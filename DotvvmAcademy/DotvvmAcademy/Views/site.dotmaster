@@ -1,0 +1,30 @@
+﻿@viewModel DotvvmAcademy.ViewModels.SiteViewModel, DotvvmAcademy
+
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>DotVVM Academy</title>
+    <link href="~/Styles/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Styles/site.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>DotVVM Academy</h1>
+        </header>
+
+        <content>
+            <dot:ContentPlaceHolder ID="MainContent" />
+        </content>
+
+        <footer>
+            &copy; 2016 <a href="https://www.dotvvm.com">DOTVVM</a>
+        </footer>
+    </div>
+</body>
+</html>
+
+

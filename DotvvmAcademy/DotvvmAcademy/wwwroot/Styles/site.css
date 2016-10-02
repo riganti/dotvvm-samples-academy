@@ -1,0 +1,29 @@
+﻿.editor-wrapper {
+	height: 380px;
+	position: relative;
+    margin: 20px;
+}
+.editor-wrapper > div {
+	margin: 0;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.step .description {
+    font-size: 14pt;
+}
+
+.lesson-box {
+    width: 280px;
+    height: 160px;
+    display: inline-block;
+    text-align: center;
+    font-size: 20pt;
+}
+.lesson-box a {
+    margin-top: 20px;
+    display: inline-block;
+}

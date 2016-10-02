@@ -1,0 +1,23 @@
+﻿@viewModel DotvvmAcademy.ViewModels.LessonViewModel, DotvvmAcademy
+@masterPage Views/site.dotmaster
+
+<dot:Content ContentPlaceHolderID="MainContent">
+
+    <div class="step" DataContext="{value: Step}">
+        <h2>Step {{value: StepIndex}}: {{value: Title}}</h2>
+
+        <cc:MarkdownLiteral Markdown="{value: Description}" class="description well" />
+
+        <cc:StepRenderer />
+
+        <div class="alert alert-danger" Visible="{value: _parent.ErrorMessage != null}" InnerText="{value: _parent.ErrorMessage}"></div>
+
+        <div class="text-right">
+            <dot:LinkButton Click="{command: _parent.Continue()}" class="btn btn-primary">
+                <span class="glyphicon glyphicon-hand-right" /> Continue
+            </dot:LinkButton>
+        </div>
+    </div>
+
+</dot:Content>
+

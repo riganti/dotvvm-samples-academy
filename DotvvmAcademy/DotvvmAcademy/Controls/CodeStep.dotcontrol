@@ -1,0 +1,17 @@
+﻿@viewModel DotvvmAcademy.Steps.CodeStep, DotvvmAcademy
+@baseType DotvvmAcademy.Controls.CodeStep, DotvvmAcademy
+
+<div class="editor-wrapper">
+    <cc:AceEditor Code="{value: Code}" Language="CSharp" />
+</div>
+
+<cc:MarkdownLiteral Markdown="{value: Description2}" Visible="{value: Description2 != null}" class="description well" />
+
+<div class="text-left">
+    <dot:LinkButton Click="{command: _control.ResetCode()}" class="btn btn-default">
+        <span class="glyphicon glyphicon-repeat" /> Reset
+    </dot:LinkButton>
+    <dot:LinkButton Click="{command: _control.ShowCorrectCode()}" class="btn btn-default">
+        <span class="glyphicon glyphicon-eye-open" /> Show Correct Code
+    </dot:LinkButton>
+</div>

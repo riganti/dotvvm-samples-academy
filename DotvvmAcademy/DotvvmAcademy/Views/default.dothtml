@@ -1,0 +1,17 @@
+﻿@viewModel DotvvmAcademy.ViewModels.DefaultViewModel, DotvvmAcademy
+@masterPage Views/site.dotmaster
+
+<dot:Content ContentPlaceHolderID="MainContent">
+
+    <h2>Choose Your Lesson</h2>
+
+    <dot:Repeater DataSource="{value: Lessons}">
+        <div class="lesson-box well" class-visited="{value: IsVisited}">
+            <dot:RouteLink RouteName="Lesson" Param-Lesson="{value: Number}" Param-Step="{value: LastStep}">
+                Lesson {{value: Number}}<br />
+                {{value: Title}}
+            </dot:RouteLink>
+        </div>
+    </dot:Repeater>
+
+</dot:Content>
