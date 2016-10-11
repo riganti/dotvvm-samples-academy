@@ -8,22 +8,56 @@
     <title>DotVVM Academy</title>
     <link href="~/Styles/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Styles/site.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 </head>
 <body>
 
-    <div class="container">
-        <header>
-            <h1>DotVVM Academy</h1>
-        </header>
+    <!--
 
-        <content>
-            <dot:ContentPlaceHolder ID="MainContent" />
-        </content>
+    -->
+    <div class="fix-height">
 
-        <footer>
-            &copy; 2016 <a href="https://www.dotvvm.com">DOTVVM</a>
-        </footer>
+        <div class="container-fluid header">
+            <div class="container">
+
+                <img src="/img/dotvvm-logo.png" class="img-responsive header-logo" />
+                <div class="header-block">
+                    <h1 class="header-1">DotVVM</h1>
+                    <h2 class="header-2">Academy</h2>
+                    <h3 class="header-3">online course</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <div class="container content-wrap">
+                <content>
+                    <dot:ContentPlaceHolder ID="MainContent" />
+                </content>
+            </div>
+        </div>
+
+        <div class="container-fluid free">
+
+        </div>
+
     </div>
+
+
+
+        <div class="container-fluid footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <!--<img src="/img/dotvvm-logo.png" class="img-responsive" style="width: 15%; padding: 10px; display: inline-block" />-->
+                        <div style="display: inline-block; vertical-align: middle;">
+                            <h3>DotVVM Academy online course</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 </body>
 </html>
 
