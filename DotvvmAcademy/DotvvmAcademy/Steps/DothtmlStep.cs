@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace DotvvmAcademy.Steps
 {
-    public class DothtmlStep : StepBase
+    public class DothtmlStep : StepBase, ICodeEditorStep
     {
 
         public string Code { get; set; } = "";
@@ -25,18 +25,28 @@ namespace DotvvmAcademy.Steps
 
         [Bind(Direction.None)]
         public Action<ResolvedTreeRoot> ValidationFunction { get; set; }
+
         public string Description2 { get; internal set; }
 
         protected override IEnumerable<string> GetErrors()
         {
-            var tokenizer = new DothtmlTokenizer();
-            tokenizer.Tokenize(Code);
-            var parser = new DothtmlParser();
-            var node = parser.Parse(tokenizer.Tokens);
-            var resolver = new DotVVM.Framework.Compilation.ControlTree.DefaultControlTreeResolver(DotvvmConfiguration.CreateDefault());
-            var root = (ResolvedTreeRoot)resolver.ResolveTree(node, Guid.NewGuid().ToString() + ".dothtml");
             try
             {
+                ResolvedTreeRoot root;
+                try
+                {
+                    var tokenizer = new DothtmlTokenizer();
+                    tokenizer.Tokenize(Code);
+                    var parser = new DothtmlParser();
+                    var node = parser.Parse(tokenizer.Tokens);
+                    var resolver = new DotVVM.Framework.Compilation.ControlTree.DefaultControlTreeResolver(DotvvmConfiguration.CreateDefault());
+                    root = (ResolvedTreeRoot) resolver.ResolveTree(node, Guid.NewGuid().ToString() + ".dothtml");
+                }
+                catch (Exception ex)
+                {
+                    throw new CodeValidationException("Syntax error in the DOTHTML code.", ex);
+                }
+
                 ValidationFunction(root);
                 return Enumerable.Empty<string>();
             }
@@ -44,6 +54,17 @@ namespace DotvvmAcademy.Steps
             {
                 return new[] { ex.Message };
             }
+        }
+
+
+        public void ResetCode()
+        {
+            Code = StartupCode;
+        }
+
+        public void ShowCorrectCode()
+        {
+            Code = FinalCode;
         }
     }
 }

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace DotvvmAcademy.Steps
 {
-    public class CodeStep : StepBase
+    public class CodeStep : StepBase, ICodeEditorStep
     {
 
 
@@ -68,6 +68,17 @@ namespace DotvvmAcademy.Steps
             {
                 return new[] { ex.Message };
             }
+        }
+
+
+        public void ResetCode()
+        {
+            Code = StartupCode;
+        }
+
+        public void ShowCorrectCode()
+        {
+            Code = FinalCode;
         }
 
     }

@@ -11,22 +11,20 @@
                     <div class="step">
                         <cc:MarkdownLiteral Markdown="{value: Description}" />
                         <cc:StepRenderer />
+
                         <div class="alert alert-danger" Visible="{value: _parent.ErrorMessage != null}" InnerText="{value: _parent.ErrorMessage}"></div>
-                        <div class="text-right">
-                          
-                        </div>
                     </div>
+                                        
                     <dot:LinkButton Click="{command: _parent.Continue()}" class="btn btn-primary pull-right lesson-btn">
                         <span class="glyphicon glyphicon-hand-right" /> Continue
                     </dot:LinkButton>
-                    
+
+                    <cc:StepButtonsRenderer />
+
                 </div>
             </div>
-           
         </div>
     </div>
-   
-            
 
 </dot:Content>
 

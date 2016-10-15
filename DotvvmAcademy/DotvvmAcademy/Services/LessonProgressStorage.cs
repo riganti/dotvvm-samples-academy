@@ -8,6 +8,8 @@ namespace DotvvmAcademy.Services
 {
     public class LessonProgressStorage
     {
+        public const int FinishedLessonStepNumber = 999;
+        
         private const string ProgressCookieName = "dotvvmAcademyProgress";
         private HttpContext httpContext;
 
@@ -48,7 +50,7 @@ namespace DotvvmAcademy.Services
                 parts = cookie.Split(',').Select(int.Parse).ToList();
             }
 
-            while (number - 1 < parts.Count)
+            while (number >= parts.Count)
             {
                 parts.Add(1);
             }

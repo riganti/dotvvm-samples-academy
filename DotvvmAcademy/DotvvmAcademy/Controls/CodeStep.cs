@@ -16,19 +16,9 @@ namespace DotvvmAcademy.Controls
         {
             if (!context.IsPostBack)
             {
-                ResetCode();
+                ViewModel.ResetCode();
             }
             base.OnInit(context);
-        }
-
-        public void ResetCode()
-        {
-            ViewModel.Code = ViewModel.StartupCode;
-        }
-
-        public void ShowCorrectCode()
-        {
-            ViewModel.Code = ViewModel.FinalCode;
         }
 
     }
