@@ -328,7 +328,11 @@ You have learned how to use DotVVM controls and data-binding of properties and c
 
             var buttonTextBinding = root.GetDescendantControls<Button>()
                 .Select(c => c.GetValue(ButtonBase.TextProperty))
-                .Single();
+                .SingleOrDefault();
+            if (buttonTextBinding == null)
+            {
+                throw new CodeValidationException("You must set the Text property of the Button!");
+            }
         }
 
         public override StepBase[] GetAllSteps()
