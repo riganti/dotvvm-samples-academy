@@ -9,6 +9,8 @@
     <link href="~/Styles/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Styles/site.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
 </head>
 <body>
 
@@ -22,8 +24,7 @@
 
                 <img src="/img/dotvvm-logo.png" class="img-responsive header-logo" />
                 <div class="header-block">
-                    <h1 class="header-1">DotVVM</h1>
-                    <h2 class="header-2">Academy</h2>
+                    <h1 class="header-1">DotVVM <span class="span-academy">Academy</span></h1>
                     <h3 class="header-3">online course</h3>
                 </div>
             </div>
