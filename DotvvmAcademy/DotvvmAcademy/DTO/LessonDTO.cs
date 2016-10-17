@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DotvvmAcademy.Services;
 
 namespace DotvvmAcademy.DTO
 {
@@ -14,7 +15,15 @@ namespace DotvvmAcademy.DTO
 
         public string Title { get; set; }
 
-        public bool IsVisited => LastStep > 0;
+        public string ImageUrl { get; set; }
+
+        public bool IsVisited => LastStep > 1;
+
+        public bool IsFinished => LastStep == LessonProgressStorage.FinishedLessonStepNumber;
+
+        public string ButtonText => IsFinished ? "Repeat Lesson" : (IsVisited ? "Continue" : "Start Lesson");
+
+        public int StepToOpen => IsFinished ? 1 : LastStep;
 
     }
 }

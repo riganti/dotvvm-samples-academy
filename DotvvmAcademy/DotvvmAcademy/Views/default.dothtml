@@ -3,137 +3,30 @@
 
 <dot:Content ContentPlaceHolderID="MainContent">
 
-
-    <!--
- <h2>Choose Your Lesson</h2>
-
-    <dot:Repeater DataSource="{value: Lessons}">
-        <div class="lesson-box well" class-visited="{value: IsVisited}">
-            <dot:RouteLink RouteName="Lesson" Param-Lesson="{value: Number}" Param-Step="{value: LastStep}">
-                Lesson {{value: Number}}<br />
-                {{value: Title}}
-            </dot:RouteLink>
-        </div>
-    </dot:Repeater>
-    -->
-   
     <div class="container-fluid content-padding">
-        <div class="row">
+        <dot:Repeater DataSource="{value: Lessons}" class="row">
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 lesson">
                 <div class="part">
                     <div class="img-part">
-                        <div class="img-part-a">
-
+                        <div class="img-part-a">                            
                         </div>
-                        <img src="/img/basics.png" class="img-responsive" />
+                        <img src="{value: ImageUrl}" class="img-responsive" />
+
+                        <div class="finished" Visible="{value: IsFinished}">
+                            <!-- TODO: nastylovat-->
+                            Completed
+                        </div>
                     </div>
                     <div class="content-part">
-                        <h3 class="lesson-h3">Lesson 1</h3>
-                        <p>
-                            Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-                        </p>
-                        <a href="lesson1/step1" class="aa">Read More ...</a>
-
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 lesson">
-                <div class="part">
-                    <div class="img-part">
-                        <div class="img-part-a">
-
-                        </div>
-                        <img src="/img/elementary.png" class="img-responsive" />
-                    </div>
-                    <div class="content-part">
-                        <h3 class="lesson-h3">Lesson 2</h3>
-                        <p>
-                            Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-                        </p>
-                        <a href="lesson1/step1" class="aa">Read More ...</a>
+                        <h3 class="lesson-h3">Lesson {{value: Number}}</h3>
+                        <dot:HtmlLiteral Html="{value: Title}" WrapperTagName="p" />
+                        <dot:RouteLink RouteName="Lesson" Param-Lesson="{value: Number}" Param-Step="{value: StepToOpen}" 
+                                       Text="{value: ButtonText}"
+                                       class="aa" />
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <br />
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 lesson">
-                <div class="part">
-                    <div class="img-part">
-                        <div class="img-part-a">
-
-                        </div>
-                        <img src="/img/intermediate.png" class="img-responsive" />
-                    </div>
-                    <div class="content-part">
-                        <h3 class="lesson-h3">Lesson 3</h3>
-                        <p>
-                            Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-                        </p>
-                        <a href="lesson1/step1" class="aa">Read More ...</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 lesson">
-                <div class="part">
-                    <div class="img-part">
-                        <div class="img-part-a">
-
-                        </div>
-                        <img src="/img/advanced.png" class="img-responsive" />
-                    </div>
-                    <div class="content-part">
-                        <h3 class="lesson-h3">Lesson 4</h3>
-                        <p>
-                            Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-                        </p>
-                        <a href="lesson1/step1" class="aa">Read More ...</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <br />
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 lesson">
-                <div class="part">
-                    <div class="img-part">
-                        <div class="img-part-a">
-
-                        </div>
-                        <img src="/img/professional.png" class="img-responsive" />
-                    </div>
-                    <div class="content-part">
-                        <h3 class="lesson-h3">Lesson 5</h3>
-                        <p>
-                            Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-                        </p>
-                        <a href="lesson1/step1" class="aa">Read More ...</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 lesson">
-                <div class="part">
-                    <div class="img-part">
-                        <div class="img-part-a">
-
-                        </div>
-                        <img src="/img/expert.png" class="img-responsive" />
-                    </div>
-                    <div class="content-part">
-                        <h3 class="lesson-h3">Lesson 6</h3>
-                        <p>
-                            Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-                        </p>
-                        <a href="lesson1/step1" class="aa">Read More ...</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </dot:Repeater>
     </div>
     <br />
 

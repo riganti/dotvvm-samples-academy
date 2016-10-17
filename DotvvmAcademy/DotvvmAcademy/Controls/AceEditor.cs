@@ -42,6 +42,7 @@ namespace DotvvmAcademy.Controls
 
         protected override void AddAttributesToRender(IHtmlWriter writer, IDotvvmRequestContext context)
         {
+            writer.AddAttribute("class", "code-editor");
             writer.AddKnockoutDataBind("aceEditor", this, CodeProperty);
             writer.AddKnockoutDataBind("aceEditor-language", KnockoutHelper.MakeStringLiteral(Language.ToString().ToLower()));
             base.AddAttributesToRender(writer, context);

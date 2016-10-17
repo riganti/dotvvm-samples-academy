@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using DotVVM.Framework.ViewModel;
 using DotvvmAcademy.Steps;
 using DotvvmAcademy.Lessons;
+using DotvvmAcademy.Services;
+using DotVVM.Framework.Hosting;
 
 namespace DotvvmAcademy.ViewModels
 {
@@ -44,16 +46,20 @@ namespace DotvvmAcademy.ViewModels
 
         public void Continue()
         {
+            var storage = new LessonProgressStorage(Context.GetAspNetCoreContext());
+
             ErrorMessage = Step.ErrorMessage;
 
             if (string.IsNullOrEmpty(ErrorMessage))
             {
                 if (stepNumber < lesson.GetAllSteps().Length)
                 {
+                    storage.UpdateLessonLastStep(lessonNumber, stepNumber + 1);
                     Context.RedirectToRoute("Lesson", new { Step = stepNumber + 1 });
                 }
                 else
                 {
+                    storage.UpdateLessonLastStep(lessonNumber, LessonProgressStorage.FinishedLessonStepNumber);
                     Context.RedirectToRoute("Default");
                 }
             }
