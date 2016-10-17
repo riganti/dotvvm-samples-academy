@@ -75,7 +75,7 @@ a {
 }
 
     .part:hover {
-        border: 3px solid #5298ea;
+        outline: 3px solid #5298ea;
     }
 
 .img-part {
