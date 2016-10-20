@@ -163,7 +163,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
     }
 }";
 
-            Assert.AreEqual(Lesson1Texts.CommandSignatureError, viewModelCommandStep.ErrorMessage);
+            Assert.AreEqual(GenericTexts.CommandMethodError, viewModelCommandStep.ErrorMessage);
         }
 
 

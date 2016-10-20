@@ -41,7 +41,11 @@ namespace DotvvmAcademy.Steps
             typeof(DotvvmConfiguration).GetTypeInfo().Assembly,     // DotVVM.Framework
             typeof(BindAttribute).GetTypeInfo().Assembly            // DotVVM.Core
         };
+
         public string Description2 { get; internal set; }
+
+        [Bind(Direction.None)]
+        public List<string> OtherFiles { get; private set; } = new List<string>();
 
         protected override IEnumerable<string> GetErrors()
         {
@@ -50,7 +54,7 @@ namespace DotvvmAcademy.Steps
                 var tree = (CSharpSyntaxTree)CSharpSyntaxTree.ParseText(Code);
                 var compilation = CSharpCompilation.Create(
                     Guid.NewGuid().ToString(), 
-                    new[] { tree },
+                    new[] { tree }.Concat(OtherFiles.Select(c => CSharpSyntaxTree.ParseText(c))),
                     ReferencedAssemblies.Select(a => MetadataReference.CreateFromFile(a.Location)).ToArray(),
                     new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)
                 );

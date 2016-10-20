@@ -78,6 +78,15 @@ namespace DotvvmAcademy.Lessons {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to The command methods in the viewmodel must be public and must have the correct signature!.
+        /// </summary>
+        public static string CommandMethodError {
+            get {
+                return ResourceManager.GetString("CommandMethodError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to The {0} method doesn&apos;t exist!.
         /// </summary>
         public static string MethodNotFound {

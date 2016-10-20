@@ -123,6 +123,9 @@
   <data name="CommandDoesNotHaveParenthesis" xml:space="preserve">
     <value>You need to add empty parenthesis after the {0} method.</value>
   </data>
+  <data name="CommandMethodError" xml:space="preserve">
+    <value>The command methods in the viewmodel must be public and must have the correct signature!</value>
+  </data>
   <data name="MethodNotFound" xml:space="preserve">
     <value>The {0} method doesn't exist!</value>
   </data>

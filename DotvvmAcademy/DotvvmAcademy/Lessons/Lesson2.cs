@@ -195,6 +195,11 @@ namespace DotvvmAcademy.Tutorial.ViewModels
         }
     }
 }",
+                OtherFiles =
+                {
+                    Step4.FinalCode
+                },
+                AllowedTypesConstructed = { "System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>" },
                 ValidationFunction = ValidateTasksProperty
             };
 
@@ -242,6 +247,16 @@ namespace DotvvmAcademy.Tutorial.ViewModels
         }
     }
 }",
+                OtherFiles =
+                {
+                    Step4.FinalCode
+                },
+                AllowedTypesConstructed =
+                {
+                    "System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>",
+                    "DotvvmAcademy.Tutorial.ViewModels.TaskData"
+                },
+                AllowedMethodsCalled = { "System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>.Add" },
                 ValidationFunction = ValidateAddTaskMethod
             };
 
@@ -408,6 +423,16 @@ namespace DotvvmAcademy.Tutorial.ViewModels
         }
     }
 }",
+                OtherFiles =
+                {
+                    Step4.FinalCode
+                },
+                AllowedTypesConstructed =
+                {
+                    "System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>",
+                    "DotvvmAcademy.Tutorial.ViewModels.TaskData"
+                },
+                AllowedMethodsCalled = { "System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>.Add" },
                 ValidationFunction = ValidateCompleteTaskMethod
             };
 
@@ -457,7 +482,7 @@ When supplying arguments to the method, you begin also in the context of `TaskDa
                 Title = "Completing The Task",
                 Description = @"The last thing we want to do, is to strike through tasks which are completed.
 
-If the task is completed, we'd like to render it as `<div class=""task-completed""></div>. 
+If the task is completed, we'd like to render it as `<div class=""task-completed""></div>`. 
 
 We need to use data-binding to specify the `class` property of the `<div>`. 
 
@@ -655,7 +680,9 @@ You have learned how to use the `Repeater` control and collections in the viewmo
         {
             ValidateRepeaterControl(root);
 
-            var template = root.GetDescendantControls<Repeater>().Single();
+            var template = root.GetDescendantControls<Repeater>().Single()
+                .Properties[Repeater.ItemTemplateProperty]
+                .CastTo<ResolvedPropertyTemplate>();
 
             var literals = template.GetDescendantControls<Literal>()
                 .Select(l => l.GetValueBindingOrNull(Literal.TextProperty))
@@ -677,8 +704,11 @@ You have learned how to use the `Repeater` control and collections in the viewmo
         {
             ValidateRepeaterTemplate1(root);
 
-            var linkButton = root.GetDescendantControls<Repeater>()
-                .Single()
+            var template = root.GetDescendantControls<Repeater>().Single()
+                .Properties[Repeater.ItemTemplateProperty]
+                .CastTo<ResolvedPropertyTemplate>();
+
+            var linkButton = template
                 .GetDescendantControls<LinkButton>()
                 .Single();
             if (linkButton.GetValueBindingText(HtmlGenericControl.VisibleProperty) != "!IsCompleted")
@@ -690,6 +720,15 @@ You have learned how to use the `Repeater` control and collections in the viewmo
         private void ValidateCompleteTaskMethod(CSharpCompilation compilation, CSharpSyntaxTree tree, SemanticModel model, Assembly assembly)
         {
             ValidateAddTaskMethod(compilation, tree, model, assembly);
+
+            var methods = tree.GetCompilationUnitRoot().DescendantNodes().OfType<MethodDeclarationSyntax>()
+                .Select(p => model.GetDeclaredSymbol(p))
+                .ToList();
+
+            if (methods.Count(m => m.CheckNameAndVoid("CompleteTask")) != 1)
+            {
+                throw new CodeValidationException(string.Format(GenericTexts.MethodNotFound, "CompleteTask"));
+            }
 
             this.ExecuteSafe(() =>
             {
@@ -710,8 +749,11 @@ You have learned how to use the `Repeater` control and collections in the viewmo
         {
             ValidateRepeaterTemplate2(root);
 
-            var linkButton = root.GetDescendantControls<Repeater>()
-                .Single()
+            var template = root.GetDescendantControls<Repeater>().Single()
+                .Properties[Repeater.ItemTemplateProperty]
+                .CastTo<ResolvedPropertyTemplate>();
+
+            var linkButton = template
                 .GetDescendantControls<LinkButton>()
                 .Single();
             linkButton.ValidateCommandBindingExpression(ButtonBase.ClickProperty, "_parent.CompleteTask(_this)");
@@ -721,14 +763,19 @@ You have learned how to use the `Repeater` control and collections in the viewmo
         {
             ValidateRepeaterTemplate3(root);
 
-            var divs = root.GetDescendantControls<Repeater>()
-                .Single()
+            var template = root.GetDescendantControls<Repeater>().Single()
+                .Properties[Repeater.ItemTemplateProperty]
+                .CastTo<ResolvedPropertyTemplate>();
+
+            var divs = template
                 .GetDescendantControls<HtmlGenericControl>()
                 .ToList();
             var div = divs.First(d => d.DothtmlNode.As<DothtmlElementNode>()?.TagName == "div");
 
-            var classProperties = div.Properties.OfType<ResolvedPropertyBinding>()
-                .Where(p => p.Property.Name == "class")
+            var classProperties = div.Properties
+                .Where(p => p.Value.Property.Name == "Attributes:class")
+                .Select(p => p.Value)
+                .OfType<ResolvedPropertyBinding>()
                 .ToList();
             if (classProperties.Count != 1)
             {

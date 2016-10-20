@@ -126,9 +126,6 @@
   <data name="CommandResultError" xml:space="preserve">
     <value>The Calculate method doesn't return a correct result!</value>
   </data>
-  <data name="CommandSignatureError" xml:space="preserve">
-    <value>The Calculate method must be public and should have zero parameters!</value>
-  </data>
   <data name="OneButtonControlError" xml:space="preserve">
     <value>There should be 1 Button control in the page!</value>
   </data>

@@ -87,15 +87,6 @@ namespace DotvvmAcademy.Lessons {
         }
         
         /// <summary>
-        ///    Looks up a localized string similar to The Calculate method must be public and should have zero parameters!.
-        /// </summary>
-        public static string CommandSignatureError {
-            get {
-                return ResourceManager.GetString("CommandSignatureError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///    Looks up a localized string similar to There should be 1 Button control in the page!.
         /// </summary>
         public static string OneButtonControlError {

@@ -136,11 +136,7 @@ namespace DotvvmAcademy.Steps.Validation
             }
             catch (RuntimeBinderException ex)
             {
-                throw new CodeValidationException(Lesson1Texts.CommandSignatureError, ex);
-            }
-            catch (Exception ex)
-            {
-                throw new CodeValidationException(Lesson1Texts.CommandResultError, ex);
+                throw new CodeValidationException(GenericTexts.CommandMethodError, ex);
             }
         }
 
