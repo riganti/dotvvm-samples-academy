@@ -85,7 +85,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
     }
 }";
 
-            Assert.AreEqual(string.Format(Lesson1Texts.PropertyNotFound, "Number1"), viewModelPropertiesStep.ErrorMessage);
+            Assert.AreEqual(string.Format(GenericTexts.PropertyNotFound, "Number1"), viewModelPropertiesStep.ErrorMessage);
         }
 
         [TestMethod]
@@ -103,7 +103,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
     }
 }";
 
-            Assert.AreEqual(string.Format(Lesson1Texts.PropertyNotFound, "Result"), viewModelPropertiesStep.ErrorMessage);
+            Assert.AreEqual(string.Format(GenericTexts.PropertyNotFound, "Result"), viewModelPropertiesStep.ErrorMessage);
         }
 
         [TestMethod]
@@ -140,7 +140,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
     }
 }";
 
-            Assert.AreEqual(Lesson1Texts.CommandNotFound, viewModelCommandStep.ErrorMessage);
+            Assert.AreEqual(GenericTexts.MethodNotFound, viewModelCommandStep.ErrorMessage);
         }
 
 

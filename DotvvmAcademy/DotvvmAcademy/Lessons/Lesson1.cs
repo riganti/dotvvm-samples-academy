@@ -48,7 +48,7 @@ We'll create a web page with 3 textboxes and 1 button.
 The user can fill numbers in the first and second textbox, and when he presses the button, 
 the sum of the numbers will appear in the third textbox.
 
-<img src=""\img\lesson1_step2.gif"" alt=""Animation"" />"
+<img src=""/img/lesson1_step2.gif"" alt=""Animation"" />"
             };
 
             Step2 = new DothtmlStep()
@@ -257,15 +257,15 @@ You have learned how to use DotVVM controls and data-binding of properties and c
 
             if (properties.Count(p => p.CheckNameAndType("Number1", "int")) != 1)
             {
-                throw new CodeValidationException(string.Format(Lesson1Texts.PropertyNotFound, "Number1"));
+                throw new CodeValidationException(string.Format(GenericTexts.PropertyNotFound, "Number1"));
             }
             if (properties.Count(p => p.CheckNameAndType("Number2", "int")) != 1)
             {
-                throw new CodeValidationException(string.Format(Lesson1Texts.PropertyNotFound, "Number2"));
+                throw new CodeValidationException(string.Format(GenericTexts.PropertyNotFound, "Number2"));
             }
             if (properties.Count(p => p.CheckNameAndType("Result", "int")) != 1)
             {
-                throw new CodeValidationException(string.Format(Lesson1Texts.PropertyNotFound, "Result"));
+                throw new CodeValidationException(string.Format(GenericTexts.PropertyNotFound, "Result"));
             }
         }
 
@@ -278,7 +278,7 @@ You have learned how to use DotVVM controls and data-binding of properties and c
                 .ToList();
             if (methods.Count(m => m.CheckNameAndVoid("Calculate")) != 1)
             {
-                throw new CodeValidationException(Lesson1Texts.CommandNotFound);
+                throw new CodeValidationException(string.Format(GenericTexts.MethodNotFound, "Calculate"));
             }
 
             this.ExecuteSafe(() =>
@@ -290,7 +290,7 @@ You have learned how to use DotVVM controls and data-binding of properties and c
 
                 if (viewModel.Result != 45)
                 {
-                    throw new Exception("Invalid result!");
+                    throw new CodeValidationException("The Calculate method returns incorrect result!");
                 }
             });
         }
@@ -313,25 +313,15 @@ You have learned how to use DotVVM controls and data-binding of properties and c
         {
             ValidateTextBoxBindings(root);
 
-            var buttonClickBinding = root.GetDescendantControls<Button>()
-                .Select(c => c.GetCommandBindingText(ButtonBase.ClickProperty))
-                .Single();
-
-            if (buttonClickBinding == "Calculate")
-            {
-                throw new CodeValidationException("You need to add empty parenthesis after the Calculate method.");
-            }
-            if (buttonClickBinding.Replace(" ", "") != "Calculate()")
-            {
-                throw new CodeValidationException("You must call the Calculate() method in the command binding!");
-            }
+            root.GetDescendantControls<Button>().Single()
+                .ValidateCommandBindingExpression(ButtonBase.ClickProperty, "Calculate()");
 
             var buttonTextBinding = root.GetDescendantControls<Button>()
                 .Select(c => c.GetValue(ButtonBase.TextProperty))
                 .SingleOrDefault();
             if (buttonTextBinding == null)
             {
-                throw new CodeValidationException("You must set the Text property of the Button!");
+                throw new CodeValidationException(Lesson1Texts.ButtonDoesNotHaveText);
             }
         }
 

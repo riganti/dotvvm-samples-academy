@@ -22,13 +22,13 @@ namespace DotvvmAcademy.Lessons {
     // with the /str option, or rebuild your VS project.
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Lesson1Texts {
+    public class GenericTexts {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
-        internal Lesson1Texts() {
+        internal GenericTexts() {
         }
         
         /// <summary>
@@ -38,7 +38,7 @@ namespace DotvvmAcademy.Lessons {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DotvvmAcademy.Lessons.Lesson1Texts", typeof(Lesson1Texts).GetTypeInfo().Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DotvvmAcademy.Lessons.GenericTexts", typeof(GenericTexts).GetTypeInfo().Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -60,65 +60,47 @@ namespace DotvvmAcademy.Lessons {
         }
         
         /// <summary>
-        ///    Looks up a localized string similar to You must set the Text property of the Button!.
+        ///    Looks up a localized string similar to The class {0} was not found!.
         /// </summary>
-        public static string ButtonDoesNotHaveText {
+        public static string ClassNotFound {
             get {
-                return ResourceManager.GetString("ButtonDoesNotHaveText", resourceCulture);
+                return ResourceManager.GetString("ClassNotFound", resourceCulture);
             }
         }
         
         /// <summary>
-        ///    Looks up a localized string similar to You must call the Calculate() method in the command binding!.
+        ///    Looks up a localized string similar to You need to add empty parenthesis after the {0} method..
         /// </summary>
-        public static string CalculateMethodNotCalled {
+        public static string CommandDoesNotHaveParenthesis {
             get {
-                return ResourceManager.GetString("CalculateMethodNotCalled", resourceCulture);
+                return ResourceManager.GetString("CommandDoesNotHaveParenthesis", resourceCulture);
             }
         }
         
         /// <summary>
-        ///    Looks up a localized string similar to The Calculate method doesn&apos;t return a correct result!.
+        ///    Looks up a localized string similar to The {0} method doesn&apos;t exist!.
         /// </summary>
-        public static string CommandResultError {
+        public static string MethodNotFound {
             get {
-                return ResourceManager.GetString("CommandResultError", resourceCulture);
+                return ResourceManager.GetString("MethodNotFound", resourceCulture);
             }
         }
         
         /// <summary>
-        ///    Looks up a localized string similar to The Calculate method must be public and should have zero parameters!.
+        ///    Looks up a localized string similar to You must call the {0} in the command binding!.
         /// </summary>
-        public static string CommandSignatureError {
+        public static string MethodWasNotCalled {
             get {
-                return ResourceManager.GetString("CommandSignatureError", resourceCulture);
+                return ResourceManager.GetString("MethodWasNotCalled", resourceCulture);
             }
         }
         
         /// <summary>
-        ///    Looks up a localized string similar to There should be 1 Button control in the page!.
+        ///    Looks up a localized string similar to The {0} property was not found or doesn&apos;t have a correct type!.
         /// </summary>
-        public static string OneButtonControlError {
+        public static string PropertyNotFound {
             get {
-                return ResourceManager.GetString("OneButtonControlError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///    Looks up a localized string similar to Each TextBox should bind to a different property in the viewmodel!.
-        /// </summary>
-        public static string TextBoxBindingsError {
-            get {
-                return ResourceManager.GetString("TextBoxBindingsError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///    Looks up a localized string similar to There should be 3 TextBox controls in the page!.
-        /// </summary>
-        public static string ThreeTextBoxControlsError {
-            get {
-                return ResourceManager.GetString("ThreeTextBoxControlsError", resourceCulture);
+                return ResourceManager.GetString("PropertyNotFound", resourceCulture);
             }
         }
     }

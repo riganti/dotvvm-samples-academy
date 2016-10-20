@@ -27,9 +27,32 @@ namespace DotvvmAcademy.Steps.Validation
             }
         }
 
+        public static IEnumerable<ResolvedTreeNode> GetDescendants(this ResolvedPropertyTemplate node)
+        {
+            foreach (var child in node.Content.SelectMany(n => n.GetDescendants()))
+            {
+                yield return child;
+            }
+        }
+
+        public static IEnumerable<ResolvedControl> GetDescendantControls<T>(this ResolvedPropertyTemplate node)
+        {
+            return GetDescendants(node).OfType<ResolvedControl>().Where(c => c.Metadata.Type == typeof(T));
+        }
+
         public static IEnumerable<ResolvedControl> GetDescendantControls<T>(this ResolvedContentNode node)
         {
             return GetDescendants(node).OfType<ResolvedControl>().Where(c => c.Metadata.Type == typeof(T));
+        }
+
+        public static ResolvedPropertyBinding GetValueBindingOrNull(this ResolvedControl control, IPropertyDescriptor property)
+        {
+            IAbstractPropertySetter binding;
+            if (!control.TryGetProperty(property, out binding))
+            {
+                return null;
+            }
+            return binding as ResolvedPropertyBinding;
         }
 
         public static string GetValueBindingText(this ResolvedControl control, IPropertyDescriptor property)
@@ -64,6 +87,19 @@ namespace DotvvmAcademy.Steps.Validation
             }
 
             return typedBinding.Binding.Value.Trim();
+        }
+
+        public static void ValidateCommandBindingExpression(this ResolvedControl control, IPropertyDescriptor property, string desiredExpression)
+        {
+            var binding = GetCommandBindingText(control, property).Replace(" ", "");
+            if (binding != desiredExpression && binding.StartsWith(desiredExpression))
+            {
+                throw new CodeValidationException(string.Format(GenericTexts.CommandDoesNotHaveParenthesis, desiredExpression));
+            }
+            if (binding != desiredExpression)
+            {
+                throw new CodeValidationException(string.Format(GenericTexts.MethodWasNotCalled, desiredExpression));
+            }
         }
 
         public static string GetValue(this ResolvedControl control, IPropertyDescriptor property)

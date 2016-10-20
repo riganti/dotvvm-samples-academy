@@ -117,25 +117,37 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddTaskButtonControlError" xml:space="preserve">
+    <value>There should be a Button control in the page!</value>
+  </data>
+  <data name="AddTaskTextBoxControlError" xml:space="preserve">
+    <value>There should be a TextBox control in the page!</value>
+  </data>
   <data name="ButtonDoesNotHaveText" xml:space="preserve">
     <value>You must set the Text property of the Button!</value>
   </data>
-  <data name="CalculateMethodNotCalled" xml:space="preserve">
-    <value>You must call the Calculate() method in the command binding!</value>
+  <data name="InvalidClassBinding" xml:space="preserve">
+    <value>The class attribute doesn't contain the binding!</value>
   </data>
-  <data name="CommandResultError" xml:space="preserve">
-    <value>The Calculate method doesn't return a correct result!</value>
+  <data name="InvalidVisibleBinding" xml:space="preserve">
+    <value>The Visible binding expression is not correct! Didn't you forget to negate the expression?</value>
   </data>
-  <data name="CommandSignatureError" xml:space="preserve">
-    <value>The Calculate method must be public and should have zero parameters!</value>
+  <data name="LinkButtonNotFound" xml:space="preserve">
+    <value>The LinkButton control wasn't found inside the Repeater control!</value>
   </data>
-  <data name="OneButtonControlError" xml:space="preserve">
-    <value>There should be 1 Button control in the page!</value>
+  <data name="RepeaterBindingError" xml:space="preserve">
+    <value>The DataSource property of the Repeater should be bound to the Tasks property!</value>
   </data>
-  <data name="TextBoxBindingsError" xml:space="preserve">
-    <value>Each TextBox should bind to a different property in the viewmodel!</value>
+  <data name="RepeaterControlError" xml:space="preserve">
+    <value>There should be a Repeater control in the page!</value>
   </data>
-  <data name="ThreeTextBoxControlsError" xml:space="preserve">
-    <value>There should be 3 TextBox controls in the page!</value>
+  <data name="RepeaterTemplateMissingDivError" xml:space="preserve">
+    <value>The Repeater should contain a div element with the "task" CSS class.</value>
+  </data>
+  <data name="TextBoxBindingError" xml:space="preserve">
+    <value>The TextBox should be bound the the AddedTaskTitle property!</value>
+  </data>
+  <data name="TitleBindingNotFound" xml:space="preserve">
+    <value>The Title is not rendered inside the Repeater control!</value>
   </data>
 </root>
