@@ -7,38 +7,32 @@
                 <div class="part">
                     <div class="img-part">
                         <div class="img-part-a">
-
                         </div>
                         <img src="{value: ImageUrl}" class="img-responsive" />
-
                     </div>
                     <div class="content-part">
-                        <h3 class="lesson-h3">Lesson {{value: Number}}</h3>
+
+                        <h3 class="lesson-h3">
+                            Lesson {{value: Number}}
+                            <i class="fa fa-check-square-o" Visible="{value: IsFinished}" aria-hidden="true"></i>
+                        </h3>
                         <dot:HtmlLiteral Html="{value: Title}" WrapperTagName="p" />
-                       
                     </div>
+
                     <div class="button">
                         <dot:RouteLink RouteName="Lesson" Param-Lesson="{value: Number}" Param-Step="{value: StepToOpen}"
                                        Text="{value: ButtonText}"
                                        class="aa" />
-                        <div class="finished" Visible="{value: IsFinished}">
-
-                            <i class="fa fa-check-square-o" aria-hidden="true"></i>
-                        </div>
                     </div>
                     <div class="button-mobile">
                         <dot:RouteLink RouteName="Lesson" Param-Lesson="{value: Number}" Param-Step="{value: StepToOpen}"
                                        Text="{value: ButtonText}"
                                        class="aa" />
-                        <div class="finished" Visible="{value: IsFinished}">
-
-                            <i class="fa fa-check-square-o" aria-hidden="true"></i>
-                        </div>
                     </div>
                 </div>
             </div>
         </dot:Repeater>
     </div>
-    
+
     <br />
 </dot:Content>
