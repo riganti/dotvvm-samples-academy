@@ -1,25 +1,21 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DotVVM.Framework.ViewModel;
-using DotvvmAcademy.Steps;
+using DotVVM.Framework.Hosting;
 using DotvvmAcademy.Lessons;
 using DotvvmAcademy.Services;
-using DotVVM.Framework.Hosting;
+using DotvvmAcademy.Steps;
+using System;
+using System.Threading.Tasks;
 
 namespace DotvvmAcademy.ViewModels
 {
-	public class LessonViewModel : SiteViewModel
-	{
-
+    public class LessonViewModel : SiteViewModel
+    {
         public StepBase Step { get; set; }
         public string ErrorMessage { get; private set; }
+        public bool ContinueButtonVisible { get; set; } = true;
 
-        private LessonBase lesson;
-        private int lessonNumber;
-        private int stepNumber;
+        protected LessonBase lesson;
+        protected int lessonNumber;
+        protected int CurrentStepNumber { get; set; }
 
         public override Task Init()
         {
@@ -31,7 +27,7 @@ namespace DotvvmAcademy.ViewModels
         private void LoadStep()
         {
             lessonNumber = Convert.ToInt32(Context.Parameters["Lesson"]);
-            stepNumber = Convert.ToInt32(Context.Parameters["Step"]);
+            CurrentStepNumber = Convert.ToInt32(Context.Parameters["Step"]);
 
             if (lessonNumber == 1)
             {
@@ -45,7 +41,13 @@ namespace DotvvmAcademy.ViewModels
             {
                 throw new NotSupportedException();
             }
-            Step = lesson.GetAllSteps()[stepNumber - 1];
+            Step = lesson.GetAllSteps()[CurrentStepNumber - 1];
+            AfterLoad();
+           
+        }
+
+        protected virtual void AfterLoad()
+        {
         }
 
         public void Continue()
@@ -56,10 +58,10 @@ namespace DotvvmAcademy.ViewModels
 
             if (string.IsNullOrEmpty(ErrorMessage))
             {
-                if (stepNumber < lesson.GetAllSteps().Length)
+                if (CurrentStepNumber < lesson.GetAllSteps().Length)
                 {
-                    storage.UpdateLessonLastStep(lessonNumber, stepNumber + 1);
-                    Context.RedirectToRoute("Lesson", new { Step = stepNumber + 1 });
+                    storage.UpdateLessonLastStep(lessonNumber, CurrentStepNumber + 1);
+                    RedirectToNextLesson();
                 }
                 else
                 {
@@ -68,6 +70,10 @@ namespace DotvvmAcademy.ViewModels
                 }
             }
         }
+
+        protected virtual void RedirectToNextLesson()
+        {
+            Context.RedirectToRoute("Lesson", new { Step = CurrentStepNumber + 1 });
+        }
     }
 }
-

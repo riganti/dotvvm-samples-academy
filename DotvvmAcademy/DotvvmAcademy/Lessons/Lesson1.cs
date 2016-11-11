@@ -231,7 +231,10 @@ we don't have to store it in the viewmodel. We can declare it directly in DOTHTM
             {
                 StepIndex = 8,
                 Title = "Congratulations!",
-                Description = @"You have finished the first lesson!
+                Description = @"
+
+
+**You have finished the first lesson!**
 
 You have learned how to use DotVVM controls and data-binding of properties and commands!"
             };

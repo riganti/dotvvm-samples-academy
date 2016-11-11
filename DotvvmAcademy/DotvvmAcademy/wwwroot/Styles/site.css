@@ -227,3 +227,6 @@ ol {
        display: none
     }
 }
+.opacity1 {
+    opacity: 1 !important;
+}
