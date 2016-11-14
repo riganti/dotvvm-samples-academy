@@ -6,7 +6,7 @@ namespace DotvvmAcademy.ViewModels
         {
             if (CurrentStepNumber == lesson.GetAllSteps().Length)
             {
-                //TODO: This part of code is only for sample view on dotvvm website - Make this code as a control usable for embending.
+                //this prop changes the view for embedded page (used on dotvvm.com as a sample)
                 ContinueButtonVisible = false;
             }
         }

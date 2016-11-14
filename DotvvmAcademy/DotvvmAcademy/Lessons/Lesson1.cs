@@ -26,7 +26,10 @@ namespace DotvvmAcademy.Lessons
 
         public Lesson1()
         {
-            Step0 = new InfoStep()
+
+            //TODO: Create LessonUserInterfaceProvider which will create all steps.
+
+            Step0 = new InfoStep(this)
             {
                 StepIndex = 1,
                 Title = "Prerequisities",
@@ -35,10 +38,10 @@ namespace DotvvmAcademy.Lessons
 + **HTML and CSS** - how to write a static page, how to use CSS to define styles
 + **C# Language** - how to declare a class with properties and methods
 
-If you don't know anything, we recommend [SoloLearn](https://www.sololearn.com/Course/). They have very nice interactive tutorials for absolute beginners."
+If you don't know anything, we recommend [SoloLearn](https://www.sololearn.com/Course/HTML/). They have very nice interactive tutorials for absolute beginners."
             };
 
-            Step1 = new InfoStep()
+            Step1 = new InfoStep(this)
             {
                 StepIndex = 2,
                 Title = "Introduction",
@@ -51,7 +54,7 @@ the sum of the numbers will appear in the third textbox.
 <img src=""/img/lesson1_step2.gif"" alt=""Animation"" />"
             };
 
-            Step2 = new DothtmlStep()
+            Step2 = new DothtmlStep(this)
             {
                 StepIndex = 3,
                 Title = "Basic Controls",
@@ -86,7 +89,7 @@ In pure HTML, it is not necessary, but it is a good practice to make sure that a
                 ValidationFunction = ValidateBasicControls
             };
 
-            Step3 = new CodeStep()
+            Step3 = new CodeStep(this)
             {
                 StepIndex = 4,
                 Title = "ViewModel Properties",
@@ -119,7 +122,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
                 ValidationFunction = ValidateViewModelProperties
             };
 
-            Step4 = new CodeStep()
+            Step4 = new CodeStep(this)
             {
                 StepIndex = 5,
                 Title = "ViewModel Command",
@@ -159,7 +162,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
                 ValidationFunction = ValidateCalculateMethod
             };
 
-            Step5 = new DothtmlStep()
+            Step5 = new DothtmlStep(this)
             {
                 StepIndex = 6,
                 Title = "Data-Binding TextBoxes",
@@ -194,7 +197,7 @@ Bind the textboxes to corresponding viewmodel properties.",
                 ValidationFunction = ValidateTextBoxBindings,
             };
 
-            Step6 = new DothtmlStep()
+            Step6 = new DothtmlStep(this)
             {
                 StepIndex = 7,
                 Title = "Data-Binding Button",
@@ -227,7 +230,7 @@ we don't have to store it in the viewmodel. We can declare it directly in DOTHTM
                 ValidationFunction = ValidateButtonBinding
             };
 
-            Step7 = new InfoStep()
+            Step7 = new InfoStep(this)
             {
                 StepIndex = 8,
                 Title = "Congratulations!",

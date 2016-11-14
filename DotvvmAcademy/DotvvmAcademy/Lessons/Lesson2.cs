@@ -1,6 +1,7 @@
 ﻿using DotvvmAcademy.Steps;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using DotVVM.Framework.Compilation.ControlTree.Resolved;
@@ -37,7 +38,7 @@ namespace DotvvmAcademy.Lessons
 
         public Lesson2()
         {
-            Step0 = new InfoStep()
+            Step0 = new InfoStep(this)
             {
                 StepIndex = 1,
                 Title = "Objective",
@@ -46,7 +47,7 @@ namespace DotvvmAcademy.Lessons
 <img src=""/img/lesson2_step1.gif"" alt=""Animation"" />"
             };
 
-            Step1 = new DothtmlStep()
+            Step1 = new DothtmlStep(this)
             {
                 StepIndex = 2,
                 Title = "Adding New Task",
@@ -69,7 +70,7 @@ Add the `TextBox` and the `Button` controls to the page. The button should say "
                 ValidationFunction = ValidateAddTaskControls
             };
 
-            Step2 = new CodeStep()
+            Step2 = new CodeStep(this)
             {
                 StepIndex = 3,
                 Title = "Adding New Task",
@@ -103,7 +104,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
                 ValidationFunction = ValidateAddTaskProperties
             };
 
-            Step3 = new DothtmlStep()
+            Step3 = new DothtmlStep(this)
             {
                 StepIndex = 4,
                 Title = "Adding New Task",
@@ -125,7 +126,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
                 ValidationFunction = ValidateAddTaskControlBindings
             };
 
-            Step4 = new CodeStep()
+            Step4 = new CodeStep(this)
             {
                 StepIndex = 5,
                 Title = "Representing Tasks",
@@ -154,7 +155,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
                 ValidationFunction = ValidateTaskDataClass
             };
 
-            Step5 = new CodeStep()
+            Step5 = new CodeStep(this)
             {
                 StepIndex = 6,
                 Title = "Representing Tasks",
@@ -203,7 +204,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
                 ValidationFunction = ValidateTasksProperty
             };
 
-            Step6 = new CodeStep()
+            Step6 = new CodeStep(this)
             {
                 StepIndex = 7,
                 Title = "Adding new Task",
@@ -260,7 +261,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
                 ValidationFunction = ValidateAddTaskMethod
             };
 
-            Step7 = new DothtmlStep()
+            Step7 = new DothtmlStep(this)
             {
                 StepIndex = 8,
                 Title = "Render The Tasks",
@@ -293,7 +294,7 @@ and inside the `<dot:Repeater>`, place the `<div class=""task""></div>` element.
                 ValidationFunction = ValidateRepeaterControl
             };
 
-            Step8 = new DothtmlStep()
+            Step8 = new DothtmlStep(this)
             {
                 StepIndex = 9,
                 Title = "Rendering The Tasks",
@@ -332,7 +333,7 @@ So, render the `Title` of the task inside the `<div>`. Also, add the `<dot:LinkB
                 ValidationFunction = ValidateRepeaterTemplate1
             };
 
-            Step9 = new DothtmlStep()
+            Step9 = new DothtmlStep(this)
             {
                 StepIndex = 10,
                 Title = "Hiding The LinkButton",
@@ -371,7 +372,7 @@ Bind the `Visible` property to the `LinkButton` to the `IsCompleted` property of
                 ValidationFunction = ValidateRepeaterTemplate2
             };
 
-            Step10 = new CodeStep()
+            Step10 = new CodeStep(this)
             {
                 StepIndex = 11,
                 Title = "Completing The Task",
@@ -436,7 +437,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
                 ValidationFunction = ValidateCompleteTaskMethod
             };
 
-            Step11 = new DothtmlStep()
+            Step11 = new DothtmlStep(this)
             {
                 StepIndex = 12,
                 Title = "Completing The Task",
@@ -476,7 +477,7 @@ When supplying arguments to the method, you begin also in the context of `TaskDa
                 ValidationFunction = ValidateRepeaterTemplate3
             };
 
-            Step12 = new DothtmlStep()
+            Step12 = new DothtmlStep(this)
             {
                 StepIndex = 13,
                 Title = "Completing The Task",
@@ -517,7 +518,7 @@ Also note that you can use single quotes (apostrophes) instead of double quotes 
                 ValidationFunction = ValidateRepeaterTemplate4
             };
 
-            Step13 = new InfoStep()
+            Step13 = new InfoStep(this)
             {
                 StepIndex = 14,
                 Title = "Congratulations!",
@@ -758,7 +759,6 @@ You have learned how to use the `Repeater` control and collections in the viewmo
                 .Single();
             linkButton.ValidateCommandBindingExpression(ButtonBase.ClickProperty, "_parent.CompleteTask(_this)");
         }
-
         private void ValidateRepeaterTemplate4(ResolvedTreeRoot root)
         {
             ValidateRepeaterTemplate3(root);

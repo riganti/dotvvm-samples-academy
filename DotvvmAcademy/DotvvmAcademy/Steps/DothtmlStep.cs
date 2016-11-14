@@ -8,11 +8,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DotvvmAcademy.Lessons;
 
 namespace DotvvmAcademy.Steps
 {
     public class DothtmlStep : StepBase, ICodeEditorStep
     {
+        public DothtmlStep(LessonBase currentLesson) : base(currentLesson)
+        {
+        }
 
         public string Code { get; set; } = "";
 
@@ -23,8 +27,11 @@ namespace DotvvmAcademy.Steps
         [Bind(Direction.None)]
         public string FinalCode { get; set; }
 
+        //TODO: REMOVE
+
         [Bind(Direction.None)]
         public Action<ResolvedTreeRoot> ValidationFunction { get; set; }
+        //TODO: /REMOVE
 
         public string Description2 { get; internal set; }
 
@@ -47,7 +54,10 @@ namespace DotvvmAcademy.Steps
                     throw new CodeValidationException("Syntax error in the DOTHTML code.", ex);
                 }
 
+                //TODO: remove this function
+                //TODO: get validation function when constructor is called by searching methods in "LessonBase" where function has the LessonStepValidation attribute with right key.
                 ValidationFunction(root);
+
                 return Enumerable.Empty<string>();
             }
             catch (CodeValidationException ex)

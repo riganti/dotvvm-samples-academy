@@ -8,12 +8,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using DotvvmAcademy.Lessons;
 
 namespace DotvvmAcademy.Steps
 {
     public class CodeStep : StepBase, ICodeEditorStep
     {
-
+        public CodeStep(LessonBase currentLesson) : base(currentLesson)
+        {
+        }
 
         public string Code { get; set; } = "";
 

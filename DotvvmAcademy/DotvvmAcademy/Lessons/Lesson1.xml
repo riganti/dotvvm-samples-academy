@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Lesson>
+  <Level>1</Level>
+  <Title>Understand basic principles of DotVVM and MVVM pattern.</Title>
+  <Steps>
+    <Step Type="Info">
+      <Title>Prerequisities</Title>
+      <Description>
+        To build apps in DotVVM, you'll need to know these things:
+
+        + **HTML and CSS** - how to write a static page, how to use CSS to define styles
+        + **C# Language** - how to declare a class with properties and methods
+
+        If you don't know anything, we recommend [SoloLearn](https://www.sololearn.com/Course/HTML/). They have very nice interactive tutorials for absolute beginners."
+      </Description>
+      <ShadowBoxDescription></ShadowBoxDescription>
+    </Step>
+    
+    <Step Type="Info">
+      <Title>Introduction</Title>
+      <Description>
+        In this lesson, we'd like to create a simple calculator.
+        We'll create a web page with 3 textboxes and 1 button.
+
+        The user can fill numbers in the first and second textbox, and when he presses the button,
+        the sum of the numbers will appear in the third textbox.
+
+        <img src="/img/lesson1_step2.gif" alt="Animation" />
+      </Description>
+      <ShadowBoxDescription></ShadowBoxDescription>
+    </Step>
+    
+    <Step Type="Dothtml" Validation="ValidationKey">
+      <Title>Basic Controls</Title>
+      <Description>
+        In DotVVM, we have special controls for HTML form fields and controls.
+
+        So instead of `<input type="text" />` we use `<dot:TextBox />`. Also, we have a `<dot:Button />` control which represents the button.
+
+        Now, try to create a page with 3 textboxes and 1 button.
+      </Description>
+      <Content>
+        <p>
+          <!-- place first textbox here -->
+          +
+          <!-- place second textbox here -->
+          =
+          <!-- place third textbox here -->
+        </p>
+        <p>
+          <!-- place the button here -->
+        </p>
+      </Content>
+      <ShadowBoxDescription>
+        Don't forget to end the elements with `/>`. It means that the control doesn't have the end tag. In pure HTML, it is not necessary, but it is a good practice to make sure that all elements are closed.
+      </ShadowBoxDescription>
+    </Step>
+
+    <Step Type="Code" Validation="ValidationKey">
+      <Description>
+        In DotVVM, every page has a thing called a viewmodel. It stores data from page controls, or anything in the page that is dynamic and can change when the user interacts with the page.
+
+        The viewmodel is a C# class and the data are stored in public properties.
+
+        Declare 3 properties – `Number1`, `Number2` and `Result`, all of them should be of type `int`.
+      </Description>
+      <Content language="csharp"> 
+        <![CDATA[using System;
+
+namespace DotvvmAcademy.Tutorial.ViewModels 
+{
+    public class Lesson1ViewModel 
+    {
+        // declare properties here
+    }
+}
+        ]]>
+      </Content>
+      <ShadowBoxDescription></ShadowBoxDescription>
+    </Step>
+    
+  </Steps>
+</Lesson>
