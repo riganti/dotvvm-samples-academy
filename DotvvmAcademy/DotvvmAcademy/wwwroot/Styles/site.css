@@ -155,14 +155,18 @@ a {
     margin-top: 20px;
 }
 
-.step{
+.step {
     border: none;
 }
 
-.step p{
-    font-size: 16px;
-    font-family: Lato, sans-serif;
-}
+    .step p {
+        font-size: 16px;
+        font-family: Lato, sans-serif;
+    }
+    .step a {
+        color: black;
+    }
+
 .step-h {
     color: #2980b9;
     padding-bottom: 50px;
@@ -219,29 +223,31 @@ a {
     color: #5298ea;
 }
 
-.right{
+.right {
     text-align: right;
 }
 
-.right h3, a{
-    color: white;
-}
+    .right h3, a {
+        color: white;
+    }
 
-.right a:hover{
-    text-decoration: none;
-}
+    .right a:hover {
+        text-decoration: none;
+        color: #8ab1df;
+    }
 
-.center{
+.center {
     text-align: center;
 }
 
-.center h3, a{
-    font-size: 16px;
-}
+    .center h3, a {
+        font-size: 16px;
+    }
 
-.center a:hover{
-    text-decoration: none;
-}
+    .center a:hover {
+        text-decoration: none;
+        color: #8ab1df;
+    }
 
 .ace_content {
     font-size: 16px;

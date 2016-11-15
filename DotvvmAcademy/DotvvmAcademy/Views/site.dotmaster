@@ -22,9 +22,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-    <!--
-
-    -->
     <div class="fix-height">
         <div class="container-fluid header">
             <div class="container header-con-padding">
@@ -56,16 +53,16 @@
                 </div>
                 <div class="col-md-6 right">
                     <div style="display: inline-block; vertical-align: middle;">
-                        <h3>www.dotvvm.com</h3>
-                        <a href="https://www.dotvvm.com/docs/latest">Documentation</a>/
-                        <a href="https://www.dotvvm.com/docs/tutorials/introduction/latest"> Tutorials</a>/
-                        <a href="https://www.dotvvm.com/docs/samples/latest"> Samples</a>
+                        <h3><a target="_blank" href="https://www.dotvvm.com/">www.dotvvm.com</a></h3>
+                        <a target="_blank" href="https://www.dotvvm.com/docs/latest">Documentation</a>/
+                        <a target="_blank" href="https://www.dotvvm.com/docs/tutorials/introduction/latest"> Tutorials</a>/
+                        <a target="_blank" href="https://www.dotvvm.com/docs/samples/latest"> Samples</a>
                     </div>
                 </div>
             </div>
             <div class="row center">
                 <div class="col-md-12">
-                    <h3>Copywrite (c) 2016 <a href="http://www.riganti.cz/en">RIGANTI s.r.o.</a></h3>
+                    <h3>Copywrite (c) 2016 <a target="_blank" href="http://www.riganti.cz/en">RIGANTI s.r.o.</a></h3>
                 </div>
             </div>
         </div>
