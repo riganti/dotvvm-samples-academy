@@ -35,4 +35,7 @@
     </div>
 
     <br />
+
+    <dot:InlineScript>
+    </dot:InlineScript>
 </dot:Content>

@@ -21,7 +21,27 @@ namespace DotvvmAcademy.DTO
 
         public bool IsFinished => LastStep == LessonProgressStorage.FinishedLessonStepNumber;
 
-        public string ButtonText => IsFinished ? "Repeat Lesson" : (IsVisited ? "Continue" : "Start Lesson");
+        public bool IsCreated => Number == 1 || Number == 2;
+
+        public string ButtonText
+        {
+            get
+            {
+                if (IsFinished)
+                {
+                    return "Repeat Lesson";
+                }
+                else if (IsVisited)
+                {
+                    return "Continue";
+                }
+                else if (!IsCreated)
+                {
+                    return "Coming Soon";
+                }
+                else return "Start Lesson";
+            }
+        }
 
         public int StepToOpen => IsFinished ? 1 : LastStep;
 
