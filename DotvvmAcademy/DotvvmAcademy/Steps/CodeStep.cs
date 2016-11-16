@@ -11,21 +11,11 @@ using Microsoft.CodeAnalysis.CSharp;
 
 namespace DotvvmAcademy.Steps
 {
-    public class CodeStep : StepBase, ICodeEditorStep
+    public class CodeStep : CodeBaseStep
     {
         public CodeStep(LessonBase currentLesson) : base(currentLesson)
         {
         }
-
-        public string Code { get; set; } = "";
-
-
-        [Bind(Direction.None)]
-        public string StartupCode { get; set; }
-
-        [Bind(Direction.None)]
-        public string FinalCode { get; set; }
-
 
         [Bind(Direction.None)]
         public Action<CSharpCompilation, CSharpSyntaxTree, SemanticModel, Assembly> ValidationFunction { get; set; }
@@ -44,21 +34,9 @@ namespace DotvvmAcademy.Steps
             typeof(BindAttribute).GetTypeInfo().Assembly // DotVVM.Core
         };
 
-        public string ShadowBoxDescription { get; internal set; }
 
         [Bind(Direction.None)]
         public List<string> OtherFiles { get; } = new List<string>();
-
-
-        public void ResetCode()
-        {
-            Code = StartupCode;
-        }
-
-        public void ShowCorrectCode()
-        {
-            Code = FinalCode;
-        }
 
         protected override IEnumerable<string> GetErrors()
         {

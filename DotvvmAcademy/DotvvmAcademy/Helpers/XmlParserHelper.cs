@@ -112,46 +112,47 @@ namespace DotvvmAcademy.Helpers
             return res.Value;
         }
 
+        //private static StepBase 
+
 
         private static InfoStep CreateInfoStep(this XElement step, LessonBase currentLessonBase, int iterator)
         {
-            //todo Description... etc
-            return new InfoStep(currentLessonBase)
-            {
-                StepIndex = iterator,
-                Description = step.GetElementValueString("Description"),
-                Title = step.GetElementValueString("Title")
-            };
+            var result = new InfoStep(currentLessonBase);
+            result.FillStepBasicData(step, iterator);
+            return result;
         }
+
+        private static void FillStepBasicData(this StepBase stepBase, XElement step, int iterator)
+        {
+            stepBase.StepIndex = iterator;
+            stepBase.Description = step.GetElementValueString("Description");
+            stepBase.Title = step.GetElementValueString("Title");
+        }
+
+        private static void FillStepCodeData(this CodeBaseStep stepCodeBase, XElement step, int iterator)
+        {
+            stepCodeBase.FillStepBasicData(step, iterator);
+            stepCodeBase.StartupCode = step.GetElementValueString("StartupCode");
+            stepCodeBase.FinalCode = step.GetElementValueString("FinalCode");
+            stepCodeBase.ShadowBoxDescription = step.GetElementValueString("ShadowBoxDescription");
+        }
+
+
 
         private static DothtmlStep CreateDothtmlStep(this XElement step, LessonBase currentLessonBase, int iterator)
         {
             //todo validation
-            //todo Description... etc
-            return new DothtmlStep(currentLessonBase)
-            {
-                StepIndex = iterator,
-                Description = step.GetElementValueString("Description"),
-                Title = step.GetElementValueString("Title"),
-                StartupCode = step.GetElementValueString("StartupCode"),
-                FinalCode = step.GetElementValueString("FinalCode"),
-                ShadowBoxDescription = step.GetElementValueString("ShadowBoxDescription")
-            };
+            var result = new DothtmlStep(currentLessonBase);
+            result.FillStepCodeData(step, iterator);
+            return result;
         }
 
         private static CodeStep CreateCodeStep(this XElement step, LessonBase currentLessonBase, int iterator)
         {
             //todo validation
-            //todo Description... etc
-            return new CodeStep(currentLessonBase)
-            {
-                StepIndex = iterator,
-                Description = step.GetElementValueString("Description"),
-                Title = step.GetElementValueString("Title"),
-                StartupCode = step.GetElementValueString("StartupCode"),
-                FinalCode = step.GetElementValueString("FinalCode"),
-                ShadowBoxDescription = step.GetElementValueString("ShadowBoxDescription")
-            };
+            var result = new CodeStep(currentLessonBase);
+            result.FillStepCodeData(step, iterator);
+            return result;
         }
 
 
