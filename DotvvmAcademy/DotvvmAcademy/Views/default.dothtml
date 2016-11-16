@@ -22,12 +22,12 @@
                     <div class="button">
                         <dot:RouteLink RouteName="Lesson" Param-Lesson="{value: Number}" Param-Step="{value: StepToOpen}"
                                        Text="{value: ButtonText}"
-                                       class="aa" />
+                                       class="aa" Enabled="{value: IsCreated}"/>
                     </div>
                     <div class="button-mobile">
                         <dot:RouteLink RouteName="Lesson" Param-Lesson="{value: Number}" Param-Step="{value: StepToOpen}"
                                        Text="{value: ButtonText}"
-                                       class="aa" />
+                                       class="aa" Enabled="{value: IsCreated}" />
                     </div>
                 </div>
             </div>

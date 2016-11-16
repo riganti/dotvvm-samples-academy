@@ -66,7 +66,7 @@ Add the `TextBox` and the `Button` controls to the page. The button should say "
 </p>
 <div>
     <!-- we'll display a list of tasks here later -->
-</p>",
+</div>",
                 ValidationFunction = ValidateAddTaskControls
             };
 
@@ -115,14 +115,14 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 </p>
 <div>
     <!-- we'll display a list of tasks here later -->
-</p>",
+</div>",
                 FinalCode = @"<p>
     <dot:TextBox Text=""{value: AddedTaskTitle}"" />
     <dot:Button Text=""Add Task"" Click=""{command: AddTask()}"" />
 </p>
 <div>
     <!-- we'll display a list of tasks here later -->
-</p>",
+</div>",
                 ValidationFunction = ValidateAddTaskControlBindings
             };
 
@@ -281,7 +281,7 @@ and inside the `<dot:Repeater>`, place the `<div class=""task""></div>` element.
 </p>
 <div>
     <!-- place the Repeater control here -->
-</p>",
+</div>",
                 FinalCode = @"<p>
     <dot:TextBox Text=""{value: AddedTaskTitle}"" />
     <dot:Button Text=""Add Task"" Click=""{command: AddTask()}"" />
@@ -290,7 +290,7 @@ and inside the `<dot:Repeater>`, place the `<div class=""task""></div>` element.
     <dot:Repeater DataSource=""{value: Tasks}"">
         <div class=""task""></div>
     </dot:Repeater>
-</p>",
+</div>",
                 ValidationFunction = ValidateRepeaterControl
             };
 
@@ -316,7 +316,7 @@ So, render the `Title` of the task inside the `<div>`. Also, add the `<dot:LinkB
             <!-- render task title and LinkButton here -->
         </div>
     </dot:Repeater>
-</p>",
+</div>",
                 FinalCode = @"
 <p>
     <dot:TextBox Text=""{value: AddedTaskTitle}"" />
@@ -329,7 +329,7 @@ So, render the `Title` of the task inside the `<div>`. Also, add the `<dot:LinkB
             <dot:LinkButton />
         </div>
     </dot:Repeater>
-</p>",
+</div>",
                 ValidationFunction = ValidateRepeaterTemplate1
             };
 
@@ -355,7 +355,7 @@ Bind the `Visible` property to the `LinkButton` to the `IsCompleted` property of
             <dot:LinkButton />
         </div>
     </dot:Repeater>
-</p>",
+</div>",
                 FinalCode = @"
 <p>
     <dot:TextBox Text=""{value: AddedTaskTitle}"" />
@@ -368,7 +368,7 @@ Bind the `Visible` property to the `LinkButton` to the `IsCompleted` property of
             <dot:LinkButton Visible=""{value: !IsCompleted}"" />
         </div>
     </dot:Repeater>
-</p>",
+</div>",
                 ValidationFunction = ValidateRepeaterTemplate2
             };
 
@@ -460,7 +460,7 @@ When supplying arguments to the method, you begin also in the context of `TaskDa
             <dot:LinkButton Visible=""{value: !IsCompleted}"" />
         </div>
     </dot:Repeater>
-</p>",
+</div>",
                 FinalCode = @"<p>
     <dot:TextBox Text=""{value: AddedTaskTitle}"" />
     <dot:Button Text=""Add Task"" Click=""{command: AddTask()}"" />
@@ -473,7 +473,7 @@ When supplying arguments to the method, you begin also in the context of `TaskDa
                  Click=""{command: _parent.CompleteTask(_this)}"" />
         </div>
     </dot:Repeater>
-</p>",
+</div>",
                 ValidationFunction = ValidateRepeaterTemplate3
             };
 
@@ -501,7 +501,7 @@ Also note that you can use single quotes (apostrophes) instead of double quotes 
                  Click=""{command: _parent.CompleteTask(_this)}"" />
         </div>
     </dot:Repeater>
-</p>",
+</div>",
                 FinalCode = @"<p>
     <dot:TextBox Text=""{value: AddedTaskTitle}"" />
     <dot:Button Text=""Add Task"" Click=""{command: AddTask()}"" />
@@ -514,7 +514,7 @@ Also note that you can use single quotes (apostrophes) instead of double quotes 
                  Click=""{command: _parent.CompleteTask(_this)}"" />
         </div>
     </dot:Repeater>
-</p>",
+</div>",
                 ValidationFunction = ValidateRepeaterTemplate4
             };
 
