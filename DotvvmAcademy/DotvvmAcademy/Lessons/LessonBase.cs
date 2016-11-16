@@ -8,6 +8,9 @@ namespace DotvvmAcademy.Lessons
 {
     public abstract class LessonBase
     {
+        public IEnumerable<StepBase> Steps { get; set; }
+
+
         public abstract StepBase[] GetAllSteps();
 
     }

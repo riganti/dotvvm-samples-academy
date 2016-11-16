@@ -10,6 +10,7 @@ using DotVVM.Framework.Controls;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Reflection;
+using DotvvmAcademy.Services;
 
 namespace DotvvmAcademy.Lessons
 {
@@ -24,10 +25,17 @@ namespace DotvvmAcademy.Lessons
         public DothtmlStep Step6 { get; private set; }
         public InfoStep Step7 { get; private set; }
 
+        //public IEnumerable<StepBase> Steps { get; set; }
+
+
         public Lesson1()
         {
-
+            //[Validation(Key = "lesson1step1")]
             //TODO: Create LessonUserInterfaceProvider which will create all steps.
+            var lesson1RelativePath = @"Lessons\Lesson1.xml";
+            LessonUserInterfaceProvider lessonProvider = new LessonUserInterfaceProvider(this, lesson1RelativePath);
+            Steps = lessonProvider.LessonSteps;
+
 
             Step0 = new InfoStep(this)
             {
@@ -53,7 +61,7 @@ the sum of the numbers will appear in the third textbox.
 
 <img src=""/img/lesson1_step2.gif"" alt=""Animation"" />"
             };
-
+            
             Step2 = new DothtmlStep(this)
             {
                 StepIndex = 3,
@@ -64,7 +72,7 @@ So instead of `<input type=""text"" />` we use `<dot:TextBox />`.
 Also, we have a `<dot:Button />` control which represents the button.
 
 Now, try to create a page with 3 textboxes and 1 button. ",
-                Description2 = @"Don't forget to end the elements with `/>`. It means that the control doesn't have the end tag.
+                ShadowBoxDescription = @"Don't forget to end the elements with `/>`. It means that the control doesn't have the end tag.
 In pure HTML, it is not necessary, but it is a good practice to make sure that all elements are closed.",
                 StartupCode = @"<p>
     <!-- place first textbox here -->
@@ -98,7 +106,7 @@ In pure HTML, it is not necessary, but it is a good practice to make sure that a
 The viewmodel is a C# class and the data are stored in public properties.
 
 Declare 3 properties – `Number1`, `Number2` and `Result`, all of them should be of type `int`.",
-                Description2 = @"The values entered by the user will be stored in `Number1` and `Number2` properties, and we'll put the sum in the `Result` property when the user clicks the button.",
+                ShadowBoxDescription = @"The values entered by the user will be stored in `Number1` and `Number2` properties, and we'll put the sum in the `Result` property when the user clicks the button.",
                 StartupCode = @"using System;
 
 namespace DotvvmAcademy.Tutorial.ViewModels 
@@ -129,7 +137,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
                 Description = @"Now we need to write a method which calculates the sum of the two numbers. This method is also declared in our viewmodel.
 
 So create a method called `Calculate` which calculates the sum of `Number1` and `Number2` and stores the result in the `Result` property.",
-                Description2 = @"The method should be public and it does not return any value.",
+                ShadowBoxDescription = @"The method should be public and it does not return any value.",
                 StartupCode = @"using System;
 
 namespace DotvvmAcademy.Tutorial.ViewModels 

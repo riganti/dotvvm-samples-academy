@@ -33,7 +33,7 @@ namespace DotvvmAcademy.Steps
         public Action<ResolvedTreeRoot> ValidationFunction { get; set; }
         //TODO: /REMOVE
 
-        public string Description2 { get; internal set; }
+        public string ShadowBoxDescription { get; internal set; }
 
         protected override IEnumerable<string> GetErrors()
         {

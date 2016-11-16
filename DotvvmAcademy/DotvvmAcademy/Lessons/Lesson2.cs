@@ -135,7 +135,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 Each task should have the `Title` property of `string`, and the `IsCompleted` property of `bool`. 
 
 Create a class named `TaskData` and declare the two properties.",
-                Description2 = @"In Visual Studio, this class would be declared in separate file.",
+                ShadowBoxDescription = @"In Visual Studio, this class would be declared in separate file.",
                 StartupCode = @"using System;
 
 namespace DotvvmAcademy.Tutorial.ViewModels 
@@ -304,7 +304,7 @@ you can use the data-binding syntax with double curly braces, like this: `{{valu
 Alternatively, you can use the `<dot:Literal Text=""{value: Title}"" />` to write a text.
 
 So, render the `Title` of the task inside the `<div>`. Also, add the `<dot:LinkButton>` inside the `<div>`. We'll use it to mark tasks as completed.",
-                Description2 = @"The `LinkButton` control works the same way as the `Button`, but it renders a hyperlink.",
+                ShadowBoxDescription = @"The `LinkButton` control works the same way as the `Button`, but it renders a hyperlink.",
                 StartupCode = @"
 <p>
     <dot:TextBox Text=""{value: AddedTaskTitle}"" />
@@ -342,7 +342,7 @@ So, render the `Title` of the task inside the `<div>`. Also, add the `<dot:LinkB
 In DotVVM, there is the `Visible` property which can show or hide content. 
 
 Bind the `Visible` property to the `LinkButton` to the `IsCompleted` property of the task. Use the `!` operator to negate the value of `IsCompleted`.",
-                Description2 = @"Please note that the `Visible` property can be used also on any HTML element.",
+                ShadowBoxDescription = @"Please note that the `Visible` property can be used also on any HTML element.",
                 StartupCode = @"
 <p>
     <dot:TextBox Text=""{value: AddedTaskTitle}"" />

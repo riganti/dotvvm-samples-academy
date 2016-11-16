@@ -9,9 +9,11 @@ namespace DotvvmAcademy.Steps
     {
         public StepBase(LessonBase currentLesson)
         {
+            //todo 
             CurrentLesson = currentLesson;
         }
         protected LessonBase CurrentLesson { get; set; }
+
 
         public int StepIndex { get; set; }
 
