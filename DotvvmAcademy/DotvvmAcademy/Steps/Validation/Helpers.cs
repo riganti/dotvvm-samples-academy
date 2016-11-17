@@ -1,23 +1,21 @@
-﻿using DotVVM.Framework.Binding.Expressions;
-using DotVVM.Framework.Compilation.ControlTree;
-using DotVVM.Framework.Compilation.ControlTree.Resolved;
-using DotvvmAcademy.Lessons;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CSharp.RuntimeBinder;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
-using System.Threading.Tasks;
+using DotvvmAcademy.Lessons;
+using DotVVM.Framework.Binding.Expressions;
+using DotVVM.Framework.Compilation.ControlTree;
+using DotVVM.Framework.Compilation.ControlTree.Resolved;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CSharp.RuntimeBinder;
 
 namespace DotvvmAcademy.Steps.Validation
 {
     public static class Helpers
     {
-
         public static IEnumerable<ResolvedTreeNode> GetDescendants(this ResolvedContentNode node)
         {
             yield return node;
@@ -45,7 +43,8 @@ namespace DotvvmAcademy.Steps.Validation
             return GetDescendants(node).OfType<ResolvedControl>().Where(c => c.Metadata.Type == typeof(T));
         }
 
-        public static ResolvedPropertyBinding GetValueBindingOrNull(this ResolvedControl control, IPropertyDescriptor property)
+        public static ResolvedPropertyBinding GetValueBindingOrNull(this ResolvedControl control,
+            IPropertyDescriptor property)
         {
             IAbstractPropertySetter binding;
             if (!control.TryGetProperty(property, out binding))
@@ -60,13 +59,15 @@ namespace DotvvmAcademy.Steps.Validation
             IAbstractPropertySetter binding;
             if (!control.TryGetProperty(property, out binding) || !(binding is ResolvedPropertyBinding))
             {
-                throw new CodeValidationException(string.Format(Texts.MissingPropertyError, control.Metadata.Type.Name, property.Name));
+                throw new CodeValidationException(string.Format(Texts.MissingPropertyError, control.Metadata.Type.Name,
+                    property.Name));
             }
 
-            var typedBinding = ((ResolvedPropertyBinding)binding);
+            var typedBinding = (ResolvedPropertyBinding) binding;
             if (typedBinding.Binding.BindingType != typeof(ValueBindingExpression))
             {
-                throw new CodeValidationException(string.Format(Texts.ValueBindingExpected, control.Metadata.Type.Name, property.Name));
+                throw new CodeValidationException(string.Format(Texts.ValueBindingExpected, control.Metadata.Type.Name,
+                    property.Name));
             }
 
             return typedBinding.Binding.Value.Trim();
@@ -77,24 +78,28 @@ namespace DotvvmAcademy.Steps.Validation
             IAbstractPropertySetter binding;
             if (!control.TryGetProperty(property, out binding) || !(binding is ResolvedPropertyBinding))
             {
-                throw new CodeValidationException(string.Format(Texts.MissingPropertyError, control.Metadata.Type.Name, property.Name));
+                throw new CodeValidationException(string.Format(Texts.MissingPropertyError, control.Metadata.Type.Name,
+                    property.Name));
             }
 
-            var typedBinding = ((ResolvedPropertyBinding)binding);
+            var typedBinding = (ResolvedPropertyBinding) binding;
             if (typedBinding.Binding.BindingType != typeof(CommandBindingExpression))
             {
-                throw new CodeValidationException(string.Format(Texts.CommandBindingExpected, control.Metadata.Type.Name, property.Name));
+                throw new CodeValidationException(string.Format(Texts.CommandBindingExpected, control.Metadata.Type.Name,
+                    property.Name));
             }
 
             return typedBinding.Binding.Value.Trim();
         }
 
-        public static void ValidateCommandBindingExpression(this ResolvedControl control, IPropertyDescriptor property, string desiredExpression)
+        public static void ValidateCommandBindingExpression(this ResolvedControl control, IPropertyDescriptor property,
+            string desiredExpression)
         {
             var binding = GetCommandBindingText(control, property).Replace(" ", "");
-            if (binding != desiredExpression && binding.StartsWith(desiredExpression))
+            if ((binding != desiredExpression) && binding.StartsWith(desiredExpression))
             {
-                throw new CodeValidationException(string.Format(GenericTexts.CommandDoesNotHaveParenthesis, desiredExpression));
+                throw new CodeValidationException(string.Format(GenericTexts.CommandDoesNotHaveParenthesis,
+                    desiredExpression));
             }
             if (binding != desiredExpression)
             {
@@ -107,10 +112,11 @@ namespace DotvvmAcademy.Steps.Validation
             IAbstractPropertySetter value;
             if (!control.TryGetProperty(property, out value) || !(value is ResolvedPropertyValue))
             {
-                throw new CodeValidationException(string.Format(Texts.MissingPropertyError, control.Metadata.Type.Name, property.Name));
+                throw new CodeValidationException(string.Format(Texts.MissingPropertyError, control.Metadata.Type.Name,
+                    property.Name));
             }
 
-            return ((ResolvedPropertyValue)value).Value?.ToString();
+            return ((ResolvedPropertyValue) value).Value?.ToString();
         }
 
         public static Assembly CompileToAssembly(this CSharpCompilation compilation)
@@ -120,7 +126,8 @@ namespace DotvvmAcademy.Steps.Validation
                 var emitResult = compilation.Emit(ms);
                 if (!emitResult.Success)
                 {
-                    throw new CodeValidationException("The code couldn't be compiled!\r\n" + string.Join("\r\n", emitResult.Diagnostics));
+                    throw new CodeValidationException("The code couldn't be compiled!\r\n" +
+                                                      string.Join("\r\n", emitResult.Diagnostics));
                 }
                 ms.Position = 0;
 
@@ -142,25 +149,25 @@ namespace DotvvmAcademy.Steps.Validation
 
         public static bool CheckNameAndType(this IPropertySymbol symbol, string name, string type)
         {
-            return symbol.Name == name 
-                && symbol.Type.ToDisplayString() == type
-                && symbol.DeclaredAccessibility == Accessibility.Public
-                && symbol.GetMethod != null
-                && symbol.SetMethod != null;
+            return (symbol.Name == name)
+                   && (symbol.Type.ToDisplayString() == type)
+                   && (symbol.DeclaredAccessibility == Accessibility.Public)
+                   && (symbol.GetMethod != null)
+                   && (symbol.SetMethod != null);
         }
 
         public static bool CheckNameAndVoid(this IMethodSymbol symbol, string name)
         {
-            return symbol.Name == name
-                && symbol.ReturnsVoid
-                && symbol.DeclaredAccessibility == Accessibility.Public;
+            return (symbol.Name == name)
+                   && symbol.ReturnsVoid
+                   && (symbol.DeclaredAccessibility == Accessibility.Public);
         }
 
         public static bool CheckNameAndType(this IMethodSymbol symbol, string name, string type)
         {
-            return symbol.Name == name
-                && symbol.ReturnType.ToDisplayString() == type
-                && symbol.DeclaredAccessibility == Accessibility.Public;
+            return (symbol.Name == name)
+                   && (symbol.ReturnType.ToDisplayString() == type)
+                   && (symbol.DeclaredAccessibility == Accessibility.Public);
         }
     }
 }

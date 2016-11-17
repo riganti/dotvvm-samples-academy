@@ -1,13 +1,14 @@
-﻿using DotVVM.Framework.Compilation.ControlTree.Resolved;
+﻿using DotvvmAcademy.Steps.Validation.Interfaces;
+using DotVVM.Framework.Compilation.ControlTree.Resolved;
 
 namespace DotvvmAcademy.Steps.Validation.Validators.Lesson1
 {
     [StepValidation(ValidationKey = "Lesson1Step3Validator")]
     public class Lesson1Step3Validator : IDotHtmlCodeStepValidationObject
     {
-        public void ValidateMethod(ResolvedTreeRoot resolvedTreeRoot)
+        public void Validate(ResolvedTreeRoot resolvedTreeRoot)
         {
-            resolvedTreeRoot.ValidateBasicControls();
+            ValidatorHelper.ValidateBasicControls(resolvedTreeRoot);
         }
     }
 }

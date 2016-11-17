@@ -11,17 +11,13 @@ namespace DotvvmAcademy.Steps.Validation
     {
         public T CreateValidator(string validatorKey,string validatorFolder)
         {
-            var validatorClass =
-                typeof(LessonBase).GetTypeInfo()
+            var validatorClass = typeof(LessonBase)
+                    .GetTypeInfo()
                     .Assembly.GetTypes()
-                    .Where(
-                        a =>
-                            (a.Namespace != null) &&
-                            a.Namespace.Contains($"DotvvmAcademy.Steps.Validation.Validators.{validatorFolder}"))
-                    .First(
-                        c => c.GetAttributeValue((StepValidationAttribute test) => test.ValidationKey == validatorKey));
-
-
+                    .Where(a =>
+                           (a.Namespace != null) &&
+                           a.Namespace.Contains($"DotvvmAcademy.Steps.Validation.Validators.{validatorFolder}"))
+                    .First( c => c.GetAttributeValue((StepValidationAttribute test) => test.ValidationKey == validatorKey));
             return (T) Activator.CreateInstance(validatorClass);
         }
     }

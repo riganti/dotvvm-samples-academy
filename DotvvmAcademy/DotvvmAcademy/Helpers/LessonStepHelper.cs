@@ -4,7 +4,7 @@ using DotvvmAcademy.Lessons;
 using DotvvmAcademy.Steps;
 using DotvvmAcademy.Steps.StepsBases;
 using DotvvmAcademy.Steps.Validation;
-using DotvvmAcademy.Steps.Validation.Validators;
+using DotvvmAcademy.Steps.Validation.Interfaces;
 
 namespace DotvvmAcademy.Helpers
 {
@@ -42,6 +42,7 @@ namespace DotvvmAcademy.Helpers
         {
             //todo to resources
             stepCodeBase.FillStepBasicData(step, iterator);
+
             stepCodeBase.StartupCode = step.GetElementValueString("StartupCode");
             stepCodeBase.FinalCode = step.GetElementValueString("FinalCode");
             stepCodeBase.ShadowBoxDescription = step.GetElementValueString("ShadowBoxDescription");
@@ -96,11 +97,11 @@ namespace DotvvmAcademy.Helpers
         public static StepBase CreateStep(this XElement stepElement, LessonBase currentLessonBase, int iterator)
         {
             //todo to resources
-            if (stepElement.IsStepType("Code"))
+            if (stepElement.IsStepType("CsharpCode"))
             {
                 return stepElement.CreateCodeCsharpStep(currentLessonBase, iterator);
             }
-            if (stepElement.IsStepType("Dothtml"))
+            if (stepElement.IsStepType("DothtmlCode"))
             {
                 return stepElement.CreateCodeDothtmlStep(currentLessonBase, iterator);
             }

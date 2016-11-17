@@ -12,6 +12,7 @@ namespace DotvvmAcademy.Services
         {
             var xmlText = XmlParserHelper.GetXmlTextRelativePath(lessonXmlRelativePath);
             var rootElement = XmlParserHelper.CreateXElementFromText(xmlText);
+
             var stepChildCollection = rootElement.GetChildElement("Steps").GetChildCollection("Step");
             return CreateSteps(currentLessonBase, stepChildCollection);
         }

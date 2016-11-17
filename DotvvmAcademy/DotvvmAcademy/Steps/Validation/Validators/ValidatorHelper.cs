@@ -14,7 +14,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators
 {
     public static class ValidatorHelper
     {
-        public static void ValidateBasicControls(this ResolvedTreeRoot root)
+        public static void ValidateBasicControls(ResolvedTreeRoot root)
         {
             if (root.GetDescendantControls<TextBox>().Count() != 3)
             {
@@ -47,7 +47,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators
             }
         }
 
-        public static void ValidateTextBoxBindings(this ResolvedTreeRoot root)
+        public static void ValidateTextBoxBindings(ResolvedTreeRoot root)
         {
             ValidateBasicControls(root);
 
@@ -61,6 +61,65 @@ namespace DotvvmAcademy.Steps.Validation.Validators
                 throw new CodeValidationException(Lesson1Texts.TextBoxBindingsError);
             }
         }
+
+        public static void ValidateAddTaskControls(ResolvedTreeRoot root)
+        {
+            if (root.GetDescendantControls<TextBox>().Count() != 1)
+            {
+                throw new CodeValidationException(Lesson2Texts.AddTaskTextBoxControlError);
+            }
+            if (root.GetDescendantControls<Button>().Count() != 1)
+            {
+                throw new CodeValidationException(Lesson2Texts.AddTaskButtonControlError);
+            }
+
+            var buttonTextBinding = root.GetDescendantControls<Button>()
+                .Select(c => c.GetValue(ButtonBase.TextProperty))
+                .SingleOrDefault();
+            if (buttonTextBinding == null)
+            {
+                throw new CodeValidationException(Lesson2Texts.ButtonDoesNotHaveText);
+            }
+        }
+
+        public static void ValidateAddTaskProperties(CSharpCompilation compilation, CSharpSyntaxTree tree,
+            SemanticModel model, Assembly assembly)
+        {
+            var properties = tree.GetCompilationUnitRoot().DescendantNodes().OfType<PropertyDeclarationSyntax>()
+                .Select(p => model.GetDeclaredSymbol(p))
+                .ToList();
+
+            if (properties.Count(p => p.CheckNameAndType("AddedTaskTitle", "string")) != 1)
+            {
+                throw new CodeValidationException(string.Format(GenericTexts.PropertyNotFound, "AddedTaskTitle"));
+            }
+
+            var methods = tree.GetCompilationUnitRoot().DescendantNodes().OfType<MethodDeclarationSyntax>()
+                .Select(p => model.GetDeclaredSymbol(p))
+                .ToList();
+
+            if (methods.Count(m => m.CheckNameAndVoid("AddTask")) != 1)
+            {
+                throw new CodeValidationException(string.Format(GenericTexts.MethodNotFound, "Calculate"));
+            }
+        }
+
+        public static void ValidateAddTaskControlBindings(ResolvedTreeRoot root)
+        {
+            ValidateAddTaskControls(root);
+
+            var propertyBindings = root.GetDescendantControls<TextBox>()
+                .Select(c => c.GetValueBindingText(TextBox.TextProperty))
+                .ToList();
+            if (!propertyBindings.Contains("AddedTaskTitle"))
+            {
+                throw new CodeValidationException(Lesson2Texts.TextBoxBindingError);
+            }
+
+            root.GetDescendantControls<Button>().Single()
+                .ValidateCommandBindingExpression(ButtonBase.ClickProperty, "AddTask()");
+        }
+
 
 
         public static void ExecuteSafe(this ILessonValidationObject validator, Action action)

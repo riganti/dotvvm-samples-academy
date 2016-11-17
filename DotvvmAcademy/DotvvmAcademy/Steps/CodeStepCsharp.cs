@@ -5,7 +5,7 @@ using System.Reflection;
 using DotvvmAcademy.Lessons;
 using DotvvmAcademy.Steps.StepsBases;
 using DotvvmAcademy.Steps.Validation;
-using DotvvmAcademy.Steps.Validation.Validators;
+using DotvvmAcademy.Steps.Validation.Interfaces;
 using DotVVM.Framework.Configuration;
 using DotVVM.Framework.ViewModel;
 using Microsoft.CodeAnalysis;
@@ -19,12 +19,7 @@ namespace DotvvmAcademy.Steps
         {
         }
 
-        //todo delete
-        //[Bind(Direction.None)]
-        //public Action<CSharpCompilation, CSharpSyntaxTree, SemanticModel, Assembly> ValidationFunction { get; set; }
-
         public override ICSharpCodeStepValidationObject Validator { get; set; }
-
 
         [Bind(Direction.None)]
         public List<string> AllowedTypesConstructed { get; private set; } = new List<string>();
@@ -63,13 +58,7 @@ namespace DotvvmAcademy.Steps
 
                 validationVisitor.Visit(tree.GetCompilationUnitRoot());
 
-
-                //todo
-                Validator.ValidationFunction(compilation, tree, model, assembly);
-
-
-                //ValidationFunction(compilation, tree, model, assembly);
-
+                Validator.Validate(compilation, tree, model, assembly);
 
                 return Enumerable.Empty<string>();
             }

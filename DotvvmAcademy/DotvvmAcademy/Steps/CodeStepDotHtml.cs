@@ -4,7 +4,7 @@ using System.Linq;
 using DotvvmAcademy.Lessons;
 using DotvvmAcademy.Steps.StepsBases;
 using DotvvmAcademy.Steps.Validation;
-using DotvvmAcademy.Steps.Validation.Validators;
+using DotvvmAcademy.Steps.Validation.Interfaces;
 using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Compilation.ControlTree.Resolved;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
@@ -39,7 +39,7 @@ namespace DotvvmAcademy.Steps
                 {
                     throw new CodeValidationException("Syntax error in the DOTHTML code.", ex);
                 }
-                Validator.ValidateMethod(root);
+                Validator.Validate(root);
 
                 return Enumerable.Empty<string>();
             }

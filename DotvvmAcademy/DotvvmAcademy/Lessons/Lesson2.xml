@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Lesson>
+    <Level>1</Level>
+    <ValidatorFolder>Lesson2</ValidatorFolder>
+    <Title>Understand basic principles of DotVVM and MVVM pattern.</Title>
+    <Steps>
+        <Step Type="Info">
+            <Title>Objective</Title>
+            <Description>
+            <![CDATA[
+In this lesson, we'll build a simple to-do list.
+
+<img src="/img/lesson2_step1.gif" alt="Animation" />"
+                ]]>
+            </Description>
+            <ShadowBoxDescription/>
+        </Step>
+
+        <Step Type="DothtmlCode">
+            <Title>Adding New Task</Title>
+            <ValidationKey>Lesson2Step2Validator</ValidationKey>
+            <Description>
+            <![CDATA[
+First, we should create the controls which add a new task.
+
+Add the `TextBox` and the `Button` controls to the page. The button should say "Add Task".
+                ]]>
+            </Description>
+            <StartupCode>
+                <![CDATA[
+<p>
+    <!-- place textbox and button for adding new task here -->
+</p>
+<div>
+    <!-- we'll display a list of tasks here later -->
+</p>
+</p>
+                ]]>
+            </StartupCode>
+            <FinalCode>
+                <![CDATA[
+"<p>
+    <dot:TextBox />
+    <dot:Button Text=""Add Task"" />
+</p>
+<div>
+    <!-- we'll display a list of tasks here later -->
+</p>
+                ]]>
+            </FinalCode>
+            <ShadowBoxDescription>
+                <![CDATA[]]>
+            </ShadowBoxDescription>
+        </Step>
+
+        <Step Type="CsharpCode">
+            <Title>Adding New Task</Title>
+            <ValidationKey>Lesson2Step3Validator</ValidationKey>
+            <Description>
+                <![CDATA[
+Now we should add a property which will represent the title of the new task. Let's name it `AddedTaskTitle`.
+Don't remember that every `TextBox` must have its property in the viewmodel, otherwise, the value entered by the user would be lost.
+
+Also, we will need the `AddTask()` method in the viewmodel. For now, make it just empty. It should not return any value.
+]]>
+            </Description>
+            
+            <StartupCode>
+                    <![CDATA[
+using System;
+
+namespace DotvvmAcademy.Tutorial.ViewModels 
+{
+    public class Lesson2ViewModel 
+    {
+         declare the AddedTaskTitle property and the AddTask() method here
+    }
+}
+]]>
+                </StartupCode>
+                <FinalCode>
+                    <![CDATA[
+using System;
+
+namespace DotvvmAcademy.Tutorial.ViewModels 
+{
+    public class Lesson2ViewModel 
+    {
+        public string AddedTaskTitle { get; set; }
+
+        public void AddTask() 
+        {
+        }
+    }
+}
+]]>
+                </FinalCode>
+                
+            <ShadowBoxDescription>
+            </ShadowBoxDescription>
+        </Step>
+        
+        <Step Type="DothtmlCode">
+            <Title>Adding New Task</Title>
+            <ValidationKey>Lesson2Step4Validator</ValidationKey>
+            <Description>
+            <![CDATA[
+Now, we need to bind the text in the `TextBox` to the `AddedTaskTitle` property, and the `Button` to the `AddTask()` method.
+                ]]>
+            </Description>
+            <StartupCode>
+                <![CDATA[
+<p>
+    <dot:TextBox />
+    <dot:Button Text=""Add Task"" />
+</p>
+<div>
+    <!-- we'll display a list of tasks here later -->
+</p>
+</p>
+                ]]>
+            </StartupCode>
+            <FinalCode>
+                <![CDATA[
+<p>
+    <dot:TextBox Text="{value: AddedTaskTitle}" />
+    <dot:Button Text="Add Task" Click="{command: AddTask()}" />
+</p>
+<div>
+    <!-- we'll display a list of tasks here later -->
+</p>
+                ]]>
+            </FinalCode>
+            <ShadowBoxDescription>
+            </ShadowBoxDescription>
+        </Step>
+
+        <Step Type="CsharpCode">
+            <Title>Representing Tasks</Title>
+            <ValidationKey>Lesson2Step5Validator</ValidationKey>
+            <Description>
+                <![CDATA[
+We are ready to create a list of tasks. However, we need a class to represent the task itself.
+
+Each task should have the `Title` property of `string`, and the `IsCompleted` property of `bool`. 
+
+Create a class named `TaskData` and declare the two properties.
+]]>
+            </Description>
+            
+            <StartupCode>
+                    <![CDATA[
+using System;
+
+namespace DotvvmAcademy.Tutorial.ViewModels 
+{
+     declare the class here
+}
+]]>
+                </StartupCode>
+                <FinalCode>
+                    <![CDATA[
+using System;
+
+namespace DotvvmAcademy.Tutorial.ViewModels 
+{
+    public class TaskData
+    {
+        public string Title { get; set; }
+        public bool IsCompleted { get; set; }
+    }
+}
+]]>
+                </FinalCode>
+                
+            <ShadowBoxDescription>
+            <![CDATA[
+In Visual Studio, this class would be declared in separate file.
+]]>
+            </ShadowBoxDescription>
+        </Step>
+        
+          <Step Type="CsharpCode">
+            <Title>Representing Tasks</Title>
+            <ValidationKey>Lesson2Step6Validator</ValidationKey>
+            <Description>
+                <![CDATA[
+XXXXXXX
+]]>
+            </Description>
+            
+            <StartupCode>
+                    <![CDATA[
+XXXXXXX
+]]>
+                </StartupCode>
+                <FinalCode>
+                    <![CDATA[
+XXXXXXX
+]]>
+                </FinalCode>
+                
+            <ShadowBoxDescription>
+            <![CDATA[
+XXXXXXX
+]]>
+            </ShadowBoxDescription>
+        </Step>
+        
+        
+        
+        
+        
+    </Steps>
+</Lesson>
