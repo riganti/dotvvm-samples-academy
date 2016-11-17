@@ -24,7 +24,7 @@ namespace DotvvmAcademy.Helpers
 
         public static bool IsStepType(this XElement stepElement, string type)
         {
-            //todo Type / move to some config file?  
+            //todo to resources
             var result = stepElement.Attribute("Type")?.Value;
             if (result != null)
             {
@@ -72,10 +72,7 @@ namespace DotvvmAcademy.Helpers
                 $"XML file doesn`t contains child element: \"{childName}\" in parent element: \"{parentElement.Name}\"");
         }
 
-        public static string GetValidationKey(this XElement parentElement)
-        {
-            return parentElement.GetElementValueString("ValidationKey");
-        }
+      
 
 
         public static string GetElementValueString(this XElement parentElement, string elementName)

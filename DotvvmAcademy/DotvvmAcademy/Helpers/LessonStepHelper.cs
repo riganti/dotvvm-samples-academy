@@ -19,23 +19,28 @@ namespace DotvvmAcademy.Helpers
 
         private static void FillStepBasicData(this StepBase stepBase, XElement step, int iterator)
         {
+            //todo to resources
             stepBase.StepIndex = iterator;
             stepBase.Description = step.GetElementValueString("Description");
             stepBase.Title = step.GetElementValueString("Title");
         }
 
-        private static void FillStepCodeData(this CodeStepBase<ICSharpCodeStepValidationObject> stepCodeBase, XElement step,
+        private static void FillStepCodeData(this CodeStepBase<ICSharpCodeStepValidationObject> stepCodeBase,
+            XElement step,
             int iterator)
         {
+            //todo to resources
             stepCodeBase.FillStepBasicData(step, iterator);
             stepCodeBase.StartupCode = step.GetElementValueString("StartupCode");
             stepCodeBase.FinalCode = step.GetElementValueString("FinalCode");
             stepCodeBase.ShadowBoxDescription = step.GetElementValueString("ShadowBoxDescription");
         }
 
-        private static void FillStepCodeData(this CodeStepBase<IDotHtmlCodeStepValidationObject> stepCodeBase, XElement step,
+        private static void FillStepCodeData(this CodeStepBase<IDotHtmlCodeStepValidationObject> stepCodeBase,
+            XElement step,
             int iterator)
         {
+            //todo to resources
             stepCodeBase.FillStepBasicData(step, iterator);
             stepCodeBase.StartupCode = step.GetElementValueString("StartupCode");
             stepCodeBase.FinalCode = step.GetElementValueString("FinalCode");
@@ -43,7 +48,8 @@ namespace DotvvmAcademy.Helpers
         }
 
 
-        private static CodeStepCsharp CreateCodeCsharpStep(this XElement step, LessonBase currentLessonBase, int iterator)
+        private static CodeStepCsharp CreateCodeCsharpStep(this XElement step, LessonBase currentLessonBase,
+            int iterator)
         {
             var result = new CodeStepCsharp(currentLessonBase);
             result.FillStepCodeData(step, iterator);
@@ -52,7 +58,8 @@ namespace DotvvmAcademy.Helpers
         }
 
 
-        private static CodeStepDotHtml CreateCodeDothtmlStep(this XElement step, LessonBase currentLessonBase, int iterator)
+        private static CodeStepDotHtml CreateCodeDothtmlStep(this XElement step, LessonBase currentLessonBase,
+            int iterator)
         {
             var result = new CodeStepDotHtml(currentLessonBase);
 
@@ -64,18 +71,31 @@ namespace DotvvmAcademy.Helpers
         private static void CreateValidator(this CodeStepBase<ICSharpCodeStepValidationObject> result, XElement step)
         {
             var vp = new ValidatorProvider<ICSharpCodeStepValidationObject>();
-            result.Validator = vp.CreateValidator(step.GetValidationKey());
+            result.Validator = vp.CreateValidator(step.GetValidationKey(), step.GetValidatorFolder());
         }
 
         private static void CreateValidator(this CodeStepBase<IDotHtmlCodeStepValidationObject> result, XElement step)
         {
             var vp = new ValidatorProvider<IDotHtmlCodeStepValidationObject>();
-            result.Validator = vp.CreateValidator(step.GetValidationKey());
+            result.Validator = vp.CreateValidator(step.GetValidationKey(), step.GetValidatorFolder());
+        }
+
+        public static string GetValidationKey(this XElement parentElement)
+        {
+            //todo to resources
+            return parentElement.GetElementValueString("ValidationKey");
+        }
+
+        private static string GetValidatorFolder(this XElement stepElement)
+        {
+            //todo to resources
+            return stepElement.Parent.Parent.GetElementValueString("ValidatorFolder");
         }
 
 
         public static StepBase CreateStep(this XElement stepElement, LessonBase currentLessonBase, int iterator)
         {
+            //todo to resources
             if (stepElement.IsStepType("Code"))
             {
                 return stepElement.CreateCodeCsharpStep(currentLessonBase, iterator);

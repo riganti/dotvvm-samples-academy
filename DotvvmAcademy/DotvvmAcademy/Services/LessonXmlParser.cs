@@ -12,17 +12,13 @@ namespace DotvvmAcademy.Services
         {
             var xmlText = XmlParserHelper.GetXmlTextRelativePath(lessonXmlRelativePath);
             var rootElement = XmlParserHelper.CreateXElementFromText(xmlText);
-
-            //todo
-            //var level = rootElement.GetElementValueInt("Level");
-            //var mainTitle = rootElement.GetElementValueString("Title");
-
             var stepChildCollection = rootElement.GetChildElement("Steps").GetChildCollection("Step");
             return CreateSteps(currentLessonBase, stepChildCollection);
         }
 
 
-        private static List<StepBase> CreateSteps(LessonBase currentLessonBase, IEnumerable<XElement> stepChildCollection)
+        private static List<StepBase> CreateSteps(LessonBase currentLessonBase,
+            IEnumerable<XElement> stepChildCollection)
         {
             var result = new List<StepBase>();
             var iterator = 1;

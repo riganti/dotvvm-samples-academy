@@ -9,7 +9,7 @@ namespace DotvvmAcademy.Steps.Validation
 {
     public class ValidatorProvider<T> where T : ILessonValidationObject
     {
-        public T CreateValidator(string validatorKey)
+        public T CreateValidator(string validatorKey,string validatorFolder)
         {
             var validatorClass =
                 typeof(LessonBase).GetTypeInfo()
@@ -17,7 +17,7 @@ namespace DotvvmAcademy.Steps.Validation
                     .Where(
                         a =>
                             (a.Namespace != null) &&
-                            a.Namespace.Contains(@"DotvvmAcademy.Steps.Validation.Validators.Lesson1"))
+                            a.Namespace.Contains($"DotvvmAcademy.Steps.Validation.Validators.{validatorFolder}"))
                     .First(
                         c => c.GetAttributeValue((StepValidationAttribute test) => test.ValidationKey == validatorKey));
 
