@@ -1,4 +1,13 @@
-﻿
+﻿@font-face {
+    font-family: 'Lato-Regular';
+    src: url('/fonts/lato/Lato-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Lato-Medium';
+    src: url('/fonts/lato/Lato-Medium.ttf');
+}
+
 .header {
     background-image: url('/img/pattern.png');
     width: auto;
@@ -161,7 +170,7 @@ a {
 
     .step p {
         font-size: 16px;
-        font-family: Lato, sans-serif;
+        font-family: Lato-Medium;
     }
     .step a {
         color: black;
@@ -229,6 +238,10 @@ a {
 
     .right h3, a {
         color: white;
+    }
+
+    h3 a{
+        font-size: 24px;
     }
 
     .right a:hover {
