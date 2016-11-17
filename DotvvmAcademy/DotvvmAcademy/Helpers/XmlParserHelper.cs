@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
-using DotvvmAcademy.Lessons;
-using DotvvmAcademy.Steps;
 
 namespace DotvvmAcademy.Helpers
 {
@@ -36,26 +34,12 @@ namespace DotvvmAcademy.Helpers
                 $"XML file doesn`t contains atribute: \"{type}\" in element: \"{stepElement.Name}\"");
         }
 
+
         public static string GetXmlTextRelativePath(string lessonXmlRelativePath)
         {
             try
             {
                 var absolutePath = Path.Combine(Directory.GetCurrentDirectory(), lessonXmlRelativePath);
-                var result = File.ReadAllText(absolutePath);
-                return result;
-            }
-            catch (Exception ex)
-            {
-                //todo
-                throw;
-            }
-        }
-
-
-        public static string GetXmlTextAbsolutePath(string absolutePath)
-        {
-            try
-            {
                 var result = File.ReadAllText(absolutePath);
                 return result;
             }
@@ -88,12 +72,19 @@ namespace DotvvmAcademy.Helpers
                 $"XML file doesn`t contains child element: \"{childName}\" in parent element: \"{parentElement.Name}\"");
         }
 
+        public static string GetValidationKey(this XElement parentElement)
+        {
+            return parentElement.GetElementValueString("ValidationKey");
+        }
+
 
         public static string GetElementValueString(this XElement parentElement, string elementName)
         {
             var result = parentElement.Element(elementName)?.Value;
             if (result != null)
             {
+                result = result.Trim();
+                result = result.TrimEnd();
                 return result;
             }
             throw new InvalidDataException(
@@ -110,68 +101,6 @@ namespace DotvvmAcademy.Helpers
                     $"I can`t cast element: \"{elementName}\" with value \"{elementValue}\" to int. Parent element: \"{parentElement.Name}\" ");
             }
             return res.Value;
-        }
-
-        //private static StepBase 
-
-
-        private static InfoStep CreateInfoStep(this XElement step, LessonBase currentLessonBase, int iterator)
-        {
-            var result = new InfoStep(currentLessonBase);
-            result.FillStepBasicData(step, iterator);
-            return result;
-        }
-
-        private static void FillStepBasicData(this StepBase stepBase, XElement step, int iterator)
-        {
-            stepBase.StepIndex = iterator;
-            stepBase.Description = step.GetElementValueString("Description");
-            stepBase.Title = step.GetElementValueString("Title");
-        }
-
-        private static void FillStepCodeData(this CodeBaseStep stepCodeBase, XElement step, int iterator)
-        {
-            stepCodeBase.FillStepBasicData(step, iterator);
-            stepCodeBase.StartupCode = step.GetElementValueString("StartupCode");
-            stepCodeBase.FinalCode = step.GetElementValueString("FinalCode");
-            stepCodeBase.ShadowBoxDescription = step.GetElementValueString("ShadowBoxDescription");
-        }
-
-
-
-        private static DothtmlStep CreateDothtmlStep(this XElement step, LessonBase currentLessonBase, int iterator)
-        {
-            //todo validation
-            var result = new DothtmlStep(currentLessonBase);
-            result.FillStepCodeData(step, iterator);
-            return result;
-        }
-
-        private static CodeStep CreateCodeStep(this XElement step, LessonBase currentLessonBase, int iterator)
-        {
-            //todo validation
-            var result = new CodeStep(currentLessonBase);
-            result.FillStepCodeData(step, iterator);
-            return result;
-        }
-
-
-        public static StepBase CreateStep(this XElement stepElement, LessonBase currentLessonBase, int iterator)
-        {
-            if (stepElement.IsStepType("Code"))
-            {
-                return stepElement.CreateCodeStep(currentLessonBase, iterator);
-            }
-            if (stepElement.IsStepType("Dothtml"))
-            {
-                return stepElement.CreateDothtmlStep(currentLessonBase, iterator);
-            }
-
-            if (stepElement.IsStepType("Info"))
-            {
-                return stepElement.CreateInfoStep(currentLessonBase, iterator);
-            }
-            throw new InvalidDataException($"Step type {stepElement.Name} ins`t supported");
         }
     }
 }

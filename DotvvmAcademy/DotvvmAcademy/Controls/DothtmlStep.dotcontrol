@@ -1,8 +1,8 @@
-﻿@viewModel DotvvmAcademy.Steps.DothtmlStep, DotvvmAcademy
+﻿@viewModel DotvvmAcademy.Steps.CodeStepDotHtml, DotvvmAcademy
 @baseType DotvvmAcademy.Controls.DothtmlStep, DotvvmAcademy
 
 <div class="editor-wrapper">
     <cc:AceEditor Code="{value: Code}" Language="Html" />
 </div>
 
-<cc:MarkdownLiteral Markdown="{value: Description2}" Visible="{value: Description2 != null}" class="description well" />
+<cc:MarkdownLiteral Markdown="{value: ShadowBoxDescription}" Visible="{value: ShadowBoxDescription != null}" class="description well" />

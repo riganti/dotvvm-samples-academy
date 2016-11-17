@@ -2,26 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using DotvvmAcademy.Lessons;
+using DotvvmAcademy.Steps.StepsBases;
 using DotvvmAcademy.Steps.Validation;
+using DotvvmAcademy.Steps.Validation.Validators;
 using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Compilation.ControlTree.Resolved;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Tokenizer;
 using DotVVM.Framework.Configuration;
-using DotVVM.Framework.ViewModel;
 
 namespace DotvvmAcademy.Steps
 {
-    public class DothtmlStep : CodeBaseStep
+    public class CodeStepDotHtml : CodeStepBase<IDotHtmlCodeStepValidationObject>
     {
-        public DothtmlStep(LessonBase currentLesson) : base(currentLesson)
+        public CodeStepDotHtml(LessonBase currentLesson) : base(currentLesson)
         {
         }
 
-        //TODO: REMOVE
-
-        [Bind(Direction.None)]
-        public Action<ResolvedTreeRoot> ValidationFunction { get; set; }
+        public override IDotHtmlCodeStepValidationObject Validator { get; set; }
 
         protected override IEnumerable<string> GetErrors()
         {
@@ -41,10 +39,7 @@ namespace DotvvmAcademy.Steps
                 {
                     throw new CodeValidationException("Syntax error in the DOTHTML code.", ex);
                 }
-
-                //TODO: remove this function
-                //TODO: get validation function when constructor is called by searching methods in "LessonBase" where function has the LessonStepValidation attribute with right key.
-                ValidationFunction(root);
+                Validator.ValidateMethod(root);
 
                 return Enumerable.Empty<string>();
             }

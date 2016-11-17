@@ -11,6 +11,7 @@ using DotVVM.Framework.Controls;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Reflection;
+using DotvvmAcademy.Steps.StepsBases;
 using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Compilation.Parser;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
@@ -21,512 +22,512 @@ namespace DotvvmAcademy.Lessons
     public class Lesson2 : LessonBase
     {
         public InfoStep Step0 { get; private set; }
-        public DothtmlStep Step1 { get; private set; }
-        public CodeStep Step2 { get; private set; }
-        public DothtmlStep Step3 { get; private set; }
-        public CodeStep Step4 { get; private set; }
-        public CodeStep Step5 { get; private set; }
-        public CodeStep Step6 { get; private set; }
-        public DothtmlStep Step7 { get; private set; }
-        public DothtmlStep Step8 { get; private set; }
-        public DothtmlStep Step9 { get; private set; }
-        public CodeStep Step10 { get; private set; }
-        public DothtmlStep Step11 { get; private set; }
-        public DothtmlStep Step12 { get; private set; }
+        public CodeStepDotHtml Step1 { get; private set; }
+        public CodeStepCsharp Step2 { get; private set; }
+        public CodeStepDotHtml Step3 { get; private set; }
+        public CodeStepCsharp Step4 { get; private set; }
+        public CodeStepCsharp Step5 { get; private set; }
+        public CodeStepCsharp Step6 { get; private set; }
+        public CodeStepDotHtml Step7 { get; private set; }
+        public CodeStepDotHtml Step8 { get; private set; }
+        public CodeStepDotHtml Step9 { get; private set; }
+        public CodeStepCsharp Step10 { get; private set; }
+        public CodeStepDotHtml Step11 { get; private set; }
+        public CodeStepDotHtml Step12 { get; private set; }
         public InfoStep Step13 { get; private set; }
 
 
-        public Lesson2()
-        {
-            Step0 = new InfoStep(this)
-            {
-                StepIndex = 1,
-                Title = "Objective",
-                Description = @"In this lesson, we'll build a simple to-do list.
+//        public Lesson2()
+//        {
+//            Step0 = new InfoStep(this)
+//            {
+//                StepIndex = 1,
+//                Title = "Objective",
+//                Description = @"In this lesson, we'll build a simple to-do list.
 
-<img src=""/img/lesson2_step1.gif"" alt=""Animation"" />"
-            };
+//<img src=""/img/lesson2_step1.gif"" alt=""Animation"" />"
+//            };
 
-            Step1 = new DothtmlStep(this)
-            {
-                StepIndex = 2,
-                Title = "Adding New Task",
-                Description = @"First, we should create the controls which add a new task.
+//            Step1 = new CodeStepDotHtml(this)
+//            {
+//                StepIndex = 2,
+//                Title = "Adding New Task",
+//                Description = @"First, we should create the controls which add a new task.
 
-Add the `TextBox` and the `Button` controls to the page. The button should say ""Add Task"".",
-                StartupCode = @"<p>
-    <!-- place textbox and button for adding new task here -->
-</p>
-<div>
-    <!-- we'll display a list of tasks here later -->
-</p>",
-                FinalCode = @"<p>
-    <dot:TextBox />
-    <dot:Button Text=""Add Task"" />
-</p>
-<div>
-    <!-- we'll display a list of tasks here later -->
-</p>",
-                ValidationFunction = ValidateAddTaskControls
-            };
+//Add the `TextBox` and the `Button` controls to the page. The button should say ""Add Task"".",
+//                StartupCode = @"<p>
+//    <!-- place textbox and button for adding new task here -->
+//</p>
+//<div>
+//    <!-- we'll display a list of tasks here later -->
+//</p>",
+//                FinalCode = @"<p>
+//    <dot:TextBox />
+//    <dot:Button Text=""Add Task"" />
+//</p>
+//<div>
+//    <!-- we'll display a list of tasks here later -->
+//</p>",
+//                ValidationFunction = ValidateAddTaskControls
+//            };
 
-            Step2 = new CodeStep(this)
-            {
-                StepIndex = 3,
-                Title = "Adding New Task",
-                Description = @"Now we should add a property which will represent the title of the new task. Let's name it `AddedTaskTitle`.
-Don't remember that every `TextBox` must have its property in the viewmodel, otherwise, the value entered by the user would be lost.
+//            Step2 = new CodeStepCsharp(this)
+//            {
+//                StepIndex = 3,
+//                Title = "Adding New Task",
+//                Description = @"Now we should add a property which will represent the title of the new task. Let's name it `AddedTaskTitle`.
+//Don't remember that every `TextBox` must have its property in the viewmodel, otherwise, the value entered by the user would be lost.
 
-Also, we will need the `AddTask()` method in the viewmodel. For now, make it just empty. It should not return any value.
-",
-                StartupCode = @"using System;
+//Also, we will need the `AddTask()` method in the viewmodel. For now, make it just empty. It should not return any value.
+//",
+//                StartupCode = @"using System;
 
-namespace DotvvmAcademy.Tutorial.ViewModels 
-{
-    public class Lesson2ViewModel 
-    {
-        // declare the AddedTaskTitle property and the AddTask() method here
-    }
-}",
-                FinalCode = @"using System;
+//namespace DotvvmAcademy.Tutorial.ViewModels 
+//{
+//    public class Lesson2ViewModel 
+//    {
+//        // declare the AddedTaskTitle property and the AddTask() method here
+//    }
+//}",
+//                FinalCode = @"using System;
 
-namespace DotvvmAcademy.Tutorial.ViewModels 
-{
-    public class Lesson2ViewModel 
-    {
-        public string AddedTaskTitle { get; set; }
+//namespace DotvvmAcademy.Tutorial.ViewModels 
+//{
+//    public class Lesson2ViewModel 
+//    {
+//        public string AddedTaskTitle { get; set; }
 
-        public void AddTask() 
-        {
-        }
-    }
-}",
-                ValidationFunction = ValidateAddTaskProperties
-            };
+//        public void AddTask() 
+//        {
+//        }
+//    }
+//}",
+//                ValidationFunction = ValidateAddTaskProperties
+//            };
 
-            Step3 = new DothtmlStep(this)
-            {
-                StepIndex = 4,
-                Title = "Adding New Task",
-                Description = @"Now, we need to bind the text in the `TextBox` to the `AddedTaskTitle` property, and the `Button` to the `AddTask()` method.",
-                StartupCode = @"<p>
-    <dot:TextBox />
-    <dot:Button Text=""Add Task"" />
-</p>
-<div>
-    <!-- we'll display a list of tasks here later -->
-</p>",
-                FinalCode = @"<p>
-    <dot:TextBox Text=""{value: AddedTaskTitle}"" />
-    <dot:Button Text=""Add Task"" Click=""{command: AddTask()}"" />
-</p>
-<div>
-    <!-- we'll display a list of tasks here later -->
-</p>",
-                ValidationFunction = ValidateAddTaskControlBindings
-            };
+//            Step3 = new CodeStepDotHtml(this)
+//            {
+//                StepIndex = 4,
+//                Title = "Adding New Task",
+//                Description = @"Now, we need to bind the text in the `TextBox` to the `AddedTaskTitle` property, and the `Button` to the `AddTask()` method.",
+//                StartupCode = @"<p>
+//    <dot:TextBox />
+//    <dot:Button Text=""Add Task"" />
+//</p>
+//<div>
+//    <!-- we'll display a list of tasks here later -->
+//</p>",
+//                FinalCode = @"<p>
+//    <dot:TextBox Text=""{value: AddedTaskTitle}"" />
+//    <dot:Button Text=""Add Task"" Click=""{command: AddTask()}"" />
+//</p>
+//<div>
+//    <!-- we'll display a list of tasks here later -->
+//</p>",
+//                ValidationFunction = ValidateAddTaskControlBindings
+//            };
 
-            Step4 = new CodeStep(this)
-            {
-                StepIndex = 5,
-                Title = "Representing Tasks",
-                Description = @"We are ready to create a list of tasks. However, we need a class to represent the task itself.
+//            Step4 = new CodeStepCsharp(this)
+//            {
+//                StepIndex = 5,
+//                Title = "Representing Tasks",
+//                Description = @"We are ready to create a list of tasks. However, we need a class to represent the task itself.
 
-Each task should have the `Title` property of `string`, and the `IsCompleted` property of `bool`. 
+//Each task should have the `Title` property of `string`, and the `IsCompleted` property of `bool`. 
 
-Create a class named `TaskData` and declare the two properties.",
-                ShadowBoxDescription = @"In Visual Studio, this class would be declared in separate file.",
-                StartupCode = @"using System;
+//Create a class named `TaskData` and declare the two properties.",
+//                ShadowBoxDescription = @"In Visual Studio, this class would be declared in separate file.",
+//                StartupCode = @"using System;
 
-namespace DotvvmAcademy.Tutorial.ViewModels 
-{
-    // declare the class here
-}",
-                FinalCode = @"using System;
+//namespace DotvvmAcademy.Tutorial.ViewModels 
+//{
+//    // declare the class here
+//}",
+//                FinalCode = @"using System;
 
-namespace DotvvmAcademy.Tutorial.ViewModels 
-{
-    public class TaskData
-    {
-        public string Title { get; set; }
-        public bool IsCompleted { get; set; }
-    }
-}",
-                ValidationFunction = ValidateTaskDataClass
-            };
+//namespace DotvvmAcademy.Tutorial.ViewModels 
+//{
+//    public class TaskData
+//    {
+//        public string Title { get; set; }
+//        public bool IsCompleted { get; set; }
+//    }
+//}",
+//                ValidationFunction = ValidateTaskDataClass
+//            };
 
-            Step5 = new CodeStep(this)
-            {
-                StepIndex = 6,
-                Title = "Representing Tasks",
-                Description = @"Now let's go back to our viewmodel. We need to add a list of `TaskData` objects in the viewmodel,
-so we can render it in the page.
+//            Step5 = new CodeStepCsharp(this)
+//            {
+//                StepIndex = 6,
+//                Title = "Representing Tasks",
+//                Description = @"Now let's go back to our viewmodel. We need to add a list of `TaskData` objects in the viewmodel,
+//so we can render it in the page.
 
-Add the `Tasks` property to the viewmodel. Its type should be `List<TaskData>` and it should be initialized
-to `new List<TaskData>()`.",
-                StartupCode = @"using System;
-using System.Collections.Generic;
+//Add the `Tasks` property to the viewmodel. Its type should be `List<TaskData>` and it should be initialized
+//to `new List<TaskData>()`.",
+//                StartupCode = @"using System;
+//using System.Collections.Generic;
 
-namespace DotvvmAcademy.Tutorial.ViewModels 
-{
-    public class Lesson2ViewModel 
-    {
-        public string AddedTaskTitle { get; set; }
+//namespace DotvvmAcademy.Tutorial.ViewModels 
+//{
+//    public class Lesson2ViewModel 
+//    {
+//        public string AddedTaskTitle { get; set; }
 
-        // declare the Tasks property here
+//        // declare the Tasks property here
 
-        public void AddTask() 
-        {
-        }
-    }
-}",
-                FinalCode = @"using System;
-using System.Collections.Generic;
+//        public void AddTask() 
+//        {
+//        }
+//    }
+//}",
+//                FinalCode = @"using System;
+//using System.Collections.Generic;
 
-namespace DotvvmAcademy.Tutorial.ViewModels 
-{
-    public class Lesson2ViewModel 
-    {
-        public string AddedTaskTitle { get; set; }
+//namespace DotvvmAcademy.Tutorial.ViewModels 
+//{
+//    public class Lesson2ViewModel 
+//    {
+//        public string AddedTaskTitle { get; set; }
 
-        public List<TaskData> Tasks { get; set; } = new List<TaskData>();
+//        public List<TaskData> Tasks { get; set; } = new List<TaskData>();
 
-        public void AddTask() 
-        {
-        }
-    }
-}",
-                OtherFiles =
-                {
-                    Step4.FinalCode
-                },
-                AllowedTypesConstructed = { "System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>" },
-                ValidationFunction = ValidateTasksProperty
-            };
+//        public void AddTask() 
+//        {
+//        }
+//    }
+//}",
+//                OtherFiles =
+//                {
+//                    Step4.FinalCode
+//                },
+//                AllowedTypesConstructed = { "System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>" },
+//                ValidationFunction = ValidateTasksProperty
+//            };
 
-            Step6 = new CodeStep(this)
-            {
-                StepIndex = 7,
-                Title = "Adding new Task",
-                Description = @"Now, we can implement the `AddTask()` method. It should add a new `TaskData` object with the `Title` property set to `AddedTaskTitle` value.
+//            Step6 = new CodeStepCsharp(this)
+//            {
+//                StepIndex = 7,
+//                Title = "Adding new Task",
+//                Description = @"Now, we can implement the `AddTask()` method. It should add a new `TaskData` object with the `Title` property set to `AddedTaskTitle` value.
 
-Also, we'd like to reset the `AddedTaskTitle` property, so after the task is created, assign an empty string in it.",
-                StartupCode = @"using System;
-using System.Collections.Generic;
+//Also, we'd like to reset the `AddedTaskTitle` property, so after the task is created, assign an empty string in it.",
+//                StartupCode = @"using System;
+//using System.Collections.Generic;
 
-namespace DotvvmAcademy.Tutorial.ViewModels 
-{
-    public class Lesson2ViewModel 
-    {
-        public string AddedTaskTitle { get; set; }
+//namespace DotvvmAcademy.Tutorial.ViewModels 
+//{
+//    public class Lesson2ViewModel 
+//    {
+//        public string AddedTaskTitle { get; set; }
 
-        public List<TaskData> Tasks { get; set; } = new List<TaskData>();
+//        public List<TaskData> Tasks { get; set; } = new List<TaskData>();
 
-        public void AddTask() 
-        {
-            // add the new task with the title set to AddedTaskTitle here
+//        public void AddTask() 
+//        {
+//            // add the new task with the title set to AddedTaskTitle here
             
-            // reset the AddedTaskTitle to an empty string
-        }
-    }
-}",
-                FinalCode = @"using System;
-using System.Collections.Generic;
+//            // reset the AddedTaskTitle to an empty string
+//        }
+//    }
+//}",
+//                FinalCode = @"using System;
+//using System.Collections.Generic;
 
-namespace DotvvmAcademy.Tutorial.ViewModels 
-{
-    public class Lesson2ViewModel 
-    {
-        public string AddedTaskTitle { get; set; }
+//namespace DotvvmAcademy.Tutorial.ViewModels 
+//{
+//    public class Lesson2ViewModel 
+//    {
+//        public string AddedTaskTitle { get; set; }
 
-        public List<TaskData> Tasks { get; set; } = new List<TaskData>();
+//        public List<TaskData> Tasks { get; set; } = new List<TaskData>();
 
-        public void AddTask() 
-        {
-            Tasks.Add(new TaskData() { Title = AddedTaskTitle });
-            AddedTaskTitle = """";
-        }
-    }
-}",
-                OtherFiles =
-                {
-                    Step4.FinalCode
-                },
-                AllowedTypesConstructed =
-                {
-                    "System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>",
-                    "DotvvmAcademy.Tutorial.ViewModels.TaskData"
-                },
-                AllowedMethodsCalled = { "System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>.Add" },
-                ValidationFunction = ValidateAddTaskMethod
-            };
+//        public void AddTask() 
+//        {
+//            Tasks.Add(new TaskData() { Title = AddedTaskTitle });
+//            AddedTaskTitle = """";
+//        }
+//    }
+//}",
+//                OtherFiles =
+//                {
+//                    Step4.FinalCode
+//                },
+//                AllowedTypesConstructed =
+//                {
+//                    "System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>",
+//                    "DotvvmAcademy.Tutorial.ViewModels.TaskData"
+//                },
+//                AllowedMethodsCalled = { "System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>.Add" },
+//                ValidationFunction = ValidateAddTaskMethod
+//            };
 
-            Step7 = new DothtmlStep(this)
-            {
-                StepIndex = 8,
-                Title = "Render The Tasks",
-                Description = @"We are ready to render a list of tasks right now. For each task, we'd like to render this HTML snippet:
+//            Step7 = new CodeStepDotHtml(this)
+//            {
+//                StepIndex = 8,
+//                Title = "Render The Tasks",
+//                Description = @"We are ready to render a list of tasks right now. For each task, we'd like to render this HTML snippet:
 
-```
-<div class=""task"">
-    ...
-</div>
-```
+//```
+//<div class=""task"">
+//    ...
+//</div>
+//```
 
-To do this, we'll use the `<dot:Repeater>` control. Add it to the page, bind its `DataSource` property to the `Tasks` property in the viewmodel,
-and inside the `<dot:Repeater>`, place the `<div class=""task""></div>` element. It will repeat the `div` for each object in the collection.",
-                StartupCode = @"<p>
-    <dot:TextBox Text=""{value: AddedTaskTitle}"" />
-    <dot:Button Text=""Add Task"" Click=""{command: AddTask()}"" />
-</p>
-<div>
-    <!-- place the Repeater control here -->
-</p>",
-                FinalCode = @"<p>
-    <dot:TextBox Text=""{value: AddedTaskTitle}"" />
-    <dot:Button Text=""Add Task"" Click=""{command: AddTask()}"" />
-</p>
-<div>
-    <dot:Repeater DataSource=""{value: Tasks}"">
-        <div class=""task""></div>
-    </dot:Repeater>
-</p>",
-                ValidationFunction = ValidateRepeaterControl
-            };
+//To do this, we'll use the `<dot:Repeater>` control. Add it to the page, bind its `DataSource` property to the `Tasks` property in the viewmodel,
+//and inside the `<dot:Repeater>`, place the `<div class=""task""></div>` element. It will repeat the `div` for each object in the collection.",
+//                StartupCode = @"<p>
+//    <dot:TextBox Text=""{value: AddedTaskTitle}"" />
+//    <dot:Button Text=""Add Task"" Click=""{command: AddTask()}"" />
+//</p>
+//<div>
+//    <!-- place the Repeater control here -->
+//</p>",
+//                FinalCode = @"<p>
+//    <dot:TextBox Text=""{value: AddedTaskTitle}"" />
+//    <dot:Button Text=""Add Task"" Click=""{command: AddTask()}"" />
+//</p>
+//<div>
+//    <dot:Repeater DataSource=""{value: Tasks}"">
+//        <div class=""task""></div>
+//    </dot:Repeater>
+//</p>",
+//                ValidationFunction = ValidateRepeaterControl
+//            };
 
-            Step8 = new DothtmlStep(this)
-            {
-                StepIndex = 9,
-                Title = "Rendering The Tasks",
-                Description = @"Inside the `<div>`, we'd like to display the task title. If you want to output text directly in the page,
-you can use the data-binding syntax with double curly braces, like this: `{{value: Title}}`.
+//            Step8 = new CodeStepDotHtml(this)
+//            {
+//                StepIndex = 9,
+//                Title = "Rendering The Tasks",
+//                Description = @"Inside the `<div>`, we'd like to display the task title. If you want to output text directly in the page,
+//you can use the data-binding syntax with double curly braces, like this: `{{value: Title}}`.
 
-Alternatively, you can use the `<dot:Literal Text=""{value: Title}"" />` to write a text.
+//Alternatively, you can use the `<dot:Literal Text=""{value: Title}"" />` to write a text.
 
-So, render the `Title` of the task inside the `<div>`. Also, add the `<dot:LinkButton>` inside the `<div>`. We'll use it to mark tasks as completed.",
-                ShadowBoxDescription = @"The `LinkButton` control works the same way as the `Button`, but it renders a hyperlink.",
-                StartupCode = @"
-<p>
-    <dot:TextBox Text=""{value: AddedTaskTitle}"" />
-    <dot:Button Text=""Add Task"" Click=""{command: AddTask()}"" />
-</p>
-<div>
-    <dot:Repeater DataSource=""{value: Tasks}"">
-        <div class=""task"">
-            <!-- render task title and LinkButton here -->
-        </div>
-    </dot:Repeater>
-</p>",
-                FinalCode = @"
-<p>
-    <dot:TextBox Text=""{value: AddedTaskTitle}"" />
-    <dot:Button Text=""Add Task"" Click=""{command: AddTask()}"" />
-</p>
-<div>
-    <dot:Repeater DataSource=""{value: Tasks}"">
-        <div class=""task"">
-            {{value: Title}}
-            <dot:LinkButton />
-        </div>
-    </dot:Repeater>
-</p>",
-                ValidationFunction = ValidateRepeaterTemplate1
-            };
+//So, render the `Title` of the task inside the `<div>`. Also, add the `<dot:LinkButton>` inside the `<div>`. We'll use it to mark tasks as completed.",
+//                ShadowBoxDescription = @"The `LinkButton` control works the same way as the `Button`, but it renders a hyperlink.",
+//                StartupCode = @"
+//<p>
+//    <dot:TextBox Text=""{value: AddedTaskTitle}"" />
+//    <dot:Button Text=""Add Task"" Click=""{command: AddTask()}"" />
+//</p>
+//<div>
+//    <dot:Repeater DataSource=""{value: Tasks}"">
+//        <div class=""task"">
+//            <!-- render task title and LinkButton here -->
+//        </div>
+//    </dot:Repeater>
+//</p>",
+//                FinalCode = @"
+//<p>
+//    <dot:TextBox Text=""{value: AddedTaskTitle}"" />
+//    <dot:Button Text=""Add Task"" Click=""{command: AddTask()}"" />
+//</p>
+//<div>
+//    <dot:Repeater DataSource=""{value: Tasks}"">
+//        <div class=""task"">
+//            {{value: Title}}
+//            <dot:LinkButton />
+//        </div>
+//    </dot:Repeater>
+//</p>",
+//                ValidationFunction = ValidateRepeaterTemplate1
+//            };
 
-            Step9 = new DothtmlStep(this)
-            {
-                StepIndex = 10,
-                Title = "Hiding The LinkButton",
-                Description = @"The LinkButton should be visible only for tasks which are not completed.
+//            Step9 = new CodeStepDotHtml(this)
+//            {
+//                StepIndex = 10,
+//                Title = "Hiding The LinkButton",
+//                Description = @"The LinkButton should be visible only for tasks which are not completed.
 
-In DotVVM, there is the `Visible` property which can show or hide content. 
+//In DotVVM, there is the `Visible` property which can show or hide content. 
 
-Bind the `Visible` property to the `LinkButton` to the `IsCompleted` property of the task. Use the `!` operator to negate the value of `IsCompleted`.",
-                ShadowBoxDescription = @"Please note that the `Visible` property can be used also on any HTML element.",
-                StartupCode = @"
-<p>
-    <dot:TextBox Text=""{value: AddedTaskTitle}"" />
-    <dot:Button Text=""Add Task"" Click=""{command: AddTask()}"" />
-</p>
-<div>
-    <dot:Repeater DataSource=""{value: Tasks}"">
-        <div class=""task"">
-            {{value: Title}}
-            <dot:LinkButton />
-        </div>
-    </dot:Repeater>
-</p>",
-                FinalCode = @"
-<p>
-    <dot:TextBox Text=""{value: AddedTaskTitle}"" />
-    <dot:Button Text=""Add Task"" Click=""{command: AddTask()}"" />
-</p>
-<div>
-    <dot:Repeater DataSource=""{value: Tasks}"">
-        <div class=""task"">
-            {{value: Title}}
-            <dot:LinkButton Visible=""{value: !IsCompleted}"" />
-        </div>
-    </dot:Repeater>
-</p>",
-                ValidationFunction = ValidateRepeaterTemplate2
-            };
+//Bind the `Visible` property to the `LinkButton` to the `IsCompleted` property of the task. Use the `!` operator to negate the value of `IsCompleted`.",
+//                ShadowBoxDescription = @"Please note that the `Visible` property can be used also on any HTML element.",
+//                StartupCode = @"
+//<p>
+//    <dot:TextBox Text=""{value: AddedTaskTitle}"" />
+//    <dot:Button Text=""Add Task"" Click=""{command: AddTask()}"" />
+//</p>
+//<div>
+//    <dot:Repeater DataSource=""{value: Tasks}"">
+//        <div class=""task"">
+//            {{value: Title}}
+//            <dot:LinkButton />
+//        </div>
+//    </dot:Repeater>
+//</p>",
+//                FinalCode = @"
+//<p>
+//    <dot:TextBox Text=""{value: AddedTaskTitle}"" />
+//    <dot:Button Text=""Add Task"" Click=""{command: AddTask()}"" />
+//</p>
+//<div>
+//    <dot:Repeater DataSource=""{value: Tasks}"">
+//        <div class=""task"">
+//            {{value: Title}}
+//            <dot:LinkButton Visible=""{value: !IsCompleted}"" />
+//        </div>
+//    </dot:Repeater>
+//</p>",
+//                ValidationFunction = ValidateRepeaterTemplate2
+//            };
 
-            Step10 = new CodeStep(this)
-            {
-                StepIndex = 11,
-                Title = "Completing The Task",
-                Description = @"When the user clicks the `LinkButton`, we need to trigger a method in the viewmodel.
+//            Step10 = new CodeStepCsharp(this)
+//            {
+//                StepIndex = 11,
+//                Title = "Completing The Task",
+//                Description = @"When the user clicks the `LinkButton`, we need to trigger a method in the viewmodel.
 
-The method needs to know, on which task it has been executed. We can supply it the task as a parameter.
+//The method needs to know, on which task it has been executed. We can supply it the task as a parameter.
 
-Declare the `CompleteTask` method which accepts one parameter of type `TaskData` and sets it `IsCompleted` property to `true`.",
-                StartupCode = @"using System;
-using System.Collections.Generic;
+//Declare the `CompleteTask` method which accepts one parameter of type `TaskData` and sets it `IsCompleted` property to `true`.",
+//                StartupCode = @"using System;
+//using System.Collections.Generic;
 
-namespace DotvvmAcademy.Tutorial.ViewModels 
-{
-    public class Lesson2ViewModel 
-    {
-        public string AddedTaskTitle { get; set; }
+//namespace DotvvmAcademy.Tutorial.ViewModels 
+//{
+//    public class Lesson2ViewModel 
+//    {
+//        public string AddedTaskTitle { get; set; }
 
-        public List<TaskData> Tasks { get; set; } = new List<TaskData>();
+//        public List<TaskData> Tasks { get; set; } = new List<TaskData>();
 
-        public void AddTask() 
-        {
-            Tasks.Add(new TaskData() { Title = AddedTaskTitle });
-            AddedTaskTitle = """";
-        }
+//        public void AddTask() 
+//        {
+//            Tasks.Add(new TaskData() { Title = AddedTaskTitle });
+//            AddedTaskTitle = """";
+//        }
 
-        // place the CompleteTask method here
-    }
-}",
-                FinalCode = @"using System;
-using System.Collections.Generic;
+//        // place the CompleteTask method here
+//    }
+//}",
+//                FinalCode = @"using System;
+//using System.Collections.Generic;
 
-namespace DotvvmAcademy.Tutorial.ViewModels 
-{
-    public class Lesson2ViewModel 
-    {
-        public string AddedTaskTitle { get; set; }
+//namespace DotvvmAcademy.Tutorial.ViewModels 
+//{
+//    public class Lesson2ViewModel 
+//    {
+//        public string AddedTaskTitle { get; set; }
 
-        public List<TaskData> Tasks { get; set; } = new List<TaskData>();
+//        public List<TaskData> Tasks { get; set; } = new List<TaskData>();
 
-        public void AddTask() 
-        {
-            Tasks.Add(new TaskData() { Title = AddedTaskTitle });
-            AddedTaskTitle = """";
-        }
+//        public void AddTask() 
+//        {
+//            Tasks.Add(new TaskData() { Title = AddedTaskTitle });
+//            AddedTaskTitle = """";
+//        }
 
-        public void CompleteTask(TaskData task) 
-        {
-            task.IsCompleted = true;
-        }
-    }
-}",
-                OtherFiles =
-                {
-                    Step4.FinalCode
-                },
-                AllowedTypesConstructed =
-                {
-                    "System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>",
-                    "DotvvmAcademy.Tutorial.ViewModels.TaskData"
-                },
-                AllowedMethodsCalled = { "System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>.Add" },
-                ValidationFunction = ValidateCompleteTaskMethod
-            };
+//        public void CompleteTask(TaskData task) 
+//        {
+//            task.IsCompleted = true;
+//        }
+//    }
+//}",
+//                OtherFiles =
+//                {
+//                    Step4.FinalCode
+//                },
+//                AllowedTypesConstructed =
+//                {
+//                    "System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>",
+//                    "DotvvmAcademy.Tutorial.ViewModels.TaskData"
+//                },
+//                AllowedMethodsCalled = { "System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>.Add" },
+//                ValidationFunction = ValidateCompleteTaskMethod
+//            };
 
-            Step11 = new DothtmlStep(this)
-            {
-                StepIndex = 12,
-                Title = "Completing The Task",
-                Description = @"Now we need to set the `Click` property of the link button to the `CompleteTask` method.
+//            Step11 = new CodeStepDotHtml(this)
+//            {
+//                StepIndex = 12,
+//                Title = "Completing The Task",
+//                Description = @"Now we need to set the `Click` property of the link button to the `CompleteTask` method.
 
-Please note that all bindings inside `Repeater` are not evaluated on viewmodel, but on the corresponding `TaskData` object.
-But the `CompleteTask` method is in the parent scope - we have declared it in the viewmodel. 
+//Please note that all bindings inside `Repeater` are not evaluated on viewmodel, but on the corresponding `TaskData` object.
+//But the `CompleteTask` method is in the parent scope - we have declared it in the viewmodel. 
 
-You can use the `_parent.CompleteTask` to reference the method from the parent scope.
-When supplying arguments to the method, you begin also in the context of `TaskData`, so you can use `_this` to pass the whole
-`TaskData` object to the method.",
-                StartupCode = @"<p>
-    <dot:TextBox Text=""{value: AddedTaskTitle}"" />
-    <dot:Button Text=""Add Task"" Click=""{command: AddTask()}"" />
-</p>
-<div>
-    <dot:Repeater DataSource=""{value: Tasks}"">
-        <div class=""task"">
-            {{value: Title}}
-            <dot:LinkButton Visible=""{value: !IsCompleted}"" />
-        </div>
-    </dot:Repeater>
-</p>",
-                FinalCode = @"<p>
-    <dot:TextBox Text=""{value: AddedTaskTitle}"" />
-    <dot:Button Text=""Add Task"" Click=""{command: AddTask()}"" />
-</p>
-<div>
-    <dot:Repeater DataSource=""{value: Tasks}"">
-        <div class=""task"">
-            {{value: Title}}
-            <dot:LinkButton Visible=""{value: !IsCompleted}""
-                 Click=""{command: _parent.CompleteTask(_this)}"" />
-        </div>
-    </dot:Repeater>
-</p>",
-                ValidationFunction = ValidateRepeaterTemplate3
-            };
+//You can use the `_parent.CompleteTask` to reference the method from the parent scope.
+//When supplying arguments to the method, you begin also in the context of `TaskData`, so you can use `_this` to pass the whole
+//`TaskData` object to the method.",
+//                StartupCode = @"<p>
+//    <dot:TextBox Text=""{value: AddedTaskTitle}"" />
+//    <dot:Button Text=""Add Task"" Click=""{command: AddTask()}"" />
+//</p>
+//<div>
+//    <dot:Repeater DataSource=""{value: Tasks}"">
+//        <div class=""task"">
+//            {{value: Title}}
+//            <dot:LinkButton Visible=""{value: !IsCompleted}"" />
+//        </div>
+//    </dot:Repeater>
+//</p>",
+//                FinalCode = @"<p>
+//    <dot:TextBox Text=""{value: AddedTaskTitle}"" />
+//    <dot:Button Text=""Add Task"" Click=""{command: AddTask()}"" />
+//</p>
+//<div>
+//    <dot:Repeater DataSource=""{value: Tasks}"">
+//        <div class=""task"">
+//            {{value: Title}}
+//            <dot:LinkButton Visible=""{value: !IsCompleted}""
+//                 Click=""{command: _parent.CompleteTask(_this)}"" />
+//        </div>
+//    </dot:Repeater>
+//</p>",
+//                ValidationFunction = ValidateRepeaterTemplate3
+//            };
 
-            Step12 = new DothtmlStep(this)
-            {
-                StepIndex = 13,
-                Title = "Completing The Task",
-                Description = @"The last thing we want to do, is to strike through tasks which are completed.
+//            Step12 = new CodeStepDotHtml(this)
+//            {
+//                StepIndex = 13,
+//                Title = "Completing The Task",
+//                Description = @"The last thing we want to do, is to strike through tasks which are completed.
 
-If the task is completed, we'd like to render it as `<div class=""task-completed""></div>`. 
+//If the task is completed, we'd like to render it as `<div class=""task-completed""></div>`. 
 
-We need to use data-binding to specify the `class` property of the `<div>`. 
+//We need to use data-binding to specify the `class` property of the `<div>`. 
 
-You will need to use the `expression ? truePart : falsePart` operator to do it.
-Also note that you can use single quotes (apostrophes) instead of double quotes to use strings in data-binidngs.",
-                StartupCode = @"<p>
-    <dot:TextBox Text=""{value: AddedTaskTitle}"" />
-    <dot:Button Text=""Add Task"" Click=""{command: AddTask()}"" />
-</p>
-<div>
-    <dot:Repeater DataSource=""{value: Tasks}"">
-        <div class=""task"">
-            {{value: Title}}
-            <dot:LinkButton Visible=""{value: !IsCompleted}""
-                 Click=""{command: _parent.CompleteTask(_this)}"" />
-        </div>
-    </dot:Repeater>
-</p>",
-                FinalCode = @"<p>
-    <dot:TextBox Text=""{value: AddedTaskTitle}"" />
-    <dot:Button Text=""Add Task"" Click=""{command: AddTask()}"" />
-</p>
-<div>
-    <dot:Repeater DataSource=""{value: Tasks}"">
-        <div class=""{value: IsCompleted ? 'task-completed' : 'task'}"">
-            {{value: Title}}
-            <dot:LinkButton Visible=""{value: !IsCompleted}""
-                 Click=""{command: _parent.CompleteTask(_this)}"" />
-        </div>
-    </dot:Repeater>
-</p>",
-                ValidationFunction = ValidateRepeaterTemplate4
-            };
+//You will need to use the `expression ? truePart : falsePart` operator to do it.
+//Also note that you can use single quotes (apostrophes) instead of double quotes to use strings in data-binidngs.",
+//                StartupCode = @"<p>
+//    <dot:TextBox Text=""{value: AddedTaskTitle}"" />
+//    <dot:Button Text=""Add Task"" Click=""{command: AddTask()}"" />
+//</p>
+//<div>
+//    <dot:Repeater DataSource=""{value: Tasks}"">
+//        <div class=""task"">
+//            {{value: Title}}
+//            <dot:LinkButton Visible=""{value: !IsCompleted}""
+//                 Click=""{command: _parent.CompleteTask(_this)}"" />
+//        </div>
+//    </dot:Repeater>
+//</p>",
+//                FinalCode = @"<p>
+//    <dot:TextBox Text=""{value: AddedTaskTitle}"" />
+//    <dot:Button Text=""Add Task"" Click=""{command: AddTask()}"" />
+//</p>
+//<div>
+//    <dot:Repeater DataSource=""{value: Tasks}"">
+//        <div class=""{value: IsCompleted ? 'task-completed' : 'task'}"">
+//            {{value: Title}}
+//            <dot:LinkButton Visible=""{value: !IsCompleted}""
+//                 Click=""{command: _parent.CompleteTask(_this)}"" />
+//        </div>
+//    </dot:Repeater>
+//</p>",
+//                ValidationFunction = ValidateRepeaterTemplate4
+//            };
 
-            Step13 = new InfoStep(this)
-            {
-                StepIndex = 14,
-                Title = "Congratulations!",
-                Description = @"You have finished the second lesson!
+//            Step13 = new InfoStep(this)
+//            {
+//                StepIndex = 14,
+//                Title = "Congratulations!",
+//                Description = @"You have finished the second lesson!
 
-You have learned how to use the `Repeater` control and collections in the viewmodel!"
-            };
-        }
+//You have learned how to use the `Repeater` control and collections in the viewmodel!"
+//            };
+//        }
 
 
         private void ValidateAddTaskControls(ResolvedTreeRoot root)
@@ -790,11 +791,6 @@ You have learned how to use the `Repeater` control and collections in the viewmo
                 throw new CodeValidationException(Lesson2Texts.InvalidClassBinding);
             }
         }
-        
 
-        public override StepBase[] GetAllSteps()
-        {
-            return new StepBase[] { Step0, Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8, Step9, Step10, Step11, Step12, Step13 };
-        }
     }
 }

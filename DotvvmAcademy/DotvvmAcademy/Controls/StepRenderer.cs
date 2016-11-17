@@ -1,18 +1,13 @@
-﻿using DotVVM.Framework.Binding;
-using DotVVM.Framework.Controls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DotVVM.Framework.Hosting;
+﻿using System;
 using DotvvmAcademy.Steps;
 using DotVVM.Framework.Compilation;
+using DotVVM.Framework.Controls;
+using DotVVM.Framework.Hosting;
 
 namespace DotvvmAcademy.Controls
 {
     public class StepRenderer : HtmlGenericControl
     {
-
         public StepRenderer() : base("div")
         {
         }
@@ -22,22 +17,22 @@ namespace DotvvmAcademy.Controls
             var controlBuilderFactory = context.Configuration.ServiceLocator.GetService<IControlBuilderFactory>();
 
             DotvvmControl control;
-            if (DataContext.GetType() == typeof(Steps.InfoStep))
+            if (DataContext.GetType() == typeof(InfoStep))
             {
                 var builder = controlBuilderFactory.GetControlBuilder("Controls/InfoStep.dotcontrol");
                 control = builder.BuildControl(controlBuilderFactory);
             }
-            else if (DataContext.GetType() == typeof(Steps.ChoicesStep))
+            else if (DataContext.GetType() == typeof(ChoicesStep))
             {
                 var builder = controlBuilderFactory.GetControlBuilder("Controls/ChoicesStep.dotcontrol");
                 control = builder.BuildControl(controlBuilderFactory);
             }
-            else if (DataContext.GetType() == typeof(Steps.DothtmlStep))
+            else if (DataContext.GetType() == typeof(CodeStepDotHtml))
             {
                 var builder = controlBuilderFactory.GetControlBuilder("Controls/DothtmlStep.dotcontrol");
                 control = builder.BuildControl(controlBuilderFactory);
             }
-            else if (DataContext.GetType() == typeof(Steps.CodeStep))
+            else if (DataContext.GetType() == typeof(CodeStepCsharp))
             {
                 var builder = controlBuilderFactory.GetControlBuilder("Controls/CodeStep.dotcontrol");
                 control = builder.BuildControl(controlBuilderFactory);
@@ -50,6 +45,5 @@ namespace DotvvmAcademy.Controls
 
             base.OnInit(context);
         }
-
     }
 }

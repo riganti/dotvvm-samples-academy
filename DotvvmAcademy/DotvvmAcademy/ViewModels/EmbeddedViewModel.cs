@@ -1,18 +1,21 @@
+using System.Linq;
+
 namespace DotvvmAcademy.ViewModels
 {
     public class EmbeddedViewModel : LessonViewModel
     {
         protected override void AfterLoad()
         {
-            if (CurrentStepNumber == lesson.GetAllSteps().Length)
+            if (CurrentStepNumber == lesson.Steps.Count())
             {
                 //this prop changes the view for embedded page (used on dotvvm.com as a sample)
                 ContinueButtonVisible = false;
             }
         }
+
         protected override void RedirectToNextLesson()
         {
-            Context.RedirectToRoute("Embedded", new { Step = CurrentStepNumber + 1 });
+            Context.RedirectToRoute("Embedded", new {Step = CurrentStepNumber + 1});
         }
     }
 }

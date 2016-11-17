@@ -1,22 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace DotvvmAcademy.Steps.Validation
 {
     public class CSharpCodeSafetyVisitor : CSharpSyntaxWalker
     {
-
-        private CodeStep step;
         private CSharpCompilation compilation;
-        private CSharpSyntaxTree tree;
-        private SemanticModel model;
+        private readonly SemanticModel model;
 
-        public CSharpCodeSafetyVisitor(CodeStep step, CSharpCompilation compilation, CSharpSyntaxTree tree, SemanticModel model)
+        private readonly CodeStepCsharp step;
+        private CSharpSyntaxTree tree;
+
+        public CSharpCodeSafetyVisitor(CodeStepCsharp step, CSharpCompilation compilation, CSharpSyntaxTree tree,
+            SemanticModel model)
         {
             this.step = step;
             this.compilation = compilation;
@@ -54,6 +51,5 @@ namespace DotvvmAcademy.Steps.Validation
 
             base.VisitObjectCreationExpression(node);
         }
-
     }
 }

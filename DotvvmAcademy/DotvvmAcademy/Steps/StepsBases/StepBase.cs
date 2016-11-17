@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using DotvvmAcademy.Lessons;
 
-namespace DotvvmAcademy.Steps
+namespace DotvvmAcademy.Steps.StepsBases
 {
     public abstract class StepBase 
     {

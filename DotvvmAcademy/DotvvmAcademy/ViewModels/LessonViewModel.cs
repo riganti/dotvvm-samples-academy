@@ -3,7 +3,9 @@ using DotvvmAcademy.Lessons;
 using DotvvmAcademy.Services;
 using DotvvmAcademy.Steps;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
+using DotvvmAcademy.Steps.StepsBases;
 
 namespace DotvvmAcademy.ViewModels
 {
@@ -41,7 +43,8 @@ namespace DotvvmAcademy.ViewModels
             {
                 throw new NotSupportedException();
             }
-            Step = lesson.GetAllSteps()[CurrentStepNumber - 1];
+
+            Step = lesson.Steps.First(s => s.StepIndex == CurrentStepNumber);
             AfterLoad();
            
         }
@@ -58,7 +61,7 @@ namespace DotvvmAcademy.ViewModels
 
             if (string.IsNullOrEmpty(ErrorMessage))
             {
-                if (CurrentStepNumber < lesson.GetAllSteps().Length)
+                if (CurrentStepNumber < lesson.Steps.Count())
                 {
                     storage.UpdateLessonLastStep(lessonNumber, CurrentStepNumber + 1);
                     RedirectToNextLesson();

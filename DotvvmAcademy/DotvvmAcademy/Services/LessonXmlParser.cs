@@ -2,7 +2,7 @@
 using System.Xml.Linq;
 using DotvvmAcademy.Helpers;
 using DotvvmAcademy.Lessons;
-using DotvvmAcademy.Steps;
+using DotvvmAcademy.Steps.StepsBases;
 
 namespace DotvvmAcademy.Services
 {
@@ -22,14 +22,14 @@ namespace DotvvmAcademy.Services
         }
 
 
-        private static List<StepBase> CreateSteps(LessonBase currentLessonBase,
-            IEnumerable<XElement> stepChildCollection)
+        private static List<StepBase> CreateSteps(LessonBase currentLessonBase, IEnumerable<XElement> stepChildCollection)
         {
             var result = new List<StepBase>();
             var iterator = 1;
             foreach (var stepElement in stepChildCollection)
             {
-                result.Add(stepElement.CreateStep(currentLessonBase, iterator));
+                var step = stepElement.CreateStep(currentLessonBase, iterator);
+                result.Add(step);
                 iterator++;
             }
             return result;

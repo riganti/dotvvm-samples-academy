@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DotvvmAcademy.Lessons;
+using DotvvmAcademy.Steps.StepsBases;
 
 namespace DotvvmAcademy.Steps
 {

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using DotvvmAcademy.Lessons;
 using DotvvmAcademy.Steps;
+using DotvvmAcademy.Steps.StepsBases;
 
 namespace DotvvmAcademy.Services
 {

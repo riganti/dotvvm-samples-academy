@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using DotvvmAcademy.Steps;
 using DotVVM.Framework.Controls;
 using DotVVM.Framework.Hosting;
 
 namespace DotvvmAcademy.Controls
 {
-	public class DothtmlStep : DotvvmMarkupControl
-	{
-
-        private Steps.DothtmlStep ViewModel => (Steps.DothtmlStep)DataContext;
+    public class DothtmlStep : DotvvmMarkupControl
+    {
+        private CodeStepDotHtml ViewModel => (CodeStepDotHtml) DataContext;
 
         protected override void OnInit(IDotvvmRequestContext context)
         {
@@ -20,6 +16,5 @@ namespace DotvvmAcademy.Controls
             }
             base.OnInit(context);
         }
-	}
+    }
 }
-

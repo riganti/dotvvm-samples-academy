@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using DotvvmAcademy.Lessons;
+using DotvvmAcademy.Steps.StepsBases;
 using DotvvmAcademy.Steps.Validation;
+using DotvvmAcademy.Steps.Validation.Validators;
 using DotVVM.Framework.Configuration;
 using DotVVM.Framework.ViewModel;
 using Microsoft.CodeAnalysis;
@@ -11,14 +13,18 @@ using Microsoft.CodeAnalysis.CSharp;
 
 namespace DotvvmAcademy.Steps
 {
-    public class CodeStep : CodeBaseStep
+    public class CodeStepCsharp : CodeStepBase<ICSharpCodeStepValidationObject>
     {
-        public CodeStep(LessonBase currentLesson) : base(currentLesson)
+        public CodeStepCsharp(LessonBase currentLesson) : base(currentLesson)
         {
         }
 
-        [Bind(Direction.None)]
-        public Action<CSharpCompilation, CSharpSyntaxTree, SemanticModel, Assembly> ValidationFunction { get; set; }
+        //todo delete
+        //[Bind(Direction.None)]
+        //public Action<CSharpCompilation, CSharpSyntaxTree, SemanticModel, Assembly> ValidationFunction { get; set; }
+
+        public override ICSharpCodeStepValidationObject Validator { get; set; }
+
 
         [Bind(Direction.None)]
         public List<string> AllowedTypesConstructed { get; private set; } = new List<string>();
@@ -54,9 +60,17 @@ namespace DotvvmAcademy.Steps
                 var model = compilation.GetSemanticModel(tree);
 
                 var validationVisitor = new CSharpCodeSafetyVisitor(this, compilation, tree, model);
+
                 validationVisitor.Visit(tree.GetCompilationUnitRoot());
 
-                ValidationFunction(compilation, tree, model, assembly);
+
+                //todo
+                Validator.ValidationFunction(compilation, tree, model, assembly);
+
+
+                //ValidationFunction(compilation, tree, model, assembly);
+
+
                 return Enumerable.Empty<string>();
             }
             catch (CodeValidationException ex)

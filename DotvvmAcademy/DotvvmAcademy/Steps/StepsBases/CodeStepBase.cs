@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
-using DotvvmAcademy.Lessons;
+﻿using DotvvmAcademy.Lessons;
 using DotVVM.Framework.ViewModel;
 
-namespace DotvvmAcademy.Steps
+namespace DotvvmAcademy.Steps.StepsBases
 {
-    public abstract class CodeBaseStep : StepBase, ICodeEditorStep
+    public abstract class CodeStepBase<TValidationObject> : StepBase, ICodeStepBase
     {
+        public CodeStepBase(LessonBase currentLesson) : base(currentLesson)
+        {
+        }
+
         public string Code { get; set; } = "";
 
 
@@ -16,11 +19,8 @@ namespace DotvvmAcademy.Steps
         public string FinalCode { get; set; }
 
         public string ShadowBoxDescription { get; internal set; }
+        public abstract TValidationObject Validator { get; set; }
 
-        //todo ICodeEditorStep
-        public CodeBaseStep(LessonBase currentLesson) : base(currentLesson)
-        {
-        }
 
         public void ResetCode()
         {
