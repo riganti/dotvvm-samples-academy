@@ -16,7 +16,7 @@ namespace DotvvmAcademy.Steps.Validation
 {
     public static class Helpers
     {
-        public static IEnumerable<ResolvedTreeNode> GetDescendants(this ResolvedContentNode node)
+        private static IEnumerable<ResolvedTreeNode> GetDescendants(this ResolvedContentNode node)
         {
             yield return node;
             foreach (var child in node.Content.SelectMany(n => n.GetDescendants()))

@@ -12,9 +12,9 @@ using DotVVM.Framework.Configuration;
 
 namespace DotvvmAcademy.Steps
 {
-    public class CodeStepDotHtml : CodeStepBase<IDotHtmlCodeStepValidationObject>
+    public class CodeStepDotHtml : CodeStepBase<IDotHtmlCodeValidationObject>
     {
-        public override IDotHtmlCodeStepValidationObject Validator { get; set; }
+        public override IDotHtmlCodeValidationObject Validator { get; set; }
 
         protected override IEnumerable<string> GetErrors()
         {

@@ -8,17 +8,18 @@ namespace DotvvmAcademy.Helpers
 {
     public static class XmlParserHelper
     {
-        public static bool IsStepType(this XElement stepElement, string type)
+
+        public static XAttribute GetAttribute(this XElement element, string attributeName)
         {
-            //todo to resources
-            var result = stepElement.Attribute("Type")?.Value;
-            if (result != null)
+            var attribute = element.Attribute(attributeName);
+            if (attribute != null)
             {
-                return result == type;
+                return attribute;
             }
             throw new InvalidDataException(
-                $"XML file doesn`t contains atribute: \"{type}\" in element: \"{stepElement.Name}\"");
+                $"Element: \"{element.Name}\" has no attribute: \"{attributeName}\"");
         }
+
 
         public static XElement CreateXElementFromText(string xmlText)
         {
@@ -48,16 +49,40 @@ namespace DotvvmAcademy.Helpers
             }
         }
 
-        public static IEnumerable<XElement> GetChildCollection(this XElement parentElement, string childName)
+        public static IEnumerable<XElement> GetChildCollection(this XElement parentElement, string childElementName)
         {
-            var result = parentElement.Elements(childName);
+            var result = parentElement.Elements(childElementName);
             if (result.Any())
             {
                 return result;
             }
             throw new InvalidDataException(
-                $"XML file doesn`t contains childs elements: \"{childName}\" in parent element: \"{parentElement.Name}\"");
+                $"XML file doesn`t contains childs elements: \"{childElementName}\" in parent element: \"{parentElement.Name}\"");
         }
+
+        public static string GetChildElementStringValue(this XElement parentElement, string childElementName)
+        {
+            if (parentElement.HaveChildElement(childElementName))
+            {
+                return parentElement.Element(childElementName).GetElementStringValue();
+            }
+            throw new InvalidDataException(
+                $"XML file doesn`t contains element: \"{childElementName}\" in parent element: \"{parentElement.Name}\"");
+        }
+
+        public static string GetElementStringValue(this XElement element)
+        {
+            string result = element.Value;
+            if (result != null)
+            {
+                result = result.Trim();
+                result = result.TrimEnd();
+                return result;
+            }
+            throw new InvalidDataException(
+                $"Element: \"{element}\" has no value");
+        }
+
 
         public static XElement GetChildElement(this XElement parentElement, string childName)
         {
@@ -70,30 +95,10 @@ namespace DotvvmAcademy.Helpers
                 $"XML file doesn`t contains child element: \"{childName}\" in parent element: \"{parentElement.Name}\"");
         }
 
-
-        public static string GetElementValueString(this XElement parentElement, string elementName)
+        public static bool HaveChildElement(this XElement parentElement, string childName)
         {
-            var result = parentElement.Element(elementName)?.Value;
-            if (result != null)
-            {
-                result = result.Trim();
-                result = result.TrimEnd();
-                return result;
-            }
-            throw new InvalidDataException(
-                $"XML file doesn`t contains element: \"{elementName}\" in parent element: \"{parentElement.Name}\"");
-        }
-
-        public static int GetElementValueInt(this XElement parentElement, string elementName)
-        {
-            var elementValue = GetElementValueString(parentElement, elementName);
-            var res = elementValue.ToNullableInt();
-            if (res == null)
-            {
-                throw new InvalidCastException(
-                    $"I can`t cast element: \"{elementName}\" with value \"{elementValue}\" to int. Parent element: \"{parentElement.Name}\" ");
-            }
-            return res.Value;
+            var result = parentElement.Element(childName);
+            return result != null;
         }
     }
 }

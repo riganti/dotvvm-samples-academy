@@ -2,7 +2,7 @@
 
 namespace DotvvmAcademy.Steps.Validation.Interfaces
 {
-    public interface IDotHtmlCodeStepValidationObject : ILessonValidationObject
+    public interface IDotHtmlCodeValidationObject : ILessonValidationObject
     {
         void Validate(ResolvedTreeRoot resolvedTreeRoot);
     }

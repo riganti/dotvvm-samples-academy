@@ -1,12 +1,11 @@
-﻿using DotVVM.Framework.ViewModel;
-using System;
-using System.Collections.Generic;
-using DotvvmAcademy.Lessons;
+﻿using System.Collections.Generic;
+using DotVVM.Framework.ViewModel;
 
 namespace DotvvmAcademy.Steps.StepsBases
 {
-    public abstract class StepBase 
+    public abstract class StepBase : IStep
     {
+        public string ErrorMessage => string.Join(" ", GetErrors());
         public int StepIndex { get; set; }
 
         [Bind(Direction.ServerToClient)]
@@ -14,8 +13,6 @@ namespace DotvvmAcademy.Steps.StepsBases
 
         [Bind(Direction.ServerToClient)]
         public string Description { get; set; }
-        
-        public string ErrorMessage => string.Join(" ", GetErrors());
 
         protected abstract IEnumerable<string> GetErrors();
     }

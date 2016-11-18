@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using DotvvmAcademy.Steps.StepsBases;
 using DotvvmAcademy.Steps.Validation;
 using DotvvmAcademy.Steps.Validation.Interfaces;
@@ -12,9 +13,9 @@ using Microsoft.CodeAnalysis.CSharp;
 
 namespace DotvvmAcademy.Steps
 {
-    public class CodeStepCsharp : CodeStepBase<ICSharpCodeStepValidationObject>
+    public class CodeStepCsharp : CodeStepBase<ICSharpCodeValidationObject>
     {
-        public override ICSharpCodeStepValidationObject Validator { get; set; }
+        public override ICSharpCodeValidationObject Validator { get; set; }
 
         [Bind(Direction.None)]
         public List<string> AllowedTypesConstructed { get; private set; } = new List<string>();
@@ -32,16 +33,20 @@ namespace DotvvmAcademy.Steps
 
 
         [Bind(Direction.None)]
-        public List<string> OtherFiles { get; } = new List<string>();
+        public List<string> OtherCodeDependencies { get; } = new List<string>();
 
         protected override IEnumerable<string> GetErrors()
         {
             try
             {
                 var tree = (CSharpSyntaxTree) CSharpSyntaxTree.ParseText(Code);
+
+                OtherCodeDependencies.ForEach(a=> Regex.Replace(a, @"\t|\n|\r", ""));
+
+
                 var compilation = CSharpCompilation.Create(
                     Guid.NewGuid().ToString(),
-                    new[] {tree}.Concat(OtherFiles.Select(c => CSharpSyntaxTree.ParseText(c))),
+                    new[] {tree}.Concat(OtherCodeDependencies.Select(c => CSharpSyntaxTree.ParseText(c))),
                     ReferencedAssemblies.Select(a => MetadataReference.CreateFromFile(a.Location)).ToArray(),
                     new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)
                 );

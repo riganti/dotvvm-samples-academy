@@ -228,7 +228,6 @@ Bind the textboxes to corresponding viewmodel properties.
 </p>
                 ]]>
             </FinalCode>
-            <ShadowBoxDescription/>
         </Step>
         
         <Step Type="DothtmlCode">
@@ -255,7 +254,7 @@ we don't have to store it in the viewmodel. We can declare it directly in DOTHTM
 </p>
 <p>
     <dot:Button />
-</p>"
+</p>
                 ]]>
             </StartupCode>
             <FinalCode>
@@ -269,10 +268,9 @@ we don't have to store it in the viewmodel. We can declare it directly in DOTHTM
 </p>
 <p>
     <dot:Button Text="Calculate!" Click="{command: Calculate()}" />
-</p>"
+</p>
             ]]>
             </FinalCode>
-            <ShadowBoxDescription/>
         </Step>
         
         <Step Type="Info">

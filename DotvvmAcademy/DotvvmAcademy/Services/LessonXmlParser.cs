@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Linq;
 using DotvvmAcademy.Helpers;
-using DotvvmAcademy.Lessons;
 using DotvvmAcademy.Steps.StepsBases;
 
 namespace DotvvmAcademy.Services
@@ -24,7 +23,8 @@ namespace DotvvmAcademy.Services
             var iterator = 1;
             foreach (var stepElement in stepChildCollection)
             {
-                var step = stepElement.CreateStep(iterator);
+                var stepBuilder = new StepBuilder();
+                var step = stepBuilder.CreateStep(stepElement, iterator);
                 result.Add(step);
                 iterator++;
             }

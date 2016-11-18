@@ -10,5 +10,8 @@ namespace DotvvmAcademy.Lessons
             var lessonProvider = new LessonUserInterfaceProvider(lesson1RelativePath);
             Steps = lessonProvider.LessonSteps;
         }
+
+        
+
     }
 }

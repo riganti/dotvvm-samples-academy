@@ -16,8 +16,8 @@ namespace DotvvmAcademy.Controls
         {
             var controlBuilderFactory = context.Configuration.ServiceLocator.GetService<IControlBuilderFactory>();
 
-            if (DataContext is CodeStepBase<IDotHtmlCodeStepValidationObject> ||
-                DataContext is CodeStepBase<ICSharpCodeStepValidationObject>)
+            if (DataContext is CodeStepBase<IDotHtmlCodeValidationObject> ||
+                DataContext is CodeStepBase<ICSharpCodeValidationObject>)
             {
                 var builder = controlBuilderFactory.GetControlBuilder("Controls/CodeEditorButtons.dotcontrol");
                 var control = builder.BuildControl(controlBuilderFactory);
