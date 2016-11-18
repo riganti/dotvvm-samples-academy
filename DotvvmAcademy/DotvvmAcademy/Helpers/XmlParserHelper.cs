@@ -8,20 +8,6 @@ namespace DotvvmAcademy.Helpers
 {
     public static class XmlParserHelper
     {
-        public static XElement CreateXElementFromText(string xmlText)
-        {
-            try
-            {
-                return XElement.Parse(xmlText);
-            }
-            catch (Exception)
-            {
-                //todo
-                throw;
-            }
-        }
-
-
         public static bool IsStepType(this XElement stepElement, string type)
         {
             //todo to resources
@@ -34,6 +20,18 @@ namespace DotvvmAcademy.Helpers
                 $"XML file doesn`t contains atribute: \"{type}\" in element: \"{stepElement.Name}\"");
         }
 
+        public static XElement CreateXElementFromText(string xmlText)
+        {
+            try
+            {
+                return XElement.Parse(xmlText);
+            }
+            catch (Exception)
+            {
+                //todo UI Exception
+                throw;
+            }
+        }
 
         public static string GetXmlTextRelativePath(string lessonXmlRelativePath)
         {
@@ -45,7 +43,7 @@ namespace DotvvmAcademy.Helpers
             }
             catch (Exception ex)
             {
-                //todo
+                //todo UI Exception
                 throw;
             }
         }
@@ -71,8 +69,6 @@ namespace DotvvmAcademy.Helpers
             throw new InvalidDataException(
                 $"XML file doesn`t contains child element: \"{childName}\" in parent element: \"{parentElement.Name}\"");
         }
-
-      
 
 
         public static string GetElementValueString(this XElement parentElement, string elementName)

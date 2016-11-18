@@ -7,14 +7,6 @@ namespace DotvvmAcademy.Steps.StepsBases
 {
     public abstract class StepBase 
     {
-        public StepBase(LessonBase currentLesson)
-        {
-            //todo 
-            CurrentLesson = currentLesson;
-        }
-        protected LessonBase CurrentLesson { get; set; }
-
-
         public int StepIndex { get; set; }
 
         [Bind(Direction.ServerToClient)]

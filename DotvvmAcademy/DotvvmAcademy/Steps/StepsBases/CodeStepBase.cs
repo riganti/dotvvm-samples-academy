@@ -5,9 +5,6 @@ namespace DotvvmAcademy.Steps.StepsBases
 {
     public abstract class CodeStepBase<TValidationObject> : StepBase, ICodeStepBase
     {
-        public CodeStepBase(LessonBase currentLesson) : base(currentLesson)
-        {
-        }
 
         public string Code { get; set; } = "";
 

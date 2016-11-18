@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using DotvvmAcademy.Lessons;
 using DotvvmAcademy.Steps.StepsBases;
 using DotvvmAcademy.Steps.Validation;
 using DotvvmAcademy.Steps.Validation.Interfaces;
@@ -15,10 +14,6 @@ namespace DotvvmAcademy.Steps
 {
     public class CodeStepCsharp : CodeStepBase<ICSharpCodeStepValidationObject>
     {
-        public CodeStepCsharp(LessonBase currentLesson) : base(currentLesson)
-        {
-        }
-
         public override ICSharpCodeStepValidationObject Validator { get; set; }
 
         [Bind(Direction.None)]

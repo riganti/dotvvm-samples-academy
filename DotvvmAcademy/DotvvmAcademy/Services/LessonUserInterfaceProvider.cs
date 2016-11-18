@@ -6,10 +6,10 @@ namespace DotvvmAcademy.Services
 {
     public class LessonUserInterfaceProvider
     {
-        public LessonUserInterfaceProvider(LessonBase lessonBase, string lessonXmlRelativePath)
+        public LessonUserInterfaceProvider(string lessonXmlRelativePath)
         {
             var parser = new LessonXmlParser();
-            LessonSteps = parser.ParseXmlToSteps(lessonXmlRelativePath, lessonBase);
+            LessonSteps = parser.ParseXmlToSteps(lessonXmlRelativePath);
         }
 
         public IEnumerable<StepBase> LessonSteps { get; set; }

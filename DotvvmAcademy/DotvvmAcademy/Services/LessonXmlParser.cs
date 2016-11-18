@@ -8,24 +8,23 @@ namespace DotvvmAcademy.Services
 {
     public class LessonXmlParser
     {
-        public List<StepBase> ParseXmlToSteps(string lessonXmlRelativePath, LessonBase currentLessonBase)
+        public List<StepBase> ParseXmlToSteps(string lessonXmlRelativePath)
         {
             var xmlText = XmlParserHelper.GetXmlTextRelativePath(lessonXmlRelativePath);
             var rootElement = XmlParserHelper.CreateXElementFromText(xmlText);
 
             var stepChildCollection = rootElement.GetChildElement("Steps").GetChildCollection("Step");
-            return CreateSteps(currentLessonBase, stepChildCollection);
+            return CreateSteps(stepChildCollection);
         }
 
 
-        private static List<StepBase> CreateSteps(LessonBase currentLessonBase,
-            IEnumerable<XElement> stepChildCollection)
+        private static List<StepBase> CreateSteps(IEnumerable<XElement> stepChildCollection)
         {
             var result = new List<StepBase>();
             var iterator = 1;
             foreach (var stepElement in stepChildCollection)
             {
-                var step = stepElement.CreateStep(currentLessonBase, iterator);
+                var step = stepElement.CreateStep(iterator);
                 result.Add(step);
                 iterator++;
             }

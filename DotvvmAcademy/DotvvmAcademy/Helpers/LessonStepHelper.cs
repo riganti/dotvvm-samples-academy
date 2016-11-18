@@ -10,9 +10,9 @@ namespace DotvvmAcademy.Helpers
 {
     public static class LessonStepHelper
     {
-        private static InfoStep CreateInfoStep(this XElement step, LessonBase currentLessonBase, int iterator)
+        private static InfoStep CreateInfoStep(this XElement step, int iterator)
         {
-            var result = new InfoStep(currentLessonBase);
+            var result = new InfoStep();
             result.FillStepBasicData(step, iterator);
             return result;
         }
@@ -49,20 +49,18 @@ namespace DotvvmAcademy.Helpers
         }
 
 
-        private static CodeStepCsharp CreateCodeCsharpStep(this XElement step, LessonBase currentLessonBase,
-            int iterator)
+        private static CodeStepCsharp CreateCodeCsharpStep(this XElement step, int iterator)
         {
-            var result = new CodeStepCsharp(currentLessonBase);
+            var result = new CodeStepCsharp();
             result.FillStepCodeData(step, iterator);
             result.CreateValidator(step);
             return result;
         }
 
 
-        private static CodeStepDotHtml CreateCodeDothtmlStep(this XElement step, LessonBase currentLessonBase,
-            int iterator)
+        private static CodeStepDotHtml CreateCodeDothtmlStep(this XElement step, int iterator)
         {
-            var result = new CodeStepDotHtml(currentLessonBase);
+            var result = new CodeStepDotHtml();
 
             result.FillStepCodeData(step, iterator);
             result.CreateValidator(step);
@@ -94,21 +92,21 @@ namespace DotvvmAcademy.Helpers
         }
 
 
-        public static StepBase CreateStep(this XElement stepElement, LessonBase currentLessonBase, int iterator)
+        public static StepBase CreateStep(this XElement stepElement, int iterator)
         {
             //todo to resources
             if (stepElement.IsStepType("CsharpCode"))
             {
-                return stepElement.CreateCodeCsharpStep(currentLessonBase, iterator);
+                return stepElement.CreateCodeCsharpStep(iterator);
             }
             if (stepElement.IsStepType("DothtmlCode"))
             {
-                return stepElement.CreateCodeDothtmlStep(currentLessonBase, iterator);
+                return stepElement.CreateCodeDothtmlStep(iterator);
             }
 
             if (stepElement.IsStepType("Info"))
             {
-                return stepElement.CreateInfoStep(currentLessonBase, iterator);
+                return stepElement.CreateInfoStep(iterator);
             }
             throw new InvalidDataException($"Step type {stepElement.Name} ins`t supported");
         }
