@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
@@ -15,33 +14,14 @@ namespace DotvvmAcademy.LessonXmlParser
             {
                 return attribute;
             }
-            throw new InvalidDataException(
-                $"Element: \"{element.Name}\" has no attribute: \"{attributeName}\"");
+            throw new InvalidDataException(string.Format(LessonXmlParserErrorMessages.ElementAttributeNotFound,
+                element.Name, attributeName));
         }
 
-
-        
-
-
-        public static IEnumerable<XElement> GetChildCollection(this XElement parentElement, string childElementName)
-        {
-            var result = parentElement.Elements(childElementName);
-            if (result.Any())
-            {
-                return result;
-            }
-            throw new InvalidDataException(
-                $"XML file doesn`t contains childs elements: \"{childElementName}\" in parent element: \"{parentElement.Name}\"");
-        }
 
         public static string GetChildElementStringValue(this XElement parentElement, string childElementName)
         {
-            if (parentElement.HaveChildElement(childElementName))
-            {
-                return parentElement.Element(childElementName).GetElementStringValue();
-            }
-            throw new InvalidDataException(
-                $"XML file doesn`t contains element: \"{childElementName}\" in parent element: \"{parentElement.Name}\"");
+            return parentElement.GetChildElement(childElementName).GetElementStringValue();
         }
 
         public static string GetElementStringValue(this XElement element)
@@ -53,32 +33,42 @@ namespace DotvvmAcademy.LessonXmlParser
                 result = result.TrimEnd();
                 return result;
             }
-            throw new InvalidDataException(
-                $"Element: \"{element}\" has no value");
+            var message = string.Format(LessonXmlParserErrorMessages.ElementHasNoValue, element);
+            throw new InvalidDataException(message);
         }
 
 
-        public static XElement GetChildElement(this XElement parentElement, string childName)
+        private static XElement GetChildElement(this XElement parentElement, string childElementName)
         {
-            var result = parentElement.Element(childName);
+            var result = parentElement.Element(childElementName);
             if (result != null)
             {
                 return result;
             }
-            throw new InvalidDataException(
-                $"XML file doesn`t contains child element: \"{childName}\" in parent element: \"{parentElement.Name}\"");
+            var message = string.Format(LessonXmlParserErrorMessages.ElementChildNotFound, parentElement.Name,
+                childElementName);
+            throw new InvalidDataException(message);
         }
 
-        public static bool HaveChildElement(this XElement parentElement, string childName)
+        public static bool HaveChildElement(this XElement parentElement, string childElementName)
         {
-            var result = parentElement.Element(childName);
+            var result = parentElement.Element(childElementName);
             return result != null;
         }
 
-        public static IEnumerable<XElement> GetChildCollection(this XElement rootElement, string childElementName,
-            string childCollectionElementName)
+        public static IEnumerable<XElement> GetChildCollection(this XElement parentElement, string childElementName,
+            string childItemsElementName)
         {
-            return rootElement.GetChildElement(childElementName).GetChildCollection(childCollectionElementName);
+            var child = parentElement.GetChildElement(childElementName);
+            var chilItems = child.Elements(childItemsElementName);
+            var childCollection = chilItems as IList<XElement> ?? chilItems.ToList();
+            if (childCollection.Any())
+            {
+                return childCollection;
+            }
+            var message = string.Format(LessonXmlParserErrorMessages.ElementChildrenNotFound, parentElement.Name,
+                childElementName);
+            throw new InvalidDataException(message);
         }
     }
 }

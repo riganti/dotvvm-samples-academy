@@ -22,7 +22,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson1
                 .SingleOrDefault();
             if (buttonTextBinding == null)
             {
-                throw new CodeValidationException(Lesson1ValidationErrorMessages.ButtonDoesNotHaveText);
+                throw new CodeValidationException(Lesson1Texts.ButtonDoesNotHaveText);
             }
         }
     }

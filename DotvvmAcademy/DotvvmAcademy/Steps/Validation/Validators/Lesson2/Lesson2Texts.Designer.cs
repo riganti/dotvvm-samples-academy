@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DotvvmAcademy.Lessons {
+namespace DotvvmAcademy.Steps.Validation.Validators.Lesson2{
     using System;
     using System.Reflection;
     
@@ -38,7 +38,7 @@ namespace DotvvmAcademy.Lessons {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DotvvmAcademy.Lessons.Lesson2ValidationErrorMessages", typeof(Lesson2Texts).GetTypeInfo().Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DotvvmAcademy.Steps.Validation.Validators.Lesson2.Lesson2Texts", typeof(Lesson2Texts).GetTypeInfo().Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

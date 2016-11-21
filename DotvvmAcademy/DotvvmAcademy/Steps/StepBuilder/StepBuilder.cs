@@ -107,8 +107,8 @@ namespace DotvvmAcademy.Steps.StepBuilder
         private static void FillElementChildrenCollection(CodeStepCsharp csharpCode, XElement parentStepElement,
             string elementWithCollectionName, string itemElementName, Action<CodeStepCsharp, string> addAction)
         {
-            var otherCodeDependencies =
-                parentStepElement.Element(elementWithCollectionName).GetChildCollection(itemElementName);
+            var otherCodeDependencies = parentStepElement.GetChildCollection(elementWithCollectionName, itemElementName);
+
             foreach (var dependency in otherCodeDependencies)
             {
                 addAction.Invoke(csharpCode, dependency.GetElementStringValue());

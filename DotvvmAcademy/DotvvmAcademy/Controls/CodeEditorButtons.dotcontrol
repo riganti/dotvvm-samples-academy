@@ -1,4 +1,4 @@
-﻿@viewModel DotvvmAcademy.Steps.StepsBases.ICodeStepCode, DotvvmAcademy
+﻿@viewModel DotvvmAcademy.Steps.StepsBases.Interfaces.ICodeStepCode, DotvvmAcademy
 
 <div class="code-editor-buttons">
     <dot:LinkButton Click="{command: ResetCode()}" class="btn btn-default">
