@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DotvvmAcademy.Steps {
+namespace DotvvmAcademy.Steps.Validation.Validators {
     using System;
     using System.Reflection;
     
@@ -22,13 +22,13 @@ namespace DotvvmAcademy.Steps {
     // with the /str option, or rebuild your VS project.
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Texts {
+    public class ValidationErrorMessages {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
-        internal Texts() {
+        internal ValidationErrorMessages() {
         }
         
         /// <summary>
@@ -38,7 +38,7 @@ namespace DotvvmAcademy.Steps {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DotvvmAcademy.Steps.Texts", typeof(Texts).GetTypeInfo().Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DotvvmAcademy.Steps.Validation.Validators.ValidationErrorMessages", typeof(ValidationErrorMessages).GetTypeInfo().Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -60,11 +60,38 @@ namespace DotvvmAcademy.Steps {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to The class {0} was not found!.
+        /// </summary>
+        public static string ClassNotFound {
+            get {
+                return ResourceManager.GetString("ClassNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to The {0} property {1} must contain binding in the following format: {{command: Something()}}.
         /// </summary>
         public static string CommandBindingExpected {
             get {
                 return ResourceManager.GetString("CommandBindingExpected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to You need to add empty parenthesis after the {0} method..
+        /// </summary>
+        public static string CommandDoesNotHaveParenthesis {
+            get {
+                return ResourceManager.GetString("CommandDoesNotHaveParenthesis", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to The command methods in the viewmodel must be public and must have the correct signature!.
+        /// </summary>
+        public static string CommandMethodError {
+            get {
+                return ResourceManager.GetString("CommandMethodError", resourceCulture);
             }
         }
         
@@ -87,11 +114,47 @@ namespace DotvvmAcademy.Steps {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to The {0} method doesn&apos;t exist!.
+        /// </summary>
+        public static string MethodNotFound {
+            get {
+                return ResourceManager.GetString("MethodNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to You must call the {0} in the command binding!.
+        /// </summary>
+        public static string MethodWasNotCalled {
+            get {
+                return ResourceManager.GetString("MethodWasNotCalled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to The {0} doesn&apos;t specify the {1} property!.
         /// </summary>
         public static string MissingPropertyError {
             get {
                 return ResourceManager.GetString("MissingPropertyError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to The {0} property was not found or doesn&apos;t have a correct type!.
+        /// </summary>
+        public static string PropertyNotFound {
+            get {
+                return ResourceManager.GetString("PropertyNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Step type {0} ins`t supported!.
+        /// </summary>
+        public static string StepTypeExpected {
+            get {
+                return ResourceManager.GetString("StepTypeExpected", resourceCulture);
             }
         }
         

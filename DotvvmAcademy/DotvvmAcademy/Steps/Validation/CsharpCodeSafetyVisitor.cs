@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using DotvvmAcademy.Steps.Validation.Validators;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -33,7 +34,7 @@ namespace DotvvmAcademy.Steps.Validation
 
             if (!step.AllowedMethodsCalled.Contains(fullMethodName))
             {
-                throw new CodeValidationException(string.Format(Texts.IllegalMethodCall, fullMethodName));
+                throw new CodeValidationException(string.Format(ValidationErrorMessages.IllegalMethodCall, fullMethodName));
             }
 
             base.VisitInvocationExpression(node);
@@ -46,7 +47,7 @@ namespace DotvvmAcademy.Steps.Validation
 
             if (!step.AllowedTypesConstructed.Contains(fullTypeName))
             {
-                throw new CodeValidationException(string.Format(Texts.IllegalConstructorCall, fullTypeName));
+                throw new CodeValidationException(string.Format(ValidationErrorMessages.IllegalConstructorCall, fullTypeName));
             }
 
             base.VisitObjectCreationExpression(node);

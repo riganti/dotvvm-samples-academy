@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using DotvvmAcademy.Lessons;
 using DotvvmAcademy.Steps.Validation.Interfaces;
+using DotvvmAcademy.Steps.Validation.ValidatorProvision;
 using DotVVM.Framework.Compilation.ControlTree.Resolved;
 using DotVVM.Framework.Controls;
 
@@ -21,7 +22,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson1
                 .SingleOrDefault();
             if (buttonTextBinding == null)
             {
-                throw new CodeValidationException(Lesson1Texts.ButtonDoesNotHaveText);
+                throw new CodeValidationException(Lesson1ValidationErrorMessages.ButtonDoesNotHaveText);
             }
         }
     }

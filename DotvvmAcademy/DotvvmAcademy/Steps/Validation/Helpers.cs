@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
 using DotvvmAcademy.Lessons;
+using DotvvmAcademy.Steps.Validation.Validators;
 using DotVVM.Framework.Binding.Expressions;
 using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Compilation.ControlTree.Resolved;
@@ -59,14 +60,16 @@ namespace DotvvmAcademy.Steps.Validation
             IAbstractPropertySetter binding;
             if (!control.TryGetProperty(property, out binding) || !(binding is ResolvedPropertyBinding))
             {
-                throw new CodeValidationException(string.Format(Texts.MissingPropertyError, control.Metadata.Type.Name,
+                throw new CodeValidationException(string.Format(ValidationErrorMessages.MissingPropertyError,
+                    control.Metadata.Type.Name,
                     property.Name));
             }
 
             var typedBinding = (ResolvedPropertyBinding) binding;
             if (typedBinding.Binding.BindingType != typeof(ValueBindingExpression))
             {
-                throw new CodeValidationException(string.Format(Texts.ValueBindingExpected, control.Metadata.Type.Name,
+                throw new CodeValidationException(string.Format(ValidationErrorMessages.ValueBindingExpected,
+                    control.Metadata.Type.Name,
                     property.Name));
             }
 
@@ -78,14 +81,16 @@ namespace DotvvmAcademy.Steps.Validation
             IAbstractPropertySetter binding;
             if (!control.TryGetProperty(property, out binding) || !(binding is ResolvedPropertyBinding))
             {
-                throw new CodeValidationException(string.Format(Texts.MissingPropertyError, control.Metadata.Type.Name,
+                throw new CodeValidationException(string.Format(ValidationErrorMessages.MissingPropertyError,
+                    control.Metadata.Type.Name,
                     property.Name));
             }
 
             var typedBinding = (ResolvedPropertyBinding) binding;
             if (typedBinding.Binding.BindingType != typeof(CommandBindingExpression))
             {
-                throw new CodeValidationException(string.Format(Texts.CommandBindingExpected, control.Metadata.Type.Name,
+                throw new CodeValidationException(string.Format(ValidationErrorMessages.CommandBindingExpected,
+                    control.Metadata.Type.Name,
                     property.Name));
             }
 
@@ -98,12 +103,13 @@ namespace DotvvmAcademy.Steps.Validation
             var binding = GetCommandBindingText(control, property).Replace(" ", "");
             if ((binding != desiredExpression) && binding.StartsWith(desiredExpression))
             {
-                throw new CodeValidationException(string.Format(GenericTexts.CommandDoesNotHaveParenthesis,
+                throw new CodeValidationException(string.Format(ValidationErrorMessages.CommandDoesNotHaveParenthesis,
                     desiredExpression));
             }
             if (binding != desiredExpression)
             {
-                throw new CodeValidationException(string.Format(GenericTexts.MethodWasNotCalled, desiredExpression));
+                throw new CodeValidationException(string.Format(ValidationErrorMessages.MethodWasNotCalled,
+                    desiredExpression));
             }
         }
 
@@ -112,7 +118,8 @@ namespace DotvvmAcademy.Steps.Validation
             IAbstractPropertySetter value;
             if (!control.TryGetProperty(property, out value) || !(value is ResolvedPropertyValue))
             {
-                throw new CodeValidationException(string.Format(Texts.MissingPropertyError, control.Metadata.Type.Name,
+                throw new CodeValidationException(string.Format(ValidationErrorMessages.MissingPropertyError,
+                    control.Metadata.Type.Name,
                     property.Name));
             }
 
@@ -143,7 +150,7 @@ namespace DotvvmAcademy.Steps.Validation
             }
             catch (RuntimeBinderException ex)
             {
-                throw new CodeValidationException(GenericTexts.CommandMethodError, ex);
+                throw new CodeValidationException(ValidationErrorMessages.CommandMethodError, ex);
             }
         }
 

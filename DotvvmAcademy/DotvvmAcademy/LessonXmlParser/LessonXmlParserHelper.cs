@@ -4,11 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace DotvvmAcademy.Helpers
+namespace DotvvmAcademy.LessonXmlParser
 {
-    public static class XmlParserHelper
+    public static class LessonXmlParserHelper
     {
-
         public static XAttribute GetAttribute(this XElement element, string attributeName)
         {
             var attribute = element.Attribute(attributeName);
@@ -21,33 +20,8 @@ namespace DotvvmAcademy.Helpers
         }
 
 
-        public static XElement CreateXElementFromText(string xmlText)
-        {
-            try
-            {
-                return XElement.Parse(xmlText);
-            }
-            catch (Exception)
-            {
-                //todo UI Exception
-                throw;
-            }
-        }
+        
 
-        public static string GetXmlTextRelativePath(string lessonXmlRelativePath)
-        {
-            try
-            {
-                var absolutePath = Path.Combine(Directory.GetCurrentDirectory(), lessonXmlRelativePath);
-                var result = File.ReadAllText(absolutePath);
-                return result;
-            }
-            catch (Exception ex)
-            {
-                //todo UI Exception
-                throw;
-            }
-        }
 
         public static IEnumerable<XElement> GetChildCollection(this XElement parentElement, string childElementName)
         {
@@ -72,7 +46,7 @@ namespace DotvvmAcademy.Helpers
 
         public static string GetElementStringValue(this XElement element)
         {
-            string result = element.Value;
+            var result = element.Value;
             if (result != null)
             {
                 result = result.Trim();
@@ -99,6 +73,12 @@ namespace DotvvmAcademy.Helpers
         {
             var result = parentElement.Element(childName);
             return result != null;
+        }
+
+        public static IEnumerable<XElement> GetChildCollection(this XElement rootElement, string childElementName,
+            string childCollectionElementName)
+        {
+            return rootElement.GetChildElement(childElementName).GetChildCollection(childCollectionElementName);
         }
     }
 }

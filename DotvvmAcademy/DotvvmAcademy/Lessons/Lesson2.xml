@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Lesson>
     <Level>2</Level>
-    <ValidatorFolder>Lesson2</ValidatorFolder>
+    <ValidatorsNamespace>DotvvmAcademy.Steps.Validation.Validators.Lesson2</ValidatorsNamespace>
     <Title>To do list</Title>
     <Steps>
         <Step Type="Info">
@@ -330,12 +330,12 @@ namespace DotvvmAcademy.Tutorial.ViewModels
             <AllowedTypesConstructed>
                 <AllowedType>
                     <![CDATA[
-"System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>
+System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>
                     ]]>
                 </AllowedType>
                 <AllowedType>
                     <![CDATA[
-"DotvvmAcademy.Tutorial.ViewModels.TaskData"
+DotvvmAcademy.Tutorial.ViewModels.TaskData
                     ]]>
                 </AllowedType>
             </AllowedTypesConstructed>

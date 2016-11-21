@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DotvvmAcademy.Steps.Validation
+namespace DotvvmAcademy.Steps.Validation.ValidatorProvision
 {
     public class StepValidationAttribute : Attribute
     {

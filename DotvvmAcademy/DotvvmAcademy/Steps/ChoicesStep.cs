@@ -4,7 +4,7 @@ using DotVVM.Framework.ViewModel;
 
 namespace DotvvmAcademy.Steps
 {
-    public class ChoicesStep : StepBase
+    public class ChoicesStep : ValidableStepBase
     {
         [Bind(Direction.ServerToClient)]
         public ChoiceStepOption[] Options { get; set; }

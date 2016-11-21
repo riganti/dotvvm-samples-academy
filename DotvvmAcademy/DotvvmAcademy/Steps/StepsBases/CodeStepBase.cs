@@ -1,10 +1,11 @@
 ﻿using DotvvmAcademy.Lessons;
+using DotvvmAcademy.Steps.StepsBases.Interfaces;
 using DotvvmAcademy.Steps.Validation.Interfaces;
 using DotVVM.Framework.ViewModel;
 
 namespace DotvvmAcademy.Steps.StepsBases
 {
-    public abstract class CodeStepBase<T> : StepBase, ICodeStep<T>
+    public abstract class CodeStepBase<T> : ValidableStepBase, ICodeStep<T>
         where T : ILessonValidationObject
     {
 

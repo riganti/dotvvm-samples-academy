@@ -2,6 +2,7 @@
 using System.Reflection;
 using DotvvmAcademy.Lessons;
 using DotvvmAcademy.Steps.Validation.Interfaces;
+using DotvvmAcademy.Steps.Validation.ValidatorProvision;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -23,7 +24,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson2
 
             if (methods.Count(m => m.CheckNameAndVoid("CompleteTask")) != 1)
             {
-                throw new CodeValidationException(string.Format(GenericTexts.MethodNotFound, "CompleteTask"));
+                throw new CodeValidationException(string.Format(ValidationErrorMessages.MethodNotFound, "CompleteTask"));
             }
 
             this.ExecuteSafe(() =>

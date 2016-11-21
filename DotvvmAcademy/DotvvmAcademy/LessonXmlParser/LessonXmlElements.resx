@@ -117,22 +117,61 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ClassNotFound" xml:space="preserve">
-    <value>The class {0} was not found!</value>
+  <data name="AllowedMethodElement" xml:space="preserve">
+    <value>AllowedMethod</value>
   </data>
-  <data name="CommandDoesNotHaveParenthesis" xml:space="preserve">
-    <value>You need to add empty parenthesis after the {0} method.</value>
+  <data name="AllowedMethodsCalledElement" xml:space="preserve">
+    <value>AllowedMethodsCalled</value>
   </data>
-  <data name="CommandMethodError" xml:space="preserve">
-    <value>The command methods in the viewmodel must be public and must have the correct signature!</value>
+  <data name="AllowedTypeElement" xml:space="preserve">
+    <value>AllowedType</value>
   </data>
-  <data name="MethodNotFound" xml:space="preserve">
-    <value>The {0} method doesn't exist!</value>
+  <data name="AllowedTypesConstructedElement" xml:space="preserve">
+    <value>AllowedTypesConstructed</value>
   </data>
-  <data name="MethodWasNotCalled" xml:space="preserve">
-    <value>You must call the {0} in the command binding!</value>
+  <data name="CodeDependenciesElement" xml:space="preserve">
+    <value>CodeDependencies</value>
   </data>
-  <data name="PropertyNotFound" xml:space="preserve">
-    <value>The {0} property was not found or doesn't have a correct type!</value>
+  <data name="CodeDependencyElement" xml:space="preserve">
+    <value>CodeDependency</value>
+  </data>
+  <data name="DescriptionElement" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="FinalCodeElement" xml:space="preserve">
+    <value>FinalCode</value>
+  </data>
+  <data name="ShadowBoxDescriptionElement" xml:space="preserve">
+    <value>ShadowBoxDescription</value>
+  </data>
+  <data name="StartupCodeElement" xml:space="preserve">
+    <value>StartupCode</value>
+  </data>
+  <data name="StepElement" xml:space="preserve">
+    <value>Step</value>
+  </data>
+  <data name="StepsElement" xml:space="preserve">
+    <value>Steps</value>
+  </data>
+  <data name="StepTypeAttribute" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="StepTypeCsharpCode" xml:space="preserve">
+    <value>CsharpCode</value>
+  </data>
+  <data name="StepTypeDothtmlCode" xml:space="preserve">
+    <value>DothtmlCode</value>
+  </data>
+  <data name="StepTypeInfo" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="TitleElement" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="ValidationKeyElement" xml:space="preserve">
+    <value>ValidationKey</value>
+  </data>
+  <data name="ValidatorsNamespaceElement" xml:space="preserve">
+    <value>ValidatorsNamespace</value>
   </data>
 </root>

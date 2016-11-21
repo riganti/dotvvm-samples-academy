@@ -1,22 +1,21 @@
-using DotVVM.Framework.Hosting;
-using DotvvmAcademy.Lessons;
-using DotvvmAcademy.Services;
-using DotvvmAcademy.Steps;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using DotvvmAcademy.Lessons;
+using DotvvmAcademy.Services;
 using DotvvmAcademy.Steps.StepsBases;
+using DotvvmAcademy.Steps.StepsBases.Interfaces;
+using DotVVM.Framework.Hosting;
 
 namespace DotvvmAcademy.ViewModels
 {
     public class LessonViewModel : SiteViewModel
     {
-        public StepBase Step { get; set; }
-        public string ErrorMessage { get; private set; }
-        public bool ContinueButtonVisible { get; set; } = true;
-
         protected LessonBase lesson;
         protected int lessonNumber;
+        public IStep Step { get; set; }
+        public string ErrorMessage { get; private set; }
+        public bool ContinueButtonVisible { get; set; } = true;
         protected int CurrentStepNumber { get; set; }
 
         public override Task Init()
@@ -44,9 +43,11 @@ namespace DotvvmAcademy.ViewModels
                 throw new NotSupportedException();
             }
 
+            //todo create cache
             Step = lesson.Steps.First(s => s.StepIndex == CurrentStepNumber);
+
+
             AfterLoad();
-           
         }
 
         protected virtual void AfterLoad()
@@ -57,7 +58,11 @@ namespace DotvvmAcademy.ViewModels
         {
             var storage = new LessonProgressStorage(Context.GetAspNetCoreContext());
 
-            ErrorMessage = Step.ErrorMessage;
+            if (Step is ValidableStepBase)
+            {
+                var validableStep = Step as ValidableStepBase;
+                ErrorMessage = validableStep.ErrorMessage;
+            }
 
             if (string.IsNullOrEmpty(ErrorMessage))
             {
@@ -76,7 +81,7 @@ namespace DotvvmAcademy.ViewModels
 
         protected virtual void RedirectToNextLesson()
         {
-            Context.RedirectToRoute("Lesson", new { Step = CurrentStepNumber + 1 });
+            Context.RedirectToRoute("Lesson", new {Step = CurrentStepNumber + 1});
         }
     }
 }

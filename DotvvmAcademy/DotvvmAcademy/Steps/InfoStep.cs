@@ -1,14 +1,11 @@
-﻿using System.Collections.Generic;
-using DotvvmAcademy.Steps.StepsBases;
+﻿using DotvvmAcademy.Steps.StepsBases.Interfaces;
 
 namespace DotvvmAcademy.Steps
 {
-    public class InfoStep : StepBase
+    public class InfoStep : IStep
     {
-        protected override IEnumerable<string> GetErrors()
-        {
-            //todo... 
-            yield break;
-        }
+        public int StepIndex { get; set; }
+        public string Description { get; set; }
+        public string Title { get; set; }
     }
 }

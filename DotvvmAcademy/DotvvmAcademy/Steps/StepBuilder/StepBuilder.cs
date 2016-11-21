@@ -1,40 +1,34 @@
 ﻿using System;
 using System.IO;
 using System.Xml.Linq;
-using DotvvmAcademy.Steps;
-using DotvvmAcademy.Steps.StepsBases;
-using DotvvmAcademy.Steps.Validation;
+using DotvvmAcademy.LessonXmlParser;
+using DotvvmAcademy.Steps.StepsBases.Interfaces;
 using DotvvmAcademy.Steps.Validation.Interfaces;
+using DotvvmAcademy.Steps.Validation.ValidatorProvision;
+using DotvvmAcademy.Steps.Validation.Validators;
 
-namespace DotvvmAcademy.Helpers
+namespace DotvvmAcademy.Steps.StepBuilder
 {
     public class StepBuilder
     {
-        public StepBase CreateStep(XElement stepElement, int index)
+        public IStep CreateStep(XElement stepElement, int index)
         {
-            //todo to resources
-            var csharpcode = "CsharpCode";
-            var dothtmlcode = "DothtmlCode";
-            var info = "Info";
-            var type = "Type";
+            var stepType = stepElement.GetAttribute(LessonXmlElements.StepTypeAttribute).Value;
 
-
-            var stepType = stepElement.GetAttribute(type).Value;
-
-            if (stepType == csharpcode)
+            if (stepType == LessonXmlElements.StepTypeCsharpCode)
             {
                 return CreateCodeCsharpStep(stepElement, index);
             }
-            if (stepType == dothtmlcode)
+            if (stepType == LessonXmlElements.StepTypeDothtmlCode)
             {
                 return CreateCodeDothtmlStep(stepElement, index);
             }
 
-            if (stepType == info)
+            if (stepType == LessonXmlElements.StepTypeInfo)
             {
                 return CreateInfoStep(stepElement, index);
             }
-            throw new InvalidDataException($"Step type {stepElement.Name} ins`t supported");
+            throw new InvalidDataException(string.Format(ValidationErrorMessages.StepTypeExpected, stepElement.Name));
         }
 
 
@@ -66,62 +60,46 @@ namespace DotvvmAcademy.Helpers
 
         private void FillStepBasicData(IStep stepBase, XElement stepElement, int index)
         {
-            //todo resources
-            var childElementName = "Description";
-            var elementName = "Title";
-
             stepBase.StepIndex = index;
-            stepBase.Description = stepElement.GetChildElementStringValue(childElementName);
-            stepBase.Title = stepElement.GetChildElementStringValue(elementName);
+            stepBase.Description = stepElement.GetChildElementStringValue(LessonXmlElements.DescriptionElement);
+            stepBase.Title = stepElement.GetChildElementStringValue(LessonXmlElements.TitleElement);
         }
 
         private void FillStepCodeData(ICodeStepData stepCodeBase, XElement stepElement, int index)
         {
-            //todo resources
-            var finalcode = "FinalCode";
-            var startupcode = "StartupCode";
-            var shadowboxdescription = "ShadowBoxDescription";
-
             FillStepBasicData(stepCodeBase, stepElement, index);
-            stepCodeBase.StartupCode = stepElement.GetChildElementStringValue(startupcode);
-            stepCodeBase.FinalCode = stepElement.GetChildElementStringValue(finalcode);
-            if (stepElement.HaveChildElement(shadowboxdescription))
+            stepCodeBase.StartupCode = stepElement.GetChildElementStringValue(LessonXmlElements.StartupCodeElement);
+            stepCodeBase.FinalCode = stepElement.GetChildElementStringValue(LessonXmlElements.FinalCodeElement);
+            if (stepElement.HaveChildElement(LessonXmlElements.ShadowBoxDescriptionElement))
             {
-                stepCodeBase.ShadowBoxDescription = stepElement.GetChildElementStringValue(shadowboxdescription);
+                stepCodeBase.ShadowBoxDescription =
+                    stepElement.GetChildElementStringValue(LessonXmlElements.ShadowBoxDescriptionElement);
             }
         }
 
         private void FillAdditionalCsharpCodeData(CodeStepCsharp csharpCode, XElement stepElement)
         {
-            //todo resources
-            var codeDependencies = "CodeDependencies";
-            var codeDependency = "CodeDependency";
-
-            var allowedTypes = "AllowedTypesConstructed";
-            var allowedType = "AllowedType";
-
-            var allowedMethods = "AllowedMethodsCalled";
-            var allowedMethod = "AllowedMethod";
-
-
             Action<CodeStepCsharp, string> addAction;
 
-            if (stepElement.HaveChildElement(codeDependencies))
+            if (stepElement.HaveChildElement(LessonXmlElements.CodeDependenciesElement))
             {
                 addAction = (code, at) => code.OtherCodeDependencies.Add(at);
-                FillElementChildrenCollection(csharpCode, stepElement, codeDependencies, codeDependency, addAction);
+                FillElementChildrenCollection(csharpCode, stepElement, LessonXmlElements.CodeDependenciesElement,
+                    LessonXmlElements.CodeDependencyElement, addAction);
             }
 
-            if (stepElement.HaveChildElement(allowedTypes))
+            if (stepElement.HaveChildElement(LessonXmlElements.AllowedTypesConstructedElement))
             {
                 addAction = (code, at) => code.AllowedTypesConstructed.Add(at);
-                FillElementChildrenCollection(csharpCode, stepElement, allowedTypes, allowedType, addAction);
+                FillElementChildrenCollection(csharpCode, stepElement, LessonXmlElements.AllowedTypesConstructedElement,
+                    LessonXmlElements.AllowedTypeElement, addAction);
             }
 
-            if (stepElement.HaveChildElement(allowedMethods))
+            if (stepElement.HaveChildElement(LessonXmlElements.AllowedMethodsCalledElement))
             {
                 addAction = (code, at) => code.AllowedMethodsCalled.Add(at);
-                FillElementChildrenCollection(csharpCode, stepElement, allowedMethods, allowedMethod, addAction);
+                FillElementChildrenCollection(csharpCode, stepElement, LessonXmlElements.AllowedMethodsCalledElement,
+                    LessonXmlElements.AllowedMethodElement, addAction);
             }
         }
 
@@ -141,14 +119,11 @@ namespace DotvvmAcademy.Helpers
         private void CreateValidator<T>(ICodeStep<T> result, XElement stepElement)
             where T : ILessonValidationObject
         {
-            //todo resources
-            var validationkey = "ValidationKey";
-            var validatorfolder = "ValidatorFolder";
-
             var provider = new ValidatorProvider<T>();
-            var validationKey = stepElement.GetChildElementStringValue(validationkey);
-            var validationFolder = stepElement.Parent.Parent.GetChildElementStringValue(validatorfolder);
-            result.Validator = provider.CreateValidator(validationKey, validationFolder);
+            var validationKey = stepElement.GetChildElementStringValue(LessonXmlElements.ValidationKeyElement);
+            var validationNamespace =
+                stepElement.Parent.Parent.GetChildElementStringValue(LessonXmlElements.ValidatorsNamespaceElement);
+            result.Validator = provider.CreateValidator(validationKey, validationNamespace);
         }
     }
 }

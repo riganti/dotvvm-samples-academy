@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using DotvvmAcademy.Steps.StepsBases;
+using DotvvmAcademy.Steps.StepsBases.Interfaces;
 
 namespace DotvvmAcademy.Lessons
 {
     public abstract class LessonBase
     {
-        public IEnumerable<StepBase> Steps { get; set; }
+        public IEnumerable<IStep> Steps { get; set; }
     }
 }

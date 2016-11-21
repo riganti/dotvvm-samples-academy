@@ -40,10 +40,6 @@ namespace DotvvmAcademy.Steps
             try
             {
                 var tree = (CSharpSyntaxTree) CSharpSyntaxTree.ParseText(Code);
-
-                OtherCodeDependencies.ForEach(a=> Regex.Replace(a, @"\t|\n|\r", ""));
-
-
                 var compilation = CSharpCompilation.Create(
                     Guid.NewGuid().ToString(),
                     new[] {tree}.Concat(OtherCodeDependencies.Select(c => CSharpSyntaxTree.ParseText(c))),

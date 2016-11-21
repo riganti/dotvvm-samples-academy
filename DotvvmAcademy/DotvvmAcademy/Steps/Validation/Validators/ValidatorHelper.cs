@@ -1,17 +1,16 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Reflection;
 using DotvvmAcademy.Lessons;
 using DotvvmAcademy.Steps.Validation.Interfaces;
+using DotvvmAcademy.Steps.Validation.Validators.Lesson1;
 using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Compilation.ControlTree.Resolved;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 using DotVVM.Framework.Controls;
+using DotVVM.Framework.Utils;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.CSharp.RuntimeBinder;
-using DotVVM.Framework.Utils;
 
 namespace DotvvmAcademy.Steps.Validation.Validators
 {
@@ -38,15 +37,15 @@ namespace DotvvmAcademy.Steps.Validation.Validators
 
             if (properties.Count(p => p.CheckNameAndType("Number1", "int")) != 1)
             {
-                throw new CodeValidationException(string.Format(GenericTexts.PropertyNotFound, "Number1"));
+                throw new CodeValidationException(string.Format(ValidationErrorMessages.PropertyNotFound, "Number1"));
             }
             if (properties.Count(p => p.CheckNameAndType("Number2", "int")) != 1)
             {
-                throw new CodeValidationException(string.Format(GenericTexts.PropertyNotFound, "Number2"));
+                throw new CodeValidationException(string.Format(ValidationErrorMessages.PropertyNotFound, "Number2"));
             }
             if (properties.Count(p => p.CheckNameAndType("Result", "int")) != 1)
             {
-                throw new CodeValidationException(string.Format(GenericTexts.PropertyNotFound, "Result"));
+                throw new CodeValidationException(string.Format(ValidationErrorMessages.PropertyNotFound, "Result"));
             }
         }
 
@@ -94,7 +93,8 @@ namespace DotvvmAcademy.Steps.Validation.Validators
 
             if (properties.Count(p => p.CheckNameAndType("AddedTaskTitle", "string")) != 1)
             {
-                throw new CodeValidationException(string.Format(GenericTexts.PropertyNotFound, "AddedTaskTitle"));
+                throw new CodeValidationException(string.Format(ValidationErrorMessages.PropertyNotFound,
+                    "AddedTaskTitle"));
             }
 
             var methods = tree.GetCompilationUnitRoot().DescendantNodes().OfType<MethodDeclarationSyntax>()
@@ -103,7 +103,8 @@ namespace DotvvmAcademy.Steps.Validation.Validators
 
             if (methods.Count(m => m.CheckNameAndVoid("AddTask")) != 1)
             {
-                throw new CodeValidationException(string.Format(GenericTexts.MethodNotFound, "Calculate"));
+                throw new CodeValidationException(string.Format(ValidationErrorMessages.MethodNotFound,
+                    "Calculate"));
             }
         }
 
@@ -124,28 +125,33 @@ namespace DotvvmAcademy.Steps.Validation.Validators
         }
 
 
-        public static void ValidateTasksProperty(CSharpCompilation compilation, CSharpSyntaxTree tree, SemanticModel model, Assembly assembly)
+        public static void ValidateTasksProperty(CSharpCompilation compilation, CSharpSyntaxTree tree,
+            SemanticModel model, Assembly assembly)
         {
             ValidateAddTaskProperties(compilation, tree, model, assembly);
 
             var properties = tree.GetCompilationUnitRoot().DescendantNodes().OfType<PropertyDeclarationSyntax>()
                 .Select(p => model.GetDeclaredSymbol(p))
                 .ToList();
-            if (properties.Count(p => p.CheckNameAndType("Tasks", "System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>")) != 1)
+            if (
+                properties.Count(
+                    p =>
+                        p.CheckNameAndType("Tasks",
+                            "System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>")) != 1)
             {
-                throw new CodeValidationException(string.Format(GenericTexts.PropertyNotFound, "Tasks"));
+                throw new CodeValidationException(string.Format(ValidationErrorMessages.PropertyNotFound, "Tasks"));
             }
         }
 
 
-
-        public static void ValidateAddTaskMethod(CSharpCompilation compilation, CSharpSyntaxTree tree, SemanticModel model, Assembly assembly, ILessonValidationObject validator)
+        public static void ValidateAddTaskMethod(CSharpCompilation compilation, CSharpSyntaxTree tree,
+            SemanticModel model, Assembly assembly, ILessonValidationObject validator)
         {
             ValidateTasksProperty(compilation, tree, model, assembly);
 
             validator.ExecuteSafe(() =>
             {
-                var viewModel = (dynamic)assembly.CreateInstance("DotvvmAcademy.Tutorial.ViewModels.Lesson2ViewModel");
+                var viewModel = (dynamic) assembly.CreateInstance("DotvvmAcademy.Tutorial.ViewModels.Lesson2ViewModel");
                 viewModel.AddedTaskTitle = "test";
                 viewModel.AddTask();
 
@@ -155,11 +161,13 @@ namespace DotvvmAcademy.Steps.Validation.Validators
                 }
                 if (viewModel.Tasks[0].Title != "test")
                 {
-                    throw new CodeValidationException("When creating a task, use the AddedTaskTitle as a title of the task!");
+                    throw new CodeValidationException(
+                        "When creating a task, use the AddedTaskTitle as a title of the task!");
                 }
                 if (viewModel.AddedTaskTitle != "")
                 {
-                    throw new CodeValidationException("You need to reset the AddedTaskTitle property to an empty string after you create a task!");
+                    throw new CodeValidationException(
+                        "You need to reset the AddedTaskTitle property to an empty string after you create a task!");
                 }
             });
         }
@@ -185,7 +193,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators
             {
                 throw new CodeValidationException(Lesson2Texts.RepeaterTemplateMissingDivError);
             }
-            var template = (ResolvedPropertyTemplate)setter;
+            var template = (ResolvedPropertyTemplate) setter;
 
             var div = template.GetDescendantControls<HtmlGenericControl>().ToList();
             if (div.Count(d => d.DothtmlNode.As<DothtmlElementNode>()?.TagName == "div") != 1)
@@ -221,7 +229,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators
         public static void ValidateRepeaterTemplate2(ResolvedTreeRoot root)
         {
             ValidateRepeaterTemplate1(root);
-
+            //todo createTemplate etc!
             var template = root.GetDescendantControls<Repeater>().Single()
                 .Properties[Repeater.ItemTemplateProperty]
                 .CastTo<ResolvedPropertyTemplate>();
@@ -234,6 +242,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators
                 throw new CodeValidationException(Lesson2Texts.InvalidVisibleBinding);
             }
         }
+
         public static void ValidateRepeaterTemplate3(ResolvedTreeRoot root)
         {
             ValidateRepeaterTemplate2(root);
@@ -245,36 +254,8 @@ namespace DotvvmAcademy.Steps.Validation.Validators
             var linkButton = template
                 .GetDescendantControls<LinkButton>()
                 .Single();
+
             linkButton.ValidateCommandBindingExpression(ButtonBase.ClickProperty, "_parent.CompleteTask(_this)");
-        }
-
-
-        //todo move to
-
-        public static void ExecuteSafe(this ILessonValidationObject validator, Action action)
-        {
-            try
-            {
-                action();
-            }
-            catch (RuntimeBinderException ex)
-            {
-                throw new CodeValidationException(GenericTexts.CommandMethodError, ex);
-            }
-        }
-
-        public static TValue GetAttributeValue<TAttribute, TValue>(this Type type,
-            Func<TAttribute, TValue> valueSelector)
-            where TAttribute : Attribute
-        {
-            var att = type.GetTypeInfo().GetCustomAttributes(
-                typeof(TAttribute), true
-            ).FirstOrDefault() as TAttribute;
-            if (att != null)
-            {
-                return valueSelector(att);
-            }
-            return default(TValue);
         }
     }
 }

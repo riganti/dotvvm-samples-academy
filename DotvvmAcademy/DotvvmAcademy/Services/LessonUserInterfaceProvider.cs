@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
-using DotvvmAcademy.Lessons;
-using DotvvmAcademy.Steps.StepsBases;
+using DotvvmAcademy.Steps.StepsBases.Interfaces;
 
 namespace DotvvmAcademy.Services
 {
@@ -8,10 +7,10 @@ namespace DotvvmAcademy.Services
     {
         public LessonUserInterfaceProvider(string lessonXmlRelativePath)
         {
-            var parser = new LessonXmlParser();
+            var parser = new LessonXmlParser.LessonXmlParser();
             LessonSteps = parser.ParseXmlToSteps(lessonXmlRelativePath);
         }
 
-        public IEnumerable<StepBase> LessonSteps { get; set; }
+        public List<IStep> LessonSteps { get; set; }
     }
 }
