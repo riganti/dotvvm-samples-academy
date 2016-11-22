@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Reflection;
-using DotvvmAcademy.Lessons;
 using DotvvmAcademy.Steps.Validation.Interfaces;
 using DotvvmAcademy.Steps.Validation.ValidatorProvision;
 using Microsoft.CodeAnalysis;
