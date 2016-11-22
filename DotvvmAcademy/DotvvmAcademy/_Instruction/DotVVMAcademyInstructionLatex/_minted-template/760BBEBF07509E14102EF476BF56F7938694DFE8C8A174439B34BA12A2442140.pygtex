@@ -1,0 +1,13 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{namespace} \PYG{n+nn}{DotvvmAcademy.Steps.Validation.Validators.LessonZ}
+\PYG{p}{\PYGZob{}}
+\PYG{n+na}{	[StepValidation(ValidatorKey = \PYGZdq{}LessonZStepXValidator\PYGZdq{})]}
+	\PYG{k}{public} \PYG{k}{class} \PYG{n+nc}{LessonZStepXValidator}\PYG{p}{:} \PYG{n}{IDotHtmlCodeValidationObject}
+	\PYG{p}{\PYGZob{}}
+		\PYG{k}{public} \PYG{k}{void} \PYG{n+nf}{Validate}\PYG{p}{(}\PYG{n}{ResolvedTreeRoot} \PYG{n}{resolvedTreeRoot}\PYG{p}{)}
+		\PYG{p}{\PYGZob{}}
+			\PYG{n}{ValidatorHelper}\PYG{p}{.}\PYG{n}{ValidateBasicControls}\PYG{p}{(}\PYG{n}{resolvedTreeRoot}\PYG{p}{);}
+		\PYG{p}{\PYGZcb{}}
+	\PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

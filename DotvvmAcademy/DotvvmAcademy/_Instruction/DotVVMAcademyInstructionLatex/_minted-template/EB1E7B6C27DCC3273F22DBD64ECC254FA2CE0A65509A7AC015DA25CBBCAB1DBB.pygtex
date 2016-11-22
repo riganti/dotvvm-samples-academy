@@ -1,0 +1,49 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cp}{\PYGZlt{}?xml version=\PYGZdq{}1.0\PYGZdq{} encoding=\PYGZdq{}UTF\PYGZhy{}8\PYGZdq{}?\PYGZgt{}}
+\PYG{n+nt}{\PYGZlt{}Lesson\PYGZgt{}}
+	\PYG{c}{\PYGZlt{}!\PYGZhy{}\PYGZhy{} namespace of all validators assigned to current lesson\PYGZhy{}\PYGZhy{}\PYGZgt{}}
+	\PYG{n+nt}{\PYGZlt{}ValidatorsNamespace\PYGZgt{}}
+	DotvvmAcademy.Steps.Validation.Validators.LessonZ
+	\PYG{n+nt}{\PYGZlt{}/ValidatorsNamespace\PYGZgt{}}
+	\PYG{n+nt}{\PYGZlt{}Steps\PYGZgt{}}
+		\PYG{c}{\PYGZlt{}!\PYGZhy{}\PYGZhy{}Required attribute\PYGZhy{}\PYGZhy{}\PYGZgt{}}
+		\PYG{n+nt}{\PYGZlt{}Step} \PYG{n+na}{Type=}\PYG{l+s}{\PYGZdq{}Info\PYGZdq{}}\PYG{n+nt}{\PYGZgt{}}
+			\PYG{c}{\PYGZlt{}!\PYGZhy{}\PYGZhy{}Required element\PYGZhy{}\PYGZhy{}\PYGZgt{}}
+			\PYG{n+nt}{\PYGZlt{}Title\PYGZgt{}}XXXXXXX\PYG{n+nt}{\PYGZlt{}/Title\PYGZgt{}}
+			 \PYG{c}{\PYGZlt{}!\PYGZhy{}\PYGZhy{}Required element\PYGZhy{}\PYGZhy{}\PYGZgt{}}
+			\PYG{n+nt}{\PYGZlt{}Description\PYGZgt{}}\PYG{c+cp}{\PYGZlt{}![CDATA[XXXXXX]]\PYGZgt{}}\PYG{n+nt}{\PYGZlt{}/Description\PYGZgt{}}
+			\PYG{c}{\PYGZlt{}!\PYGZhy{}\PYGZhy{}Optional element\PYGZhy{}\PYGZhy{}\PYGZgt{}}
+			\PYG{n+nt}{\PYGZlt{}ShadowBoxDescription\PYGZgt{}}\PYG{c+cp}{\PYGZlt{}![CDATA[XXXXXX]]\PYGZgt{}}
+			\PYG{n+nt}{\PYGZlt{}/ShadowBoxDescription\PYGZgt{}}
+		\PYG{n+nt}{\PYGZlt{}/Step\PYGZgt{}}
+		\PYG{n+nt}{\PYGZlt{}Step} \PYG{n+na}{Type=}\PYG{l+s}{\PYGZdq{}CsharpCode\PYGZdq{}}\PYG{n+nt}{\PYGZgt{}}
+			\PYG{n+nt}{\PYGZlt{}Title\PYGZgt{}}XXXXXXX\PYG{n+nt}{\PYGZlt{}/Title\PYGZgt{}}
+			\PYG{n+nt}{\PYGZlt{}ValidationKey\PYGZgt{}}XXXXXX\PYG{n+nt}{\PYGZlt{}/ValidationKey\PYGZgt{}}
+			\PYG{n+nt}{\PYGZlt{}Description\PYGZgt{}}\PYG{c+cp}{\PYGZlt{}![CDATA[XXXXXX]]\PYGZgt{}}\PYG{n+nt}{\PYGZlt{}/Description\PYGZgt{}}
+			\PYG{c}{\PYGZlt{}!\PYGZhy{}\PYGZhy{}Optional element\PYGZhy{}\PYGZhy{}\PYGZgt{}}
+			\PYG{n+nt}{\PYGZlt{}ShadowBoxDescription\PYGZgt{}}\PYG{c+cp}{\PYGZlt{}![CDATA[XXXXXX]]\PYGZgt{}}
+			\PYG{n+nt}{\PYGZlt{}/ShadowBoxDescription\PYGZgt{}}
+			\PYG{c}{\PYGZlt{}!\PYGZhy{}\PYGZhy{}Required element\PYGZhy{}\PYGZhy{}\PYGZgt{}}
+			\PYG{n+nt}{\PYGZlt{}StartupCode\PYGZgt{}}\PYG{c+cp}{\PYGZlt{}![CDATA[XXXXXX]]\PYGZgt{}}\PYG{n+nt}{\PYGZlt{}/StartupCode\PYGZgt{}}
+			\PYG{c}{\PYGZlt{}!\PYGZhy{}\PYGZhy{}Required element\PYGZhy{}\PYGZhy{}\PYGZgt{}}
+			\PYG{n+nt}{\PYGZlt{}FinalCode\PYGZgt{}}\PYG{c+cp}{\PYGZlt{}![CDATA[XXXXXX]]\PYGZgt{}}\PYG{n+nt}{\PYGZlt{}/FinalCode\PYGZgt{}}
+			\PYG{c}{\PYGZlt{}!\PYGZhy{}\PYGZhy{}Optional element\PYGZhy{}\PYGZhy{}\PYGZgt{}}
+			\PYG{n+nt}{\PYGZlt{}CodeDependencies\PYGZgt{}}
+				\PYG{n+nt}{\PYGZlt{}CodeDependency\PYGZgt{}}\PYG{c+cp}{\PYGZlt{}![CDATA[XXXXXX]]\PYGZgt{}}
+				\PYG{n+nt}{\PYGZlt{}/CodeDependency\PYGZgt{}}
+				\PYG{n+nt}{\PYGZlt{}CodeDependency\PYGZgt{}}\PYG{c+cp}{\PYGZlt{}![CDATA[XXXXXX]]\PYGZgt{}}
+				\PYG{n+nt}{\PYGZlt{}/CodeDependency\PYGZgt{}}
+			\PYG{n+nt}{\PYGZlt{}/CodeDependencies\PYGZgt{}}
+			\PYG{c}{\PYGZlt{}!\PYGZhy{}\PYGZhy{}Optional element\PYGZhy{}\PYGZhy{}\PYGZgt{}}
+			\PYG{n+nt}{\PYGZlt{}AllowedTypesConstructed\PYGZgt{}}
+			\PYG{n+nt}{\PYGZlt{}AllowedType\PYGZgt{}}\PYG{c+cp}{\PYGZlt{}![CDATA[XXXXXX]]\PYGZgt{}}\PYG{n+nt}{\PYGZlt{}/AllowedType\PYGZgt{}}
+			\PYG{n+nt}{\PYGZlt{}/AllowedTypesConstructed\PYGZgt{}}
+			\PYG{c}{\PYGZlt{}!\PYGZhy{}\PYGZhy{}Optional element\PYGZhy{}\PYGZhy{}\PYGZgt{}}
+			\PYG{n+nt}{\PYGZlt{}AllowedMethodsCalled\PYGZgt{}}
+				\PYG{n+nt}{\PYGZlt{}AllowedMethod\PYGZgt{}}\PYG{c+cp}{\PYGZlt{}![CDATA[XXXXXX]]\PYGZgt{}}
+				\PYG{n+nt}{\PYGZlt{}/AllowedMethod\PYGZgt{}}
+			\PYG{n+nt}{\PYGZlt{}/AllowedMethodsCalled\PYGZgt{}}
+		\PYG{n+nt}{\PYGZlt{}/Step\PYGZgt{}}
+	\PYG{n+nt}{\PYGZlt{}/Steps\PYGZgt{}}
+\PYG{n+nt}{\PYGZlt{}/Lesson\PYGZgt{}}
+\end{Verbatim}
