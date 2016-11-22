@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Lesson>
-    <Level>2</Level>
     <ValidatorsNamespace>DotvvmAcademy.Steps.Validation.Validators.Lesson2</ValidatorsNamespace>
-    <Title>To do list</Title>
     <Steps>
         <Step Type="Info">
             <Title>Objective</Title>

@@ -1,21 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
-using DotvvmAcademy.Lessons;
 using DotvvmAcademy.Steps.Validation.Validators;
 using DotVVM.Framework.Binding.Expressions;
 using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Compilation.ControlTree.Resolved;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CSharp.RuntimeBinder;
 
 namespace DotvvmAcademy.Steps.Validation
 {
-    public static class Helpers
+    public static class Extensions
     {
         private static IEnumerable<ResolvedTreeNode> GetDescendants(this ResolvedContentNode node)
         {
@@ -139,18 +136,6 @@ namespace DotvvmAcademy.Steps.Validation
                 ms.Position = 0;
 
                 return AssemblyLoadContext.Default.LoadFromStream(ms);
-            }
-        }
-
-        public static void ExecuteSafe(this LessonBase lesson, Action action)
-        {
-            try
-            {
-                action();
-            }
-            catch (RuntimeBinderException ex)
-            {
-                throw new CodeValidationException(ValidationErrorMessages.CommandMethodError, ex);
             }
         }
 

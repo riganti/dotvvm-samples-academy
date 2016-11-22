@@ -6,7 +6,7 @@ using Microsoft.CodeAnalysis.CSharp;
 
 namespace DotvvmAcademy.Steps.Validation.Validators.Lesson2
 {
-    [StepValidation(ValidationKey = "Lesson2Step6Validator")]
+    [StepValidation(ValidatorKey = "Lesson2Step6Validator")]
     public class Lesson2Step6Validator : ICSharpCodeValidationObject
     {
         public void Validate(CSharpCompilation compilation, CSharpSyntaxTree tree, SemanticModel model, Assembly assembly)

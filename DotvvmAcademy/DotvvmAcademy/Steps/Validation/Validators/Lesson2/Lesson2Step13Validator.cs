@@ -9,7 +9,7 @@ using DotVVM.Framework.Utils;
 
 namespace DotvvmAcademy.Steps.Validation.Validators.Lesson2
 {
-    [StepValidation(ValidationKey = "Lesson2Step13Validator")]
+    [StepValidation(ValidatorKey = "Lesson2Step13Validator")]
     public class Lesson2Step13Validator : IDotHtmlCodeValidationObject
     {
         public void Validate(ResolvedTreeRoot resolvedTreeRoot)

@@ -4,7 +4,7 @@ using DotVVM.Framework.Compilation.ControlTree.Resolved;
 
 namespace DotvvmAcademy.Steps.Validation.Validators.Lesson2
 {
-    [StepValidation(ValidationKey = "Lesson2Step12Validator")]
+    [StepValidation(ValidatorKey = "Lesson2Step12Validator")]
     public class Lesson2Step12Validator: IDotHtmlCodeValidationObject
     {
         public void Validate(ResolvedTreeRoot resolvedTreeRoot)

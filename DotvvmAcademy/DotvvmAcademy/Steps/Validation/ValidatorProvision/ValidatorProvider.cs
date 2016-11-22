@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Reflection;
 using DotvvmAcademy.Lessons;
@@ -17,7 +17,7 @@ namespace DotvvmAcademy.Steps.Validation.ValidatorProvision
                     .Where(a =>
                            (a.Namespace != null) &&
                            a.Namespace.Contains(validatorNamespace))
-                    .First( c => c.GetAttributeValue((StepValidationAttribute test) => test.ValidationKey == validatorKey));
+                    .First( c => c.GetAttributeValue((StepValidationAttribute sva) => sva.ValidatorKey == validatorKey));
 
             return (T) Activator.CreateInstance(validatorClass);
         }

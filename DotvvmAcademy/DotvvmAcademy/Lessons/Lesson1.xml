@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Lesson>
-    <Level>1</Level>
     <ValidatorsNamespace>DotvvmAcademy.Steps.Validation.Validators.Lesson1</ValidatorsNamespace>
-    <Title>Understand basic principles of DotVVM and MVVM pattern.</Title>
     <Steps>
         <Step Type="Info">
             <Title>Prerequisities</Title>

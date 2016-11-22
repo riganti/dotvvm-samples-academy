@@ -6,12 +6,10 @@ namespace DotvvmAcademy.Lessons
     {
         public Lesson1()
         {
-            var lesson1RelativePath = @"Lessons\Lesson1.xml";
-            var lessonProvider = new LessonUserInterfaceProvider(lesson1RelativePath);
+            var lesson1XmlRelativePath = @"Lessons\Lesson1.xml";
+            var lessonProvider = new LessonUserInterfaceProvider(lesson1XmlRelativePath);
             Steps = lessonProvider.LessonSteps;
+           
         }
-
-        
-
     }
 }

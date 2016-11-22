@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace DotvvmAcademy.Steps.Validation
 {
-    public class CodeValidationException : Exception 
+    public class CodeValidationException : Exception
     {
-
         public CodeValidationException(string message) : base(message)
         {
         }
@@ -15,6 +11,5 @@ namespace DotvvmAcademy.Steps.Validation
         public CodeValidationException(string message, Exception innerException) : base(message, innerException)
         {
         }
-
     }
 }
