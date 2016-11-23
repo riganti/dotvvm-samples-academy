@@ -1,13 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using DotvvmAcademy.Lessons;
+﻿using System.Reflection;
 using DotvvmAcademy.Steps.Validation.Interfaces;
 using DotvvmAcademy.Steps.Validation.ValidatorProvision;
 using DotvvmAcademy.Steps.Validation.Validators.CommonValidators;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace DotvvmAcademy.Steps.Validation.Validators.Lesson2
 {
@@ -17,14 +13,11 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson2
         public void Validate(CSharpCompilation compilation, CSharpSyntaxTree tree, SemanticModel model,
             Assembly assembly)
         {
-            CsharpCommonValidator.ValidateAddTaskMethod(compilation, tree, model, assembly, this);
+            Lesson2CommonValidator.ValidateAddTaskMethod(compilation, tree, model, assembly, this);
             var methods = CsharpCommonValidator.GetTreeMethods(tree, model);
-            var methodsNames = new List<string>
-            {
-                "CompleteTask"
-            };
 
-            CsharpCommonValidator.GetValidationVoidMethodsErrors(methods, methodsNames);
+            var methodName = "CompleteTask";
+            CsharpCommonValidator.GetVoidMethodValidationError(methods, methodName);
 
 
             this.ExecuteSafe(() =>

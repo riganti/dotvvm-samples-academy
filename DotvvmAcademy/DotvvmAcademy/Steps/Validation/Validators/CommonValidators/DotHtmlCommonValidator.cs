@@ -30,6 +30,8 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
             var propertyBindings = root.GetDescendantControls<TextBox>()
                 .Select(c => c.GetValueBindingText(TextBox.TextProperty))
                 .ToList();
+
+
             if (!propertyBindings.Contains("AddedTaskTitle"))
             {
                 throw new CodeValidationException(Lesson2Texts.TextBoxBindingError);
@@ -135,6 +137,8 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
                 .Select(c => c.GetValueBindingText(TextBox.TextProperty))
                 .ToList();
             //todo tttt
+
+
             if (!propertyBindings.Contains("Number1") || !propertyBindings.Contains("Number2") ||
                 !propertyBindings.Contains("Result"))
             {
