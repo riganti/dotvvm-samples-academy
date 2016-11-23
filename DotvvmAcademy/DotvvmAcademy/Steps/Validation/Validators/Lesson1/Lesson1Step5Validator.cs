@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using DotvvmAcademy.Steps.Validation.Interfaces;
 using DotvvmAcademy.Steps.Validation.ValidatorProvision;
+using DotvvmAcademy.Steps.Validation.Validators.CommonValidators;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -14,15 +16,15 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson1
         public void Validate(CSharpCompilation compilation, CSharpSyntaxTree tree, SemanticModel model,
             Assembly assembly)
         {
-            ValidatorHelper.ValidateViewModelProperties(compilation, tree, model, assembly);
+            CsharpCommonValidator.ValidateViewModelProperties(compilation, tree, model, assembly);
 
-            var methods = tree.GetCompilationUnitRoot().DescendantNodes().OfType<MethodDeclarationSyntax>()
-                .Select(m => model.GetDeclaredSymbol(m))
-                .ToList();
-            if (methods.Count(m => m.CheckNameAndVoid("Calculate")) != 1)
+            var methods = CsharpCommonValidator.GetTreeMethods(tree, model);
+            var methodsNames = new List<string>()
             {
-                throw new CodeValidationException(string.Format(ValidationErrorMessages.MethodNotFound, "Calculate"));
-            }
+                "AddTask"
+            };
+
+            CsharpCommonValidator.GetValidationVoidMethodsErrors(methods, methodsNames);
 
             this.ExecuteSafe(() =>
             {
@@ -33,7 +35,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson1
 
                 if (viewModel.Result != 45)
                 {
-                    throw new CodeValidationException("The Calculate method returns incorrect result!");
+                    throw new CodeValidationException("The Calculate method calculate incorrect result!");
                 }
             });
         }

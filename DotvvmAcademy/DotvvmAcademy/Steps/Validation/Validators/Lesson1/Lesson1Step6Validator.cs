@@ -1,5 +1,6 @@
 using DotvvmAcademy.Steps.Validation.Interfaces;
 using DotvvmAcademy.Steps.Validation.ValidatorProvision;
+using DotvvmAcademy.Steps.Validation.Validators.CommonValidators;
 using DotVVM.Framework.Compilation.ControlTree.Resolved;
 
 namespace DotvvmAcademy.Steps.Validation.Validators.Lesson1
@@ -9,7 +10,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson1
     {
         public void Validate(ResolvedTreeRoot resolvedTreeRoot)
         {
-            ValidatorHelper.ValidateTextBoxBindings(resolvedTreeRoot);
+            DotHtmlCommonValidator.ValidateTextBoxBindings(resolvedTreeRoot);
         }
     }
 }

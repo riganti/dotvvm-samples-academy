@@ -38,6 +38,14 @@ namespace DotvvmAcademy.ViewModels
             {
                 lesson = new Lesson2();
             }
+            else if (lessonNumber == 3)
+            {
+                lesson = new Lesson3();
+            }
+            else if (lessonNumber == 4)
+            {
+                lesson = new Lesson4();
+            }
             else
             {
                 throw new NotSupportedException();

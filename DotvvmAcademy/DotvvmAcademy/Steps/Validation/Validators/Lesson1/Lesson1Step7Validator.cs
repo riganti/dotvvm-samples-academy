@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using DotvvmAcademy.Steps.Validation.Interfaces;
 using DotvvmAcademy.Steps.Validation.ValidatorProvision;
+using DotvvmAcademy.Steps.Validation.Validators.CommonValidators;
 using DotVVM.Framework.Compilation.ControlTree.Resolved;
 using DotVVM.Framework.Controls;
 
@@ -11,7 +12,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson1
     {
         public void Validate(ResolvedTreeRoot resolvedTreeRoot)
         {
-            ValidatorHelper.ValidateTextBoxBindings(resolvedTreeRoot);
+            DotHtmlCommonValidator.ValidateTextBoxBindings(resolvedTreeRoot);
 
             resolvedTreeRoot.GetDescendantControls<Button>().Single()
                 .ValidateCommandBindingExpression(ButtonBase.ClickProperty, "Calculate()");
@@ -19,6 +20,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson1
             var buttonTextBinding = resolvedTreeRoot.GetDescendantControls<Button>()
                 .Select(c => c.GetValue(ButtonBase.TextProperty))
                 .SingleOrDefault();
+
             if (buttonTextBinding == null)
             {
                 throw new CodeValidationException(Lesson1Texts.ButtonDoesNotHaveText);

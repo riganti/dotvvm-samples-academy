@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Lesson>
+    <ValidatorsNamespace>DotvvmAcademy.Steps.Validation.Validators.Lesson3</ValidatorsNamespace>
+    <Steps>
+    
+    </Steps>
+        <Step Type="Info">
+            <!--Required element-->
+            <Title>TextBox, CheckBox, RadioButton a ComboBox</Title>
+             <!--Required element-->
+            <Description>
+                <![CDATA[
+Point of this is using component TextBox, CheckBox, RadioButton and ComboBox. In this lesson we type simple form for creating customers.
+                ]]>
+            </Description>
+        </Step>
+        
+        <Step Type="CsharpCode">
+            <!--Required element-->
+            <Title>Create properties</Title>
+            <!--Required element-->
+            <ValidationKey>Lesson2Step2Validator</ValidationKey>
+            <!--Required element-->
+            <Description>
+                <![CDATA[
+Into ViewModel add new string type properties FirstName and LastName.
+]]>
+            </Description>
+            <!--Required element-->
+            <StartupCode>
+                <![CDATA[
+using System;
+
+namespace DotvvmAcademy.Tutorial.ViewModels 
+{
+    public class Lesson2ViewModel 
+    {
+        // declare properties here
+    }
+}
+]]>
+            </StartupCode>
+            <!--Required element-->
+            <FinalCode>
+                <![CDATA[
+namespace DotvvmAcademy.Tutorial.ViewModels 
+{
+    public class Lesson1ViewModel 
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+    }
+}
+]]>
+            </FinalCode>
+        </Step>
+        
+        
+    </Lesson>

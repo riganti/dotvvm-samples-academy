@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using DotvvmAcademy.Steps.Validation.Interfaces;
 using DotvvmAcademy.Steps.Validation.ValidatorProvision;
+using DotvvmAcademy.Steps.Validation.Validators.CommonValidators;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 
@@ -11,9 +12,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson2
     {
         public void Validate(CSharpCompilation compilation, CSharpSyntaxTree tree, SemanticModel model, Assembly assembly)
         {
-            ValidatorHelper.ValidateTasksProperty(compilation,tree,model,assembly);
-
-
+            CsharpCommonValidator.ValidateTasksProperty(compilation,tree,model,assembly);
         }
     }
 }
