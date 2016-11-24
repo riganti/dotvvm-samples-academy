@@ -14,12 +14,12 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson2
         public void Validate(CSharpCompilation compilation, CSharpSyntaxTree tree, SemanticModel model,
             Assembly assembly)
         {
-            var classDeclarations = CsharpCommonValidator.GetClassDeclarations(tree, model);
+            var classTreeDeclarations = CsharpCommonValidator.GetClassDeclarations(tree, model);
 
             var className = "TaskData";
-            CsharpCommonValidator.GetClassValidationError(classDeclarations, className);
+            CsharpCommonValidator.GetClassValidationError(classTreeDeclarations, className);
 
-            var properties = CsharpCommonValidator.GetTreeProperties(tree, model);
+            var treeProperties = CsharpCommonValidator.GetTreeProperties(tree, model);
             var propertiesToValidate = new List<Property>
             {
                 new Property("Title", "string"),
@@ -27,7 +27,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson2
                 new Property("Result", "int")
             };
 
-            CsharpCommonValidator.GetPropertiesValidationErrors(properties, propertiesToValidate);
+            CsharpCommonValidator.GetPropertiesValidationErrors(treeProperties, propertiesToValidate);
         }
     }
 }

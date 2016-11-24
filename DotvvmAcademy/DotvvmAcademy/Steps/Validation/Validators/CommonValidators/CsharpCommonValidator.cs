@@ -74,9 +74,9 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
             }
         }
 
-        public static void GetClassValidationError(List<INamedTypeSymbol> classDeclarations, string className)
+        public static void GetClassValidationError(List<INamedTypeSymbol> classTreeDeclarations, string className)
         {
-            if (classDeclarations.All(c => c.Name != className))
+            if (classTreeDeclarations.All(c => c.Name != className))
             {
                 throw new CodeValidationException(string.Format(ValidationErrorMessages.ClassNotFound, className));
             }

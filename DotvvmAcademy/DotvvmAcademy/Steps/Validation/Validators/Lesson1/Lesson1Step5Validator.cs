@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Reflection;
+﻿using System.Reflection;
 using DotvvmAcademy.Steps.Validation.Interfaces;
 using DotvvmAcademy.Steps.Validation.ValidatorProvision;
 using DotvvmAcademy.Steps.Validation.Validators.CommonValidators;
@@ -16,10 +15,10 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson1
         {
             Lesson1CommonValidator.ValidateViewModelProperties(compilation, tree, model, assembly);
 
-            var methods = CsharpCommonValidator.GetTreeMethods(tree, model);
+            var treeMethods = CsharpCommonValidator.GetTreeMethods(tree, model);
 
             var methodName = "AddTask";
-            CsharpCommonValidator.GetVoidMethodValidationError(methods, methodName);
+            CsharpCommonValidator.GetVoidMethodValidationError(treeMethods, methodName);
 
             this.ExecuteSafe(() =>
             {

@@ -14,10 +14,10 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson2
             Assembly assembly)
         {
             Lesson2CommonValidator.ValidateAddTaskMethod(compilation, tree, model, assembly, this);
-            var methods = CsharpCommonValidator.GetTreeMethods(tree, model);
+            var treeMethods = CsharpCommonValidator.GetTreeMethods(tree, model);
 
             var methodName = "CompleteTask";
-            CsharpCommonValidator.GetVoidMethodValidationError(methods, methodName);
+            CsharpCommonValidator.GetVoidMethodValidationError(treeMethods, methodName);
 
 
             this.ExecuteSafe(() =>

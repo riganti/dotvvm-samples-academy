@@ -1,6 +1,5 @@
 ﻿using DotvvmAcademy.Steps.Validation.Interfaces;
 using DotvvmAcademy.Steps.Validation.ValidatorProvision;
-using DotvvmAcademy.Steps.Validation.Validators.CommonValidators;
 using DotVVM.Framework.Compilation.ControlTree.Resolved;
 
 namespace DotvvmAcademy.Steps.Validation.Validators.Lesson2
@@ -10,7 +9,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson2
     {
         public void Validate(ResolvedTreeRoot resolvedTreeRoot)
         {
-            DotHtmlCommonValidator.ValidateRepeaterTemplate2(resolvedTreeRoot);
+            Lesson2CommonValidator.ValidateRepeaterTemplate2(resolvedTreeRoot);
         }
     }
 }

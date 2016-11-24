@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using DotvvmAcademy.Steps.Validation.Interfaces;
 using DotvvmAcademy.Steps.Validation.ValidatorProvision;
-using DotvvmAcademy.Steps.Validation.Validators.CommonValidators;
 using DotVVM.Framework.Compilation.ControlTree.Resolved;
 using DotVVM.Framework.Controls;
 
@@ -12,7 +11,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson1
     {
         public void Validate(ResolvedTreeRoot resolvedTreeRoot)
         {
-            DotHtmlCommonValidator.ValidateTextBoxBindings(resolvedTreeRoot);
+            Lesson1CommonValidator.ValidateTextBoxBindings(resolvedTreeRoot);
 
             resolvedTreeRoot.GetDescendantControls<Button>().Single()
                 .ValidateCommandBindingExpression(ButtonBase.ClickProperty, "Calculate()");
