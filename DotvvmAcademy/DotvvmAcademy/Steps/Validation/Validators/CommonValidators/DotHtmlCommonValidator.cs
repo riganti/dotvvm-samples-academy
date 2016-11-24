@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using DotVVM.Framework.Compilation.ControlTree.Resolved;
 using DotVVM.Framework.Controls;
@@ -23,11 +24,39 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
                 .CastTo<ResolvedPropertyTemplate>();
         }
 
-        public static List<string> GetPropertyBindings(ResolvedTreeRoot root)
+
+        private static List<string> GetPropertyBindings(ResolvedTreeRoot root)
         {
-            return root.GetDescendantControls<TextBox>()
+            var propertyBindings = root.GetDescendantControls<TextBox>()
                 .Select(c => c.GetValueBindingText(TextBox.TextProperty))
                 .ToList();
+
+            if (propertyBindings == null)
+            {
+                throw new ArgumentNullException(nameof(propertyBindings));
+            }
+            return propertyBindings;
         }
+
+        public static void ValidatePropertiesBindings(ResolvedTreeRoot root, List<Property> propertiesToValidate)
+        {
+            foreach (var property in propertiesToValidate)
+            {
+                ValidatePropertyBinding(root, property);
+            }
+        }
+
+        public static void ValidatePropertyBinding(ResolvedTreeRoot root, Property propertyToValidate)
+        {
+            var propertyBindings = GetPropertyBindings(root);
+
+            var propertyName = propertyToValidate.Name;
+            if (!propertyBindings.Contains(propertyName))
+            {
+                throw new CodeValidationException(string.Format(ValidationErrorMessages.ValueBindingError, propertyName));
+            }
+        }
+
+
     }
 }

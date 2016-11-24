@@ -13,14 +13,13 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson1
         public void Validate(CSharpCompilation compilation, CSharpSyntaxTree tree, SemanticModel model,
             Assembly assembly)
         {
-            Lesson1CommonValidator.ValidateViewModelProperties(compilation, tree, model, assembly);
-
-            var treeMethods = CsharpCommonValidator.GetTreeMethods(tree, model);
+            CsharpCommonValidator.ValidateProperties(tree, model, Lesson1CommonValidator.CreateStep4Properties());
 
             var methodName = "AddTask";
-            CsharpCommonValidator.GetVoidMethodValidationError(treeMethods, methodName);
 
-            this.ExecuteSafe(() =>
+            CsharpCommonValidator.ValidateMethod(tree,model,methodName);
+
+            ValidationExtensions.ExecuteSafe(() =>
             {
                 var viewModel = (dynamic) assembly.CreateInstance("DotvvmAcademy.Tutorial.ViewModels.Lesson1ViewModel");
                 viewModel.Number1 = 15;

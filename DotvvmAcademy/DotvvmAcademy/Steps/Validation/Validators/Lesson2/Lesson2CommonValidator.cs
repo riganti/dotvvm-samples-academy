@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Reflection;
 using DotvvmAcademy.Steps.Validation.Interfaces;
 using DotvvmAcademy.Steps.Validation.Validators.CommonValidators;
@@ -15,18 +14,18 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson2
 {
     public class Lesson2CommonValidator
     {
+        public static Property CreateStep3Property()
+        {
+            return new Property("AddedTaskTitle", "string");
+        }
+
         public static void ValidateAddTaskProperties(CSharpCompilation compilation, CSharpSyntaxTree tree,
             SemanticModel model, Assembly assembly)
         {
-            var treeProperties = CsharpCommonValidator.GetTreeProperties(tree, model);
-            var property = new Property("AddedTaskTitle", "string");
-
-
-            CsharpCommonValidator.GetPropertyValidationError(treeProperties, property);
-            var treeMethods = CsharpCommonValidator.GetTreeMethods(tree, model);
+            CsharpCommonValidator.ValidateProperty(tree,model, CreateStep3Property());
 
             var methodName = "AddTask";
-            CsharpCommonValidator.GetVoidMethodValidationError(treeMethods, methodName);
+            CsharpCommonValidator.ValidateMethod(tree,model,methodName);
         }
 
 
@@ -34,11 +33,9 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson2
             SemanticModel model, Assembly assembly)
         {
             ValidateAddTaskProperties(compilation, tree, model, assembly);
-
-            var treeProperties = CsharpCommonValidator.GetTreeProperties(tree, model);
-
-            var propertyToValidate = new Property("Tasks", "System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>");
-            CsharpCommonValidator.GetPropertyValidationError(treeProperties, propertyToValidate);
+            var propertyToValidate = new Property("Tasks",
+                "System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>");
+            CsharpCommonValidator.ValidateProperty(tree,model,propertyToValidate);
         }
 
 
@@ -47,7 +44,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson2
         {
             ValidateTasksProperty(compilation, tree, model, assembly);
 
-            validator.ExecuteSafe(() =>
+            ValidationExtensions.ExecuteSafe(() =>
             {
                 var viewModel = (dynamic) assembly.CreateInstance("DotvvmAcademy.Tutorial.ViewModels.Lesson2ViewModel");
                 viewModel.AddedTaskTitle = "test";
@@ -70,18 +67,13 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson2
             });
         }
 
-        public static void ValidateAddTaskControls(ResolvedTreeRoot root)
+        public static void ValidateAddTaskControls(ResolvedTreeRoot resolvedTreeRoot)
         {
-            if (root.GetDescendantControls<TextBox>().Count() != 1)
-            {
-                throw new CodeValidationException(Lesson2Texts.AddTaskTextBoxControlError);
-            }
-            if (root.GetDescendantControls<Button>().Count() != 1)
-            {
-                throw new CodeValidationException(Lesson2Texts.AddTaskButtonControlError);
-            }
+            ValidationExtensions.CheckTypeAndCount<TextBox>(resolvedTreeRoot, 1);
+            ValidationExtensions.CheckTypeAndCount<Button>(resolvedTreeRoot, 1);
 
-            var buttonTextBinding = root.GetDescendantControls<Button>()
+
+            var buttonTextBinding = resolvedTreeRoot.GetDescendantControls<Button>()
                 .Select(c => c.GetValue(ButtonBase.TextProperty))
                 .SingleOrDefault();
 
@@ -131,16 +123,14 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson2
             }
         }
 
-        public static void ValidateRepeaterControl(ResolvedTreeRoot root)
+        public static void ValidateRepeaterControl(ResolvedTreeRoot resolvedTreeRoot)
         {
-            ValidateAddTaskControlBindings(root);
+            ValidateAddTaskControlBindings(resolvedTreeRoot);
 
-            if (root.GetDescendantControls<Repeater>().Count() != 1)
-            {
-                throw new CodeValidationException(Lesson2Texts.RepeaterControlError);
-            }
+            ValidationExtensions.CheckTypeAndCount<Repeater>(resolvedTreeRoot, 1);
 
-            var repeater = root.GetDescendantControls<Repeater>().Single();
+
+            var repeater = resolvedTreeRoot.GetDescendantControls<Repeater>().Single();
             if (repeater.GetValueBindingText(ItemsControl.DataSourceProperty) != "Tasks")
             {
                 throw new CodeValidationException(Lesson2Texts.RepeaterBindingError);
@@ -164,12 +154,8 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson2
         public static void ValidateAddTaskControlBindings(ResolvedTreeRoot root)
         {
             ValidateAddTaskControls(root);
-            var propertyBindings = DotHtmlCommonValidator.GetPropertyBindings(root);
 
-            if (!propertyBindings.Contains("AddedTaskTitle"))
-            {
-                throw new CodeValidationException(Lesson2Texts.TextBoxBindingError);
-            }
+            DotHtmlCommonValidator.ValidatePropertyBinding(root, CreateStep3Property());
 
             root.GetDescendantControls<Button>().Single()
                 .ValidateCommandBindingExpression(ButtonBase.ClickProperty, "AddTask()");

@@ -117,49 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ClassNotFound" xml:space="preserve">
-    <value>The class {0} was not found!</value>
+  <data name="TwoRadioButtonsControlsError" xml:space="preserve">
+    <value>There should be 2 RadioButton controls in the page!</value>
   </data>
-  <data name="CommandBindingExpected" xml:space="preserve">
-    <value>The {0} property {1} must contain binding in the following format: {{command: Something()}}</value>
-  </data>
-  <data name="CommandDoesNotHaveParenthesis" xml:space="preserve">
-    <value>You need to add empty parenthesis after the {0} method.</value>
-  </data>
-  <data name="CommandMethodError" xml:space="preserve">
-    <value>The command methods in the viewmodel must be public and must have the correct signature!</value>
-  </data>
-  <data name="IllegalConstructorCall" xml:space="preserve">
-    <value>The constructor of type {0} is not allowed!</value>
-  </data>
-  <data name="IllegalMethodCall" xml:space="preserve">
-    <value>The method {0} is not allowed!</value>
-  </data>
-  <data name="MethodNotFound" xml:space="preserve">
-    <value>The {0} method doesn't exist!</value>
-  </data>
-  <data name="MethodWasNotCalled" xml:space="preserve">
-    <value>You must call the {0} in the command binding!</value>
-  </data>
-  <data name="MissingPropertyError" xml:space="preserve">
-    <value>The {0} doesn't specify the {1} property!</value>
-  </data>
-  <data name="PropertyNotFound" xml:space="preserve">
-    <value>The {0} property was not found or doesn't have a correct type!</value>
-  </data>
-  <data name="StepTypeExpected" xml:space="preserve">
-    <value>Step type {0} ins`t supported!</value>
-  </data>
-  <data name="TextBoxBindingsError" xml:space="preserve">
-    <value>Each TextBox should bind to a different property in the viewmodel!</value>
-  </data>
-  <data name="TypeCountError" xml:space="preserve">
-    <value>There should be {0} {1} controls in the page!</value>
-  </data>
-  <data name="ValueBindingError" xml:space="preserve">
-    <value>"Property {0} should be bind!"</value>
-  </data>
-  <data name="ValueBindingExpected" xml:space="preserve">
-    <value>The {0} property {1} must contain binding in the following format: {{value: Something}}</value>
+  <data name="TwoTextBoxControlsError" xml:space="preserve">
+    <value>There should be 2 TextBox controls in the page!</value>
   </data>
 </root>

@@ -8,6 +8,44 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
 {
     public static class CsharpCommonValidator
     {
+        public static void ValidateProperties(CSharpSyntaxTree tree, SemanticModel model,
+            List<Property> propertiesToValidate)
+        {
+            var treeProperties = GetTreeProperties(tree, model);
+            foreach (var propertyToValidate in propertiesToValidate)
+            {
+                GetPropertyValidationError(treeProperties, propertyToValidate);
+            }
+        }
+
+        public static void ValidateProperty(CSharpSyntaxTree tree, SemanticModel model, Property propertyToValidate)
+        {
+            var treeProperties = GetTreeProperties(tree, model);
+            GetPropertyValidationError(treeProperties, propertyToValidate);
+        }
+
+        public static void ValidateClasses(CSharpSyntaxTree tree, SemanticModel model, List<string> classesNames)
+        {
+            var classDeclarations = GetClassDeclarations(tree, model);
+            foreach (var className in classesNames)
+            {
+                GetClassValidationError(classDeclarations, className);
+            }
+        }
+
+        public static void ValidateClass(CSharpSyntaxTree tree, SemanticModel model, string className)
+        {
+            var classDeclarations = GetClassDeclarations(tree, model);
+            GetClassValidationError(classDeclarations, className);
+        }
+
+        public static void ValidateMethod(CSharpSyntaxTree tree, SemanticModel model, string methodName)
+        {
+            var treeMethods = GetTreeMethods(tree, model);
+            GetVoidMethodValidationError(treeMethods, methodName);
+        }
+
+
         public static List<IPropertySymbol> GetTreeProperties(CSharpSyntaxTree tree, SemanticModel model)
         {
             return tree.GetCompilationUnitRoot().DescendantNodes().OfType<PropertyDeclarationSyntax>()
@@ -29,16 +67,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
                 .ToList();
         }
 
-
-        public static void GetVoidMethodsValidationErrors(List<IMethodSymbol> voidMethods, List<string> voidMethodsNames)
-        {
-            foreach (var methodName in voidMethodsNames)
-            {
-                GetVoidMethodValidationError(voidMethods, methodName);
-            }
-        }
-
-        public static void GetVoidMethodValidationError(List<IMethodSymbol> voidMethods, string methodName)
+        private static void GetVoidMethodValidationError(List<IMethodSymbol> voidMethods, string methodName)
         {
             if (!voidMethods.Any(m => m.CheckNameAndVoid(methodName)))
             {
@@ -46,17 +75,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
             }
         }
 
-
-        public static void GetPropertiesValidationErrors(List<IPropertySymbol> treeProperties,
-            List<Property> propertiesToValidate)
-        {
-            foreach (var prop in propertiesToValidate)
-            {
-                GetPropertyValidationError(treeProperties, prop);
-            }
-        }
-
-        public static void GetPropertyValidationError(List<IPropertySymbol> treeProperties, Property propertyToValidate)
+        private static void GetPropertyValidationError(List<IPropertySymbol> treeProperties, Property propertyToValidate)
         {
             if (!treeProperties.Any(p => p.CheckNameAndType(propertyToValidate.Name, propertyToValidate.Type)))
             {
@@ -65,18 +84,9 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
             }
         }
 
-
-        public static void GetVoidClassesValidationErrors(List<INamedTypeSymbol> voidMethods, List<string> classesNames)
+        private static void GetClassValidationError(List<INamedTypeSymbol> classTreeDeclarations, string className)
         {
-            foreach (var className in classesNames)
-            {
-                GetClassValidationError(voidMethods, className);
-            }
-        }
-
-        public static void GetClassValidationError(List<INamedTypeSymbol> classTreeDeclarations, string className)
-        {
-            if (classTreeDeclarations.All(c => c.Name != className))
+            if (classTreeDeclarations.All(c => c.Name == className))
             {
                 throw new CodeValidationException(string.Format(ValidationErrorMessages.ClassNotFound, className));
             }

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DotvvmAcademy.Steps.Validation.Validators.Lesson1 {
+namespace DotvvmAcademy.Steps.Validation.Validators.Lesson3 {
     using System;
     using System.Reflection;
     
@@ -22,13 +22,13 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson1 {
     // with the /str option, or rebuild your VS project.
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Lesson1Texts {
+    public class Lesson3Texts {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
-        internal Lesson1Texts() {
+        internal Lesson3Texts() {
         }
         
         /// <summary>
@@ -38,7 +38,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson1 {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DotvvmAcademy.Steps.Validation.Validators.Lesson1.Lesson1Texts", typeof(Lesson1Texts).GetTypeInfo().Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DotvvmAcademy.Steps.Validation.Validators.Lesson3.Lesson3Texts", typeof(Lesson3Texts).GetTypeInfo().Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -60,47 +60,20 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson1 {
         }
         
         /// <summary>
-        ///    Looks up a localized string similar to You must set the Text property of the Button!.
+        ///    Looks up a localized string similar to There should be 2 RadioButton controls in the page!.
         /// </summary>
-        public static string ButtonDoesNotHaveText {
+        public static string TwoRadioButtonsControlsError {
             get {
-                return ResourceManager.GetString("ButtonDoesNotHaveText", resourceCulture);
+                return ResourceManager.GetString("TwoRadioButtonsControlsError", resourceCulture);
             }
         }
         
         /// <summary>
-        ///    Looks up a localized string similar to You must call the Calculate() method in the command binding!.
+        ///    Looks up a localized string similar to There should be 2 TextBox controls in the page!.
         /// </summary>
-        public static string CalculateMethodNotCalled {
+        public static string TwoTextBoxControlsError {
             get {
-                return ResourceManager.GetString("CalculateMethodNotCalled", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///    Looks up a localized string similar to The Calculate method doesn&apos;t return a correct result!.
-        /// </summary>
-        public static string CommandResultError {
-            get {
-                return ResourceManager.GetString("CommandResultError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///    Looks up a localized string similar to There should be 1 Button control in the page!.
-        /// </summary>
-        public static string OneButtonControlError {
-            get {
-                return ResourceManager.GetString("OneButtonControlError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///    Looks up a localized string similar to There should be 3 TextBox controls in the page!.
-        /// </summary>
-        public static string ThreeTextBoxControlsError {
-            get {
-                return ResourceManager.GetString("ThreeTextBoxControlsError", resourceCulture);
+                return ResourceManager.GetString("TwoTextBoxControlsError", resourceCulture);
             }
         }
     }

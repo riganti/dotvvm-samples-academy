@@ -129,9 +129,6 @@
   <data name="OneButtonControlError" xml:space="preserve">
     <value>There should be 1 Button control in the page!</value>
   </data>
-  <data name="TextBoxBindingsError" xml:space="preserve">
-    <value>Each TextBox should bind to a different property in the viewmodel!</value>
-  </data>
   <data name="ThreeTextBoxControlsError" xml:space="preserve">
     <value>There should be 3 TextBox controls in the page!</value>
   </data>

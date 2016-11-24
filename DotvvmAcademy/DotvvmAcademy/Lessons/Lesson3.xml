@@ -2,12 +2,12 @@
 <Lesson>
     <ValidatorsNamespace>DotvvmAcademy.Steps.Validation.Validators.Lesson3</ValidatorsNamespace>
     <Steps>
-    
-    </Steps>
+
+        <!--1-->
         <Step Type="Info">
             <!--Required element-->
             <Title>TextBox, CheckBox, RadioButton a ComboBox</Title>
-             <!--Required element-->
+            <!--Required element-->
             <Description>
                 <![CDATA[
 Point of this is using component TextBox, CheckBox, RadioButton and ComboBox. In this lesson we type simple form for creating customers.
@@ -15,15 +15,16 @@ Point of this is using component TextBox, CheckBox, RadioButton and ComboBox. In
             </Description>
         </Step>
         
+        <!--2-->
         <Step Type="CsharpCode">
             <!--Required element-->
             <Title>Create properties</Title>
             <!--Required element-->
-            <ValidationKey>Lesson2Step2Validator</ValidationKey>
+            <ValidationKey>Lesson3Step2Validator</ValidationKey>
             <!--Required element-->
             <Description>
                 <![CDATA[
-Into ViewModel add new string type properties FirstName and LastName.
+Add to ViewModel new string type properties FirstName and LastName.
 ]]>
             </Description>
             <!--Required element-->
@@ -45,7 +46,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
                 <![CDATA[
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
-    public class Lesson1ViewModel 
+    public class Lesson3ViewModel 
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -54,6 +55,252 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 ]]>
             </FinalCode>
         </Step>
+
+        <!--3-->
+        <Step Type="DothtmlCode">
+            <!--Required element-->
+            <Title>Addition TextBoxes</Title>
+            <!--Required element-->
+            <ValidationKey>Lesson3Step3Validator</ValidationKey>
+            <Description>
+                <![CDATA[
+Add to page 2 TextBoxes and bind on them FirstName and LastName.
+                ]]>
+            </Description>
+            <!--Required element-->
+            <StartupCode>
+                <![CDATA[
+<p>
+    <!-- place first textbox here -->
+    <!-- place second textbox here -->
+</p>
+                ]]>
+            </StartupCode>
+            <!--Required element-->
+            <FinalCode>
+                <![CDATA[
+<p>
+    <dot:TextBox Text="{value: FirstName}"/>
+    <dot:TextBox Text="{value: LastName}"/>
+</p>
+                ]]>
+            </FinalCode>
+        </Step>
+
+        <!--4-->
+        <Step Type="CsharpCode">
+            <!--Required element-->
+            <Title>Addition Role property</Title>
+            <!--Required element-->
+            <ValidationKey>Lesson3Step4Validator</ValidationKey>
+            <!--Required element-->
+            <Description>
+                <![CDATA[
+Add to ViewModel new string property Role.
+]]>
+            </Description>
+
+            <StartupCode>
+                <![CDATA[
+namespace DotvvmAcademy.Tutorial.ViewModels 
+{
+    public class Lesson3ViewModel 
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        // add Role property
+    }
+}
+]]>
+            </StartupCode>
+            <!--Required element-->
+            <FinalCode>
+                <![CDATA[
+namespace DotvvmAcademy.Tutorial.ViewModels 
+{
+    public class Lesson3ViewModel 
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Role { get; set; }
+    }
+}
+]]>
+            </FinalCode>
+        </Step>
+        
+        <!--5-->
+        <Step Type="DothtmlCode">
+            <!--Required element-->
+            <Title>Creating RadioButtons</Title>
+            <!--Required element-->
+            <ValidationKey>Lesson3Step5Validator</ValidationKey>
+            <Description>
+                <![CDATA[
+Add to page 2 RadioButtons, set them attribute Text to "Admin" and "User", attribute CheckedValue to "A" and "U". On attribute CheckedItem bind ViewModel property Role.
+                ]]>
+            </Description>
+
+            <!--Required element-->
+            <StartupCode>
+                <![CDATA[
+<p>
+    <dot:TextBox Text="{value: FirstName}"/>
+    <dot:TextBox Text="{value: LastName}"/>
+    <!-- place first RadioButton here -->
+    <!-- place second RadioButton here -->
+</p>
+                ]]>
+            </StartupCode>
+            <!--Required element-->
+            <FinalCode>
+                <![CDATA[
+<p>
+    <dot:TextBox Text="{value: FirstName}"/>
+    <dot:TextBox Text="{value: LastName}"/>
+    <dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin"/>
+    <dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User"/>
+</p>
+                ]]>
+            </FinalCode>
+
+        </Step>
+
+        <!--6-->
+        <Step Type="CsharpCode">
+            <!--Required element-->
+            <Title>Addition Interests property</Title>
+            <!--Required element-->
+            <ValidationKey>Lesson3Step6Validator</ValidationKey>
+            <!--Required element-->
+            <Description>
+                <![CDATA[
+Add to ViewModel new List<string> property Interests.
+]]>
+            </Description>
+            <!--Required element-->
+            <StartupCode>
+                <![CDATA[
+namespace DotvvmAcademy.Tutorial.ViewModels 
+{
+    public class Lesson3ViewModel 
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Role { get; set; }
+        // add Interests property and initialize
+    }
+}
+]]>
+            </StartupCode>
+            <!--Required element-->
+            <FinalCode>
+                <![CDATA[
+namespace DotvvmAcademy.Tutorial.ViewModels 
+{
+    public class Lesson3ViewModel 
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Role { get; set; }
+        public Interests List<string> { get; set; } = new List<string>();
+    }
+}
+]]>
+            </FinalCode>
+            <!--Optional element-->
+            <AllowedTypesConstructed>
+                <AllowedType>
+                    <![CDATA[
+System.Collections.Generic.List<string>
+                        ]]>
+                </AllowedType>
+            </AllowedTypesConstructed>
+
+        </Step>
+
+        <!--7-->
+        <Step Type="DothtmlCode">
+            <!--Required element-->
+            <Title>Add to page 3 CheckBoxes</Title>
+            <!--Required element-->
+            <ValidationKey>Lesson3Step7Validator</ValidationKey>
+            <Description>
+                <![CDATA[
+Add to page 3 CheckBoxes, bind CheckedItem to Interests, and set them attribute Text to "Music", "Sports", "News" and CheckedValue to "M", "S" a "N". 
+
+                ]]>
+            </Description>
+
+            <StartupCode>
+                <![CDATA[
+<p>
+    <dot:TextBox Text="{value: FirstName}"/>
+    <dot:TextBox Text="{value: LastName}"/>
+    <dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin"/>
+    <dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User"/>
+    <!-- place first CheckBox here -->
+    <!-- place second CheckBox here -->
+    <!-- place third CheckBox here -->
+</p>
+                ]]>
+            </StartupCode>
+            <!--Required element-->
+            <FinalCode>
+                <![CDATA[
+<p>
+    <dot:TextBox Text="{value: FirstName}"/>
+    <dot:TextBox Text="{value: LastName}"/>
+    <dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin"/>
+    <dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User"/>
+    <dot:CheckBox CheckedItems="{value:Interests}" Text="Music" CheckedValue="M"></dot:CheckBox>
+    <dot:CheckBox CheckedItems="{value:Interests}" Text="Sports" CheckedValue="S"></dot:CheckBox>
+    <dot:CheckBox CheckedItems="{value:Interests}" Text="News" CheckedValue="N"></dot:CheckBox>
+</p>
+                ]]>
+            </FinalCode>
+        </Step>
+        
+        <!--8-->
+        <Step Type="CsharpCode">
+            <!--Required element-->
+            <Title>Create class CountryInfo</Title>
+            <!--Required element-->
+            <ValidationKey>Lesson3Step8Validator</ValidationKey>
+            <!--Required element-->
+            <Description>
+                <![CDATA[
+Create new class CountryInfo with properties Id (int) and Name (string)
+]]>
+            </Description>
+            <!--Optional element-->
+           
+            <StartupCode>
+                <![CDATA[
+namespace DotvvmAcademy.Tutorial.ViewModels 
+{
+    // create class CountryInfo
+}
+]]>
+            </StartupCode>
+            <!--Required element-->
+            <FinalCode>
+                <![CDATA[
+namespace DotvvmAcademy.Tutorial.ViewModels 
+{
+    public class CountryInfo 
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
+}
+]]>
+            </FinalCode>
+        </Step>
         
         
-    </Lesson>
+
+    </Steps>
+
+
+</Lesson>

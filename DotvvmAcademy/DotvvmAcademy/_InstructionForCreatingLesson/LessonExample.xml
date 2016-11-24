@@ -32,6 +32,12 @@ XXXXXX
 XXXXXX
                 ]]>
             </Description>
+            <!--Optional element-->
+            <ShadowBoxDescription>
+                <![CDATA[
+XXXXXXX
+                ]]>
+            </ShadowBoxDescription>
             <!--Required element-->
             <StartupCode>
                 <![CDATA[
@@ -44,13 +50,9 @@ XXXXX
 XXXXXXX
                 ]]>
             </FinalCode>
-            <!--Optional element-->
-            <ShadowBoxDescription>
-                <![CDATA[
-XXXXXXX
-                ]]>
-            </ShadowBoxDescription>
+            
         </Step>
+         
          <!--Required attribute-->
         <Step Type="CsharpCode">
             <!--Required element-->

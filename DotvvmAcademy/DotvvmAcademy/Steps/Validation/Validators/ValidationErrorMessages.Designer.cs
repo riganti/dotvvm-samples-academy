@@ -159,6 +159,33 @@ namespace DotvvmAcademy.Steps.Validation.Validators {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Each TextBox should bind to a different property in the viewmodel!.
+        /// </summary>
+        public static string TextBoxBindingsError {
+            get {
+                return ResourceManager.GetString("TextBoxBindingsError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to There should be {0} {1} controls in the page!.
+        /// </summary>
+        public static string TypeCountError {
+            get {
+                return ResourceManager.GetString("TypeCountError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to &quot;Property {0} should be bind!&quot;.
+        /// </summary>
+        public static string ValueBindingError {
+            get {
+                return ResourceManager.GetString("ValueBindingError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to The {0} property {1} must contain binding in the following format: {{value: Something}}.
         /// </summary>
         public static string ValueBindingExpected {

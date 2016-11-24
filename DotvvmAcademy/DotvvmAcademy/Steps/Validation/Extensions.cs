@@ -14,7 +14,7 @@ namespace DotvvmAcademy.Steps.Validation
 {
     public static class Extensions
     {
-        private static IEnumerable<ResolvedTreeNode> GetDescendants(this ResolvedContentNode node)
+        public static IEnumerable<ResolvedTreeNode> GetDescendants(this ResolvedContentNode node)
         {
             yield return node;
             foreach (var child in node.Content.SelectMany(n => n.GetDescendants()))
@@ -40,6 +40,7 @@ namespace DotvvmAcademy.Steps.Validation
         {
             return GetDescendants(node).OfType<ResolvedControl>().Where(c => c.Metadata.Type == typeof(T));
         }
+
 
         public static ResolvedPropertyBinding GetValueBindingOrNull(this ResolvedControl control,
             IPropertyDescriptor property)
