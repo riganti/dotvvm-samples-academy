@@ -144,7 +144,7 @@ using System;
 
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
-     declare the class here
+     //declare the class here
 }
 ]]>
             </StartupCode>
@@ -194,7 +194,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
     {
         public string AddedTaskTitle { get; set; }
 
-         declare the Tasks property here
+        //declare the Tasks property here
 
         public void AddTask() 
         {
@@ -277,9 +277,9 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 
         public void AddTask() 
         {
-             add the new task with the title set to AddedTaskTitle here
+             //add the new task with the title set to AddedTaskTitle here
             
-             reset the AddedTaskTitle to an empty string
+             //reset the AddedTaskTitle to an empty string
         }
     }
 }
@@ -528,7 +528,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
             AddedTaskTitle = "";
         }
 
-         place the CompleteTask method here
+         //place the CompleteTask method here
     }
 }
 ]]>

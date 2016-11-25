@@ -5,13 +5,13 @@ using DotVVM.Framework.Compilation.ControlTree.Resolved;
 
 namespace DotvvmAcademy.Steps.Validation.Validators.Lesson3
 {
-    [StepValidation(ValidatorKey = "Lesson3Step3Validator")]
-    public class Lesson3Step3Validator : IDotHtmlCodeValidationObject
+    [StepValidation(ValidatorKey = "Lesson3Step11Validator")]
+    public class Lesson3Step11Validator : IDotHtmlCodeValidationObject
     {
         public void Validate(ResolvedTreeRoot resolvedTreeRoot)
         {
-            Lesson3CommonValidator.CheckStepControls(resolvedTreeRoot);
-            DotHtmlCommonValidator.ValidatePropertiesBindings(resolvedTreeRoot,Lesson3CommonValidator.CreateStep2Properties());
+            Lesson3CommonValidator.CheckStep11Controls(resolvedTreeRoot);
+            DotHtmlCommonValidator.ValidatePropertiesBindings(resolvedTreeRoot, Lesson3CommonValidator.CreateStep9Properties());
         }
     }
 }

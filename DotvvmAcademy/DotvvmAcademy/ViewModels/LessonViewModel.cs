@@ -14,6 +14,9 @@ namespace DotvvmAcademy.ViewModels
         protected LessonBase lesson;
         protected int lessonNumber;
         public IStep Step { get; set; }
+
+        //public List<IStep> Steps { get; set; }
+
         public string ErrorMessage { get; private set; }
         public bool ContinueButtonVisible { get; set; } = true;
         protected int CurrentStepNumber { get; set; }
@@ -66,9 +69,10 @@ namespace DotvvmAcademy.ViewModels
         {
             var storage = new LessonProgressStorage(Context.GetAspNetCoreContext());
 
-            if (Step is ValidableStepBase)
+            var step = Step as ValidableStepBase;
+            if (step != null)
             {
-                var validableStep = Step as ValidableStepBase;
+                var validableStep = step;
                 ErrorMessage = validableStep.ErrorMessage;
             }
 

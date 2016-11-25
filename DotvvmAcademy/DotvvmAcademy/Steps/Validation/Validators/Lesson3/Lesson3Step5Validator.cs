@@ -2,7 +2,6 @@
 using DotvvmAcademy.Steps.Validation.ValidatorProvision;
 using DotvvmAcademy.Steps.Validation.Validators.CommonValidators;
 using DotVVM.Framework.Compilation.ControlTree.Resolved;
-using DotVVM.Framework.Controls;
 
 namespace DotvvmAcademy.Steps.Validation.Validators.Lesson3
 {
@@ -13,10 +12,9 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson3
         {
             var propertiesToValidate = Lesson3CommonValidator.CreateStep6Properties();
             DotHtmlCommonValidator.ValidatePropertiesBindings(resolvedTreeRoot, propertiesToValidate);
-
-            ValidationExtensions.CheckTypeAndCount<RadioButton>(resolvedTreeRoot, 2);
-
-            DotHtmlCommonValidator.ValidatePropertiesBindings(resolvedTreeRoot,Lesson3CommonValidator.CreateStep4Properties());
+            Lesson3CommonValidator.CheckStep5Controls(resolvedTreeRoot);
+            DotHtmlCommonValidator.ValidatePropertiesBindings(resolvedTreeRoot,
+                Lesson3CommonValidator.CreateStep4Properties());
         }
     }
 }

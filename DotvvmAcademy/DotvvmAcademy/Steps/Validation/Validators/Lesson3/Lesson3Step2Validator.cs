@@ -13,7 +13,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson3
         public void Validate(CSharpCompilation compilation, CSharpSyntaxTree tree, SemanticModel model,
             Assembly assembly)
         {
-            CsharpCommonValidator.ValidateProperties(tree,model, Lesson3CommonValidator.CreateStep2Properties());
+            CSharpCommonValidator.ValidateProperties(tree,model, Lesson3CommonValidator.CreateStep2Properties());
         }
     }
 }

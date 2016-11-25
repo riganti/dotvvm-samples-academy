@@ -15,15 +15,10 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson2
             Assembly assembly)
         {
             var taskdata = "TaskData";
-            CsharpCommonValidator.ValidateClass(tree,model,taskdata);
+            CSharpCommonValidator.ValidateClass(tree, model, taskdata);
 
-            var propertiesToValidate = new List<Property>
-            {
-                new Property("Title", "string"),
-                new Property("IsCompleted", "bool"),
-                new Property("Result", "int")
-            };
-            CsharpCommonValidator.ValidateProperties(tree,model,propertiesToValidate);
+            List<Property> propertiesToValidate = Lesson2CommonValidator.CreateStep5Properties();
+            CSharpCommonValidator.ValidateProperties(tree, model, propertiesToValidate);
         }
     }
 }

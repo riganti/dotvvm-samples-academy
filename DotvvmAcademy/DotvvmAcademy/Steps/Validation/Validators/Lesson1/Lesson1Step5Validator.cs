@@ -13,11 +13,11 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson1
         public void Validate(CSharpCompilation compilation, CSharpSyntaxTree tree, SemanticModel model,
             Assembly assembly)
         {
-            CsharpCommonValidator.ValidateProperties(tree, model, Lesson1CommonValidator.CreateStep4Properties());
+            CSharpCommonValidator.ValidateProperties(tree, model, Lesson1CommonValidator.CreateStep4Properties());
 
-            var methodName = "AddTask";
+            var methodName = "Calculate";
 
-            CsharpCommonValidator.ValidateMethod(tree,model,methodName);
+            CSharpCommonValidator.ValidateMethod(tree,model,methodName);
 
             ValidationExtensions.ExecuteSafe(() =>
             {

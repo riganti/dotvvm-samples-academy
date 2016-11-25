@@ -7,12 +7,12 @@ using Microsoft.CodeAnalysis.CSharp;
 
 namespace DotvvmAcademy.Steps.Validation.Validators.Lesson3
 {
-    [StepValidation(ValidatorKey = "Lesson3Step6Validator")]
-    public class Lesson3Step6Validator : ICSharpCodeValidationObject
+    [StepValidation(ValidatorKey = "Lesson3Step9Validator")]
+    public class Lesson3Step9Validator : ICSharpCodeValidationObject
     {
         public void Validate(CSharpCompilation compilation, CSharpSyntaxTree tree, SemanticModel model, Assembly assembly)
         {
-            CSharpCommonValidator.ValidateProperties(tree, model, Lesson3CommonValidator.CreateStep6Properties());
+            CSharpCommonValidator.ValidateProperties(tree, model, Lesson3CommonValidator.CreateStep9Properties());
         }
     }
 }

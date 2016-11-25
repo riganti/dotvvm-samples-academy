@@ -11,9 +11,9 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson1
         {
             return new List<Property>
             {
-                new Property("Number1", "int"),
-                new Property("Number2", "int"),
-                new Property("Result", "int")
+                new Property("Number1", "int", ControlBindName.TextBoxText),
+                new Property("Number2", "int", ControlBindName.TextBoxText),
+                new Property("Result", "int", ControlBindName.TextBoxText)
             };
         }
 
@@ -25,8 +25,8 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson1
 
         public static void ValidateBasicControls(ResolvedTreeRoot resolvedTreeRoot)
         {
-            ValidationExtensions.CheckTypeAndCount<TextBox>(resolvedTreeRoot, 3);
-            ValidationExtensions.CheckTypeAndCount<Button>(resolvedTreeRoot, 1);
+            DotHtmlCommonValidator.CheckTypeAndCount<TextBox>(resolvedTreeRoot, 3);
+            DotHtmlCommonValidator.CheckTypeAndCount<Button>(resolvedTreeRoot, 1);
         }
     }
 }

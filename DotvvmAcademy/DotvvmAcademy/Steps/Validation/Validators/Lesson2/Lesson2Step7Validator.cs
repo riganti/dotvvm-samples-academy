@@ -12,7 +12,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson2
         public void Validate(CSharpCompilation compilation, CSharpSyntaxTree tree, SemanticModel model,
             Assembly assembly)
         {
-            Lesson2CommonValidator.ValidateAddTaskMethod(compilation, tree, model, assembly, this);
+            Lesson2CommonValidator.ValidateAddTaskMethod(compilation, tree, model, assembly);
         }
     }
 }

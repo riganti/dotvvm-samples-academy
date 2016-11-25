@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using DotvvmAcademy.Steps.Validation.Interfaces;
 using DotvvmAcademy.Steps.Validation.ValidatorProvision;
 using DotVVM.Framework.Compilation.ControlTree.Resolved;
@@ -19,21 +20,32 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson2
                 .Properties[Repeater.ItemTemplateProperty]
                 .CastTo<ResolvedPropertyTemplate>();
 
-            var divs = template
+
+            //todo ControlBindName.DivClass
+            // DotHtmlValidator.ValidatePropertyBinding
+
+            List<ResolvedControl> resolvedControls = template
                 .GetDescendantControls<HtmlGenericControl>()
                 .ToList();
-            var div = divs.First(d => d.DothtmlNode.As<DothtmlElementNode>()?.TagName == "div");
 
-            var classProperties = div.Properties
+            ResolvedControl div = resolvedControls.First(d => d.DothtmlNode.As<DothtmlElementNode>()?.TagName == "div");
+
+
+            //todo
+            List<ResolvedPropertyBinding> divClassProperties = div.Properties
                 .Where(p => p.Value.Property.Name == "Attributes:class")
                 .Select(p => p.Value)
                 .OfType<ResolvedPropertyBinding>()
                 .ToList();
-            if (classProperties.Count != 1)
+
+
+            if (divClassProperties.Count != 1)
             {
                 throw new CodeValidationException(Lesson2Texts.InvalidClassBinding);
             }
-            var classBinding = classProperties[0].Binding.Value.Replace(" ", "").Replace("\"", "'");
+
+
+            var classBinding = divClassProperties[0].Binding.Value.Replace(" ", "").Replace("\"", "'");
             if ((classBinding != "IsCompleted?'task-completed':'task'")
                 && (classBinding != "IsCompleted==true?'task-completed':'task'")
                 && (classBinding != "!IsCompleted?'task':'task-completed'")

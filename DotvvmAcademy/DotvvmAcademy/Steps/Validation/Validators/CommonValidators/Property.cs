@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
+﻿namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
 {
     public class Property
     {
-        public Property(string name, string type)
+        public Property(string name, string csharpType, ControlBindName targetControlBindName)
         {
             Name = name;
-            Type = type;
+            CsharpType = csharpType;
+            TargetControlBindName = targetControlBindName;
         }
-
-        public string Name { get; }
-
-        public string Type { get; }
+        public ControlBindName TargetControlBindName { get; }
+        public string Name { get; set; }
+        public string CsharpType { get; }
     }
 }

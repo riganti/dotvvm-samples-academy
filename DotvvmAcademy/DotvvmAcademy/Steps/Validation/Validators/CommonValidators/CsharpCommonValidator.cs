@@ -6,7 +6,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
 {
-    public static class CsharpCommonValidator
+    public static class CSharpCommonValidator
     {
         public static void ValidateProperties(CSharpSyntaxTree tree, SemanticModel model,
             List<Property> propertiesToValidate)
@@ -77,7 +77,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
 
         private static void GetPropertyValidationError(List<IPropertySymbol> treeProperties, Property propertyToValidate)
         {
-            if (!treeProperties.Any(p => p.CheckNameAndType(propertyToValidate.Name, propertyToValidate.Type)))
+            if (!treeProperties.Any(p => p.CheckNameAndType(propertyToValidate.Name, propertyToValidate.CsharpType)))
             {
                 throw new CodeValidationException(string.Format(ValidationErrorMessages.PropertyNotFound,
                     propertyToValidate.Name));
@@ -86,7 +86,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
 
         private static void GetClassValidationError(List<INamedTypeSymbol> classTreeDeclarations, string className)
         {
-            if (classTreeDeclarations.All(c => c.Name == className))
+            if (!classTreeDeclarations.Any(c => c.Name == className))
             {
                 throw new CodeValidationException(string.Format(ValidationErrorMessages.ClassNotFound, className));
             }
