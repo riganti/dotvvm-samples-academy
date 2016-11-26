@@ -10,8 +10,6 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
 {
     public static class DotHtmlCommonValidator
     {
-      
-
         public static ResolvedControl GetControlInRepeater<T>(ResolvedTreeRoot resolvedTreeRoot)
             where T : HtmlGenericControl
         {
@@ -49,7 +47,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
         private static IEnumerable<string> GetRepeaterDataSourceBinding(ResolvedTreeRoot resolvedTreeRoot)
         {
             var propertyBindings = resolvedTreeRoot.GetDescendantControls<Repeater>()
-                .Select(c => c.GetValueBindingText(Repeater.DataSourceProperty))
+                .Select(c => c.GetValueBindingText(ItemsControl.DataSourceProperty))
                 .ToList();
             return propertyBindings;
         }
@@ -62,7 +60,6 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
             return propertyBindings;
         }
 
-       
 
         private static IEnumerable<string> GetLiteralValueBinding(ResolvedTreeRoot resolvedTreeRoot)
         {
@@ -73,69 +70,64 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
             return propertyBindings;
         }
 
-        private static IEnumerable<string> GetComboBoxDataSourceBinding(ResolvedTreeRoot resolvedTreeRoot)
+        private static string GetComboBoxDataSourceBinding(ResolvedTreeRoot resolvedTreeRoot)
         {
-            var propertyBindings = resolvedTreeRoot.GetDescendantControls<ComboBox>()
+            return resolvedTreeRoot.GetDescendantControls<ComboBox>()
                 .Select(c => c.GetValueBindingText(ItemsControl.DataSourceProperty))
-                .ToList();
-            return propertyBindings;
+                .FirstOrDefault();
         }
 
-        private static IEnumerable<string> GetComboBoxSelectedValueBinding(ResolvedTreeRoot resolvedTreeRoot)
+        private static string GetComboBoxSelectedValueBinding(ResolvedTreeRoot resolvedTreeRoot)
         {
-            var propertyBindings = resolvedTreeRoot.GetDescendantControls<ComboBox>()
+            return resolvedTreeRoot.GetDescendantControls<ComboBox>()
                 .Select(c => c.GetValueBindingText(Selector.SelectedValueProperty))
-                .ToList();
-            return propertyBindings;
+                .FirstOrDefault();
         }
+
+        private static string GetComboBoxValueMemberValue(ResolvedTreeRoot resolvedTreeRoot)
+        {
+            return resolvedTreeRoot.GetDescendantControls<ComboBox>()
+                .Select(c => c.GetValue(SelectorBase.ValueMemberProperty))
+                .FirstOrDefault();
+        }
+
+        private static string GetComboBoxDisplayMemberValue(ResolvedTreeRoot resolvedTreeRoot)
+        {
+            return resolvedTreeRoot.GetDescendantControls<ComboBox>()
+                .Select(c => c.GetValue(SelectorBase.DisplayMemberProperty))
+                .FirstOrDefault();
+        }
+
         private static IEnumerable<string> GetRepeaterLiteralBinding(ResolvedTreeRoot resolvedTreeRoot)
         {
+            //todo
             var repeaterTemplate = GetRepeaterTemplate(resolvedTreeRoot);
-            List<ResolvedPropertyBinding> literals = repeaterTemplate.GetDescendantControls<Literal>()
-              .Select(l => l.GetValueBindingOrNull(Literal.TextProperty))
-              .Where(l => l != null)
-              .ToList();
+            var literals = repeaterTemplate.GetDescendantControls<Literal>()
+                .Select(l => l.GetValueBindingOrNull(Literal.TextProperty))
+                .Where(l => l != null)
+                .ToList();
             return literals.Select(l => l.Binding.Value);
         }
+
         private static IEnumerable<string> GetRepeaterDivClassBinding(ResolvedTreeRoot resolvedTreeRoot)
         {
             var result = new List<string>();
             var repeaterTemplate = GetRepeaterTemplate(resolvedTreeRoot);
-            var resolvedControls = repeaterTemplate.GetDescendantControls<HtmlGenericControl>()
-                .Where(d => d.DothtmlNode.As<DothtmlElementNode>()?.TagName == "div")
-                .ToList();
+            var divs = repeaterTemplate.GetDescendantControls<HtmlGenericControl>()
+                .Where(d => d.DothtmlNode.As<DothtmlElementNode>()?.TagName == "div").ToList();
 
-            foreach (var resolvedControl in resolvedControls)
+
+            foreach (var resolvedControl in divs)
             {
-                var ac = resolvedControl.Properties
-                    .Where(p => p.Value.Property.Name == "Attributes:class");
-                // resolvedControl
-
-                List<ResolvedPropertyBinding> divClassProperties = resolvedControl.Properties
-               .Where(p => p.Value.Property.Name == "Attributes:class")
-               .Select(p => p.Value)
-               .OfType<ResolvedPropertyBinding>()
-               // resolvedControl
-               //.Select(c=> c.GetValueBindingText(Literal.TextProperty))
-               .ToList();
-
-
+                var divClassProperties = resolvedControl.Properties
+                    .Where(p => p.Value.Property.Name == "Attributes:class")
+                    .Select(p => p.Value)
+                    .OfType<ResolvedPropertyBinding>()
+                    .ToList();
+                result.AddRange(divClassProperties.Select(a => a.Binding.Value));
             }
-
-            //var resolvedControls = resolvedControls.Where(d => d.DothtmlNode.As<DothtmlElementNode>()?.TagName == "div");
-            
-
-
-
-            List<ResolvedPropertyBinding> literals = repeaterTemplate.GetDescendantControls<Literal>()
-              .Select(l => l.GetValueBindingOrNull(Literal.TextProperty))
-              .Where(l => l != null)
-              .ToList();
-
-
-            return literals.Select(l => l.Binding.Value);
+            return result;
         }
-
 
 
         public static void ValidatePropertiesBindings(ResolvedTreeRoot resolvedTreeRoot,
@@ -155,20 +147,26 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
             {
                 propertiesBindings.AddRange(GetTextBoxTextBinding(resolvedTreeRoot));
             }
-
             else if (propertyToValidate.TargetControlBindName == ControlBindName.RadioButtonCheckedItem)
             {
                 propertiesBindings.AddRange(GetRadioButtonCheckedItemBinding(resolvedTreeRoot));
             }
             else if (propertyToValidate.TargetControlBindName == ControlBindName.ComboBoxDataSource)
             {
-                propertiesBindings.AddRange(GetComboBoxDataSourceBinding(resolvedTreeRoot));
+                propertiesBindings.Add(GetComboBoxDataSourceBinding(resolvedTreeRoot));
             }
             else if (propertyToValidate.TargetControlBindName == ControlBindName.ComboBoxSelectedValue)
             {
-                propertiesBindings.AddRange(GetComboBoxSelectedValueBinding(resolvedTreeRoot));
+                propertiesBindings.Add(GetComboBoxSelectedValueBinding(resolvedTreeRoot));
             }
-
+            else if (propertyToValidate.TargetControlBindName == ControlBindName.ComboBoxValueMemberNotBind)
+            {
+                propertiesBindings.Add(GetComboBoxValueMemberValue(resolvedTreeRoot));
+            }
+            else if (propertyToValidate.TargetControlBindName == ControlBindName.ComboBoxDisplayMemberNotBind)
+            {
+                propertiesBindings.Add(GetComboBoxDisplayMemberValue(resolvedTreeRoot));
+            }
             else if (propertyToValidate.TargetControlBindName == ControlBindName.RepeaterDataSource)
             {
                 propertiesBindings.AddRange(GetRepeaterDataSourceBinding(resolvedTreeRoot));
@@ -181,8 +179,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
             {
                 propertiesBindings.AddRange(GetRepeaterDivClassBinding(resolvedTreeRoot));
             }
-
-            else if(propertyToValidate.TargetControlBindName == ControlBindName.CheckBoxCheckedItems)
+            else if (propertyToValidate.TargetControlBindName == ControlBindName.CheckBoxCheckedItems)
             {
                 propertiesBindings.AddRange(GetCheckBoxCheckedItemsBinding(resolvedTreeRoot));
             }
@@ -198,11 +195,13 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
             {
                 throw new NotImplementedException();
             }
+
             else if (propertyToValidate.TargetControlBindName == ControlBindName.NotExist)
             {
                 throw new ArgumentException($"Property {propertyToValidate.Name}, cant be validate in DotHtml.");
             }
-            
+
+
             var propertyName = propertyToValidate.Name;
 
             if (!propertiesBindings.Contains(propertyName))
@@ -216,6 +215,17 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
             where T : HtmlGenericControl
         {
             if (resolvedTreeRoot.GetDescendantControls<T>().Count() != count)
+            {
+                throw new CodeValidationException(string.Format(ValidationErrorMessages.TypeCountError, count,
+                    typeof(T).Name));
+            }
+        }
+
+        public static void CheckTypeAndCountInRepeater<T>(ResolvedTreeRoot resolvedTreeRoot, int count)
+            where T : HtmlGenericControl
+        {
+            var repeaterTemplate = GetRepeaterTemplate(resolvedTreeRoot);
+            if (repeaterTemplate.GetDescendantControls<T>().Count() != count)
             {
                 throw new CodeValidationException(string.Format(ValidationErrorMessages.TypeCountError, count,
                     typeof(T).Name));

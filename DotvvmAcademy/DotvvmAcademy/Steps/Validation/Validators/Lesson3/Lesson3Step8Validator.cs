@@ -15,16 +15,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson3
         {
             var className = "CountryInfo";
             CSharpCommonValidator.ValidateClass(tree,model,className);
-            CSharpCommonValidator.ValidateProperties(tree,model, CreateStep8Properties());
-        }
-
-        private static List<Property> CreateStep8Properties()
-        {
-            return new List<Property>
-            {
-                new Property("Id", "int", ControlBindName.NotExist),
-                new Property("Name", "string", ControlBindName.NotExist)
-            };
+            CSharpCommonValidator.ValidateProperties(tree,model, Lesson3CommonValidator.CreateStep8Properties());
         }
     }
 }

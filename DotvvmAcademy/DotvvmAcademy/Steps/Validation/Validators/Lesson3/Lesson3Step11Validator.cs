@@ -11,7 +11,6 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson3
         public void Validate(ResolvedTreeRoot resolvedTreeRoot)
         {
             Lesson3CommonValidator.CheckStep11Controls(resolvedTreeRoot);
-            DotHtmlCommonValidator.ValidatePropertiesBindings(resolvedTreeRoot, Lesson3CommonValidator.CreateStep9Properties());
         }
     }
 }

@@ -73,7 +73,11 @@ namespace DotvvmAcademy.ViewModels
             if (step != null)
             {
                 var validableStep = step;
-                ErrorMessage = validableStep.ErrorMessage;
+                if (Context.IsPostBack)
+                {
+                   ErrorMessage = validableStep.Validate();
+                }
+               
             }
 
             if (string.IsNullOrEmpty(ErrorMessage))

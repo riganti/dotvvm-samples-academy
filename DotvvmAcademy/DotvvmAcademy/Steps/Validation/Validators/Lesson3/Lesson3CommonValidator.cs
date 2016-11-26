@@ -15,7 +15,6 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson3
                 new Property("LastName", "string",ControlBindName.TextBoxText)
             };
         }
-
         public static List<Property> CreateStep4Properties()
         {
             var properties = CreateStep2Properties();
@@ -29,16 +28,24 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson3
             return properties;
         }
 
-        public static void CheckStepControls(ResolvedTreeRoot resolvedTreeRoot)
+        public static void CheckStep3Controls(ResolvedTreeRoot resolvedTreeRoot)
         {
             DotHtmlCommonValidator.CheckTypeAndCount<TextBox>(resolvedTreeRoot, 2);
         }
         public static void CheckStep5Controls(ResolvedTreeRoot resolvedTreeRoot)
         {
-            CheckStepControls(resolvedTreeRoot);
+            CheckStep3Controls(resolvedTreeRoot);
             DotHtmlCommonValidator.CheckTypeAndCount<RadioButton>(resolvedTreeRoot, 2);
         }
 
+        public static List<Property> CreateStep8Properties()
+        {
+            return new List<Property>
+            {
+                new Property("Id", "int", ControlBindName.ComboBoxValueMemberNotBind),
+                new Property("Name", "string", ControlBindName.ComboBoxDisplayMemberNotBind)
+            };
+        }
 
         public static List<Property> CreateStep9Properties()
         {
@@ -52,13 +59,21 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson3
             return new List<Property>
             {
                 new Property("SelectedCountryId", "int", ControlBindName.ComboBoxSelectedValue),
-                new Property("Countries", "List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>",ControlBindName.RepeaterDataSource)
+                new Property("Countries", "System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>",ControlBindName.ComboBoxDataSource)
             };
+        }
+
+        public static List<Property> CreateStep11Properties()
+        {
+            var properties = CreateStep8Properties();
+            properties.AddRange(CreateStep9Properties());
+            return properties;
         }
 
         public static void CheckStep11Controls(ResolvedTreeRoot resolvedTreeRoot)
         {
             CheckStep5Controls(resolvedTreeRoot);
+            DotHtmlCommonValidator.ValidatePropertiesBindings(resolvedTreeRoot, CreateStep11Properties());
             DotHtmlCommonValidator.CheckTypeAndCount<ComboBox>(resolvedTreeRoot, 1);
         }
 
@@ -73,6 +88,5 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson3
             properties.Add(CreateNewCustomerProperty());
             return properties;
         }
-
     }
 }

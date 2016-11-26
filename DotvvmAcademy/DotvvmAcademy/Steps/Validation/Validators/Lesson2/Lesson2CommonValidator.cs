@@ -114,8 +114,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson2
             ValidateRepeaterControl(root);
 
             DotHtmlCommonValidator.ValidatePropertyBinding(root, CreateStep5TitleProperty());
-
-            DotHtmlCommonValidator.CheckTypeAndCount<LinkButton>(root,1);
+            DotHtmlCommonValidator.CheckTypeAndCountInRepeater<LinkButton>(root,1);
 
         }
 

@@ -181,6 +181,8 @@ Add to ViewModel new List<string> property Interests.
             <!--Required element-->
             <StartupCode>
                 <![CDATA[
+using System.Collections.Generic;
+
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
     public class Lesson3ViewModel 
@@ -196,6 +198,9 @@ namespace DotvvmAcademy.Tutorial.ViewModels
             <!--Required element-->
             <FinalCode>
                 <![CDATA[
+
+using System.Collections.Generic;
+
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
     public class Lesson3ViewModel 
@@ -203,7 +208,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Role { get; set; }
-        public Interests List<string> { get; set; } = new List<string>();
+        public List<string> Interests { get; set; } = new List<string>();
     }
 }
 ]]>
@@ -313,6 +318,8 @@ Add to ViewModel collection Countries of type List<CountryInfo> and int property
             <!--Required element-->
             <StartupCode>
                 <![CDATA[
+using System.Collections.Generic;
+
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
     public class Lesson3ViewModel 
@@ -329,6 +336,8 @@ namespace DotvvmAcademy.Tutorial.ViewModels
             <!--Required element-->
             <FinalCode>
                 <![CDATA[
+using System.Collections.Generic;
+
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
     public class Lesson3ViewModel 
@@ -337,7 +346,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
         public string LastName { get; set; }
         public string Role { get; set; }
         public int SelectedCountryId { get; set; }
-        public Countries List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo> { get; set; } = new List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>();
+        public List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo> Countries { get; set; } = new List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>();
     }
 }
 ]]>
@@ -384,15 +393,18 @@ In Lesson3ViewModel add parameterless ctor and add into Countries 2 states - "US
             <!--Optional element-->
             <StartupCode>
                 <![CDATA[
+using System.Collections.Generic;
+
 namespace DotvvmAcademy.Tutorial.ViewModels
 {
     public class Lesson3ViewModel 
     {
+        // add ctor
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Role { get; set; }
         public int SelectedCountryId { get; set; }
-        public Countries List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo> { get; set; } = new List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>();
+        public List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo> Countries { get; set; } = new List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>();
     }
 }
 ]]>
@@ -400,6 +412,8 @@ namespace DotvvmAcademy.Tutorial.ViewModels
             <!--Required element-->
             <FinalCode>
                 <![CDATA[
+using System.Collections.Generic;
+
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
     public class Lesson3ViewModel 
@@ -413,7 +427,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
         public string LastName { get; set; }
         public string Role { get; set; }
         public int SelectedCountryId { get; set; }
-        public Countries List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo> { get; set; } = new List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>();
+        public List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo> Countries { get; set; } = new List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>();
     }
 }
 ]]>
@@ -439,6 +453,11 @@ namespace DotvvmAcademy.Tutorial.ViewModels
                 <AllowedType>
                     <![CDATA[
 System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>
+                        ]]>
+                </AllowedType>
+                <AllowedType>
+                    <![CDATA[
+DotvvmAcademy.Tutorial.ViewModels.CountryInfo
                         ]]>
                 </AllowedType>
             </AllowedTypesConstructed>
@@ -492,7 +511,7 @@ Add to page ComboBox, attribute DataSource bind to "Countries", DisplayMember se
                 ]]>
             </FinalCode>
         </Step>
-        
+
         <!--12-->
         <Step Type="Info">
             <!--Required element-->
@@ -521,6 +540,8 @@ Add to ViewModel property NewCustomer of type CustomerInfo.
             <!--Required element-->
             <StartupCode>
                 <![CDATA[
+using System.Collections.Generic;
+
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
     public class Lesson3ViewModel 
@@ -532,7 +553,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
         }
         // add prop CustomerInfo
         public int SelectedCountryId { get; set; }
-        public Countries List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo> { get; set; } = new List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>();
+        public List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo> Countries { get; set; } = new List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>();
     }
 }
 ]]>
@@ -540,6 +561,8 @@ namespace DotvvmAcademy.Tutorial.ViewModels
             <!--Required element-->
             <FinalCode>
                 <![CDATA[
+using System.Collections.Generic;
+
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
     public class Lesson3ViewModel 
@@ -551,7 +574,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
         }
         public CustomerInfo NewCustomer { get; set; }
         public int SelectedCountryId { get; set; }
-        public Countries List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo> { get; set; } = new List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>();
+        public List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo> Countries { get; set; } = new List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>();
     }
 }
 ]]>
@@ -664,12 +687,12 @@ Datacontext gets or sets a data context for the control and its children. All va
 
         </Step>
 
-    
+
         <!--15-->
         <Step Type="DothtmlCode">
-        <!--Required element-->
+            <!--Required element-->
             <Title>Change bind context</Title>
-             <!--Required element-->
+            <!--Required element-->
             <ValidationKey>Lesson3Step15Validator</ValidationKey>
             <Description>
                 <![CDATA[
@@ -720,13 +743,13 @@ In every context you can use `_parent`, `_this` and `_root`. `_parent` is contex
 </div>
                 ]]>
             </FinalCode>
-        <!--16-->
+            <!--16-->
         </Step>
-        
-                 <Step Type="Info">
+
+        <Step Type="Info">
             <Title>Congratulations</Title>
             <Description>
-            <![CDATA[
+                <![CDATA[
 You have finished the third lesson!
 
 You have learned how to use the `ComboBox` control and context of ViewModels!"
@@ -734,7 +757,7 @@ You have learned how to use the `ComboBox` control and context of ViewModels!"
             </Description>
             <ShadowBoxDescription/>
         </Step>
-    
+
     </Steps>
 
 

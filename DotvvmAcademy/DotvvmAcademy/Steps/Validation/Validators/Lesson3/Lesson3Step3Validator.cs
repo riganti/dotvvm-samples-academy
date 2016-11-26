@@ -10,7 +10,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson3
     {
         public void Validate(ResolvedTreeRoot resolvedTreeRoot)
         {
-            Lesson3CommonValidator.CheckStepControls(resolvedTreeRoot);
+            Lesson3CommonValidator.CheckStep3Controls(resolvedTreeRoot);
             DotHtmlCommonValidator.ValidatePropertiesBindings(resolvedTreeRoot,Lesson3CommonValidator.CreateStep2Properties());
         }
     }
