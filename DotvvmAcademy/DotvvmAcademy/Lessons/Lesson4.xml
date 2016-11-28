@@ -2,14 +2,72 @@
 <Lesson>
     <ValidatorsNamespace>DotvvmAcademy.Steps.Validation.Validators.Lesson4</ValidatorsNamespace>
     <Steps>
-     <Step Type="Info">
-            <Title>Test</Title>
+        <!--1-->
+        <Step Type="Info">
+            <Title>Introduction</Title>
             <Description>
                 <![CDATA[
-Test
+Purpose of this lesson is understanding validation.
                 ]]>
             </Description>
         </Step>
+
+        <!--2-->
+        <Step Type="CsharpCode">
+            <!--Required element-->
+            <Title>Attribute `Required`</Title>
+            <!--Required element-->
+            <ValidationKey>Lesson4Step2Validator</ValidationKey>
+            <!--Required element-->
+            <Description>
+                <![CDATA[
+XXXXXXX
+]]>
+            </Description>
+            <!--Optional element-->
+
+            <StartupCode>
+                <![CDATA[
+using System.ComponentModel.DataAnnotations;
+
+namespace DotvvmAcademy.Tutorial.ViewModels 
+{
+    public class Lesson4ViewModel 
+    {
+        //add Required attribute
+        public string City { get; set; }
+        //add Required attribute
+        public string ZIP { get; set; }
+        //add EmailAddress attribute
+        public string Email { get; set; }
+    }
+}
+]]>
+            </StartupCode>
+            <!--Required element-->
+            <FinalCode>
+                <![CDATA[
+using System.ComponentModel.DataAnnotations;
+
+namespace DotvvmAcademy.Tutorial.ViewModels 
+{
+    public class Lesson4ViewModel 
+    {
+        [Required]
+        public string City { get; set; }
+        [Required]
+        public string ZIP { get; set; }
+        [EmailAddress]
+        public string Email { get; set; }
+    }
+}
+]]>
+            </FinalCode>
+        </Step>
+
+
+
+
     </Steps>
-    
-    </Lesson>
+
+</Lesson>

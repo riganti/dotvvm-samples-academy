@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using DotvvmAcademy.Steps.StepsBases;
 using DotvvmAcademy.Steps.Validation;
 using DotvvmAcademy.Steps.Validation.Interfaces;
+using DotvvmAcademy.Steps.Validation.Validators.CommonValidators;
 using DotVVM.Framework.Configuration;
 using DotVVM.Framework.ViewModel;
 using Microsoft.CodeAnalysis;
@@ -50,7 +51,7 @@ namespace DotvvmAcademy.Steps
                 var assembly = compilation.CompileToAssembly();
                 var model = compilation.GetSemanticModel(tree);
 
-                var validationVisitor = new CSharpCodeSafetyVisitor(this, compilation, tree, model);
+                var validationVisitor = new CSharpCodeSafetyVisitor(this, model);
 
                 validationVisitor.Visit(tree.GetCompilationUnitRoot());
 

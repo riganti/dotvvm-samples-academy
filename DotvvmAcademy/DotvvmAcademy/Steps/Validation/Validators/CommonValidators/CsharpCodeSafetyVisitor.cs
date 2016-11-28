@@ -1,24 +1,18 @@
-﻿using DotvvmAcademy.Steps.Validation.Validators;
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace DotvvmAcademy.Steps.Validation
+namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
 {
     public class CSharpCodeSafetyVisitor : CSharpSyntaxWalker
     {
-        private CSharpCompilation compilation;
         private readonly SemanticModel model;
 
         private readonly CodeStepCsharp step;
-        private CSharpSyntaxTree tree;
 
-        public CSharpCodeSafetyVisitor(CodeStepCsharp step, CSharpCompilation compilation, CSharpSyntaxTree tree,
-            SemanticModel model)
+        public CSharpCodeSafetyVisitor(CodeStepCsharp step, SemanticModel model)
         {
             this.step = step;
-            this.compilation = compilation;
-            this.tree = tree;
             this.model = model;
         }
 

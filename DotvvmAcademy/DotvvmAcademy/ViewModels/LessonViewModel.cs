@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using DotvvmAcademy.Cache;
@@ -15,9 +16,6 @@ namespace DotvvmAcademy.ViewModels
         protected LessonBase lesson;
         protected int lessonNumber;
         public IStep Step { get; set; }
-
-        //public List<IStep> Steps { get; set; }
-
         public string ErrorMessage { get; private set; }
         public bool ContinueButtonVisible { get; set; } = true;
         protected int CurrentStepNumber { get; set; }
