@@ -4,6 +4,7 @@ using DotVVM.Framework.Compilation.ControlTree.Resolved;
 using DotVVM.Framework.Controls;
 using System.Linq;
 using DotvvmAcademy.Steps.Validation.Validators.CommonValidators;
+using DotvvmAcademy.Steps.Validation.Validators.PropertyAndControlType;
 
 namespace DotvvmAcademy.Steps.Validation.Validators.Lesson3
 {

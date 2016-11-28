@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using DotvvmAcademy.Steps.Validation.Validators.CommonValidators;
+using DotvvmAcademy.Steps.Validation.Validators.PropertyAndControlType;
 using DotVVM.Framework.Compilation.ControlTree.Resolved;
 using DotVVM.Framework.Controls;
 
@@ -12,20 +12,23 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson3
         {
             return new List<Property>
             {
-                new Property("FirstName", "string",ControlBindName.TextBoxText),
-                new Property("LastName", "string",ControlBindName.TextBoxText)
+                new Property("FirstName", "string", ControlBindName.TextBoxText),
+                new Property("LastName", "string", ControlBindName.TextBoxText)
             };
         }
+
         public static List<Property> CreateStep4Properties()
         {
             var properties = CreateStep2Properties();
             properties.Add(new Property("Role", "string", ControlBindName.RadioButtonCheckedItem));
             return properties;
         }
+
         public static List<Property> CreateStep6Properties()
         {
             var properties = CreateStep4Properties();
-            properties.Add(new Property("Interests", "System.Collections.Generic.List<string>",ControlBindName.CheckBoxCheckedItems));
+            properties.Add(new Property("Interests", "System.Collections.Generic.List<string>",
+                ControlBindName.CheckBoxCheckedItems));
             return properties;
         }
 
@@ -33,6 +36,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson3
         {
             DotHtmlCommonValidator.CheckControlTypeCount<TextBox>(resolvedTreeRoot, 2);
         }
+
         public static void CheckStep5Controls(ResolvedTreeRoot resolvedTreeRoot)
         {
             CheckStep3Controls(resolvedTreeRoot);
@@ -60,7 +64,9 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson3
             return new List<Property>
             {
                 new Property("SelectedCountryId", "int", ControlBindName.ComboBoxSelectedValue),
-                new Property("Countries", "System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>",ControlBindName.ComboBoxDataSource)
+                new Property("Countries",
+                    "System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>",
+                    ControlBindName.ComboBoxDataSource)
             };
         }
 
@@ -80,7 +86,8 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson3
 
         public static Property CreateNewCustomerProperty()
         {
-            return new Property("NewCustomer", "DotvvmAcademy.Tutorial.ViewModels.CustomerInfo",ControlBindName.DivDataContext);
+            return new Property("NewCustomer", "DotvvmAcademy.Tutorial.ViewModels.CustomerInfo",
+                ControlBindName.DivDataContext);
         }
 
         public static List<Property> CreateStep14Properties()

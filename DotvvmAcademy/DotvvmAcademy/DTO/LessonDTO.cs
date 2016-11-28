@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DotvvmAcademy.Services;
+﻿using DotvvmAcademy.Services;
 
 namespace DotvvmAcademy.DTO
 {
     public class LessonDTO
     {
-
         public int Number { get; set; }
 
         public int LastStep { get; set; }
@@ -21,7 +16,7 @@ namespace DotvvmAcademy.DTO
 
         public bool IsFinished => LastStep == LessonProgressStorage.FinishedLessonStepNumber;
         //todo 
-        public bool IsCreated => Number == 1 || Number == 2 || Number == 3;
+        public bool IsCreated => (Number == 1) || (Number == 2) || (Number == 3);
 
         public string ButtonText
         {
@@ -31,19 +26,18 @@ namespace DotvvmAcademy.DTO
                 {
                     return "Repeat Lesson";
                 }
-                else if (IsVisited)
+                if (IsVisited)
                 {
                     return "Continue";
                 }
-                else if (!IsCreated)
+                if (!IsCreated)
                 {
                     return "Coming Soon";
                 }
-                else return "Start Lesson";
+                return "Start Lesson";
             }
         }
 
         public int StepToOpen => IsFinished ? 1 : LastStep;
-
     }
 }

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using DotvvmAcademy.Steps.Validation.Validators.CommonValidators;
+using DotvvmAcademy.Steps.Validation.Validators.PropertyAndControlType;
 using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Compilation.ControlTree.Resolved;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;

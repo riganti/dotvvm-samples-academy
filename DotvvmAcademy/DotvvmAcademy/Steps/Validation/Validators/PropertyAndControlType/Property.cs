@@ -1,4 +1,4 @@
-﻿namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
+﻿namespace DotvvmAcademy.Steps.Validation.Validators.PropertyAndControlType
 {
     public class Property
     {

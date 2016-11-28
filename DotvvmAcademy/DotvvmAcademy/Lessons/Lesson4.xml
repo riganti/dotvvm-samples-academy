@@ -2,7 +2,14 @@
 <Lesson>
     <ValidatorsNamespace>DotvvmAcademy.Steps.Validation.Validators.Lesson4</ValidatorsNamespace>
     <Steps>
-    
+     <Step Type="Info">
+            <Title>Test</Title>
+            <Description>
+                <![CDATA[
+Test
+                ]]>
+            </Description>
+        </Step>
     </Steps>
     
     </Lesson>

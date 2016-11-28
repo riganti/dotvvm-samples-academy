@@ -1,16 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.IO;
+using DotvvmAcademy.Cache;
+using DotvvmAcademy.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
-using DotVVM.Framework.Hosting;
-using DotVVM.Framework.Configuration;
-using DotVVM.Framework.Security;
-using System.IO;
 
 namespace DotvvmAcademy
 {
@@ -32,13 +27,17 @@ namespace DotvvmAcademy
             var applicationPhysicalPath = env.ContentRootPath;
 
             // use DotVVM
-            DotvvmConfiguration dotvvmConfiguration = app.UseDotVVM<DotvvmStartup>(applicationPhysicalPath);
+            var dotvvmConfiguration = app.UseDotVVM<DotvvmStartup>(applicationPhysicalPath);
 
             // use static files
             app.UseStaticFiles(new StaticFileOptions
             {
-                FileProvider = new Microsoft.Extensions.FileProviders.PhysicalFileProvider(Path.Combine(applicationPhysicalPath, "wwwroot"))
+                FileProvider = new PhysicalFileProvider(Path.Combine(applicationPhysicalPath, "wwwroot"))
             });
+
+            var cache = new LessonsCache();
+            var lessonProvider = new AllLessonProvider();
+            cache.Set(lessonProvider.CreateSteps());
         }
     }
 }

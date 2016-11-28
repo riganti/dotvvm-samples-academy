@@ -1,15 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using DotvvmAcademy.Steps.StepsBases.Interfaces;
+﻿using System.Collections.Generic;
+using DotvvmAcademy.Lessons;
 
 namespace DotvvmAcademy.Services
 {
     public class AllLessonProvider
     {
-        public List<IStep> CreateSteps()
+        public Dictionary<int, LessonBase> CreateSteps()
         {
-            throw new NotImplementedException();
+            var lessons = new Dictionary<int, LessonBase>
+            {
+                {1, new Lesson1()},
+                {2, new Lesson2()},
+                {3, new Lesson3()},
+                {4, new Lesson4()}
+            };
+            return lessons;
         }
-
     }
 }

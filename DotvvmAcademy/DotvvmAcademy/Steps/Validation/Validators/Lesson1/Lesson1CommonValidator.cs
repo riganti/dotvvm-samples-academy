@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using DotvvmAcademy.Steps.Validation.Validators.CommonValidators;
+using DotvvmAcademy.Steps.Validation.Validators.PropertyAndControlType;
 using DotVVM.Framework.Compilation.ControlTree.Resolved;
 using DotVVM.Framework.Controls;
 

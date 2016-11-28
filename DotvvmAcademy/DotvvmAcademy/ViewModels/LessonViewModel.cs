@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using DotvvmAcademy.Cache;
 using DotvvmAcademy.Lessons;
 using DotvvmAcademy.Services;
 using DotvvmAcademy.Steps.StepsBases;
@@ -33,31 +34,31 @@ namespace DotvvmAcademy.ViewModels
             lessonNumber = Convert.ToInt32(Context.Parameters["Lesson"]);
             CurrentStepNumber = Convert.ToInt32(Context.Parameters["Step"]);
 
+            var cache = new LessonsCache();
+            var lessons = cache.Get();
+
+
             if (lessonNumber == 1)
             {
-                lesson = new Lesson1();
+                lesson = lessons.First(l => l.Key == 1).Value;
             }
             else if (lessonNumber == 2)
             {
-                lesson = new Lesson2();
+                lesson = lessons.First(l => l.Key == 2).Value;
             }
             else if (lessonNumber == 3)
             {
-                lesson = new Lesson3();
+                lesson = lessons.First(l => l.Key == 3).Value;
             }
             else if (lessonNumber == 4)
             {
-                lesson = new Lesson4();
+                lesson = lessons.First(l => l.Key == 4).Value;
             }
             else
             {
                 throw new NotSupportedException();
             }
-
-            //todo create cache
             Step = lesson.Steps.First(s => s.StepIndex == CurrentStepNumber);
-
-
             AfterLoad();
         }
 
