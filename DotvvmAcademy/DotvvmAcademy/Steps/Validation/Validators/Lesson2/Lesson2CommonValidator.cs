@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using DotvvmAcademy.Steps.Validation.Interfaces;
 using DotvvmAcademy.Steps.Validation.Validators.CommonValidators;
 using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Compilation.ControlTree.Resolved;
@@ -19,19 +18,21 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson2
         {
             return new Property("AddedTaskTitle", "string", ControlBindName.TextBoxText);
         }
+
         public static Property CreateStep6Property()
         {
             return new Property("Tasks",
-                "System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>",ControlBindName.RepeaterDataSource);
+                "System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>",
+                ControlBindName.RepeaterDataSource);
         }
 
         public static void ValidateAddTaskProperties(CSharpCompilation compilation, CSharpSyntaxTree tree,
             SemanticModel model, Assembly assembly)
         {
-            CSharpCommonValidator.ValidateProperty(tree,model, CreateStep3Property());
+            CSharpCommonValidator.ValidateProperty(tree, model, CreateStep3Property());
 
             var methodName = "AddTask";
-            CSharpCommonValidator.ValidateMethod(tree,model,methodName);
+            CSharpCommonValidator.ValidateMethod(tree, model, methodName);
         }
 
 
@@ -39,7 +40,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson2
             SemanticModel model, Assembly assembly)
         {
             ValidateAddTaskProperties(compilation, tree, model, assembly);
-            CSharpCommonValidator.ValidateProperty(tree,model, CreateStep6Property());
+            CSharpCommonValidator.ValidateProperty(tree, model, CreateStep6Property());
         }
 
 
@@ -73,8 +74,8 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson2
 
         public static void ValidateAddTaskControls(ResolvedTreeRoot resolvedTreeRoot)
         {
-            DotHtmlCommonValidator.CheckTypeAndCount<TextBox>(resolvedTreeRoot, 1);
-            DotHtmlCommonValidator.CheckTypeAndCount<Button>(resolvedTreeRoot, 1);
+            DotHtmlCommonValidator.CheckControlTypeCount<TextBox>(resolvedTreeRoot, 1);
+            DotHtmlCommonValidator.CheckControlTypeCount<Button>(resolvedTreeRoot, 1);
 
 
             var buttonTextBinding = resolvedTreeRoot.GetDescendantControls<Button>()
@@ -102,7 +103,6 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson2
         {
             ValidateRepeaterTemplate1(root);
             var linkButton = DotHtmlCommonValidator.GetControlInRepeater<LinkButton>(root);
-            //todo IsCompleted
             if (linkButton.GetValueBindingText(HtmlGenericControl.VisibleProperty) != "!IsCompleted")
             {
                 throw new CodeValidationException(Lesson2Texts.InvalidVisibleBinding);
@@ -114,8 +114,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson2
             ValidateRepeaterControl(root);
 
             DotHtmlCommonValidator.ValidatePropertyBinding(root, CreateStep5TitleProperty());
-            DotHtmlCommonValidator.CheckTypeAndCountInRepeater<LinkButton>(root,1);
-
+            DotHtmlCommonValidator.CheckControlTypeCountInRepeater<LinkButton>(root, 1);
         }
 
         public static List<Property> CreateStep5Properties()
@@ -137,12 +136,15 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson2
         {
             ValidateAddTaskControlBindings(resolvedTreeRoot);
 
-            DotHtmlCommonValidator.CheckTypeAndCount<Repeater>(resolvedTreeRoot, 1);
+            DotHtmlCommonValidator.CheckControlTypeCount<Repeater>(resolvedTreeRoot, 1);
 
 
             var repeater = resolvedTreeRoot.GetDescendantControls<Repeater>().Single();
 
             DotHtmlCommonValidator.ValidatePropertyBinding(resolvedTreeRoot, CreateStep6Property());
+
+
+            DotHtmlCommonValidator.CheckTypeAndCountHtmlTag(resolvedTreeRoot, "div", 1);
 
             IAbstractPropertySetter setter;
             if (!repeater.TryGetProperty(Repeater.ItemTemplateProperty, out setter)

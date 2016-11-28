@@ -17,6 +17,15 @@ namespace DotvvmAcademy.Steps.Validation.Validators
             {
                 throw new CodeValidationException(ValidationErrorMessages.CommandMethodError, ex);
             }
+            catch (CodeValidationException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                //todo UI exception
+                throw new CodeValidationException("Bad UI exception",ex);
+            }
         }
 
         public static TValue GetAttributeValue<TAttribute, TValue>(this Type type,

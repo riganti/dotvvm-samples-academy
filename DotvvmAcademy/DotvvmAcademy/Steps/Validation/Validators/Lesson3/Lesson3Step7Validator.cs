@@ -15,7 +15,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson3
             DotHtmlCommonValidator.ValidatePropertiesBindings(resolvedTreeRoot,
                Lesson3CommonValidator.CreateStep6Properties());
             Lesson3CommonValidator.CheckStep5Controls(resolvedTreeRoot);
-            DotHtmlCommonValidator.CheckTypeAndCount<CheckBox>(resolvedTreeRoot, 3);
+            DotHtmlCommonValidator.CheckControlTypeCount<CheckBox>(resolvedTreeRoot, 3);
 
         }
     }

@@ -129,6 +129,9 @@
   <data name="CommandMethodError" xml:space="preserve">
     <value>The command methods in the viewmodel must be public and must have the correct signature!</value>
   </data>
+  <data name="HtmlTagCountError" xml:space="preserve">
+    <value>There should be {0} {1} html tag in the page!</value>
+  </data>
   <data name="IllegalConstructorCall" xml:space="preserve">
     <value>The constructor of type {0} is not allowed!</value>
   </data>
@@ -153,11 +156,11 @@
   <data name="TextBoxBindingsError" xml:space="preserve">
     <value>Each TextBox should bind to a different property in the viewmodel!</value>
   </data>
-  <data name="TypeCountError" xml:space="preserve">
+  <data name="TypeControlCountError" xml:space="preserve">
     <value>There should be {0} {1} controls in the page!</value>
   </data>
   <data name="ValueBindingError" xml:space="preserve">
-    <value>"Property {0} should be bind!"</value>
+    <value>Property {0} should be bind!</value>
   </data>
   <data name="ValueBindingExpected" xml:space="preserve">
     <value>The {0} property {1} must contain binding in the following format: {{value: Something}}</value>

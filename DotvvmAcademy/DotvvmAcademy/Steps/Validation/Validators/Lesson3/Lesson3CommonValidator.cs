@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using DotvvmAcademy.Steps.Validation.Validators.CommonValidators;
 using DotVVM.Framework.Compilation.ControlTree.Resolved;
 using DotVVM.Framework.Controls;
@@ -30,12 +31,12 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson3
 
         public static void CheckStep3Controls(ResolvedTreeRoot resolvedTreeRoot)
         {
-            DotHtmlCommonValidator.CheckTypeAndCount<TextBox>(resolvedTreeRoot, 2);
+            DotHtmlCommonValidator.CheckControlTypeCount<TextBox>(resolvedTreeRoot, 2);
         }
         public static void CheckStep5Controls(ResolvedTreeRoot resolvedTreeRoot)
         {
             CheckStep3Controls(resolvedTreeRoot);
-            DotHtmlCommonValidator.CheckTypeAndCount<RadioButton>(resolvedTreeRoot, 2);
+            DotHtmlCommonValidator.CheckControlTypeCount<RadioButton>(resolvedTreeRoot, 2);
         }
 
         public static List<Property> CreateStep8Properties()
@@ -74,7 +75,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson3
         {
             CheckStep5Controls(resolvedTreeRoot);
             DotHtmlCommonValidator.ValidatePropertiesBindings(resolvedTreeRoot, CreateStep11Properties());
-            DotHtmlCommonValidator.CheckTypeAndCount<ComboBox>(resolvedTreeRoot, 1);
+            DotHtmlCommonValidator.CheckControlTypeCount<ComboBox>(resolvedTreeRoot, 1);
         }
 
         public static Property CreateNewCustomerProperty()

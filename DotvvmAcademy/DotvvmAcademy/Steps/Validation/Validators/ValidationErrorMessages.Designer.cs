@@ -96,6 +96,15 @@ namespace DotvvmAcademy.Steps.Validation.Validators {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to There should be {0} {1} html tag in the page!.
+        /// </summary>
+        public static string HtmlTagCountError {
+            get {
+                return ResourceManager.GetString("HtmlTagCountError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to The constructor of type {0} is not allowed!.
         /// </summary>
         public static string IllegalConstructorCall {
@@ -170,14 +179,14 @@ namespace DotvvmAcademy.Steps.Validation.Validators {
         /// <summary>
         ///    Looks up a localized string similar to There should be {0} {1} controls in the page!.
         /// </summary>
-        public static string TypeCountError {
+        public static string TypeControlCountError {
             get {
-                return ResourceManager.GetString("TypeCountError", resourceCulture);
+                return ResourceManager.GetString("TypeControlCountError", resourceCulture);
             }
         }
         
         /// <summary>
-        ///    Looks up a localized string similar to &quot;Property {0} should be bind!&quot;.
+        ///    Looks up a localized string similar to Property {0} should be bind!.
         /// </summary>
         public static string ValueBindingError {
             get {

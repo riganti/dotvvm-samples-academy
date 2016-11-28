@@ -25,8 +25,8 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson1
 
         public static void ValidateBasicControls(ResolvedTreeRoot resolvedTreeRoot)
         {
-            DotHtmlCommonValidator.CheckTypeAndCount<TextBox>(resolvedTreeRoot, 3);
-            DotHtmlCommonValidator.CheckTypeAndCount<Button>(resolvedTreeRoot, 1);
+            DotHtmlCommonValidator.CheckControlTypeCount<TextBox>(resolvedTreeRoot, 3);
+            DotHtmlCommonValidator.CheckControlTypeCount<Button>(resolvedTreeRoot, 1);
         }
     }
 }
