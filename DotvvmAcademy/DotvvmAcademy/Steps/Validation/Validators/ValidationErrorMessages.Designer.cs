@@ -186,7 +186,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators {
         }
         
         /// <summary>
-        ///    Looks up a localized string similar to Property {0} should be bind!.
+        ///    Looks up a localized string similar to Property {0} should be bind to {1}!.
         /// </summary>
         public static string ValueBindingError {
             get {

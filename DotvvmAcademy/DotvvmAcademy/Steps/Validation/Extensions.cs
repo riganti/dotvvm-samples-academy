@@ -53,6 +53,23 @@ namespace DotvvmAcademy.Steps.Validation
             return binding as ResolvedPropertyBinding;
         }
 
+        public static string GetValueBindingTextOrNull(this ResolvedControl control, IPropertyDescriptor property)
+        {
+            IAbstractPropertySetter binding;
+            if (!control.TryGetProperty(property, out binding) || !(binding is ResolvedPropertyBinding))
+            {
+                return null;
+            }
+            var typedBinding = (ResolvedPropertyBinding)binding;
+            if (typedBinding.Binding.BindingType != typeof(ValueBindingExpression))
+            {
+                return null;
+            }
+            return typedBinding.Binding.Value.Trim();
+        }
+
+
+
         public static string GetValueBindingText(this ResolvedControl control, IPropertyDescriptor property)
         {
             IAbstractPropertySetter binding;
@@ -63,7 +80,7 @@ namespace DotvvmAcademy.Steps.Validation
                     property.Name));
             }
 
-            var typedBinding = (ResolvedPropertyBinding) binding;
+            var typedBinding = (ResolvedPropertyBinding)binding;
             if (typedBinding.Binding.BindingType != typeof(ValueBindingExpression))
             {
                 throw new CodeValidationException(string.Format(ValidationErrorMessages.ValueBindingExpected,
@@ -73,6 +90,7 @@ namespace DotvvmAcademy.Steps.Validation
 
             return typedBinding.Binding.Value.Trim();
         }
+
 
         public static string GetCommandBindingText(this ResolvedControl control, IPropertyDescriptor property)
         {

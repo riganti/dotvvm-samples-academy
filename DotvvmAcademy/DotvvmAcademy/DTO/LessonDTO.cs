@@ -16,7 +16,7 @@ namespace DotvvmAcademy.DTO
 
         public bool IsFinished => LastStep == LessonProgressStorage.FinishedLessonStepNumber;
         //todo 
-        public bool IsCreated => (Number == 1) || (Number == 2) || (Number == 3);
+        public bool IsCreated => (Number == 1) || (Number == 2) || (Number == 3)|| (Number == 4);
 
         public string ButtonText
         {

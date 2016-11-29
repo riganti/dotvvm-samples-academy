@@ -60,20 +60,11 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson4 {
         }
         
         /// <summary>
-        ///    Looks up a localized string similar to Property {0} should be EmailAddress attribute!.
+        ///    Looks up a localized string similar to Property {0} should be {1} attribute!.
         /// </summary>
-        public static string EmailAddressAttributeMissing {
+        public static string AttributeMissing {
             get {
-                return ResourceManager.GetString("EmailAddressAttributeMissing", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///    Looks up a localized string similar to Property {0} should be Required attribute!.
-        /// </summary>
-        public static string RequiredAttributeMissing {
-            get {
-                return ResourceManager.GetString("RequiredAttributeMissing", resourceCulture);
+                return ResourceManager.GetString("AttributeMissing", resourceCulture);
             }
         }
     }

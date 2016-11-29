@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using DotvvmAcademy.Steps.Validation.Validators.PropertyAndControlType;
+using DotVVM.Framework.Binding.Expressions;
 using DotVVM.Framework.Compilation.ControlTree.Resolved;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 using DotVVM.Framework.Controls;
@@ -119,7 +120,6 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
                     .ToList();
                 result.AddRange(divClassProperties.Select(a => a.Binding.Value));
             }
-
             propertiesBindings.AddRange(result);
         }
 
@@ -130,6 +130,19 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
                 .Where(d => d.DothtmlNode.As<DothtmlElementNode>()?.TagName == "div").ToList();
             propertiesBindings.AddRange(divs.Select(
                 resolvedControl => resolvedControl.GetValueBindingText(DotvvmBindableObject.DataContextProperty)));
+        }
+
+        private static void FillDivValidationValueBinding(ResolvedTreeRoot resolvedTreeRoot,
+            ref List<string> propertiesBindings)
+        {
+            var divs = resolvedTreeRoot.GetDescendantControls<HtmlGenericControl>()
+                .Where(d => d.DothtmlNode.As<DothtmlElementNode>()?.TagName == "div").ToList();
+
+            //todo
+            IEnumerable<string> result = divs.Select(
+                rs => rs.GetValueBindingTextOrNull(Validator.ValueProperty)).
+                Where(rs=> rs != null);
+            propertiesBindings.AddRange(result);
         }
 
 
@@ -208,15 +221,20 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
                 case ControlBindName.DivDataContext:
                     FillDivDataContextValueBinding(resolvedTreeRoot, ref propertiesBindings);
                     break;
+                case ControlBindName.DivValidationValue:
+                    FillDivValidationValueBinding(resolvedTreeRoot, ref propertiesBindings);
+                    break;
                 case ControlBindName.NotExist:
+                    throw new ArgumentException($"Property {propertyToValidate.Name}, cant be validate in DotHtml.");
+                default:
                     throw new ArgumentException($"Property {propertyToValidate.Name}, cant be validate in DotHtml.");
             }
 
             var propertyName = propertyToValidate.Name;
-
             if (!propertiesBindings.Contains(propertyName))
             {
-                throw new CodeValidationException(string.Format(ValidationErrorMessages.ValueBindingError, propertyName));
+                throw new CodeValidationException(string.Format(ValidationErrorMessages.ValueBindingError,
+                    propertyName, propertyToValidate.TargetControlBindName.ToDescriptionString()));
             }
         }
 

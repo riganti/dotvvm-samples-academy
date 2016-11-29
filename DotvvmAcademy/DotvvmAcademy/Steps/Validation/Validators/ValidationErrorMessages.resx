@@ -160,7 +160,7 @@
     <value>There should be {0} {1} controls in the page!</value>
   </data>
   <data name="ValueBindingError" xml:space="preserve">
-    <value>Property {0} should be bind!</value>
+    <value>Property {0} should be bind to {1}!</value>
   </data>
   <data name="ValueBindingExpected" xml:space="preserve">
     <value>The {0} property {1} must contain binding in the following format: {{value: Something}}</value>
