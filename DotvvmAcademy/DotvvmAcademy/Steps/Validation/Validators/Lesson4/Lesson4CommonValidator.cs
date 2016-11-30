@@ -46,11 +46,14 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson4
 
         public static void ValidateStep2Properties(CSharpSyntaxTree tree, SemanticModel model, Assembly assembly)
         {
+           
+
             CSharpCommonValidator.ValidateProperties(tree, model, CreateStep2ControlProperties());
 
             
             ValidationExtensions.ExecuteSafe(() =>
             {
+
                 var viewModel = (dynamic)assembly.CreateInstance("DotvvmAcademy.Tutorial.ViewModels.Lesson4ViewModel");
 
                 var modelProperties = (viewModel.GetType().GetProperties() as IEnumerable<PropertyInfo>).ToList();

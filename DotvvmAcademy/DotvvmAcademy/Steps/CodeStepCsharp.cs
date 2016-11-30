@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text.RegularExpressions;
 using DotvvmAcademy.Steps.StepsBases;
 using DotvvmAcademy.Steps.Validation;
 using DotvvmAcademy.Steps.Validation.Interfaces;
@@ -25,12 +26,22 @@ namespace DotvvmAcademy.Steps
         public List<string> AllowedMethodsCalled { get; private set; } = new List<string>();
 
         [Bind(Direction.None)]
-        public List<Assembly> ReferencedAssemblies { get; } = new List<Assembly>
+        public List<string> ReferencedAssemblies { get; } = new List<string>
         {
-            typeof(object).GetTypeInfo().Assembly,
-            typeof(DotvvmConfiguration).GetTypeInfo().Assembly, // DotVVM.Framework
-            typeof(BindAttribute).GetTypeInfo().Assembly // DotVVM.Core
+            GetAssemblyLocationFromType(typeof(object)),
+            GetAssemblyLocationFromType(typeof(DotvvmConfiguration)),
+            GetAssemblyLocationFromType(typeof(BindAttribute)),
+            GetAssemblyLocationFromType(typeof(RequiredAttribute)),
+            GetAssemblyLocationFromType(typeof(System.Runtime.GCLatencyMode)),
+            Path.Combine(Directory.GetCurrentDirectory(), @"libs\System.Runtime.dll")
         };
+
+
+        private static string GetAssemblyLocationFromType(Type type)
+        {
+            return type.GetTypeInfo().Assembly.Location;
+        }
+
 
 
         [Bind(Direction.None)]
@@ -40,13 +51,20 @@ namespace DotvvmAcademy.Steps
         {
             try
             {
+
                 var tree = (CSharpSyntaxTree) CSharpSyntaxTree.ParseText(Code);
+
+                var portableExecutableReferences = ReferencedAssemblies.Select(path => MetadataReference.CreateFromFile(path)).ToArray();
+                var syntaxTrees = new[] {tree}.Concat(OtherCodeDependencies.Select(c => CSharpSyntaxTree.ParseText(c)));
+
                 var compilation = CSharpCompilation.Create(
                     Guid.NewGuid().ToString(),
-                    new[] {tree}.Concat(OtherCodeDependencies.Select(c => CSharpSyntaxTree.ParseText(c))),
-                    ReferencedAssemblies.Select(a => MetadataReference.CreateFromFile(a.Location)).ToArray(),
+                    syntaxTrees,
+                    portableExecutableReferences,
                     new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)
                 );
+
+
 
                 var assembly = compilation.CompileToAssembly();
                 var model = compilation.GetSemanticModel(tree);

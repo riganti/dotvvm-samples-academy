@@ -4,15 +4,12 @@ using DotvvmAcademy.Services;
 
 namespace DotvvmAcademy.Cache
 {
-    public class LessonsCache : KeyValueItemCacheBase<Dictionary<int,LessonBase>>
+    public class LessonsCache : KeyValueItemCacheBase<Dictionary<int, LessonBase>>
     {
         public LessonsCache()
         {
-            UpdateFunc = obj =>
-            {
-                var alp = new AllLessonProvider();
-                return alp.CreateSteps();
-            };
+            var alp = new AllLessonProvider();
+            Set(alp.CreateSteps());
         }
 
         public Dictionary<int, LessonBase> Get()

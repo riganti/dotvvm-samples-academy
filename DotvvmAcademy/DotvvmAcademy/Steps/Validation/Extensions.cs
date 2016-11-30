@@ -12,6 +12,7 @@ using Microsoft.CodeAnalysis.CSharp;
 
 namespace DotvvmAcademy.Steps.Validation
 {
+    //todo
     public static class Extensions
     {
         public static IEnumerable<ResolvedTreeNode> GetDescendants(this ResolvedContentNode node)
