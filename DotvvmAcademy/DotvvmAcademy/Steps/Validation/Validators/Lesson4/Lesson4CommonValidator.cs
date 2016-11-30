@@ -90,8 +90,10 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson4
 
         public static void ValidateStep3Properties(ResolvedTreeRoot resolvedTreeRoot)
         {
+            DotHtmlCommonValidator.CheckTypeAndCountHtmlTag(resolvedTreeRoot, "div", 3);
             DotHtmlCommonValidator.ValidatePropertiesBindings(resolvedTreeRoot, CreateStep2ControlProperties());
             DotHtmlCommonValidator.ValidatePropertiesBindings(resolvedTreeRoot, CreateStep2ValidationValueProperties());
+            
         }
 
     }

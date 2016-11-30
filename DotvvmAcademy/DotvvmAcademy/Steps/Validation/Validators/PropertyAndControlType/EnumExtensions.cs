@@ -11,5 +11,15 @@ namespace DotvvmAcademy.Steps.Validation.Validators.PropertyAndControlType
                     .GetCustomAttribute(typeof(DescriptionAttribute));
             return descriptionAttribute != null ? descriptionAttribute.Description : string.Empty;
         }
+
+        public static bool RemovePropertyFromCode(this ControlBindName val)
+        {
+            var preservePropertyAttribute =
+                (PreservePropertyAttribute)typeof(ControlBindName).GetTypeInfo().GetField(val.ToString())
+                    .GetCustomAttribute(typeof(PreservePropertyAttribute));
+
+            return preservePropertyAttribute?.RemoveProperty ?? false;
+        }
+
     }
 }

@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using DotvvmAcademy.Steps.StepsBases;
 using DotvvmAcademy.Steps.Validation;
 using DotvvmAcademy.Steps.Validation.Interfaces;
@@ -32,7 +33,9 @@ namespace DotvvmAcademy.Steps
             GetAssemblyLocationFromType(typeof(DotvvmConfiguration)),
             GetAssemblyLocationFromType(typeof(BindAttribute)),
             GetAssemblyLocationFromType(typeof(RequiredAttribute)),
-            GetAssemblyLocationFromType(typeof(System.Runtime.GCLatencyMode)),
+            GetAssemblyLocationFromType(typeof(System.Runtime.GCSettings)),
+            GetAssemblyLocationFromType(typeof(Attribute)),
+            GetAssemblyLocationFromType(typeof(ExtensionAttribute)),
             Path.Combine(Directory.GetCurrentDirectory(), @"libs\System.Runtime.dll")
         };
 
@@ -51,13 +54,12 @@ namespace DotvvmAcademy.Steps
         {
             try
             {
-
                 var tree = (CSharpSyntaxTree) CSharpSyntaxTree.ParseText(Code);
 
-                var portableExecutableReferences = ReferencedAssemblies.Select(path => MetadataReference.CreateFromFile(path)).ToArray();
-                var syntaxTrees = new[] {tree}.Concat(OtherCodeDependencies.Select(c => CSharpSyntaxTree.ParseText(c)));
+                PortableExecutableReference[] portableExecutableReferences = ReferencedAssemblies.Select(path => MetadataReference.CreateFromFile(path)).ToArray();
+                IEnumerable<SyntaxTree> syntaxTrees = new[] {tree}.Concat(OtherCodeDependencies.Select(c => CSharpSyntaxTree.ParseText(c)));
 
-                var compilation = CSharpCompilation.Create(
+                CSharpCompilation compilation = CSharpCompilation.Create(
                     Guid.NewGuid().ToString(),
                     syntaxTrees,
                     portableExecutableReferences,

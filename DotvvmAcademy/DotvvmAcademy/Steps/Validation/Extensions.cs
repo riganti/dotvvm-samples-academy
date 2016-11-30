@@ -18,7 +18,7 @@ namespace DotvvmAcademy.Steps.Validation
         public static IEnumerable<ResolvedTreeNode> GetDescendants(this ResolvedContentNode node)
         {
             yield return node;
-            foreach (var child in node.Content.SelectMany(n => n.GetDescendants()))
+            foreach (ResolvedTreeNode child in node.Content.SelectMany(n => n.GetDescendants()))
             {
                 yield return child;
             }
@@ -42,6 +42,13 @@ namespace DotvvmAcademy.Steps.Validation
             return GetDescendants(node).OfType<ResolvedControl>().Where(c => c.Metadata.Type == typeof(T));
         }
 
+        public static IEnumerable<ResolvedControl> GetChildrenControls<T>(this ResolvedContentNode node)
+        {
+            return node.Content.OfType<ResolvedControl>().Where(c => c.Metadata.Type == typeof(T));
+            //return GetDescendants(node).OfType<ResolvedControl>().Where(c => c.Metadata.Type == typeof(T));
+        }
+
+
 
         public static ResolvedPropertyBinding GetValueBindingOrNull(this ResolvedControl control,
             IPropertyDescriptor property)
@@ -53,6 +60,28 @@ namespace DotvvmAcademy.Steps.Validation
             }
             return binding as ResolvedPropertyBinding;
         }
+
+        public static string GetValue(this ResolvedControl control, IPropertyDescriptor property)
+        {
+            IAbstractPropertySetter value;
+            if (!control.TryGetProperty(property, out value) || !(value is ResolvedPropertyValue))
+            {
+                throw new CodeValidationException(string.Format(ValidationErrorMessages.MissingPropertyError,
+                    control.Metadata.Type.Name,
+                    property.Name));
+            }
+            return ((ResolvedPropertyValue)value).Value?.ToString();
+        }
+        public static string GetValueOrNull(this ResolvedControl control, IPropertyDescriptor property)
+        {
+            IAbstractPropertySetter value;
+            if (!control.TryGetProperty(property, out value) || !(value is ResolvedPropertyValue))
+            {
+                return null;
+            }
+            return ((ResolvedPropertyValue)value).Value?.ToString();
+        }
+
 
         public static string GetValueBindingTextOrNull(this ResolvedControl control, IPropertyDescriptor property)
         {
@@ -130,18 +159,7 @@ namespace DotvvmAcademy.Steps.Validation
             }
         }
 
-        public static string GetValue(this ResolvedControl control, IPropertyDescriptor property)
-        {
-            IAbstractPropertySetter value;
-            if (!control.TryGetProperty(property, out value) || !(value is ResolvedPropertyValue))
-            {
-                throw new CodeValidationException(string.Format(ValidationErrorMessages.MissingPropertyError,
-                    control.Metadata.Type.Name,
-                    property.Name));
-            }
-
-            return ((ResolvedPropertyValue) value).Value?.ToString();
-        }
+        
 
         public static Assembly CompileToAssembly(this CSharpCompilation compilation)
         {

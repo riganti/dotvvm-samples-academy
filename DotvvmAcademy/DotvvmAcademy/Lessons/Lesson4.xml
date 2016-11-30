@@ -128,6 +128,94 @@ To the page add `Validation.Value` to the div`s and bind for current property.
 </div>
                 ]]>
             </FinalCode>
+        </Step>
+         
+          <!--4-->
+        <Step Type="DothtmlCode">
+        <!--Required element-->
+            <Title>Add `Validation.InvalidCssClass`</Title>
+             <!--Required element-->
+            <ValidationKey>Lesson4Step4Validator</ValidationKey>
+            <Description>
+                <![CDATA[
+Add to divs `Validation.InvalidCssClass="has-error"`. In case if is validation rule violated, add into element div class "has-error".
+                ]]>
+            </Description>
+
+            <!--Required element-->
+            <StartupCode>
+                <![CDATA[
+<div Validator.Value="{value: City}">
+    <dot:TextBox Text="{value: City}"/>
+</div>
+<div Validator.Value="{value: ZIP}">
+    <dot:TextBox Text="{value: ZIP}"/>
+</div>
+<div Validator.Value="{value: Email}">
+    <dot:TextBox Text="{value: Email}"/>
+</div>
+                ]]>
+            </StartupCode>
+            <!--Required element-->
+            <FinalCode>
+                <![CDATA[
+<div Validator.Value="{value: City}" Validator.InvalidCssClass="has-error">
+    <dot:TextBox Text="{value: City}"/>
+</div>
+<div Validator.Value="{value: ZIP}" Validator.InvalidCssClass="has-error">
+    <dot:TextBox Text="{value: ZIP}"/>
+</div>
+<div Validator.Value="{value: Email}" Validator.InvalidCssClass="has-error">
+    <dot:TextBox Text="{value: Email}"/>
+</div>
+                ]]>
+            </FinalCode>
+            
+        </Step>
+          <!--Required attribute-->
+        <Step Type="DothtmlCode">
+        <!--Required element-->
+            <Title>Set global `Validation.InvalidCssClass`</Title>
+             <!--Required element-->
+            <ValidationKey>Lesson4Step5Validator</ValidationKey>
+            <Description>
+                <![CDATA[
+If you want set `Validator.InvalidCssClass` globally, you can simply add to parent element.  
+                ]]>
+            </Description>
+
+            <!--Required element-->
+            <StartupCode>
+                <![CDATA[
+<!--add div with Validator.InvalidCssClass-->                
+    <div Validator.Value="{value: City}" Validator.InvalidCssClass="has-error"><!--remove redutant Validator.InvalidCssClass-->
+        <dot:TextBox Text="{value: City}"/>
+    </div>
+    <div Validator.Value="{value: ZIP}" Validator.InvalidCssClass="has-error"><!--remove redutant Validator.InvalidCssClass-->
+        <dot:TextBox Text="{value: ZIP}"/>
+    </div>
+    <div Validator.Value="{value: Email}" Validator.InvalidCssClass="has-error"><!--remove redutant Validator.InvalidCssClass-->
+        <dot:TextBox Text="{value: Email}"/>
+    </div>
+<!--don`t forget close div element-->
+                ]]>
+            </StartupCode>
+            <!--Required element-->
+            <FinalCode>
+                <![CDATA[
+<div Validator.InvalidCssClass="has-error">
+    <div Validator.Value="{value: City}">
+        <dot:TextBox Text="{value: City}"/>
+    </div>
+    <div Validator.Value="{value: ZIP}">
+        <dot:TextBox Text="{value: ZIP}"/>
+    </div>
+    <div Validator.Value="{value: Email}">
+        <dot:TextBox Text="{value: Email}"/>
+    </div>
+</div>
+                ]]>
+            </FinalCode>
             
         </Step>
          

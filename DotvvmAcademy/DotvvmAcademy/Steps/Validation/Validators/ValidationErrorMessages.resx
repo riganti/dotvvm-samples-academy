@@ -129,6 +129,9 @@
   <data name="CommandMethodError" xml:space="preserve">
     <value>The command methods in the viewmodel must be public and must have the correct signature!</value>
   </data>
+  <data name="DeleteCodeError" xml:space="preserve">
+    <value>You should delete Property "{0}" from {1}!</value>
+  </data>
   <data name="HtmlTagCountError" xml:space="preserve">
     <value>There should be {0} {1} html tag in the page!</value>
   </data>
@@ -160,7 +163,7 @@
     <value>There should be {0} {1} controls in the page!</value>
   </data>
   <data name="ValueBindingError" xml:space="preserve">
-    <value>Property {0} should be bind to {1}!</value>
+    <value>Property "{0}" should be bind to {1}!</value>
   </data>
   <data name="ValueBindingExpected" xml:space="preserve">
     <value>The {0} property {1} must contain binding in the following format: {{value: Something}}</value>

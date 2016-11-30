@@ -1,10 +1,10 @@
-﻿namespace DotvvmAcademy.Steps.Validation.Validators.PropertyAndControlType
+﻿using System;
+
+namespace DotvvmAcademy.Steps.Validation.Validators.PropertyAndControlType
 {
     //todo
     public enum ControlBindName
     {
-        [Description(Description = "not exist!")]
-        NotExist,
         [Description(Description = "control <dot:TextBox Text =\"{value: Property}\"")]
         TextBoxText,
         [Description(Description = "control <dot:ComboBox DataSource=\"{value: Property}\"")]
@@ -32,6 +32,11 @@
         [Description(Description = "element <div class=\"{value: Property}\"> in Repeater")]
         RepeaterDivClass,
         [Description(Description = "element <div Validation.Value=\"{value: Property}\">")]
-        DivValidationValue
+        DivValidationValue,
+        [Description(Description = "element <div Validation.InvalidCssClass=\"Property\">")]
+        DivValidatorInvalidCssClass,
+        [PreserveProperty(RemoveProperty = true)]
+        [Description(Description = "element <div Validation.InvalidCssClass=\"Property\">")]
+        DivValidatorInvalidCssClassRemove
     }
 }

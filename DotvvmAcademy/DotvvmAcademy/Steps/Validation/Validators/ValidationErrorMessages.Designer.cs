@@ -96,6 +96,15 @@ namespace DotvvmAcademy.Steps.Validation.Validators {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to You should delete Property &quot;{0}&quot; from {1}!.
+        /// </summary>
+        public static string DeleteCodeError {
+            get {
+                return ResourceManager.GetString("DeleteCodeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to There should be {0} {1} html tag in the page!.
         /// </summary>
         public static string HtmlTagCountError {
@@ -186,7 +195,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators {
         }
         
         /// <summary>
-        ///    Looks up a localized string similar to Property {0} should be bind to {1}!.
+        ///    Looks up a localized string similar to Property &quot;{0}&quot; should be bind to {1}!.
         /// </summary>
         public static string ValueBindingError {
             get {
