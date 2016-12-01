@@ -145,7 +145,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson2
             DotHtmlCommonValidator.ValidatePropertyBinding(resolvedTreeRoot, CreateStep6Property());
 
 
-            DotHtmlCommonValidator.CheckTypeAndCountHtmlTag(resolvedTreeRoot, "div", 1);
+            DotHtmlCommonValidator.CheckCountOfHtmlTag(resolvedTreeRoot, "div", 1);
 
             IAbstractPropertySetter setter;
             if (!repeater.TryGetProperty(Repeater.ItemTemplateProperty, out setter)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DotvvmAcademy.Steps.Validation.Validators.PropertyAndControlType;
 using DotVVM.Framework.Binding.Expressions;
+using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Compilation.ControlTree.Resolved;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 using DotVVM.Framework.Controls;
@@ -108,7 +109,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
             ref List<string> propertiesBindings)
         {
             var result = new List<string>();
-            List<ResolvedControl> divs = GetDivsInResolvedTreeRoot(resolvedContentNode);
+            IEnumerable<ResolvedControl> divs = GetDivsInResolvedTreeRoot(resolvedContentNode);
 
             foreach (var resolvedControl in divs)
             {
@@ -125,7 +126,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
         private static void FillDivDataContextValueBinding(ResolvedContentNode resolvedContentNode,
             ref List<string> propertiesBindings)
         {
-            List<ResolvedControl> divs = GetDivsInResolvedTreeRoot(resolvedContentNode);
+            IEnumerable<ResolvedControl> divs = GetDivsInResolvedTreeRoot(resolvedContentNode);
             propertiesBindings.AddRange(divs.Select(
                 resolvedControl => resolvedControl.GetValueBindingText(DotvvmBindableObject.DataContextProperty)));
         }
@@ -133,7 +134,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
         private static void FillDivValidatorValueBinding(ResolvedContentNode resolvedContentNode,
             ref List<string> propertiesBindings)
         {
-            List<ResolvedControl> divs = GetDivsInResolvedTreeRoot(resolvedContentNode);
+            IEnumerable<ResolvedControl> divs = GetDivsInResolvedTreeRoot(resolvedContentNode);
             //todo
             IEnumerable<string> result = divs.Select(
                 rs => rs.GetValueBindingTextOrNull(Validator.ValueProperty)).
@@ -141,10 +142,19 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
             propertiesBindings.AddRange(result);
         }
 
+        private static void FillValidatorValueBinding(ResolvedContentNode resolvedContentNode,
+           ref List<string> propertiesBindings)
+        {
+            propertiesBindings.AddRange(resolvedContentNode.GetDescendantControls<Validator>()
+                  .Select(l => l.GetValueBindingOrNull(Validator.ValueProperty))
+                  .Where(l => l != null).Select(l => l.Binding.Value));
+        }
+
+
         private static void FillDivValidatorInvalidCssClassValue(ResolvedContentNode resolvedContentNode,
             ref List<string> propertiesBindings)
         {
-            List<ResolvedControl> divs = GetDivsInResolvedTreeRoot(resolvedContentNode);
+            IEnumerable<ResolvedControl> divs = GetDivsInResolvedTreeRoot(resolvedContentNode);
 
             IEnumerable<string> result = divs.Select(
                 rs => rs.GetValueOrNull(Validator.InvalidCssClassProperty))
@@ -154,7 +164,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
         }
 
 
-        private static List<ResolvedControl> GetDivsInResolvedTreeRoot(ResolvedContentNode resolvedContentNode)
+        private static IEnumerable<ResolvedControl> GetDivsInResolvedTreeRoot(ResolvedContentNode resolvedContentNode)
         {
             //resolvedTreeRoot.Content.Where(d => d.DothtmlNode.As<DothtmlElementNode>()?.TagName == "div").ToList()
 
@@ -162,12 +172,23 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
                             .Where(d => d.DothtmlNode.As<DothtmlElementNode>()?.TagName == "div").ToList();
         }
 
+        public static void CheckCountOfHtmlTagWithPropertyDescriptor(ResolvedContentNode resolvedTreeRoot, string htmlTag, int count, IPropertyDescriptor propertyDescriptor, CodeValidationException codeValidationException)
+        {
+            var counter = resolvedTreeRoot
+                .GetChildrenControls<HtmlGenericControl>()
+                .Where(d => d.DothtmlNode.As<DothtmlElementNode>()?.TagName == htmlTag)
+                .Count(d=> d.GetValueOrNull(propertyDescriptor) != null);
+            if (counter != count)
+            {
+                throw codeValidationException;
+            }
+        }
+
+
         private static IEnumerable<string> GetRepeaterDivClassBinding(ResolvedContentNode resolvedContentNode)
         {
-            var repeaterTemplate = GetRepeaterTemplate(resolvedContentNode);
             var result = new List<string>();
-
-            List<ResolvedControl> divs = GetDivsInResolvedTreeRoot(resolvedContentNode);
+            var divs = GetDivsInResolvedTreeRoot(resolvedContentNode);
 
             foreach (var resolvedControl in divs)
             {
@@ -268,7 +289,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
             }
         }
 
-        public static void CheckTypeAndCountHtmlTag(ResolvedContentNode resolvedTreeRoot, string htmlTag, int count, CodeValidationException codeValidationException = null)
+        public static void CheckCountOfHtmlTag(ResolvedContentNode resolvedTreeRoot, string htmlTag, int count, CodeValidationException codeValidationException = null)
         {
             var counter = resolvedTreeRoot
                 .GetChildrenControls<HtmlGenericControl>()

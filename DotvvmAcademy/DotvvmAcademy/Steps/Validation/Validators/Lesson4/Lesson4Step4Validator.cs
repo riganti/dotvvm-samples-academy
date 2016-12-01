@@ -3,6 +3,7 @@ using DotvvmAcademy.Steps.Validation.ValidatorProvision;
 using DotvvmAcademy.Steps.Validation.Validators.CommonValidators;
 using DotvvmAcademy.Steps.Validation.Validators.PropertyAndControlType;
 using DotVVM.Framework.Compilation.ControlTree.Resolved;
+using DotVVM.Framework.Controls;
 
 namespace DotvvmAcademy.Steps.Validation.Validators.Lesson4
 {
@@ -15,6 +16,13 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson4
 
             var property = new Property("has-error","none",ControlBindName.DivValidatorInvalidCssClass);
             DotHtmlCommonValidator.ValidatePropertyBinding(resolvedTreeRoot,property);
+
+
+            var invalidCssException = new CodeValidationException("You should add Validator.InvalidCssClass=\"has-error\" on every div element");
+
+            DotHtmlCommonValidator.CheckCountOfHtmlTagWithPropertyDescriptor(resolvedTreeRoot, "div",3, Validator.InvalidCssClassProperty, invalidCssException);
+
+
         }
     }
 }

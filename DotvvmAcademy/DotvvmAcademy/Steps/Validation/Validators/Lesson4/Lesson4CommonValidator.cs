@@ -5,8 +5,12 @@ using System.Reflection;
 using DotvvmAcademy.Steps.Validation.Validators.CommonValidators;
 using DotvvmAcademy.Steps.Validation.Validators.PropertyAndControlType;
 using DotVVM.Framework.Compilation.ControlTree.Resolved;
+using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
+using DotVVM.Framework.Controls;
+using DotVVM.Framework.Utils;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Validator = DotVVM.Framework.Controls.Validator;
 
 namespace DotvvmAcademy.Steps.Validation.Validators.Lesson4
 {
@@ -90,11 +94,35 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson4
 
         public static void ValidateStep3Properties(ResolvedTreeRoot resolvedTreeRoot)
         {
-            DotHtmlCommonValidator.CheckTypeAndCountHtmlTag(resolvedTreeRoot, "div", 3);
+            DotHtmlCommonValidator.CheckCountOfHtmlTag(resolvedTreeRoot, "div", 3);
             DotHtmlCommonValidator.ValidatePropertiesBindings(resolvedTreeRoot, CreateStep2ControlProperties());
             DotHtmlCommonValidator.ValidatePropertiesBindings(resolvedTreeRoot, CreateStep2ValidationValueProperties());
             
         }
 
+
+        public static void ValidateStep5(ResolvedTreeRoot resolvedTreeRoot)
+        {
+            ValidateStep3Properties(resolvedTreeRoot);
+
+            var divEnwrapException = new CodeValidationException("You shold enwrap div`s with one div");
+
+            DotHtmlCommonValidator.CheckCountOfHtmlTag(resolvedTreeRoot, "div", 1, divEnwrapException);
+
+            var property = new Property("has-error", "none", ControlBindName.DivValidatorInvalidCssClass);
+            DotHtmlCommonValidator.ValidatePropertyBinding(resolvedTreeRoot, property);
+
+            property.TargetControlBindName = ControlBindName.DivValidatorInvalidCssClassRemove;
+            var contentNode = resolvedTreeRoot.GetDescendantControls<HtmlGenericControl>().
+               FirstOrDefault(d => d.DothtmlNode.As<DothtmlElementNode>()?.TagName == "div");
+
+            DotHtmlCommonValidator.CheckCountOfHtmlTag(contentNode, "div", 3);
+            DotHtmlCommonValidator.ValidatePropertyBinding(contentNode, property);
+
+            var redundantInvalidCssException = new CodeValidationException("You should delete Validator.InvalidCssClass=\"has-error\" from child elements");
+
+            DotHtmlCommonValidator.CheckCountOfHtmlTagWithPropertyDescriptor(contentNode,"div",0,Validator.InvalidCssClassProperty,redundantInvalidCssException);
+
+        }
     }
 }
