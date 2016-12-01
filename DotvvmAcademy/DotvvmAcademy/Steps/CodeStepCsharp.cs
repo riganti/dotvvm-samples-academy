@@ -27,17 +27,22 @@ namespace DotvvmAcademy.Steps
         public List<string> AllowedMethodsCalled { get; private set; } = new List<string>();
 
         [Bind(Direction.None)]
-        public List<string> ReferencedAssemblies { get; } = new List<string>
+        public List<string> ReferencedAssemblies { get; }
+
+        public CodeStepCsharp()
         {
-            GetAssemblyLocationFromType(typeof(object)),
-            GetAssemblyLocationFromType(typeof(DotvvmConfiguration)),
-            GetAssemblyLocationFromType(typeof(BindAttribute)),
-            GetAssemblyLocationFromType(typeof(RequiredAttribute)),
-            GetAssemblyLocationFromType(typeof(System.Runtime.GCSettings)),
-            GetAssemblyLocationFromType(typeof(Attribute)),
-            GetAssemblyLocationFromType(typeof(ExtensionAttribute)),
-            Path.Combine(Directory.GetCurrentDirectory(), @"libs\System.Runtime.dll")
-        };
+            ReferencedAssemblies = new List<string>
+            {
+                GetAssemblyLocationFromType(typeof(object)),
+                GetAssemblyLocationFromType(typeof(DotvvmConfiguration)),
+                GetAssemblyLocationFromType(typeof(BindAttribute)),
+                GetAssemblyLocationFromType(typeof(RequiredAttribute)),
+                GetAssemblyLocationFromType(typeof(Attribute)),
+                GetAssemblyLocationFromType(typeof(ExtensionAttribute)),
+                Assembly.Load(new AssemblyName("System.Runtime")).Location,
+                Assembly.Load(new AssemblyName("mscorlib")).Location
+            };
+        }
 
 
         private static string GetAssemblyLocationFromType(Type type)
