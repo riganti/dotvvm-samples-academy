@@ -45,7 +45,6 @@ namespace DotvvmAcademy.Steps.Validation
         public static IEnumerable<ResolvedControl> GetChildrenControls<T>(this ResolvedContentNode node)
         {
             return node.Content.OfType<ResolvedControl>().Where(c => c.Metadata.Type == typeof(T));
-            //return GetDescendants(node).OfType<ResolvedControl>().Where(c => c.Metadata.Type == typeof(T));
         }
 
 

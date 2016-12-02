@@ -40,6 +40,17 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
             GetClassValidationError(classDeclarations, className);
         }
 
+        public static void ValidateClassIfImplementInterface(CSharpSyntaxTree tree, SemanticModel model, string className, string interfaceName)
+        {
+            ValidateClass(tree, model, className);
+            INamedTypeSymbol classDeclarations = GetClassDeclarations(tree, model).FirstOrDefault(cd=> cd.Name == className);
+
+            if (!classDeclarations.AllInterfaces.Any(i=> i.Name == interfaceName))
+            {
+                throw new CodeValidationException(string.Format("Class \"{0}\" doesnt implement interface \"{1}\"", className, interfaceName));
+            }
+        }
+
         public static void ValidateMethod(CSharpSyntaxTree tree, SemanticModel model, string methodName)
         {
             var treeMethods = GetTreeMethods(tree, model);

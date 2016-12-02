@@ -12,14 +12,14 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson4
     {
         public void Validate(ResolvedTreeRoot resolvedTreeRoot)
         {
-            Lesson4CommonValidator.ValidateStep3Properties(resolvedTreeRoot);
+            DotHtmlCommonValidator.CheckCountOfHtmlTag(resolvedTreeRoot, "div", 3);
+            Lesson4CommonValidator.ValidateStep2ValidationProperties(resolvedTreeRoot);
+            Lesson4CommonValidator.ValidateOnlyStep3Properties(resolvedTreeRoot);
 
             var property = new Property("has-error","none",ControlBindName.DivValidatorInvalidCssClass);
             DotHtmlCommonValidator.ValidatePropertyBinding(resolvedTreeRoot,property);
 
-
             var invalidCssException = new CodeValidationException("You should add Validator.InvalidCssClass=\"has-error\" on every div element");
-
             DotHtmlCommonValidator.CheckCountOfHtmlTagWithPropertyDescriptor(resolvedTreeRoot, "div",3, Validator.InvalidCssClassProperty, invalidCssException);
 
 

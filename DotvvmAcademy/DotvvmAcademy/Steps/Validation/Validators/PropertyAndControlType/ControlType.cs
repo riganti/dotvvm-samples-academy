@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DotvvmAcademy.Steps.Validation.Validators.PropertyAndControlType
+﻿namespace DotvvmAcademy.Steps.Validation.Validators.PropertyAndControlType
 {
     //todo
     public enum ControlBindName
@@ -31,12 +29,16 @@ namespace DotvvmAcademy.Steps.Validation.Validators.PropertyAndControlType
         LiteralValue,
         [Description(Description = "element <div class=\"{value: Property}\"> in Repeater")]
         RepeaterDivClass,
-        [Description(Description = "element <div Validation.Value=\"{value: Property}\">")]
-        DivValidationValue,
-        [Description(Description = "element <div Validation.InvalidCssClass=\"Property\">")]
+        [Description(Description = "element <div Validator.Value=\"{value: Property}\">")]
+        DivValidatorValue,
+        [Description(Description = "element <div Validator.InvalidCssClass=\"Property\">")]
         DivValidatorInvalidCssClass,
         [PreserveProperty(RemoveProperty = true)]
-        [Description(Description = "element <div Validation.InvalidCssClass=\"Property\">")]
-        DivValidatorInvalidCssClassRemove
+        [Description(Description = "element <div Validator.InvalidCssClass=\"Property\">")]
+        DivValidatorInvalidCssClassRemove,
+        [Description(Description = "control <dot:Validator Value=\"{value: Property}\">")]
+        ValidatorValue,
+        [Description(Description = "control <dot:Validator ShowErrorMessageText=\"true\">")]
+        ValidatorShowErrorMessageText
     }
 }

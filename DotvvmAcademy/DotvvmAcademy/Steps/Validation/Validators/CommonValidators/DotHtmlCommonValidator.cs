@@ -135,7 +135,6 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
             ref List<string> propertiesBindings)
         {
             IEnumerable<ResolvedControl> divs = GetDivsInResolvedTreeRoot(resolvedContentNode);
-            //todo
             IEnumerable<string> result = divs.Select(
                 rs => rs.GetValueBindingTextOrNull(Validator.ValueProperty)).
                 Where(rs=> rs != null);
@@ -149,13 +148,19 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
                   .Select(l => l.GetValueBindingOrNull(Validator.ValueProperty))
                   .Where(l => l != null).Select(l => l.Binding.Value));
         }
+        private static void FillValidatorShowErrorMessageTextValue(ResolvedContentNode resolvedContentNode,
+           ref List<string> propertiesBindings)
+        {
+            propertiesBindings.AddRange(resolvedContentNode.GetDescendantControls<Validator>()
+                  .Select(l => l.GetValueOrNull(Validator.ShowErrorMessageTextProperty))
+                  .Where(l => l != null));
+        }
 
 
         private static void FillDivValidatorInvalidCssClassValue(ResolvedContentNode resolvedContentNode,
             ref List<string> propertiesBindings)
         {
             IEnumerable<ResolvedControl> divs = GetDivsInResolvedTreeRoot(resolvedContentNode);
-
             IEnumerable<string> result = divs.Select(
                 rs => rs.GetValueOrNull(Validator.InvalidCssClassProperty))
                 .Where(rs => rs != null);
@@ -257,7 +262,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
                 case ControlBindName.DivDataContext:
                     FillDivDataContextValueBinding(resolvedContentNode, ref propertiesBindings);
                     break;
-                case ControlBindName.DivValidationValue:
+                case ControlBindName.DivValidatorValue:
                     FillDivValidatorValueBinding(resolvedContentNode, ref propertiesBindings);
                     break;
                 case ControlBindName.DivValidatorInvalidCssClass:
@@ -265,6 +270,12 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
                     break;
                 case ControlBindName.DivValidatorInvalidCssClassRemove:
                     FillDivValidatorInvalidCssClassValue(resolvedContentNode, ref propertiesBindings);
+                    break;
+                case ControlBindName.ValidatorShowErrorMessageText:
+                    FillValidatorShowErrorMessageTextValue(resolvedContentNode, ref propertiesBindings);
+                    break;
+                case ControlBindName.ValidatorValue:
+                    FillValidatorValueBinding(resolvedContentNode, ref propertiesBindings);
                     break;
                 default:
                     throw new ArgumentException($"Property {propertyToValidate.Name}, cant be validate in DotHtml.");

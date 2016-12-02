@@ -2,6 +2,8 @@
 <Lesson>
     <ValidatorsNamespace>DotvvmAcademy.Steps.Validation.Validators.Lesson2</ValidatorsNamespace>
     <Steps>
+
+        <!-- 1-->
         <Step Type="Info">
             <Title>Objective</Title>
             <Description>
@@ -13,7 +15,7 @@ In this lesson, we'll build a simple to-do list.
             </Description>
         </Step>
 
-
+        <!-- 2-->
         <Step Type="DothtmlCode">
             <Title>Adding New Task</Title>
             <ValidationKey>Lesson2Step2Validator</ValidationKey>
@@ -48,6 +50,7 @@ Add the `TextBox` and the `Button` controls to the page. The button should say "
             </FinalCode>
         </Step>
 
+        <!-- 3-->
         <Step Type="CsharpCode">
             <Title>Adding New Task</Title>
             <ValidationKey>Lesson2Step3Validator</ValidationKey>
@@ -92,6 +95,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
             </FinalCode>
         </Step>
 
+        <!-- 4-->
         <Step Type="DothtmlCode">
             <Title>Adding New Task</Title>
             <ValidationKey>Lesson2Step4Validator</ValidationKey>
@@ -125,6 +129,7 @@ Now, we need to bind the text in the `TextBox` to the `AddedTaskTitle` property,
             </FinalCode>
         </Step>
 
+        <!-- 5-->
         <Step Type="CsharpCode">
             <Title>Representing Tasks</Title>
             <ValidationKey>Lesson2Step5Validator</ValidationKey>
@@ -170,6 +175,7 @@ In Visual Studio, this class would be declared in separate file.
             </ShadowBoxDescription>
         </Step>
 
+        <!-- 6-->
         <Step Type="CsharpCode">
             <Title>Representing Tasks</Title>
             <ValidationKey>Lesson2Step6Validator</ValidationKey>
@@ -251,6 +257,7 @@ System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>
         </Step>
 
 
+        <!-- 7-->
         <Step Type="CsharpCode">
             <Title>Adding new Task</Title>
             <ValidationKey>Lesson2Step7Validator</ValidationKey>
@@ -347,6 +354,7 @@ System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>.Add
             </AllowedMethodsCalled>
         </Step>
 
+        <!-- 8-->
         <Step Type="DothtmlCode">
             <Title>Render The Tasks</Title>
             <ValidationKey>Lesson2Step8Validator</ValidationKey>
@@ -391,7 +399,7 @@ and inside the `<dot:Repeater>`, place the `<div class="task"></div>` element. I
             </FinalCode>
         </Step>
 
-
+        <!-- 9-->
         <Step Type="DothtmlCode">
             <Title>Rendering The Tasks</Title>
             <ValidationKey>Lesson2Step9Validator</ValidationKey>
@@ -444,12 +452,12 @@ The `LinkButton` control works the same way as the `Button`, but it renders a hy
         </Step>
 
 
-        
+        <!-- 10-->
         <Step Type="DothtmlCode">
             <Title>Hiding The LinkButton</Title>
             <ValidationKey>Lesson2Step10Validator</ValidationKey>
             <Description>
-            <![CDATA[
+                <![CDATA[
 The LinkButton should be visible only for tasks which are not completed.
 
 In DotVVM, there is the `Visible` property which can show or hide content. 
@@ -496,7 +504,8 @@ Please note that the `Visible` property can be used also on any HTML element.
             </ShadowBoxDescription>
         </Step>
 
-         <Step Type="CsharpCode">
+        <!-- 11-->
+        <Step Type="CsharpCode">
             <Title>Completing The Task</Title>
             <ValidationKey>Lesson2Step11Validator</ValidationKey>
             <Description>
@@ -508,9 +517,9 @@ The method needs to know, on which task it has been executed. We can supply it t
 Declare the `CompleteTask` method which accepts one parameter of type `TaskData` and sets it `IsCompleted` property to `true`.
 ]]>
             </Description>
-            
+
             <StartupCode>
-                    <![CDATA[
+                <![CDATA[
 using System;
 using System.Collections.Generic;
 
@@ -532,9 +541,9 @@ namespace DotvvmAcademy.Tutorial.ViewModels
     }
 }
 ]]>
-                </StartupCode>
-                <FinalCode>
-                    <![CDATA[
+            </StartupCode>
+            <FinalCode>
+                <![CDATA[
 using System;
 using System.Collections.Generic;
 
@@ -559,11 +568,11 @@ namespace DotvvmAcademy.Tutorial.ViewModels
     }
 }
 ]]>
-                </FinalCode>
-                
+            </FinalCode>
+
             <CodeDependencies>
-            <CodeDependency>
-                <![CDATA[
+                <CodeDependency>
+                    <![CDATA[
 using System;
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
@@ -574,37 +583,37 @@ namespace DotvvmAcademy.Tutorial.ViewModels
     }
 }
                     ]]>
-            </CodeDependency>
-        </CodeDependencies>
-         <AllowedTypesConstructed>
-            <AllowedType>
-                <![CDATA[
+                </CodeDependency>
+            </CodeDependencies>
+            <AllowedTypesConstructed>
+                <AllowedType>
+                    <![CDATA[
 System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>
                     ]]>
-            </AllowedType>
-              <AllowedType>
-                <![CDATA[
+                </AllowedType>
+                <AllowedType>
+                    <![CDATA[
 DotvvmAcademy.Tutorial.ViewModels.TaskData
                     ]]>
-            </AllowedType>
-        </AllowedTypesConstructed>
-        <AllowedMethodsCalled>
-            <AllowedMethod>
-                <![CDATA[
+                </AllowedType>
+            </AllowedTypesConstructed>
+            <AllowedMethodsCalled>
+                <AllowedMethod>
+                    <![CDATA[
 System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>.Add
                     ]]>
-            </AllowedMethod>
-        </AllowedMethodsCalled>
-        
-        
+                </AllowedMethod>
+            </AllowedMethodsCalled>
+
+
         </Step>
-        
-        
+
+        <!-- 12-->
         <Step Type="DothtmlCode">
             <Title>Completing The Task</Title>
             <ValidationKey>Lesson2Step12Validator</ValidationKey>
             <Description>
-            <![CDATA[
+                <![CDATA[
 Now we need to set the `Click` property of the link button to the `CompleteTask` method.
 
 Please note that all bindings inside `Repeater` are not evaluated on viewmodel, but on the corresponding `TaskData` object.
@@ -650,12 +659,12 @@ When supplying arguments to the method, you begin also in the context of `TaskDa
             </FinalCode>
         </Step>
 
-        
+        <!-- 13-->
         <Step Type="DothtmlCode">
             <Title>Completing The Task</Title>
             <ValidationKey>Lesson2Step13Validator</ValidationKey>
             <Description>
-            <![CDATA[
+                <![CDATA[
 The last thing we want to do, is to strike through tasks which are completed.
 
 If the task is completed, we'd like to render it as `<div class="task-completed"></div>`. 
@@ -701,12 +710,12 @@ Also note that you can use single quotes (apostrophes) instead of double quotes 
                 ]]>
             </FinalCode>
         </Step>
-        
-        
+
+        <!-- 14-->
         <Step Type="Info">
             <Title>Congratulations</Title>
             <Description>
-            <![CDATA[
+                <![CDATA[
 You have finished the second lesson!
 
 You have learned how to use the `Repeater` control and collections in the viewmodel!"

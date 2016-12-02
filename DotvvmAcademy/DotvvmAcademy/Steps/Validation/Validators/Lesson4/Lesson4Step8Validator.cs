@@ -9,7 +9,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson4
     {
         public void Validate(ResolvedTreeRoot resolvedTreeRoot)
         {
-            throw new System.NotImplementedException();
+            Lesson4CommonValidator.ValidateStep8(resolvedTreeRoot);
         }
     }
 }

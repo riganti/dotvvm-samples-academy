@@ -13,12 +13,6 @@
 XXXXXX
                 ]]>
             </Description>
-            <!--Optional element-->
-            <ShadowBoxDescription>
-               <![CDATA[
-XXXXXX
-                ]]>
-            </ShadowBoxDescription>
         </Step>
         
         <!--Required attribute-->

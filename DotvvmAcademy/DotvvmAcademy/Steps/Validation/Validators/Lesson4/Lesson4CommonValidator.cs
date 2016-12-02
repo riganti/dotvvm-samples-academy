@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
@@ -30,6 +31,13 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson4
             return new Property("Email", "string", ControlBindName.TextBoxText);
         }
 
+        public static Property CreateStep7ValidatorEmail()
+        {
+            var step2EmailAddressProperty = CreateStep2EmailAddressProperty();
+            step2EmailAddressProperty.TargetControlBindName = ControlBindName.ValidatorValue;
+            return step2EmailAddressProperty;
+        }
+
         public static List<Property> CreateStep2ControlProperties()
         {
             var properties = CreateStep2RequiredProperties();
@@ -42,7 +50,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson4
 
             foreach (var property in properties)
             {
-                property.TargetControlBindName = ControlBindName.DivValidationValue;
+                property.TargetControlBindName = ControlBindName.DivValidatorValue;
             }
             return properties;
         }
@@ -50,30 +58,24 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson4
 
         public static void ValidateStep2Properties(CSharpSyntaxTree tree, SemanticModel model, Assembly assembly)
         {
-           
-
             CSharpCommonValidator.ValidateProperties(tree, model, CreateStep2ControlProperties());
 
-            
             ValidationExtensions.ExecuteSafe(() =>
             {
-
                 var viewModel = (dynamic)assembly.CreateInstance("DotvvmAcademy.Tutorial.ViewModels.Lesson4ViewModel");
-
                 var modelProperties = (viewModel.GetType().GetProperties() as IEnumerable<PropertyInfo>).ToList();
-
                 foreach (var requiredProperty in CreateStep2RequiredProperties())
                 {
                     var viewModelProperty = modelProperties.FirstOrDefault(a=> a.Name == requiredProperty.Name);
 
                     if (viewModelProperty == null)
                     {
-                        throw new CodeValidationException(string.Format(ValidationErrorMessages.PropertyNotFound, requiredProperty.Name));
+                        throw new CodeValidationException(String.Format(ValidationErrorMessages.PropertyNotFound, requiredProperty.Name));
                     }
 
                     if (!viewModelProperty.IsDefined(typeof(RequiredAttribute)))
                     {
-                        throw new CodeValidationException(string.Format(Lesson4Texts.AttributeMissing,
+                        throw new CodeValidationException(String.Format(Lesson4Texts.AttributeMissing,
                             requiredProperty.Name, nameof(RequiredAttribute)));
                     }
                 }
@@ -82,47 +84,74 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson4
                 var emailProperty = modelProperties.FirstOrDefault(a => a.Name == emailPropertyName);
                 if (emailProperty == null)
                 {
-                    throw new CodeValidationException(string.Format(ValidationErrorMessages.PropertyNotFound, emailPropertyName));
+                    throw new CodeValidationException(String.Format(ValidationErrorMessages.PropertyNotFound, emailPropertyName));
                 }
                 if (!emailProperty.IsDefined(typeof(EmailAddressAttribute)))
                 {
-                    throw new CodeValidationException(string.Format(Lesson4Texts.AttributeMissing,
+                    throw new CodeValidationException(String.Format(Lesson4Texts.AttributeMissing,
                         emailPropertyName, nameof(EmailAddressAttribute)));
                 }
             });
         }
 
-        public static void ValidateStep3Properties(ResolvedTreeRoot resolvedTreeRoot)
+        public static void ValidateOnlyStep3Properties(ResolvedTreeRoot resolvedTreeRoot)
         {
-            DotHtmlCommonValidator.CheckCountOfHtmlTag(resolvedTreeRoot, "div", 3);
+            DotHtmlCommonValidator.CheckControlTypeCount<TextBox>(resolvedTreeRoot, 3);
             DotHtmlCommonValidator.ValidatePropertiesBindings(resolvedTreeRoot, CreateStep2ControlProperties());
-            DotHtmlCommonValidator.ValidatePropertiesBindings(resolvedTreeRoot, CreateStep2ValidationValueProperties());
-            
+        }
+
+
+
+        public static void ValidateStep2ValidationProperties(ResolvedContentNode resolvedContentNode)
+        {
+            DotHtmlCommonValidator.ValidatePropertiesBindings(resolvedContentNode, CreateStep2ValidationValueProperties());
         }
 
 
         public static void ValidateStep5(ResolvedTreeRoot resolvedTreeRoot)
         {
-            ValidateStep3Properties(resolvedTreeRoot);
-
             var divEnwrapException = new CodeValidationException("You shold enwrap div`s with one div");
 
             DotHtmlCommonValidator.CheckCountOfHtmlTag(resolvedTreeRoot, "div", 1, divEnwrapException);
-
-            var property = new Property("has-error", "none", ControlBindName.DivValidatorInvalidCssClass);
+          
+            var property = new Property("has-error", "fakeProp", ControlBindName.DivValidatorInvalidCssClass);
             DotHtmlCommonValidator.ValidatePropertyBinding(resolvedTreeRoot, property);
 
-            property.TargetControlBindName = ControlBindName.DivValidatorInvalidCssClassRemove;
+            
             var contentNode = resolvedTreeRoot.GetDescendantControls<HtmlGenericControl>().
                FirstOrDefault(d => d.DothtmlNode.As<DothtmlElementNode>()?.TagName == "div");
 
             DotHtmlCommonValidator.CheckCountOfHtmlTag(contentNode, "div", 3);
-            DotHtmlCommonValidator.ValidatePropertyBinding(contentNode, property);
-
             var redundantInvalidCssException = new CodeValidationException("You should delete Validator.InvalidCssClass=\"has-error\" from child elements");
+            ValidateStep2ValidationProperties(contentNode);
+            DotHtmlCommonValidator.CheckCountOfHtmlTagWithPropertyDescriptor(contentNode, "div", 0, Validator.InvalidCssClassProperty, redundantInvalidCssException);
 
-            DotHtmlCommonValidator.CheckCountOfHtmlTagWithPropertyDescriptor(contentNode,"div",0,Validator.InvalidCssClassProperty,redundantInvalidCssException);
+            property.TargetControlBindName = ControlBindName.DivValidatorInvalidCssClassRemove;
+            DotHtmlCommonValidator.ValidatePropertyBinding(contentNode, property);
+        }
 
+        public static void ValidateStep8(ResolvedTreeRoot resolvedTreeRoot)
+        {
+            ValidateStep5(resolvedTreeRoot);
+            DotHtmlCommonValidator.CheckControlTypeCount<ValidationSummary>(resolvedTreeRoot, 1);
+        }
+
+        public static void ValidateStep11Properties(CSharpSyntaxTree tree, SemanticModel model, Assembly assembly)
+        {
+            ValidateStep2Properties(tree, model, assembly);
+            var propertiesToValidate = new List<Property>()
+            {
+                new Property("SubscriptionFrom", "System.DateTime", ControlBindName.DivClass),
+                new Property("SubscriptionTo", "System.DateTime", ControlBindName.DivClass)
+            };
+            CSharpCommonValidator.ValidateProperties(tree, model, propertiesToValidate);
+        }
+
+        public static void ValidateStep12(CSharpSyntaxTree tree, SemanticModel model, Assembly assembly)
+        {
+            ValidateStep11Properties(tree, model, assembly);
+            CSharpCommonValidator.ValidateClassIfImplementInterface(tree, model, "Lesson4ViewModel",
+                "IValidatableObject");
         }
     }
 }
