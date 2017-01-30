@@ -1,18 +1,20 @@
-﻿{
+{
   "version": "1.0.0-*",
   "testRunner": "mstest",
 
   "dependencies": {
-    "Microsoft.NETCore.App": "1.1.0-preview1-001100-00",
-    "MSTest.TestFramework": "1.0.6-preview",
-    "dotnet-test-mstest": "1.1.1-preview",
-    "DotvvmAcademy": {
-      "target": "project"
-    }
+    "Microsoft.NETCore.App": "1.1.0",
+    "dotnet-test-mstest": "1.1.2-preview",
+    "MSTest.TestFramework": "1.0.8-rc2",
+    "DotvvmAcademy": "1.0.0-*"
+  },
+
+  "runtimes": {
+    "win10-x64": {}
   },
 
   "frameworks": {
-    "netcoreapp1.0": {
+    "netcoreapp1.6": {
       "imports": "dnxcore50"
     }
   }

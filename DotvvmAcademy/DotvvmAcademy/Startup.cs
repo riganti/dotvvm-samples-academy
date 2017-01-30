@@ -17,8 +17,10 @@ namespace DotvvmAcademy
             services.AddAuthorization();
             services.AddWebEncoders();
 
-            services.AddDotVVM()
-                .ConfigureTempStorages("temp");
+            services.AddDotVVM(options =>
+            {
+                options.AddDefaultTempStorages("temp");
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

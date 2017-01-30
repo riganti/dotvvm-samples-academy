@@ -3,16 +3,16 @@
     "CommonMark.NET": "0.14.0",
     "Microsoft.Extensions.Logging.Console": "1.1.0",
     "System.Linq": "4.3.0",
-    "DotVVM": "1.1.0-beta",
-    "DotVVM.AspNetCore": "1.1.0-beta",
-    "DotVVM.Core": "1.1.0-beta",
     "System.Reflection.Extensions": "4.3.0",
     "Microsoft.AspNetCore.Server.IISIntegration": "1.1.0",
     "Microsoft.AspNetCore.Server.IISIntegration.Tools": "1.1.0-preview4-final",
     "Microsoft.AspNetCore.Server.Kestrel": "1.1.0",
     "Microsoft.AspNetCore.StaticFiles": "1.1.0",
     "Microsoft.NETCore.App": "1.1.0",
-    "System.Runtime": "4.3.0"
+    "System.Runtime": "4.3.0",
+    "DotVVM": "1.1.0-rc3",
+    "DotVVM.AspNetCore": "1.1.0-rc3",
+    "DotVVM.Core": "1.1.0-rc3"
   },
 
   "tools": {

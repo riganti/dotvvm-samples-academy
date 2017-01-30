@@ -1,7 +1,5 @@
-using DotVVM.Framework;
 using DotVVM.Framework.Configuration;
 using DotVVM.Framework.ResourceManagement;
-using DotVVM.Framework.Routing;
 using DotvvmAcademy.Controls;
 
 namespace DotvvmAcademy
@@ -40,14 +38,13 @@ namespace DotvvmAcademy
         private void ConfigureResources(DotvvmConfiguration config, string applicationPath)
         {
             // register custom resources and adjust paths to the built-in resources
-
             config.Resources.Register("ace", new ScriptResource()
             {
-                Url = "~/Scripts/ace/ace.js"
+                Location = new LocalFileResourceLocation("~/wwwroot/Scripts/ace/ace.js")
             });
             config.Resources.Register("dotvvm-ace", new ScriptResource()
             {
-                Url = "~/Scripts/dotvvm-ace.js",
+                Location = new LocalFileResourceLocation("~/wwwroot/Scripts/dotvvm-ace.js"),
                 Dependencies = new[] { "dotvvm", "ace" }
             });
         }

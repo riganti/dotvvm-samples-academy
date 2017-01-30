@@ -12,14 +12,14 @@
           "lib/netstandard1.0/CommonMark.dll": {}
         }
       },
-      "DotVVM/1.1.0-beta": {
+      "DotVVM/1.1.0-rc3": {
         "type": "package",
         "dependencies": {
-          "DotVVM.Core": "1.1.0-beta",
+          "DotVVM.Core": "1.1.0-rc3",
           "Microsoft.CodeAnalysis.CSharp": "1.3.2",
           "Microsoft.Extensions.DependencyInjection": "1.0.0",
           "Microsoft.Extensions.DependencyModel": "1.0.0",
-          "Microsoft.Extensions.PlatformAbstractions": "1.0.0",
+          "NETStandard.Library": "1.6.0",
           "Newtonsoft.Json": "9.0.1",
           "System.Collections.Specialized": "4.0.1",
           "System.Diagnostics.Contracts": "4.0.1",
@@ -36,15 +36,18 @@
           "lib/netstandard1.6/DotVVM.Framework.dll": {}
         }
       },
-      "DotVVM.AspNetCore/1.1.0-beta": {
+      "DotVVM.AspNetCore/1.1.0-rc3": {
         "type": "package",
         "dependencies": {
-          "DotVVM": "1.1.0-beta",
+          "DotVVM": "1.1.0-rc3",
+          "DotVVM.Core": "1.1.0-rc3",
           "Microsoft.AspNetCore.Authentication.Cookies": "1.0.0",
           "Microsoft.AspNetCore.Authorization": "1.0.0",
           "Microsoft.AspNetCore.DataProtection": "1.0.0",
           "Microsoft.AspNetCore.Http.Extensions": "1.0.0",
-          "Microsoft.AspNetCore.Localization": "1.0.0"
+          "Microsoft.AspNetCore.Localization": "1.0.0",
+          "Microsoft.Extensions.Localization": "1.0.0",
+          "NETStandard.Library": "1.6.0"
         },
         "compile": {
           "lib/netstandard1.6/DotVVM.Framework.Hosting.AspNetCore.dll": {}
@@ -53,12 +56,12 @@
           "lib/netstandard1.6/DotVVM.Framework.Hosting.AspNetCore.dll": {}
         }
       },
-      "DotVVM.Core/1.1.0-beta": {
+      "DotVVM.Core/1.1.0-rc3": {
         "type": "package",
         "dependencies": {
           "NETStandard.Library": "1.6.0",
-          "System.ComponentModel.Annotations": "4.1.0",
-          "System.Linq.Queryable": "4.0.1"
+          "System.ComponentModel.Annotations": "4.3.0",
+          "System.Linq.Queryable": "4.3.0"
         },
         "compile": {
           "lib/netstandard1.6/DotVVM.Core.dll": {}
@@ -773,6 +776,23 @@
         },
         "runtime": {
           "lib/netstandard1.1/Microsoft.Extensions.Globalization.CultureInfoCache.dll": {}
+        }
+      },
+      "Microsoft.Extensions.Localization/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Hosting.Abstractions": "1.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0",
+          "Microsoft.Extensions.Localization.Abstractions": "1.0.0",
+          "Microsoft.Extensions.Options": "1.0.0",
+          "System.Collections.Concurrent": "4.0.12",
+          "System.Resources.Reader": "4.0.0"
+        },
+        "compile": {
+          "lib/netstandard1.3/Microsoft.Extensions.Localization.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Microsoft.Extensions.Localization.dll": {}
         }
       },
       "Microsoft.Extensions.Localization.Abstractions/1.0.0": {
@@ -3306,14 +3326,14 @@
           "lib/netstandard1.0/CommonMark.dll": {}
         }
       },
-      "DotVVM/1.1.0-beta": {
+      "DotVVM/1.1.0-rc3": {
         "type": "package",
         "dependencies": {
-          "DotVVM.Core": "1.1.0-beta",
+          "DotVVM.Core": "1.1.0-rc3",
           "Microsoft.CodeAnalysis.CSharp": "1.3.2",
           "Microsoft.Extensions.DependencyInjection": "1.0.0",
           "Microsoft.Extensions.DependencyModel": "1.0.0",
-          "Microsoft.Extensions.PlatformAbstractions": "1.0.0",
+          "NETStandard.Library": "1.6.0",
           "Newtonsoft.Json": "9.0.1",
           "System.Collections.Specialized": "4.0.1",
           "System.Diagnostics.Contracts": "4.0.1",
@@ -3330,15 +3350,18 @@
           "lib/netstandard1.6/DotVVM.Framework.dll": {}
         }
       },
-      "DotVVM.AspNetCore/1.1.0-beta": {
+      "DotVVM.AspNetCore/1.1.0-rc3": {
         "type": "package",
         "dependencies": {
-          "DotVVM": "1.1.0-beta",
+          "DotVVM": "1.1.0-rc3",
+          "DotVVM.Core": "1.1.0-rc3",
           "Microsoft.AspNetCore.Authentication.Cookies": "1.0.0",
           "Microsoft.AspNetCore.Authorization": "1.0.0",
           "Microsoft.AspNetCore.DataProtection": "1.0.0",
           "Microsoft.AspNetCore.Http.Extensions": "1.0.0",
-          "Microsoft.AspNetCore.Localization": "1.0.0"
+          "Microsoft.AspNetCore.Localization": "1.0.0",
+          "Microsoft.Extensions.Localization": "1.0.0",
+          "NETStandard.Library": "1.6.0"
         },
         "compile": {
           "lib/netstandard1.6/DotVVM.Framework.Hosting.AspNetCore.dll": {}
@@ -3347,12 +3370,12 @@
           "lib/netstandard1.6/DotVVM.Framework.Hosting.AspNetCore.dll": {}
         }
       },
-      "DotVVM.Core/1.1.0-beta": {
+      "DotVVM.Core/1.1.0-rc3": {
         "type": "package",
         "dependencies": {
           "NETStandard.Library": "1.6.0",
-          "System.ComponentModel.Annotations": "4.1.0",
-          "System.Linq.Queryable": "4.0.1"
+          "System.ComponentModel.Annotations": "4.3.0",
+          "System.Linq.Queryable": "4.3.0"
         },
         "compile": {
           "lib/netstandard1.6/DotVVM.Core.dll": {}
@@ -4013,6 +4036,23 @@
         },
         "runtime": {
           "lib/netstandard1.1/Microsoft.Extensions.Globalization.CultureInfoCache.dll": {}
+        }
+      },
+      "Microsoft.Extensions.Localization/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Hosting.Abstractions": "1.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0",
+          "Microsoft.Extensions.Localization.Abstractions": "1.0.0",
+          "Microsoft.Extensions.Options": "1.0.0",
+          "System.Collections.Concurrent": "4.0.12",
+          "System.Resources.Reader": "4.0.0"
+        },
+        "compile": {
+          "lib/netstandard1.3/Microsoft.Extensions.Localization.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Microsoft.Extensions.Localization.dll": {}
         }
       },
       "Microsoft.Extensions.Localization.Abstractions/1.0.0": {
@@ -6740,30 +6780,27 @@
         "tools/cmark.exe.config"
       ]
     },
-    "DotVVM/1.1.0-beta": {
-      "sha512": "trkUmKnQtt8lUskrVU5ZSeg7PVWOqRFR52jYbDv53jzKuSv2oZTnJBCCF0EyoUdHa7XIVAATGYKy8OGupIj5+Q==",
+    "DotVVM/1.1.0-rc3": {
+      "sha512": "zx8AE36QON46lJuHF2zIPmsR1mEn+yIYdlGgySjOpQP4+VUWIugF1rGi8E9p3uK8K1pgHul52bV8K9haTr+JJA==",
       "type": "package",
-      "path": "DotVVM/1.1.0-beta",
+      "path": "DotVVM/1.1.0-rc3",
       "files": [
-        "DotVVM.1.1.0-beta.nupkg.sha512",
+        "DotVVM.1.1.0-rc3.nupkg.sha512",
         "DotVVM.nuspec",
         "lib/net451/DotVVM.Framework.dll",
         "lib/net451/DotVVM.Framework.xml",
         "lib/netstandard1.6/DotVVM.Framework.dll",
         "lib/netstandard1.6/DotVVM.Framework.xml",
-        "tools/DotVVM.Compiler.Light.deps.json",
         "tools/DotVVM.Compiler.Light.dll",
-        "tools/DotVVM.Compiler.Light.runtimeconfig.dev.json",
-        "tools/DotVVM.Compiler.Light.runtimeconfig.json",
         "tools/DotVVM.Compiler.exe"
       ]
     },
-    "DotVVM.AspNetCore/1.1.0-beta": {
-      "sha512": "JSP/anAgPFsV0rsZpgv/gQEHXZP8AxAvgTX1dAkttgKEMcgOCn3h5NFfARYiAT++QicUWZJ3tNRx00blfk/wWw==",
+    "DotVVM.AspNetCore/1.1.0-rc3": {
+      "sha512": "fwzrPmnqJGyNR2PZI4RXasJmVKH/ZA3dzK0Xr0HWjMPr05xIWnLF+sv1LuR83XqVzCipS9mLx+k7MTVPSGaqig==",
       "type": "package",
-      "path": "DotVVM.AspNetCore/1.1.0-beta",
+      "path": "DotVVM.AspNetCore/1.1.0-rc3",
       "files": [
-        "DotVVM.AspNetCore.1.1.0-beta.nupkg.sha512",
+        "DotVVM.AspNetCore.1.1.0-rc3.nupkg.sha512",
         "DotVVM.AspNetCore.nuspec",
         "lib/net451/DotVVM.Framework.Hosting.AspNetCore.dll",
         "lib/net451/DotVVM.Framework.Hosting.AspNetCore.xml",
@@ -6771,12 +6808,12 @@
         "lib/netstandard1.6/DotVVM.Framework.Hosting.AspNetCore.xml"
       ]
     },
-    "DotVVM.Core/1.1.0-beta": {
-      "sha512": "xDsRtFHN9mm5QS5UnJm3jDlW9DbjnsxQizHaThteBr/dkZwOg2ue8IB6J+5ydK2KNw/Ri+B0v8JBSXGc8pDCqQ==",
+    "DotVVM.Core/1.1.0-rc3": {
+      "sha512": "Lh1YjRVz9OgenRuJY7zogfcY0NTaA0WlMxcIJ2U58GEOHSx0KZ68mLV/p0HojsJF90sxfLQA4xjeSLAnhLLdUQ==",
       "type": "package",
-      "path": "DotVVM.Core/1.1.0-beta",
+      "path": "DotVVM.Core/1.1.0-rc3",
       "files": [
-        "DotVVM.Core.1.1.0-beta.nupkg.sha512",
+        "DotVVM.Core.1.1.0-rc3.nupkg.sha512",
         "DotVVM.Core.nuspec",
         "lib/net451/DotVVM.Core.dll",
         "lib/net451/DotVVM.Core.xml",
@@ -7349,6 +7386,19 @@
         "Microsoft.Extensions.Globalization.CultureInfoCache.nuspec",
         "lib/netstandard1.1/Microsoft.Extensions.Globalization.CultureInfoCache.dll",
         "lib/netstandard1.1/Microsoft.Extensions.Globalization.CultureInfoCache.xml"
+      ]
+    },
+    "Microsoft.Extensions.Localization/1.0.0": {
+      "sha512": "nkDgz++GXjMSEIiVS6CpeirV8m8zvc/vUN2sq5sPnqG8PZltCMSNmqrwyL1onx6A6aRNdTr1nVfvYHwWAmS4vg==",
+      "type": "package",
+      "path": "Microsoft.Extensions.Localization/1.0.0",
+      "files": [
+        "Microsoft.Extensions.Localization.1.0.0.nupkg.sha512",
+        "Microsoft.Extensions.Localization.nuspec",
+        "lib/net451/Microsoft.Extensions.Localization.dll",
+        "lib/net451/Microsoft.Extensions.Localization.xml",
+        "lib/netstandard1.3/Microsoft.Extensions.Localization.dll",
+        "lib/netstandard1.3/Microsoft.Extensions.Localization.xml"
       ]
     },
     "Microsoft.Extensions.Localization.Abstractions/1.0.0": {
@@ -13145,9 +13195,9 @@
   "projectFileDependencyGroups": {
     "": [
       "CommonMark.NET >= 0.14.0",
-      "DotVVM >= 1.1.0-beta",
-      "DotVVM.AspNetCore >= 1.1.0-beta",
-      "DotVVM.Core >= 1.1.0-beta",
+      "DotVVM >= 1.1.0-rc3",
+      "DotVVM.AspNetCore >= 1.1.0-rc3",
+      "DotVVM.Core >= 1.1.0-rc3",
       "Microsoft.AspNetCore.Server.IISIntegration >= 1.1.0",
       "Microsoft.AspNetCore.Server.IISIntegration.Tools >= 1.1.0-preview4-final",
       "Microsoft.AspNetCore.Server.Kestrel >= 1.1.0",
