@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26127.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "DotvvmAcademy", "DotvvmAcademy\DotvvmAcademy.xproj", "{F43E4F26-CFBD-4D50-9065-E6E0043D3895}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotvvmAcademy", "DotvvmAcademy\DotvvmAcademy.csproj", "{F43E4F26-CFBD-4D50-9065-E6E0043D3895}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "DotvvmAcademy.Tests", "DotvvmAcademy.Tests\DotvvmAcademy.Tests.xproj", "{412EA3FF-607C-44BD-8668-4E378CA7927A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotvvmAcademy.Tests", "DotvvmAcademy.Tests\DotvvmAcademy.Tests.csproj", "{412EA3FF-607C-44BD-8668-4E378CA7927A}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "DotvvmAcademy.xUnitTests", "DotvvmAcademy.xUnitTests\DotvvmAcademy.xUnitTests.xproj", "{C4474425-F7CE-45E3-A739-89498EF95298}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotvvmAcademy.xUnitTests", "DotvvmAcademy.xUnitTests\DotvvmAcademy.xUnitTests.csproj", "{C4474425-F7CE-45E3-A739-89498EF95298}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
