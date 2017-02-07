@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.26127.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotvvmAcademy", "DotvvmAcademy\DotvvmAcademy.csproj", "{F43E4F26-CFBD-4D50-9065-E6E0043D3895}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotvvmAcademy.Tests", "DotvvmAcademy.Tests\DotvvmAcademy.Tests.csproj", "{412EA3FF-607C-44BD-8668-4E378CA7927A}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotvvmAcademy.xUnitTests", "DotvvmAcademy.xUnitTests\DotvvmAcademy.xUnitTests.csproj", "{C4474425-F7CE-45E3-A739-89498EF95298}"
 EndProject
 Global
@@ -19,10 +17,6 @@ Global
 		{F43E4F26-CFBD-4D50-9065-E6E0043D3895}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F43E4F26-CFBD-4D50-9065-E6E0043D3895}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F43E4F26-CFBD-4D50-9065-E6E0043D3895}.Release|Any CPU.Build.0 = Release|Any CPU
-		{412EA3FF-607C-44BD-8668-4E378CA7927A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{412EA3FF-607C-44BD-8668-4E378CA7927A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{412EA3FF-607C-44BD-8668-4E378CA7927A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{412EA3FF-607C-44BD-8668-4E378CA7927A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C4474425-F7CE-45E3-A739-89498EF95298}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C4474425-F7CE-45E3-A739-89498EF95298}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4474425-F7CE-45E3-A739-89498EF95298}.Release|Any CPU.ActiveCfg = Release|Any CPU

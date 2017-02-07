@@ -1,769 +1,770 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <Lesson>
-    <ValidatorsNamespace>DotvvmAcademy.Steps.Validation.Validators.Lesson3</ValidatorsNamespace>
-    <Steps>
+	<ValidatorsNamespace>DotvvmAcademy.Steps.Validation.Validators.Lesson3</ValidatorsNamespace>
+	<Steps>
 
-        <!--1-->
-        <Step Type="Info">
-            <!--Required element-->
-            <Title>TextBox, CheckBox, RadioButton a ComboBox</Title>
-            <!--Required element-->
-            <Description>
-                <![CDATA[
+		<!--1-->
+		<Step Type="Info">
+			<!--Required element-->
+			<Title>TextBox, CheckBox, RadioButton a ComboBox</Title>
+			<!--Required element-->
+			<Description>
+				<![CDATA[
 Point of this is using component `TextBox`, `CheckBox`, `RadioButton` and `ComboBox`. In this lesson we type simple form for creating customers.
-                ]]>
-            </Description>
-        </Step>
+								]]>
+			</Description>
+		</Step>
 
-        <!--2-->
-        <Step Type="CsharpCode">
-            <!--Required element-->
-            <Title>Create properties</Title>
-            <!--Required element-->
-            <ValidationKey>Lesson3Step2Validator</ValidationKey>
-            <!--Required element-->
-            <Description>
-                <![CDATA[
+		<!--2-->
+		<Step Type="CsharpCode">
+			<!--Required element-->
+			<Title>Create properties</Title>
+			<!--Required element-->
+			<ValidationKey>Lesson3Step2Validator</ValidationKey>
+			<!--Required element-->
+			<Description>
+				<![CDATA[
 Add to ViewModel new string type properties FirstName and LastName.
 ]]>
-            </Description>
-            <!--Required element-->
-            <StartupCode>
-                <![CDATA[
+			</Description>
+			<!--Required element-->
+			<StartupCode>
+				<![CDATA[
 using System;
 
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
-    public class Lesson2ViewModel 
-    {
-        // declare properties here
-    }
+	public class Lesson2ViewModel 
+	{
+		// declare properties here
+	}
 }
 ]]>
-            </StartupCode>
-            <!--Required element-->
-            <FinalCode>
-                <![CDATA[
+			</StartupCode>
+			<!--Required element-->
+			<FinalCode>
+				<![CDATA[
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
-    public class Lesson3ViewModel 
-    {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-    }
+	public class Lesson3ViewModel 
+	{
+		public string FirstName { get; set; }
+		public string LastName { get; set; }
+	}
 }
 ]]>
-            </FinalCode>
-        </Step>
+			</FinalCode>
+		</Step>
 
-        <!--3-->
-        <Step Type="DothtmlCode">
-            <!--Required element-->
-            <Title>Addition TextBoxes</Title>
-            <!--Required element-->
-            <ValidationKey>Lesson3Step3Validator</ValidationKey>
-            <Description>
-                <![CDATA[
+		<!--3-->
+		<Step Type="DothtmlCode">
+			<!--Required element-->
+			<Title>Addition TextBoxes</Title>
+			<!--Required element-->
+			<ValidationKey>Lesson3Step3Validator</ValidationKey>
+			<Description>
+				<![CDATA[
 Add to page 2 TextBoxes and bind on them FirstName and LastName.
-                ]]>
-            </Description>
-            <!--Required element-->
-            <StartupCode>
-                <![CDATA[
+								]]>
+			</Description>
+			<!--Required element-->
+			<StartupCode>
+				<![CDATA[
 <p>
-    <!-- place first textbox here -->
-    <!-- place second textbox here -->
+	<!-- place first textbox here -->
+	<!-- place second textbox here -->
 </p>
-                ]]>
-            </StartupCode>
-            <!--Required element-->
-            <FinalCode>
-                <![CDATA[
+								]]>
+			</StartupCode>
+			<!--Required element-->
+			<FinalCode>
+				<![CDATA[
 <p>
-    <dot:TextBox Text="{value: FirstName}"/>
-    <dot:TextBox Text="{value: LastName}"/>
+	<dot:TextBox Text="{value: FirstName}"/>
+	<dot:TextBox Text="{value: LastName}"/>
 </p>
-                ]]>
-            </FinalCode>
-        </Step>
+								]]>
+			</FinalCode>
+		</Step>
 
-        <!--4-->
-        <Step Type="CsharpCode">
-            <!--Required element-->
-            <Title>Addition Role property</Title>
-            <!--Required element-->
-            <ValidationKey>Lesson3Step4Validator</ValidationKey>
-            <!--Required element-->
-            <Description>
-                <![CDATA[
+		<!--4-->
+		<Step Type="CsharpCode">
+			<!--Required element-->
+			<Title>Addition Role property</Title>
+			<!--Required element-->
+			<ValidationKey>Lesson3Step4Validator</ValidationKey>
+			<!--Required element-->
+			<Description>
+				<![CDATA[
 Add to ViewModel new string property Role.
 ]]>
-            </Description>
+			</Description>
 
-            <StartupCode>
-                <![CDATA[
+			<StartupCode>
+				<![CDATA[
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
-    public class Lesson3ViewModel 
-    {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        // add Role property
-    }
+	public class Lesson3ViewModel 
+	{
+		public string FirstName { get; set; }
+		public string LastName { get; set; }
+		// add Role property
+	}
 }
 ]]>
-            </StartupCode>
-            <!--Required element-->
-            <FinalCode>
-                <![CDATA[
+			</StartupCode>
+			<!--Required element-->
+			<FinalCode>
+				<![CDATA[
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
-    public class Lesson3ViewModel 
-    {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Role { get; set; }
-    }
+	public class Lesson3ViewModel 
+	{
+		public string FirstName { get; set; }
+		public string LastName { get; set; }
+		public string Role { get; set; }
+	}
 }
 ]]>
-            </FinalCode>
-        </Step>
+			</FinalCode>
+		</Step>
 
-        <!--5-->
-        <Step Type="DothtmlCode">
-            <!--Required element-->
-            <Title>Creating RadioButtons</Title>
-            <!--Required element-->
-            <ValidationKey>Lesson3Step5Validator</ValidationKey>
-            <Description>
-                <![CDATA[
+		<!--5-->
+		<Step Type="DothtmlCode">
+			<!--Required element-->
+			<Title>Creating RadioButtons</Title>
+			<!--Required element-->
+			<ValidationKey>Lesson3Step5Validator</ValidationKey>
+			<Description>
+				<![CDATA[
 Add to page 2 RadioButtons, set them attribute Text to "Admin" and "User", attribute CheckedValue to "A" and "U". On attribute CheckedItem bind ViewModel property Role.
-                ]]>
-            </Description>
+								]]>
+			</Description>
 
-            <!--Required element-->
-            <StartupCode>
-                <![CDATA[
+			<!--Required element-->
+			<StartupCode>
+				<![CDATA[
 <p>
-    <dot:TextBox Text="{value: FirstName}"/>
-    <dot:TextBox Text="{value: LastName}"/>
-    <!-- place first RadioButton here -->
-    <!-- place second RadioButton here -->
+	<dot:TextBox Text="{value: FirstName}"/>
+	<dot:TextBox Text="{value: LastName}"/>
+	<!-- place first RadioButton here -->
+	<!-- place second RadioButton here -->
 </p>
-                ]]>
-            </StartupCode>
-            <!--Required element-->
-            <FinalCode>
-                <![CDATA[
+								]]>
+			</StartupCode>
+			<!--Required element-->
+			<FinalCode>
+				<![CDATA[
 <p>
-    <dot:TextBox Text="{value: FirstName}"/>
-    <dot:TextBox Text="{value: LastName}"/>
-    <dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin"/>
-    <dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User"/>
+	<dot:TextBox Text="{value: FirstName}"/>
+	<dot:TextBox Text="{value: LastName}"/>
+	<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin"/>
+	<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User"/>
 </p>
-                ]]>
-            </FinalCode>
+								]]>
+			</FinalCode>
 
-        </Step>
+		</Step>
 
-        <!--6-->
-        <Step Type="CsharpCode">
-            <!--Required element-->
-            <Title>Addition Interests property</Title>
-            <!--Required element-->
-            <ValidationKey>Lesson3Step6Validator</ValidationKey>
-            <!--Required element-->
-            <Description>
-                <![CDATA[
+		<!--6-->
+		<Step Type="CsharpCode">
+			<!--Required element-->
+			<Title>Addition Interests property</Title>
+			<!--Required element-->
+			<ValidationKey>Lesson3Step6Validator</ValidationKey>
+			<!--Required element-->
+			<Description>
+				<![CDATA[
 Add to ViewModel new List<string> property Interests.
 ]]>
-            </Description>
-            <!--Required element-->
-            <StartupCode>
-                <![CDATA[
+			</Description>
+			<!--Required element-->
+			<StartupCode>
+				<![CDATA[
 using System.Collections.Generic;
 
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
-    public class Lesson3ViewModel 
-    {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Role { get; set; }
-        // add Interests property and initialize
-    }
+	public class Lesson3ViewModel 
+	{
+		public string FirstName { get; set; }
+		public string LastName { get; set; }
+		public string Role { get; set; }
+		// add Interests property and initialize
+	}
 }
 ]]>
-            </StartupCode>
-            <!--Required element-->
-            <FinalCode>
-                <![CDATA[
+			</StartupCode>
+			<!--Required element-->
+			<FinalCode>
+				<![CDATA[
 
 using System.Collections.Generic;
 
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
-    public class Lesson3ViewModel 
-    {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Role { get; set; }
-        public List<string> Interests { get; set; } = new List<string>();
-    }
+	public class Lesson3ViewModel 
+	{
+		public string FirstName { get; set; }
+		public string LastName { get; set; }
+		public string Role { get; set; }
+		public List<string> Interests { get; set; } = new List<string>();
+	}
 }
 ]]>
-            </FinalCode>
-            <!--Optional element-->
-            <AllowedTypesConstructed>
-                <AllowedType>
-                    <![CDATA[
+			</FinalCode>
+			<!--Optional element-->
+			<AllowedTypesConstructed>
+				<AllowedType>
+					<![CDATA[
 System.Collections.Generic.List<string>
-                        ]]>
-                </AllowedType>
-            </AllowedTypesConstructed>
+												]]>
+				</AllowedType>
+			</AllowedTypesConstructed>
 
-        </Step>
+		</Step>
 
-        <!--7-->
-        <Step Type="DothtmlCode">
-            <!--Required element-->
-            <Title>Add to page 3 CheckBoxes</Title>
-            <!--Required element-->
-            <ValidationKey>Lesson3Step7Validator</ValidationKey>
-            <Description>
-                <![CDATA[
+		<!--7-->
+		<Step Type="DothtmlCode">
+			<!--Required element-->
+			<Title>Add to page 3 CheckBoxes</Title>
+			<!--Required element-->
+			<ValidationKey>Lesson3Step7Validator</ValidationKey>
+			<Description>
+				<![CDATA[
 Add to page 3 CheckBoxes, bind CheckedItem to Interests, and set them attribute Text to "Music", "Sports", "News" and CheckedValue to "M", "S" a "N". 
 
-                ]]>
-            </Description>
+								]]>
+			</Description>
 
-            <StartupCode>
-                <![CDATA[
+			<StartupCode>
+				<![CDATA[
 <p>
-    <dot:TextBox Text="{value: FirstName}"/>
-    <dot:TextBox Text="{value: LastName}"/>
-    <dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin"/>
-    <dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User"/>
-    <!-- place first CheckBox here -->
-    <!-- place second CheckBox here -->
-    <!-- place third CheckBox here -->
+	<dot:TextBox Text="{value: FirstName}"/>
+	<dot:TextBox Text="{value: LastName}"/>
+	<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin"/>
+	<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User"/>
+	<!-- place first CheckBox here -->
+	<!-- place second CheckBox here -->
+	<!-- place third CheckBox here -->
 </p>
-                ]]>
-            </StartupCode>
-            <!--Required element-->
-            <FinalCode>
-                <![CDATA[
+								]]>
+			</StartupCode>
+			<!--Required element-->
+			<FinalCode>
+				<![CDATA[
 <p>
-    <dot:TextBox Text="{value: FirstName}"/>
-    <dot:TextBox Text="{value: LastName}"/>
-    <dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin"/>
-    <dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User"/>
-    <dot:CheckBox CheckedItems="{value: Interests}" Text="Music" CheckedValue="M"></dot:CheckBox>
-    <dot:CheckBox CheckedItems="{value: Interests}" Text="Sports" CheckedValue="S"></dot:CheckBox>
-    <dot:CheckBox CheckedItems="{value: Interests}" Text="News" CheckedValue="N"></dot:CheckBox>
+	<dot:TextBox Text="{value: FirstName}"/>
+	<dot:TextBox Text="{value: LastName}"/>
+	<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin"/>
+	<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User"/>
+	<dot:CheckBox CheckedItems="{value: Interests}" Text="Music" CheckedValue="M"></dot:CheckBox>
+	<dot:CheckBox CheckedItems="{value: Interests}" Text="Sports" CheckedValue="S"></dot:CheckBox>
+	<dot:CheckBox CheckedItems="{value: Interests}" Text="News" CheckedValue="N"></dot:CheckBox>
 </p>
-                ]]>
-            </FinalCode>
-        </Step>
+								]]>
+			</FinalCode>
+		</Step>
 
-        <!--8-->
-        <Step Type="CsharpCode">
-            <!--Required element-->
-            <Title>Create class CountryInfo</Title>
-            <!--Required element-->
-            <ValidationKey>Lesson3Step8Validator</ValidationKey>
-            <!--Required element-->
-            <Description>
-                <![CDATA[
+		<!--8-->
+		<Step Type="CsharpCode">
+			<!--Required element-->
+			<Title>Create class CountryInfo</Title>
+			<!--Required element-->
+			<ValidationKey>Lesson3Step8Validator</ValidationKey>
+			<!--Required element-->
+			<Description>
+				<![CDATA[
 Create new class CountryInfo with properties Id (int) and Name (string)
 ]]>
-            </Description>
-            <!--Optional element-->
+			</Description>
+			<!--Optional element-->
 
-            <StartupCode>
-                <![CDATA[
+			<StartupCode>
+				<![CDATA[
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
-    // create class CountryInfo
+		// create class CountryInfo
 }
 ]]>
-            </StartupCode>
-            <!--Required element-->
-            <FinalCode>
-                <![CDATA[
+			</StartupCode>
+			<!--Required element-->
+			<FinalCode>
+				<![CDATA[
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
-    public class CountryInfo 
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-    }
+	public class CountryInfo 
+	{
+		public int Id { get; set; }
+		public string Name { get; set; }
+	}
 }
 ]]>
-            </FinalCode>
-        </Step>
+			</FinalCode>
+		</Step>
 
-        <!--9-->
-        <Step Type="CsharpCode">
-            <!--Required element-->
-            <Title>Add collection of Countries</Title>
-            <!--Required element-->
-            <ValidationKey>Lesson3Step9Validator</ValidationKey>
-            <!--Required element-->
-            <Description>
-                <![CDATA[
+		<!--9-->
+		<Step Type="CsharpCode">
+			<!--Required element-->
+			<Title>Add collection of Countries</Title>
+			<!--Required element-->
+			<ValidationKey>Lesson3Step9Validator</ValidationKey>
+			<!--Required element-->
+			<Description>
+				<![CDATA[
 Add to ViewModel collection Countries of type List<CountryInfo> and int property SelectedCountryId.
 ]]>
-            </Description>
-            <!--Required element-->
-            <StartupCode>
-                <![CDATA[
+			</Description>
+			<!--Required element-->
+			<StartupCode>
+				<![CDATA[
 using System.Collections.Generic;
 
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
-    public class Lesson3ViewModel 
-    {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Role { get; set; }
-        //add property SelectedCountryId 
-        //add property DotvvmAcademy.Tutorial.ViewModels.CountryInfo
-    }
+	public class Lesson3ViewModel 
+	{
+		public string FirstName { get; set; }
+		public string LastName { get; set; }
+		public string Role { get; set; }
+		//add property SelectedCountryId 
+		//add property DotvvmAcademy.Tutorial.ViewModels.CountryInfo
+	}
 }
 ]]>
-            </StartupCode>
-            <!--Required element-->
-            <FinalCode>
-                <![CDATA[
+			</StartupCode>
+			<!--Required element-->
+			<FinalCode>
+				<![CDATA[
 using System.Collections.Generic;
 
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
-    public class Lesson3ViewModel 
-    {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Role { get; set; }
-        public int SelectedCountryId { get; set; }
-        public List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo> Countries { get; set; } = new List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>();
-    }
+	public class Lesson3ViewModel 
+	{
+		public string FirstName { get; set; }
+		public string LastName { get; set; }
+		public string Role { get; set; }
+		public int SelectedCountryId { get; set; }
+		public List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo> Countries { get; set; } = new List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>();
+	}
 }
 ]]>
-            </FinalCode>
+			</FinalCode>
 
-            <!--Optional element-->
-            <CodeDependencies>
-                <CodeDependency>
-                    <![CDATA[
+			<!--Optional element-->
+			<CodeDependencies>
+				<CodeDependency>
+					<![CDATA[
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
-    public class CountryInfo 
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-    }
+	public class CountryInfo 
+	{
+		public int Id { get; set; }
+		public string Name { get; set; }
+	}
 }
-                        ]]>
-                </CodeDependency>
-            </CodeDependencies>
+												]]>
+				</CodeDependency>
+			</CodeDependencies>
 
 
-            <AllowedTypesConstructed>
-                <AllowedType>
-                    <![CDATA[
+			<AllowedTypesConstructed>
+				<AllowedType>
+					<![CDATA[
 System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>
-                        ]]>
-                </AllowedType>
-            </AllowedTypesConstructed>
-        </Step>
+												]]>
+				</AllowedType>
+			</AllowedTypesConstructed>
+		</Step>
 
-        <!--10-->
-        <Step Type="CsharpCode">
-            <!--Required element-->
-            <Title>Add countries</Title>
-            <!--Required element-->
-            <ValidationKey>Lesson3Step10Validator</ValidationKey>
-            <!--Required element-->
-            <Description>
-                <![CDATA[
+		<!--10-->
+		<Step Type="CsharpCode">
+			<!--Required element-->
+			<Title>Add countries</Title>
+			<!--Required element-->
+			<ValidationKey>Lesson3Step10Validator</ValidationKey>
+			<!--Required element-->
+			<Description>
+				<![CDATA[
 In Lesson3ViewModel add parameterless ctor and add into Countries 2 states - "USA" with Id 1 and "Canada" with Id 2.
 ]]>
-            </Description>
-            <!--Optional element-->
-            <StartupCode>
-                <![CDATA[
+			</Description>
+			<!--Optional element-->
+			<StartupCode>
+				<![CDATA[
 using System.Collections.Generic;
 
 namespace DotvvmAcademy.Tutorial.ViewModels
 {
-    public class Lesson3ViewModel 
-    {
-        // add ctor
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Role { get; set; }
-        public int SelectedCountryId { get; set; }
-        public List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo> Countries { get; set; } = new List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>();
-    }
+	public class Lesson3ViewModel 
+	{
+		// add ctor
+		public string FirstName { get; set; }
+		public string LastName { get; set; }
+		public string Role { get; set; }
+		public int SelectedCountryId { get; set; }
+		public List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo> Countries { get; set; } = new List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>();
+	}
 }
 ]]>
-            </StartupCode>
-            <!--Required element-->
-            <FinalCode>
-                <![CDATA[
+			</StartupCode>
+			<!--Required element-->
+			<FinalCode>
+				<![CDATA[
 using System.Collections.Generic;
 
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
-    public class Lesson3ViewModel 
-    {
-        public Lesson3ViewModel ()
-        {
-            Countries.Add(new CountryInfo() { Id = 1, Name = "USA" });
-            Countries.Add(new CountryInfo() { Id = 2, Name = "Canada" });
-        }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Role { get; set; }
-        public int SelectedCountryId { get; set; }
-        public List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo> Countries { get; set; } = new List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>();
-    }
+	public class Lesson3ViewModel 
+	{
+		public Lesson3ViewModel ()
+		{
+			Countries.Add(new CountryInfo() { Id = 1, Name = "USA" });
+			Countries.Add(new CountryInfo() { Id = 2, Name = "Canada" });
+		}
+		public string FirstName { get; set; }
+		public string LastName { get; set; }
+		public string Role { get; set; }
+		public int SelectedCountryId { get; set; }
+		public List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo> Countries { get; set; } = new List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>();
+	}
 }
 ]]>
-            </FinalCode>
+			</FinalCode>
 
-            <!--Optional element-->
-            <CodeDependencies>
-                <CodeDependency>
-                    <![CDATA[
+			<!--Optional element-->
+			<CodeDependencies>
+				<CodeDependency>
+					<![CDATA[
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
-    public class CountryInfo 
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-    }
+	public class CountryInfo 
+	{
+		public int Id { get; set; }
+		public string Name { get; set; }
+	}
 }
-                        ]]>
-                </CodeDependency>
-            </CodeDependencies>
-            <!--Optional element-->
-            <AllowedTypesConstructed>
-                <AllowedType>
-                    <![CDATA[
+												]]>
+				</CodeDependency>
+			</CodeDependencies>
+			<!--Optional element-->
+			<AllowedTypesConstructed>
+				<AllowedType>
+					<![CDATA[
 System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>
-                        ]]>
-                </AllowedType>
-                <AllowedType>
-                    <![CDATA[
+												]]>
+				</AllowedType>
+				<AllowedType>
+					<![CDATA[
 DotvvmAcademy.Tutorial.ViewModels.CountryInfo
-                        ]]>
-                </AllowedType>
-            </AllowedTypesConstructed>
-            <!--Optional element-->
-            <AllowedMethodsCalled>
-                <AllowedMethod>
-                    <![CDATA[
+												]]>
+				</AllowedType>
+			</AllowedTypesConstructed>
+			<!--Optional element-->
+			<AllowedMethodsCalled>
+				<AllowedMethod>
+					<![CDATA[
 System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>.Add
-                        ]]>
-                </AllowedMethod>
-            </AllowedMethodsCalled>
-        </Step>
+												]]>
+				</AllowedMethod>
+			</AllowedMethodsCalled>
+		</Step>
 
-        <!--11-->
-        <Step Type="DothtmlCode">
-            <!--Required element-->
-            <Title>Add ComboBox</Title>
-            <!--Required element-->
-            <ValidationKey>Lesson3Step11Validator</ValidationKey>
-            <Description>
-                <![CDATA[
+		<!--11-->
+		<Step Type="DothtmlCode">
+			<!--Required element-->
+			<Title>Add ComboBox</Title>
+			<!--Required element-->
+			<ValidationKey>Lesson3Step11Validator</ValidationKey>
+			<Description>
+				<![CDATA[
 Add to page ComboBox, attribute DataSource bind to "Countries", DisplayMember set to "Name", ValueMember set to "Id" and SelectedValue bind to "SelectedCountryId"
-                ]]>
-            </Description>
-            <!--Required element-->
-            <StartupCode>
-                <![CDATA[
+								]]>
+			</Description>
+			<!--Required element-->
+			<StartupCode>
+				<![CDATA[
 <p>
-    <dot:TextBox Text="{value: FirstName}"/>
-    <dot:TextBox Text="{value: LastName}"/>
-    <dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin"/>
-    <dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User"/>
-    <!--Here create ComboBox-->
+	<dot:TextBox Text="{value: FirstName}"/>
+	<dot:TextBox Text="{value: LastName}"/>
+	<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin"/>
+	<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User"/>
+	<!--Here create ComboBox-->
 </p>
-                ]]>
-            </StartupCode>
-            <!--Required element-->
-            <FinalCode>
-                <![CDATA[
+								]]>
+			</StartupCode>
+			<!--Required element-->
+			<FinalCode>
+				<![CDATA[
 <p>
-    <dot:TextBox Text="{value: FirstName}"/>
-    <dot:TextBox Text="{value: LastName}"/>
-    <dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin"/>
-    <dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User"/>
-    <dot:ComboBox DataSource="{value: Countries}"
-                  SelectedValue="{value: SelectedCountryId}"
-                  ValueMember="Id"
-                  DisplayMember="Name">
-    </dot:ComboBox>
+	<dot:TextBox Text="{value: FirstName}"/>
+	<dot:TextBox Text="{value: LastName}"/>
+	<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin"/>
+	<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User"/>
+	<dot:ComboBox DataSource="{value: Countries}"
+			SelectedValue="{value: SelectedCountryId}"
+			ValueMember="Id"
+			DisplayMember="Name">
+	</dot:ComboBox>
 </p>
-                ]]>
-            </FinalCode>
-        </Step>
+								]]>
+			</FinalCode>
+		</Step>
 
-        <!--12-->
-        <Step Type="Info">
-            <!--Required element-->
-            <Title>Class CustomerInfo</Title>
-            <!--Required element-->
-            <Description>
-                <![CDATA[
+		<!--12-->
+		<Step Type="Info">
+			<!--Required element-->
+			<Title>Class CustomerInfo</Title>
+			<!--Required element-->
+			<Description>
+				<![CDATA[
 To explain, we moved properties FirstName, LastName and Role to class CustomerInfo.
-                ]]>
-            </Description>
-        </Step>
+								]]>
+			</Description>
+		</Step>
 
-        <!--13-->
-        <Step Type="CsharpCode">
-            <!--Required element-->
-            <Title>Add property CustomerInfo</Title>
-            <!--Required element-->
-            <ValidationKey>Lesson3Step13Validator</ValidationKey>
-            <!--Required element-->
-            <Description>
-                <![CDATA[
+		<!--13-->
+		<Step Type="CsharpCode">
+			<!--Required element-->
+			<Title>Add property CustomerInfo</Title>
+			<!--Required element-->
+			<ValidationKey>Lesson3Step13Validator</ValidationKey>
+			<!--Required element-->
+			<Description>
+				<![CDATA[
 Add to ViewModel property NewCustomer of type CustomerInfo.
 ]]>
-            </Description>
+			</Description>
 
-            <!--Required element-->
-            <StartupCode>
-                <![CDATA[
+			<!--Required element-->
+			<StartupCode>
+				<![CDATA[
 using System.Collections.Generic;
 
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
-    public class Lesson3ViewModel 
-    {
-        public Lesson3ViewModel ()
-        {
-            Countries.Add(new CountryInfo() { Id = 1, Name = "USA" });
-            Countries.Add(new CountryInfo() { Id = 2, Name = "Canada" });
-        }
-        // add prop CustomerInfo
-        public int SelectedCountryId { get; set; }
-        public List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo> Countries { get; set; } = new List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>();
-    }
+	public class Lesson3ViewModel 
+{
+		public Lesson3ViewModel ()
+		{
+			Countries.Add(new CountryInfo() { Id = 1, Name = "USA" });
+			Countries.Add(new CountryInfo() { Id = 2, Name = "Canada" });
+		}
+		// add prop CustomerInfo
+		public int SelectedCountryId { get; set; }
+		public List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo> Countries { get; set; } = new List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>();
+	}
 }
 ]]>
-            </StartupCode>
-            <!--Required element-->
-            <FinalCode>
-                <![CDATA[
+			</StartupCode>
+			<!--Required element-->
+			<FinalCode>
+				<![CDATA[
 using System.Collections.Generic;
 
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
-    public class Lesson3ViewModel 
-    {
-        public Lesson3ViewModel ()
-        {
-            Countries.Add(new CountryInfo() { Id = 1, Name = "USA" });
-            Countries.Add(new CountryInfo() { Id = 2, Name = "Canada" });
-        }
-        public CustomerInfo NewCustomer { get; set; }
-        public int SelectedCountryId { get; set; }
-        public List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo> Countries { get; set; } = new List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>();
-    }
+	public class Lesson3ViewModel 
+	{
+		public Lesson3ViewModel ()
+		{
+			Countries.Add(new CountryInfo() { Id = 1, Name = "USA" });
+			Countries.Add(new CountryInfo() { Id = 2, Name = "Canada" });
+		}
+		public CustomerInfo NewCustomer { get; set; }
+		public int SelectedCountryId { get; set; }
+		public List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo> Countries { get; set; } = new List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>();
+	}
 }
 ]]>
-            </FinalCode>
+			</FinalCode>
 
-            <!--Optional element-->
-            <CodeDependencies>
-                <CodeDependency>
-                    <![CDATA[
+			<!--Optional element-->
+			<CodeDependencies>
+				<CodeDependency>
+					<![CDATA[
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
-    public class CountryInfo 
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-    }
+	public class CountryInfo 
+	{
+		public int Id { get; set; }
+		public string Name { get; set; }
+	}
 }
-                        ]]>
-                </CodeDependency>
-                <CodeDependency>
-                    <![CDATA[
+												]]>
+				</CodeDependency>
+				<CodeDependency>
+					<![CDATA[
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
-    public class CustomerInfo
-    {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Role { get; set; }
-    }
+	public class CustomerInfo
+	{
+		public string FirstName { get; set; }
+		public string LastName { get; set; }
+		public string Role { get; set; }
+	}
 }
-                        ]]>
-                </CodeDependency>
-            </CodeDependencies>
-            <!--Optional element-->
-            <AllowedTypesConstructed>
-                <AllowedType>
-                    <![CDATA[
+												]]>
+				</CodeDependency>
+			</CodeDependencies>
+			<!--Optional element-->
+			<AllowedTypesConstructed>
+				<AllowedType>
+					<![CDATA[
 System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>
-                        ]]>
-                </AllowedType>
-                <AllowedType>
-                    <![CDATA[
+												]]>
+				</AllowedType>
+				<AllowedType>
+					<![CDATA[
 DotvvmAcademy.Tutorial.ViewModels.CountryInfo
-                        ]]>
-                </AllowedType>
-                <AllowedType>
-                    <![CDATA[
+												]]>
+				</AllowedType>
+				<AllowedType>
+					<![CDATA[
 DotvvmAcademy.Tutorial.ViewModels.CustomerInfo
-                    ]]>
-                </AllowedType>
-            </AllowedTypesConstructed>
-            <!--Optional element-->
-            <AllowedMethodsCalled>
-                <AllowedMethod>
-                    <![CDATA[
+										]]>
+				</AllowedType>
+			</AllowedTypesConstructed>
+			<!--Optional element-->
+			<AllowedMethodsCalled>
+				<AllowedMethod>
+					<![CDATA[
 System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>.Add
-                        ]]>
-                </AllowedMethod>
-            </AllowedMethodsCalled>
-        </Step>
+												]]>
+				</AllowedMethod>
+			</AllowedMethodsCalled>
+		</Step>
 
-        <!--14-->
-        <Step Type="DothtmlCode">
-            <!--Required element-->
-            <Title>Create DataContext</Title>
-            <!--Required element-->
-            <ValidationKey>Lesson3Step14Validator</ValidationKey>
-            <Description>
-                <![CDATA[
+		<!--14-->
+		<Step Type="DothtmlCode">
+			<!--Required element-->
+			<Title>Create DataContext</Title>
+			<!--Required element-->
+			<ValidationKey>Lesson3Step14Validator</ValidationKey>
+			<Description>
+				<![CDATA[
 Wrap markup with `<div DataContext="{value: NewCustomer}">`.
-                ]]>
-            </Description>
-            <!--Optional element-->
-            <ShadowBoxDescription>
-                <![CDATA[
+								]]>
+			</Description>
+			<!--Optional element-->
+			<ShadowBoxDescription>
+				<![CDATA[
 Datacontext gets or sets a data context for the control and its children. All value and command bindings are evaluated in context of this value.
-                ]]>
-            </ShadowBoxDescription>
-            <!--Required element-->
-            <StartupCode>
-                <![CDATA[
+								]]>
+			</ShadowBoxDescription>
+			<!--Required element-->
+			<StartupCode>
+				<![CDATA[
 <!--add div-->
-    <p>
-        <dot:TextBox Text="{value: FirstName}"/>
-        <dot:TextBox Text="{value: LastName}"/>
-        <dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin"/>
-        <dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User"/>
-        <dot:ComboBox DataSource="{value: Countries}"
-                      SelectedValue="{value: SelectedCountryId}"
-                      ValueMember="Id"
-                      DisplayMember="Name">
-        </dot:ComboBox>
-    </p>
+<p>
+	<dot:TextBox Text="{value: FirstName}"/>
+	<dot:TextBox Text="{value: LastName}"/>
+	<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin"/>
+	<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User"/>
+	<dot:ComboBox DataSource="{value: Countries}"
+			SelectedValue="{value: SelectedCountryId}"
+			ValueMember="Id"
+			DisplayMember="Name">
+	</dot:ComboBox>
+</p>
 
-                ]]>
-            </StartupCode>
-            <!--Required element-->
-            <FinalCode>
-                <![CDATA[
+								]]>
+			</StartupCode>
+			<!--Required element-->
+			<FinalCode>
+				<![CDATA[
 <div DataContext="{value: NewCustomer}">
-    <p>
-        <dot:TextBox Text="{value: FirstName}"/>
-        <dot:TextBox Text="{value: LastName}"/>
-        <dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin"/>
-        <dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User"/>
-        <dot:ComboBox DataSource="{value: Countries}"
-                      SelectedValue="{value: SelectedCountryId}"
-                      ValueMember="Id"
-                      DisplayMember="Name">
-        </dot:ComboBox>
-    </p>
+	<p>
+		<dot:TextBox Text="{value: FirstName}"/>
+		<dot:TextBox Text="{value: LastName}"/>
+		<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin"/>
+		<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User"/>
+		<dot:ComboBox DataSource="{value: Countries}"
+				SelectedValue="{value: SelectedCountryId}"
+				ValueMember="Id"
+				DisplayMember="Name">
+		</dot:ComboBox>
+	</p>
 </div>
-                ]]>
-            </FinalCode>
+								]]>
+			</FinalCode>
 
-        </Step>
+		</Step>
 
 
-        <!--15-->
-        <Step Type="DothtmlCode">
-            <!--Required element-->
-            <Title>Change bind context</Title>
-            <!--Required element-->
-            <ValidationKey>Lesson3Step15Validator</ValidationKey>
-            <Description>
-                <![CDATA[
+		<!--15-->
+		<Step Type="DothtmlCode">
+			<!--Required element-->
+			<Title>Change bind context</Title>
+			<!--Required element-->
+			<ValidationKey>Lesson3Step15Validator</ValidationKey>
+			<Description>
+				<![CDATA[
 ComboBox bind property Countries, which isn`t in DataContext. Is necessary change bind to `_parent.Countries`.
-                ]]>
-            </Description>
-            <!--Optional element-->
-            <ShadowBoxDescription>
-                <![CDATA[
+								]]>
+			</Description>
+			<!--Optional element-->
+			<ShadowBoxDescription>
+				<![CDATA[
 In every context you can use `_parent`, `_this` and `_root`. `_parent` is context ViewModel of parent element, `_this` is actual ViewModel and `_root` is ViewModel of page.
-                ]]>
-            </ShadowBoxDescription>
-            <!--Required element-->
-            <StartupCode>
-                <![CDATA[
+								]]>
+			</ShadowBoxDescription>
+			<!--Required element-->
+			<StartupCode>
+				<![CDATA[
 <div DataContext="{value: NewCustomer}">
-    <p>
-        <dot:TextBox Text="{value: FirstName}"/>
-        <dot:TextBox Text="{value: LastName}"/>
-        <dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin"/>
-        <dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User"/>
-        
-        <!--change bind context-->
-        <dot:ComboBox DataSource="{value: Countries}"
-                      SelectedValue="{value: SelectedCountryId}"
-                      ValueMember="Id"
-                      DisplayMember="Name">
-        </dot:ComboBox>
-    </p>
+	<p>
+		<dot:TextBox Text="{value: FirstName}"/>
+		<dot:TextBox Text="{value: LastName}"/>
+		<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin"/>
+		<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User"/>
+				
+		<!--change bind context-->
+		<dot:ComboBox DataSource="{value: Countries}"
+				SelectedValue="{value: SelectedCountryId}"
+				ValueMember="Id"
+				DisplayMember="Name">
+		</dot:ComboBox>
+	</p>
 </div>
-                ]]>
-            </StartupCode>
-            <!--Required element-->
-            <FinalCode>
-                <![CDATA[
+								]]>
+			</StartupCode>
+			<!--Required element-->
+			<FinalCode>
+				<![CDATA[
 <div DataContext="{value: NewCustomer}">
-    <p>
-        <dot:TextBox Text="{value: FirstName}"/>
-        <dot:TextBox Text="{value: LastName}"/>
-        <dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin"/>
-        <dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User"/>
-        <dot:ComboBox DataSource="{value: _parent.Countries}"
-                      SelectedValue="{value: SelectedCountryId}"
-                      ValueMember="Id"
-                      DisplayMember="Name">
-        </dot:ComboBox>
-    </p>
+	<p>
+		<dot:TextBox Text="{value: FirstName}"/>
+		<dot:TextBox Text="{value: LastName}"/>
+		<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin"/>
+		<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User"/>
+		<dot:ComboBox DataSource="{value: _parent.Countries}"
+				SelectedValue="{value: SelectedCountryId}"
+				ValueMember="Id"
+				DisplayMember="Name">
+		</dot:ComboBox>
+	</p>
 </div>
-                ]]>
-            </FinalCode>
-            <!--16-->
-        </Step>
+								]]>
+			</FinalCode>
+			<!--16-->
+		</Step>
 
-        <Step Type="Info">
-            <Title>Congratulations</Title>
-            <Description>
-                <![CDATA[
+		<Step Type="Info">
+			<Title>Congratulations</Title>
+			<Description>
+				<![CDATA[
 You have finished the third lesson!
 
 You have learned how to use the `ComboBox` control and context of ViewModels!"
-                ]]>
-            </Description>
-            <ShadowBoxDescription/>
-        </Step>
+								]]>
+			</Description>
+			<ShadowBoxDescription />
+		</Step>
 
-    </Steps>
+	</Steps>
 
 
 </Lesson>

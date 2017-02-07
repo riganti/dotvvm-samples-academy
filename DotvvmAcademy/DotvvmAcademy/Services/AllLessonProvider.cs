@@ -5,7 +5,7 @@ namespace DotvvmAcademy.Services
 {
     public class AllLessonProvider
     {
-        public Dictionary<int, LessonBase> CreateSteps()
+        public Dictionary<int, LessonBase> CreateLessons()
         {
             var lessons = new Dictionary<int, LessonBase>
             {

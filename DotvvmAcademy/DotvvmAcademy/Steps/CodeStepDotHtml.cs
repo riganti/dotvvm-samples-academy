@@ -16,7 +16,7 @@ namespace DotvvmAcademy.Steps
     {
         public override IDotHtmlCodeValidationObject Validator { get; set; }
 
-        protected override IEnumerable<string> GetErrors()
+        protected override IEnumerable<string> GetValidationErrors()
         {
             try
             {

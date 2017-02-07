@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <Lesson>
-    <ValidatorsNamespace>DotvvmAcademy.Steps.Validation.Validators.Lesson1</ValidatorsNamespace>
-    <Steps>
-        <Step Type="Info">
-            <Title>Prerequisities</Title>
-            <Description>
-            <![CDATA[
+	<ValidatorsNamespace>DotvvmAcademy.Steps.Validation.Validators.Lesson1</ValidatorsNamespace>
+	<Steps>
+		<Step Type="Info">
+			<Title>Prerequisities</Title>
+			<Description>
+				<![CDATA[
 To build apps in DotVVM, you'll need to know these things:
 
 + **HTML and CSS** - how to write a static page, how to use CSS to define styles
 + **C# Language** - how to declare a class with properties and methods
 
 If you don't know anything, we recommend [SoloLearn](https://www.sololearn.com/Course/HTML/). They have very nice interactive tutorials for absolute beginners."
-                ]]>
-            </Description>
-        </Step>
+								]]>
+			</Description>
+		</Step>
 
-        <Step Type="Info">
-            <Title>Introduction</Title>
-            <Description>
-            <![CDATA[
+		<Step Type="Info">
+			<Title>Introduction</Title>
+			<Description>
+				<![CDATA[
 In this lesson, we'd like to create a simple calculator.
 We'll create a web page with 3 textboxes and 1 button.
 
@@ -27,167 +28,167 @@ The user can fill numbers in the first and second textbox, and when he presses t
 the sum of the numbers will appear in the third textbox.
 
 <img src="/img/lesson1_step2.gif" alt="Animation" />
-                ]]>
-            </Description>
-        </Step>
+								]]>
+			</Description>
+		</Step>
 
-        <Step Type="DothtmlCode">
-            <Title>Basic Controls</Title>
-            <ValidationKey>Lesson1Step3Validator</ValidationKey>
-            <Description>
-            <![CDATA[
+		<Step Type="DothtmlCode">
+			<Title>Basic Controls</Title>
+			<ValidationKey>Lesson1Step3Validator</ValidationKey>
+			<Description>
+				<![CDATA[
 In DotVVM, we have special controls for HTML form fields and controls.
 
 So instead of `<input type="text" />` we use `<dot:TextBox />`. Also, we have a `<dot:Button />` control which represents the button.
 
 Now, try to create a page with 3 textboxes and 1 button.
-                ]]>
-            </Description>
-            <StartupCode>
-<![CDATA[
+								]]>
+			</Description>
+			<StartupCode>
+				<![CDATA[
 <p>
-    <!-- place first textbox here -->
-    +
-    <!-- place second textbox here -->
-    =
-    <!-- place third textbox here -->
+	<!-- place first textbox here -->
+	+
+	<!-- place second textbox here -->
+	=
+	<!-- place third textbox here -->
 </p>
 <p>
-    <!-- place the button here -->
+	<!-- place the button here -->
 </p>
 ]]>
-            </StartupCode>
-            <FinalCode>
-                <![CDATA[
+			</StartupCode>
+			<FinalCode>
+				<![CDATA[
 <p>
-    <dot:TextBox />
-    +
-    <dot:TextBox />
-    =
-    <dot:TextBox />
+	<dot:TextBox />
+	+
+	<dot:TextBox />
+	=
+	<dot:TextBox />
 </p>
 <p>
-    <dot:Button />
+	<dot:Button />
 </p>
-                ]]>
-            </FinalCode>
-            <ShadowBoxDescription>
-                <![CDATA[
+								]]>
+			</FinalCode>
+			<ShadowBoxDescription>
+				<![CDATA[
 Don't forget to end the elements with `/>`. It means that the control doesn't have the end tag. In pure HTML, it is not necessary, but it is a good practice to make sure that all elements are closed.
 ]]>
-            </ShadowBoxDescription>
-        </Step>
+			</ShadowBoxDescription>
+		</Step>
 
-        <Step Type="CsharpCode">
-            <Title>ViewModel Properties</Title>
-            <ValidationKey>Lesson1Step4Validator</ValidationKey>
-            <Description>
-                <![CDATA[
+		<Step Type="CsharpCode">
+			<Title>ViewModel Properties</Title>
+			<ValidationKey>Lesson1Step4Validator</ValidationKey>
+			<Description>
+				<![CDATA[
 In DotVVM, every page has a thing called a viewmodel. It stores data from page controls, or anything in the page that is dynamic and can change when the user interacts with the page.
 
 The viewmodel is a C# class and the data are stored in public properties.
 
 Declare 3 properties – `Number1`, `Number2` and `Result`, all of them should be of type `int`.
 ]]>
-            </Description>
-            
-            <StartupCode>
-                    <![CDATA[
+			</Description>
+
+			<StartupCode>
+				<![CDATA[
 using System;
 
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
-    public class Lesson1ViewModel 
-    {
-        // declare properties here
-    }
+	public class Lesson1ViewModel 
+	{
+		// declare properties here
+	}
 }
 ]]>
-                </StartupCode>
-                <FinalCode>
-                    <![CDATA[
+			</StartupCode>
+			<FinalCode>
+				<![CDATA[
 using System;
 
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
-    public class Lesson1ViewModel 
-    {
-        public int Number1 { get; set; }
-        public int Number2 { get; set; }
-        public int Result { get; set; }
-    }
+	public class Lesson1ViewModel 
+	{
+		public int Number1 { get; set; }
+		public int Number2 { get; set; }
+		public int Result { get; set; }
+	}
 }
 ]]>
-                </FinalCode>
-                
-            <ShadowBoxDescription>
-            <![CDATA[
+			</FinalCode>
+
+			<ShadowBoxDescription>
+				<![CDATA[
 The values entered by the user will be stored in `Number1` and `Number2` properties, and we'll put the sum in the `Result` property when the user clicks the button.
 ]]>
-            </ShadowBoxDescription>
-        </Step>
-        
-        <Step Type="CsharpCode">
-            <Title>ViewModel Command</Title>
-            <ValidationKey>Lesson1Step5Validator</ValidationKey>
-            <Description>
-            <![CDATA[
+			</ShadowBoxDescription>
+		</Step>
+
+		<Step Type="CsharpCode">
+			<Title>ViewModel Command</Title>
+			<ValidationKey>Lesson1Step5Validator</ValidationKey>
+			<Description>
+				<![CDATA[
 Now we need to write a method which calculates the sum of the two numbers. This method is also declared in our viewmodel.
 
 So create a method called `Calculate` which calculates the sum of `Number1` and `Number2` and stores the result in the `Result` property.
 ]]>
-            </Description>
-            
-            <StartupCode>
-                    <![CDATA[
+			</Description>
+
+			<StartupCode>
+				<![CDATA[
 using System;
 
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
-    public class Lesson1ViewModel 
-    {
-        public int Number1 { get; set; }
-        public int Number2 { get; set; }
-        public int Result { get; set; }
+	public class Lesson1ViewModel 
+	{
+		public int Number1 { get; set; }
+		public int Number2 { get; set; }
+		public int Result { get; set; }
 
-        // declare the Calculate method here
-    }
+		// declare the Calculate method here
+	}
 }
 ]]>
-                </StartupCode>
-                <FinalCode>
-                    <![CDATA[
+			</StartupCode>
+			<FinalCode>
+				<![CDATA[
 using System;
 
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
-    public class Lesson1ViewModel 
-    {
-        public int Number1 { get; set; }
-        public int Number2 { get; set; }
-        public int Result { get; set; }
+	public class Lesson1ViewModel 
+	{
+		public int Number1 { get; set; }
+		public int Number2 { get; set; }
+		public int Result { get; set; }
 
-        public void Calculate() 
-        {
-            Result = Number1 + Number2;
-        }
-    }
+		public void Calculate() 
+		{
+			Result = Number1 + Number2;
+		}
+	}
 }
 ]]>
-                </FinalCode>
-                
-            <ShadowBoxDescription>
-            <![CDATA[
+			</FinalCode>
+
+			<ShadowBoxDescription>
+				<![CDATA[
 The method should be public and it does not return any value.
 ]]>
-            </ShadowBoxDescription>
-        </Step>
-        
-        <Step Type="DothtmlCode">
-            <Title>Data-Binding TextBoxes</Title>
-            <ValidationKey>Lesson1Step6Validator</ValidationKey>
-            <Description>
-            <![CDATA[
+			</ShadowBoxDescription>
+		</Step>
+
+		<Step Type="DothtmlCode">
+			<Title>Data-Binding TextBoxes</Title>
+			<ValidationKey>Lesson1Step6Validator</ValidationKey>
+			<Description>
+				<![CDATA[
 Now we need to connect the textboxes with properties in the viewmodel. When the user enters a value in the textbox, it will appear in the 
 viewmodel property automatically. Similarly, when you change a property value in the viewmodel, this change should be propagated in the page.
 
@@ -197,90 +198,90 @@ This mechanism is called the **data-binding**. To bind the textbox to a property
 
 Bind the textboxes to corresponding viewmodel properties.
 ]]>
-            </Description>
-            <StartupCode>
-                <![CDATA[
+			</Description>
+			<StartupCode>
+				<![CDATA[
 <p>
-    <dot:TextBox />
-    +
-    <dot:TextBox />
-    =
-    <dot:TextBox />
+	<dot:TextBox />
+	+
+	<dot:TextBox />
+	=
+	<dot:TextBox />
 </p>
 <p>
-    <dot:Button />
+	<dot:Button />
 </p>
 ]]>
-            </StartupCode>
-            <FinalCode>
-                <![CDATA[
+			</StartupCode>
+			<FinalCode>
+				<![CDATA[
 <p>
-    <dot:TextBox Text="{value: Number1}" />
-    +
-    <dot:TextBox Text="{value: Number2}" />
-    =
-    <dot:TextBox Text="{value: Result}" />
+	<dot:TextBox Text="{value: Number1}" />
+	+
+	<dot:TextBox Text="{value: Number2}" />
+	=
+	<dot:TextBox Text="{value: Result}" />
 </p>
 <p>
-    <dot:Button />
+	<dot:Button />
 </p>
-                ]]>
-            </FinalCode>
-        </Step>
-        
-        <Step Type="DothtmlCode">
-            <Title>Data-Binding Button</Title>
-            <ValidationKey>Lesson1Step7Validator</ValidationKey>
-            <Description>
-            <![CDATA[
+								]]>
+			</FinalCode>
+		</Step>
+
+		<Step Type="DothtmlCode">
+			<Title>Data-Binding Button</Title>
+			<ValidationKey>Lesson1Step7Validator</ValidationKey>
+			<Description>
+				<![CDATA[
 Now we want to connect the button to the Calculate method we have declared in one of the previous steps.
 
 We use the following syntax for command bindings: `Click="{command: Calculate()}"`.
  
 Also, we'd like to change the text on the button – it should say "Calculate!". We can use the `Text` property of the button and because this text never changes, 
 we don't have to store it in the viewmodel. We can declare it directly in DOTHTML code like this: `Text="Calculate!"`.
-                ]]>
-            </Description>
-            <StartupCode>
-                <![CDATA[
+								]]>
+			</Description>
+			<StartupCode>
+				<![CDATA[
 <p>
-    <dot:TextBox Text="{value: Number1}" />
-    +
-    <dot:TextBox Text="{value: Number2}" />
-    =
-    <dot:TextBox Text="{value: Result}" />
+	<dot:TextBox Text="{value: Number1}" />
+	+
+	<dot:TextBox Text="{value: Number2}" />
+	=
+	<dot:TextBox Text="{value: Result}" />
 </p>
 <p>
-    <dot:Button />
+	<dot:Button />
 </p>
-                ]]>
-            </StartupCode>
-            <FinalCode>
-                <![CDATA[
+								]]>
+			</StartupCode>
+			<FinalCode>
+				<![CDATA[
 <p>
-    <dot:TextBox Text="{value: Number1}" />
-    +
-    <dot:TextBox Text="{value: Number2}" />
-    =
-    <dot:TextBox Text="{value: Result}" />
+	<dot:TextBox Text="{value: Number1}" />
+	+
+	<dot:TextBox Text="{value: Number2}" />
+	=
+	<dot:TextBox Text="{value: Result}" />
 </p>
 <p>
-    <dot:Button Text="Calculate!" Click="{command: Calculate()}" />
+	<dot:Button Text="Calculate!" Click="{command: Calculate()}" />
 </p>
-            ]]>
-            </FinalCode>
-        </Step>
-        
-        <Step Type="Info">
-            <Title>Congratulations!</Title>
-            <Description>
-            <![CDATA[
+						]]>
+			</FinalCode>
+		</Step>
+
+		<Step Type="Info">
+			<Title>Congratulations!</Title>
+			<Description>
+				<![CDATA[
 **You have finished the first lesson!**
 
 You have learned how to use DotVVM controls and data-binding of properties and commands!"
-                ]]>
-            </Description>
-        </Step>
-        
-    </Steps>
+								]]>
+			</Description>
+		</Step>
+
+	</Steps>
 </Lesson>

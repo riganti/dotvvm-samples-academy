@@ -14,7 +14,7 @@ namespace DotvvmAcademy.Steps
 
         public int SelectedId { get; set; } = -1;
 
-        protected override IEnumerable<string> GetErrors()
+        protected override IEnumerable<string> GetValidationErrors()
         {
             if (SelectedId != CorrectId)
             {

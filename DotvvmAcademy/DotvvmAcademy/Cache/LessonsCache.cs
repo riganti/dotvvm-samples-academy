@@ -9,7 +9,7 @@ namespace DotvvmAcademy.Cache
         public LessonsCache()
         {
             var alp = new AllLessonProvider();
-            Set(alp.CreateSteps());
+            Set(alp.CreateLessons());
         }
 
         public Dictionary<int, LessonBase> Get()

@@ -7,13 +7,13 @@ namespace DotvvmAcademy.Steps.StepsBases
     {
         public string Validate()
         {
-            return string.Join(" ", GetErrors());
+            return string.Join(" ", GetValidationErrors());
         }
 
         public int StepIndex { get; set; }
         public string Description { get; set; }
         public string Title { get; set; }
 
-        protected abstract IEnumerable<string> GetErrors();
+        protected abstract IEnumerable<string> GetValidationErrors();
     }
 }

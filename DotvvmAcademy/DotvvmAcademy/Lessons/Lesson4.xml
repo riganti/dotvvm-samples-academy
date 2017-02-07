@@ -1,698 +1,683 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Lesson>
-    <ValidatorsNamespace>DotvvmAcademy.Steps.Validation.Validators.Lesson4</ValidatorsNamespace>
-    <Steps>
-        <!--1-->
-        <Step Type="Info">
-            <Title>Introduction</Title>
-            <Description>
-                <![CDATA[
+	<ValidatorsNamespace>DotvvmAcademy.Steps.Validation.Validators.Lesson4</ValidatorsNamespace>
+	<Steps>
+		<!--1-->
+		<Step Type="Info">
+			<Title>Introduction</Title>
+			<Description>
+				<![CDATA[
 Purpose of this lesson is understanding validation in dotVVM.
-                ]]>
-            </Description>
-        </Step>
+								]]>
+			</Description>
+		</Step>
 
-        <!--2-->
-        <Step Type="CsharpCode">
-            <!--Required element-->
-            <Title>Attribute `Required`</Title>
-            <!--Required element-->
-            <ValidationKey>Lesson4Step2Validator</ValidationKey>
-            <!--Required element-->
-            <Description>
-                <![CDATA[
+		<!--2-->
+		<Step Type="CsharpCode">
+			<!--Required element-->
+			<Title>Attribute `Required`</Title>
+			<!--Required element-->
+			<ValidationKey>Lesson4Step2Validator</ValidationKey>
+			<!--Required element-->
+			<Description>
+				<![CDATA[
 Add to ViewModel attributes `[Required]` and `[EmailAddress]`.
 ]]>
-            </Description>
-            <StartupCode>
-                <![CDATA[
+			</Description>
+			<StartupCode>
+				<![CDATA[
 using System.ComponentModel.DataAnnotations;
 
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
-    public class Lesson4ViewModel 
-    {
-        //add Required attribute
-        public string City { get; set; }
-        //add Required attribute
-        public string ZIP { get; set; }
-        //add EmailAddress attribute
-        public string Email { get; set; }
-    }
+	public class Lesson4ViewModel 
+	{
+		//add Required attribute
+		public string City { get; set; }
+		//add Required attribute
+		public string ZIP { get; set; }
+		//add EmailAddress attribute
+		public string Email { get; set; }
+	}
 }
 ]]>
-            </StartupCode>
-            <!--Required element-->
-            <FinalCode>
-                <![CDATA[
+			</StartupCode>
+			<!--Required element-->
+			<FinalCode>
+				<![CDATA[
 using System.ComponentModel.DataAnnotations;
 
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
-    public class Lesson4ViewModel 
-    {
-        [Required]
-        public string City { get; set; }
-        [Required]
-        public string ZIP { get; set; }
-        [EmailAddress]
-        public string Email { get; set; }
-    }
+	public class Lesson4ViewModel 
+	{
+		[Required]
+		public string City { get; set; }
+		[Required]
+		public string ZIP { get; set; }
+		[EmailAddress]
+		public string Email { get; set; }
+	}
 }
 ]]>
-            </FinalCode>
+			</FinalCode>
 
-            <AllowedTypesConstructed>
-                <AllowedType>
-                    <![CDATA[
+			<AllowedTypesConstructed>
+				<AllowedType>
+					<![CDATA[
 System.ComponentModel.DataAnnotations.EmailAddressAttribute
-                        ]]>
-                </AllowedType>
-                <AllowedType>
-                    <![CDATA[
+												]]>
+				</AllowedType>
+				<AllowedType>
+					<![CDATA[
 System.ComponentModel.DataAnnotations.RequiredAttribute
-                        ]]>
-                </AllowedType>
-            </AllowedTypesConstructed>
-        </Step>
+												]]>
+				</AllowedType>
+			</AllowedTypesConstructed>
+		</Step>
 
-        <!--3-->
-        <Step Type="DothtmlCode">
-            <!--Required element-->
-            <Title>Add validation context</Title>
-            <!--Required element-->
-            <ValidationKey>Lesson4Step3Validator</ValidationKey>
-            <Description>
-                <![CDATA[
+		<!--3-->
+		<Step Type="DothtmlCode">
+			<!--Required element-->
+			<Title>Add validation context</Title>
+			<!--Required element-->
+			<ValidationKey>Lesson4Step3Validator</ValidationKey>
+			<Description>
+				<![CDATA[
 To the page add `Validation.Value` to the div`s and bind for current property.
-                ]]>
-            </Description>
+								]]>
+			</Description>
 
-            <StartupCode>
-                <![CDATA[
+			<StartupCode>
+				<![CDATA[
  <!--bind div to Validator.Value for current property-->
 <div>
-    <dot:TextBox Text="{value: City}"/>
+		<dot:TextBox Text="{value: City}"/>
 </div>
  <!--bind div to Validator.Value for current property-->
 <div>
-    <dot:TextBox Text="{value: ZIP}"/>
+	<dot:TextBox Text="{value: ZIP}"/>
 </div>
  <!--bind div to Validator.Value for current property-->
 <div>
-    <dot:TextBox Text="{value: Email}"/>
+	<dot:TextBox Text="{value: Email}"/>
 </div>
-                ]]>
-            </StartupCode>
-            <!--Required element-->
-            <FinalCode>
-                <![CDATA[
+								]]>
+			</StartupCode>
+			<!--Required element-->
+			<FinalCode>
+				<![CDATA[
 <div Validator.Value="{value: City}">
-    <dot:TextBox Text="{value: City}"/>
+	<dot:TextBox Text="{value: City}"/>
 </div>
 <div Validator.Value="{value: ZIP}">
-    <dot:TextBox Text="{value: ZIP}"/>
+	<dot:TextBox Text="{value: ZIP}"/>
 </div>
 <div Validator.Value="{value: Email}">
-    <dot:TextBox Text="{value: Email}"/>
+	<dot:TextBox Text="{value: Email}"/>
 </div>
-                ]]>
-            </FinalCode>
-        </Step>
+								]]>
+			</FinalCode>
+		</Step>
 
-        <!--4-->
-        <Step Type="DothtmlCode">
-            <!--Required element-->
-            <Title>Add `Validation.InvalidCssClass`</Title>
-            <!--Required element-->
-            <ValidationKey>Lesson4Step4Validator</ValidationKey>
-            <Description>
-                <![CDATA[
+		<!--4-->
+		<Step Type="DothtmlCode">
+			<!--Required element-->
+			<Title>Add `Validation.InvalidCssClass`</Title>
+			<!--Required element-->
+			<ValidationKey>Lesson4Step4Validator</ValidationKey>
+			<Description>
+				<![CDATA[
 Add to divs `Validation.InvalidCssClass="has-error"`. In case if is validation rule violated, add into element div class "has-error".
-                ]]>
-            </Description>
+								]]>
+			</Description>
 
-            <!--Required element-->
-            <StartupCode>
-                <![CDATA[
+			<!--Required element-->
+			<StartupCode>
+				<![CDATA[
 <!--add Validator.InvalidCssClass-->
 <div Validator.Value="{value: City}">
-    <dot:TextBox Text="{value: City}"/>
+	<dot:TextBox Text="{value: City}"/>
 </div>
 <!--add Validator.InvalidCssClass-->
 <div Validator.Value="{value: ZIP}">
-    <dot:TextBox Text="{value: ZIP}"/>
+	<dot:TextBox Text="{value: ZIP}"/>
 </div>
 <!--add Validator.InvalidCssClass-->
 <div Validator.Value="{value: Email}">
-    <dot:TextBox Text="{value: Email}"/>
+	<dot:TextBox Text="{value: Email}"/>
 </div>
-                ]]>
-            </StartupCode>
-            <!--Required element-->
-            <FinalCode>
-                <![CDATA[
+								]]>
+			</StartupCode>
+			<!--Required element-->
+			<FinalCode>
+				<![CDATA[
 <div Validator.Value="{value: City}" Validator.InvalidCssClass="has-error">
-    <dot:TextBox Text="{value: City}"/>
+	<dot:TextBox Text="{value: City}"/>
 </div>
 <div Validator.Value="{value: ZIP}" Validator.InvalidCssClass="has-error">
-    <dot:TextBox Text="{value: ZIP}"/>
+	<dot:TextBox Text="{value: ZIP}"/>
 </div>
 <div Validator.Value="{value: Email}" Validator.InvalidCssClass="has-error">
-    <dot:TextBox Text="{value: Email}"/>
+	<dot:TextBox Text="{value: Email}"/>
 </div>
-                ]]>
-            </FinalCode>
+								]]>
+			</FinalCode>
 
-        </Step>
+		</Step>
 
-        <!--5-->
-        <Step Type="DothtmlCode">
-            <!--Required element-->
-            <Title>Set global `Validation.InvalidCssClass`</Title>
-            <!--Required element-->
-            <ValidationKey>Lesson4Step5Validator</ValidationKey>
-            <Description>
-                <![CDATA[
+		<!--5-->
+		<Step Type="DothtmlCode">
+			<!--Required element-->
+			<Title>Set global `Validation.InvalidCssClass`</Title>
+			<!--Required element-->
+			<ValidationKey>Lesson4Step5Validator</ValidationKey>
+			<Description>
+				<![CDATA[
 If we want set `Validator.InvalidCssClass` globally, we can simply add to parent element.  
-                ]]>
-            </Description>
+								]]>
+			</Description>
 
-            <!--Required element-->
-            <StartupCode>
-                <![CDATA[
+			<!--Required element-->
+			<StartupCode>
+				<![CDATA[
 <!--add div with Validator.InvalidCssClass-->                
-    <!--remove redutant Validator.InvalidCssClass-->
-    <div Validator.Value="{value: City}" Validator.InvalidCssClass="has-error">
-        <dot:TextBox Text="{value: City}"/>
-    </div>
-    <!--remove redutant Validator.InvalidCssClass-->
-    <div Validator.Value="{value: ZIP}" Validator.InvalidCssClass="has-error">
-        <dot:TextBox Text="{value: ZIP}"/>
-    </div>
-    <!--remove redutant Validator.InvalidCssClass-->
-    <div Validator.Value="{value: Email}" Validator.InvalidCssClass="has-error">
-        <dot:TextBox Text="{value: Email}"/>
-    </div>
+	<!--remove redutant Validator.InvalidCssClass-->
+	<div Validator.Value="{value: City}" Validator.InvalidCssClass="has-error">
+		<dot:TextBox Text="{value: City}"/>
+	</div>
+	<!--remove redutant Validator.InvalidCssClass-->
+	<div Validator.Value="{value: ZIP}" Validator.InvalidCssClass="has-error">
+		<dot:TextBox Text="{value: ZIP}"/>
+	</div>
+	<!--remove redutant Validator.InvalidCssClass-->
+	<div Validator.Value="{value: Email}" Validator.InvalidCssClass="has-error">
+		<dot:TextBox Text="{value: Email}"/>
+	</div>
 <!--don`t forget close div element-->
-                ]]>
-            </StartupCode>
-            <!--Required element-->
-            <FinalCode>
-                <![CDATA[
+								]]>
+			</StartupCode>
+			<!--Required element-->
+			<FinalCode>
+				<![CDATA[
 <div Validator.InvalidCssClass="has-error">
-    <div Validator.Value="{value: City}">
-        <dot:TextBox Text="{value: City}"/>
-    </div>
-    <div Validator.Value="{value: ZIP}">
-        <dot:TextBox Text="{value: ZIP}"/>
-    </div>
-    <div Validator.Value="{value: Email}">
-        <dot:TextBox Text="{value: Email}"/>
-    </div>
+	<div Validator.Value="{value: City}">
+		<dot:TextBox Text="{value: City}"/>
+	</div>
+	<div Validator.Value="{value: ZIP}">
+		<dot:TextBox Text="{value: ZIP}"/>
+	</div>
+	<div Validator.Value="{value: Email}">
+		<dot:TextBox Text="{value: Email}"/>
+	</div>
 </div>
-                ]]>
-            </FinalCode>
+								]]>
+			</FinalCode>
 
-        </Step>
+		</Step>
 
-        <!--6-->
-        <Step Type="Info">
-            <!--Required element-->
-            <Title>`Validator` control</Title>
-            <!--Required element-->
-            <Description>
-                <![CDATA[
-                
+		<!--6-->
+		<Step Type="Info">
+			<!--Required element-->
+			<Title>`Validator` control</Title>
+			<!--Required element-->
+			<Description>
+				<![CDATA[
+								
 There are the `ShowErrorMessageText` and `SetToolTipText` properties. If they are set, the error message generated by the `[Required]` attribute will be displayed in the `Validator` control or set as a tool tip text. 
-                
+								
 To learn more about control `Validator`, read the documentation on [DotVVM Validator docs](https://www.dotvvm.com/docs/controls/builtin/Validator/latest). 
-                ]]>
-            </Description>
-        </Step>
+								]]>
+			</Description>
+		</Step>
 
-        <!--7-->
-        <Step Type="DothtmlCode">
-            <!--Required element-->
-            <Title>Example of use Validator</Title>
-            <!--Required element-->
-            <ValidationKey>Lesson4Step7Validator</ValidationKey>
-            <Description>
-                <![CDATA[
+		<!--7-->
+		<Step Type="DothtmlCode">
+			<!--Required element-->
+			<Title>Example of use Validator</Title>
+			<!--Required element-->
+			<ValidationKey>Lesson4Step7Validator</ValidationKey>
+			<Description>
+				<![CDATA[
 If we want somewhere display the validation error, we can use control `dot:Validator` independently.
 
 Now we try Validator for Email property with ShowErrorMessageText="true".
-                ]]>
-            </Description>
-            <!--Optional element-->
-            <!--Required element-->
-            <StartupCode>
-                <![CDATA[
+								]]>
+			</Description>
+			<!--Optional element-->
+			<!--Required element-->
+			<StartupCode>
+				<![CDATA[
 <div Validator.InvalidCssClass="has-error">
-    <div Validator.Value="{value: City}">
-        <dot:TextBox Text="{value: City}"/>
-    </div>
-    <div Validator.Value="{value: ZIP}">
-        <dot:TextBox Text="{value: ZIP}"/>
-    </div>
-    <div Validator.Value="{value: Email}">
-        <dot:TextBox Text="{value: Email}"/>
-    </div>
+	<div Validator.Value="{value: City}">
+		<dot:TextBox Text="{value: City}"/>
+	</div>
+	<div Validator.Value="{value: ZIP}">
+		<dot:TextBox Text="{value: ZIP}"/>
+	</div>
+	<div Validator.Value="{value: Email}">
+		<dot:TextBox Text="{value: Email}"/>
+	</div>
 </div>
- <!--use Validator with ShowErrorMessageText on Email property-->
-                ]]>
-            </StartupCode>
-            <!--Required element-->
-            <FinalCode>
-                <![CDATA[
+<!--use Validator with ShowErrorMessageText on Email property-->
+								]]>
+			</StartupCode>
+			<!--Required element-->
+			<FinalCode>
+				<![CDATA[
 <div Validator.InvalidCssClass="has-error">
-    <div Validator.Value="{value: City}">
-        <dot:TextBox Text="{value: City}"/>
-    </div>
-    <div Validator.Value="{value: ZIP}">
-        <dot:TextBox Text="{value: ZIP}"/>
-    </div>
-    <div Validator.Value="{value: Email}">
-        <dot:TextBox Text="{value: Email}"/>
-    </div>
+	<div Validator.Value="{value: City}">
+		<dot:TextBox Text="{value: City}"/>
+	</div>
+	<div Validator.Value="{value: ZIP}">
+		<dot:TextBox Text="{value: ZIP}"/>
+	</div>
+	<div Validator.Value="{value: Email}">
+		<dot:TextBox Text="{value: Email}"/>
+	</div>
 </div>
 <dot:Validator Value="{value: Email}" ShowErrorMessageText="true"/>
-                ]]>
-            </FinalCode>
+								]]>
+			</FinalCode>
 
-        </Step>
+		</Step>
 
-        <!--8-->
-        <Step Type="DothtmlCode">
-            <!--Required element-->
-            <Title>Example of use ValidationSummary. </Title>
-            <!--Required element-->
-            <ValidationKey>Lesson4Step8Validator</ValidationKey>
-            <Description>
-                <![CDATA[
+		<!--8-->
+		<Step Type="DothtmlCode">
+			<!--Required element-->
+			<Title>Example of use ValidationSummary. </Title>
+			<!--Required element-->
+			<ValidationKey>Lesson4Step8Validator</ValidationKey>
+			<Description>
+				<![CDATA[
 At the end of form add control `<dot:ValidationSummary`. All validation errors are intercepted into this control .
-                ]]>
-            </Description>
-            <!--Required element-->
-            <StartupCode>
-                <![CDATA[
+								]]>
+			</Description>
+			<!--Required element-->
+			<StartupCode>
+				<![CDATA[
 <div Validator.InvalidCssClass="has-error">
-    <div Validator.Value="{value: City}">
-        <dot:TextBox Text="{value: City}"/>
-    </div>
-    <div Validator.Value="{value: ZIP}">
-        <dot:TextBox Text="{value: ZIP}"/>
-    </div>
-    <div Validator.Value="{value: Email}">
-        <dot:TextBox Text="{value: Email}"/>
-    </div>
+	<div Validator.Value="{value: City}">
+		<dot:TextBox Text="{value: City}"/>
+	</div>
+	<div Validator.Value="{value: ZIP}">
+		<dot:TextBox Text="{value: ZIP}"/>
+	</div>
+	<div Validator.Value="{value: Email}">
+		<dot:TextBox Text="{value: Email}"/>
+	</div>
 </div>
 <!--use ValidationSummary -->
-                ]]>
-            </StartupCode>
-            <!--Required element-->
-            <FinalCode>
-                <![CDATA[
+								]]>
+			</StartupCode>
+			<!--Required element-->
+			<FinalCode>
+				<![CDATA[
 <div Validator.InvalidCssClass="has-error">
-    <div Validator.Value="{value: City}">
-        <dot:TextBox Text="{value: City}"/>
-    </div>
-    <div Validator.Value="{value: ZIP}">
-        <dot:TextBox Text="{value: ZIP}"/>
-    </div>
-    <div Validator.Value="{value: Email}">
-        <dot:TextBox Text="{value: Email}"/>
-    </div>
+	<div Validator.Value="{value: City}">
+		<dot:TextBox Text="{value: City}"/>
+	</div>
+	<div Validator.Value="{value: ZIP}">
+		<dot:TextBox Text="{value: ZIP}"/>
+	</div>
+	<div Validator.Value="{value: Email}">
+		<dot:TextBox Text="{value: Email}"/>
+	</div>
 </div>
 <dot:ValidationSummary />
-                ]]>
-            </FinalCode>
+								]]>
+			</FinalCode>
 
-        </Step>
+		</Step>
 
-        <!--9-->
-        <Step Type="Info">
-            <!--Required element-->
-            <Title>Validate part of ViewModel</Title>
-            <!--Required element-->
-            <Description>
-                <![CDATA[
+		<!--9-->
+		<Step Type="Info">
+			<!--Required element-->
+			<Title>Validate part of ViewModel</Title>
+			<!--Required element-->
+			<Description>
+				<![CDATA[
 Sometimes is ViewModel more complex and contains complex object. In this case we can use `Validation.Target="{value: Property}"`. With this we can validate only part of ViewModel.
 If you want disable valdiation in some part, you can use `Validation.Enabled="false"`.
-                ]]>
-            </Description>
-        </Step>
+								]]>
+			</Description>
+		</Step>
 
-        <!--10-->
-        <Step Type="Info">
-            <!--Required element-->
-            <Title>Validate part of ViewModel II.</Title>
-            <!--Required element-->
-            <Description>
-                <![CDATA[
+		<!--10-->
+		<Step Type="Info">
+			<!--Required element-->
+			<Title>Validate part of ViewModel II.</Title>
+			<!--Required element-->
+			<Description>
+				<![CDATA[
 You can use properties `Validation.Target="{value: Property}"` and `Validation.Enabled="false"` direct on `<dot:Button` or any parent element.
-                ]]>
-            </Description>
-        </Step>
+								]]>
+			</Description>
+		</Step>
 
-        <!--11-->
-        <Step Type="CsharpCode">
-            <!--Required element-->
-            <Title>Add properties to ViewModel</Title>
-            <!--Required element-->
-            <ValidationKey>Lesson4Step11Validator</ValidationKey>
-            <!--Required element-->
-            <Description>
-                <![CDATA[
+		<!--11-->
+		<Step Type="CsharpCode">
+			<!--Required element-->
+			<Title>Add properties to ViewModel</Title>
+			<!--Required element-->
+			<ValidationKey>Lesson4Step11Validator</ValidationKey>
+			<!--Required element-->
+			<Description>
+				<![CDATA[
 Add properties SubscriptionFrom and SubscriptionTo of type DateTime into ViewModel.
 ]]>
-            </Description>
+			</Description>
 
-            <!--Required element-->
-            <StartupCode>
-                <![CDATA[
+			<!--Required element-->
+			<StartupCode>
+				<![CDATA[
 using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
-    public class Lesson4ViewModel 
-    {
-        [Required]
-        public string City { get; set; }
-        [Required]
-        public string ZIP { get; set; }
-        [EmailAddress]
-        public string Email { get; set; }
-        // add property SubscriptionFrom 
-        // add property SubscriptionTo  
-    }
+	public class Lesson4ViewModel 
+	{
+		[Required]
+		public string City { get; set; }
+		[Required]
+		public string ZIP { get; set; }
+		[EmailAddress]
+		public string Email { get; set; }
+		// add property SubscriptionFrom 
+		// add property SubscriptionTo  
+	}
 }
 ]]>
-            </StartupCode>
-            <!--Required element-->
-            <FinalCode>
-                <![CDATA[
+			</StartupCode>
+			<!--Required element-->
+			<FinalCode>
+				<![CDATA[
 using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
-    public class Lesson4ViewModel 
-    {
-        [Required]
-        public string City { get; set; }
-        [Required]
-        public string ZIP { get; set; }
-        [EmailAddress]
-        public string Email { get; set; }
-        public DateTime SubscriptionFrom { get; set; }
-        public DateTime SubscriptionTo { get; set; }
-    }
+	public class Lesson4ViewModel 
+	{
+		[Required]
+		public string City { get; set; }
+		[Required]
+		public string ZIP { get; set; }
+		[EmailAddress]
+		public string Email { get; set; }
+		public DateTime SubscriptionFrom { get; set; }
+		public DateTime SubscriptionTo { get; set; }
+	}
 }
 ]]>
-            </FinalCode>
+			</FinalCode>
 
-            <AllowedTypesConstructed>
-                <AllowedType>
-                    <![CDATA[
+			<AllowedTypesConstructed>
+				<AllowedType>
+					<![CDATA[
 System.ComponentModel.DataAnnotations.EmailAddressAttribute
-                        ]]>
-                </AllowedType>
-                <AllowedType>
-                    <![CDATA[
+												]]>
+				</AllowedType>
+				<AllowedType>
+					<![CDATA[
 System.ComponentModel.DataAnnotations.RequiredAttribute
-                        ]]>
-                </AllowedType>
-                <AllowedType>
-                    <![CDATA[
+												]]>
+				</AllowedType>
+				<AllowedType>
+					<![CDATA[
 System.DateTime
-                        ]]>
-                </AllowedType>
-            </AllowedTypesConstructed>
+												]]>
+				</AllowedType>
+			</AllowedTypesConstructed>
 
-            <AllowedMethodsCalled>
-                <AllowedMethod>
-                    <![CDATA[
+			<AllowedMethodsCalled>
+				<AllowedMethod>
+					<![CDATA[
 System.ComponentModel.DataAnnotations.RequiredAttribute.IsValid
-                        ]]>
-                </AllowedMethod>
-                <AllowedMethod>
-                    <![CDATA[
+												]]>
+				</AllowedMethod>
+				<AllowedMethod>
+					<![CDATA[
 System.ComponentModel.DataAnnotations.EmailAddressAttribute.IsValid
-                        ]]>
-                </AllowedMethod>
-            </AllowedMethodsCalled>
-        </Step>
+												]]>
+				</AllowedMethod>
+			</AllowedMethodsCalled>
+		</Step>
 
 
-        <!--12-->
-        <Step Type="CsharpCode">
-            <!--Required element-->
-            <Title>Implement IValidatableObject</Title>
-            <!--Required element-->
-            <ValidationKey>Lesson4Step12Validator</ValidationKey>
-            <!--Required element-->
-            <Description>
-                <![CDATA[
+		<!--12-->
+		<Step Type="CsharpCode">
+			<!--Required element-->
+			<Title>Implement IValidatableObject</Title>
+			<!--Required element-->
+			<ValidationKey>Lesson4Step12Validator</ValidationKey>
+			<!--Required element-->
+			<Description>
+				<![CDATA[
 Implement to Lesson4ViewModel interface IValidatableObject with method IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext). For now throw NotImplementedException();
 ]]>
-            </Description>
-            <!--Optional element-->
-            <StartupCode>
-                <![CDATA[
+			</Description>
+			<!--Optional element-->
+			<StartupCode>
+				<![CDATA[
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
-   // implement IValidatableObject interface
-   public class Lesson4ViewModel
-    {
-        [Required]
-        public string City { get; set; }
-        [Required]
-        public string ZIP { get; set; }
-        [EmailAddress]
-        public string Email { get; set; }
-        public DateTime SubscriptionFrom { get; set; }
-        public DateTime SubscriptionTo { get; set; }
-    }
+	// implement IValidatableObject interface
+	public class Lesson4ViewModel
+	{
+		[Required]
+		public string City { get; set; }
+		[Required]
+		public string ZIP { get; set; }
+		[EmailAddress]
+		public string Email { get; set; }
+		public DateTime SubscriptionFrom { get; set; }
+		public DateTime SubscriptionTo { get; set; }
+	}
 }
 ]]>
-            </StartupCode>
-            <!--Required element-->
-            <FinalCode>
-                <![CDATA[
+			</StartupCode>
+			<!--Required element-->
+			<FinalCode>
+				<![CDATA[
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
-    public class Lesson4ViewModel : IValidatableObject
-    {
-        [Required]
-        public string City { get; set; }
-        [Required]
-        public string ZIP { get; set; }
-        [EmailAddress]
-        public string Email { get; set; }
-        public DateTime SubscriptionFrom { get; set; }
-        public DateTime SubscriptionTo { get; set; }
-        
-        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-        {
-            throw new NotImplementedException();
-        }
-    }
+	public class Lesson4ViewModel : IValidatableObject
+	{
+		[Required]
+		public string City { get; set; }
+		[Required]
+		public string ZIP { get; set; }
+		[EmailAddress]
+		public string Email { get; set; }
+		public DateTime SubscriptionFrom { get; set; }
+		public DateTime SubscriptionTo { get; set; }
+
+		IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+		{
+			throw new NotImplementedException();
+		}
+	}
 }
 ]]>
-            </FinalCode>
+			</FinalCode>
 
-            <AllowedTypesConstructed>
-                <AllowedType>
-                    <![CDATA[
+			<AllowedTypesConstructed>
+				<AllowedType>
+					<![CDATA[
 System.ComponentModel.DataAnnotations.EmailAddressAttribute
-                        ]]>
-                </AllowedType>
-                <AllowedType>
-                    <![CDATA[
+												]]>
+				</AllowedType>
+				<AllowedType>
+					<![CDATA[
 System.ComponentModel.DataAnnotations.RequiredAttribute
-                        ]]>
-                </AllowedType>
-                <AllowedType>
-                    <![CDATA[
+												]]>
+				</AllowedType>
+				<AllowedType>
+					<![CDATA[
 System.DateTime
-                        ]]>
-                </AllowedType>
-                <AllowedType>
-                    <![CDATA[
+												]]>
+				</AllowedType>
+				<AllowedType>
+					<![CDATA[
 System.ComponentModel.DataAnnotations.IValidatableObject
-                        ]]>
-                </AllowedType> 
-                <AllowedType>
-                    <![CDATA[
+												]]>
+				</AllowedType>
+				<AllowedType>
+					<![CDATA[
 System.NotImplementedException
-                        ]]>
-                </AllowedType>
-            </AllowedTypesConstructed>
-            <AllowedMethodsCalled>
-                <AllowedMethod>
-                    <![CDATA[
+												]]>
+				</AllowedType>
+			</AllowedTypesConstructed>
+			<AllowedMethodsCalled>
+				<AllowedMethod>
+					<![CDATA[
 System.NotImplementedException
-                        ]]>
-                </AllowedMethod>
-            </AllowedMethodsCalled>
-        </Step>
+												]]>
+				</AllowedMethod>
+			</AllowedMethodsCalled>
+		</Step>
 
-        <!--13-->
-        <Step Type="CsharpCode">
-            <!--Required element-->
-            <Title>Implement IValidatableObject II.</Title>
-            <!--Required element-->
-            <ValidationKey>Lesson4Step13Validator</ValidationKey>
-            <!--Required element-->
-            <Description>
-                <![CDATA[
+		<!--13-->
+		<Step Type="CsharpCode">
+			<!--Required element-->
+			<Title>Implement IValidatableObject II.</Title>
+			<!--Required element-->
+			<ValidationKey>Lesson4Step13Validator</ValidationKey>
+			<!--Required element-->
+			<Description>
+				<![CDATA[
 Implement function Validate and add condition whitch verify that SubscriptionFrom is less that SubscriptionTo.
 ]]>
-            </Description>
-            <!--Optional element-->
-            <StartupCode>
-                <![CDATA[
+			</Description>
+			<!--Optional element-->
+			<StartupCode>
+				<![CDATA[
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
-    public class Lesson4ViewModel : IValidatableObject
-    {
-        [Required]
-        public string City { get; set; }
-        [Required]
-        public string ZIP { get; set; }
-        [EmailAddress]
-        public string Email { get; set; }
-        public DateTime SubscriptionFrom { get; set; }
-        public DateTime SubscriptionTo { get; set; }
-        
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            if (condition)
-            {
-                yield return new ValidationResult("SubscriptionFrom shold be less that SubscriptionTo!");
-            }
-        }
-    }
+	public class Lesson4ViewModel : IValidatableObject
+	{
+		[Required]
+		public string City { get; set; }
+		[Required]
+		public string ZIP { get; set; }
+		[EmailAddress]
+		public string Email { get; set; }
+		public DateTime SubscriptionFrom { get; set; }
+		public DateTime SubscriptionTo { get; set; }
+
+		public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+		{
+			var condition = true;
+			if (condition)
+			{
+				yield return new ValidationResult("SubscriptionFrom shold be less that SubscriptionTo!");
+			}
+		}
+	}
 }
 ]]>
-            </StartupCode>
-            <!--Required element-->
-            <FinalCode>
-                <![CDATA[
+			</StartupCode>
+			<!--Required element-->
+			<FinalCode>
+				<![CDATA[
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
-    public class Lesson4ViewModel : IValidatableObject
-    {
-        [Required]
-        public string City { get; set; }
-        [Required]
-        public string ZIP { get; set; }
-        [EmailAddress]
-        public string Email { get; set; }
-        public DateTime SubscriptionFrom { get; set; }
-        public DateTime SubscriptionTo { get; set; }
-        
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            if (SubscriptionFrom > SubscriptionTo)
-            {
-                yield return new ValidationResult("SubscriptionFrom shold be less that SubscriptionTo!");
-            }
-        }
-    }
+	public class Lesson4ViewModel : IValidatableObject
+	{
+		[Required]
+		public string City { get; set; }
+		[Required]
+		public string ZIP { get; set; }
+		[EmailAddress]
+		public string Email { get; set; }
+		public DateTime SubscriptionFrom { get; set; }
+		public DateTime SubscriptionTo { get; set; }
+
+		public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+		{
+			var condition = SubscriptionFrom > SubscriptionTo;
+			if (SubscriptionFrom > SubscriptionTo)
+			{
+				yield return new ValidationResult("SubscriptionFrom shold be less that SubscriptionTo!");
+			}
+		}
+	}
 }
 ]]>
-            </FinalCode>
+			</FinalCode>
 
-            
-            <!-- 
-              public  IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            var validationResults = new List<ValidationResult>();
-             if (SubscriptionFrom > SubscriptionTo)
-            {
-                validationResults.Add(new ValidationResult("SubscriptionFrom shold be less that SubscriptionTo!"));
-            }
-             // add condition and new ValdiationResult
-             return validationResults;
-        }
-            
-            
-            -->
-            
-            
-            <AllowedTypesConstructed>
-                <AllowedType>
-                    <![CDATA[
+			<AllowedTypesConstructed>
+				<AllowedType>
+					<![CDATA[
 System.ComponentModel.DataAnnotations.EmailAddressAttribute
-                        ]]>
-                </AllowedType>
-                <AllowedType>
-                    <![CDATA[
+												]]>
+				</AllowedType>
+				<AllowedType>
+					<![CDATA[
 System.ComponentModel.DataAnnotations.RequiredAttribute
-                        ]]>
-                </AllowedType>
-                <AllowedType>
-                    <![CDATA[
+												]]>
+				</AllowedType>
+				<AllowedType>
+					<![CDATA[
 System.DateTime
-                        ]]>
-                </AllowedType>
-                <AllowedType>
-                    <![CDATA[
+												]]>
+				</AllowedType>
+				<AllowedType>
+					<![CDATA[
 System.ComponentModel.DataAnnotations.IValidatableObject
-                        ]]>
-                </AllowedType>
-                <AllowedType>
-                    <![CDATA[
+												]]>
+				</AllowedType>
+				<AllowedType>
+					<![CDATA[
 System.Collections.Generic.List<System.ComponentModel.DataAnnotations.ValidationResult>
-                        ]]>
-                </AllowedType>
-                <AllowedType>
-                    <![CDATA[
+												]]>
+				</AllowedType>
+				<AllowedType>
+					<![CDATA[
 System.ComponentModel.DataAnnotations.ValidationResult
-                        ]]>
-                </AllowedType> 
-            </AllowedTypesConstructed>
-            <AllowedMethodsCalled>
-                <AllowedMethod>
-                    <![CDATA[
+												]]>
+				</AllowedType>
+			</AllowedTypesConstructed>
+			<AllowedMethodsCalled>
+				<AllowedMethod>
+					<![CDATA[
 System.Collections.Generic.List<System.ComponentModel.DataAnnotations.ValidationResult>.Add
-                        ]]>
-                </AllowedMethod>
-            </AllowedMethodsCalled>
+												]]>
+				</AllowedMethod>
+			</AllowedMethodsCalled>
 
-        </Step>
+		</Step>
 
-        <!--Required element-->
-        <Step Type="Info">
-            <Title>Congratulations</Title>
-            <Description>
-                <![CDATA[
+		<!--Required element-->
+		<Step Type="Info">
+			<Title>Congratulations</Title>
+			<Description>
+				<![CDATA[
 You have finished the fourth lesson!
 
 You have learned how to use the validation in dotVVM!"
-                ]]>
-            </Description>
-        </Step>
+								]]>
+			</Description>
+		</Step>
 
-    </Steps>
+	</Steps>
 
 </Lesson>

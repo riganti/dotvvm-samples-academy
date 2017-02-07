@@ -53,7 +53,7 @@ namespace DotvvmAcademy.Steps
             return type.GetTypeInfo().Assembly.Location;
         }
 
-        protected override IEnumerable<string> GetErrors()
+        protected override IEnumerable<string> GetValidationErrors()
         {
             try
             {

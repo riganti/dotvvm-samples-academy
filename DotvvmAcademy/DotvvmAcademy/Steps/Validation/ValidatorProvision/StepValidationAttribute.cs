@@ -2,8 +2,11 @@ using System;
 
 namespace DotvvmAcademy.Steps.Validation.ValidatorProvision
 {
-    public class StepValidationAttribute : Attribute
-    {
-        public string ValidatorKey { get; set; }
-    }
+	/// <summary>
+	/// Attribute for matching xml data and current validator.
+	/// </summary>
+	public class StepValidationAttribute : Attribute
+	{
+		public string ValidatorKey { get; set; }
+	}
 }

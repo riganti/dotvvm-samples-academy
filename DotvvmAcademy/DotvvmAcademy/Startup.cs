@@ -39,7 +39,7 @@ namespace DotvvmAcademy
 
             var cache = new LessonsCache();
             var lessonProvider = new AllLessonProvider();
-            cache.Set(lessonProvider.CreateSteps());
+            cache.Set(lessonProvider.CreateLessons());
         }
     }
 }
