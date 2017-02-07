@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace DotvvmAcademy.Steps.Validation.ValidatorProvision
 {
-	public static class ValidationExtensions
+	public static class TypeExtensions
 	{
 		public static TValue GetAttributeValue<TAttribute, TValue>(this Type type,
 			Func<TAttribute, TValue> valueSelector)

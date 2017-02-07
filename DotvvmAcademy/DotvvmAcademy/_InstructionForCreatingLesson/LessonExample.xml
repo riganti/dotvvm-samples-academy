@@ -1,112 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <Lesson>
-    <!-- namespace of all validators assigned to current lesson-->
-    <ValidatorsNamespace>DotvvmAcademy.Steps.Validation.Validators.XXXXX</ValidatorsNamespace>
-    <Steps>
-        <!--Required attribute-->
-        <Step Type="Info">
-            <!--Required element-->
-            <Title>XXXXXXX</Title>
-             <!--Required element-->
-            <Description>
-                <![CDATA[
+	<!-- namespace of all validators assigned to current lesson-->
+	<ValidatorsNamespace>DotvvmAcademy.Steps.Validation.Validators.XXXXX</ValidatorsNamespace>
+	<Steps>
+		<!--Required attribute-->
+		<Step Type="Info">
+			<!--Required element-->
+			<Title>XXXXXXX</Title>
+			<!--Required element-->
+			<Description>
+				<![CDATA[
 XXXXXX
-                ]]>
-            </Description>
-        </Step>
-        
-        <!--Required attribute-->
-        <Step Type="DothtmlCode">
-        <!--Required element-->
-            <Title>XXXXX</Title>
-             <!--Required element-->
-            <ValidationKey>XXXXX</ValidationKey>
-            <Description>
-                <![CDATA[
+								]]>
+			</Description>
+		</Step>
+
+		<!--Required attribute-->
+		<Step Type="DothtmlCode">
+			<!--Required element-->
+			<Title>XXXXX</Title>
+			<!--Required element-->
+			<ValidationKey>XXXXX</ValidationKey>
+			<Description>
+				<![CDATA[
 XXXXXX
-                ]]>
-            </Description>
-            <!--Optional element-->
-            <ShadowBoxDescription>
-                <![CDATA[
+								]]>
+			</Description>
+			<!--Optional element-->
+			<ShadowBoxDescription>
+				<![CDATA[
 XXXXXXX
-                ]]>
-            </ShadowBoxDescription>
-            <!--Required element-->
-            <StartupCode>
-                <![CDATA[
+								]]>
+			</ShadowBoxDescription>
+			<!--Required element-->
+			<StartupCode>
+				<![CDATA[
 XXXXX
-                ]]>
-            </StartupCode>
-            <!--Required element-->
-            <FinalCode>
-                <![CDATA[
+								]]>
+			</StartupCode>
+			<!--Required element-->
+			<FinalCode>
+				<![CDATA[
 XXXXXXX
-                ]]>
-            </FinalCode>
-            
-        </Step>
-         
-         <!--Required attribute-->
-        <Step Type="CsharpCode">
-            <!--Required element-->
-            <Title>XXXXXXX</Title>
-            <!--Required element-->
-            <ValidationKey>XXXXXX</ValidationKey>
-            <!--Required element-->
-            <Description>
-                <![CDATA[
-XXXXXXX
-]]>
-            </Description>
-            <!--Optional element-->
-            <ShadowBoxDescription>
-                <![CDATA[
-XXXXXXX
-]]>
-            </ShadowBoxDescription>
-            <!--Required element-->
-            <StartupCode>
-                <![CDATA[
-XXXXXXX
-]]>
-            </StartupCode>
-            <!--Required element-->
-            <FinalCode>
-                <![CDATA[
-XXXXXXX
-]]>
-            </FinalCode>
+								]]>
+			</FinalCode>
 
-            <!--Optional element-->
-            <CodeDependencies>
-                <CodeDependency>
-                    <![CDATA[
+		</Step>
+
+		<!--Required attribute-->
+		<Step Type="CsharpCode">
+			<!--Required element-->
+			<Title>XXXXXXX</Title>
+			<!--Required element-->
+			<ValidationKey>XXXXXX</ValidationKey>
+			<!--Required element-->
+			<Description>
+				<![CDATA[
 XXXXXXX
-                        ]]>
-                </CodeDependency>
-            </CodeDependencies>
-            <!--Optional element-->
-            <AllowedTypesConstructed>
-                <AllowedType>
-                      <![CDATA[
+]]>
+			</Description>
+			<!--Optional element-->
+			<ShadowBoxDescription>
+				<![CDATA[
 XXXXXXX
-                        ]]>
-                </AllowedType>
-            </AllowedTypesConstructed>
-            <!--Optional element-->
-            <AllowedMethodsCalled>
-                <AllowedMethod>
-                      <![CDATA[
+]]>
+			</ShadowBoxDescription>
+			<!--Required element-->
+			<StartupCode>
+				<![CDATA[
 XXXXXXX
-                        ]]>
-                </AllowedMethod>
-            </AllowedMethodsCalled>
-        </Step>
-        
-    </Steps>
+]]>
+			</StartupCode>
+			<!--Required element-->
+			<FinalCode>
+				<![CDATA[
+XXXXXXX
+]]>
+			</FinalCode>
+
+			<!--Optional element-->
+			<CodeDependencies>
+				<CodeDependency>
+					<![CDATA[
+XXXXXXX
+												]]>
+				</CodeDependency>
+			</CodeDependencies>
+			<!--Optional element-->
+			<AllowedTypesConstructed>
+				<AllowedType>
+					<![CDATA[
+XXXXXXX
+												]]>
+				</AllowedType>
+			</AllowedTypesConstructed>
+			<!--Optional element-->
+			<AllowedMethodsCalled>
+				<AllowedMethod>
+					<![CDATA[
+XXXXXXX
+												]]>
+				</AllowedMethod>
+			</AllowedMethodsCalled>
+		</Step>
+
+	</Steps>
 </Lesson>
-
-
-
-
