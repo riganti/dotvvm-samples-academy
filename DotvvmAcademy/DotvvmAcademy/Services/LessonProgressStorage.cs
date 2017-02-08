@@ -28,7 +28,7 @@ namespace DotvvmAcademy.Services
 			{
 				return int.Parse(parts[number - 1]);
 			}
-				
+
 			return 1;
 		}
 
@@ -36,15 +36,21 @@ namespace DotvvmAcademy.Services
 		{
 			List<int> parts;
 			if (!httpContext.Request.Cookies.TryGetValue(ProgressCookieName, out string cookie))
+			{
 				parts = Enumerable.Range(0, number).Select(p => 1).ToList();
+			}
 			else
+			{
 				parts = cookie.Split(',').Select(int.Parse).ToList();
+			}
 
 			while (number >= parts.Count)
 				parts.Add(1);
 
 			if (parts[number - 1] < step)
+			{
 				parts[number - 1] = step;
+			}
 
 			httpContext.Response.Cookies.Append(ProgressCookieName, string.Join(",", parts), new CookieOptions
 			{

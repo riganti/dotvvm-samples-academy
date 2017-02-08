@@ -18,11 +18,12 @@ namespace DotvvmAcademy.ViewModels
 		public string ErrorMessage { get; private set; }
 		public bool ContinueButtonVisible { get; set; } = true;
 		protected int CurrentStepNumber { get; set; }
+		protected int NextStepNumber => CurrentStepNumber + 1;
+
 
 		public override Task Init()
 		{
 			LoadStep();
-
 			return base.Init();
 		}
 
@@ -35,16 +36,12 @@ namespace DotvvmAcademy.ViewModels
 			var lessons = cache.Get();
 
 
-			if (lessonNumber == 1)
-				lesson = lessons.First(l => l.Key == 1).Value;
-			else if (lessonNumber == 2)
-				lesson = lessons.First(l => l.Key == 2).Value;
-			else if (lessonNumber == 3)
-				lesson = lessons.First(l => l.Key == 3).Value;
-			else if (lessonNumber == 4)
-				lesson = lessons.First(l => l.Key == 4).Value;
-			else
+			lesson = lessons.First(l => l.Key == lessonNumber).Value;
+			if (lesson == null)
+			{
 				throw new NotSupportedException();
+			}
+
 			Step = lesson.Steps.First(s => s.StepIndex == CurrentStepNumber);
 			AfterLoad();
 		}
@@ -62,13 +59,16 @@ namespace DotvvmAcademy.ViewModels
 			{
 				var validableStep = step;
 				if (Context.IsPostBack)
+				{
 					ErrorMessage = validableStep.Validate();
+				}
 			}
 
 			if (string.IsNullOrEmpty(ErrorMessage))
+			{
 				if (CurrentStepNumber < lesson.Steps.Count())
 				{
-					storage.UpdateLessonLastStep(lessonNumber, CurrentStepNumber + 1);
+					storage.UpdateLessonLastStep(lessonNumber, NextStepNumber);
 					RedirectToNextLesson();
 				}
 				else
@@ -76,11 +76,12 @@ namespace DotvvmAcademy.ViewModels
 					storage.UpdateLessonLastStep(lessonNumber, LessonProgressStorage.FinishedLessonStepNumber);
 					Context.RedirectToRoute("Default");
 				}
+			}
 		}
 
 		protected virtual void RedirectToNextLesson()
 		{
-			Context.RedirectToRoute("Lesson", new {Step = CurrentStepNumber + 1});
+			Context.RedirectToRoute("Lesson", new {Step = NextStepNumber });
 		}
 	}
 }

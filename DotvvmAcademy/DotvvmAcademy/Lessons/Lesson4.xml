@@ -613,8 +613,8 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 
 		public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
 		{
-			var condition = SubscriptionFrom > SubscriptionTo;
-			if (SubscriptionFrom > SubscriptionTo)
+			var condition = SubscriptionFrom < SubscriptionTo;
+			if (condition)
 			{
 				yield return new ValidationResult("SubscriptionFrom shold be less that SubscriptionTo!");
 			}

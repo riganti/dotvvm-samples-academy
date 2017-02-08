@@ -285,7 +285,7 @@ Create new class CountryInfo with properties Id (int) and Name (string)
 				<![CDATA[
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
-		// create class CountryInfo
+	// create class CountryInfo
 }
 ]]>
 			</StartupCode>
@@ -388,7 +388,7 @@ System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>
 			<!--Required element-->
 			<Description>
 				<![CDATA[
-In Lesson3ViewModel add parameterless ctor and add into Countries 2 states - "USA" with Id 1 and "Canada" with Id 2.
+In Lesson3ViewModel create parameterless ctor and add into Countries 2 states - "USA" with Id 1 and "Canada" with Id 2.
 ]]>
 			</Description>
 			<!--Optional element-->
@@ -503,10 +503,10 @@ Add to page ComboBox, attribute DataSource bind to "Countries", DisplayMember se
 	<dot:TextBox Text="{value: LastName}"/>
 	<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin"/>
 	<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User"/>
-	<dot:ComboBox DataSource="{value: Countries}"
-			SelectedValue="{value: SelectedCountryId}"
-			ValueMember="Id"
-			DisplayMember="Name">
+	<dot:ComboBox	DataSource="{value: Countries}"
+					SelectedValue="{value: SelectedCountryId}"
+					ValueMember="Id"
+					DisplayMember="Name">
 	</dot:ComboBox>
 </p>
 								]]>

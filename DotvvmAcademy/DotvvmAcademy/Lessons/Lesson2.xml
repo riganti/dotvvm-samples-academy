@@ -652,7 +652,7 @@ When supplying arguments to the method, you begin also in the context of `TaskDa
 		<div class="task">
 			{{value: Title}}
 			<dot:LinkButton Visible="{value: !IsCompleted}"
-					Click="{command: _parent.CompleteTask(_this)}" />
+							Click="{command: _parent.CompleteTask(_this)}" />
 		</div>
 	</dot:Repeater>
 </p>
@@ -687,7 +687,7 @@ Also note that you can use single quotes (apostrophes) instead of double quotes 
 		<div class="task">
 			{{value: Title}}
 			<dot:LinkButton Visible="{value: !IsCompleted}"
-					Click="{command: _parent.CompleteTask(_this)}" />
+							Click="{command: _parent.CompleteTask(_this)}" />
 		</div>
 	</dot:Repeater>
 </p>
@@ -704,7 +704,7 @@ Also note that you can use single quotes (apostrophes) instead of double quotes 
 		<div class="{value: IsCompleted ? 'task-completed' : 'task'}">
 			{{value: Title}}
 			<dot:LinkButton Visible="{value: !IsCompleted}"
-					Click="{command: _parent.CompleteTask(_this)}" />
+							Click="{command: _parent.CompleteTask(_this)}" />
 		</div>
 	</dot:Repeater>
 </p>

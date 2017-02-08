@@ -8,18 +8,18 @@ using DotvvmAcademy.Steps.StepsBases.Interfaces;
 namespace DotvvmAcademy.LessonXmlParser
 {
 	/// <summary>
-	/// Parser for creating lesson.
+	///     Parser for creating lesson.
 	/// </summary>
 	public class LessonXmlParser
 	{
 		/// <summary>
-		/// Parse xml file to steps.
+		///     Parse xml file to steps.
 		/// </summary>
 		/// <param name="lessonXmlRelativePath"> Relative path to lesson xml file. </param>
 		/// <returns> Collection of parsed steps for current lesson. </returns>
 		public List<IStep> ParseXmlToSteps(string lessonXmlRelativePath)
 		{
-			var xmlFileAbsolutePath = GetXmlTextRelativePath(lessonXmlRelativePath);
+			var xmlFileAbsolutePath = GetXmlTextAbsolutePath(lessonXmlRelativePath);
 			var xmlText = GetTextFromXml(xmlFileAbsolutePath);
 			var rootElement = CreateXElementFromText(xmlText);
 			var stepChildCollection = rootElement.GetChildCollection(LessonXmlElements.StepsElement,
@@ -42,7 +42,7 @@ namespace DotvvmAcademy.LessonXmlParser
 			return result;
 		}
 
-		private static string GetXmlTextRelativePath(string lessonXmlRelativePath)
+		private static string GetXmlTextAbsolutePath(string lessonXmlRelativePath)
 		{
 			return Path.Combine(Directory.GetCurrentDirectory(), lessonXmlRelativePath);
 		}
@@ -68,7 +68,7 @@ namespace DotvvmAcademy.LessonXmlParser
 			{
 				return XElement.Parse(xmlText);
 			}
-			catch (Exception)
+			catch (Exception ex)
 			{
 				//todo UI Exception
 				throw;
