@@ -99,23 +99,22 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson4
 
 		public static void ValidateStep5(ResolvedTreeRoot resolvedTreeRoot)
 		{
-			var divEnwrapException = new CodeValidationException("You shold enwrap div`s with one div");
+			var divEnwrapException = new CodeValidationException(Lesson4Texts.WrapDivsInForm);
 
-			DotHtmlCommonValidator.CheckCountOfHtmlTag(resolvedTreeRoot, "div", 1, divEnwrapException);
+			DotHtmlCommonValidator.CheckCountOfHtmlTag(resolvedTreeRoot, "form", 1, divEnwrapException);
 
-			var property = new Property("has-error", "fakeProp", ControlBindName.DivValidatorInvalidCssClass);
+			var property = new Property("has-error", "fakeProp", ControlBindName.FormValidatorInvalidCssClass);
 			DotHtmlCommonValidator.ValidatePropertyBinding(resolvedTreeRoot, property);
 
 
 			var contentNode = resolvedTreeRoot.GetDescendantControls<HtmlGenericControl>().
-				FirstOrDefault(d => d.DothtmlNode.As<DothtmlElementNode>()?.TagName == "div");
+				FirstOrDefault(d => d.DothtmlNode.As<DothtmlElementNode>()?.TagName == "form");
 
 			DotHtmlCommonValidator.CheckCountOfHtmlTag(contentNode, "div", 3);
-			var redundantInvalidCssException =
-				new CodeValidationException("You should delete Validator.InvalidCssClass=\"has-error\" from child elements");
+
+            var redundantInvalidCssException = new CodeValidationException(Lesson4Texts.ChildDivsDontNeedInvalidCssClassAnymore);
 			ValidateStep2ValidationProperties(contentNode);
-			DotHtmlCommonValidator.CheckCountOfHtmlTagWithPropertyDescriptor(contentNode, "div", 0,
-				Validator.InvalidCssClassProperty, redundantInvalidCssException);
+			DotHtmlCommonValidator.CheckCountOfHtmlTagWithPropertyDescriptor(contentNode, "div", 0, Validator.InvalidCssClassProperty, redundantInvalidCssException);
 
 			property.TargetControlBindName = ControlBindName.DivValidatorInvalidCssClassRemove;
 			DotHtmlCommonValidator.ValidatePropertyBinding(contentNode, property);

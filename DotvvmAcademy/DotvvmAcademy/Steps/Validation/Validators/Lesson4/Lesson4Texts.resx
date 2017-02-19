@@ -117,7 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AllDivsMustHaveInvalidCssClass" xml:space="preserve">
+    <value>You should add Validator.InvalidCssClass property to all div elements!</value>
+  </data>
   <data name="AttributeMissing" xml:space="preserve">
     <value>Property {0} should be {1} attribute!</value>
+  </data>
+  <data name="ChildDivsDontNeedInvalidCssClassAnymore" xml:space="preserve">
+    <value>You should delete the Validator.InvalidCssClass property from the div elements. It is set on the parent level now.</value>
+  </data>
+  <data name="IncorrectValidationRule" xml:space="preserve">
+    <value>The condition is not correct!</value>
+  </data>
+  <data name="WrapDivsInForm" xml:space="preserve">
+    <value>You should wrap the div elements with one form element!</value>
   </data>
 </root>

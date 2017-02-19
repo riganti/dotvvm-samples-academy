@@ -44,13 +44,13 @@ namespace DotvvmAcademy.ViewModels
                     Title = "Learn how validation works and <code>DataContext</code> works.",
                     ImageUrl = "/img/advanced.png"
                 },
-                new LessonDTO
-                {
-                    Number = 5,
-                    LastStep = storage.GetLessonLastStep(5),
-                    Title = "Understand <code>GridView</code> and loading data from <code>IQueryable</code>.",
-                    ImageUrl = "/img/professional.png"
-                }
+                //new LessonDTO
+                //{
+                //    Number = 5,
+                //    LastStep = storage.GetLessonLastStep(5),
+                //    Title = "Understand <code>GridView</code> and loading data from <code>IQueryable</code>.",
+                //    ImageUrl = "/img/professional.png"
+                //}
             };
 
             return base.Init();

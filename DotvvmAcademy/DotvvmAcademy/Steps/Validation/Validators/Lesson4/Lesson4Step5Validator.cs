@@ -11,7 +11,6 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson4
         public void Validate(ResolvedTreeRoot resolvedTreeRoot)
         {
             Lesson4CommonValidator.ValidateStep5(resolvedTreeRoot);
-
         }
     }
 }

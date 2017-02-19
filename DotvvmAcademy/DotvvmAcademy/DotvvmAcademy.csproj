@@ -16,6 +16,9 @@
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="dotvvm_serialized_config.json.tmp" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Update="wwwroot\**\*;Views\**\*;web.config;Controls\**\*">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
@@ -33,5 +36,54 @@
     <PackageReference Include="DotVVM" Version="1.1.0-rc3" />
     <PackageReference Include="DotVVM.AspNetCore" Version="1.1.0-rc3" />
     <PackageReference Include="DotVVM.Core" Version="1.1.0-rc3" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Steps\Validation\Validators\Lesson1\Lesson1Texts.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Lesson1Texts.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Steps\Validation\Validators\Lesson2\Lesson2Texts.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Lesson2Texts.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Steps\Validation\Validators\Lesson3\Lesson3Texts.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Lesson3Texts.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Steps\Validation\Validators\Lesson4\Lesson4Texts.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Lesson4Texts.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Steps\Validation\Validators\ValidationErrorMessages.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ValidationErrorMessages.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Steps\Validation\Validators\Lesson1\Lesson1Texts.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Lesson1Texts.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Steps\Validation\Validators\Lesson2\Lesson2Texts.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Lesson2Texts.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Steps\Validation\Validators\Lesson3\Lesson3Texts.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Lesson3Texts.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Steps\Validation\Validators\Lesson4\Lesson4Texts.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Lesson4Texts.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Steps\Validation\Validators\ValidationErrorMessages.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ValidationErrorMessages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

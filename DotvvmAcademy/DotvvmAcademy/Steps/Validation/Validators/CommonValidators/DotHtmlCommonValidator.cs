@@ -58,14 +58,6 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
                 .Select(c => c.GetValueBindingText(CheckBox.CheckedItemsProperty)));
         }
 
-
-        private static void FillLiteralValueBinding(ResolvedContentNode resolvedContentNode, ref List<string> propertyBindings)
-        {
-            propertyBindings.AddRange(resolvedContentNode.GetDescendantControls<Literal>()
-                .Select(c => c.GetValueBindingText(Literal.TextProperty))
-                .Where(l => l != null));
-        }
-
         private static void FillComboBoxDataSourceBinding(ResolvedContentNode resolvedContentNode,
             ref List<string> propertiesBindings)
         {
@@ -167,14 +159,28 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
                
             propertiesBindings.AddRange(result);
         }
+        private static void FillFormValidatorInvalidCssClassValue(ResolvedContentNode resolvedContentNode,
+            ref List<string> propertiesBindings)
+        {
+            IEnumerable<ResolvedControl> forms = GetFormsInResolvedTreeRoot(resolvedContentNode);
+            IEnumerable<string> result = forms.Select(
+                rs => rs.GetValueOrNull(Validator.InvalidCssClassProperty))
+                .Where(rs => rs != null);
+
+            propertiesBindings.AddRange(result);
+        }
 
 
         private static IEnumerable<ResolvedControl> GetDivsInResolvedTreeRoot(ResolvedContentNode resolvedContentNode)
         {
-            //resolvedTreeRoot.Content.Where(d => d.DothtmlNode.As<DothtmlElementNode>()?.TagName == "div").ToList()
-
             return resolvedContentNode.GetChildrenControls<HtmlGenericControl>()
                             .Where(d => d.DothtmlNode.As<DothtmlElementNode>()?.TagName == "div").ToList();
+        }
+
+        private static IEnumerable<ResolvedControl> GetFormsInResolvedTreeRoot(ResolvedContentNode resolvedContentNode)
+        {
+            return resolvedContentNode.GetChildrenControls<HtmlGenericControl>()
+                            .Where(d => d.DothtmlNode.As<DothtmlElementNode>()?.TagName == "form").ToList();
         }
 
         public static void CheckCountOfHtmlTagWithPropertyDescriptor(ResolvedContentNode resolvedTreeRoot, string htmlTag, int count, IPropertyDescriptor propertyDescriptor, CodeValidationException codeValidationException)
@@ -253,9 +259,6 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
                 case ControlBindName.CheckBoxCheckedItems:
                     FillCheckBoxCheckedItemsBinding(resolvedContentNode, ref propertiesBindings);
                     break;
-                case ControlBindName.LiteralValue:
-                    FillLiteralValueBinding(resolvedContentNode, ref propertiesBindings);
-                    break;
                 case ControlBindName.DivClass:
                     FillDivClassValue(resolvedContentNode, ref propertiesBindings);
                     break;
@@ -267,6 +270,9 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
                     break;
                 case ControlBindName.DivValidatorInvalidCssClass:
                     FillDivValidatorInvalidCssClassValue(resolvedContentNode, ref propertiesBindings);
+                    break;
+                case ControlBindName.FormValidatorInvalidCssClass:
+                    FillFormValidatorInvalidCssClassValue(resolvedContentNode, ref propertiesBindings);
                     break;
                 case ControlBindName.DivValidatorInvalidCssClassRemove:
                     FillDivValidatorInvalidCssClassValue(resolvedContentNode, ref propertiesBindings);
@@ -295,7 +301,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
                 if (!propertiesBindings.Contains(propertyName))
                 {
                     throw new CodeValidationException(string.Format(ValidationErrorMessages.ValueBindingError,
-                        propertyName, propertyToValidate.TargetControlBindName.ToDescriptionString()));
+                        propertyToValidate.TargetControlBindName.ToDescriptionString(), propertyName));
                 }
             }
         }

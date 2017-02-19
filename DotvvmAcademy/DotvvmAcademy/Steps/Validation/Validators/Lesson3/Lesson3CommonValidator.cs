@@ -63,7 +63,6 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson3
         {
             return new List<Property>
             {
-                new Property("SelectedCountryId", "int", ControlBindName.ComboBoxSelectedValue),
                 new Property("Countries",
                     "System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>",
                     ControlBindName.ComboBoxDataSource)

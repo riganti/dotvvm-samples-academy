@@ -28,7 +28,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson1
 
 				if (viewModel.Result != 45)
 				{
-					throw new CodeValidationException("The Calculate method calculate incorrect result!");
+					throw new CodeValidationException(Lesson1Texts.CommandResultError);
 				}
 			});
 		}

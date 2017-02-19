@@ -48,21 +48,17 @@
             <div class="row">
                 <div class="col-md-6 left">
                     <div style="display: inline-block; vertical-align: middle;">
-                        <h3>DotVVM Academy online course 2016</h3>
+                        <h3><a target="_blank" href="https://www.dotvvm.com/">www.dotvvm.com</a></h3>
                     </div>
                 </div>
                 <div class="col-md-6 right">
                     <div style="display: inline-block; vertical-align: middle;">
-                        <h3><a target="_blank" href="https://www.dotvvm.com/">www.dotvvm.com</a></h3>
-                        <a target="_blank" href="https://www.dotvvm.com/docs/latest">Documentation</a>/
-                        <a target="_blank" href="https://www.dotvvm.com/docs/tutorials/introduction/latest"> Tutorials</a>/
-                        <a target="_blank" href="https://www.dotvvm.com/docs/samples/latest"> Samples</a>
+                        <p style="padding-top: 20px">
+                            <a target="_blank" href="https://www.dotvvm.com/docs/latest">Documentation</a> |
+                            <a target="_blank" href="https://www.dotvvm.com/docs/tutorials/introduction/latest"> Tutorials</a> |
+                            <a target="_blank" href="https://www.dotvvm.com/docs/samples/latest">Samples</a>
+                        </p>
                     </div>
-                </div>
-            </div>
-            <div class="row center">
-                <div class="col-md-12">
-                    <h3>Copywrite (c) 2016 <a target="_blank" href="http://www.riganti.cz/en">RIGANTI s.r.o.</a></h3>
                 </div>
             </div>
         </div>

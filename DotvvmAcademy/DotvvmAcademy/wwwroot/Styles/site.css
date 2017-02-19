@@ -85,6 +85,7 @@ a {
     line-height: 130%;
     overflow: hidden;
     transition: border 120ms ease-in;
+    cursor: pointer;
 }
 
     .part:hover {
@@ -279,7 +280,7 @@ ol {
 .button {
     position: absolute;
     bottom: 15px;
-    right: 135px;
+    right: 25px;
     padding-top: 10px;
 }
 

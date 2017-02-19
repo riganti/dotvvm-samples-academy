@@ -169,8 +169,7 @@ namespace DotvvmAcademy.Steps.Validation
 				var emitResult = compilation.Emit(ms);
 				if (!emitResult.Success)
 				{
-					throw new CodeValidationException("The code couldn't be compiled!\r\n" +
-													  string.Join("\r\n", emitResult.Diagnostics));
+					throw new CodeValidationException("The code couldn't be compiled!\r\n" + string.Join("\r\n", emitResult.Diagnostics));
 				}
 				ms.Position = 0;
 
@@ -217,8 +216,7 @@ namespace DotvvmAcademy.Steps.Validation
 			}
 			catch (Exception ex)
 			{
-				//todo UI exception
-				throw new CodeValidationException("Bad UI exception", ex);
+				throw new CodeValidationException("Unexpected exception has occurred.", ex);
 			}
 		}
 	}

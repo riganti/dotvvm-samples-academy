@@ -28,7 +28,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson2
 
 				if (!task.IsCompleted)
 				{
-					throw new CodeValidationException("The CompleteTask() method should set the IsCompleted to true!");
+					throw new CodeValidationException(Lesson2Texts.CompleteTaskMethodError);
 				}
 			});
 		}

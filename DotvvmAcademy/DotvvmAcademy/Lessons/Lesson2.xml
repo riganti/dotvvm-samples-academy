@@ -58,7 +58,7 @@ Add the `TextBox` and the `Button` controls to the page. The button should say "
 			<Description>
 				<![CDATA[
 Now we should add a property which will represent the title of the new task. Let's name it `AddedTaskTitle`.
-Don't remember that every `TextBox` must have its property in the viewmodel, otherwise, the value entered by the user would be lost.
+Don't forgot that every `TextBox` must have its property in the viewmodel, otherwise, the value entered by the user would be lost.
 
 Also, we will need the `AddTask()` method in the viewmodel. For now, make it just empty. It should not return any value.
 ]]>
@@ -388,8 +388,8 @@ and inside the `<dot:Repeater>`, place the `<div class="task"></div>` element. I
 			<FinalCode>
 				<![CDATA[
 <p>
-		<dot:TextBox Text="{value: AddedTaskTitle}" />
-		<dot:Button Text="Add Task" Click="{command: AddTask()}" />
+	<dot:TextBox Text="{value: AddedTaskTitle}" />
+	<dot:Button Text="Add Task" Click="{command: AddTask()}" />
 </p>
 <div>
 	<dot:Repeater DataSource="{value: Tasks}">
@@ -417,8 +417,8 @@ So, render the `Title` of the task inside the `<div>`. Also, add the `<dot:LinkB
 			<StartupCode>
 				<![CDATA[
 <p>
-		<dot:TextBox Text="{value: AddedTaskTitle}" />
-		<dot:Button Text="Add Task" Click="{command: AddTask()}" />
+	<dot:TextBox Text="{value: AddedTaskTitle}" />
+	<dot:Button Text="Add Task" Click="{command: AddTask()}" />
 </p>
 <div>
 	<dot:Repeater DataSource="{value: Tasks}">
@@ -432,8 +432,8 @@ So, render the `Title` of the task inside the `<div>`. Also, add the `<dot:LinkB
 			<FinalCode>
 				<![CDATA[
 <p>
-		<dot:TextBox Text="{value: AddedTaskTitle}" />
-		<dot:Button Text="Add Task" Click="{command: AddTask()}" />
+	<dot:TextBox Text="{value: AddedTaskTitle}" />
+	<dot:Button Text="Add Task" Click="{command: AddTask()}" />
 </p>
 <div>
 	<dot:Repeater DataSource="{value: Tasks}">
@@ -469,8 +469,8 @@ Bind the `Visible` property to the `LinkButton` to the `IsCompleted` property of
 			<StartupCode>
 				<![CDATA[
 <p>
-		<dot:TextBox Text="{value: AddedTaskTitle}" />
-		<dot:Button Text="Add Task" Click="{command: AddTask()}" />
+	<dot:TextBox Text="{value: AddedTaskTitle}" />
+	<dot:Button Text="Add Task" Click="{command: AddTask()}" />
 </p>
 <div>
 	<dot:Repeater DataSource="{value: Tasks}">
@@ -485,8 +485,8 @@ Bind the `Visible` property to the `LinkButton` to the `IsCompleted` property of
 			<FinalCode>
 				<![CDATA[
 <p>
-		<dot:TextBox Text="{value: AddedTaskTitle}" />
-		<dot:Button Text="Add Task" Click="{command: AddTask()}" />
+	<dot:TextBox Text="{value: AddedTaskTitle}" />
+	<dot:Button Text="Add Task" Click="{command: AddTask()}" />
 </p>
 <div>
 	<dot:Repeater DataSource="{value: Tasks}">
@@ -628,8 +628,8 @@ When supplying arguments to the method, you begin also in the context of `TaskDa
 			<StartupCode>
 				<![CDATA[
 <p>
-		<dot:TextBox Text="{value: AddedTaskTitle}" />
-		<dot:Button Text="Add Task" Click="{command: AddTask()}" />
+	<dot:TextBox Text="{value: AddedTaskTitle}" />
+	<dot:Button Text="Add Task" Click="{command: AddTask()}" />
 </p>
 <div>
 	<dot:Repeater DataSource="{value: Tasks}">
@@ -644,8 +644,8 @@ When supplying arguments to the method, you begin also in the context of `TaskDa
 			<FinalCode>
 				<![CDATA[
 <p>
-		<dot:TextBox Text="{value: AddedTaskTitle}" />
-		<dot:Button Text="Add Task" Click="{command: AddTask()}" />
+	<dot:TextBox Text="{value: AddedTaskTitle}" />
+	<dot:Button Text="Add Task" Click="{command: AddTask()}" />
 </p>
 <div>
 	<dot:Repeater DataSource="{value: Tasks}">
@@ -679,8 +679,8 @@ Also note that you can use single quotes (apostrophes) instead of double quotes 
 			<StartupCode>
 				<![CDATA[
 <p>
-		<dot:TextBox Text="{value: AddedTaskTitle}" />
-		<dot:Button Text="Add Task" Click="{command: AddTask()}" />
+	<dot:TextBox Text="{value: AddedTaskTitle}" />
+	<dot:Button Text="Add Task" Click="{command: AddTask()}" />
 </p>
 <div>
 	<dot:Repeater DataSource="{value: Tasks}">
@@ -696,8 +696,8 @@ Also note that you can use single quotes (apostrophes) instead of double quotes 
 			<FinalCode>
 				<![CDATA[
 <p>
-		<dot:TextBox Text="{value: AddedTaskTitle}" />
-		<dot:Button Text="Add Task" Click="{command: AddTask()}" />
+	<dot:TextBox Text="{value: AddedTaskTitle}" />
+	<dot:Button Text="Add Task" Click="{command: AddTask()}" />
 </p>
 <div>
 	<dot:Repeater DataSource="{value: Tasks}">
@@ -717,9 +717,9 @@ Also note that you can use single quotes (apostrophes) instead of double quotes 
 			<Title>Congratulations</Title>
 			<Description>
 				<![CDATA[
-You have finished the second lesson!
+**You have finished the second lesson!**
 
-You have learned how to use the `Repeater` control and collections in the viewmodel!"
+You have learned how to use the `Repeater` control and collections in the viewmodel!
 								]]>
 			</Description>
 			<ShadowBoxDescription />

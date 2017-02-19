@@ -124,7 +124,7 @@
     <value>You must call the Calculate() method in the command binding!</value>
   </data>
   <data name="CommandResultError" xml:space="preserve">
-    <value>The Calculate method doesn't return a correct result!</value>
+    <value>The Calculate method does not return a correct result!</value>
   </data>
   <data name="OneButtonControlError" xml:space="preserve">
     <value>There should be 1 Button control in the page!</value>

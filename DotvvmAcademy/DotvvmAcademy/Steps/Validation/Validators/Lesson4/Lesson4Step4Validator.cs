@@ -19,7 +19,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson4
             var property = new Property("has-error","none",ControlBindName.DivValidatorInvalidCssClass);
             DotHtmlCommonValidator.ValidatePropertyBinding(resolvedTreeRoot,property);
 
-            var invalidCssException = new CodeValidationException("You should add Validator.InvalidCssClass=\"has-error\" on every div element");
+            var invalidCssException = new CodeValidationException(Lesson4Texts.AllDivsMustHaveInvalidCssClass);
             DotHtmlCommonValidator.CheckCountOfHtmlTagWithPropertyDescriptor(resolvedTreeRoot, "div",3, Validator.InvalidCssClassProperty, invalidCssException);
 
 

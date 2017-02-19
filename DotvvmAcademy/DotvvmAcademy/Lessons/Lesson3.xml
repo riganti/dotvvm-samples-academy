@@ -7,11 +7,11 @@
 		<!--1-->
 		<Step Type="Info">
 			<!--Required element-->
-			<Title>TextBox, CheckBox, RadioButton a ComboBox</Title>
+			<Title>Form Controls</Title>
 			<!--Required element-->
 			<Description>
 				<![CDATA[
-Point of this is using component `TextBox`, `CheckBox`, `RadioButton` and `ComboBox`. In this lesson we type simple form for creating customers.
+In this lesson, you'll learn how to use the `TextBox`, `CheckBox`, `RadioButton` and `ComboBox` controls. We will build a simple form with customer details.
 								]]>
 			</Description>
 		</Step>
@@ -19,13 +19,13 @@ Point of this is using component `TextBox`, `CheckBox`, `RadioButton` and `Combo
 		<!--2-->
 		<Step Type="CsharpCode">
 			<!--Required element-->
-			<Title>Create properties</Title>
+			<Title>Adding FirstName and LastName Properties</Title>
 			<!--Required element-->
 			<ValidationKey>Lesson3Step2Validator</ValidationKey>
 			<!--Required element-->
 			<Description>
 				<![CDATA[
-Add to ViewModel new string type properties FirstName and LastName.
+Declare the `FirstName` and `LastName` properties of type `string` in the following class.
 ]]>
 			</Description>
 			<!--Required element-->
@@ -35,7 +35,7 @@ using System;
 
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
-	public class Lesson2ViewModel 
+	public class Lesson3ViewModel 
 	{
 		// declare properties here
 	}
@@ -45,6 +45,8 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 			<!--Required element-->
 			<FinalCode>
 				<![CDATA[
+using System;
+
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
 	public class Lesson3ViewModel 
@@ -60,12 +62,12 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 		<!--3-->
 		<Step Type="DothtmlCode">
 			<!--Required element-->
-			<Title>Addition TextBoxes</Title>
+			<Title>Using TextBoxes</Title>
 			<!--Required element-->
 			<ValidationKey>Lesson3Step3Validator</ValidationKey>
 			<Description>
 				<![CDATA[
-Add to page 2 TextBoxes and bind on them FirstName and LastName.
+Add 2 `TextBox` controls in the page and bind their `Text` to the `FirstName` and `LastName` properties.
 								]]>
 			</Description>
 			<!--Required element-->
@@ -91,13 +93,13 @@ Add to page 2 TextBoxes and bind on them FirstName and LastName.
 		<!--4-->
 		<Step Type="CsharpCode">
 			<!--Required element-->
-			<Title>Addition Role property</Title>
+			<Title>Adding Role Property</Title>
 			<!--Required element-->
 			<ValidationKey>Lesson3Step4Validator</ValidationKey>
 			<!--Required element-->
 			<Description>
 				<![CDATA[
-Add to ViewModel new string property Role.
+Declare a `string` property called `Role` in the viewmodel.
 ]]>
 			</Description>
 
@@ -133,12 +135,18 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 		<!--5-->
 		<Step Type="DothtmlCode">
 			<!--Required element-->
-			<Title>Creating RadioButtons</Title>
+			<Title>Using RadioButtons</Title>
 			<!--Required element-->
 			<ValidationKey>Lesson3Step5Validator</ValidationKey>
 			<Description>
 				<![CDATA[
-Add to page 2 RadioButtons, set them attribute Text to "Admin" and "User", attribute CheckedValue to "A" and "U". On attribute CheckedItem bind ViewModel property Role.
+Add 2 `RadioButton` controls in the page. 
+
+The `Text` property specifies the label text for the radio button. Set the `Text` of the first one to "Admin" and the `Text` of the second one to "User".
+
+The `CheckedItem` specifies which viewmodel property be used. Set this to `Role` on both radio buttons.
+
+And finally, the `CheckedValue` specifies the value that will be stored in the `Role` property. Set the first one to "A" and the second one to "U". 
 								]]>
 			</Description>
 
@@ -148,7 +156,10 @@ Add to page 2 RadioButtons, set them attribute Text to "Admin" and "User", attri
 <p>
 	<dot:TextBox Text="{value: FirstName}"/>
 	<dot:TextBox Text="{value: LastName}"/>
-	<!-- place first RadioButton here -->
+</p>
+<p>
+ Role: 
+ <!-- place first RadioButton here -->
 	<!-- place second RadioButton here -->
 </p>
 								]]>
@@ -159,6 +170,9 @@ Add to page 2 RadioButtons, set them attribute Text to "Admin" and "User", attri
 <p>
 	<dot:TextBox Text="{value: FirstName}"/>
 	<dot:TextBox Text="{value: LastName}"/>
+</p>
+<p>
+ Role: 
 	<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin"/>
 	<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User"/>
 </p>
@@ -170,13 +184,13 @@ Add to page 2 RadioButtons, set them attribute Text to "Admin" and "User", attri
 		<!--6-->
 		<Step Type="CsharpCode">
 			<!--Required element-->
-			<Title>Addition Interests property</Title>
+			<Title>Adding Interests Property</Title>
 			<!--Required element-->
 			<ValidationKey>Lesson3Step6Validator</ValidationKey>
 			<!--Required element-->
 			<Description>
 				<![CDATA[
-Add to ViewModel new List<string> property Interests.
+Declare a property named `Interests` of type `List<string>`.
 ]]>
 			</Description>
 			<!--Required element-->
@@ -228,12 +242,17 @@ System.Collections.Generic.List<string>
 		<!--7-->
 		<Step Type="DothtmlCode">
 			<!--Required element-->
-			<Title>Add to page 3 CheckBoxes</Title>
+			<Title>Using CheckBoxes</Title>
 			<!--Required element-->
 			<ValidationKey>Lesson3Step7Validator</ValidationKey>
 			<Description>
 				<![CDATA[
-Add to page 3 CheckBoxes, bind CheckedItem to Interests, and set them attribute Text to "Music", "Sports", "News" and CheckedValue to "M", "S" a "N". 
+Add 3 `CheckBox` controls to the page. 
+Bind their `CheckedItems` property to `Interests` to specify where the checked items will be stored.
+
+Then, set the `Text` to "Music", "Sports" and "News".
+
+And finally, set `CheckedValue` to "M", "S" a "N". These values will be stored in the `Interests` collection when the corresponding checkbox is checked.
 
 								]]>
 			</Description>
@@ -243,8 +262,13 @@ Add to page 3 CheckBoxes, bind CheckedItem to Interests, and set them attribute 
 <p>
 	<dot:TextBox Text="{value: FirstName}"/>
 	<dot:TextBox Text="{value: LastName}"/>
+</p>
+<p>
+ Role: 
 	<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin"/>
 	<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User"/>
+</p>
+<p>
 	<!-- place first CheckBox here -->
 	<!-- place second CheckBox here -->
 	<!-- place third CheckBox here -->
@@ -257,11 +281,16 @@ Add to page 3 CheckBoxes, bind CheckedItem to Interests, and set them attribute 
 <p>
 	<dot:TextBox Text="{value: FirstName}"/>
 	<dot:TextBox Text="{value: LastName}"/>
+</p>
+<p>
+ Role: 
 	<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin"/>
 	<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User"/>
-	<dot:CheckBox CheckedItems="{value: Interests}" Text="Music" CheckedValue="M"></dot:CheckBox>
-	<dot:CheckBox CheckedItems="{value: Interests}" Text="Sports" CheckedValue="S"></dot:CheckBox>
-	<dot:CheckBox CheckedItems="{value: Interests}" Text="News" CheckedValue="N"></dot:CheckBox>
+</p>
+<p>
+	<dot:CheckBox CheckedItems="{value: Interests}" Text="Music" CheckedValue="M"/>
+	<dot:CheckBox CheckedItems="{value: Interests}" Text="Sports" CheckedValue="S"/>
+	<dot:CheckBox CheckedItems="{value: Interests}" Text="News" CheckedValue="N"/>
 </p>
 								]]>
 			</FinalCode>
@@ -270,13 +299,13 @@ Add to page 3 CheckBoxes, bind CheckedItem to Interests, and set them attribute 
 		<!--8-->
 		<Step Type="CsharpCode">
 			<!--Required element-->
-			<Title>Create class CountryInfo</Title>
+			<Title>Add CountryInfo Class</Title>
 			<!--Required element-->
 			<ValidationKey>Lesson3Step8Validator</ValidationKey>
 			<!--Required element-->
 			<Description>
 				<![CDATA[
-Create new class CountryInfo with properties Id (int) and Name (string)
+Create a new class called `CountryInfo` with `Id` property of type `int` and `Name` property of type `string`.
 ]]>
 			</Description>
 			<!--Optional element-->
@@ -285,7 +314,7 @@ Create new class CountryInfo with properties Id (int) and Name (string)
 				<![CDATA[
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
-	// create class CountryInfo
+	// create the CountryInfo here
 }
 ]]>
 			</StartupCode>
@@ -307,13 +336,13 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 		<!--9-->
 		<Step Type="CsharpCode">
 			<!--Required element-->
-			<Title>Add collection of Countries</Title>
+			<Title>Add the Countries Collection</Title>
 			<!--Required element-->
 			<ValidationKey>Lesson3Step9Validator</ValidationKey>
 			<!--Required element-->
 			<Description>
 				<![CDATA[
-Add to ViewModel collection Countries of type List<CountryInfo> and int property SelectedCountryId.
+Declare the `Countries` property of type `List<CountryInfo>` and `SelectedCountryId` property of type `int`.
 ]]>
 			</Description>
 			<!--Required element-->
@@ -328,8 +357,8 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
 		public string Role { get; set; }
-		//add property SelectedCountryId 
-		//add property DotvvmAcademy.Tutorial.ViewModels.CountryInfo
+		// declare Countries collection
+		// declare SelectedCountryId 
 	}
 }
 ]]>
@@ -347,7 +376,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 		public string LastName { get; set; }
 		public string Role { get; set; }
 		public int SelectedCountryId { get; set; }
-		public List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo> Countries { get; set; } = new List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>();
+		public List<CountryInfo> Countries { get; set; } = new List<CountryInfo>();
 	}
 }
 ]]>
@@ -382,13 +411,16 @@ System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>
 		<!--10-->
 		<Step Type="CsharpCode">
 			<!--Required element-->
-			<Title>Add countries</Title>
+			<Title>Initialize Countries Collection</Title>
 			<!--Required element-->
 			<ValidationKey>Lesson3Step10Validator</ValidationKey>
 			<!--Required element-->
 			<Description>
 				<![CDATA[
-In Lesson3ViewModel create parameterless ctor and add into Countries 2 states - "USA" with Id 1 and "Canada" with Id 2.
+Create a default constructor and initialize the `Countries` collection with the following states:
+
+* "USA" with `Id` = 1
+* "Canada" with `Id` = 2
 ]]>
 			</Description>
 			<!--Optional element-->
@@ -400,12 +432,16 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 {
 	public class Lesson3ViewModel 
 	{
-		// add ctor
+		public Lesson3ViewModel() 
+		{
+			// initialize the countries
+		}
+  
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
 		public string Role { get; set; }
 		public int SelectedCountryId { get; set; }
-		public List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo> Countries { get; set; } = new List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>();
+		public List<CountryInfo> Countries { get; set; } = new List<CountryInfo>();
 	}
 }
 ]]>
@@ -419,16 +455,17 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 {
 	public class Lesson3ViewModel 
 	{
-		public Lesson3ViewModel ()
+		public Lesson3ViewModel()
 		{
 			Countries.Add(new CountryInfo() { Id = 1, Name = "USA" });
 			Countries.Add(new CountryInfo() { Id = 2, Name = "Canada" });
 		}
+  
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
 		public string Role { get; set; }
 		public int SelectedCountryId { get; set; }
-		public List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo> Countries { get; set; } = new List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>();
+		public List<CountryInfo> Countries { get; set; } = new List<CountryInfo>();
 	}
 }
 ]]>
@@ -475,12 +512,18 @@ System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>.A
 		<!--11-->
 		<Step Type="DothtmlCode">
 			<!--Required element-->
-			<Title>Add ComboBox</Title>
+			<Title>Using ComboBox</Title>
 			<!--Required element-->
 			<ValidationKey>Lesson3Step11Validator</ValidationKey>
 			<Description>
 				<![CDATA[
-Add to page ComboBox, attribute DataSource bind to "Countries", DisplayMember set to "Name", ValueMember set to "Id" and SelectedValue bind to "SelectedCountryId"
+Add the `ComboBox` control to the page and bind its `DataSource` to the `Countries` collection. It will fill the combo box with the countries we have initialized in the constructor.
+
+Now we need to tell the combo box that the `Name` property from the `CountryInfo` class should be displayed. Set the `DisplayMember` to "Name". 
+
+When the user selects some item, we want to use the `Id` from the selected `CountryInfo` object as selected value. So set the `ValueMember` to "Id".
+
+And finally, we have to specify where the selected value will be stored. Bind the `SelectedValue` to the `SelectedCountryId` property in the viewmodel.
 								]]>
 			</Description>
 			<!--Required element-->
@@ -489,9 +532,19 @@ Add to page ComboBox, attribute DataSource bind to "Countries", DisplayMember se
 <p>
 	<dot:TextBox Text="{value: FirstName}"/>
 	<dot:TextBox Text="{value: LastName}"/>
+</p>
+<p>
+ Role: 
 	<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin"/>
 	<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User"/>
-	<!--Here create ComboBox-->
+</p>
+<p>
+	<dot:CheckBox CheckedItems="{value: Interests}" Text="Music" CheckedValue="M"/>
+	<dot:CheckBox CheckedItems="{value: Interests}" Text="Sports" CheckedValue="S"/>
+	<dot:CheckBox CheckedItems="{value: Interests}" Text="News" CheckedValue="N"/>
+</p>
+<p>
+ <!-- create ComboBox here -->
 </p>
 								]]>
 			</StartupCode>
@@ -501,13 +554,22 @@ Add to page ComboBox, attribute DataSource bind to "Countries", DisplayMember se
 <p>
 	<dot:TextBox Text="{value: FirstName}"/>
 	<dot:TextBox Text="{value: LastName}"/>
+</p>
+<p>
+ Role: 
 	<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin"/>
 	<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User"/>
-	<dot:ComboBox	DataSource="{value: Countries}"
-					SelectedValue="{value: SelectedCountryId}"
-					ValueMember="Id"
-					DisplayMember="Name">
-	</dot:ComboBox>
+</p>
+<p>
+	<dot:CheckBox CheckedItems="{value: Interests}" Text="Music" CheckedValue="M"/>
+	<dot:CheckBox CheckedItems="{value: Interests}" Text="Sports" CheckedValue="S"/>
+	<dot:CheckBox CheckedItems="{value: Interests}" Text="News" CheckedValue="N"/>
+</p>
+<p>
+	<dot:ComboBox DataSource="{value: Countries}"
+        SelectedValue="{value: SelectedCountryId}"
+        ValueMember="Id"
+        DisplayMember="Name" />
 </p>
 								]]>
 			</FinalCode>
@@ -516,11 +578,29 @@ Add to page ComboBox, attribute DataSource bind to "Countries", DisplayMember se
 		<!--12-->
 		<Step Type="Info">
 			<!--Required element-->
-			<Title>Class CustomerInfo</Title>
+			<Title>The CustomerInfo Class</Title>
 			<!--Required element-->
 			<Description>
 				<![CDATA[
-To explain, we moved properties FirstName, LastName and Role to class CustomerInfo.
+In the previous steps, we have placed all properties - `FirstName`, `LastName`, `Role` and `SelectedCountryId` in the same class with the `Countries` collection.
+
+That's not the best practise, because we are mixing the information about specific customer with some other data, which is e.g. the list of countries.
+It is a good idea to separate properties that represent state of some entity (customer, in this case), into a separate class. This class often contains only properties and no methods. 
+It is called DTO - Data Transfer Object.
+
+So, we have moved the properties in the `CustomerInfo` class:
+
+```CSHARP
+public class CustomerInfo
+{
+	public string FirstName { get; set; }
+	public string LastName { get; set; }
+	public string Role { get; set; }
+	public int SelectedCountryId { get; set; }
+}
+```
+
+The `Countries` collection stays in the viewmodel.
 								]]>
 			</Description>
 		</Step>
@@ -528,13 +608,13 @@ To explain, we moved properties FirstName, LastName and Role to class CustomerIn
 		<!--13-->
 		<Step Type="CsharpCode">
 			<!--Required element-->
-			<Title>Add property CustomerInfo</Title>
+			<Title>Adding CustomerInfo Property</Title>
 			<!--Required element-->
 			<ValidationKey>Lesson3Step13Validator</ValidationKey>
 			<!--Required element-->
 			<Description>
 				<![CDATA[
-Add to ViewModel property NewCustomer of type CustomerInfo.
+Declare a new property called `NewCustomer` of type `CustomerInfo`.
 ]]>
 			</Description>
 
@@ -546,14 +626,15 @@ using System.Collections.Generic;
 namespace DotvvmAcademy.Tutorial.ViewModels 
 {
 	public class Lesson3ViewModel 
-{
-		public Lesson3ViewModel ()
+	{
+		public Lesson3ViewModel()
 		{
 			Countries.Add(new CountryInfo() { Id = 1, Name = "USA" });
 			Countries.Add(new CountryInfo() { Id = 2, Name = "Canada" });
 		}
-		// add prop CustomerInfo
-		public int SelectedCountryId { get; set; }
+		
+		// add the NewCustomer property
+  
 		public List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo> Countries { get; set; } = new List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>();
 	}
 }
@@ -573,8 +654,9 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 			Countries.Add(new CountryInfo() { Id = 1, Name = "USA" });
 			Countries.Add(new CountryInfo() { Id = 2, Name = "Canada" });
 		}
+  
 		public CustomerInfo NewCustomer { get; set; }
-		public int SelectedCountryId { get; set; }
+  
 		public List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo> Countries { get; set; } = new List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>();
 	}
 }
@@ -604,6 +686,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
 		public string Role { get; set; }
+		public int SelectedCountryId { get; set; }
 	}
 }
 												]]>
@@ -640,24 +723,25 @@ System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>.A
 		<!--14-->
 		<Step Type="DothtmlCode">
 			<!--Required element-->
-			<Title>Create DataContext</Title>
+			<Title>Using DataContext Property</Title>
 			<!--Required element-->
 			<ValidationKey>Lesson3Step14Validator</ValidationKey>
 			<Description>
 				<![CDATA[
-Wrap markup with `<div DataContext="{value: NewCustomer}">`.
+Now the bindings in the page are not correct, because the viewmodel doesn't contain the `FirstName` and the other properties.
+They changed to `NewCustomer.FirstName`. 
+
+In real apps, you want to avoid the complex bindings like `NewCustomer.FirstName`. Instead, you can use the `DataContext` property. 
+You can set the property on any HTML element or DotVVM control. 
+
+This property tells DotVVM that all bindings inside this element or control are evaluated on the expression you pass to the `DataContext`.
+
+So, wrap the whole form in `<div DataContext="{value: NewCustomer}">`. You can keep the databindings inside as they are.
 								]]>
 			</Description>
-			<!--Optional element-->
-			<ShadowBoxDescription>
-				<![CDATA[
-Datacontext gets or sets a data context for the control and its children. All value and command bindings are evaluated in context of this value.
-								]]>
-			</ShadowBoxDescription>
 			<!--Required element-->
 			<StartupCode>
 				<![CDATA[
-<!--add div-->
 <p>
 	<dot:TextBox Text="{value: FirstName}"/>
 	<dot:TextBox Text="{value: LastName}"/>
@@ -690,25 +774,32 @@ Datacontext gets or sets a data context for the control and its children. All va
 </div>
 								]]>
 			</FinalCode>
-
 		</Step>
-
 
 		<!--15-->
 		<Step Type="DothtmlCode">
 			<!--Required element-->
-			<Title>Change bind context</Title>
+			<Title>Fix the ComboBox Error</Title>
 			<!--Required element-->
 			<ValidationKey>Lesson3Step15Validator</ValidationKey>
 			<Description>
 				<![CDATA[
-ComboBox bind property Countries, which isn`t in DataContext. Is necessary change bind to `_parent.Countries`.
+Now, we have an error in the code, because the `ComboBox` has the `DataSource` set to `Countries` which doesn't exists in the `NewCustomer` object
+because a list of all countries is not a part of the customer information.
+
+This collection is in the page viewmodel, so basically we need to access the parent binding context.
+
+Change the binding of the `DataSource` control to `_parent.Countries` to fix the issue.
 								]]>
 			</Description>
 			<!--Optional element-->
 			<ShadowBoxDescription>
 				<![CDATA[
-In every context you can use `_parent`, `_this` and `_root`. `_parent` is context ViewModel of parent element, `_this` is actual ViewModel and `_root` is ViewModel of page.
+In every binding expression, you can use `_parent`, `_this` and `_root` variables. 
+
+* `_parent` represents the parent binding context
+* `_this` is actual context
+* `_root` is always the viewmodel of the whole page.
 								]]>
 			</ShadowBoxDescription>
 			<!--Required element-->
@@ -721,7 +812,7 @@ In every context you can use `_parent`, `_this` and `_root`. `_parent` is contex
 		<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin"/>
 		<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User"/>
 				
-		<!--change bind context-->
+		<!--Change the DataSource binding to use the parent binding context-->
 		<dot:ComboBox DataSource="{value: Countries}"
 				SelectedValue="{value: SelectedCountryId}"
 				ValueMember="Id"
@@ -740,6 +831,7 @@ In every context you can use `_parent`, `_this` and `_root`. `_parent` is contex
 		<dot:TextBox Text="{value: LastName}"/>
 		<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin"/>
 		<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User"/>
+    
 		<dot:ComboBox DataSource="{value: _parent.Countries}"
 				SelectedValue="{value: SelectedCountryId}"
 				ValueMember="Id"
@@ -756,9 +848,9 @@ In every context you can use `_parent`, `_this` and `_root`. `_parent` is contex
 			<Title>Congratulations</Title>
 			<Description>
 				<![CDATA[
-You have finished the third lesson!
+**You have finished the third lesson!**
 
-You have learned how to use the `ComboBox` control and context of ViewModels!"
+You have learned how to use the `ComboBox` control and work with binding contexts!
 								]]>
 			</Description>
 			<ShadowBoxDescription />

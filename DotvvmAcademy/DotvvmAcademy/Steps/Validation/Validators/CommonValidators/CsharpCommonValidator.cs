@@ -47,7 +47,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
 
             if (!classDeclarations.AllInterfaces.Any(i=> i.Name == interfaceName))
             {
-                throw new CodeValidationException(string.Format("Class \"{0}\" doesnt implement interface \"{1}\"", className, interfaceName));
+                throw new CodeValidationException(string.Format(ValidationErrorMessages.ClassDoesNotImplementInterface, className, interfaceName));
             }
         }
 
@@ -76,6 +76,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
         {
             return tree.GetCompilationUnitRoot().DescendantNodes().OfType<ClassDeclarationSyntax>()
                 .Select(c => model.GetDeclaredSymbol(c))
+                .Where(c => c.DeclaredAccessibility == Accessibility.Public)
                 .ToList();
         }
 

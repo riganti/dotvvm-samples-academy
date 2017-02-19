@@ -57,13 +57,11 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson2
 				viewModel.AddTask();
 
 				if (viewModel.Tasks.Count != 1)
-					throw new CodeValidationException("The AddTask() method should add one task!");
+					throw new CodeValidationException(Lesson2Texts.AddTaskShouldAddTaskObject);
 				if (viewModel.Tasks[0].Title != "test")
-					throw new CodeValidationException(
-						"When creating a task, use the AddedTaskTitle as a title of the task!");
+					throw new CodeValidationException(Lesson2Texts.AddTaskInvalidTaskText);
 				if (viewModel.AddedTaskTitle != "")
-					throw new CodeValidationException(
-						"You need to reset the AddedTaskTitle property to an empty string after you create a task!");
+					throw new CodeValidationException(Lesson2Texts.AddTaskTitleNotReset);
 			});
 		}
 
@@ -73,11 +71,11 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson2
 			DotHtmlCommonValidator.CheckControlTypeCount<Button>(resolvedTreeRoot, 1);
 
 
-			var buttonTextBinding = resolvedTreeRoot.GetDescendantControls<Button>()
+			var buttonText = resolvedTreeRoot.GetDescendantControls<Button>()
 				.Select(c => c.GetValue(ButtonBase.TextProperty))
 				.SingleOrDefault();
 
-			if (buttonTextBinding == null)
+			if (buttonText == null)
 				throw new CodeValidationException(Lesson2Texts.ButtonDoesNotHaveText);
 		}
 

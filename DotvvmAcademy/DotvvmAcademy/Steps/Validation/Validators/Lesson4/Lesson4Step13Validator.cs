@@ -25,21 +25,21 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson4
 
 				var now = DateTime.UtcNow;
 
-				viewModel.SubscriptionFrom = now;
+				viewModel.SubscriptionFrom = now.AddDays(3);
 				viewModel.SubscriptionTo = now;
 
 				IEnumerable<ValidationResult> validationResults = viewModel.Validate(null);
-				if (validationResults.Any())
+				if (!validationResults.Any())
 				{
-					throw new CodeValidationException("Bad condition, try again.");
+					throw new CodeValidationException(Lesson4Texts.IncorrectValidationRule);
 				}
 				viewModel.SubscriptionFrom = now;
 				viewModel.SubscriptionTo = now.AddDays(5);
 
 				validationResults = viewModel.Validate(null);
-				if (!validationResults.Any())
+				if (validationResults.Any())
 				{
-					throw new CodeValidationException("Bad condition, try again.");
+					throw new CodeValidationException(Lesson4Texts.IncorrectValidationRule);
 				}
 			});
 		}

@@ -117,8 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ClassDoesNotImplementInterface" xml:space="preserve">
+    <value>The class {0} does not implement the {1} interface!</value>
+  </data>
   <data name="ClassNotFound" xml:space="preserve">
-    <value>The class {0} was not found!</value>
+    <value>The class {0} was not found! Make sure the name is correct and that the class is declared as public!</value>
   </data>
   <data name="CommandBindingExpected" xml:space="preserve">
     <value>The {0} property {1} must contain binding in the following format: {{command: Something()}}</value>
@@ -130,10 +133,10 @@
     <value>The command methods in the viewmodel must be public and must have the correct signature!</value>
   </data>
   <data name="DeleteCodeError" xml:space="preserve">
-    <value>You should delete Property "{0}" from {1}!</value>
+    <value>You should delete the {0} property from {1}!</value>
   </data>
   <data name="HtmlTagCountError" xml:space="preserve">
-    <value>There should be {0} {1} html tag in the page!</value>
+    <value>There should be {0} {1} HTML tag in the page!</value>
   </data>
   <data name="IllegalConstructorCall" xml:space="preserve">
     <value>The constructor of type {0} is not allowed!</value>
@@ -142,19 +145,22 @@
     <value>The method {0} is not allowed!</value>
   </data>
   <data name="MethodNotFound" xml:space="preserve">
-    <value>The {0} method doesn't exist!</value>
+    <value>The {0} method doesn't exist! Make sure it has the correct name and is declared as public!</value>
   </data>
   <data name="MethodWasNotCalled" xml:space="preserve">
     <value>You must call the {0} in the command binding!</value>
   </data>
   <data name="MissingPropertyError" xml:space="preserve">
-    <value>The {0} doesn't specify the {1} property!</value>
+    <value>The {0} does not specify the {1} property!</value>
   </data>
   <data name="PropertyNotFound" xml:space="preserve">
     <value>The {0} property was not found or doesn't have a correct type!</value>
   </data>
+  <data name="PropertyValueError" xml:space="preserve">
+    <value>The {0} property should contain the value '{1}'!</value>
+  </data>
   <data name="StepTypeExpected" xml:space="preserve">
-    <value>Step type {0} ins`t supported!</value>
+    <value>Step type {0} is not supported!</value>
   </data>
   <data name="TextBoxBindingsError" xml:space="preserve">
     <value>Each TextBox should bind to a different property in the viewmodel!</value>
@@ -163,7 +169,7 @@
     <value>There should be {0} {1} controls in the page!</value>
   </data>
   <data name="ValueBindingError" xml:space="preserve">
-    <value>Property "{0}" should be bind to {1}!</value>
+    <value>The {0} should be bind to {1}!</value>
   </data>
   <data name="ValueBindingExpected" xml:space="preserve">
     <value>The {0} property {1} must contain binding in the following format: {{value: Something}}</value>

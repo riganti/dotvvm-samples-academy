@@ -3,42 +3,42 @@
     //todo
     public enum ControlBindName
     {
-        [Description(Description = "control <dot:TextBox Text =\"{value: Property}\"")]
+        [Description(Description = "Text property of the TextBox")]
         TextBoxText,
-        [Description(Description = "control <dot:ComboBox DataSource=\"{value: Property}\"")]
+        [Description(Description = "DataSource property of the ComboBox")]
         ComboBoxDataSource,
-        [Description(Description = "control <dot:ComboBox SelectedValue=\"{value: Property}\"")]
+        [Description(Description = "SelectedValue property of the ComboBox")]
         ComboBoxSelectedValue,
-        [Description(Description = "control <dot:ComboBox ValueMember=\"Property\"")]
+        [Description(Description = "ValueMember property of the ComboBox")]
         ComboBoxValueMemberNotBind,
-        [Description(Description = "control <dot:ComboBox DisplayMember=\"Property\"")]
+        [Description(Description = "DisplayMember property of the ComboBox")]
         ComboBoxDisplayMemberNotBind,
-        [Description(Description = "control <dot:RadioButton CheckedItem=\"{value: Property}\"")]
+        [Description(Description = "CheckedItem property of the RadioButton")]
         RadioButtonCheckedItem,
-        [Description(Description = "control <dot:Repeater DataSource=\"{value: Property}\"")]
+        [Description(Description = "DataSource property of the Repeater")]
         RepeaterDataSource,
-        [Description(Description = "control <dot:RadioButton CheckedItem=\"{value: Role}\"")]
+        [Description(Description = "CheckedItem property of the CheckBox")]
         CheckBoxCheckedItems,
-        [Description(Description = "control Literal - {{value: Property}} in Repeater")]
+        [Description(Description = "binding inside Repeater")]
         RepeaterLiteral,
-        [Description(Description = "element <div class=\"{value: Property}\">")]
+        [Description(Description = "CSS class of the div element")]
         DivClass,
-        [Description(Description = "element <div DataContext=\"{value: Property}\"> in Repeater")]
+        [Description(Description = "DataContext property of the div element")]
         DivDataContext,
-        [Description(Description = "control <dot:Literal Value=\"{value: Property}\"")]
-        LiteralValue,
-        [Description(Description = "element <div class=\"{value: Property}\"> in Repeater")]
+        [Description(Description = "CSS class of the div element in Repeater")]
         RepeaterDivClass,
-        [Description(Description = "element <div Validator.Value=\"{value: Property}\">")]
+        [Description(Description = "Validator.Value property of the div element")]
         DivValidatorValue,
-        [Description(Description = "element <div Validator.InvalidCssClass=\"Property\">")]
+        [Description(Description = "Validator.InvalidCssClass of the div element")]
         DivValidatorInvalidCssClass,
+        [Description(Description = "Validator.InvalidCssClass of the form element")]
+        FormValidatorInvalidCssClass,
         [PreserveProperty(RemoveProperty = true)]
-        [Description(Description = "element <div Validator.InvalidCssClass=\"Property\">")]
+        [Description(Description = "Validator.InvalidCssClass of the div element")]
         DivValidatorInvalidCssClassRemove,
-        [Description(Description = "control <dot:Validator Value=\"{value: Property}\">")]
+        [Description(Description = "Value property of the Validator")]
         ValidatorValue,
-        [Description(Description = "control <dot:Validator ShowErrorMessageText=\"true\">")]
+        [Description(Description = "ShowErrorMessageText property of the Validator")]
         ValidatorShowErrorMessageText
     }
 }

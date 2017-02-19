@@ -23,12 +23,12 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson3
 				var usa = viewModel?.Countries[0];
 				if (usa == null ||  usa.Name != "USA" || usa.Id != 1)
 				{
-					throw new CodeValidationException("Property country USA dont have Id 1!");
+					throw new CodeValidationException(string.Format(Lesson3Texts.CountryInfoError, "USA", 1));
 				}
 				var canada = viewModel?.Countries[1];
 				if (canada == null || canada.Name != "Canada" || canada.Id != 2)
 				{
-					throw new CodeValidationException("Property country Canada dont have Id 2!");
+					throw new CodeValidationException(string.Format(Lesson3Texts.CountryInfoError, "Canada", 2));
 				}
 			});
 		}
