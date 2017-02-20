@@ -1,9 +1,14 @@
 using System.Linq;
+using DotvvmAcademy.Cache;
 
 namespace DotvvmAcademy.ViewModels
 {
     public class EmbeddedViewModel : LessonViewModel
     {
+        public EmbeddedViewModel(LessonsCache lessonsCache) : base(lessonsCache)
+        {
+        }
+
         protected override void AfterLoad()
         {
             if (CurrentStepNumber == lesson.Steps.Count())

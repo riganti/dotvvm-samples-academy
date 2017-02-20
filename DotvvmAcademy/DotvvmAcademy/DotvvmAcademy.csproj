@@ -16,7 +16,35 @@
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Controls\ChoicesStep.dotcontrol" />
+    <None Remove="Controls\CodeEditorButtons.dotcontrol" />
+    <None Remove="Controls\CodeStep.dotcontrol" />
+    <None Remove="Controls\DothtmlStep.dotcontrol" />
+    <None Remove="Controls\InfoStep.dotcontrol" />
     <None Remove="dotvvm_serialized_config.json.tmp" />
+    <None Remove="Lessons\Lesson1.xml" />
+    <None Remove="Lessons\Lesson2.xml" />
+    <None Remove="Lessons\Lesson3.xml" />
+    <None Remove="Lessons\Lesson4.xml" />
+    <None Remove="Views\default.dothtml" />
+    <None Remove="Views\embedded.dothtml" />
+    <None Remove="Views\lesson.dothtml" />
+    <None Remove="Views\site.dotmaster" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Controls\ChoicesStep.dotcontrol" />
+    <Content Include="Controls\CodeEditorButtons.dotcontrol" />
+    <Content Include="Controls\CodeStep.dotcontrol" />
+    <Content Include="Controls\DothtmlStep.dotcontrol" />
+    <Content Include="Controls\InfoStep.dotcontrol" />
+    <Content Include="Lessons\Lesson1.xml" />
+    <Content Include="Lessons\Lesson2.xml" />
+    <Content Include="Lessons\Lesson3.xml" />
+    <Content Include="Lessons\Lesson4.xml" />
+    <Content Include="Views\default.dothtml" />
+    <Content Include="Views\embedded.dothtml" />
+    <Content Include="Views\lesson.dothtml" />
+    <Content Include="Views\site.dotmaster" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="wwwroot\**\*;Views\**\*;web.config;Controls\**\*">

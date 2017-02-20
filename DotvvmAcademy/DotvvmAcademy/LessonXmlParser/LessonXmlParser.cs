@@ -4,6 +4,8 @@ using System.IO;
 using System.Xml.Linq;
 using DotvvmAcademy.Steps.StepBuilder;
 using DotvvmAcademy.Steps.StepsBases.Interfaces;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Hosting.Internal;
 
 namespace DotvvmAcademy.LessonXmlParser
 {
@@ -12,6 +14,13 @@ namespace DotvvmAcademy.LessonXmlParser
 	/// </summary>
 	public class LessonXmlParser
 	{
+	    private readonly IHostingEnvironment hostingEnvironment;
+
+	    public LessonXmlParser(IHostingEnvironment hostingEnvironment)
+	    {
+	        this.hostingEnvironment = hostingEnvironment;
+	    }
+
 		/// <summary>
 		///     Parse xml file to steps.
 		/// </summary>
@@ -42,9 +51,9 @@ namespace DotvvmAcademy.LessonXmlParser
 			return result;
 		}
 
-		private static string GetXmlTextAbsolutePath(string lessonXmlRelativePath)
+        private string GetXmlTextAbsolutePath(string lessonXmlRelativePath)
 		{
-			return Path.Combine(Directory.GetCurrentDirectory(), lessonXmlRelativePath);
+			return Path.Combine(hostingEnvironment.ContentRootPath, lessonXmlRelativePath);
 		}
 
 		private static string GetTextFromXml(string absolutePath)

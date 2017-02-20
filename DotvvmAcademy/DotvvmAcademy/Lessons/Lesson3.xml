@@ -158,8 +158,8 @@ And finally, the `CheckedValue` specifies the value that will be stored in the `
 	<dot:TextBox Text="{value: LastName}"/>
 </p>
 <p>
- Role: 
- <!-- place first RadioButton here -->
+	Role: 
+	<!-- place first RadioButton here -->
 	<!-- place second RadioButton here -->
 </p>
 								]]>
@@ -172,7 +172,7 @@ And finally, the `CheckedValue` specifies the value that will be stored in the `
 	<dot:TextBox Text="{value: LastName}"/>
 </p>
 <p>
- Role: 
+	Role: 
 	<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin"/>
 	<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User"/>
 </p>
@@ -264,7 +264,7 @@ And finally, set `CheckedValue` to "M", "S" a "N". These values will be stored i
 	<dot:TextBox Text="{value: LastName}"/>
 </p>
 <p>
- Role: 
+	Role: 
 	<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin"/>
 	<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User"/>
 </p>

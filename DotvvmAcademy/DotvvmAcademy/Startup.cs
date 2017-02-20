@@ -11,6 +11,13 @@ namespace DotvvmAcademy
 {
     public class Startup
     {
+        private readonly IHostingEnvironment hostingEnvironment;
+
+        public Startup(IHostingEnvironment hostingEnvironment)
+        {
+            this.hostingEnvironment = hostingEnvironment;
+        }
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDataProtection();
@@ -21,6 +28,8 @@ namespace DotvvmAcademy
             {
                 options.AddDefaultTempStorages("temp");
             });
+
+            services.AddSingleton(p => new LessonsCache(hostingEnvironment));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,10 +45,6 @@ namespace DotvvmAcademy
             {
                 FileProvider = new PhysicalFileProvider(Path.Combine(applicationPhysicalPath, "wwwroot"))
             });
-
-            var cache = new LessonsCache();
-            var lessonProvider = new AllLessonProvider();
-            cache.Set(lessonProvider.CreateLessons());
         }
     }
 }

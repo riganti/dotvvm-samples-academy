@@ -1,25 +1,21 @@
 ﻿using System.Collections.Generic;
 using DotvvmAcademy.Lessons;
 using DotvvmAcademy.Services;
+using Microsoft.AspNetCore.Hosting;
 
 namespace DotvvmAcademy.Cache
 {
     public class LessonsCache : KeyValueItemCacheBase<Dictionary<int, LessonBase>>
     {
-        public LessonsCache()
+        public LessonsCache(IHostingEnvironment hostingEnvironment)
         {
-            var alp = new AllLessonProvider();
-            Set(alp.CreateLessons());
+            var provider = new AllLessonProvider(hostingEnvironment);
+            SetValue<LessonBase>(provider.CreateLessons());
         }
 
         public Dictionary<int, LessonBase> Get()
         {
             return GetValue<LessonBase>();
-        }
-
-        public void Set(Dictionary<int, LessonBase> value)
-        {
-            SetValue<LessonBase>(value);
         }
     }
 }

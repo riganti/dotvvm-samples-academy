@@ -12,13 +12,21 @@ namespace DotvvmAcademy.ViewModels
 {
 	public class LessonViewModel : SiteViewModel
 	{
-		protected LessonBase lesson;
+	    private readonly LessonsCache lessonsCache;
+
+	    protected LessonBase lesson;
 		protected int lessonNumber;
+
 		public IStep Step { get; set; }
 		public string ErrorMessage { get; private set; }
 		public bool ContinueButtonVisible { get; set; } = true;
 		protected int CurrentStepNumber { get; set; }
 		protected int NextStepNumber => CurrentStepNumber + 1;
+
+	    public LessonViewModel(LessonsCache lessonsCache)
+	    {
+	        this.lessonsCache = lessonsCache;
+	    }
 
 
 		public override Task Init()
@@ -32,9 +40,7 @@ namespace DotvvmAcademy.ViewModels
 			lessonNumber = Convert.ToInt32(Context.Parameters["Lesson"]);
 			CurrentStepNumber = Convert.ToInt32(Context.Parameters["Step"]);
 
-			var cache = new LessonsCache();
-			var lessons = cache.Get();
-
+			var lessons = lessonsCache.Get();
 
 			lesson = lessons.First(l => l.Key == lessonNumber).Value;
 			if (lesson == null)
