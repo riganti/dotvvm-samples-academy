@@ -170,7 +170,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The {0} property was not found or doesn&apos;t have a correct type!.
+        ///   Looks up a localized string similar to The {0} property was not found! Make sure it has the correct name, correct type and is declared as public!.
         /// </summary>
         public static string PropertyNotFound {
             get {

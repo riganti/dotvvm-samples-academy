@@ -154,7 +154,7 @@
     <value>The {0} does not specify the {1} property!</value>
   </data>
   <data name="PropertyNotFound" xml:space="preserve">
-    <value>The {0} property was not found or doesn't have a correct type!</value>
+    <value>The {0} property was not found! Make sure it has the correct name, correct type and is declared as public!</value>
   </data>
   <data name="PropertyValueError" xml:space="preserve">
     <value>The {0} property should contain the value '{1}'!</value>

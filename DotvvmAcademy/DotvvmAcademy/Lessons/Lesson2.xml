@@ -461,9 +461,9 @@ The `LinkButton` control works the same way as the `Button`, but it renders a hy
 				<![CDATA[
 The LinkButton should be visible only for tasks which are not completed.
 
-In DotVVM, there is the `Visible` property which can show or hide content. 
+In DotVVM, there is the `Visible` property which you can use on any HTML element or DotVVM control. It can show or hide the element. 
 
-Bind the `Visible` property to the `LinkButton` to the `IsCompleted` property of the task. Use the `!` operator to negate the value of `IsCompleted`.
+Bind the `IsCompleted` property value from the task to the `Visible` property of the `LinkButton`, so the button is hidden when the task is completed.
 								]]>
 			</Description>
 			<StartupCode>
@@ -513,9 +513,9 @@ Please note that the `Visible` property can be used also on any HTML element.
 				<![CDATA[
 When the user clicks the `LinkButton`, we need to trigger a method in the viewmodel.
 
-The method needs to know, on which task it has been executed. We can supply it the task as a parameter.
+The method needs to know, on which task it has been executed. We can supply the task to the method as a parameter.
 
-Declare the `CompleteTask` method which accepts one parameter of type `TaskData` and sets it `IsCompleted` property to `true`.
+Declare the `CompleteTask` method which accepts one parameter of type `TaskData`, and sets its `IsCompleted` property to `true`.
 ]]>
 			</Description>
 
@@ -620,7 +620,7 @@ Now we need to set the `Click` property of the link button to the `CompleteTask`
 Please note that all bindings inside `Repeater` are not evaluated on viewmodel, but on the corresponding `TaskData` object.
 But the `CompleteTask` method is in the parent scope - we have declared it in the viewmodel. 
 
-You can use the `_parent.CompleteTask` to reference the method from the parent scope.
+You can use the `_parent.CompleteTask()` to reference the method from the parent scope.
 When supplying arguments to the method, you begin also in the context of `TaskData`, so you can use `_this` to pass the whole
 `TaskData` object to the method.
 								]]>
