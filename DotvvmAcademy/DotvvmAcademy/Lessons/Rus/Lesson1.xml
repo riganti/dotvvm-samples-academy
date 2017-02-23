@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Lesson>
+	<ValidatorsNamespace>DotvvmAcademy.Steps.Validation.Validators.Lesson1</ValidatorsNamespace>
+	<Steps>
+		<Step Type="Info">
+			<Title>Prerequisites</Title>
+			<Description>
+				<![CDATA[
+Для создания приложений в DotVVM, вы должны знать следующие вещи:
+
++ **HTML and CSS** - как писать статические страницы, как использовать CSS для определения стилей
++ **C# Language** - как объявить класс со свойствами и методами
+
+Если вы не знаете ничего из выше перечисленного, мы рекомендуем [SoloLearn](https://www.sololearn.com/Course/HTML/). У них есть очень хорошие интерактивные обучающие программы для начинающих."
+								]]>
+			</Description>
+		</Step>
+
+		<Step Type="Info">
+			<Title>Introduction</Title>
+			<Description>
+				<![CDATA[
+В этом уроке, мы создадим простой калькулятор.
+Мы создадим веб-страницу с 3 текстовыми полями и 1 кнопкой.
+
+Пользователь может заполнить числами первое и второе текстовое поле, и, когда он нажмет на кнопку,
+сумма чисел появится в третьем текстовом поле.
+
+<img src="/img/lesson1_step2.gif" alt="Animation" />
+								]]>
+			</Description>
+		</Step>
+
+		<Step Type="DothtmlCode">
+			<Title>Basic Controls</Title>
+			<ValidationKey>Lesson1Step3Validator</ValidationKey>
+			<Description>
+				<![CDATA[
+В DotVVM, есть специальные элементы управления для HTML полей, форм и элементов управления.
+
+Таким образом, вместо `<input type="text" />` мы используем `<dot:TextBox />`. Кроме того, у нас есть `<dot:Button />` для создания кнопки.
+
+Now, try to create a page with 3 textboxes and 1 button.
+Теперь попробуйте создать страницу с 3 текстовыми полями и 1 кнопкой.
+								]]>
+			</Description>
+			<StartupCode>
+				<![CDATA[
+<p>
+	<!-- разместите Первое текстовое поле здесь -->
+	+
+	<!-- разместите Второе текстовое поле здесь -->
+	=
+	<!-- разместите Третье текстовое поле здесь -->
+</p>
+<p>
+	<!-- разместите Кнопку здесь -->
+</p>
+]]>
+			</StartupCode>
+			<FinalCode>
+				<![CDATA[
+<p>
+	<dot:TextBox />
+	+
+	<dot:TextBox />
+	=
+	<dot:TextBox />
+</p>
+<p>
+	<dot:Button />
+</p>
+								]]>
+			</FinalCode>
+			<ShadowBoxDescription>
+				<![CDATA[
+Не забудьте `/>` в конце каждого элемента управления. 
+]]>
+			</ShadowBoxDescription>
+		</Step>
+
+		<Step Type="CsharpCode">
+			<Title>ViewModel Properties</Title>
+			<ValidationKey>Lesson1Step4Validator</ValidationKey>
+			<Description>
+				<![CDATA[
+В DotVVM, каждая страница имеет объект ViewModel. Он хранит данные из элементов управления страницы, или чего-нибудь на странице, что является динамическим и может измениться, когда пользователь взаимодействует со страницей.
+
+ViewModel это класс C# и данные хранятся в публичных свойствах.
+
+Объявите 3 свойства – `Number1`, `Number2` и `Result`, все они должны быть типа `int`.
+]]>
+			</Description>
+
+			<StartupCode>
+				<![CDATA[
+using System;
+
+namespace DotvvmAcademy.Tutorial.ViewModels 
+{
+	public class Lesson1ViewModel 
+	{
+		// объявите свойства здесь
+	}
+}
+]]>
+			</StartupCode>
+			<FinalCode>
+				<![CDATA[
+using System;
+
+namespace DotvvmAcademy.Tutorial.ViewModels 
+{
+	public class Lesson1ViewModel 
+	{
+		public int Number1 { get; set; }
+		public int Number2 { get; set; }
+		public int Result { get; set; }
+	}
+}
+]]>
+			</FinalCode>
+
+			<ShadowBoxDescription>
+				<![CDATA[
+Значения, введеные пользователем будут храниться в свойствах `Number1` и `Number2`, сумму этих чисел мы поместим в свойство `Result`, когда пользователь нажмет на кнопку.
+]]>
+			</ShadowBoxDescription>
+		</Step>
+
+		<Step Type="CsharpCode">
+			<Title>ViewModel Command</Title>
+			<ValidationKey>Lesson1Step5Validator</ValidationKey>
+			<Description>
+				<![CDATA[
+Теперь нам нужно написать метод, который вычисляет сумму двух чисел. Этот метод также объявим в нашей ViewModel.
+
+Таким образом, создайте метод `Calculate` который вычисляет сумму `Number1` и `Number2` и сохраняет результат в свойство `Result`.
+]]>
+			</Description>
+
+			<StartupCode>
+				<![CDATA[
+using System;
+
+namespace DotvvmAcademy.Tutorial.ViewModels 
+{
+	public class Lesson1ViewModel 
+	{
+		public int Number1 { get; set; }
+		public int Number2 { get; set; }
+		public int Result { get; set; }
+
+		// объявите метод Calculate здесь
+	}
+}
+]]>
+			</StartupCode>
+			<FinalCode>
+				<![CDATA[
+using System;
+
+namespace DotvvmAcademy.Tutorial.ViewModels 
+{
+	public class Lesson1ViewModel 
+	{
+		public int Number1 { get; set; }
+		public int Number2 { get; set; }
+		public int Result { get; set; }
+
+		public void Calculate() 
+		{
+			Result = Number1 + Number2;
+		}
+	}
+}
+]]>
+			</FinalCode>
+
+			<ShadowBoxDescription>
+				<![CDATA[
+Метод должен быть публичным и не возвращать никаких значений.
+]]>
+			</ShadowBoxDescription>
+		</Step>
+
+		<Step Type="DothtmlCode">
+			<Title>Data-Binding TextBoxes</Title>
+			<ValidationKey>Lesson1Step6Validator</ValidationKey>
+			<Description>
+				<![CDATA[
+Теперь нам нужно соединить текстовые поля со свойствами во ViewModel. Когда пользователь вводит значение в текстовом поле, оно появится в свойстве во
+ViewModel автоматически. Кроме того, при изменении значения свойства во ViewModel, это изменение должно отобразиться на странице.
+
+Этот мех\низм называется **data-binding** или привязка данных. Для того, чтобы связать текстовое поле со свойством во ViewModel, мы используем следующий синтаксис:
+
+```<dot:TextBox Text="{value: Number1}" />```
+
+Свяжите текстовые поля с соответствующими свойствами во ViewModel. 
+]]>
+			</Description>
+			<StartupCode>
+				<![CDATA[
+<p>
+	<dot:TextBox />
+	+
+	<dot:TextBox />
+	=
+	<dot:TextBox />
+</p>
+<p>
+	<dot:Button />
+</p>
+]]>
+			</StartupCode>
+			<FinalCode>
+				<![CDATA[
+<p>
+	<dot:TextBox Text="{value: Number1}" />
+	+
+	<dot:TextBox Text="{value: Number2}" />
+	=
+	<dot:TextBox Text="{value: Result}" />
+</p>
+<p>
+	<dot:Button />
+</p>
+								]]>
+			</FinalCode>
+		</Step>
+
+		<Step Type="DothtmlCode">
+			<Title>Data-Binding Button</Title>
+			<ValidationKey>Lesson1Step7Validator</ValidationKey>
+			<Description>
+				<![CDATA[
+Теперь мы хотим подключить кнопку к методу Calculate, который мы объявили в одном из предыдущих шагов.
+
+Для этого, мы используем следующий синтаксис: `Click="{command: Calculate()}"`.
+ 
+Кроме того, мы хотели бы изменить текст на кнопке - он должен сказать "Calculate!". Мы можем использовать свойство кнопки `Text`, и потому, что этот текст никогда не меняется,
+мы не должны хранить его в ViewModel. Мы можем объявить его непосредственно в DOTHTML: `Text="Calculate!"`.
+								]]>
+			</Description>
+			<StartupCode>
+				<![CDATA[
+<p>
+	<dot:TextBox Text="{value: Number1}" />
+	+
+	<dot:TextBox Text="{value: Number2}" />
+	=
+	<dot:TextBox Text="{value: Result}" />
+</p>
+<p>
+	<dot:Button />
+</p>
+								]]>
+			</StartupCode>
+			<FinalCode>
+				<![CDATA[
+<p>
+	<dot:TextBox Text="{value: Number1}" />
+	+
+	<dot:TextBox Text="{value: Number2}" />
+	=
+	<dot:TextBox Text="{value: Result}" />
+</p>
+<p>
+	<dot:Button Text="Calculate!" Click="{command: Calculate()}" />
+</p>
+						]]>
+			</FinalCode>
+		</Step>
+
+		<Step Type="Info">
+			<Title>Congratulations!</Title>
+			<Description>
+				<![CDATA[
+**Вы закончили первый урок!**
+
+Вы научились использовать элементы управления DotVVM, а так же использовать data-binding для свойств и команд!
+								]]>
+			</Description>
+		</Step>
+
+	</Steps>
+</Lesson>

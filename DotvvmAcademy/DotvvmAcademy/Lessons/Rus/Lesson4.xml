@@ -7,9 +7,9 @@
 			<Title>Introduction</Title>
 			<Description>
 				<![CDATA[
-In this lesson, we'll play with the validation in DotVVM.
+В этом уроке, мы будем играть с проверкой в DotVVM.
 
-You'll see how to use Data Annotations attributes in the viewmodels, and how to write more complex validation logic.
+Вы увидите, как использовать атрибуты Data Annotations в ViewModels, и как писать более сложную логику проверки.
 								]]>
 			</Description>
 		</Step>
@@ -23,9 +23,9 @@ You'll see how to use Data Annotations attributes in the viewmodels, and how to 
 			<!--Required element-->
 			<Description>
 				<![CDATA[
-Mark the `City` and `ZIP` properties with the `[Required]` attribute. The validation will make sure that these values are not empty.
+Отметьте свойства `City` and `ZIP` атрибутом `[Required]`. Проверка удостоверится, что эти значения не пусты.
 
-Mark the `Email` property with the `[EmailAddress]` attribute. The validation will make sure that this property is either empty, or contains an e-mail address in the correct format.
+Отметьте свойство `Email` атрибутом `[EmailAddress]`. Проверка удостоверится, что это свойство либо пусто, либо содержит адрес электронной почты в правильном формате.
 ]]>
 			</Description>
 			<StartupCode>
@@ -36,11 +36,11 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 {
 	public class Lesson4ViewModel 
 	{
-		//add Required attribute
+		//добавьте атрибут Required
 		public string City { get; set; }
-		//add Required attribute
+		//добавьте атрибут Required
 		public string ZIP { get; set; }
-		//add EmailAddress attribute
+		//добавьте атрибут EmailAddress
 		public string Email { get; set; }
 	}
 }
@@ -88,25 +88,25 @@ System.ComponentModel.DataAnnotations.RequiredAttribute
 			<ValidationKey>Lesson4Step3Validator</ValidationKey>
 			<Description>
 				<![CDATA[
-In the page, you can invoke the validation using the `Validator.Value` property.  
-Depending on the settings of the validation, it may for example add a CSS class when some property is not valid.
+На странице, вы можете вызвать проверку с помощью свойства `Validator.Value`.
+В зависимости от настроек проверки, она может, например, добавить класс CSS, когда какое-то свойство не является действительным.
 
-You can add this property to any HTML element or DotVVM control.
-Add the `Validator.Value` property to each `div` and bind it to the property which is used in the `TextBox` inside.
+Вы можете добавить это свойство к любому элементу HTML или DotVVM.
+Добавьте свойство `Validator.Value` к каждому `div` и свяжите его со свойством, которой используется внутри `TextBox`.
 								]]>
 			</Description>
 
 			<StartupCode>
 				<![CDATA[
- <!--bind div to Validator.Value for current property-->
+ <!--свяжите div с Validator.Value для текущего свойства-->
 <div>
 		<dot:TextBox Text="{value: City}"/>
 </div>
- <!--bind div to Validator.Value for current property-->
+ <!--свяжите div с Validator.Value для текущего свойства-->
 <div>
 	<dot:TextBox Text="{value: ZIP}"/>
 </div>
- <!--bind div to Validator.Value for current property-->
+ <!--свяжите div с Validator.Value для текущего свойства-->
 <div>
 	<dot:TextBox Text="{value: Email}"/>
 </div>
@@ -136,27 +136,27 @@ Add the `Validator.Value` property to each `div` and bind it to the property whi
 			<ValidationKey>Lesson4Step4Validator</ValidationKey>
 			<Description>
 				<![CDATA[
-We have marked elements which can interact with the validation of the individual properties.
+Мы отметили элементы, которые могут взаимодействовать с проверками отдельных свойств.
 
-Now we have to specify what should happen when the property is not valid.
-We'd like to add a CSS class `has-error` to the `div`s which are not valid. This will highlight the textboxes inside.
+Теперь мы должны определить, что должно произойти, когда свойство не является действительным.
+Мы хотели бы, добавить CSS класс `has-error` ко всем `div`-ам, которые не являются действительными. Это позволит выделить текстовые поля внутри.
 
-Add the `Validation.InvalidCssClass="has-error"` to each `div`. 
+Добавьте `Validation.InvalidCssClass="has-error"` каждому `div`.								
 								]]>
 			</Description>
 
 			<!--Required element-->
 			<StartupCode>
 				<![CDATA[
-<!--add Validator.InvalidCssClass-->
+<!--добавьте Validator.InvalidCssClass-->
 <div Validator.Value="{value: City}">
 	<dot:TextBox Text="{value: City}"/>
 </div>
-<!--add Validator.InvalidCssClass-->
+<!--добавьте Validator.InvalidCssClass-->
 <div Validator.Value="{value: ZIP}">
 	<dot:TextBox Text="{value: ZIP}"/>
 </div>
-<!--add Validator.InvalidCssClass-->
+<!--добавьте Validator.InvalidCssClass-->
 <div Validator.Value="{value: Email}">
 	<dot:TextBox Text="{value: Email}"/>
 </div>
@@ -187,31 +187,31 @@ Add the `Validation.InvalidCssClass="has-error"` to each `div`.
 			<ValidationKey>Lesson4Step5Validator</ValidationKey>
 			<Description>
 				<![CDATA[
-Specifying `Validator.InvalidCssClass` on each validated element is quite annoying. However, you can use this property on any element and it will propagate into all its children.
-So you can set this property globally e.g. on the `body` element.
+Указание `Validator.InvalidCssClass` на каждом проверяемом элементе очень раздражает. Но, вы можете использовать это свойство на любом элементе, и он будет распространяться на все свои дочерние элементы.
+Таким образом, вы можете установить это свойство глобально, например, на `body`.
 
-So, you can now remove the `Validator.InvalidCssClass` from the `div`s, wrap the form in the `form` element and use the property on the `form` instead.
+Итак, теперь вы можете удалить `Validator.InvalidCssClass` из`div`-ов, оберните форму в `form` и используйте свойство на `form`.
 								]]>
 			</Description>
 
 			<!--Required element-->
 			<StartupCode>
 				<![CDATA[
-<!-- wrap the contents in the form element with Validator.InvalidCssClass set -->
+<!-- оберните контент в элемент form с установленным Validator.InvalidCssClass -->
 	
-  <!--remove redundant Validator.InvalidCssClass-->
+  <!--удалите лишний Validator.InvalidCssClass-->
 	<div Validator.Value="{value: City}" Validator.InvalidCssClass="has-error">
 		<dot:TextBox Text="{value: City}"/>
 	</div>
-	<!--remove redundant Validator.InvalidCssClass-->
+	<!--удалите лишний Validator.InvalidCssClass-->
 	<div Validator.Value="{value: ZIP}" Validator.InvalidCssClass="has-error">
 		<dot:TextBox Text="{value: ZIP}"/>
 	</div>
-	<!--remove redundant Validator.InvalidCssClass-->
+	<!--удалите лишний Validator.InvalidCssClass-->
 	<div Validator.Value="{value: Email}" Validator.InvalidCssClass="has-error">
 		<dot:TextBox Text="{value: Email}"/>
 	</div>
-<!--don't forget close form element-->
+<!--не забудьте закрыть элемент form-->
 								]]>
 			</StartupCode>
 			<!--Required element-->
@@ -245,6 +245,12 @@ If you just need to display an error message, you can use the `dot:Validator` co
 There are the `ShowErrorMessageText` and `SetToolTipText` properties. If they are set, the error message generated by the `[Required]` attribute will be displayed in the `Validator` control or is set as a tool tip text on the element. 
 								
 To learn more about the `Validator` control, read the [documentation](https://www.dotvvm.com/docs/controls/builtin/Validator/latest). 
+
+Если вам просто нужно, чтобы отобразить сообщение об ошибке, вы можете использовать `dot:Validator`.
+
+Есть свойства `ShowErrorMessageText` и `SetToolTipText`. Если они установлены, сообщение об ошибке генерируется как `[Required]`, атрибут будет отображаться в `Validator` или отображаться в качестве текста подсказки на элементе.
+
+Чтобы узнать больше о `Validator` читайте [documentation] (https://www.dotvvm.com/docs/controls/builtin/Validator/latest).
 								]]>
 			</Description>
 		</Step>
@@ -257,9 +263,9 @@ To learn more about the `Validator` control, read the [documentation](https://ww
 			<ValidationKey>Lesson4Step7Validator</ValidationKey>
 			<Description>
 				<![CDATA[
-Add a `Validator` control in the third `div` and set its `Value` to the `Email` in the viewmodel.
+Добавьте `Validator` к третьему `div` и установите его `Value` как `Email` в ViewModel.
 
-Also, set property `ShowErrorMessageText` to "true".
+Кроме того, установите свойство `ShowErrorMessageText` как "true".
 								]]>
 			</Description>
 			<!--Optional element-->
@@ -275,7 +281,7 @@ Also, set property `ShowErrorMessageText` to "true".
 	</div>
 	<div Validator.Value="{value: Email}">
 		<dot:TextBox Text="{value: Email}"/>
-		<!--use Validator with ShowErrorMessageText on Email property-->
+		<!--используйте Validator с ShowErrorMessageText на свойстве Email-->
 	</div>
 </form>
 								]]>
@@ -311,6 +317,10 @@ Also, set property `ShowErrorMessageText` to "true".
 To display all errors from the form, you can use the `ValidationSummary` control. 
 
 Add this control to the end of the form.
+
+Чтобы отобразить все ошибки из формы, вы можете использовать `ValidationSummary`.
+
+Добавьте его в конец формы.
 								]]>
 			</Description>
 			<!--Required element-->
@@ -327,7 +337,7 @@ Add this control to the end of the form.
 		<dot:TextBox Text="{value: Email}"/>
 	</div>
 </form>
-<!-- add the ValidationSummary control -->
+<!-- добавьте ValidationSummary -->
 								]]>
 			</StartupCode>
 			<!--Required element-->
@@ -357,13 +367,13 @@ Add this control to the end of the form.
 			<!--Required element-->
 			<Description>
 				<![CDATA[
-By default, all buttons run validation on the whole viewmodel and if there is any error, the command in the viewmodel is not executed at all.
+По умолчанию все кнопки запускают проверку на всей ViewModel, и если есть какая-либо ошибка, то команда в ViewModel не выполняется вообще.
 
-However, the viewmodel often contains some child objects and you don't want to validate everything. 
+Тем не менее, ViewModel часто содержит некоторые дочерние объекты и вы не хотели бы, проверять их все.
 
-In such case you can use the `Validation.Target="{value: Property}"`. You can apply this property to any element or DotVVM control.
+В таком случае вы можете использовать `Validation.Target="{value: Property}"`. Вы можете применить это свойство к любому элементу DotVVM.
 
-Inside this element or control, the validation rules will be checked only on the `Validation.Target` you have specified. 
+Внутри этого элемента, правила проверки будут проверены только на `Validation.Target`, указанные Вами.
 								]]>
 			</Description>
 		</Step>
@@ -375,13 +385,13 @@ Inside this element or control, the validation rules will be checked only on the
 			<!--Required element-->
 			<Description>
 				<![CDATA[
-You can also disable the validation completely by adding `Validation.Enabled="false"`. Again, this can be set on any element or control, and it disables the 
-validation on this element and all its children.
+Вы также можете отключить проверку полностью, добавив `Validation.Enabled="false"`. Опять же, это может быть установлено на любом элементе, и это отключит
+все проверки на этом элементе и всех его дочерних элементах.
 
-Please note that the validation is triggered by the `{command: something}` bindings. 
+Обратите внимание, что проверка инициируется с помощью привязок `{command: something}`.
 
-That's why you have to apply `Validation.Enabled` or `Validation.Target` always to a button or the control with a command binding.
-Turning the validation off only on the form fields doesn't do anything.
+Вот почему вы должны применить `Validation.Enabled` или `Validation.Target` всегда к кнопке или элемента управления с командой привязки.
+Выключение проверки только на областях формы ничего не дает.
 								]]>
 			</Description>
 		</Step>
@@ -395,9 +405,9 @@ Turning the validation off only on the form fields doesn't do anything.
 			<!--Required element-->
 			<Description>
 				<![CDATA[
-Declare the `SubscriptionFrom` and `SubscriptionTo` of type `DateTime` in the viewmodel.
+Объявите `SubscriptionFrom` и `SubscriptionTo` типа `DateTime` в viewmodel.
 
-We will need to make sure that the first one contains a lower value than the second one.
+Нам нужно будет убедиться, что первый из них содержит меньшее значение, чем второй.
 ]]>
 			</Description>
 
@@ -418,8 +428,8 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 		[EmailAddress]
 		public string Email { get; set; }
     
-		// add the SubscriptionFrom property
-		// add the SubscriptionTo property
+		// добавьте свойство SubscriptionFrom
+		// добавьте свойство SubscriptionTo
 	}
 }
 ]]>
@@ -489,12 +499,12 @@ System.ComponentModel.DataAnnotations.EmailAddressAttribute.IsValid
 			<!--Required element-->
 			<Description>
 				<![CDATA[
-To make sure that `SubscriptionFrom` is less than `SubscriptionTo`, we need to validate the object using C# code.
+Чтобы убедиться в том, что `SubscriptionFrom` меньше, чем `SubscriptionTo`, нам нужно проверить объект с помощью C#.
 
-The `Lesson4ViewModel` must implement the `IValidatableObject` interface. This interface contains the `Validate` method, which should return list of the validation errors.
-They are combined with the errors returned by the validation attributes, so you don't need to care about the other properties.
+`Lesson4ViewModel` должен реализовывать интерфейс `IValidatableObject`. Этот интерфейс содержит метод `Validate`, который должен возвращать список ошибок проверки.
+Они объединены с ошибками, возвращенных атрибутов проверки, так что вам не нужно заботиться о других свойствах.
 
-You can return the error using the `yield return new ValidationResult("error message")`. Return it if the `SubscriptionFrom` is greater than `SubscriptionTo`.
+Вы можете вернуть ошибку с помощью `yield return new ValidationResult("error message")`. Верните его, если `SubscriptionFrom` больше` SubscriptionTo`.
 ]]>
 			</Description>
 			<!--Optional element-->
@@ -519,7 +529,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 
 		public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
 		{
-			// check the condition and return the error using yield return new ValidationResult("error message");
+			// проверьте условие и верните ошибку используя yield return new ValidationResult("error message");
 		}
 	}
 }
@@ -604,9 +614,9 @@ System.Collections.Generic.List<System.ComponentModel.DataAnnotations.Validation
 			<Title>Congratulations</Title>
 			<Description>
 				<![CDATA[
-**You have finished the fourth lesson!**
+**Вы закончили четвертый урок!**
 
-You have learned how to use the validation in DotVVM!
+Вы научились использовать проверку в DotVVM!
 								]]>
 			</Description>
 		</Step>
