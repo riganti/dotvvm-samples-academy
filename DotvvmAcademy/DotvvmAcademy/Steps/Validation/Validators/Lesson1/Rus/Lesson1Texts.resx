@@ -117,52 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AddTaskButtonControlError" xml:space="preserve">
-    <value>There should be a Button control in the page!</value>
-  </data>
-  <data name="AddTaskInvalidTaskText" xml:space="preserve">
-    <value>When creating a task, use the AddedTaskTitle as a title of the task!</value>
-  </data>
-  <data name="AddTaskShouldAddTaskObject" xml:space="preserve">
-    <value>The AddTask() method should add one task!</value>
-  </data>
-  <data name="AddTaskTextBoxControlError" xml:space="preserve">
-    <value>There should be a TextBox control in the page!</value>
-  </data>
-  <data name="AddTaskTitleNotReset" xml:space="preserve">
-    <value>You need to reset the AddedTaskTitle property to an empty string after you create a task!</value>
-  </data>
   <data name="ButtonDoesNotHaveText" xml:space="preserve">
-    <value>You must set the Text property of the Button!</value>
+    <value>Вы должны указать свойство Text элемента Button!</value>
   </data>
-  <data name="CompleteTaskMethodError" xml:space="preserve">
-    <value>The CompleteTask() method should set the IsCompleted to true!</value>
+  <data name="CalculateMethodNotCalled" xml:space="preserve">
+    <value>Вы должны вызвать метод Calculate() в команде привязки!</value>
   </data>
-  <data name="InvalidClassBinding" xml:space="preserve">
-    <value>The class attribute doesn't contain the binding!</value>
+  <data name="CommandResultError" xml:space="preserve">
+    <value>Метод Calculate не возвращает корректный результат!</value>
   </data>
-  <data name="InvalidClassExpressionBinding" xml:space="preserve">
-    <value>The expression in the class attribute is not correct! If the task is completed, the CSS class should be 'task-completed', otherwise it should be 'task'. </value>
+  <data name="OneButtonControlError" xml:space="preserve">
+    <value>Должен быть 1 элемент Button на странице!</value>
   </data>
-  <data name="InvalidVisibleBinding" xml:space="preserve">
-    <value>The Visible binding expression is not correct! Didn't you forget to negate the expression?</value>
-  </data>
-  <data name="LinkButtonNotFound" xml:space="preserve">
-    <value>The LinkButton control wasn't found inside the Repeater control!</value>
-  </data>
-  <data name="RepeaterBindingError" xml:space="preserve">
-    <value>The DataSource property of the Repeater should be bound to the Tasks property!</value>
-  </data>
-  <data name="RepeaterControlError" xml:space="preserve">
-    <value>There should be a Repeater control in the page!</value>
-  </data>
-  <data name="RepeaterTemplateMissingDivError" xml:space="preserve">
-    <value>The Repeater should contain a div element with the "task" CSS class.</value>
-  </data>
-  <data name="TextBoxBindingError" xml:space="preserve">
-    <value>The TextBox should be bound to the AddedTaskTitle property!</value>
-  </data>
-  <data name="TitleBindingNotFound" xml:space="preserve">
-    <value>The Title is not rendered inside the Repeater control!</value>
+  <data name="ThreeTextBoxControlsError" xml:space="preserve">
+    <value>Должно быть 3 элемента TextBox на странице!</value>
   </data>
 </root>

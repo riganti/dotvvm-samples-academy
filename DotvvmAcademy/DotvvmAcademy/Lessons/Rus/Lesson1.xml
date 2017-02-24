@@ -4,7 +4,7 @@
 	<ValidatorsNamespace>DotvvmAcademy.Steps.Validation.Validators.Lesson1</ValidatorsNamespace>
 	<Steps>
 		<Step Type="Info">
-			<Title>Prerequisites</Title>
+			<Title>Прежде чем начать</Title>
 			<Description>
 				<![CDATA[
 Для создания приложений в DotVVM, вы должны знать следующие вещи:
@@ -18,7 +18,7 @@
 		</Step>
 
 		<Step Type="Info">
-			<Title>Introduction</Title>
+			<Title>Введение</Title>
 			<Description>
 				<![CDATA[
 В этом уроке, мы создадим простой калькулятор.
@@ -33,7 +33,7 @@
 		</Step>
 
 		<Step Type="DothtmlCode">
-			<Title>Basic Controls</Title>
+			<Title>Базовые элементы</Title>
 			<ValidationKey>Lesson1Step3Validator</ValidationKey>
 			<Description>
 				<![CDATA[
@@ -81,7 +81,7 @@ Now, try to create a page with 3 textboxes and 1 button.
 		</Step>
 
 		<Step Type="CsharpCode">
-			<Title>ViewModel Properties</Title>
+			<Title>Свойства ViewModel</Title>
 			<ValidationKey>Lesson1Step4Validator</ValidationKey>
 			<Description>
 				<![CDATA[
@@ -130,7 +130,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 		</Step>
 
 		<Step Type="CsharpCode">
-			<Title>ViewModel Command</Title>
+			<Title>Методы ViewModel</Title>
 			<ValidationKey>Lesson1Step5Validator</ValidationKey>
 			<Description>
 				<![CDATA[
@@ -186,7 +186,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 		</Step>
 
 		<Step Type="DothtmlCode">
-			<Title>Data-Binding TextBoxes</Title>
+			<Title>Привязка TextBox-ов</Title>
 			<ValidationKey>Lesson1Step6Validator</ValidationKey>
 			<Description>
 				<![CDATA[
@@ -231,7 +231,7 @@ ViewModel автоматически. Кроме того, при изменен
 		</Step>
 
 		<Step Type="DothtmlCode">
-			<Title>Data-Binding Button</Title>
+			<Title>Привязка Button</Title>
 			<ValidationKey>Lesson1Step7Validator</ValidationKey>
 			<Description>
 				<![CDATA[
@@ -274,7 +274,7 @@ ViewModel автоматически. Кроме того, при изменен
 		</Step>
 
 		<Step Type="Info">
-			<Title>Congratulations!</Title>
+			<Title>Поздравляем!</Title>
 			<Description>
 				<![CDATA[
 **Вы закончили первый урок!**

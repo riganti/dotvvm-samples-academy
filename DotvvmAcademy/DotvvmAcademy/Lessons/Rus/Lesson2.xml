@@ -6,7 +6,7 @@
 
 		<!-- 1-->
 		<Step Type="Info">
-			<Title>Objective</Title>
+			<Title>Задача</Title>
 			<Description>
 				<![CDATA[
 В этом уроке мы создадим простой TO-DO лист.
@@ -18,7 +18,7 @@
 
 		<!-- 2-->
 		<Step Type="DothtmlCode">
-			<Title>Adding New Task</Title>
+			<Title>Добавление новой задачи</Title>
 			<ValidationKey>Lesson2Step2Validator</ValidationKey>
 			<Description>
 				<![CDATA[
@@ -53,7 +53,7 @@
 
 		<!-- 3-->
 		<Step Type="CsharpCode">
-			<Title>Adding New Task</Title>
+			<Title>Добавление новой задачи</Title>
 			<ValidationKey>Lesson2Step3Validator</ValidationKey>
 			<Description>
 				<![CDATA[
@@ -98,7 +98,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 
 		<!-- 4-->
 		<Step Type="DothtmlCode">
-			<Title>Adding New Task</Title>
+			<Title>Добавление новой задачи</Title>
 			<ValidationKey>Lesson2Step4Validator</ValidationKey>
 			<Description>
 				<![CDATA[
@@ -132,7 +132,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 
 		<!-- 5-->
 		<Step Type="CsharpCode">
-			<Title>Representing Tasks</Title>
+			<Title>Предоставление задач</Title>
 			<ValidationKey>Lesson2Step5Validator</ValidationKey>
 			<Description>
 				<![CDATA[
@@ -178,7 +178,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 
 		<!-- 6-->
 		<Step Type="CsharpCode">
-			<Title>Representing Tasks</Title>
+			<Title>Предоставление задач</Title>
 			<ValidationKey>Lesson2Step6Validator</ValidationKey>
 			<Description>
 				<![CDATA[
@@ -260,7 +260,7 @@ System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>
 
 		<!-- 7-->
 		<Step Type="CsharpCode">
-			<Title>Adding new Task</Title>
+			<Title>Добавление новой Задачи</Title>
 			<ValidationKey>Lesson2Step7Validator</ValidationKey>
 			<Description>
 				<![CDATA[
@@ -357,11 +357,10 @@ System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>.Add
 
 		<!-- 8-->
 		<Step Type="DothtmlCode">
-			<Title>Render The Tasks</Title>
+			<Title>Отображение Задач</Title>
 			<ValidationKey>Lesson2Step8Validator</ValidationKey>
 			<Description>
 				<![CDATA[
-We are ready to render a list of tasks right now. For each task, we'd like to render this HTML snippet:
 Мы готовы показать список задач. Для каждой задачи, мы хотели бы, использовать этот фрагмент кода HTML:
 
 ```
@@ -403,7 +402,7 @@ We are ready to render a list of tasks right now. For each task, we'd like to re
 
 		<!-- 9-->
 		<Step Type="DothtmlCode">
-			<Title>Rendering The Tasks</Title>
+			<Title>Отображение задач</Title>
 			<ValidationKey>Lesson2Step9Validator</ValidationKey>
 			<Description>
 				<![CDATA[
@@ -456,7 +455,7 @@ We are ready to render a list of tasks right now. For each task, we'd like to re
 
 		<!-- 10-->
 		<Step Type="DothtmlCode">
-			<Title>Hiding The LinkButton</Title>
+			<Title>Скрытие LinkButton</Title>
 			<ValidationKey>Lesson2Step10Validator</ValidationKey>
 			<Description>
 				<![CDATA[
@@ -508,7 +507,7 @@ LinkButton должен быть виден только для задач, ко
 
 		<!-- 11-->
 		<Step Type="CsharpCode">
-			<Title>Completing The Task</Title>
+			<Title>Выполнение задачи</Title>
 			<ValidationKey>Lesson2Step11Validator</ValidationKey>
 			<Description>
 				<![CDATA[
@@ -612,7 +611,7 @@ System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>.Add
 
 		<!-- 12-->
 		<Step Type="DothtmlCode">
-			<Title>Completing The Task</Title>
+			<Title>Выполнение задачи</Title>
 			<ValidationKey>Lesson2Step12Validator</ValidationKey>
 			<Description>
 				<![CDATA[
@@ -663,7 +662,7 @@ System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>.Add
 
 		<!-- 13-->
 		<Step Type="DothtmlCode">
-			<Title>Completing The Task</Title>
+			<Title>Выполнение задачи</Title>
 			<ValidationKey>Lesson2Step13Validator</ValidationKey>
 			<Description>
 				<![CDATA[
@@ -715,7 +714,7 @@ System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>.Add
 
 		<!-- 14-->
 		<Step Type="Info">
-			<Title>Congratulations</Title>
+			<Title>Поздравляем</Title>
 			<Description>
 				<![CDATA[
 **Вы закончили второй урок!**

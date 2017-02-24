@@ -7,7 +7,7 @@
 		<!--1-->
 		<Step Type="Info">
 			<!--Required element-->
-			<Title>Form Controls</Title>
+			<Title>Элементы управления</Title>
 			<!--Required element-->
 			<Description>
 				<![CDATA[
@@ -19,7 +19,7 @@
 		<!--2-->
 		<Step Type="CsharpCode">
 			<!--Required element-->
-			<Title>Adding FirstName and LastName Properties</Title>
+			<Title>Добавление свойств FirstName и LastName</Title>
 			<!--Required element-->
 			<ValidationKey>Lesson3Step2Validator</ValidationKey>
 			<!--Required element-->
@@ -62,7 +62,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 		<!--3-->
 		<Step Type="DothtmlCode">
 			<!--Required element-->
-			<Title>Using TextBoxes</Title>
+			<Title>Используем TextBox-ы</Title>
 			<!--Required element-->
 			<ValidationKey>Lesson3Step3Validator</ValidationKey>
 			<Description>
@@ -93,7 +93,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 		<!--4-->
 		<Step Type="CsharpCode">
 			<!--Required element-->
-			<Title>Adding Role Property</Title>
+			<Title>Добавляем свойство Role</Title>
 			<!--Required element-->
 			<ValidationKey>Lesson3Step4Validator</ValidationKey>
 			<!--Required element-->
@@ -135,7 +135,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 		<!--5-->
 		<Step Type="DothtmlCode">
 			<!--Required element-->
-			<Title>Using RadioButtons</Title>
+			<Title>Используем RadioButton-ы</Title>
 			<!--Required element-->
 			<ValidationKey>Lesson3Step5Validator</ValidationKey>
 			<Description>
@@ -184,7 +184,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 		<!--6-->
 		<Step Type="CsharpCode">
 			<!--Required element-->
-			<Title>Adding Interests Property</Title>
+			<Title>Добавляем свойство Interests</Title>
 			<!--Required element-->
 			<ValidationKey>Lesson3Step6Validator</ValidationKey>
 			<!--Required element-->
@@ -242,18 +242,11 @@ System.Collections.Generic.List<string>
 		<!--7-->
 		<Step Type="DothtmlCode">
 			<!--Required element-->
-			<Title>Using CheckBoxes</Title>
+			<Title>Используем CheckBox-ы</Title>
 			<!--Required element-->
 			<ValidationKey>Lesson3Step7Validator</ValidationKey>
 			<Description>
 				<![CDATA[
-Bind their `CheckedItems` property to `Interests` to specify where the checked items will be stored.
-
-Then, set the `Text` to "Music", "Sports" and "News".
-
-And finally, set `CheckedValue` to "M", "S" a "N". These values will be stored in the `Interests` collection when the corresponding checkbox is checked.
-
-
 Добавьте 3 элемента `CheckBox` на страницу.
 Свяжите их свойство `CheckedItems` с `Interests`, чтобы указать, где проверяемые элементы будут расположены.
 
@@ -305,7 +298,7 @@ And finally, set `CheckedValue` to "M", "S" a "N". These values will be stored i
 		<!--8-->
 		<Step Type="CsharpCode">
 			<!--Required element-->
-			<Title>Add CountryInfo Class</Title>
+			<Title>Добавляем класс CountryInfo</Title>
 			<!--Required element-->
 			<ValidationKey>Lesson3Step8Validator</ValidationKey>
 			<!--Required element-->
@@ -342,7 +335,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 		<!--9-->
 		<Step Type="CsharpCode">
 			<!--Required element-->
-			<Title>Add the Countries Collection</Title>
+			<Title>Добавляем список Countries</Title>
 			<!--Required element-->
 			<ValidationKey>Lesson3Step9Validator</ValidationKey>
 			<!--Required element-->
@@ -417,7 +410,7 @@ System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>
 		<!--10-->
 		<Step Type="CsharpCode">
 			<!--Required element-->
-			<Title>Initialize Countries Collection</Title>
+			<Title>Инициализируем список Countries</Title>
 			<!--Required element-->
 			<ValidationKey>Lesson3Step10Validator</ValidationKey>
 			<!--Required element-->
@@ -518,7 +511,7 @@ System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>.A
 		<!--11-->
 		<Step Type="DothtmlCode">
 			<!--Required element-->
-			<Title>Using ComboBox</Title>
+			<Title>Используем ComboBox</Title>
 			<!--Required element-->
 			<ValidationKey>Lesson3Step11Validator</ValidationKey>
 			<Description>
@@ -584,7 +577,7 @@ System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>.A
 		<!--12-->
 		<Step Type="Info">
 			<!--Required element-->
-			<Title>The CustomerInfo Class</Title>
+			<Title>Класс CustomerInfo</Title>
 			<!--Required element-->
 			<Description>
 				<![CDATA[
@@ -614,7 +607,7 @@ public class CustomerInfo
 		<!--13-->
 		<Step Type="CsharpCode">
 			<!--Required element-->
-			<Title>Adding CustomerInfo Property</Title>
+			<Title>Добавляем свойство CustomerInfo</Title>
 			<!--Required element-->
 			<ValidationKey>Lesson3Step13Validator</ValidationKey>
 			<!--Required element-->
@@ -729,7 +722,7 @@ System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>.A
 		<!--14-->
 		<Step Type="DothtmlCode">
 			<!--Required element-->
-			<Title>Using DataContext Property</Title>
+			<Title>Используем свойство DataContext</Title>
 			<!--Required element-->
 			<ValidationKey>Lesson3Step14Validator</ValidationKey>
 			<Description>
@@ -785,7 +778,7 @@ System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>.A
 		<!--15-->
 		<Step Type="DothtmlCode">
 			<!--Required element-->
-			<Title>Fix the ComboBox Error</Title>
+			<Title>Исправляем ошибку ComboBox</Title>
 			<!--Required element-->
 			<ValidationKey>Lesson3Step15Validator</ValidationKey>
 			<Description>
@@ -853,7 +846,7 @@ System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>.A
 		</Step>
 
 		<Step Type="Info">
-			<Title>Congratulations</Title>
+			<Title>Поздравляем</Title>
 			<Description>
 				<![CDATA[
 **Вы закончили третий урок!**
