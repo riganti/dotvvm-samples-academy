@@ -35,7 +35,6 @@ Add the `TextBox` and the `Button` controls to the page. The button should say "
 <div>
 	<!-- we'll display a list of tasks here later -->
 </p>
-</p>
 								]]>
 			</StartupCode>
 			<FinalCode>
@@ -113,7 +112,6 @@ Now, we need to bind the text in the `TextBox` to the `AddedTaskTitle` property,
 </p>
 <div>
 	<!-- we'll display a list of tasks here later -->
-</p>
 </p>
 								]]>
 			</StartupCode>
