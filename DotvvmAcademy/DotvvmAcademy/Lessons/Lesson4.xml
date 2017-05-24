@@ -139,7 +139,7 @@ Add the `Validator.Value` property to each `div` and bind it to the property whi
 We have marked elements which can interact with the validation of the individual properties.
 
 Now we have to specify what should happen when the property is not valid.
-We'd like to add a CSS clas `has-error` to the `div`s which are not valid. This will highlight the textboxes inside.
+We'd like to add a CSS class `has-error` to the `div`s which are not valid. This will highlight the textboxes inside.
 
 Add the `Validation.InvalidCssClass="has-error"` to each `div`. 
 								]]>
