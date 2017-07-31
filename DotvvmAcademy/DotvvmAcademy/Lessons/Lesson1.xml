@@ -12,7 +12,7 @@ To build apps in DotVVM, you'll need to know these things:
 + **HTML and CSS** - how to write a static page, how to use CSS to define styles
 + **C# Language** - how to declare a class with properties and methods
 
-If you don't know anything, we recommend [SoloLearn](https://www.sololearn.com/Course/HTML/). They have very nice interactive tutorials for absolute beginners."
+If you don't know anything, we recommend [SoloLearn](https://www.sololearn.com/Course/HTML/). They have very nice interactive tutorials for absolute beginners.
 								]]>
 			</Description>
 		</Step>
@@ -234,7 +234,7 @@ Bind the textboxes to corresponding viewmodel properties.
 			<ValidationKey>Lesson1Step7Validator</ValidationKey>
 			<Description>
 				<![CDATA[
-Now we want to connect the button to the Calculate method we have declared in one of the previous steps.
+Now we want to connect the button to the `Calculate` method we have declared in one of the previous steps.
 
 We use the following syntax for command bindings: `Click="{command: Calculate()}"`.
  
