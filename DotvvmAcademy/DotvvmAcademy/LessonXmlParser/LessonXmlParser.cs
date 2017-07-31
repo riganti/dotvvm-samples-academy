@@ -63,7 +63,7 @@ namespace DotvvmAcademy.LessonXmlParser
 				var result = File.ReadAllText(absolutePath);
 				return result;
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
 				//todo UI Exception
 				throw;
@@ -77,7 +77,7 @@ namespace DotvvmAcademy.LessonXmlParser
 			{
 				return XElement.Parse(xmlText);
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
 				//todo UI Exception
 				throw;
