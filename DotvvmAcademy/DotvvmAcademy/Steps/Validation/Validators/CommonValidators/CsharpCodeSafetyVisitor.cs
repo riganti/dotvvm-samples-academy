@@ -16,7 +16,6 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
             this.model = model;
         }
 
-
         public override void VisitInvocationExpression(InvocationExpressionSyntax node)
         {
             var symbol = model.GetSymbolInfo(node).Symbol;

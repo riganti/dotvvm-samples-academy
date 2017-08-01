@@ -1,93 +1,95 @@
 using System;
-using System.Linq;
-using System.Threading.Tasks;
+using DotVVM.Framework.Hosting;
 using DotvvmAcademy.Cache;
 using DotvvmAcademy.Lessons;
 using DotvvmAcademy.Services;
 using DotvvmAcademy.Steps.StepsBases;
 using DotvvmAcademy.Steps.StepsBases.Interfaces;
-using DotVVM.Framework.Hosting;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace DotvvmAcademy.ViewModels
 {
-	public class LessonViewModel : SiteViewModel
-	{
-	    private readonly LessonsCache lessonsCache;
+    public class LessonViewModel : SiteViewModel
+    {
+        protected LessonBase lesson;
+        protected int lessonNumber;
+        private readonly LessonsCache lessonsCache;
 
-	    protected LessonBase lesson;
-		protected int lessonNumber;
+        public LessonViewModel(LessonsCache lessonsCache)
+        {
+            this.lessonsCache = lessonsCache;
+        }
 
-		public IStep Step { get; set; }
-		public string ErrorMessage { get; private set; }
-		public bool ContinueButtonVisible { get; set; } = true;
-		protected int CurrentStepNumber { get; set; }
-		protected int NextStepNumber => CurrentStepNumber + 1;
+        public bool ContinueButtonVisible { get; set; } = true;
 
-	    public LessonViewModel(LessonsCache lessonsCache)
-	    {
-	        this.lessonsCache = lessonsCache;
-	    }
+        public string ErrorMessage { get; private set; }
 
+        public IStep Step { get; set; }
 
-		public override Task Init()
-		{
-			LoadStep();
-			return base.Init();
-		}
+        protected int CurrentStepNumber { get; set; }
 
-		private void LoadStep()
-		{
-			lessonNumber = Convert.ToInt32(Context.Parameters["Lesson"]);
-			CurrentStepNumber = Convert.ToInt32(Context.Parameters["Step"]);
+        protected int NextStepNumber => CurrentStepNumber + 1;
 
-			var lessons = lessonsCache.Get();
+        public void Continue()
+        {
+            var storage = new LessonProgressStorage(Context.GetAspNetCoreContext());
 
-			lesson = lessons.First(l => l.Key == lessonNumber).Value;
-			if (lesson == null)
-			{
-				throw new NotSupportedException();
-			}
+            var step = Step as ValidableStepBase;
+            if (step != null)
+            {
+                var validableStep = step;
+                if (Context.IsPostBack)
+                {
+                    ErrorMessage = validableStep.Validate();
+                }
+            }
 
-			Step = lesson.Steps.First(s => s.StepIndex == CurrentStepNumber);
-			AfterLoad();
-		}
+            if (string.IsNullOrEmpty(ErrorMessage))
+            {
+                if (CurrentStepNumber < lesson.Steps.Count())
+                {
+                    storage.UpdateLessonLastStep(lessonNumber, NextStepNumber);
+                    RedirectToNextLesson();
+                }
+                else
+                {
+                    storage.UpdateLessonLastStep(lessonNumber, LessonProgressStorage.FinishedLessonStepNumber);
+                    Context.RedirectToRoute("Default");
+                }
+            }
+        }
 
-		protected virtual void AfterLoad()
-		{
-		}
+        public override Task Init()
+        {
+            LoadStep();
+            return base.Init();
+        }
 
-		public void Continue()
-		{
-			var storage = new LessonProgressStorage(Context.GetAspNetCoreContext());
+        protected virtual void AfterLoad()
+        {
+        }
 
-			var step = Step as ValidableStepBase;
-			if (step != null)
-			{
-				var validableStep = step;
-				if (Context.IsPostBack)
-				{
-					ErrorMessage = validableStep.Validate();
-				}
-			}
+        protected virtual void RedirectToNextLesson()
+        {
+            Context.RedirectToRoute("Lesson", new { Step = NextStepNumber });
+        }
 
-			if (string.IsNullOrEmpty(ErrorMessage))
-			{
-				if (CurrentStepNumber < lesson.Steps.Count())
-				{
-					storage.UpdateLessonLastStep(lessonNumber, NextStepNumber);
-					RedirectToNextLesson();
-				}
-				else
-				{
-					storage.UpdateLessonLastStep(lessonNumber, LessonProgressStorage.FinishedLessonStepNumber);
-					Context.RedirectToRoute("Default");
-				}
-			}
-		}
+        private void LoadStep()
+        {
+            lessonNumber = Convert.ToInt32(Context.Parameters["Lesson"]);
+            CurrentStepNumber = Convert.ToInt32(Context.Parameters["Step"]);
 
-		protected virtual void RedirectToNextLesson()
-		{
-			Context.RedirectToRoute("Lesson", new {Step = NextStepNumber });
-		}
-	}
+            var lessons = lessonsCache.Get();
+
+            lesson = lessons.First(l => l.Key == lessonNumber).Value;
+            if (lesson == null)
+            {
+                throw new NotSupportedException();
+            }
+
+            Step = lesson.Steps.First(s => s.StepIndex == CurrentStepNumber);
+            AfterLoad();
+        }
+    }
 }

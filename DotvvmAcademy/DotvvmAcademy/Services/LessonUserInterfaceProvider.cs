@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using DotvvmAcademy.Steps.StepsBases.Interfaces;
+﻿using DotvvmAcademy.Steps.StepsBases.Interfaces;
 using Microsoft.AspNetCore.Hosting;
+using System.Collections.Generic;
 
 namespace DotvvmAcademy.Services
 {

@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using DotvvmAcademy.Lessons;
+﻿using DotvvmAcademy.Lessons;
 using Microsoft.AspNetCore.Hosting;
+using System.Collections.Generic;
 
 namespace DotvvmAcademy.Services
 {

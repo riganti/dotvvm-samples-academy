@@ -67,9 +67,9 @@ Also, we will need the `AddTask()` method in the viewmodel. For now, make it jus
 				<![CDATA[
 using System;
 
-namespace DotvvmAcademy.Tutorial.ViewModels 
+namespace DotvvmAcademy.Tutorial.ViewModels
 {
-	public class Lesson2ViewModel 
+	public class Lesson2ViewModel
 	{
 		//declare the AddedTaskTitle property and the AddTask() method here
 	}
@@ -80,13 +80,13 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 				<![CDATA[
 using System;
 
-namespace DotvvmAcademy.Tutorial.ViewModels 
+namespace DotvvmAcademy.Tutorial.ViewModels
 {
-	public class Lesson2ViewModel 
+	public class Lesson2ViewModel
 	{
 		public string AddedTaskTitle { get; set; }
 
-		public void AddTask() 
+		public void AddTask()
 		{
 		}
 	}
@@ -136,7 +136,7 @@ Now, we need to bind the text in the `TextBox` to the `AddedTaskTitle` property,
 				<![CDATA[
 We are ready to create a list of tasks. However, we need a class to represent the task itself.
 
-Each task should have the `Title` property of `string`, and the `IsCompleted` property of `bool`. 
+Each task should have the `Title` property of `string`, and the `IsCompleted` property of `bool`.
 
 Create a class named `TaskData` and declare the two properties.
 ]]>
@@ -146,7 +146,7 @@ Create a class named `TaskData` and declare the two properties.
 				<![CDATA[
 using System;
 
-namespace DotvvmAcademy.Tutorial.ViewModels 
+namespace DotvvmAcademy.Tutorial.ViewModels
 {
 	//declare the class here
 }
@@ -156,7 +156,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 				<![CDATA[
 using System;
 
-namespace DotvvmAcademy.Tutorial.ViewModels 
+namespace DotvvmAcademy.Tutorial.ViewModels
 {
 	public class TaskData
 	{
@@ -193,15 +193,15 @@ to `new List<TaskData>()`.
 using System;
 using System.Collections.Generic;
 
-namespace DotvvmAcademy.Tutorial.ViewModels 
+namespace DotvvmAcademy.Tutorial.ViewModels
 {
-	public class Lesson2ViewModel 
+	public class Lesson2ViewModel
 	{
 		public string AddedTaskTitle { get; set; }
 
 		//declare the Tasks property here
 
-		public void AddTask() 
+		public void AddTask()
 		{
 		}
 	}
@@ -213,15 +213,15 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 using System;
 using System.Collections.Generic;
 
-namespace DotvvmAcademy.Tutorial.ViewModels 
+namespace DotvvmAcademy.Tutorial.ViewModels
 {
-	public class Lesson2ViewModel 
+	public class Lesson2ViewModel
 	{
 		public string AddedTaskTitle { get; set; }
 
 		public List<TaskData> Tasks { get; set; } = new List<TaskData>();
 
-		public void AddTask() 
+		public void AddTask()
 		{
 		}
 	}
@@ -233,7 +233,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 					<![CDATA[
 using System;
 
-namespace DotvvmAcademy.Tutorial.ViewModels 
+namespace DotvvmAcademy.Tutorial.ViewModels
 {
 	public class TaskData
 	{
@@ -243,7 +243,6 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 }
 										]]>
 				</CodeDependency>
-
 			</CodeDependencies>
 			<AllowedTypesConstructed>
 				<AllowedType>
@@ -251,10 +250,8 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>
 										]]>
 				</AllowedType>
-
 			</AllowedTypesConstructed>
 		</Step>
-
 
 		<!-- 7-->
 		<Step Type="CsharpCode">
@@ -273,18 +270,18 @@ Also, we'd like to reset the `AddedTaskTitle` property, so after the task is cre
 using System;
 using System.Collections.Generic;
 
-namespace DotvvmAcademy.Tutorial.ViewModels 
+namespace DotvvmAcademy.Tutorial.ViewModels
 {
-	public class Lesson2ViewModel 
+	public class Lesson2ViewModel
 	{
 		public string AddedTaskTitle { get; set; }
 
 		public List<TaskData> Tasks { get; set; } = new List<TaskData>();
 
-		public void AddTask() 
+		public void AddTask()
 		{
 			//add the new task with the title set to AddedTaskTitle here
-						
+
 			//reset the AddedTaskTitle to an empty string
 		}
 	}
@@ -296,15 +293,15 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 using System;
 using System.Collections.Generic;
 
-namespace DotvvmAcademy.Tutorial.ViewModels 
+namespace DotvvmAcademy.Tutorial.ViewModels
 {
-	public class Lesson2ViewModel 
+	public class Lesson2ViewModel
 	{
 		public string AddedTaskTitle { get; set; }
 
 		public List<TaskData> Tasks { get; set; } = new List<TaskData>();
 
-		public void AddTask() 
+		public void AddTask()
 		{
 			Tasks.Add(new TaskData() { Title = AddedTaskTitle });
 			AddedTaskTitle = "";
@@ -319,7 +316,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 					<![CDATA[
 using System;
 
-namespace DotvvmAcademy.Tutorial.ViewModels 
+namespace DotvvmAcademy.Tutorial.ViewModels
 {
 	public class TaskData
 	{
@@ -449,7 +446,6 @@ The `LinkButton` control works the same way as the `Button`, but it renders a hy
 			</ShadowBoxDescription>
 		</Step>
 
-
 		<!-- 10-->
 		<Step Type="DothtmlCode">
 			<Title>Hiding The LinkButton</Title>
@@ -458,7 +454,7 @@ The `LinkButton` control works the same way as the `Button`, but it renders a hy
 				<![CDATA[
 The LinkButton should be visible only for tasks which are not completed.
 
-In DotVVM, there is the `Visible` property which you can use on any HTML element or DotVVM control. It can show or hide the element. 
+In DotVVM, there is the `Visible` property which you can use on any HTML element or DotVVM control. It can show or hide the element.
 
 Bind the `IsCompleted` property value from the task to the `Visible` property of the `LinkButton`, so the button is hidden when the task is completed.
 								]]>
@@ -521,15 +517,15 @@ Declare the `CompleteTask` method which accepts one parameter of type `TaskData`
 using System;
 using System.Collections.Generic;
 
-namespace DotvvmAcademy.Tutorial.ViewModels 
+namespace DotvvmAcademy.Tutorial.ViewModels
 {
-	public class Lesson2ViewModel 
+	public class Lesson2ViewModel
 	{
 		public string AddedTaskTitle { get; set; }
 
 		public List<TaskData> Tasks { get; set; } = new List<TaskData>();
 
-		public void AddTask() 
+		public void AddTask()
 		{
 			Tasks.Add(new TaskData() { Title = AddedTaskTitle });
 			AddedTaskTitle = "";
@@ -545,21 +541,21 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 using System;
 using System.Collections.Generic;
 
-namespace DotvvmAcademy.Tutorial.ViewModels 
+namespace DotvvmAcademy.Tutorial.ViewModels
 {
-	public class Lesson2ViewModel 
+	public class Lesson2ViewModel
 	{
 		public string AddedTaskTitle { get; set; }
 
 		public List<TaskData> Tasks { get; set; } = new List<TaskData>();
 
-		public void AddTask() 
+		public void AddTask()
 		{
 			Tasks.Add(new TaskData() { Title = AddedTaskTitle });
 			AddedTaskTitle = "";
 		}
 
-		public void CompleteTask(TaskData task) 
+		public void CompleteTask(TaskData task)
 		{
 			task.IsCompleted = true;
 		}
@@ -572,7 +568,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 				<CodeDependency>
 					<![CDATA[
 using System;
-namespace DotvvmAcademy.Tutorial.ViewModels 
+namespace DotvvmAcademy.Tutorial.ViewModels
 {
 	public class TaskData
 	{
@@ -602,8 +598,6 @@ System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>.Add
 										]]>
 				</AllowedMethod>
 			</AllowedMethodsCalled>
-
-
 		</Step>
 
 		<!-- 12-->
@@ -615,7 +609,7 @@ System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>.Add
 Now we need to set the `Click` property of the link button to the `CompleteTask` method.
 
 Please note that all bindings inside `Repeater` are not evaluated on viewmodel, but on the corresponding `TaskData` object.
-But the `CompleteTask` method is in the parent scope - we have declared it in the viewmodel. 
+But the `CompleteTask` method is in the parent scope - we have declared it in the viewmodel.
 
 You can use the `_parent.CompleteTask()` to reference the method from the parent scope.
 When supplying arguments to the method, you begin also in the context of `TaskData`, so you can use `_this` to pass the whole
@@ -665,9 +659,9 @@ When supplying arguments to the method, you begin also in the context of `TaskDa
 				<![CDATA[
 The last thing we want to do, is to strike through tasks which are completed.
 
-If the task is completed, we'd like to render it as `<div class="task-completed"></div>`. 
+If the task is completed, we'd like to render it as `<div class="task-completed"></div>`.
 
-We need to use data-binding to specify the `class` property of the `<div>`. 
+We need to use data-binding to specify the `class` property of the `<div>`.
 
 You will need to use the `expression ? truePart : falsePart` operator to do it.
 Also note that you can use single quotes (apostrophes) instead of double quotes to use strings in data-bindings.
@@ -721,7 +715,5 @@ You have learned how to use the `Repeater` control and collections in the viewmo
 			</Description>
 			<ShadowBoxDescription />
 		</Step>
-
-
 	</Steps>
 </Lesson>

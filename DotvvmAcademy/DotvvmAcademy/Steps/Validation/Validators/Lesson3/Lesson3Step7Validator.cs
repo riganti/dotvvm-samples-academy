@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using DotVVM.Framework.Compilation.ControlTree.Resolved;
+using DotVVM.Framework.Controls;
 using DotvvmAcademy.Steps.Validation.Interfaces;
 using DotvvmAcademy.Steps.Validation.ValidatorProvision;
 using DotvvmAcademy.Steps.Validation.Validators.CommonValidators;
-using DotvvmAcademy.Steps.Validation.Validators.PropertyAndControlType;
-using DotVVM.Framework.Compilation.ControlTree.Resolved;
-using DotVVM.Framework.Controls;
+using System.Linq;
 
 namespace DotvvmAcademy.Steps.Validation.Validators.Lesson3
 {

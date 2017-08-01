@@ -1,17 +1,17 @@
 ﻿using System;
+using DotVVM.Framework.Configuration;
+using DotVVM.Framework.ViewModel;
+using DotvvmAcademy.Steps.StepsBases;
+using DotvvmAcademy.Steps.Validation;
+using DotvvmAcademy.Steps.Validation.Interfaces;
+using DotvvmAcademy.Steps.Validation.Validators.CommonValidators;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using DotvvmAcademy.Steps.StepsBases;
-using DotvvmAcademy.Steps.Validation;
-using DotvvmAcademy.Steps.Validation.Interfaces;
-using DotvvmAcademy.Steps.Validation.Validators.CommonValidators;
-using DotVVM.Framework.Configuration;
-using DotVVM.Framework.ViewModel;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
 
 namespace DotvvmAcademy.Steps
 {
@@ -32,36 +32,29 @@ namespace DotvvmAcademy.Steps
             };
         }
 
-        public override ICSharpCodeValidationObject Validator { get; set; }
+        [Bind(Direction.None)]
+        public List<string> AllowedMethodsCalled { get; private set; } = new List<string>();
 
         [Bind(Direction.None)]
         public List<string> AllowedTypesConstructed { get; private set; } = new List<string>();
 
         [Bind(Direction.None)]
-        public List<string> AllowedMethodsCalled { get; private set; } = new List<string>();
+        public List<string> OtherCodeDependencies { get; } = new List<string>();
 
         [Bind(Direction.None)]
         public List<string> ReferencedAssemblies { get; }
 
-
-        [Bind(Direction.None)]
-        public List<string> OtherCodeDependencies { get; } = new List<string>();
-
-
-        private static string GetAssemblyLocationFromType(Type type)
-        {
-            return type.GetTypeInfo().Assembly.Location;
-        }
+        public override ICSharpCodeValidationObject Validator { get; set; }
 
         protected override IEnumerable<string> GetValidationErrors()
         {
             try
             {
-                var tree = (CSharpSyntaxTree) CSharpSyntaxTree.ParseText(Code);
+                var tree = (CSharpSyntaxTree)CSharpSyntaxTree.ParseText(Code);
 
                 var portableExecutableReferences =
                     ReferencedAssemblies.Select(path => MetadataReference.CreateFromFile(path)).ToArray();
-                var syntaxTrees = new[] {tree}.Concat(OtherCodeDependencies.Select(c => CSharpSyntaxTree.ParseText(c)));
+                var syntaxTrees = new[] { tree }.Concat(OtherCodeDependencies.Select(c => CSharpSyntaxTree.ParseText(c)));
 
                 var compilation = CSharpCompilation.Create(
                     Guid.NewGuid().ToString(),
@@ -80,8 +73,13 @@ namespace DotvvmAcademy.Steps
             }
             catch (CodeValidationException ex)
             {
-                return new[] {ex.Message};
+                return new[] { ex.Message };
             }
+        }
+
+        private static string GetAssemblyLocationFromType(Type type)
+        {
+            return type.GetTypeInfo().Assembly.Location;
         }
     }
 }

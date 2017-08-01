@@ -10,7 +10,6 @@ namespace DotvvmAcademy.Lessons
             var lesson1XmlRelativePath = @"Lessons\Lesson1.xml";
             var lessonProvider = new LessonUserInterfaceProvider(lesson1XmlRelativePath, hostingEnvironment);
             Steps = lessonProvider.LessonSteps;
-           
         }
     }
 }

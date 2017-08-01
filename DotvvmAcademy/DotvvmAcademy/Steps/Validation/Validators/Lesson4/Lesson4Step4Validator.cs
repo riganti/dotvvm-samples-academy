@@ -1,9 +1,9 @@
-﻿using DotvvmAcademy.Steps.Validation.Interfaces;
+﻿using DotVVM.Framework.Compilation.ControlTree.Resolved;
+using DotVVM.Framework.Controls;
+using DotvvmAcademy.Steps.Validation.Interfaces;
 using DotvvmAcademy.Steps.Validation.ValidatorProvision;
 using DotvvmAcademy.Steps.Validation.Validators.CommonValidators;
 using DotvvmAcademy.Steps.Validation.Validators.PropertyAndControlType;
-using DotVVM.Framework.Compilation.ControlTree.Resolved;
-using DotVVM.Framework.Controls;
 
 namespace DotvvmAcademy.Steps.Validation.Validators.Lesson4
 {
@@ -16,13 +16,11 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson4
             Lesson4CommonValidator.ValidateStep2ValidationProperties(resolvedTreeRoot);
             Lesson4CommonValidator.ValidateOnlyStep3Properties(resolvedTreeRoot);
 
-            var property = new Property("has-error","none",ControlBindName.DivValidatorInvalidCssClass);
-            DotHtmlCommonValidator.ValidatePropertyBinding(resolvedTreeRoot,property);
+            var property = new Property("has-error", "none", ControlBindName.DivValidatorInvalidCssClass);
+            DotHtmlCommonValidator.ValidatePropertyBinding(resolvedTreeRoot, property);
 
             var invalidCssException = new CodeValidationException(Lesson4Texts.AllDivsMustHaveInvalidCssClass);
-            DotHtmlCommonValidator.CheckCountOfHtmlTagWithPropertyDescriptor(resolvedTreeRoot, "div",3, Validator.InvalidCssClassProperty, invalidCssException);
-
-
+            DotHtmlCommonValidator.CheckCountOfHtmlTagWithPropertyDescriptor(resolvedTreeRoot, "div", 3, Validator.InvalidCssClassProperty, invalidCssException);
         }
     }
 }

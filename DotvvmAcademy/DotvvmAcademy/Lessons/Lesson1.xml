@@ -74,7 +74,7 @@ Now, try to create a page with 3 textboxes and 1 button.
 			</FinalCode>
 			<ShadowBoxDescription>
 				<![CDATA[
-Don't forget to end the elements with `/>`. It means that the control doesn't have the end tag. In pure HTML, it is not necessary, but it is a good practice to make sure that all elements are closed.
+Don't forget to end the elements with ` />`. It means that the control doesn't have the end tag. In pure HTML, it is not necessary, but it is a good practice to make sure that all elements are closed.
 ]]>
 			</ShadowBoxDescription>
 		</Step>
@@ -96,9 +96,9 @@ Declare 3 properties – `Number1`, `Number2` and `Result`, all of them should b
 				<![CDATA[
 using System;
 
-namespace DotvvmAcademy.Tutorial.ViewModels 
+namespace DotvvmAcademy.Tutorial.ViewModels
 {
-	public class Lesson1ViewModel 
+	public class Lesson1ViewModel
 	{
 		// declare properties here
 	}
@@ -109,9 +109,9 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 				<![CDATA[
 using System;
 
-namespace DotvvmAcademy.Tutorial.ViewModels 
+namespace DotvvmAcademy.Tutorial.ViewModels
 {
-	public class Lesson1ViewModel 
+	public class Lesson1ViewModel
 	{
 		public int Number1 { get; set; }
 		public int Number2 { get; set; }
@@ -143,9 +143,9 @@ So create a method called `Calculate` which calculates the sum of `Number1` and 
 				<![CDATA[
 using System;
 
-namespace DotvvmAcademy.Tutorial.ViewModels 
+namespace DotvvmAcademy.Tutorial.ViewModels
 {
-	public class Lesson1ViewModel 
+	public class Lesson1ViewModel
 	{
 		public int Number1 { get; set; }
 		public int Number2 { get; set; }
@@ -160,15 +160,15 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 				<![CDATA[
 using System;
 
-namespace DotvvmAcademy.Tutorial.ViewModels 
+namespace DotvvmAcademy.Tutorial.ViewModels
 {
-	public class Lesson1ViewModel 
+	public class Lesson1ViewModel
 	{
 		public int Number1 { get; set; }
 		public int Number2 { get; set; }
 		public int Result { get; set; }
 
-		public void Calculate() 
+		public void Calculate()
 		{
 			Result = Number1 + Number2;
 		}
@@ -189,7 +189,7 @@ The method should be public and it does not return any value.
 			<ValidationKey>Lesson1Step6Validator</ValidationKey>
 			<Description>
 				<![CDATA[
-Now we need to connect the textboxes with properties in the viewmodel. When the user enters a value in the textbox, it will appear in the 
+Now we need to connect the textboxes with properties in the viewmodel. When the user enters a value in the textbox, it will appear in the
 viewmodel property automatically. Similarly, when you change a property value in the viewmodel, this change should be propagated in the page.
 
 This mechanism is called the **data-binding**. To bind the textbox to a property in the viewmodel, we use the following syntax:
@@ -237,8 +237,8 @@ Bind the textboxes to corresponding viewmodel properties.
 Now we want to connect the button to the `Calculate` method we have declared in one of the previous steps.
 
 We use the following syntax for command bindings: `Click="{command: Calculate()}"`.
- 
-Also, we'd like to change the text on the button – it should say "Calculate!". We can use the `Text` property of the button and because this text never changes, 
+
+Also, we'd like to change the text on the button – it should say "Calculate!". We can use the `Text` property of the button and because this text never changes,
 we don't have to store it in the viewmodel. We can declare it directly in DOTHTML code like this: `Text="Calculate!"`.
 								]]>
 			</Description>
@@ -282,6 +282,5 @@ You have learned how to use DotVVM controls and data-binding of properties and c
 								]]>
 			</Description>
 		</Step>
-
 	</Steps>
 </Lesson>

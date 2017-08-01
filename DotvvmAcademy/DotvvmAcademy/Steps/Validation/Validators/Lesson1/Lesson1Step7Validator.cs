@@ -1,8 +1,8 @@
-﻿using System.Linq;
+﻿using DotVVM.Framework.Compilation.ControlTree.Resolved;
+using DotVVM.Framework.Controls;
 using DotvvmAcademy.Steps.Validation.Interfaces;
 using DotvvmAcademy.Steps.Validation.ValidatorProvision;
-using DotVVM.Framework.Compilation.ControlTree.Resolved;
-using DotVVM.Framework.Controls;
+using System.Linq;
 
 namespace DotvvmAcademy.Steps.Validation.Validators.Lesson1
 {

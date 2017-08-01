@@ -45,7 +45,6 @@ XXXXX
 XXXXXXX
 								]]>
 			</FinalCode>
-
 		</Step>
 
 		<!--Required attribute-->
@@ -104,6 +103,5 @@ XXXXXXX
 				</AllowedMethod>
 			</AllowedMethodsCalled>
 		</Step>
-
 	</Steps>
 </Lesson>

@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using DotvvmAcademy.Steps.Validation.Interfaces;
-using DotvvmAcademy.Steps.Validation.ValidatorProvision;
-using DotVVM.Framework.Compilation.ControlTree.Resolved;
+﻿using DotVVM.Framework.Compilation.ControlTree.Resolved;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 using DotVVM.Framework.Controls;
 using DotVVM.Framework.Utils;
+using DotvvmAcademy.Steps.Validation.Interfaces;
+using DotvvmAcademy.Steps.Validation.ValidatorProvision;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DotvvmAcademy.Steps.Validation.Validators.Lesson2
 {
@@ -19,12 +19,11 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson2
             var template = resolvedTreeRoot.GetDescendantControls<Repeater>().Single()
                 .Properties[Repeater.ItemTemplateProperty]
                 .CastTo<ResolvedPropertyTemplate>();
-            
+
             List<ResolvedControl> resolvedControls = template
                 .GetDescendantControls<HtmlGenericControl>()
                 .ToList();
             var div = resolvedControls.First(d => d.DothtmlNode.As<DothtmlElementNode>()?.TagName == "div");
-            
 
             List<ResolvedPropertyBinding> divClassProperties = div.Properties
                 .Where(p => p.Value.Property.Name == "Attributes:class")

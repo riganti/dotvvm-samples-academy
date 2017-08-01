@@ -2,10 +2,9 @@
 
 <dot:Repeater DataSource="{value: Options}" WrapperTagName="ul" class="choices-step">
     <li>
-        <dot:RadioButton name="{value: _parent.StepIndex}" 
-                         Text="{value: Text}" 
-                         CheckedValue="{value: Id}" 
+        <dot:RadioButton name="{value: _parent.StepIndex}"
+                         Text="{value: Text}"
+                         CheckedValue="{value: Id}"
                          CheckedItem="{value: _parent.SelectedId}" />
     </li>
 </dot:Repeater>
-

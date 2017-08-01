@@ -1,16 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using DotVVM.Framework.ViewModel;
 using DotvvmAcademy.Steps.StepsBases;
-using DotVVM.Framework.ViewModel;
+using System.Collections.Generic;
 
 namespace DotvvmAcademy.Steps
 {
     public class ChoicesStep : ValidableStepBase
     {
         [Bind(Direction.ServerToClient)]
-        public ChoiceStepOption[] Options { get; set; }
+        public int CorrectId { get; set; }
 
         [Bind(Direction.ServerToClient)]
-        public int CorrectId { get; set; }
+        public ChoiceStepOption[] Options { get; set; }
 
         public int SelectedId { get; set; } = -1;
 

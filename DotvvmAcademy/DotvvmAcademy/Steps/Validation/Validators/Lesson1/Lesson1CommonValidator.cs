@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using DotVVM.Framework.Compilation.ControlTree.Resolved;
+using DotVVM.Framework.Controls;
 using DotvvmAcademy.Steps.Validation.Validators.CommonValidators;
 using DotvvmAcademy.Steps.Validation.Validators.PropertyAndControlType;
-using DotVVM.Framework.Compilation.ControlTree.Resolved;
-using DotVVM.Framework.Controls;
+using System.Collections.Generic;
 
 namespace DotvvmAcademy.Steps.Validation.Validators.Lesson1
 {
@@ -18,16 +18,16 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson1
             };
         }
 
-        public static void ValidateTextBoxBindings(ResolvedTreeRoot resolvedTreeRoot)
-        {
-            ValidateBasicControls(resolvedTreeRoot);
-            DotHtmlCommonValidator.ValidatePropertiesBindings(resolvedTreeRoot, CreateStep4Properties());
-        }
-
         public static void ValidateBasicControls(ResolvedTreeRoot resolvedTreeRoot)
         {
             DotHtmlCommonValidator.CheckControlTypeCount<TextBox>(resolvedTreeRoot, 3);
             DotHtmlCommonValidator.CheckControlTypeCount<Button>(resolvedTreeRoot, 1);
+        }
+
+        public static void ValidateTextBoxBindings(ResolvedTreeRoot resolvedTreeRoot)
+        {
+            ValidateBasicControls(resolvedTreeRoot);
+            DotHtmlCommonValidator.ValidatePropertiesBindings(resolvedTreeRoot, CreateStep4Properties());
         }
     }
 }

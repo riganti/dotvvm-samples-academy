@@ -1,8 +1,10 @@
 ﻿using System;
-using DotvvmAcademy.Steps;
 using DotVVM.Framework.Compilation;
 using DotVVM.Framework.Controls;
 using DotVVM.Framework.Hosting;
+using DotvvmAcademy.Steps;
+
+using System;
 
 namespace DotvvmAcademy.Controls
 {

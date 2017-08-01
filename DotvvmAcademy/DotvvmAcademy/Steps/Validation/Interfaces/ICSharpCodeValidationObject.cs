@@ -1,6 +1,6 @@
-﻿using System.Reflection;
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using System.Reflection;
 
 namespace DotvvmAcademy.Steps.Validation.Interfaces
 {
@@ -10,4 +10,3 @@ namespace DotvvmAcademy.Steps.Validation.Interfaces
             Assembly assembly);
     }
 }
-

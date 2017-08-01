@@ -4,14 +4,6 @@ namespace DotvvmAcademy.Steps.Validation.Validators.PropertyAndControlType
 {
     public static class EnumExtensions
     {
-        public static string ToDescriptionString(this ControlBindName val)
-        {
-            var descriptionAttribute =
-                (DescriptionAttribute) typeof(ControlBindName).GetTypeInfo().GetField(val.ToString())
-                    .GetCustomAttribute(typeof(DescriptionAttribute));
-            return descriptionAttribute != null ? descriptionAttribute.Description : string.Empty;
-        }
-
         public static bool RemovePropertyFromCode(this ControlBindName val)
         {
             var preservePropertyAttribute =
@@ -21,5 +13,12 @@ namespace DotvvmAcademy.Steps.Validation.Validators.PropertyAndControlType
             return preservePropertyAttribute?.RemoveProperty ?? false;
         }
 
+        public static string ToDescriptionString(this ControlBindName val)
+        {
+            var descriptionAttribute =
+                (DescriptionAttribute)typeof(ControlBindName).GetTypeInfo().GetField(val.ToString())
+                    .GetCustomAttribute(typeof(DescriptionAttribute));
+            return descriptionAttribute != null ? descriptionAttribute.Description : string.Empty;
+        }
     }
 }

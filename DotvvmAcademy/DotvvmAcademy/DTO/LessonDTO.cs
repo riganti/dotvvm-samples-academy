@@ -4,20 +4,6 @@ namespace DotvvmAcademy.DTO
 {
     public class LessonDTO
     {
-        public int Number { get; set; }
-
-        public int LastStep { get; set; }
-
-        public string Title { get; set; }
-
-        public string ImageUrl { get; set; }
-
-        public bool IsVisited => LastStep > 1;
-
-        public bool IsFinished => LastStep == LessonProgressStorage.FinishedLessonStepNumber;
-        //todo 
-        public bool IsCreated => (Number == 1) || (Number == 2) || (Number == 3)|| (Number == 4);
-
         public string ButtonText
         {
             get
@@ -38,6 +24,21 @@ namespace DotvvmAcademy.DTO
             }
         }
 
+        public string ImageUrl { get; set; }
+
+        //todo
+        public bool IsCreated => (Number == 1) || (Number == 2) || (Number == 3) || (Number == 4);
+
+        public bool IsFinished => LastStep == LessonProgressStorage.FinishedLessonStepNumber;
+
+        public bool IsVisited => LastStep > 1;
+
+        public int LastStep { get; set; }
+
+        public int Number { get; set; }
+
         public int StepToOpen => IsFinished ? 1 : LastStep;
+
+        public string Title { get; set; }
     }
 }

@@ -1,8 +1,8 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using DotVVM.Framework.Hosting;
 using DotvvmAcademy.DTO;
 using DotvvmAcademy.Services;
-using DotVVM.Framework.Hosting;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace DotvvmAcademy.ViewModels
 {

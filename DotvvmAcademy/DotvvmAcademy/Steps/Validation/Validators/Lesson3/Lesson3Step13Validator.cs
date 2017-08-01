@@ -1,9 +1,9 @@
-﻿using System.Reflection;
-using DotvvmAcademy.Steps.Validation.Interfaces;
+﻿using DotvvmAcademy.Steps.Validation.Interfaces;
 using DotvvmAcademy.Steps.Validation.ValidatorProvision;
 using DotvvmAcademy.Steps.Validation.Validators.CommonValidators;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using System.Reflection;
 
 namespace DotvvmAcademy.Steps.Validation.Validators.Lesson3
 {
@@ -17,7 +17,5 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson3
             properties.Add(Lesson3CommonValidator.CreateNewCustomerProperty());
             CSharpCommonValidator.ValidateProperties(tree, model, properties);
         }
-
-
     }
 }

@@ -1,14 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using DotvvmAcademy.Steps.StepsBases;
-using DotvvmAcademy.Steps.Validation;
-using DotvvmAcademy.Steps.Validation.Interfaces;
 using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Compilation.ControlTree.Resolved;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Tokenizer;
 using DotVVM.Framework.Configuration;
+using DotvvmAcademy.Steps.StepsBases;
+using DotvvmAcademy.Steps.Validation;
+using DotvvmAcademy.Steps.Validation.Interfaces;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DotvvmAcademy.Steps
 {
@@ -28,7 +28,7 @@ namespace DotvvmAcademy.Steps
                     var parser = new DothtmlParser();
                     var node = parser.Parse(tokenizer.Tokens);
                     var resolver = new DefaultControlTreeResolver(DotvvmConfiguration.CreateDefault());
-                    root = (ResolvedTreeRoot) resolver.ResolveTree(node, Guid.NewGuid() + ".dothtml");
+                    root = (ResolvedTreeRoot)resolver.ResolveTree(node, Guid.NewGuid() + ".dothtml");
                 }
                 catch (Exception ex)
                 {
@@ -40,7 +40,7 @@ namespace DotvvmAcademy.Steps
             }
             catch (CodeValidationException ex)
             {
-                return new[] {ex.Message};
+                return new[] { ex.Message };
             }
         }
     }

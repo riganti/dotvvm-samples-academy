@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using DotvvmAcademy.Lessons;
+﻿using DotvvmAcademy.Lessons;
 using DotvvmAcademy.Services;
 using Microsoft.AspNetCore.Hosting;
+using System.Collections.Generic;
 
 namespace DotvvmAcademy.Cache
 {

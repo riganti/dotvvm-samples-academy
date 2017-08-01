@@ -4,10 +4,10 @@ namespace DotvvmAcademy.Steps.StepsBases.Interfaces
 {
     public interface IStep
     {
-        int StepIndex { get; set; }
-
         [Bind(Direction.ServerToClient)]
         string Description { get; set; }
+
+        int StepIndex { get; set; }
 
         [Bind(Direction.ServerToClient)]
         string Title { get; set; }

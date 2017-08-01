@@ -1,6 +1,6 @@
-﻿using DotvvmAcademy.Steps.Validation.Interfaces;
+﻿using DotVVM.Framework.Compilation.ControlTree.Resolved;
+using DotvvmAcademy.Steps.Validation.Interfaces;
 using DotvvmAcademy.Steps.Validation.ValidatorProvision;
-using DotVVM.Framework.Compilation.ControlTree.Resolved;
 
 namespace DotvvmAcademy.Steps.Validation.Validators.Lesson3
 {

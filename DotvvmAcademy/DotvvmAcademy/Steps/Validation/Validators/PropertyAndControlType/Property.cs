@@ -8,8 +8,11 @@
             CsharpType = csharpType;
             TargetControlBindName = targetControlBindName;
         }
-        public ControlBindName TargetControlBindName { get; set; }
-        public string Name { get; set; }
+
         public string CsharpType { get; }
+
+        public string Name { get; set; }
+
+        public ControlBindName TargetControlBindName { get; set; }
     }
 }

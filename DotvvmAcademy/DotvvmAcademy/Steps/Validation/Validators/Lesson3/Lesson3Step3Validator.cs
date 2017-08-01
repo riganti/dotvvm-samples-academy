@@ -1,7 +1,7 @@
-﻿using DotvvmAcademy.Steps.Validation.Interfaces;
+﻿using DotVVM.Framework.Compilation.ControlTree.Resolved;
+using DotvvmAcademy.Steps.Validation.Interfaces;
 using DotvvmAcademy.Steps.Validation.ValidatorProvision;
 using DotvvmAcademy.Steps.Validation.Validators.CommonValidators;
-using DotVVM.Framework.Compilation.ControlTree.Resolved;
 
 namespace DotvvmAcademy.Steps.Validation.Validators.Lesson3
 {
@@ -11,7 +11,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.Lesson3
         public void Validate(ResolvedTreeRoot resolvedTreeRoot)
         {
             Lesson3CommonValidator.CheckStep3Controls(resolvedTreeRoot);
-            DotHtmlCommonValidator.ValidatePropertiesBindings(resolvedTreeRoot,Lesson3CommonValidator.CreateStep2Properties());
+            DotHtmlCommonValidator.ValidatePropertiesBindings(resolvedTreeRoot, Lesson3CommonValidator.CreateStep2Properties());
         }
     }
 }
