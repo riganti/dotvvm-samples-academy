@@ -52,18 +52,18 @@
 		</Content>
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="CommonMark.NET" Version="0.14.0" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="1.1.0" />
+		<PackageReference Include="CommonMark.NET" Version="0.15.1" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="1.1.2" />
 		<PackageReference Include="System.Linq" Version="4.3.0" />
 		<PackageReference Include="System.Reflection.Extensions" Version="4.3.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Server.IISIntegration" Version="1.1.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Server.IISIntegration" Version="1.1.2" />
 		<PackageReference Include="Microsoft.AspNetCore.Server.IISIntegration.Tools" Version="1.1.0-preview4-final" />
-		<PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="1.1.0" />
-		<PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="1.1.2" />
+		<PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.2" />
 		<PackageReference Include="System.Runtime" Version="4.3.0" />
-		<PackageReference Include="DotVVM" Version="1.1.0-rc3" />
-		<PackageReference Include="DotVVM.AspNetCore" Version="1.1.0-rc3" />
-		<PackageReference Include="DotVVM.Core" Version="1.1.0-rc3" />
+		<PackageReference Include="DotVVM" Version="1.1.2" />
+		<PackageReference Include="DotVVM.AspNetCore" Version="1.1.2" />
+		<PackageReference Include="DotVVM.Core" Version="1.1.2" />
 	</ItemGroup>
 	<ItemGroup>
 		<Compile Update="Steps\Validation\Validators\Lesson1\Lesson1Texts.Designer.cs">
