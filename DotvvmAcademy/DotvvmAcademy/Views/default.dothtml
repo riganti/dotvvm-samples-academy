@@ -1,34 +1,51 @@
 ﻿@viewModel DotvvmAcademy.ViewModels.DefaultViewModel, DotvvmAcademy
-@masterPage Views/site.dotmaster
+@masterPage Views/master.dotmaster
 <dot:Content ContentPlaceHolderID="MainContent">
 
     <div class="container-fluid content-padding">
-        <dot:Repeater DataSource="{value: Lessons}" class="row">
+        <dot:Repeater DataSource="{value: Lessons}"
+                      class="row">
             <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 lesson">
-                <div class="part" onclick="document.location.href = $(this).find('a:first').attr('href');">
+                <div class="part" 
+                     onclick="document.location.href = $(this).find('a:first').attr('href');">
                     <div class="img-part">
                         <div class="img-part-a">
                         </div>
-                        <dot:RouteLink RouteName="Lesson" Param-Lesson="{value: Number}" Param-Step="{value: StepToOpen}" Enabled="{value: IsCreated}">
-                            <img src="{value: ImageUrl}" class="img-responsive" />
+                        <dot:RouteLink RouteName="Lesson" 
+                                       Param-Lesson="{value: Index}" 
+                                       Param-Step="{value: _root.LastStepIndices[Index] == StepCount ? 0 : _root.LastStepIndices[Index]}" 
+                                       Enabled="{value: IsReady}">
+                            <img src="{value: ImageUrl}" 
+                                 class="img-responsive" />
                         </dot:RouteLink>
                     </div>
                     <div class="content-part">
 
                         <h3 class="lesson-h3">
-                            Lesson {{value: Number}}
-                            <i class="fa fa-check-square-o" Visible="{value: IsFinished}" aria-hidden="true"></i>
+                            Lesson {{value: Index + 1}}
+                            <i class="fa fa-check-square-o" 
+                               Visible="{value: _root.LastStepIndices[Index] == StepCount }" 
+                               aria-hidden="true"></i>
                         </h3>
-                        <dot:HtmlLiteral Html="{value: Title}" WrapperTagName="p" />
+                        <dot:HtmlLiteral Html="{value: Annotation}" 
+                                         WrapperTagName="p" />
                     </div>
 
                     <div class="button">
-                        <dot:RouteLink RouteName="Lesson" Param-Lesson="{value: Number}" Param-Step="{value: StepToOpen}"
-                                       Text="{value: ButtonText}" Enabled="{value: IsCreated}" class="aa" />
+                        <dot:RouteLink RouteName="Lesson" 
+                                       Param-Lesson="{value: Index + 1}" 
+                                       Param-Step="{value: _root.LastStepIndices[Index] == StepCount ? 0 : _root.LastStepIndices[Index]}"
+                                       Text="{value: _root.LastStepIndices[Index] == StepCount ? "Repeat Lesson" : "Start Lesson"}" 
+                                       Enabled="{value: IsReady}" 
+                                       class="aa" />
                     </div>
                     <div class="button-mobile">
-                        <dot:RouteLink RouteName="Lesson" Param-Lesson="{value: Number}" Param-Step="{value: StepToOpen}"
-                                       Text="{value: ButtonText}" Enabled="{value: IsCreated}" class="aa" />
+                        <dot:RouteLink RouteName="Lesson" 
+                                       Param-Lesson="{value: Index + 1}" 
+                                       Param-Step="{value: _root.LastStepIndices[Index] == StepCount ? 0 : _root.LastStepIndices[Index]}"
+                                       Text="{value: _root.LastStepIndices[Index] == StepCount ? "Repeat Lesson" : "Start Lesson"}" 
+                                       Enabled="{value: IsReady}" 
+                                       class="aa" />
                     </div>
                 </div>
             </div>

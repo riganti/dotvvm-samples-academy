@@ -1,4 +1,4 @@
-using DotvvmAcademy.Cache;
+using DotvvmAcademy.BL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,9 +17,9 @@ namespace DotvvmAcademy
             this.hostingEnvironment = hostingEnvironment;
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            //CacheLessons(app);
             var applicationPhysicalPath = env.ContentRootPath;
 
             // use DotVVM
@@ -43,7 +43,26 @@ namespace DotvvmAcademy
                 options.AddDefaultTempStorages("temp");
             });
 
-            services.AddSingleton(p => new LessonsCache(hostingEnvironment));
+            services.AddBL();
         }
+
+        //private void CacheLessons(IApplicationBuilder app)
+        //{
+        //    var lessonCache = app.ApplicationServices.GetService<ILessonCache>();
+        //    var stepCache = app.ApplicationServices.GetService<IStepCache>();
+        //    var lessonProvider = app.ApplicationServices.GetService<ILessonProvider>();
+        //    var stepProvider = app.ApplicationServices.GetService<IStepProvider>();
+
+        //    var lessons = lessonProvider.GetLessons();
+        //    foreach (var lesson in lessons)
+        //    {
+        //        lessonCache.Add(lesson);
+        //        var steps = stepProvider.GetSteps(lesson).ToList();
+        //        for (int i = 0; i < steps.Count; i++)
+        //        {
+        //            stepCache.Add(steps[i], lesson, i);
+        //        }
+        //    }
+        //}
     }
 }

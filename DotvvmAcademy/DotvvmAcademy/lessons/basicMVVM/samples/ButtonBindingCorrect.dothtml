@@ -1,0 +1,10 @@
+﻿<p>
+    <dot:TextBox Text="{value: Number1}" />
+    +
+    <dot:TextBox Text="{value: Number2}" />
+    =
+    <dot:TextBox Text="{value: Result}" />
+</p>
+<p>
+    <dot:Button Text="Calculate!" Click="{command: Calculate()}" />
+</p>

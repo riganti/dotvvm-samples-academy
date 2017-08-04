@@ -1,21 +1,24 @@
 ﻿@viewModel DotvvmAcademy.ViewModels.LessonViewModel, DotvvmAcademy
-@masterPage Views/site.dotmaster
+@masterPage Views/master.dotmaster
 
 <dot:Content ContentPlaceHolderID="MainContent">
     <div class="container-fluid">
 
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 lesson">
             <div class="container-fluid">
-                <div DataContext="{value: Step}">
-                    <h2 class="step-h">Step {{value: StepIndex}}: {{value: Title}}</h2>
-                    <div class="step">
+                <div>
+                    <h2 class="step-h">{{value: "Step " + (StepIndex + 1) + ":"}}</h2>
+
+                    <cc:StepControl Source="{value: Step}" />
+
+                    <%--<div class="step">
                         <cc:MarkdownLiteral Markdown="{value: Description}" />
                         <cc:StepRenderer />
 
                         <div class="alert alert-danger" Visible="{value: _parent.ErrorMessage != null}" InnerText="{value: _parent.ErrorMessage}"></div>
-                    </div>
+                    </div>--%>
 
-                    <dot:LinkButton Click="{command: _parent.Continue()}" class="btn btn-primary pull-right lesson-btn">
+                    <dot:LinkButton Click="{command Continue()}" class="btn btn-primary pull-right lesson-btn">
                         <span class="glyphicon glyphicon-hand-right" /> Continue
                     </dot:LinkButton>
 

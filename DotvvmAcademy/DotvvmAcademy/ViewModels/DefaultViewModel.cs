@@ -1,57 +1,36 @@
 using DotVVM.Framework.Hosting;
-using DotvvmAcademy.DTO;
+using DotVVM.Framework.ViewModel;
+using DotvvmAcademy.BL.DTO;
+using DotvvmAcademy.BL.Facades;
 using DotvvmAcademy.Services;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DotvvmAcademy.ViewModels
 {
-    public class DefaultViewModel : SiteViewModel
+    public class DefaultViewModel : DotvvmAcademyViewModelBase
     {
+        private LessonFacade lessonFacade;
+
+        public DefaultViewModel(LessonFacade lessonFacade)
+        {
+            this.lessonFacade = lessonFacade;
+        }
+
         public List<LessonDTO> Lessons { get; private set; }
+
+        public List<int> LastStepIndices { get; private set; } = new List<int>();
 
         public override Task Init()
         {
+            Lessons = lessonFacade.GetAllLessons(language: "en").ToList();
+
             var storage = new LessonProgressStorage(Context.GetAspNetCoreContext());
-            Lessons = new List<LessonDTO>
+            foreach(var lesson in Lessons)
             {
-                new LessonDTO
-                {
-                    Number = 1,
-                    LastStep = storage.GetLessonLastStep(1),
-                    Title = "Understand basic principles of DotVVM and MVVM pattern.",
-                    ImageUrl = "/img/basics.png"
-                },
-                new LessonDTO
-                {
-                    Number = 2,
-                    LastStep = storage.GetLessonLastStep(2),
-                    Title = "Learn how to use the <code>Repeater</code> control and how to work with collections.",
-                    ImageUrl = "/img/elementary.png"
-                },
-                new LessonDTO
-                {
-                    Number = 3,
-                    LastStep = storage.GetLessonLastStep(3),
-                    Title =
-                        "Try out working with advanced form controls like <code>ComboBox</code> and <code>RadioButton</code>.",
-                    ImageUrl = "/img/intermediate.png"
-                },
-                new LessonDTO
-                {
-                    Number = 4,
-                    LastStep = storage.GetLessonLastStep(4),
-                    Title = "Learn how validation works and <code>DataContext</code> works.",
-                    ImageUrl = "/img/advanced.png"
-                },
-                //new LessonDTO
-                //{
-                //    Number = 5,
-                //    LastStep = storage.GetLessonLastStep(5),
-                //    Title = "Understand <code>GridView</code> and loading data from <code>IQueryable</code>.",
-                //    ImageUrl = "/img/professional.png"
-                //}
-            };
+                LastStepIndices.Add(storage.GetLessonLastStep(lesson.Index + 1));
+            }
 
             return base.Init();
         }

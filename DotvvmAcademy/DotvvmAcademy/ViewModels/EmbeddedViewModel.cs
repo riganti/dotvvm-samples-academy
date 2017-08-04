@@ -1,17 +1,16 @@
-using DotvvmAcademy.Cache;
-using System.Linq;
+using DotvvmAcademy.BL.Facades;
 
 namespace DotvvmAcademy.ViewModels
 {
     public class EmbeddedViewModel : LessonViewModel
     {
-        public EmbeddedViewModel(LessonsCache lessonsCache) : base(lessonsCache)
+        public EmbeddedViewModel(LessonFacade lessonFacade, StepFacade stepFacade) : base(lessonFacade, stepFacade)
         {
         }
 
         protected override void AfterLoad()
         {
-            if (CurrentStepNumber == lesson.Steps.Count())
+            if (StepIndex == LessonStepCount - 1)
             {
                 //this prop changes the view for embedded page (used on dotvvm.com as a sample)
                 ContinueButtonVisible = false;
@@ -20,7 +19,7 @@ namespace DotvvmAcademy.ViewModels
 
         protected override void RedirectToNextLesson()
         {
-            Context.RedirectToRoute("Embedded", new { Step = CurrentStepNumber + 1 });
+            Context.RedirectToRoute("Embedded", new { Step = StepIndex + 2 });
         }
     }
 }

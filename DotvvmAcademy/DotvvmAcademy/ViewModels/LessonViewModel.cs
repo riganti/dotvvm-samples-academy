@@ -1,60 +1,49 @@
-using System;
 using DotVVM.Framework.Hosting;
-using DotvvmAcademy.Cache;
-using DotvvmAcademy.Lessons;
+using DotVVM.Framework.ViewModel;
+using DotvvmAcademy.BL.Facades;
 using DotvvmAcademy.Services;
-using DotvvmAcademy.Steps.StepsBases;
-using DotvvmAcademy.Steps.StepsBases.Interfaces;
-using System.Linq;
+using System;
 using System.Threading.Tasks;
 
 namespace DotvvmAcademy.ViewModels
 {
-    public class LessonViewModel : SiteViewModel
+    public class LessonViewModel : DotvvmAcademyViewModelBase
     {
-        protected LessonBase lesson;
-        protected int lessonNumber;
-        private readonly LessonsCache lessonsCache;
+        private LessonFacade lessonFacade;
+        private StepFacade stepFacade;
 
-        public LessonViewModel(LessonsCache lessonsCache)
+        public LessonViewModel(LessonFacade lessonFacade, StepFacade stepFacade)
         {
-            this.lessonsCache = lessonsCache;
+            this.lessonFacade = lessonFacade;
+            this.stepFacade = stepFacade;
         }
 
         public bool ContinueButtonVisible { get; set; } = true;
 
-        public string ErrorMessage { get; private set; }
+        public bool IsValid { get; set; }
 
-        public IStep Step { get; set; }
+        public int LessonStepCount { get; private set; }
 
-        protected int CurrentStepNumber { get; set; }
+        public int LessonIndex { get; private set; }
 
-        protected int NextStepNumber => CurrentStepNumber + 1;
+        public string Step { get; set; }
+
+        public int StepIndex { get; private set; }
 
         public void Continue()
         {
             var storage = new LessonProgressStorage(Context.GetAspNetCoreContext());
 
-            var step = Step as ValidableStepBase;
-            if (step != null)
+            if (IsValid)
             {
-                var validableStep = step;
-                if (Context.IsPostBack)
+                if (StepIndex < LessonStepCount - 1)
                 {
-                    ErrorMessage = validableStep.Validate();
-                }
-            }
-
-            if (string.IsNullOrEmpty(ErrorMessage))
-            {
-                if (CurrentStepNumber < lesson.Steps.Count())
-                {
-                    storage.UpdateLessonLastStep(lessonNumber, NextStepNumber);
+                    storage.UpdateLessonLastStep(LessonIndex + 1, StepIndex + 2);
                     RedirectToNextLesson();
                 }
                 else
                 {
-                    storage.UpdateLessonLastStep(lessonNumber, LessonProgressStorage.FinishedLessonStepNumber);
+                    storage.UpdateLessonLastStep(LessonIndex + 1, LessonProgressStorage.FinishedLessonStepNumber);
                     Context.RedirectToRoute("Default");
                 }
             }
@@ -62,7 +51,13 @@ namespace DotvvmAcademy.ViewModels
 
         public override Task Init()
         {
-            LoadStep();
+            LessonIndex = Convert.ToInt32(Context.Parameters["Lesson"]) - 1;
+            StepIndex = Convert.ToInt32(Context.Parameters["Step"]) - 1;
+            Step = stepFacade.GetStep(LessonIndex, "en", StepIndex);
+            LessonStepCount = lessonFacade.GetLessonStepCount(LessonIndex, "en");
+
+            AfterLoad();
+
             return base.Init();
         }
 
@@ -72,24 +67,7 @@ namespace DotvvmAcademy.ViewModels
 
         protected virtual void RedirectToNextLesson()
         {
-            Context.RedirectToRoute("Lesson", new { Step = NextStepNumber });
-        }
-
-        private void LoadStep()
-        {
-            lessonNumber = Convert.ToInt32(Context.Parameters["Lesson"]);
-            CurrentStepNumber = Convert.ToInt32(Context.Parameters["Step"]);
-
-            var lessons = lessonsCache.Get();
-
-            lesson = lessons.First(l => l.Key == lessonNumber).Value;
-            if (lesson == null)
-            {
-                throw new NotSupportedException();
-            }
-
-            Step = lesson.Steps.First(s => s.StepIndex == CurrentStepNumber);
-            AfterLoad();
+            Context.RedirectToRoute("Lesson", new { Step = StepIndex + 2 });
         }
     }
 }

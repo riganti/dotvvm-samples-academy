@@ -1,6 +1,8 @@
 using DotVVM.Framework.Configuration;
 using DotVVM.Framework.ResourceManagement;
 using DotvvmAcademy.Controls;
+using DotvvmAcademy.Services;
+using System.Linq;
 
 namespace DotvvmAcademy
 {
@@ -17,8 +19,7 @@ namespace DotvvmAcademy
         private void ConfigureControls(DotvvmConfiguration config, string applicationPath)
         {
             // register code-only controls and markup controls
-            config.Markup.AddCodeControl("cc", typeof(AceEditor));
-
+            config.Markup.AddCodeControls("cc", typeof(AceEditor));
             config.Markup.AddMarkupControl("step", "InfoStep", "Controls/InfoStep.dotcontrol");
             config.Markup.AddMarkupControl("step", "ChoicesStep", "Controls/ChoicesStep.dotcontrol");
             config.Markup.AddMarkupControl("step", "DothtmlStep", "Controls/DothtmlStep.dotcontrol");
@@ -30,12 +31,17 @@ namespace DotvvmAcademy
             // register custom resources and adjust paths to the built-in resources
             config.Resources.Register("ace", new ScriptResource()
             {
-                Location = new LocalFileResourceLocation("~/wwwroot/Scripts/ace/ace.js")
+                Location = new FileResourceLocation("~/wwwroot/Scripts/ace/ace.js")
             });
             config.Resources.Register("dotvvm-ace", new ScriptResource()
             {
-                Location = new LocalFileResourceLocation("~/wwwroot/Scripts/dotvvm-ace.js"),
+                Location = new FileResourceLocation("~/wwwroot/Scripts/dotvvm-ace.js"),
                 Dependencies = new[] { "dotvvm", "ace" }
+            });
+            config.Resources.Register("google-analytics", new ScriptResource()
+            {
+                Location = new FileResourceLocation("~/wwwroot/Scripts/google-analytics.js"),
+                RenderPosition = ResourceRenderPosition.Head
             });
         }
 

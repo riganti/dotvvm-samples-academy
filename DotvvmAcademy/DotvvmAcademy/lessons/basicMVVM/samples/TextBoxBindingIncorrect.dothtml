@@ -1,0 +1,10 @@
+﻿<p>
+    <dot:TextBox />
+    +
+    <dot:TextBox />
+    =
+    <dot:TextBox />
+</p>
+<p>
+    <dot:Button />
+</p>

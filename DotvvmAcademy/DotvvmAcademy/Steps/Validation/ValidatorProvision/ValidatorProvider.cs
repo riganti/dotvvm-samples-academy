@@ -1,5 +1,4 @@
 using System;
-using DotvvmAcademy.Lessons;
 using DotvvmAcademy.Steps.Validation.Interfaces;
 using System.Linq;
 using System.Reflection;
@@ -31,13 +30,14 @@ namespace DotvvmAcademy.Steps.Validation.ValidatorProvision
         /// <param name="validatorNamespace"></param>
         private static Type FindValidatorByKey(string validatorKey, string validatorNamespace)
         {
-            return typeof(LessonBase)
-                .GetTypeInfo()
-                .Assembly.GetTypes()
-                .Where(a =>
-                    a.Namespace != null &&
-                    a.Namespace.Contains(validatorNamespace))
-                .First(c => c.GetAttributeValue((StepValidationAttribute sva) => sva.ValidatorKey == validatorKey));
+            //return typeof(LessonBase)
+            //    .GetTypeInfo()
+            //    .Assembly.GetTypes()
+            //    .Where(a =>
+            //        a.Namespace != null &&
+            //        a.Namespace.Contains(validatorNamespace))
+            //    .First(c => c.GetAttributeValue((StepValidationAttribute sva) => sva.ValidatorKey == validatorKey));
+            return null;
         }
     }
 }
