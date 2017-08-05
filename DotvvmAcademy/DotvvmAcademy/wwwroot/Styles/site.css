@@ -29,6 +29,13 @@
     vertical-align: middle;
 }
 
+.header-block-right {
+    margin-top: 35px;
+    margin-right: 10px;
+    float: right;
+}
+
+
 .header-1, .header-2, .header-3 {
     font-family: 'Montserrat', sans-serif;
 }

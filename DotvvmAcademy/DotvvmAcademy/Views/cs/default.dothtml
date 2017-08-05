@@ -1,0 +1,37 @@
+﻿@viewModel DotvvmAcademy.ViewModels.cs.DefaultCSViewModel, DotvvmAcademy
+@masterPage Views/site.dotmaster
+<dot:Content ContentPlaceHolderID="MainContent">
+
+    <div class="container-fluid content-padding">
+        <dot:Repeater DataSource="{value: Kurzy}" class="row">
+            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 lesson">
+                <div class="part" onclick="document.location.href = $(this).find('a:first').attr('href');">
+                    <div class="img-part">
+                        <div class="img-part-a">
+                        </div>
+                        <dot:RouteLink RouteName="LessonCS" Param-Lesson="{value: Number}" Param-Step="{value: StepToOpen}" Enabled="{value: IsCreated}">
+                            <img src="{value: ImageUrl}" class="img-responsive" />
+                        </dot:RouteLink>
+                    </div>
+                    <div class="content-part">
+
+                        <h3 class="lesson-h3">
+                            Kurz {{value: Number}}
+                            <i class="fa fa-check-square-o" Visible="{value: IsFinished}" aria-hidden="true"></i>
+                        </h3>
+                        <dot:HtmlLiteral Html="{value: Title}" WrapperTagName="p" />
+                    </div>
+
+                    <div class="button">
+                        <dot:RouteLink RouteName="LessonCS" Param-Lesson="{value: Number}" Param-Step="{value: StepToOpen}"
+                                       Text="{value: ButtonText}" Enabled="{value: IsCreated}" class="aa" />
+                    </div>
+                    <div class="button-mobile">
+                        <dot:RouteLink RouteName="LessonCS" Param-Lesson="{value: Number}" Param-Step="{value: StepToOpen}"
+                                       Text="{value: ButtonText}" Enabled="{value: IsCreated}" class="aa" />
+                    </div>
+                </div>
+            </div>
+        </dot:Repeater>
+    </div>
+</dot:Content>

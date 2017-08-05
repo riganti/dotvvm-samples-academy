@@ -15,6 +15,7 @@ namespace DotvvmAcademy.ViewModels
         protected LessonBase lesson;
         protected int lessonNumber;
         private readonly LessonsCache lessonsCache;
+                
 
         public LessonViewModel(LessonsCache lessonsCache)
         {
@@ -22,6 +23,8 @@ namespace DotvvmAcademy.ViewModels
         }
 
         public bool ContinueButtonVisible { get; set; } = true;
+
+        public string ContinueButtonText => LessonNames.NextBtnText;
 
         public string ErrorMessage { get; private set; }
 
@@ -80,7 +83,7 @@ namespace DotvvmAcademy.ViewModels
             lessonNumber = Convert.ToInt32(Context.Parameters["Lesson"]);
             CurrentStepNumber = Convert.ToInt32(Context.Parameters["Step"]);
 
-            var lessons = lessonsCache.Get();
+            var lessons = lessonsCache.Get((string)Context.Parameters["Lang"]);
 
             lesson = lessons.First(l => l.Key == lessonNumber).Value;
             if (lesson == null)

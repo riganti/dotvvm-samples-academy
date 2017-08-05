@@ -12,6 +12,7 @@ namespace DotvvmAcademy
             ConfigureRoutes(config, applicationPath);
             ConfigureControls(config, applicationPath);
             ConfigureResources(config, applicationPath);
+
         }
 
         private void ConfigureControls(DotvvmConfiguration config, string applicationPath)
@@ -41,9 +42,9 @@ namespace DotvvmAcademy
 
         private void ConfigureRoutes(DotvvmConfiguration config, string applicationPath)
         {
-            config.RouteTable.Add("Default", "", "Views/default.dothtml");
-            config.RouteTable.Add("Lesson", "lesson{Lesson}/step{Step}", "Views/lesson.dothtml");
-            config.RouteTable.Add("Embedded", "elesson{Lesson}/step{Step}", "Views/embedded.dothtml");
+            config.RouteTable.Add("Lesson", "{Lang}/lesson{Lesson}/step{Step}", "Views/lesson.dothtml");
+
+            config.RouteTable.Add("Default", "{Lang:alpha}", "Views/default.dothtml", new { Lang = "en" });
 
             // Uncomment the following line to auto-register all dothtml files in the Views folder
             // config.RouteTable.AutoDiscoverRoutes(new DefaultRouteStrategy(config));

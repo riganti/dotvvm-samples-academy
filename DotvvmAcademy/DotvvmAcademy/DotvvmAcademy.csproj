@@ -37,10 +37,25 @@
 		<Content Include="Controls\CodeStep.dotcontrol" />
 		<Content Include="Controls\DothtmlStep.dotcontrol" />
 		<Content Include="Controls\InfoStep.dotcontrol" />
+		<Content Include="Lessons\cs\LessonCs3.xml">
+		  <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</Content>
+		<Content Include="Lessons\cs\LessonCs1.xml">
+		  <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</Content>
+		<Content Include="Lessons\cs\LessonCs2.xml">
+		  <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</Content>
+		<Content Include="Lessons\cs\LessonCs4.xml">
+		  <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</Content>
 		<Content Include="Lessons\Lesson1.xml" />
 		<Content Include="Lessons\Lesson2.xml" />
 		<Content Include="Lessons\Lesson3.xml" />
 		<Content Include="Lessons\Lesson4.xml" />
+		<Content Include="Views\cs\default.dothtml" />
+		<Content Include="Views\cs\embedded.dothtml" />
+		<Content Include="Views\cs\lesson.dothtml" />
 		<Content Include="Views\default.dothtml" />
 		<Content Include="Views\embedded.dothtml" />
 		<Content Include="Views\lesson.dothtml" />
@@ -93,6 +108,25 @@
 		</Compile>
 	</ItemGroup>
 	<ItemGroup>
+	  <Content Update="Views\default.dothtml">
+	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+	  </Content>
+	  <Content Update="Views\embedded.dothtml">
+	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+	  </Content>
+	  <Content Update="Views\lesson.dothtml">
+	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+	  </Content>
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Update="Lessons\LessonNames.cs.resx">
+		  <LastGenOutput>LessonNames - Copy.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Lessons\LessonNames.en.resx">
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		  <LastGenOutput>LessonNames.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
 		<EmbeddedResource Update="Steps\Validation\Validators\Lesson1\Lesson1Texts.resx">
 			<Generator>PublicResXFileCodeGenerator</Generator>
 			<LastGenOutput>Lesson1Texts.Designer.cs</LastGenOutput>

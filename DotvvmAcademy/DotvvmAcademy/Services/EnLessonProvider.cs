@@ -4,14 +4,15 @@ using System.Collections.Generic;
 
 namespace DotvvmAcademy.Services
 {
-    public class AllLessonProvider
+    public class EnLessonProvider : ILessonProvider
     {
         private readonly IHostingEnvironment hostingEnvironment;
 
-        public AllLessonProvider(IHostingEnvironment hostingEnvironment)
+        public EnLessonProvider(IHostingEnvironment hostingEnvironment)
         {
             this.hostingEnvironment = hostingEnvironment;
         }
+        public string Language => "en";
 
         public Dictionary<int, LessonBase> CreateLessons()
         {
