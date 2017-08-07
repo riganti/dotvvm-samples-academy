@@ -24,6 +24,7 @@ namespace DotvvmAcademy.Controls
                 control.SetValue(Internal.UniqueIDProperty, "c1");
                 Children.Add(control);
             }
+            context.ChangeCurrentCulture(context.Parameters["Lang"].ToString());
             base.OnInit(context);
         }
     }

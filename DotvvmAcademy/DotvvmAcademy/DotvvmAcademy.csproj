@@ -16,6 +16,12 @@
 		<GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
 	</PropertyGroup>
 	<ItemGroup>
+	  <Compile Remove="Views\cs\**" />
+	  <Content Remove="Views\cs\**" />
+	  <EmbeddedResource Remove="Views\cs\**" />
+	  <None Remove="Views\cs\**" />
+	</ItemGroup>
+	<ItemGroup>
 		<None Remove="Controls\ChoicesStep.dotcontrol" />
 		<None Remove="Controls\CodeEditorButtons.dotcontrol" />
 		<None Remove="Controls\CodeStep.dotcontrol" />
@@ -53,9 +59,6 @@
 		<Content Include="Lessons\Lesson2.xml" />
 		<Content Include="Lessons\Lesson3.xml" />
 		<Content Include="Lessons\Lesson4.xml" />
-		<Content Include="Views\cs\default.dothtml" />
-		<Content Include="Views\cs\embedded.dothtml" />
-		<Content Include="Views\cs\lesson.dothtml" />
 		<Content Include="Views\default.dothtml" />
 		<Content Include="Views\embedded.dothtml" />
 		<Content Include="Views\lesson.dothtml" />
@@ -68,6 +71,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="CommonMark.NET" Version="0.15.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Localization" Version="1.1.3" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="1.1.2" />
 		<PackageReference Include="System.Linq" Version="4.3.0" />
 		<PackageReference Include="System.Reflection.Extensions" Version="4.3.0" />
@@ -81,6 +85,11 @@
 		<PackageReference Include="DotVVM.Core" Version="1.1.2" />
 	</ItemGroup>
 	<ItemGroup>
+		<Compile Update="Lessons\LessonNames.Designer.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>LessonNames.resx</DependentUpon>
+		</Compile>
 		<Compile Update="Steps\Validation\Validators\Lesson1\Lesson1Texts.Designer.cs">
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
@@ -120,10 +129,13 @@
 	</ItemGroup>
 	<ItemGroup>
 		<EmbeddedResource Update="Lessons\LessonNames.cs.resx">
-		  <LastGenOutput>LessonNames - Copy.Designer.cs</LastGenOutput>
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Lessons\LessonNames.en.resx">
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		  <LastGenOutput>LessonNames.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Lessons\LessonNames.resx">
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		  <LastGenOutput>LessonNames.Designer.cs</LastGenOutput>
 		</EmbeddedResource>

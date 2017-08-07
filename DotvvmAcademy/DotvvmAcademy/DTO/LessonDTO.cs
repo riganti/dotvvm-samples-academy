@@ -1,26 +1,29 @@
-﻿using DotvvmAcademy.Services;
+﻿using DotvvmAcademy.Lessons;
+using DotvvmAcademy.Services;
+using System.Globalization;
 
 namespace DotvvmAcademy.DTO
 {
     public class LessonDTO
     {
+        public string CurrentCulture { get; set; }
         public string ButtonText
         {
             get
             {
                 if (IsFinished)
                 {
-                    return "Repeat Lesson";
+                    return LessonNames.ResourceManager.GetString("IsFinishedLessonBtnText", new CultureInfo(CurrentCulture));
                 }
                 if (IsVisited)
                 {
-                    return "Continue";
+                    return LessonNames.ResourceManager.GetString("IsVisitedLessonBtnText", new CultureInfo(CurrentCulture));
                 }
                 if (!IsCreated)
                 {
-                    return "Coming Soon";
+                    return LessonNames.ResourceManager.GetString("IsCreatedLessonBtnText", new CultureInfo(CurrentCulture));
                 }
-                return "Start Lesson";
+                return LessonNames.ResourceManager.GetString("StartLessonBtnText", new CultureInfo(CurrentCulture));
             }
         }
 

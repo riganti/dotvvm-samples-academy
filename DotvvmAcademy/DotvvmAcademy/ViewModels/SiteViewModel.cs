@@ -9,11 +9,9 @@ namespace DotvvmAcademy.ViewModels
 {
     public class SiteViewModel : DotvvmViewModelBase
     {
-        public void GetCurrentLanguage()
+        public void SetCurrentLanguage()
         {
-            var culture = new CultureInfo(Context.Parameters["Lang"].ToString());
-            CultureInfo.CurrentCulture = culture;
-            CultureInfo.CurrentUICulture = culture;
+            Context.ChangeCurrentCulture(Context.Parameters["Lang"].ToString());
         }
 
         public void SwitchLanguage(string language)

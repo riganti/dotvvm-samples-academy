@@ -7,6 +7,7 @@ using DotvvmAcademy.Steps.StepsBases;
 using DotvvmAcademy.Steps.StepsBases.Interfaces;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Globalization;
 
 namespace DotvvmAcademy.ViewModels
 {
@@ -24,7 +25,9 @@ namespace DotvvmAcademy.ViewModels
 
         public bool ContinueButtonVisible { get; set; } = true;
 
-        public string ContinueButtonText => LessonNames.NextBtnText;
+        public string ContinueButtonText => LessonNames.ResourceManager.GetString("NextBtnText", CultureInfo.CurrentCulture);
+
+        public string StepsButtonText => LessonNames.ResourceManager.GetString("StepBtnText", CultureInfo.CurrentCulture);
 
         public string ErrorMessage { get; private set; }
 

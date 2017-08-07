@@ -16,7 +16,7 @@
                     <div class="content-part">
 
                         <h3 class="lesson-h3">
-                            Lesson {{value: Number}}
+                            {{value: _parent.LessonName}} {{value: Number}}
                             <i class="fa fa-check-square-o" Visible="{value: IsFinished}" aria-hidden="true"></i>
                         </h3>
                         <dot:HtmlLiteral Html="{value: Title}" WrapperTagName="p" />

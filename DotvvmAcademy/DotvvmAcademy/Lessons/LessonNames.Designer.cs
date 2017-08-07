@@ -105,5 +105,14 @@ namespace DotvvmAcademy.Lessons {
                 return ResourceManager.GetString("NextBtnText", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Step.
+        /// </summary>
+        public static string StepBtnText {
+            get {
+                return ResourceManager.GetString("StepBtnText", resourceCulture);
+            }
+        }
     }
 }
