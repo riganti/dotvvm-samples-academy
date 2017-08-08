@@ -1,0 +1,13 @@
+<p>
+    <dot:TextBox Text="{value: AddedTaskTitle}" />
+    <dot:Button Text="Add Task" Click="{command: AddTask()}" />
+</p>
+<div>
+    <dot:Repeater DataSource="{value: Tasks}">
+        <div class="task">
+            {{value: Title}}
+            <dot:LinkButton Visible="{value: !IsCompleted}"
+                            Click="{command: _parent.CompleteTask(_this)}" />
+        </div>
+    </dot:Repeater>
+</div>

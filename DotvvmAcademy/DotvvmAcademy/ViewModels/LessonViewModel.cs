@@ -20,7 +20,7 @@ namespace DotvvmAcademy.ViewModels
 
         public bool ContinueButtonVisible { get; set; } = true;
 
-        public bool IsValid { get; set; }
+        public bool IsValid { get; set; } = true;
 
         public int LessonStepCount { get; private set; }
 

@@ -16,42 +16,23 @@
 		<GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
 	</PropertyGroup>
 	<ItemGroup>
-	  <Compile Remove="lessons\basicMVVM\samples\Lesson1ViewModelStep4Correct.cs" />
-	  <Compile Remove="lessons\basicMVVM\samples\Lesson1ViewModelStep4Incorrect.cs" />
-	  <Compile Remove="lessons\basicMVVM\samples\Lesson1ViewModelStep5Correct.cs" />
-	  <Compile Remove="lessons\basicMVVM\samples\Lesson1ViewModelStep5Incorrect.cs" />
+	  <Compile Remove="lessons\**\samples\*" />
+	  <Content Include="lessons\**\samples\*" />
 	</ItemGroup>
 	<ItemGroup>
-		<None Remove="Controls\ChoicesStep.dotcontrol" />
-		<None Remove="Controls\CodeEditorButtons.dotcontrol" />
-		<None Remove="Controls\CodeStep.dotcontrol" />
-		<None Remove="Controls\DothtmlStep.dotcontrol" />
-		<None Remove="Controls\InfoStep.dotcontrol" />
+		<None Remove="Controls\*.dotcontrol" />
 		<None Remove="dotvvm_serialized_config.json.tmp" />
-		<None Remove="lessons\Lesson2.xml" />
-		<None Remove="lessons\Lesson3.xml" />
-		<None Remove="lessons\Lesson4.xml" />
-		<None Remove="Views\default.dothtml" />
-		<None Remove="Views\embedded.dothtml" />
-		<None Remove="Views\lesson.dothtml" />
+		<None Remove="Views\*.dothtml" />
+		<None Remove="Views\*.dotmaster" />
 	</ItemGroup>
 	<ItemGroup>
-		<Content Include="Controls\ChoicesStep.dotcontrol" />
-		<Content Include="Controls\CodeEditorButtons.dotcontrol" />
-		<Content Include="Controls\CodeStep.dotcontrol" />
-		<Content Include="Controls\DothtmlStep.dotcontrol" />
-		<Content Include="Controls\InfoStep.dotcontrol" />
-		<Content Include="lessons\collections\Lesson2.xml" />
-		<Content Include="lessons\advancedForms\Lesson3.xml" />
-		<Content Include="lessons\validationDataContext\Lesson4.xml" />
-		<Content Include="Views\default.dothtml" />
-		<Content Include="Views\embedded.dothtml" />
-		<Content Include="Views\lesson.dothtml" />
-		<Content Include="Views\master.dotmaster" />
+		<Content Include="Controls\*.dotcontrol" />
+		<Content Include="Views\*.dothtml" />
+		<Content Include="Views\*.dotmaster" />
 		<Content Include="wwwroot\Scripts\google-analytics.js" />
 	</ItemGroup>
 	<ItemGroup>
-		<Content Update="wwwroot\**\*;Views\**\*;web.config;Controls\**\*;lessons\*.xml">
+		<Content Update="wwwroot\**\*;Views\**\*;web.config;Controls\**\*;lessons\**\*">
 			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
 		</Content>
 	</ItemGroup>
@@ -68,6 +49,9 @@
 		<PackageReference Include="DotVVM" Version="1.1.2" />
 		<PackageReference Include="DotVVM.AspNetCore" Version="1.1.2" />
 		<PackageReference Include="DotVVM.Core" Version="1.1.2" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\DotvvmAcademy.BL\DotvvmAcademy.BL.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<Compile Update="Steps\Validation\Validators\Lesson1\Lesson1Texts.Designer.cs">
@@ -117,14 +101,5 @@
 			<Generator>PublicResXFileCodeGenerator</Generator>
 			<LastGenOutput>ValidationErrorMessages.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
-	</ItemGroup>
-	<ItemGroup>
-	  <None Include="lessons\basicMVVM\samples\Lesson1ViewModelStep4Correct.cs" />
-	  <None Include="lessons\basicMVVM\samples\Lesson1ViewModelStep4Incorrect.cs" />
-	  <None Include="lessons\basicMVVM\samples\Lesson1ViewModelStep5Correct.cs" />
-	  <None Include="lessons\basicMVVM\samples\Lesson1ViewModelStep5Incorrect.cs" />
-	</ItemGroup>
-	<ItemGroup>
-	  <ProjectReference Include="..\DotvvmAcademy.BL\DotvvmAcademy.BL.csproj" />
 	</ItemGroup>
 </Project>
