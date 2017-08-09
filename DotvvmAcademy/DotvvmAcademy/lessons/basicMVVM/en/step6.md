@@ -10,6 +10,6 @@ This mechanism is called the **data-binding**. To bind the textbox to a property
 ```
 Bind the textboxes to corresponding viewmodel properties.
 
-<sample Incorrect="../samples/TextBoxBindingIncorrect.dothtml"
-        Correct="../samples/TextBoxBindingCorrect.dothtml"
-        Validator="Lesson1Step6Validator"/>
+[<sample Incorrect="../samples/TextBoxBindingIncorrect.dothtml"
+         Correct="../samples/TextBoxBindingCorrect.dothtml"
+         Validator="Lesson1Step6Validator"/>]

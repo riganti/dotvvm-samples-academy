@@ -14,6 +14,6 @@ we don't have to store it in the viewmodel. We can declare it directly in DOTHTM
 ```DOTHTML
 <dot:Button Click="{command: Text = "Calculate!"}" />
 ```
-<sample Incorrect="../samples/ButtonBindingIncorrect.dothtml"
-        Correct="../samples/ButtonBindingCorrect.dothtml"
-        Validator="Lesson1Step7Validator" />
+[<sample Incorrect="../samples/ButtonBindingIncorrect.dothtml"
+         Correct="../samples/ButtonBindingCorrect.dothtml"
+         Validator="Lesson1Step7Validator" />]

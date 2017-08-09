@@ -10,13 +10,13 @@ namespace DotvvmAcademy.BL.CommonMark
 {
     public class StepParser
     {
+        private int index;
+        private string language;
+        private int lastLiteralLength = 0;
+        private int lessonIndex;
         private List<SourceComponent> parsedComponents;
         private List<IComponentParser<SourceComponent>> parsers = new List<IComponentParser<SourceComponent>>();
         private CommonMarkSettings settings;
-        private int lessonIndex;
-        private string language;
-        private int index;
-        private int literalLength = 0;
 
         public StepParser()
         {
@@ -32,18 +32,13 @@ namespace DotvvmAcademy.BL.CommonMark
 
         public StepDTO Parse(int lessonIndex, string language, int index, string source)
         {
-            // create a new collection for this parsing
-            parsedComponents = new List<SourceComponent>();
-            this.lessonIndex = lessonIndex;
-            this.language = language;
-            this.index = index;
-
+            Reset(lessonIndex, language, index);
             var parsedMarkdown = CommonMarkConverter.Parse(source, settings);
             using (var writer = new StringWriter())
             {
                 CommonMarkConverter.ProcessStage3(parsedMarkdown, writer, settings);
                 var lastLiteral = ParseLiteral(writer);
-                if(lastLiteral != null)
+                if (lastLiteral != null)
                 {
                     parsedComponents.Add(lastLiteral);
                 }
@@ -56,6 +51,32 @@ namespace DotvvmAcademy.BL.CommonMark
 
         public void RegisterComponentParser(IComponentParser<SourceComponent> parser) => parsers.Add(parser);
 
+        private HtmlLiteralComponent ParseLiteral(StringWriter writer)
+        {
+            writer.Flush();
+            var wholeSource = writer.ToString();
+            var literalSource = wholeSource.Substring(lastLiteralLength);
+            lastLiteralLength = wholeSource.Length;
+            if (string.IsNullOrEmpty(literalSource))
+            {
+                return null;
+            }
+            var literal = new HtmlLiteralComponent(lessonIndex, language, index)
+            {
+                Source = literalSource
+            };
+            return literal;
+        }
+
+        private void Reset(int lessonIndex, string language, int index)
+        {
+            parsedComponents = new List<SourceComponent>();
+            this.lessonIndex = lessonIndex;
+            this.language = language;
+            this.index = index;
+            lastLiteralLength = 0;
+        }
+
         private string ResolvePlaceholder(string placeholder, StringWriter writer)
         {
             var element = XElement.Parse(placeholder);
@@ -64,7 +85,7 @@ namespace DotvvmAcademy.BL.CommonMark
                 if (parser.CanParse(element))
                 {
                     var literal = ParseLiteral(writer);
-                    if(literal != null)
+                    if (literal != null)
                     {
                         parsedComponents.Add(literal);
                     }
@@ -77,23 +98,6 @@ namespace DotvvmAcademy.BL.CommonMark
             }
             // parsing was not successful the placeholder stays
             return null;
-        }
-
-        private HtmlLiteralComponent ParseLiteral(StringWriter writer)
-        {
-            writer.Flush();
-            var wholeSource = writer.ToString();
-            var literalSource = wholeSource.Substring(literalLength);
-            literalLength = wholeSource.Length;
-            if(string.IsNullOrEmpty(literalSource))
-            {
-                return null;
-            }
-            var literal = new HtmlLiteralComponent(lessonIndex, language, index)
-            {
-                Source = literalSource
-            };
-            return literal;
         }
     }
 }

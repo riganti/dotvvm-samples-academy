@@ -1,4 +1,5 @@
 ﻿using DotvvmAcademy.BL.DTO;
+using DotvvmAcademy.BL.DTO.Components;
 using DotvvmAcademy.DAL.Base.Providers;
 using System;
 using System.Collections.Generic;
@@ -17,26 +18,27 @@ namespace DotvvmAcademy.BL.Facades
             this.sampleProvider = sampleProvider;
         }
 
-        public SampleDTO GetSample(int lessonIndex, string language, int stepIndex, string correctPath, string incorrectPath)
+        public SampleDTO GetSample(SampleComponent component)
         {
-            var correctPathLanguage = GetSampleLanguage(correctPath);
-            var incorrectPathLanguage = GetSampleLanguage(incorrectPath);
+            var correctPathLanguage = GetSampleLanguage(component.CorrectPath);
+            var incorrectPathLanguage = GetSampleLanguage(component.IncorrectPath);
             if (correctPathLanguage != incorrectPathLanguage)
             {
-                throw new InvalidOperationException($"The samples '{correctPath}' and '{incorrectPath}' do not share the same programming language.");
+                throw new InvalidOperationException($"The samples '{component.CorrectPath}' and '{component.IncorrectPath}' " +
+                    "do not share the same programming language.");
             }
 
-            var sample = new SampleDTO(lessonIndex, language, stepIndex)
+            var sample = new SampleDTO(component.LessonIndex, component.Language, component.StepIndex)
             {
                 CodeLanguage = correctPathLanguage,
-                CorrectCode = GetSample(lessonIndex, language, stepIndex, correctPath),
-                IncorrectCode = GetSample(lessonIndex, language, stepIndex, incorrectPath)
+                CorrectCode = GetRawSample(component.LessonIndex, component.Language, component.StepIndex, component.CorrectPath),
+                IncorrectCode = GetRawSample(component.LessonIndex, component.Language, component.StepIndex, component.IncorrectPath)
             };
 
             return sample;
         }
 
-        public string GetSample(int lessonIndex, string lessonLanguage, int stepIndex, string path)
+        public string GetRawSample(int lessonIndex, string lessonLanguage, int stepIndex, string path)
         {
             var lesson = lessonProvider.Get(lessonIndex, lessonLanguage);
             return sampleProvider.Get(lesson, stepIndex, path);

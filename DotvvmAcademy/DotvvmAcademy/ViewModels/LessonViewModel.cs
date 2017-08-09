@@ -1,10 +1,12 @@
 using DotVVM.Framework.Hosting;
 using DotVVM.Framework.ViewModel;
 using DotvvmAcademy.BL.DTO;
+using DotvvmAcademy.BL.DTO.Components;
 using DotvvmAcademy.BL.Facades;
 using DotvvmAcademy.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DotvvmAcademy.ViewModels
@@ -12,30 +14,32 @@ namespace DotvvmAcademy.ViewModels
     public class LessonViewModel : DotvvmAcademyViewModelBase
     {
         private LessonFacade lessonFacade;
+        private SampleFacade sampleFacade;
         private StepFacade stepFacade;
 
-        public LessonViewModel(LessonFacade lessonFacade, StepFacade stepFacade)
+        public LessonViewModel(LessonFacade lessonFacade, StepFacade stepFacade, SampleFacade sampleFacade)
         {
             this.lessonFacade = lessonFacade;
             this.stepFacade = stepFacade;
+            this.sampleFacade = sampleFacade;
         }
 
         public bool ContinueButtonVisible { get; set; } = true;
 
         public bool IsValid { get; set; } = true;
 
-        public int LessonStepCount { get; private set; }
+        public string Language { get; set; } = "en";
 
         public int LessonIndex { get; private set; }
 
-        public string Language { get; set; } = "en";
+        public int LessonStepCount { get; private set; }
+
+        public List<SampleDTO> Samples { get; set; } = new List<SampleDTO>();
 
         [Bind(Direction.None)]
         public StepDTO Step { get; set; }
 
         public int StepIndex { get; private set; }
-
-        public List<SampleDTO> Samples { get; set; } = new List<SampleDTO>();
 
         public void Continue()
         {
@@ -62,6 +66,7 @@ namespace DotvvmAcademy.ViewModels
             StepIndex = Convert.ToInt32(Context.Parameters["Step"]) - 1;
             Step = stepFacade.GetStep(LessonIndex, Language, StepIndex);
             LessonStepCount = lessonFacade.GetLessonStepCount(LessonIndex, Language);
+            ProcessStepSource();
 
             AfterLoad();
 
@@ -75,6 +80,19 @@ namespace DotvvmAcademy.ViewModels
         protected virtual void RedirectToNextLesson()
         {
             Context.RedirectToRoute("Lesson", new { Step = StepIndex + 2 });
+        }
+
+        private void ProcessSamples()
+        {
+            foreach (var sample in Step.Source.OfType<SampleComponent>())
+            {
+                Samples.Add(sampleFacade.GetSample(sample));
+            }
+        }
+
+        private void ProcessStepSource()
+        {
+            ProcessSamples();
         }
     }
 }

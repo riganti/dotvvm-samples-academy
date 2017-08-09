@@ -1,4 +1,6 @@
 using DotvvmAcademy.BL;
+using DotvvmAcademy.BL.DTO.Components;
+using DotvvmAcademy.Controls;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -44,6 +46,13 @@ namespace DotvvmAcademy
             });
 
             services.AddBL();
+            ConfigureComponentRenderers(services);
+        }
+
+        public void ConfigureComponentRenderers(IServiceCollection services)
+        {
+            services.AddTransient<SourceComponentRenderer<SampleComponent>, SampleComponentRenderer>();
+            services.AddTransient<SourceComponentRenderer<HtmlLiteralComponent>, HtmlLiteralComponentRenderer>();
         }
 
         //private void CacheLessons(IApplicationBuilder app)
