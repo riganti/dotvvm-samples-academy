@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DocumentationText" xml:space="preserve">
+    <value>Dokumentace</value>
+  </data>
   <data name="IsCreatedLessonBtnText" xml:space="preserve">
     <value>Již brzy</value>
   </data>
@@ -144,10 +147,19 @@
   <data name="NextBtnText" xml:space="preserve">
     <value>Pokračovat</value>
   </data>
+  <data name="OnlineCourseText" xml:space="preserve">
+    <value>online kurzy</value>
+  </data>
+  <data name="SamplesText" xml:space="preserve">
+    <value>Příklady</value>
+  </data>
   <data name="StartLessonBtnText" xml:space="preserve">
     <value>Začít kurz</value>
   </data>
   <data name="StepBtnText" xml:space="preserve">
     <value>Krok</value>
+  </data>
+  <data name="TutorialsText" xml:space="preserve">
+    <value>Cvičení</value>
   </data>
 </root>

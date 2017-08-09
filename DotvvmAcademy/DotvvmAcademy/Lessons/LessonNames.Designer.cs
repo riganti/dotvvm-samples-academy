@@ -62,6 +62,42 @@ namespace DotvvmAcademy.Lessons {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dokumentation.
+        /// </summary>
+        public static string DocumentationText {
+            get {
+                return ResourceManager.GetString("DocumentationText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Coming Soon.
+        /// </summary>
+        public static string IsCreatedLessonBtnText {
+            get {
+                return ResourceManager.GetString("IsCreatedLessonBtnText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Repeat Lesson.
+        /// </summary>
+        public static string IsFinishedLessonBtnText {
+            get {
+                return ResourceManager.GetString("IsFinishedLessonBtnText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Continue.
+        /// </summary>
+        public static string IsVisitedLessonBtnText {
+            get {
+                return ResourceManager.GetString("IsVisitedLessonBtnText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Understand basic principles of DotVVM and MVVM pattern..
         /// </summary>
         public static string Lesson1 {
@@ -98,6 +134,15 @@ namespace DotvvmAcademy.Lessons {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lesson.
+        /// </summary>
+        public static string LessonText {
+            get {
+                return ResourceManager.GetString("LessonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Continue.
         /// </summary>
         public static string NextBtnText {
@@ -107,11 +152,47 @@ namespace DotvvmAcademy.Lessons {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to online course.
+        /// </summary>
+        public static string OnlineCourseText {
+            get {
+                return ResourceManager.GetString("OnlineCourseText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Samples.
+        /// </summary>
+        public static string SamplesText {
+            get {
+                return ResourceManager.GetString("SamplesText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start Lesson.
+        /// </summary>
+        public static string StartLessonBtnText {
+            get {
+                return ResourceManager.GetString("StartLessonBtnText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Step.
         /// </summary>
         public static string StepBtnText {
             get {
                 return ResourceManager.GetString("StepBtnText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tutorials.
+        /// </summary>
+        public static string TutorialsText {
+            get {
+                return ResourceManager.GetString("TutorialsText", resourceCulture);
             }
         }
     }

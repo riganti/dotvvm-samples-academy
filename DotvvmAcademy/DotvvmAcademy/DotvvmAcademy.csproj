@@ -43,16 +43,16 @@
 		<Content Include="Controls\CodeStep.dotcontrol" />
 		<Content Include="Controls\DothtmlStep.dotcontrol" />
 		<Content Include="Controls\InfoStep.dotcontrol" />
-		<Content Include="Lessons\cs\LessonCs3.xml">
+		<Content Include="Lessons\cs\Lesson3.xml">
 		  <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
 		</Content>
-		<Content Include="Lessons\cs\LessonCs1.xml">
+		<Content Include="Lessons\cs\Lesson1.xml">
 		  <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
 		</Content>
-		<Content Include="Lessons\cs\LessonCs2.xml">
+		<Content Include="Lessons\cs\Lesson2.xml">
 		  <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
 		</Content>
-		<Content Include="Lessons\cs\LessonCs4.xml">
+		<Content Include="Lessons\cs\Lesson4.xml">
 		  <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
 		</Content>
 		<Content Include="Lessons\Lesson1.xml" />

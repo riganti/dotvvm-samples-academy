@@ -12,7 +12,8 @@ namespace DotvvmAcademy.Cache
         {
             var providers = new ILessonProvider[] {
                 new EnLessonProvider(hostingEnvironment),
-                new CsLessonProvider(hostingEnvironment)
+                new CsLessonProvider(hostingEnvironment),
+                new RuLessonProvider(hostingEnvironment)
             };
 
             var dict = providers.ToDictionary(p => p.Language, p => p.CreateLessons());

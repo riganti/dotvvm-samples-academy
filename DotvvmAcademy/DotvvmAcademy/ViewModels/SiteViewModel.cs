@@ -14,6 +14,11 @@ namespace DotvvmAcademy.ViewModels
             Context.ChangeCurrentCulture(Context.Parameters["Lang"].ToString());
         }
 
+        public string OnlineCourseText { get; set; }
+        public string DocumentationText { get; set; }
+        public string SamplesText { get; set; }
+        public string TutorialsText { get; set; }
+
         public void SwitchLanguage(string language)
         {
             Context.RedirectToRoute(Context.Route.RouteName, new { Lang = language });

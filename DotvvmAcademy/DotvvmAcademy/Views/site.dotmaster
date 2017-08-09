@@ -29,7 +29,7 @@
                 <img src="/img/dotvvm-logo.png" class="img-responsive header-logo" />
                 <div class="header-block">
                     <h1 class="header-1">DotVVM <span class="span-academy">Academy</span></h1>
-                    <h3 class="header-3">online course</h3>
+                    <h3 class="header-3">{{value:  _this.OnlineCourseText}}</h3>
                 </div>
                 <div class="header-block-right">
                     <div class="dropdown">
@@ -40,6 +40,7 @@
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                             <li><dot:LinkButton Click="{command: SwitchLanguage("en")}" Text="English"></dot:LinkButton></li>
                             <li><dot:LinkButton Click="{command: SwitchLanguage("cs")}" Text="Česky"></dot:LinkButton></li>
+                            <li><dot:LinkButton Click="{command: SwitchLanguage("ru")}" Text="Русский"></dot:LinkButton></li>
                         </ul>
                     </div>
                 </div>
@@ -67,9 +68,9 @@
                 <div class="col-md-6 right">
                     <div style="display: inline-block; vertical-align: middle;">
                         <p style="padding-top: 20px">
-                            <a target="_blank" href="https://www.dotvvm.com/docs/latest">Documentation</a> |
-                            <a target="_blank" href="https://www.dotvvm.com/docs/tutorials/introduction/latest"> Tutorials</a> |
-                            <a target="_blank" href="https://www.dotvvm.com/docs/samples/latest">Samples</a>
+                            <a target="_blank" href="https://www.dotvvm.com/docs/latest">{{value: DocumentationText}}</a> |
+                            <a target="_blank" href="https://www.dotvvm.com/docs/tutorials/introduction/latest">{{value: TutorialsText}}</a> |
+                            <a target="_blank" href="https://www.dotvvm.com/docs/samples/latest">{{value: SamplesText}}</a>
                         </p>
                     </div>
                 </div>

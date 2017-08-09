@@ -67,7 +67,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 			<ValidationKey>Lesson3Step3Validator</ValidationKey>
 			<Description>
 				<![CDATA[
-Добавьте 2 `TextBox` на страницу и свяжите их свойство `Text` со свойствами `FirstName` и `LastName`.
+Добавьте 2 элемента TextBox на страницу и свяжите их свойство `Text` со свойствами `FirstName` и `LastName`.
 								]]>
 			</Description>
 			<!--Required element-->
@@ -516,9 +516,9 @@ System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>.A
 			<ValidationKey>Lesson3Step11Validator</ValidationKey>
 			<Description>
 				<![CDATA[
-Добавьте `ComboBox` на страницу и свяжите его свойство `DataSource` с `Countries`. Он (ComboBox) будет заполнен списком со странами, которые мы инициализируем в конструкторе.
+Добавьте элемент `ComboBox` на страницу и свяжите его свойство `DataSource` с `Countries`. `ComboBox` будет наполнен списком со странами, которые мы инициализируем в конструкторе.
 
-Теперь нам нужно указать ComboBox, что свойство `Name` из класса `CountryInfo` должно быть отображено. Установите `DisplayMember` как "Name".
+Элементу `ComboBox` нужно указать , что свойство `Name` из класса `CountryInfo` должно быть отображено. Установите `DisplayMember` как "Name".
 
 Когда пользователь выбирает какой-то элемент, мы хотим использовать `Id` от выбранного объекта` CountryInfo` в качестве выбранного значения. Установим `ValueMember` на "Id".
 
@@ -583,9 +583,10 @@ System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>.A
 				<![CDATA[
 В предыдущих шагах, мы разместили все свойства - `FirstName`, `LastName`, `Role` и `SelectedCountryId` в одном классе с коллекцией `Countries`.
 
-Это не лучшая практика, потому что мы смешиваем информацию о конкретном заказчике с некоторыми другими данными, например, список стран.
-Это хороший момент, чтобы отделить свойства, которые представляют состояние некоторого объекта (заказчика, в данном случае), в отдельный класс. Этот класс содержит только свойства и никаких методов.
-Это называется DTO - Передача данных объекта (Data Transfer Object).
+Это не лучшая практика, потому что мы смешиваем информацию о конкретном заказчике с некоторыми другими данными, например, списком стран.
+Было бы неплохо отделить свойства, которые представляют состояние некоторого объекта (заказчика, в данном случае), в отдельный класс.
+Этот класс содержал бы только свойства и никаких методов.
+Это называется DTO - Объект передачи данных (Data Transfer Object).
 
 Итак, мы перемещаем свойства в классе `CustomerInfo`:
 

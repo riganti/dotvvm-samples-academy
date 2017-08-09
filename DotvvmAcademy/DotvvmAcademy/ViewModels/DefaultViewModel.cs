@@ -17,6 +17,12 @@ namespace DotvvmAcademy.ViewModels
         {
             SetCurrentLanguage();
             LessonName = LessonNames.ResourceManager.GetString("LessonText", CultureInfo.CurrentCulture);
+
+            OnlineCourseText = LessonNames.ResourceManager.GetString("OnlineCourseText", CultureInfo.CurrentCulture);
+            SamplesText = LessonNames.ResourceManager.GetString("SamplesText", CultureInfo.CurrentCulture);
+            DocumentationText = LessonNames.ResourceManager.GetString("DocumentationText", CultureInfo.CurrentCulture);
+            TutorialsText = LessonNames.ResourceManager.GetString("TutorialsText", CultureInfo.CurrentCulture);
+
             var storage = new LessonProgressStorage(Context.GetAspNetCoreContext());
             Lessons = new List<LessonDTO>
             {
