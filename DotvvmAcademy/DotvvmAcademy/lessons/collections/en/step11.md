@@ -11,13 +11,12 @@ Declare the `CompleteTask` method which accepts one parameter of type `TaskData`
          Validator="Lesson2Step11Validator">
     <dependencies>
         <dependency>../samples/TaskDataCorrect.cs</dependency>
-    </dependecies>
+    </dependencies>
     <allowedTypes>
-        <allowedType>System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData></allowedType>
+        <allowedType><![CDATA[System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>]]></allowedType>
         <allowedType>DotvvmAcademy.Tutorial.ViewModels.TaskData</allowedType>
-        <allowedType></allowedType>
     </allowedTypes>
     <allowedMethods>
-        <allowedMethod>System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>.Add</allowedMethod>
+        <allowedMethod><![CDATA[System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>.Add]]></allowedMethod>
     </allowedMethods>
 </sample>]

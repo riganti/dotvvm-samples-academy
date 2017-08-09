@@ -9,6 +9,6 @@ We need to use data-binding to specify the `class` property of the `<div>`.
 You will need to use the `expression ? truePart : falsePart` operator to do it.
 Also note that you can use single quotes (apostrophes) instead of double quotes to use strings in data-bindings.
 
-[<sample Correct="CompleteTask2Correct.dothtml"
-         Incorrect="CompleteTaskCorrect.dothtml"
+[<sample Correct="../samples/CompleteTask2Correct.dothtml"
+         Incorrect="../samples/CompleteTaskCorrect.dothtml"
          Validator="Lesson2Step13Validator">]

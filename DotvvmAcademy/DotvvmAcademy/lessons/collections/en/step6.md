@@ -13,6 +13,6 @@ to `new List<TaskData>()`.
         <dependency>../samples/TaskDataCorrect.cs</dependency>
     </dependencies>
     <allowedTypes>
-        <allowedType>System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData></allowedType>
+        <allowedType><![CDATA[System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>]]></allowedType>
     </allowedTypes>
 </sample>]

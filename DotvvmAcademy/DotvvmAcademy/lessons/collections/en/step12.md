@@ -9,6 +9,6 @@ You can use the `_parent.CompleteTask()` to reference the method from the parent
 When supplying arguments to the method, you begin also in the context of `TaskData`, so you can use `_this` to pass the whole
 `TaskData` object to the method.
 
-[<sample Correct="CompleteTaskCorrect.dothtml"
-         Incorrect="CompleteTaskIncorrect.dothtml"
+[<sample Correct="../samples/CompleteTaskCorrect.dothtml"
+         Incorrect="../samples/CompleteTaskIncorrect.dothtml"
          Validator="Lesson2Step12Validator" />]

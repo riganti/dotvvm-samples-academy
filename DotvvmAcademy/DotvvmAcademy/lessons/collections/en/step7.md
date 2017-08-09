@@ -11,10 +11,10 @@ Also, we'd like to reset the `AddedTaskTitle` property, so after the task is cre
         <dependency>../samples/TaskDataCorrect.cs</dependency>
     </dependencies>
     <allowedTypes>
-        <allowedType>System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData></allowedType>
+        <allowedType><![CDATA[System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>]]></allowedType>
         <allowedType>DotvvmAcademy.Tutorial.ViewModels.TaskData</allowedType>
     </allowedTypes>
     <allowedMethods>
-        <allowedMethod>System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>.Add</allowedMethod>
+        <allowedMethod><![CDATA[System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>.Add]]></allowedMethod>
     </allowedMethods>
 </sample>]
