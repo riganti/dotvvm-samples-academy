@@ -1,0 +1,12 @@
+<!--add Validator.InvalidCssClass-->
+<div Validator.Value="{value: City}">
+    <dot:TextBox Text="{value: City}" />
+</div>
+<!--add Validator.InvalidCssClass-->
+<div Validator.Value="{value: ZIP}">
+    <dot:TextBox Text="{value: ZIP}" />
+</div>
+<!--add Validator.InvalidCssClass-->
+<div Validator.Value="{value: Email}">
+    <dot:TextBox Text="{value: Email}" />
+</div>

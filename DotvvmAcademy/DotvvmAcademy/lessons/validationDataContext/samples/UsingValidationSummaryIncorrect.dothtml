@@ -1,0 +1,12 @@
+<form Validator.InvalidCssClass="has-error">
+    <div Validator.Value="{value: City}">
+        <dot:TextBox Text="{value: City}" />
+    </div>
+    <div Validator.Value="{value: ZIP}">
+        <dot:TextBox Text="{value: ZIP}" />
+    </div>
+    <div Validator.Value="{value: Email}">
+        <dot:TextBox Text="{value: Email}" />
+    </div>
+</form>
+<!-- add the ValidationSummary control -->

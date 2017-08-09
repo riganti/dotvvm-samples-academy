@@ -1,0 +1,12 @@
+ <!--bind div to Validator.Value for current property-->
+<div>
+        <dot:TextBox Text="{value: City}" />
+</div>
+ <!--bind div to Validator.Value for current property-->
+<div>
+    <dot:TextBox Text="{value: ZIP}" />
+</div>
+ <!--bind div to Validator.Value for current property-->
+<div>
+    <dot:TextBox Text="{value: Email}" />
+</div>
