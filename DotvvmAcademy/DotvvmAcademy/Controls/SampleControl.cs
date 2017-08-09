@@ -1,36 +1,40 @@
 ﻿using DotVVM.Framework.Binding;
 using DotVVM.Framework.Controls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using DotVVM.Framework.Hosting;
+using DotvvmAcademy.BL.DTO;
 
 namespace DotvvmAcademy.Controls
 {
     public class SampleControl : DotvvmControl
     {
-        public string IncorrectPath
+        public SampleDTO Sample
         {
-            get { return (string)GetValue(IncorrectPathProperty); }
-            set { SetValue(IncorrectPathProperty, value); }
+            get { return (SampleDTO)GetValue(SampleProperty); }
+            set { SetValue(SampleProperty, value); }
         }
-        public static readonly DotvvmProperty IncorrectPathProperty
-            = DotvvmProperty.Register<string, SampleControl>(c => c.IncorrectPath, null);
+        public static readonly DotvvmProperty SampleProperty
+            = DotvvmProperty.Register<SampleDTO, SampleControl>(c => c.Sample, null);
 
-        public string CorrectPath
-        {
-            get { return (string)GetValue(CorrectPathProperty); }
-            set { SetValue(CorrectPathProperty, value); }
-        }
-        public static readonly DotvvmProperty CorrectPathProperty
-            = DotvvmProperty.Register<string, SampleControl>(c => c.CorrectPath, null);
 
         public string ValidatorName
         {
             get { return (string)GetValue(ValidatorNameProperty); }
             set { SetValue(ValidatorNameProperty, value); }
         }
+
         public static readonly DotvvmProperty ValidatorNameProperty
             = DotvvmProperty.Register<string, SampleControl>(c => c.ValidatorName, null);
+
+        protected override void OnLoad(IDotvvmRequestContext context)
+        {
+            var editorWrapper = new HtmlGenericControl("div");
+            editorWrapper.Attributes.Add("class", "editor-wrapper");
+            var ace = new AceEditor();
+            ace.Language = Sample.CodeLanguage;
+            var code = GetValueBinding(SampleProperty);
+            editorWrapper.Children.Add(ace);
+            Children.Add(editorWrapper);
+            base.OnLoad(context);
+        }
     }
 }

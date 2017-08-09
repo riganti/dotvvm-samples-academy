@@ -9,8 +9,10 @@
                 <div>
                     <h2 class="step-h">{{value: "Step " + (StepIndex + 1) + ":"}}</h2>
 
-                    <cc:StepControl Source="{value: Step}" />
-
+                    <%--<cc:StepControl Source="{value: Step}"
+                                    LessonIndex="{value: LessonIndex}"
+                                    LessonLanguage="{value: Language}"
+                                    StepIndex="{value: StepIndex}"/>--%>
                     <%--<div class="step">
                         <cc:MarkdownLiteral Markdown="{value: Description}" />
                         <cc:StepRenderer />
@@ -18,7 +20,7 @@
                         <div class="alert alert-danger" Visible="{value: _parent.ErrorMessage != null}" InnerText="{value: _parent.ErrorMessage}"></div>
                     </div>--%>
 
-                    <dot:LinkButton Click="{command Continue()}" class="btn btn-primary pull-right lesson-btn">
+                    <dot:LinkButton Click="{command: Continue()}" class="btn btn-primary pull-right lesson-btn">
                         <span class="glyphicon glyphicon-hand-right" /> Continue
                     </dot:LinkButton>
 

@@ -12,14 +12,16 @@ namespace DotvvmAcademy.DAL.FileSystem.Providers
         {
         }
 
-        public string Get(Lesson lesson, string path)
+        public string Get(Lesson lesson, int stepIndex, string path)
         {
-            return GetFile(Path.Combine(lesson.DirectoryPath, path));
+            var stepPath = lesson.Steps[stepIndex];
+            stepPath = stepPath.Substring(0, stepPath.LastIndexOfAny(new[] { '\\', '/' }));
+            return GetFile(Path.Combine(lesson.DirectoryPath, stepPath, path));
         }
 
-        public IQueryable<string> GetQueryable(Lesson lesson, IEnumerable<string> paths)
+        public IQueryable<string> GetQueryable(Lesson lesson, int stepIndex, IEnumerable<string> paths)
         {
-            paths = paths.Select(path => Path.Combine(lesson.DirectoryPath, path));
+            paths = paths.Select(p=> Get(lesson, stepIndex, p));
             return GetFiles(paths).AsQueryable();
         }
     }

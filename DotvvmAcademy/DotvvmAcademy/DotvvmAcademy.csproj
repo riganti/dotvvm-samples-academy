@@ -37,7 +37,6 @@
 		</Content>
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="CommonMark.NET" Version="0.15.1" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="1.1.2" />
 		<PackageReference Include="System.Linq" Version="4.3.0" />
 		<PackageReference Include="System.Reflection.Extensions" Version="4.3.0" />

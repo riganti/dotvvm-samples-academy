@@ -6,8 +6,8 @@ namespace DotvvmAcademy.DAL.Base.Providers
 {
     public interface ISampleProvider
     {
-        string Get(Lesson lesson, string path);
+        string Get(Lesson lesson, int stepIndex, string path);
 
-        IQueryable<string> GetQueryable(Lesson lesson, IEnumerable<string> paths);
+        IQueryable<string> GetQueryable(Lesson lesson, int stepIndex, IEnumerable<string> paths);
     }
 }

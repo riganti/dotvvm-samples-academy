@@ -1,4 +1,6 @@
-﻿using DotvvmAcademy.BL.Facades;
+﻿using DotvvmAcademy.BL.CommonMark;
+using DotvvmAcademy.BL.DTO.Components;
+using DotvvmAcademy.BL.Facades;
 using DotvvmAcademy.DAL.FileSystem;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,6 +14,13 @@ namespace DotvvmAcademy.BL
             services.AddSingleton<LessonFacade>();
             services.AddSingleton<StepFacade>();
             services.AddSingleton<SampleFacade>();
+            services.AddSingleton<IComponentParser<SampleComponent>, SampleComponentParser>();
+            services.AddSingleton(p =>
+            {
+                var parser = new StepParser();
+                parser.RegisterComponentParser(p.GetService<IComponentParser<SampleComponent>>());
+                return parser;
+            });
         }
     }
 }

@@ -2,6 +2,7 @@
 using DotVVM.Framework.Controls;
 using System;
 using DotVVM.Framework.Hosting;
+using DotvvmAcademy.BL.DTO;
 
 namespace DotvvmAcademy.Controls
 {
@@ -11,7 +12,7 @@ namespace DotvvmAcademy.Controls
             = DotvvmProperty.Register<string, AceEditor>(c => c.Code, null);
 
         public static readonly DotvvmProperty LanguageProperty
-            = DotvvmProperty.Register<AceEditorLanguage, AceEditor>(c => c.Language, AceEditorLanguage.Html);
+            = DotvvmProperty.Register<SampleCodeLanguage, AceEditor>(c => c.Language, SampleCodeLanguage.Html);
 
         public AceEditor() : base("div")
         {
@@ -25,9 +26,9 @@ namespace DotvvmAcademy.Controls
         }
 
         [MarkupOptions(AllowBinding = false)]
-        public AceEditorLanguage Language
+        public SampleCodeLanguage Language
         {
-            get { return (AceEditorLanguage)GetValue(LanguageProperty); }
+            get { return (SampleCodeLanguage)GetValue(LanguageProperty); }
             set { SetValue(LanguageProperty, value); }
         }
 

@@ -1,8 +1,10 @@
 using DotVVM.Framework.Hosting;
 using DotVVM.Framework.ViewModel;
+using DotvvmAcademy.BL.DTO;
 using DotvvmAcademy.BL.Facades;
 using DotvvmAcademy.Services;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace DotvvmAcademy.ViewModels
@@ -26,9 +28,14 @@ namespace DotvvmAcademy.ViewModels
 
         public int LessonIndex { get; private set; }
 
-        public string Step { get; set; }
+        public string Language { get; set; } = "en";
+
+        [Bind(Direction.None)]
+        public StepDTO Step { get; set; }
 
         public int StepIndex { get; private set; }
+
+        public List<SampleDTO> Samples { get; set; } = new List<SampleDTO>();
 
         public void Continue()
         {
@@ -53,8 +60,8 @@ namespace DotvvmAcademy.ViewModels
         {
             LessonIndex = Convert.ToInt32(Context.Parameters["Lesson"]) - 1;
             StepIndex = Convert.ToInt32(Context.Parameters["Step"]) - 1;
-            Step = stepFacade.GetStep(LessonIndex, "en", StepIndex);
-            LessonStepCount = lessonFacade.GetLessonStepCount(LessonIndex, "en");
+            Step = stepFacade.GetStep(LessonIndex, Language, StepIndex);
+            LessonStepCount = lessonFacade.GetLessonStepCount(LessonIndex, Language);
 
             AfterLoad();
 
