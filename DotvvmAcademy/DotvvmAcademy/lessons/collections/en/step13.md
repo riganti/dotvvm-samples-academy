@@ -11,4 +11,4 @@ Also note that you can use single quotes (apostrophes) instead of double quotes 
 
 [<sample Correct="../samples/CompleteTask2Correct.dothtml"
          Incorrect="../samples/CompleteTaskCorrect.dothtml"
-         Validator="Lesson2Step13Validator">]
+         Validator="Lesson2Step13Validator" />]

@@ -23,7 +23,10 @@ namespace DotvvmAcademy.DAL.FileSystem.Providers
 
         public Lesson Get(int index, string language) => GetQueryable(index, language).Single();
 
-        public IQueryable<Lesson> GetQueryable(int? index = null, string language = null) => GetLessons(index, language).AsQueryable();
+        public IQueryable<Lesson> GetQueryable(int? index = null, string language = null)
+        {
+            return GetLessons(index, language).OrderBy(l => l.Index).AsQueryable();
+        }
 
         private IEnumerable<Lesson> GetLessons(int? index, string language)
         {

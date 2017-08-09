@@ -1,10 +1,10 @@
 ﻿[
   {
-    "Index": 1,
+    "Index": 2,
     "Language": "en",
-    "Name": "Working with Collections",
-    "Annotation": "Learn how to use the <code>Repeater</code> control and how to work with collections.",
-    "ImageUrl": "/img/elementary.png",
+    "Name": "Advanced Forms",
+    "Annotation": "Try out working with advanced form controls like <code>ComboBox</code> and <code>RadioButton</code>.",
+    "ImageUrl": "/img/intermediate.png",
     "IsReady": true,
     "Steps": [
       "./en/step1.md",
@@ -20,7 +20,9 @@
       "./en/step11.md",
       "./en/step12.md",
       "./en/step13.md",
-      "./en/step14.md"
+      "./en/step14.md",
+      "./en/step15.md",
+      "./en/step16.md"
     ]
   }
 ]

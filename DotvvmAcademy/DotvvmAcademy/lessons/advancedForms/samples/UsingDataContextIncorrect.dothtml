@@ -1,0 +1,11 @@
+<p>
+    <dot:TextBox Text="{value: FirstName}" />
+    <dot:TextBox Text="{value: LastName}" />
+    <dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin" />
+    <dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User" />
+    <dot:ComboBox DataSource="{value: Countries}"
+            SelectedValue="{value: SelectedCountryId}"
+            ValueMember="Id"
+            DisplayMember="Name">
+    </dot:ComboBox>
+</p>

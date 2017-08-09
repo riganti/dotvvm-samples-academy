@@ -1,0 +1,4 @@
+<p>
+    <dot:TextBox Text="{value: FirstName}" />
+    <dot:TextBox Text="{value: LastName}" />
+</p>

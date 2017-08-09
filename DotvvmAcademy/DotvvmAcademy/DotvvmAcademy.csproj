@@ -16,8 +16,10 @@
 		<GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
 	</PropertyGroup>
 	<ItemGroup>
-	  <Compile Remove="lessons\**\samples\*" />
-	  <Content Include="lessons\**\samples\*" />
+		<Compile Remove="lessons\**\*.cs" />
+		<Content Include="lessons\**\*.cs" />
+		<Content Include="lessons\**\*.dothtml" />
+		<Content Include="lessons\**\*.md" />
 	</ItemGroup>
 	<ItemGroup>
 		<None Remove="Controls\*.dotcontrol" />
