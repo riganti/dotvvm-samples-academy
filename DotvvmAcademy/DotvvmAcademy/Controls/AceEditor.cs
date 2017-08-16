@@ -12,7 +12,7 @@ namespace DotvvmAcademy.Controls
             = DotvvmProperty.Register<string, AceEditor>(c => c.Code, null);
 
         public static readonly DotvvmProperty LanguageProperty
-            = DotvvmProperty.Register<SampleCodeLanguage, AceEditor>(c => c.Language, SampleCodeLanguage.Html);
+            = DotvvmProperty.Register<SampleCodeLanguage, AceEditor>(c => c.Language, SampleCodeLanguage.Dothtml);
 
         public AceEditor() : base("div")
         {

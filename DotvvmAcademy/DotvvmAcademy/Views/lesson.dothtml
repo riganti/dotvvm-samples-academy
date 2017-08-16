@@ -11,6 +11,7 @@
 
                     <cc:StepRenderer Source="{value: Step.Source}"
                                      Samples="{value: Samples}"/>
+
                     <%--<div class="step">
                         <cc:MarkdownLiteral Markdown="{value: Description}" />
                         <cc:StepRenderer />
@@ -21,8 +22,6 @@
                     <dot:LinkButton Click="{command: Continue()}" class="btn btn-primary pull-right lesson-btn">
                         <span class="glyphicon glyphicon-hand-right" /> Continue
                     </dot:LinkButton>
-
-                    <cc:StepButtonsRenderer />
                 </div>
             </div>
         </div>

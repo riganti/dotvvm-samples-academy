@@ -3,16 +3,16 @@
 namespace DotvvmAcademy.BL.Validation
 {
     [AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
-    sealed class ValidationMethodAttribute : Attribute
+    internal sealed class ValidatorAttribute : Attribute
     {
-        readonly string id;
+        private readonly string id;
 
-        public ValidationMethodAttribute(string id)
+        public ValidatorAttribute(string id)
         {
             this.id = id;
         }
 
-        public string PositionalString
+        public string Id
         {
             get { return id; }
         }

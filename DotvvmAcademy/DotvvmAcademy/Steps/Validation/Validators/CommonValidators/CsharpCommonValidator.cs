@@ -63,8 +63,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
             GetVoidMethodValidationError(treeMethods, methodName);
         }
 
-        public static void ValidateProperties(CSharpSyntaxTree tree, SemanticModel model,
-                                                                    List<Property> propertiesToValidate)
+        public static void ValidateProperties(CSharpSyntaxTree tree, SemanticModel model, List<Property> propertiesToValidate)
         {
             var treeProperties = GetTreeProperties(tree, model);
             foreach (var propertyToValidate in propertiesToValidate)

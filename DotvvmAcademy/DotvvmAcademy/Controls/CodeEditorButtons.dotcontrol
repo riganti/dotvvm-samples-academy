@@ -1,10 +1,16 @@
-﻿@viewModel DotvvmAcademy.Steps.StepsBases.Interfaces.ICodeStepCode, DotvvmAcademy
+﻿@viewModel DotvvmAcademy.Models.Sample, DotvvmAcademy
 
 <div class="code-editor-buttons">
-    <dot:LinkButton Click="{command: ResetCode()}" class="btn btn-default">
+    <dot:LinkButton Click="{command: ResetCode()}" 
+                    class="btn btn-default">
         <span class="glyphicon glyphicon-repeat" /> Reset
     </dot:LinkButton>
-    <dot:LinkButton Click="{command: ShowCorrectCode()}" class="btn btn-default">
+    <dot:LinkButton Click="{command: ShowCorrectCode()}" 
+                    class="btn btn-default">
         <span class="glyphicon glyphicon-eye-open" /> Show Correct Code
+    </dot:LinkButton>
+    <dot:LinkButton Click="{command: Validate()}"
+                    class="btn btn-default">
+        <span class="glyphicon glyphicon-alert" /> Validate
     </dot:LinkButton>
 </div>

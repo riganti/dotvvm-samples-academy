@@ -9,13 +9,15 @@ namespace DotvvmAcademy.BL.Facades
 {
     public class SampleFacade
     {
-        private ISampleProvider sampleProvider;
         private ILessonProvider lessonProvider;
+        private ISampleProvider sampleProvider;
+        private ValidatorFacade validatorFacade;
 
-        public SampleFacade(ILessonProvider lessonProvider, ISampleProvider sampleProvider)
+        public SampleFacade(ILessonProvider lessonProvider, ISampleProvider sampleProvider, ValidatorFacade validatorFacade) 
         {
             this.lessonProvider = lessonProvider;
             this.sampleProvider = sampleProvider;
+            this.validatorFacade = validatorFacade;
         }
 
         public SampleDTO GetSample(SampleComponent component)
@@ -32,7 +34,8 @@ namespace DotvvmAcademy.BL.Facades
             {
                 CodeLanguage = correctPathLanguage,
                 CorrectCode = GetRawSample(component.LessonIndex, component.Language, component.StepIndex, component.CorrectPath),
-                IncorrectCode = GetRawSample(component.LessonIndex, component.Language, component.StepIndex, component.IncorrectPath)
+                IncorrectCode = GetRawSample(component.LessonIndex, component.Language, component.StepIndex, component.IncorrectPath),
+                Validate = validatorFacade.GetValidator(component.Validator, correctPathLanguage)
             };
 
             return sample;
@@ -58,7 +61,7 @@ namespace DotvvmAcademy.BL.Facades
                 case "cs":
                     return SampleCodeLanguage.CSharp;
                 case "dothtml":
-                    return SampleCodeLanguage.Html;
+                    return SampleCodeLanguage.Dothtml;
                 default:
                     throw new NotSupportedException($"The sample '{path}' has an unrecognized file extension.");
             }
