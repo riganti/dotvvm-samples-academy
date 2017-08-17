@@ -16,10 +16,10 @@
         <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
     </PropertyGroup>
     <ItemGroup>
-        <Compile Remove="lessons\**\*.cs" />
-        <Content Include="lessons\**\*.cs" />
-        <Content Include="lessons\**\*.dothtml" />
-        <Content Include="lessons\**\*.md" />
+        <Compile Remove="Lessons\**\*.cs" />
+        <Content Include="Lessons\**\*.cs" />
+        <Content Include="Lessons\**\*.dothtml" />
+        <Content Include="Lessons\**\*.md" />
     </ItemGroup>
     <ItemGroup>
         <None Remove="Controls\*.dotcontrol" />
@@ -31,10 +31,9 @@
         <Content Include="Controls\*.dotcontrol" />
         <Content Include="Views\*.dothtml" />
         <Content Include="Views\*.dotmaster" />
-        <Content Include="wwwroot\Scripts\google-analytics.js" />
     </ItemGroup>
     <ItemGroup>
-        <Content Update="wwwroot\**\*;Views\**\*;web.config;Controls\**\*;lessons\**\*">
+        <Content Update="wwwroot\**\*;Views\**\*;web.config;Controls\**\*;Lessons\**\*">
             <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
         </Content>
     </ItemGroup>

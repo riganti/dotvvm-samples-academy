@@ -3,6 +3,6 @@
     public static class LessonConstants
     {
         public const string LessonConfigurationFileName = "lesson.json";
-        public const string LessonsDirectoryName = "lessons";
+        public const string LessonsDirectoryName = "Lessons";
     }
 }
