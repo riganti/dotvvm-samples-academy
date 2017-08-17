@@ -22,13 +22,25 @@ namespace DotvvmAcademy.BL.Validators
         }
 
         [Validator(nameof(Lesson1Step4Validator))]
-        public static void Lesson1Step4Validator(CSharpValidate validate)
+        public static CSharpClass Lesson1Step4Validator(CSharpValidate validate)
         {
+            validate.Root.Usings("System");
+            var tutorial = validate.Root.Namespace("DotvvmAcademy.Tutorial.ViewModels");
+            var viewModel = tutorial.Class("Lesson1ViewModel");
+            viewModel.AutoProperty<int>("Number1");
+            viewModel.AutoProperty<int>("Number2");
+            viewModel.AutoProperty<int>("Result");
+            return viewModel;
         }
 
         [Validator(nameof(Lesson1Step5Validator))]
         public static void Lesson1Step5Validator(CSharpValidate validate)
         {
+            var viewModel = Lesson1Step4Validator(validate);
+            viewModel.Method("Calculate", typeof(void));
+            var instance = viewModel.Instance();
+            instance.ExecuteMethod("Calculate");
+            instance.PropertyValue("Result", 45);
         }
 
         [Validator(nameof(Lesson1Step6Validator))]
