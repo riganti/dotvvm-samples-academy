@@ -38,9 +38,9 @@
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                            <li><dot:LinkButton Click="{command: SwitchLanguage("en")}" Text="English"></dot:LinkButton></li>
-                            <li><dot:LinkButton Click="{command: SwitchLanguage("cs")}" Text="Česky"></dot:LinkButton></li>
-                            <li><dot:LinkButton Click="{command: SwitchLanguage("ru")}" Text="Русский"></dot:LinkButton></li>
+                            <li><dot:RouteLink RouteName="{resource: Context.Route.RouteName}" Param-Lang="en">English</dot:RouteLink></li>
+                            <li><dot:RouteLink RouteName="{resource: Context.Route.RouteName}" Param-Lang="cs">Česky</dot:RouteLink></li>
+                            <li><dot:RouteLink RouteName="{resource: Context.Route.RouteName}" Param-Lang="ru">Русский</dot:RouteLink></li>
                         </ul>
                     </div>
                 </div>
@@ -68,9 +68,9 @@
                 <div class="col-md-6 right">
                     <div style="display: inline-block; vertical-align: middle;">
                         <p style="padding-top: 20px">
-                            <a target="_blank" href="https://www.dotvvm.com/docs/latest">{{value: DocumentationText}}</a> |
-                            <a target="_blank" href="https://www.dotvvm.com/docs/tutorials/introduction/latest">{{value: TutorialsText}}</a> |
-                            <a target="_blank" href="https://www.dotvvm.com/docs/samples/latest">{{value: SamplesText}}</a>
+                            <a target="_blank" href="https://www.dotvvm.com/docs/latest">{{resource: LessonNames.DocumentationText}}</a> |
+                            <a target="_blank" href="https://www.dotvvm.com/docs/tutorials/introduction/latest">{{resource: LessonNames.TutorialsText}}</a> |
+                            <a target="_blank" href="https://www.dotvvm.com/docs/samples/latest">{{resource: LessonNames.SamplesText}}</a>
                         </p>
                     </div>
                 </div>
