@@ -14,7 +14,7 @@
                     </div>
                     <cc:StepButtonsRenderer />
 
-                    <dot:RouteLink RouteName="Lesson" Param-Step="{value: StepIndex - 1}" class="btn btn-primary pull-left lesson-btn">
+                    <dot:RouteLink Visible="{value: StepIndex > 1}" RouteName="Lesson" Param-Step="{value: StepIndex - 1}" class="btn btn-primary pull-left lesson-btn">
                         <span class="glyphicon glyphicon-chevron-left" /> {{resource: LessonNames.PreviousBtnText}}
                     </dot:RouteLink>
 
