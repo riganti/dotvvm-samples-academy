@@ -56,7 +56,7 @@ namespace DotvvmAcademy.ViewModels
                 if (CurrentStepNumber < lesson.Steps.Count())
                 {
                     storage.UpdateLessonLastStep(lessonNumber, NextStepNumber);
-                    RedirectToNextLesson();
+                    Context.RedirectToRoute("Lesson", new { Step = NextStepNumber });
                 }
                 else
                 {
@@ -74,11 +74,6 @@ namespace DotvvmAcademy.ViewModels
 
         protected virtual void AfterLoad()
         {
-        }
-
-        protected virtual void RedirectToNextLesson()
-        {
-            Context.RedirectToRoute("Lesson", new { Step = NextStepNumber });
         }
 
         private void LoadStep()

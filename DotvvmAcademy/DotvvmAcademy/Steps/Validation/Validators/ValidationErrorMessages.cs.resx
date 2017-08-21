@@ -117,58 +117,61 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DocumentationText" xml:space="preserve">
-    <value>Документация</value>
+  <data name="ClassDoesNotImplementInterface" xml:space="preserve">
+    <value>Třída {0} neimplementuje rozhraní {1}!</value>
   </data>
-  <data name="IsCreatedLessonBtnText" xml:space="preserve">
-    <value>Другие курсы скоро!</value>
+  <data name="ClassNotFound" xml:space="preserve">
+    <value>Třída {0} nebyla nalezená! Ujistětě se, že se třída jmenuje správně a je deklarováná jako public!</value>
   </data>
-  <data name="IsFinishedLessonBtnText" xml:space="preserve">
-    <value>Повторить курс</value>
+  <data name="CommandBindingExpected" xml:space="preserve">
+    <value>{0} vlastnost {1} musí obsahovat binding v daném formátu: {{command: Metoda()}}</value>
   </data>
-  <data name="IsVisitedLessonBtnText" xml:space="preserve">
-    <value>Продолжить</value>
+  <data name="CommandDoesNotHaveParenthesis" xml:space="preserve">
+    <value>Musíte přidat prázdnout parentezi po metodě {0}!</value>
   </data>
-  <data name="Lesson1" xml:space="preserve">
-    <value>Понимание базовых принципов DotVVM и MVVM паттерна.</value>
+  <data name="CommandMethodError" xml:space="preserve">
+    <value>Příkazy ve viewmodelu musí být public a musí používat správnou signaturu a návratový typ!</value>
   </data>
-  <data name="Lesson2" xml:space="preserve">
-    <value>Узнаете, как использовать &lt;code&gt;Repeater&lt;/code&gt; и как работать с коллекциями.</value>
+  <data name="DeleteCodeError" xml:space="preserve">
+    <value>Musíte smazat vlastnost {0} z {1}!</value>
   </data>
-  <data name="Lesson3" xml:space="preserve">
-    <value>Попробуйте поработать с расширенными элементами управления, такими как &lt;code&gt;ComboBox&lt;/code&gt; и &lt;code&gt;RadioButton&lt;/code&gt;.</value>
+  <data name="HtmlTagCountError" xml:space="preserve">
+    <value>Musí tam být {0} {1} HTML tagů na stránce!</value>
   </data>
-  <data name="Lesson4" xml:space="preserve">
-    <value>Узнаете, как работает валидация и свойство &lt;code&gt;DataContext&lt;/code&gt;.</value>
+  <data name="IllegalConstructorCall" xml:space="preserve">
+    <value>Typ konstruktoru {0} není povolený!</value>
   </data>
-  <data name="LessonText" xml:space="preserve">
-    <value>Курс</value>
+  <data name="IllegalMethodCall" xml:space="preserve">
+    <value>Metoda {0} není povolená!</value>
   </data>
-  <data name="NextBtnText" xml:space="preserve">
-    <value>Продолжить</value>
+  <data name="MethodNotFound" xml:space="preserve">
+    <value>Metoda {0} neexistuje! Ujistětě se, že se metoda jmenuje správně a je deklarováná jako public!</value>
   </data>
-  <data name="OnlineCourseText" xml:space="preserve">
-    <value>онлайн курсы</value>
+  <data name="MethodWasNotCalled" xml:space="preserve">
+    <value>V bindingu musíte zavolat {0}!</value>
   </data>
-  <data name="PreviousBtnText" xml:space="preserve">
-    <value>Назад</value>
+  <data name="MissingPropertyError" xml:space="preserve">
+    <value>V {0} chybí vlastnost {1}!</value>
   </data>
-  <data name="ResetBtn" xml:space="preserve">
-    <value>Сбросить</value>
+  <data name="PropertyNotFound" xml:space="preserve">
+    <value>Vlastnost {0} nebyla nalezená! Ujistětě se, že se vlastnost jmenuje správně a je deklarováná jako public!</value>
   </data>
-  <data name="SamplesText" xml:space="preserve">
-    <value>Примеры</value>
+  <data name="PropertyValueError" xml:space="preserve">
+    <value>Vlastnost {0} musí obsahovat hodnotu '{1}'!</value>
   </data>
-  <data name="ShowCorrectCodeBtn" xml:space="preserve">
-    <value>Показать правильный код</value>
+  <data name="StepTypeExpected" xml:space="preserve">
+    <value>Krok typu {0} není podporován!</value>
   </data>
-  <data name="StartLessonBtnText" xml:space="preserve">
-    <value>Начать курс</value>
+  <data name="TextBoxBindingsError" xml:space="preserve">
+    <value>Každý TextBox musí mít bind na jinou vlastnost ve viewmodelu</value>
   </data>
-  <data name="StepBtnText" xml:space="preserve">
-    <value>Шаг</value>
+  <data name="TypeControlCountError" xml:space="preserve">
+    <value>Musí být {0} {1} komponent na stránce!</value>
   </data>
-  <data name="TutorialsText" xml:space="preserve">
-    <value>Руководства</value>
+  <data name="ValueBindingError" xml:space="preserve">
+    <value>V {0} musí být bind na {1}!</value>
+  </data>
+  <data name="ValueBindingExpected" xml:space="preserve">
+    <value>{0} Vlastnost {1} musí mít binding v daném formátu: {{value: Something}}</value>
   </data>
 </root>

@@ -150,8 +150,17 @@
   <data name="OnlineCourseText" xml:space="preserve">
     <value>online course</value>
   </data>
+  <data name="PreviousBtnText" xml:space="preserve">
+    <value>Previous</value>
+  </data>
+  <data name="ResetBtn" xml:space="preserve">
+    <value>Reset</value>
+  </data>
   <data name="SamplesText" xml:space="preserve">
     <value>Samples</value>
+  </data>
+  <data name="ShowCorrectCodeBtn" xml:space="preserve">
+    <value>Show Correct Code</value>
   </data>
   <data name="StartLessonBtnText" xml:space="preserve">
     <value>Start Lesson</value>

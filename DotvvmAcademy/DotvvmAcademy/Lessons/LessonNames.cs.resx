@@ -150,8 +150,17 @@
   <data name="OnlineCourseText" xml:space="preserve">
     <value>online kurzy</value>
   </data>
+  <data name="PreviousBtnText" xml:space="preserve">
+    <value>Zpět</value>
+  </data>
+  <data name="ResetBtn" xml:space="preserve">
+    <value>Storno</value>
+  </data>
   <data name="SamplesText" xml:space="preserve">
     <value>Příklady</value>
+  </data>
+  <data name="ShowCorrectCodeBtn" xml:space="preserve">
+    <value>Zobrazit správné řešení</value>
   </data>
   <data name="StartLessonBtnText" xml:space="preserve">
     <value>Začít kurz</value>

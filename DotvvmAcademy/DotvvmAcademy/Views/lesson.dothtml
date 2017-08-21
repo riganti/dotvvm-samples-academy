@@ -6,17 +6,22 @@
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 lesson">
             <div class="container-fluid">
                 <div DataContext="{value: Step}">
-                    <h2 class="step-h">{{value: _parent.StepsButtonText}} {{value: StepIndex}}: {{value: Title}}</h2>
+                    <h2 class="step-h">{{resource: LessonNames.StepBtnText}} {{value: StepIndex}}: {{value: Title}}</h2>
                     <div class="step">
                         <cc:MarkdownLiteral Markdown="{value: Description}" />
                         <cc:StepRenderer />
                         <div class="alert alert-danger" Visible="{value: _parent.ErrorMessage != null}" InnerText="{value: _parent.ErrorMessage}"></div>
                     </div>
+                    <cc:StepButtonsRenderer />
+
+                    <dot:RouteLink RouteName="Lesson" Param-Step="{value: StepIndex - 1}" class="btn btn-primary pull-left lesson-btn">
+                        <span class="glyphicon glyphicon-chevron-left" /> {{resource: LessonNames.PreviousBtnText}}
+                    </dot:RouteLink>
+
                     <dot:LinkButton Click="{command: _parent.Continue()}" class="btn btn-primary pull-right lesson-btn">
-                        <span class="glyphicon glyphicon-hand-right" /> {{value: _parent.ContinueButtonText}}
+                        <span class=" glyphicon glyphicon-chevron-right" /> {{resource: LessonNames.NextBtnText}}
                     </dot:LinkButton>
 
-                    <cc:StepButtonsRenderer />
                 </div>
             </div>
         </div>

@@ -9,25 +9,25 @@
                     <div class="img-part">
                         <div class="img-part-a">
                         </div>
-                        <dot:RouteLink RouteName="Lesson" Param-Lesson="{value: Number}" Param-Step="{value: StepToOpen}" Enabled="{value: IsCreated}">
+                        <dot:RouteLink RouteName="Lesson" Param-Lang="{value: CurrentCulture}" Param-Lesson="{value: Number}" Param-Step="{value: StepToOpen}" Enabled="{value: IsCreated}">
                             <img src="{value: ImageUrl}" class="img-responsive" />
                         </dot:RouteLink>
                     </div>
                     <div class="content-part">
 
                         <h3 class="lesson-h3">
-                            {{value: _parent.LessonName}} {{value: Number}}
+                            {{resource: LessonNames.LessonText}} {{value: Number}}
                             <i class="fa fa-check-square-o" Visible="{value: IsFinished}" aria-hidden="true"></i>
                         </h3>
                         <dot:HtmlLiteral Html="{value: Title}" WrapperTagName="p" />
                     </div>
 
                     <div class="button">
-                        <dot:RouteLink RouteName="Lesson" Param-Lesson="{value: Number}" Param-Step="{value: StepToOpen}"
+                        <dot:RouteLink RouteName="Lesson" Param-Lang="{value: CurrentCulture}" Param-Lesson="{value: Number}" Param-Step="{value: StepToOpen}"
                                        Text="{value: ButtonText}" Enabled="{value: IsCreated}" class="aa" />
                     </div>
                     <div class="button-mobile">
-                        <dot:RouteLink RouteName="Lesson" Param-Lesson="{value: Number}" Param-Step="{value: StepToOpen}"
+                        <dot:RouteLink RouteName="Lesson" Param-Lang="{value: CurrentCulture}"  Param-Lesson="{value: Number}" Param-Step="{value: StepToOpen}"
                                        Text="{value: ButtonText}" Enabled="{value: IsCreated}" class="aa" />
                     </div>
                 </div>

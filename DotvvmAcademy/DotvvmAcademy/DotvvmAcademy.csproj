@@ -70,18 +70,18 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommonMark.NET" Version="0.15.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Localization" Version="1.1.3" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="1.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Localization" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.0.0" />
     <PackageReference Include="System.Linq" Version="4.3.0" />
     <PackageReference Include="System.Reflection.Extensions" Version="4.3.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Server.IISIntegration" Version="1.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.IISIntegration" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Server.IISIntegration.Tools" Version="1.1.0-preview4-final" />
-    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="1.1.2" />
-    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.0.0" />
     <PackageReference Include="System.Runtime" Version="4.3.0" />
-    <PackageReference Include="DotVVM" Version="1.1.2" />
-    <PackageReference Include="DotVVM.AspNetCore" Version="1.1.2" />
-    <PackageReference Include="DotVVM.Core" Version="1.1.2" />
+    <PackageReference Include="DotVVM" Version="1.1.6-beta" />
+    <PackageReference Include="DotVVM.AspNetCore" Version="1.1.6-beta" />
+    <PackageReference Include="DotVVM.Core" Version="1.1.6-beta" />
     <PackageReference Include="System.ValueTuple" Version="4.4.0" />
   </ItemGroup>
   <ItemGroup>
@@ -94,11 +94,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Lesson1Texts.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Steps\Validation\Validators\Lesson2\Lesson2Texts.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Lesson2Texts.resx</DependentUpon>
     </Compile>
     <Compile Update="Steps\Validation\Validators\Lesson3\Lesson3Texts.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -139,13 +134,26 @@
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		  <LastGenOutput>LessonNames.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
+		<EmbeddedResource Update="Lessons\LessonNames.ru.resx">
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Steps\Validation\Validators\Lesson1\Lesson1Texts.cs.resx">
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
     <EmbeddedResource Update="Steps\Validation\Validators\Lesson1\Lesson1Texts.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Lesson1Texts.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Steps\Validation\Validators\Lesson1\Lesson1Texts.ru.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <CustomToolNamespace>PublicResXFileCodeGenerator</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Steps\Validation\Validators\Lesson2\Lesson2Texts.cs.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Steps\Validation\Validators\Lesson2\Lesson2Texts.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Lesson2Texts.Designer.cs</LastGenOutput>
+      <LastGenOutput>Lesson2Texts - Copy.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Steps\Validation\Validators\Lesson3\Lesson3Texts.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -155,9 +163,15 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Lesson4Texts.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Steps\Validation\Validators\ValidationErrorMessages.cs.resx">
+      <Generator></Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Steps\Validation\Validators\ValidationErrorMessages.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ValidationErrorMessages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Steps\Validation\Validators\ValidationErrorMessages.ru.resx">
+      <Generator></Generator>
     </EmbeddedResource>
   </ItemGroup>
 </Project>

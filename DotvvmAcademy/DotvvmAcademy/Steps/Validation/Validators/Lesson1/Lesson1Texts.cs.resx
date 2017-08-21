@@ -117,58 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DocumentationText" xml:space="preserve">
-    <value>Документация</value>
+  <data name="ButtonDoesNotHaveText" xml:space="preserve">
+    <value>Komponenta Button musí mít nastavenou vlastnost Text!</value>
   </data>
-  <data name="IsCreatedLessonBtnText" xml:space="preserve">
-    <value>Другие курсы скоро!</value>
+  <data name="CalculateMethodNotCalled" xml:space="preserve">
+    <value>V bindu musí být uvedena metoda Calculate()</value>
   </data>
-  <data name="IsFinishedLessonBtnText" xml:space="preserve">
-    <value>Повторить курс</value>
+  <data name="CommandResultError" xml:space="preserve">
+    <value>Metoda Calculate nevrací správný výsledek!</value>
   </data>
-  <data name="IsVisitedLessonBtnText" xml:space="preserve">
-    <value>Продолжить</value>
+  <data name="OneButtonControlError" xml:space="preserve">
+    <value>Na stránce musí být uveden jeden element Button!</value>
   </data>
-  <data name="Lesson1" xml:space="preserve">
-    <value>Понимание базовых принципов DotVVM и MVVM паттерна.</value>
-  </data>
-  <data name="Lesson2" xml:space="preserve">
-    <value>Узнаете, как использовать &lt;code&gt;Repeater&lt;/code&gt; и как работать с коллекциями.</value>
-  </data>
-  <data name="Lesson3" xml:space="preserve">
-    <value>Попробуйте поработать с расширенными элементами управления, такими как &lt;code&gt;ComboBox&lt;/code&gt; и &lt;code&gt;RadioButton&lt;/code&gt;.</value>
-  </data>
-  <data name="Lesson4" xml:space="preserve">
-    <value>Узнаете, как работает валидация и свойство &lt;code&gt;DataContext&lt;/code&gt;.</value>
-  </data>
-  <data name="LessonText" xml:space="preserve">
-    <value>Курс</value>
-  </data>
-  <data name="NextBtnText" xml:space="preserve">
-    <value>Продолжить</value>
-  </data>
-  <data name="OnlineCourseText" xml:space="preserve">
-    <value>онлайн курсы</value>
-  </data>
-  <data name="PreviousBtnText" xml:space="preserve">
-    <value>Назад</value>
-  </data>
-  <data name="ResetBtn" xml:space="preserve">
-    <value>Сбросить</value>
-  </data>
-  <data name="SamplesText" xml:space="preserve">
-    <value>Примеры</value>
-  </data>
-  <data name="ShowCorrectCodeBtn" xml:space="preserve">
-    <value>Показать правильный код</value>
-  </data>
-  <data name="StartLessonBtnText" xml:space="preserve">
-    <value>Начать курс</value>
-  </data>
-  <data name="StepBtnText" xml:space="preserve">
-    <value>Шаг</value>
-  </data>
-  <data name="TutorialsText" xml:space="preserve">
-    <value>Руководства</value>
+  <data name="ThreeTextBoxControlsError" xml:space="preserve">
+    <value>Na stránce musí být uvedené tři elementy TextBox!</value>
   </data>
 </root>

@@ -41,7 +41,7 @@ namespace DotvvmAcademy
 
         private void ConfigureRoutes(DotvvmConfiguration config, string applicationPath)
         {
-            config.RouteTable.Add("Lesson", "{Lang}/lesson{Lesson}/step{Step}", "Views/lesson.dothtml", presenterFactory: LocalizablePresenter.BasedOnParameter("Lang"));
+            config.RouteTable.Add("Lesson", "{Lang}/lesson{Lesson}/step{Step}", "Views/lesson.dothtml", new { Lang = "en" }, presenterFactory: LocalizablePresenter.BasedOnParameter("Lang"));
 
             config.RouteTable.Add("Default", "{Lang:alpha}", "Views/default.dothtml", new { Lang = "en" }, presenterFactory: LocalizablePresenter.BasedOnParameter("Lang"));
 

@@ -7,8 +7,8 @@ namespace DotvvmAcademy.Lessons
     {
         public Lesson4(IHostingEnvironment hostingEnvironment)
         {
-            var lesson1XmlRelativePath = @"Lessons\Lesson4.xml";
-            var lessonProvider = new LessonUserInterfaceProvider(lesson1XmlRelativePath, hostingEnvironment);
+            var lessonXmlRelativePath = @"Lessons/Lesson4.xml";
+            var lessonProvider = new LessonUserInterfaceProvider(lessonXmlRelativePath, hostingEnvironment);
             Steps = lessonProvider.LessonSteps;
         }
     }

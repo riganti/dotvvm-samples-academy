@@ -10,7 +10,6 @@
 
 namespace DotvvmAcademy.Lessons {
     using System;
-    using System.Reflection;
     
     
     /// <summary>
@@ -20,7 +19,7 @@ namespace DotvvmAcademy.Lessons {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class LessonNames {
@@ -40,7 +39,7 @@ namespace DotvvmAcademy.Lessons {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DotvvmAcademy.Lessons.LessonNames", typeof(LessonNames).GetTypeInfo().Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DotvvmAcademy.Lessons.LessonNames", typeof(LessonNames).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -161,11 +160,38 @@ namespace DotvvmAcademy.Lessons {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Previous.
+        /// </summary>
+        public static string PreviousBtnText {
+            get {
+                return ResourceManager.GetString("PreviousBtnText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset.
+        /// </summary>
+        public static string ResetBtn {
+            get {
+                return ResourceManager.GetString("ResetBtn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Samples.
         /// </summary>
         public static string SamplesText {
             get {
                 return ResourceManager.GetString("SamplesText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Correct Code.
+        /// </summary>
+        public static string ShowCorrectCodeBtn {
+            get {
+                return ResourceManager.GetString("ShowCorrectCodeBtn", resourceCulture);
             }
         }
         

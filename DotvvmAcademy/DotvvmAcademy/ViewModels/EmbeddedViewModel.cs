@@ -18,9 +18,5 @@ namespace DotvvmAcademy.ViewModels
             }
         }
 
-        protected override void RedirectToNextLesson()
-        {
-            Context.RedirectToRoute("Embedded", new { Step = CurrentStepNumber + 1 });
-        }
     }
 }

@@ -2,9 +2,9 @@
 
 <div class="code-editor-buttons">
     <dot:LinkButton Click="{command: ResetCode()}" class="btn btn-default">
-        <span class="glyphicon glyphicon-repeat" /> Reset
+        <span class="glyphicon glyphicon-repeat" /> {{resource: LessonNames.ResetBtn}}
     </dot:LinkButton>
     <dot:LinkButton Click="{command: ShowCorrectCode()}" class="btn btn-default">
-        <span class="glyphicon glyphicon-eye-open" /> Show Correct Code
+        <span class="glyphicon glyphicon-eye-open" /> {{resource: LessonNames.ShowCorrectCodeBtn}}
     </dot:LinkButton>
 </div>
