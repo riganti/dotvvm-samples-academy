@@ -130,13 +130,13 @@
     <value>Pokračovat</value>
   </data>
   <data name="Lesson1" xml:space="preserve">
-    <value>Pochopíte základy DotVVM a paternu MVVM.</value>
+    <value>Pochopíte základy DotVVM a návrhového vzoru MVVM.</value>
   </data>
   <data name="Lesson2" xml:space="preserve">
-    <value>Naučíte se pracovat s komponentou &lt;code&gt;Repeater&lt;/code&gt; a jak pacovat s kolekcemi.</value>
+    <value>Naučíte se pracovat s komponentou &lt;code&gt;Repeater&lt;/code&gt; a s kolekcemi.</value>
   </data>
   <data name="Lesson3" xml:space="preserve">
-    <value>Vyzkoušíme si práci s pokročilými komponentami pro formy jako &lt;code&gt;ComboBox&lt;/code&gt; a &lt;code&gt;RadioButton&lt;/code&gt;.</value>
+    <value>Vyzkoušíme si práci s pokročilými komponentami &lt;code&gt;ComboBox&lt;/code&gt; a &lt;code&gt;RadioButton&lt;/code&gt;.</value>
   </data>
   <data name="Lesson4" xml:space="preserve">
     <value>Naučíte se jak funguje validace a vlastnost &lt;code&gt;DataContext&lt;/code&gt;.</value>
@@ -169,6 +169,6 @@
     <value>Krok</value>
   </data>
   <data name="TutorialsText" xml:space="preserve">
-    <value>Cvičení</value>
+    <value>Vzorové aplikace</value>
   </data>
 </root>

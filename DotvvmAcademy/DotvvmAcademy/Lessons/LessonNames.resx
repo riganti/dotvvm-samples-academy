@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="DocumentationText" xml:space="preserve">
-    <value>Dokumentation</value>
+    <value>Documentation</value>
   </data>
   <data name="IsCreatedLessonBtnText" xml:space="preserve">
     <value>Coming Soon</value>
@@ -130,7 +130,7 @@
     <value>Continue</value>
   </data>
   <data name="Lesson1" xml:space="preserve">
-    <value>Understand basic principles of DotVVM and MVVM pattern.</value>
+    <value>Understand basic principles of DotVVM and the MVVM pattern.</value>
   </data>
   <data name="Lesson2" xml:space="preserve">
     <value>Learn how to use the &lt;code&gt;Repeater&lt;/code&gt; control and how to work with collections.</value>

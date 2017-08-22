@@ -61,7 +61,7 @@ namespace DotvvmAcademy.Lessons {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dokumentation.
+        ///   Looks up a localized string similar to Documentation.
         /// </summary>
         public static string DocumentationText {
             get {
@@ -97,7 +97,7 @@ namespace DotvvmAcademy.Lessons {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Understand basic principles of DotVVM and MVVM pattern..
+        ///   Looks up a localized string similar to Understand basic principles of DotVVM and the MVVM pattern..
         /// </summary>
         public static string Lesson1 {
             get {
