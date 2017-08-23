@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DotvvmAcademy.BL.Validation.CSharp
+﻿namespace DotvvmAcademy.BL.Validation.CSharp
 {
     public enum CSharpAccessModifier
     {
-        Private,
-        Public,
-        Protected,
-        Internal
+        Private = 1,
+        ProtectedInternal = 2,
+        Protected = 3,
+        Internal = 4,
+        Public = 6
     }
 }

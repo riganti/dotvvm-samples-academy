@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Runtime.Loader;
@@ -28,7 +29,7 @@ namespace DotvvmAcademy.BL.Validation.CSharp
         protected override void Init()
         {
             Tree = CSharpSyntaxTree.ParseText(Code);
-            Compilation = CSharpCompilation.Create(UserCodeAssemblyName, new[] { Tree });
+            Compilation = CSharpCompilation.Create(UserCodeAssemblyName, new[] { Tree }, GetMetadataReferences(), GetCompilationOptions());
             Model = Compilation.GetSemanticModel(Tree);
             Assembly = EmitToAssembly(Compilation);
             Root = new CSharpRoot(this, Tree.GetCompilationUnitRoot());
@@ -41,13 +42,43 @@ namespace DotvvmAcademy.BL.Validation.CSharp
                 var result = compilation.Emit(stream);
                 if (!result.Success)
                 {
-                    AddError("The code couldn't be compiled.", 0, 0);
+                    AddGlobalError("The code couldn't be compiled.");
+                    foreach (var diagnostic in result.Diagnostics)
+                    {
+                        if (diagnostic.Location.Kind == LocationKind.None)
+                        {
+                            AddGlobalError(diagnostic.ToString());
+                        }
+                        else
+                        {
+                            AddError(diagnostic.ToString(), diagnostic.Location.SourceSpan.Start, diagnostic.Location.SourceSpan.End);
+                        }
+                    }
                     return null;
                 }
                 stream.Position = 0;
 
                 return AssemblyLoadContext.Default.LoadFromStream(stream);
             }
+        }
+
+        private IEnumerable<MetadataReference> GetMetadataReferences()
+        {
+            var types = new Type[]
+            {
+                typeof(object)
+            };
+
+            foreach (var type in types)
+            {
+                yield return MetadataReference.CreateFromFile(type.Assembly.Location);
+            }
+        }
+
+        private CSharpCompilationOptions GetCompilationOptions()
+        {
+            var options = new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary);
+            return options;
         }
     }
 }

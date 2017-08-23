@@ -5,11 +5,11 @@ namespace DotvvmAcademy.BL.Validation.CSharp
 {
     public sealed class CSharpNamespace : CSharpValidationObject<NamespaceDeclarationSyntax>
     {
-        public CSharpNamespace(CSharpValidate validate, NamespaceDeclarationSyntax node) : base(validate, node)
+        internal CSharpNamespace(CSharpValidate validate, NamespaceDeclarationSyntax node, bool isActive = true) : base(validate, node, isActive)
         {
         }
 
-        public static CSharpNamespace Inactive => new CSharpNamespace(null, null) { IsActive = false };
+        public static CSharpNamespace Inactive => new CSharpNamespace(null, null, false);
 
         public CSharpClass Class(string name)
         {
@@ -29,6 +29,11 @@ namespace DotvvmAcademy.BL.Validation.CSharp
             }
 
             return new CSharpClass(Validate, classes.Single());
+        }
+
+        private void AddError(string message)
+        {
+            AddError(message, Node.Name.Span.Start, Node.Name.Span.End);
         }
     }
 }

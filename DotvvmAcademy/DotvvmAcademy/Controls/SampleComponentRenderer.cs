@@ -5,7 +5,7 @@ using DotVVM.Framework.Compilation.Javascript;
 using DotVVM.Framework.Controls;
 using DotVVM.Framework.Hosting;
 using DotvvmAcademy.BL.DTO.Components;
-using DotvvmAcademy.Models;
+using DotvvmAcademy.ViewModels;
 using System.Linq;
 
 namespace DotvvmAcademy.Controls
@@ -17,14 +17,14 @@ namespace DotvvmAcademy.Controls
         private DotvvmControl errorList;
         private int uniqueIdIndex = 0;
 
-        public Sample Sample
+        public SampleViewModel Sample
         {
-            get { return (Sample)GetValue(SampleProperty); }
+            get { return (SampleViewModel)GetValue(SampleProperty); }
             set { SetValue(SampleProperty, value); }
         }
 
         public static readonly DotvvmProperty SampleProperty
-            = DotvvmProperty.Register<Sample, SampleComponentRenderer>(c => c.Sample, null);
+            = DotvvmProperty.Register<SampleViewModel, SampleComponentRenderer>(c => c.Sample, null);
 
         public override void SetBindings(StepRenderer renderer)
         {

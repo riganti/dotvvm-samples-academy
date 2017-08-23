@@ -12,7 +12,7 @@
                         <div class="img-part-a">
                         </div>
                         <dot:RouteLink RouteName="Lesson" 
-                                       Param-Lesson="{value: Index}" 
+                                       Param-Lesson="{value: Index + 1}" 
                                        Param-Step="{value: _root.LastStepIndices[Index] == StepCount ? 0 : _root.LastStepIndices[Index]}" 
                                        Enabled="{value: IsReady}">
                             <img src="{value: ImageUrl}" 

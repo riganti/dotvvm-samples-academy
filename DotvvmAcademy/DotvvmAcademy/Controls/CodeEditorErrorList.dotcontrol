@@ -1,4 +1,4 @@
-@viewModel DotvvmAcademy.Models.Sample, DotvvmAcademy
+@viewModel DotvvmAcademy.ViewModels.SampleViewModel, DotvvmAcademy
 
 <dot:Repeater DataSource="{value: Errors}">
     <div class="alert alert-danger" InnerText="{value: Message}" />

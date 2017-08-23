@@ -5,7 +5,7 @@ using DotVVM.Framework.Hosting;
 using DotvvmAcademy.BL.DTO;
 using DotvvmAcademy.BL.DTO.Components;
 using DotvvmAcademy.BL.Facades;
-using DotvvmAcademy.Models;
+using DotvvmAcademy.ViewModels;
 using System;
 using System.Collections.Generic;
 
@@ -13,14 +13,14 @@ namespace DotvvmAcademy.Controls
 {
     public class StepRenderer : DotvvmControl
     {
-        public List<Sample> Samples
+        public List<SampleViewModel> Samples
         {
-            get { return (List<Sample>)GetValue(SamplesProperty); }
+            get { return (List<SampleViewModel>)GetValue(SamplesProperty); }
             set { SetValue(SamplesProperty, value); }
         }
 
         public static readonly DotvvmProperty SamplesProperty
-            = DotvvmProperty.Register<List<Sample>, StepRenderer>(c => c.Samples, null);
+            = DotvvmProperty.Register<List<SampleViewModel>, StepRenderer>(c => c.Samples, null);
 
 
         public List<SourceComponent> Source

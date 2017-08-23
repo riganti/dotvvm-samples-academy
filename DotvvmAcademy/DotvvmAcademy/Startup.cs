@@ -12,13 +12,6 @@ namespace DotvvmAcademy
 {
     public class Startup
     {
-        private readonly IHostingEnvironment hostingEnvironment;
-
-        public Startup(IHostingEnvironment hostingEnvironment)
-        {
-            this.hostingEnvironment = hostingEnvironment;
-        }
-
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             //CacheLessons(app);

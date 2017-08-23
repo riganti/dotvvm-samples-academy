@@ -8,11 +8,11 @@ namespace DotvvmAcademy.BL.Validation.CSharp
 {
     public sealed class CSharpClassInstance : CSharpValidationObject<ClassDeclarationSyntax>
     {
-        public CSharpClassInstance(CSharpValidate validate, ClassDeclarationSyntax node) : base(validate, node)
+        internal CSharpClassInstance(CSharpValidate validate, ClassDeclarationSyntax node, bool isActive = true) : base(validate, node, isActive)
         {
         }
 
-        public static CSharpClassInstance Inactive => new CSharpClassInstance(null, null) { IsActive = false };
+        public static CSharpClassInstance Inactive => new CSharpClassInstance(null, null, false);
 
         public void ExecuteMethod(string methodName, object expectedResult = null, params object[] arguments)
         {

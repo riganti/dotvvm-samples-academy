@@ -20,10 +20,6 @@ namespace DotvvmAcademy
         {
             // register code-only controls and markup controls
             config.Markup.AddCodeControls("cc", typeof(AceEditor));
-            config.Markup.AddMarkupControl("step", "InfoStep", "Controls/InfoStep.dotcontrol");
-            config.Markup.AddMarkupControl("step", "ChoicesStep", "Controls/ChoicesStep.dotcontrol");
-            config.Markup.AddMarkupControl("step", "DothtmlStep", "Controls/DothtmlStep.dotcontrol");
-            config.Markup.AddMarkupControl("step", "CodeStep", "Controls/CodeStep.dotcontrol");
         }
 
         private void ConfigureResources(DotvvmConfiguration config, string applicationPath)

@@ -4,7 +4,6 @@ using DotvvmAcademy.BL.DTO;
 using DotvvmAcademy.BL.DTO.Components;
 using DotvvmAcademy.BL.Facades;
 using DotvvmAcademy.BL.Validation;
-using DotvvmAcademy.Models;
 using DotvvmAcademy.Services;
 using System;
 using System.Collections.Generic;
@@ -36,7 +35,7 @@ namespace DotvvmAcademy.ViewModels
 
         public int LessonStepCount { get; private set; }
 
-        public List<Sample> Samples { get; set; } = new List<Sample>();
+        public List<SampleViewModel> Samples { get; set; } = new List<SampleViewModel>();
 
         [Bind(Direction.None)]
         public List<SampleDTO> SampleDTOs { get; set; } = new List<SampleDTO>();
@@ -100,7 +99,7 @@ namespace DotvvmAcademy.ViewModels
                 var dto = sampleFacade.GetSample(component);
                 if(!Context.IsPostBack)
                 {
-                    Samples.Add(Sample.Create(dto));
+                    Samples.Add(SampleViewModel.Create(dto));
                 }
                 else
                 {

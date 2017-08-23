@@ -4,7 +4,7 @@
     "Language": "en",
     "Name": "Validation and DataContext",
     "Annotation": "Learn how validation works and <code>DataContext</code> works.",
-    "ImageUrl": "/img/professional.png",
+    "ImageUrl": "/img/advanced.png",
     "IsReady": true,
     "Steps": [
       "./en/step1.md",

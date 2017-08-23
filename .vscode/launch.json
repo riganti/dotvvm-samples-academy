@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceRoot}/DotvvmAcademy/DotvvmAcademy/bin/Debug/netcoreapp1.1/DotvvmAcademy.dll",
+            "program": "${workspaceRoot}/DotvvmAcademy/DotvvmAcademy/bin/Debug/netcoreapp2.0/DotvvmAcademy.dll",
             "args": [],
             "cwd": "${workspaceRoot}/DotvvmAcademy/DotvvmAcademy",
             "stopAtEntry": false,
