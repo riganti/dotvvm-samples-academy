@@ -11,7 +11,5 @@ namespace DotvvmAcademy.BL.Validation.CSharp
         }
 
         public TNode Node { get; }
-
-        protected abstract void AddError(string message);
     }
 }

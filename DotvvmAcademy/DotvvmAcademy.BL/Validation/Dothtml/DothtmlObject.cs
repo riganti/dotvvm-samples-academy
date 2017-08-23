@@ -46,7 +46,7 @@ namespace DotvvmAcademy.BL.Validation.Dothtml
             }
             else
             {
-                AddError($"This control doesn't contain any controls of type {typeof(TControl).Name}.");
+                AddError($"This control doesn't contain any controls of type '{typeof(TControl).Name}'.");
                 return DothtmlControlCollection.Inactive;
             }
         }
@@ -62,7 +62,7 @@ namespace DotvvmAcademy.BL.Validation.Dothtml
             }
             else
             {
-                AddError($"This control should contain {count} controls of type {typeof(TControl).Name}.");
+                AddError($"This control should contain {count} controls of type '{typeof(TControl).Name}'.");
                 return DothtmlControlCollection.Inactive;
             }
         }
@@ -98,7 +98,7 @@ namespace DotvvmAcademy.BL.Validation.Dothtml
             }
             else
             {
-                AddError($"This control doesn't contain any elements with tag {elementTag}.");
+                AddError($"This control doesn't contain any elements with tag '{elementTag}'.");
                 return DothtmlControlCollection.Inactive;
             }
         }
@@ -114,10 +114,12 @@ namespace DotvvmAcademy.BL.Validation.Dothtml
             }
             else
             {
-                AddError($"This control should contain {count} elements with tag {elementTag}.");
+                AddError($"This control should contain {count} elements with tag '{elementTag}'.");
                 return DothtmlControlCollection.Inactive;
             }
         }
+
+        protected override void AddError(string message) => AddError(message, Node.DothtmlNode.StartPosition, Node.DothtmlNode.EndPosition);
 
         protected DothtmlControlCollection GetControls<TControl>() where TControl : DotvvmControl
         {
@@ -135,7 +137,5 @@ namespace DotvvmAcademy.BL.Validation.Dothtml
                 .Where(c => ((DothtmlElementNode)c.DothtmlNode).TagName == elementTag)
                 .Select(c => new DothtmlControl(Validate, c)));
         }
-
-        protected virtual void AddError(string message) => AddError(message, Node.DothtmlNode.StartPosition, Node.DothtmlNode.EndPosition);
     }
 }

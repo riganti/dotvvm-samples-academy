@@ -32,5 +32,7 @@ namespace DotvvmAcademy.BL.Validation.Dothtml
         {
             return Controls.GetEnumerator();
         }
+
+        protected override void AddError(string message) => AddGlobalError(message);
     }
 }

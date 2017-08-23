@@ -13,6 +13,8 @@
 
         public TValidate Validate { get; }
 
+        protected abstract void AddError(string message);
+
         protected void AddError(string message, int startPosition, int endPosition) => Validate.AddError(message, startPosition, endPosition);
 
         protected void AddGlobalError(string message) => Validate.AddGlobalError(message);

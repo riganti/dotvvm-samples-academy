@@ -53,9 +53,9 @@ namespace DotvvmAcademy.BL.Validators
         public static (DothtmlControlCollection textBoxes, DothtmlControl button) Lesson1Step6Validator(DothtmlValidate validate)
         {
             (var textBoxes, var button) = Lesson1Step3Validator(validate);
-            textBoxes[0].ValueBinding(TextBox.TextProperty, "Number1");
-            textBoxes[1].ValueBinding(TextBox.TextProperty, "Number2");
-            textBoxes[2].ValueBinding(TextBox.TextProperty, "Result");
+            textBoxes[0].Property(TextBox.TextProperty).ValueBinding("Number1");
+            textBoxes[1].Property(TextBox.TextProperty).ValueBinding("Number2");
+            textBoxes[2].Property(TextBox.TextProperty).ValueBinding("Result");
             return (textBoxes, button);
         }
 
@@ -63,8 +63,8 @@ namespace DotvvmAcademy.BL.Validators
         public static (DothtmlControlCollection textBoxes, DothtmlControl button) Lesson1Step7Validator(DothtmlValidate validate)
         {
             (var textBoxes, var button) = Lesson1Step6Validator(validate);
-            button.HardcodedValue(ButtonBase.TextProperty, "Calculate!");
-            button.CommandBinding(ButtonBase.ClickProperty, "Calculate()");
+            button.Property(ButtonBase.TextProperty).HardcodedValue("Calculate!");
+            button.Property(ButtonBase.ClickProperty).CommandBinding("Calculate()");
             return (textBoxes, button);
         }
     }
