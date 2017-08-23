@@ -13,9 +13,11 @@ namespace DotvvmAcademy.BL.Validation.CSharp
 
         public bool IsActive { get; }
 
-        protected TNode Node { get; }
+        public TNode Node { get; }
 
         protected CSharpValidate Validate { get; }
+
+        protected abstract void AddError(string message);
 
         protected void AddError(string message, int startPosition, int endPosition) => Validate.AddError(message, startPosition, endPosition);
 

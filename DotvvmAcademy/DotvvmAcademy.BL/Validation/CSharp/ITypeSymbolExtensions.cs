@@ -17,7 +17,7 @@ namespace DotvvmAcademy.BL.Validation.CSharp
 
         public static bool EqualsTypeFullName(this ITypeSymbol symbol, string typeFullName)
         {
-            return $"{symbol.ContainingNamespace.Name}.{symbol.Name}" == typeFullName;
+            return symbol.ToString() == typeFullName;
         }
     }
 }

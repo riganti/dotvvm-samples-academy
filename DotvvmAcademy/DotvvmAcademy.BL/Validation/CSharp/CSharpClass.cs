@@ -2,7 +2,11 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System;
+using System.Collections.Immutable;
+using System.Globalization;
 using System.Linq;
+using System.Reflection;
+using System.Text;
 
 namespace DotvvmAcademy.BL.Validation.CSharp
 {
@@ -10,9 +14,14 @@ namespace DotvvmAcademy.BL.Validation.CSharp
     {
         internal CSharpClass(CSharpValidate validate, ClassDeclarationSyntax node, bool isActive = true) : base(validate, node, isActive)
         {
+            if (!IsActive) return;
+
+            Symbol = Validate.Model.GetDeclaredSymbol(Node);
         }
 
         public static CSharpClass Inactive => new CSharpClass(null, null, false);
+
+        public INamedTypeSymbol Symbol { get; }
 
         public CSharpProperty AutoProperty<TProperty>(string name,
             CSharpAccessModifier access = CSharpAccessModifier.Public,
@@ -38,15 +47,60 @@ namespace DotvvmAcademy.BL.Validation.CSharp
             return property;
         }
 
-        public CSharpClassInstance Instance()
+        public CSharpClassInstance Instance(params object[] constructorArguments)
         {
             if (!IsActive) return CSharpClassInstance.Inactive;
-            return CSharpClassInstance.Inactive;
+            object instance;
+            try
+            {
+                instance = Validate.Assembly.CreateInstance(Symbol.ToString(), false, BindingFlags.CreateInstance, null, constructorArguments, null, null);
+                if(instance == null)
+                {
+                    AddError("This class could not be instantiated. Assembly.CreateInstance returned null.");
+                    return CSharpClassInstance.Inactive;
+                }
+            }
+            catch(Exception e)
+            {
+                AddError($"This class could not be instantiated. Exception message: '{e.Message}'.");
+                return CSharpClassInstance.Inactive;
+            }
+            return new CSharpClassInstance(Validate, Node, instance);
         }
 
-        public void Method(string name, Type returnType, params Type[] parameters)
+        public CSharpMethod Method(string name, Type returnType, params Type[] parameters)
         {
-            if (!IsActive) return;
+            if (!IsActive) return CSharpMethod.Inactive;
+
+            var errorMessage = $"This class is missing the '{GetMethodSignature(name, returnType.Name, parameters.Select(p => p.Name).ToArray())}' method.";
+            var methods = Node.Members
+                .OfType<MethodDeclarationSyntax>()
+                .Where(m => m.Identifier.ValueText == name)
+                .ToList();
+            if (methods.Count == 0)
+            {
+                AddError(errorMessage);
+                return CSharpMethod.Inactive;
+            }
+
+            var methodSymbols = methods
+                .Select(m => Validate.Model.GetDeclaredSymbol(m))
+                .Where(s => s.ReturnType.EqualsType(returnType))
+                .ToList();
+            if (methodSymbols.Count == 0)
+            {
+                AddError(errorMessage);
+                return CSharpMethod.Inactive;
+            }
+
+            var methodSymbol = methodSymbols.SingleOrDefault(s => ValidateParameterTypes(s.Parameters, parameters));
+            if(methodSymbol == default(IMethodSymbol))
+            {
+                AddError(errorMessage);
+                return CSharpMethod.Inactive;
+            }
+
+            return new CSharpMethod(Validate, methods.Single(m => Validate.Model.GetDeclaredSymbol(m) == methodSymbol));
         }
 
         public CSharpProperty Property<TProperty>(string name)
@@ -60,7 +114,7 @@ namespace DotvvmAcademy.BL.Validation.CSharp
             return Property(typeFullName, name, s => s.EqualsTypeFullName(typeFullName));
         }
 
-        private void AddError(string message) => AddError(message, Node.Identifier.Span.Start, Node.Identifier.Span.End);
+        protected override void AddError(string message) => AddError(message, Node.Identifier.Span.Start, Node.Identifier.Span.End);
 
         private CSharpProperty Property(string typeFullname, string name, Func<ITypeSymbol, bool> typeCheck)
         {
@@ -89,7 +143,7 @@ namespace DotvvmAcademy.BL.Validation.CSharp
             return new CSharpProperty(Validate, property);
         }
 
-        private void ValidateAutoProperty(CSharpProperty property, CSharpAccessModifier access, 
+        private void ValidateAutoProperty(CSharpProperty property, CSharpAccessModifier access,
             bool hasGetter, CSharpAccessModifier getterAccess, bool hasSetter, CSharpAccessModifier setterAccess)
         {
             property.AccessModifier(access);
@@ -110,6 +164,42 @@ namespace DotvvmAcademy.BL.Validation.CSharp
             {
                 property.NoSetter();
             }
+        }
+
+        private bool ValidateParameterTypes(ImmutableArray<IParameterSymbol> parameterSymbols, Type[] parameterTypes)
+        {
+            if(parameterSymbols.Length != parameterTypes.Length)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < parameterSymbols.Length; i++)
+            {
+                var symbol = parameterSymbols[i];
+                var type = parameterTypes[i];
+                if(!symbol.Type.EqualsType(type))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private string GetMethodSignature(string name, string returnType, params string[] parameterTypes)
+        {
+            var sb = new StringBuilder();
+            sb.Append($"{returnType} {name}(");
+            for (int i = 0; i < parameterTypes.Length; i++)
+            {
+                sb.Append(parameterTypes[i]);
+                if(i != parameterTypes.Length - 1)
+                {
+                    sb.Append(", ");
+                }
+            }
+            sb.Append(')');
+            return sb.ToString();
         }
     }
 }

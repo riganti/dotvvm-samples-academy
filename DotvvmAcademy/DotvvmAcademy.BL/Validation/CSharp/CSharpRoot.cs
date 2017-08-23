@@ -23,12 +23,12 @@ namespace DotvvmAcademy.BL.Validation.CSharp
             var missingUsings = expectedUsings.Except(usersUsings);
             foreach(var missing in missingUsings)
             {
-                AddGlobalError($"This file is missing the '{missing}' using.");
+                AddError($"This file is missing the '{missing}' using.");
             }
             var extraUsings = usersUsings.Except(expectedUsings);
             foreach(var extra in extraUsings)
             {
-                AddGlobalError($"This file contain an extra using: '{extra}'.");
+                AddError($"This file contain an extra using: '{extra}'.");
             }
         }
 
@@ -39,17 +39,19 @@ namespace DotvvmAcademy.BL.Validation.CSharp
             var namespaces = Node.Members.OfType<NamespaceDeclarationSyntax>().Where(n => n.Name.ToString() == name).ToList();
             if(namespaces.Count > 1)
             {
-                AddGlobalError($"This file should not contain multiple namespace declarations named '{name}'.");
+                AddError($"This file should not contain multiple namespace declarations named '{name}'.");
                 return CSharpNamespace.Inactive;
             }
 
             if(namespaces.Count == 0)
             {
-                AddGlobalError($"This file is missing a namespace named '{name}'.");
+                AddError($"This file is missing a namespace named '{name}'.");
                 return CSharpNamespace.Inactive;
             }
 
             return new CSharpNamespace(Validate, namespaces.Single());
         }
+
+        protected override void AddError(string message) => AddGlobalError(message);
     }
 }
