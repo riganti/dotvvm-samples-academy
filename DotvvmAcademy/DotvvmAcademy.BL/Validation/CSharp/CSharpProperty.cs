@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace DotvvmAcademy.BL.Validation.CSharp
 {
-    public sealed class CSharpProperty : CSharpValidationObject<PropertyDeclarationSyntax>
+    public sealed class CSharpProperty : CSharpObject<PropertyDeclarationSyntax>
     {
         internal CSharpProperty(CSharpValidate validate, PropertyDeclarationSyntax node, bool isActive = true) : base(validate, node, isActive)
         {

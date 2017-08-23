@@ -7,7 +7,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace DotvvmAcademy.BL.Validation.CSharp
 {
-    public sealed class CSharpRoot : CSharpValidationObject<CompilationUnitSyntax>
+    public sealed class CSharpRoot : CSharpObject<CompilationUnitSyntax>
     {
         internal CSharpRoot(CSharpValidate validate, CompilationUnitSyntax node, bool isActive = true) : base(validate, node, isActive)
         {

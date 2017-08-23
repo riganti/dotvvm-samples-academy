@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace DotvvmAcademy.BL.Validation.CSharp
 {
-    public sealed class CSharpClassInstance : CSharpValidationObject<ClassDeclarationSyntax>
+    public sealed class CSharpClassInstance : CSharpObject<ClassDeclarationSyntax>
     {
         internal CSharpClassInstance(CSharpValidate validate, ClassDeclarationSyntax node, object instance, bool isActive = true) : base(validate, node, isActive)
         {

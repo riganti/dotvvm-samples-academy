@@ -12,7 +12,7 @@ Also, we'd like to change the text on the button – it should say "Calculate!".
 we don't have to store it in the viewmodel. We can declare it directly in DOTHTML code like this: 
 
 ```DOTHTML
-<dot:Button Click="{command: Text = "Calculate!"}" />
+<dot:Button Text="Calculate!" />
 ```
 [<sample Incorrect="../samples/ButtonBindingIncorrect.dothtml"
          Correct="../samples/ButtonBindingCorrect.dothtml"

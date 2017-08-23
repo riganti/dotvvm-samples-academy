@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace DotvvmAcademy.BL.Validation.CSharp
 {
-    public sealed class CSharpNamespace : CSharpValidationObject<NamespaceDeclarationSyntax>
+    public sealed class CSharpNamespace : CSharpObject<NamespaceDeclarationSyntax>
     {
         internal CSharpNamespace(CSharpValidate validate, NamespaceDeclarationSyntax node, bool isActive = true) : base(validate, node, isActive)
         {

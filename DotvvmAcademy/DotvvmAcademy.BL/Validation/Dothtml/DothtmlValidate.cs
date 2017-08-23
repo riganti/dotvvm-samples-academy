@@ -4,19 +4,16 @@ using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Tokenizer;
 using DotVVM.Framework.Configuration;
 using System;
-using System.Linq;
 
 namespace DotvvmAcademy.BL.Validation.Dothtml
 {
     public sealed class DothtmlValidate : Validate
     {
-        private ResolvedTreeRoot root;
-
         public DothtmlValidate(string code) : base(code)
         {
         }
 
-        public DothtmlControl Root { get; private set; }
+        public DothtmlRoot Root { get; private set; }
 
         protected override void Init()
         {
@@ -26,8 +23,8 @@ namespace DotvvmAcademy.BL.Validation.Dothtml
             var resolver = new DefaultControlTreeResolver(configuration);
 
             tokenizer.Tokenize(Code);
-            root = (ResolvedTreeRoot)resolver.ResolveTree(parser.Parse(tokenizer.Tokens), GetFileName());
-            Root = new DothtmlControl(root, this);
+            var root = (ResolvedTreeRoot)resolver.ResolveTree(parser.Parse(tokenizer.Tokens), GetFileName());
+            Root = new DothtmlRoot(this, root);
         }
 
         private string GetFileName()

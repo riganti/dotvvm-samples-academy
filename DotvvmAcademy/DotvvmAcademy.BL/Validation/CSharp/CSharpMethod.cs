@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace DotvvmAcademy.BL.Validation.CSharp
 {
-    public sealed class CSharpMethod : CSharpValidationObject<MethodDeclarationSyntax>
+    public sealed class CSharpMethod : CSharpObject<MethodDeclarationSyntax>
     {
         internal CSharpMethod(CSharpValidate validate, MethodDeclarationSyntax node, bool isActive = true) : base(validate, node, isActive)
         {

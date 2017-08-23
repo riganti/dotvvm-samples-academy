@@ -3,14 +3,13 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System;
 using System.Collections.Immutable;
-using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 
 namespace DotvvmAcademy.BL.Validation.CSharp
 {
-    public sealed class CSharpClass : CSharpValidationObject<ClassDeclarationSyntax>
+    public sealed class CSharpClass : CSharpObject<ClassDeclarationSyntax>
     {
         internal CSharpClass(CSharpValidate validate, ClassDeclarationSyntax node, bool isActive = true) : base(validate, node, isActive)
         {
@@ -54,13 +53,13 @@ namespace DotvvmAcademy.BL.Validation.CSharp
             try
             {
                 instance = Validate.Assembly.CreateInstance(Symbol.ToString(), false, BindingFlags.CreateInstance, null, constructorArguments, null, null);
-                if(instance == null)
+                if (instance == null)
                 {
                     AddError("This class could not be instantiated. Assembly.CreateInstance returned null.");
                     return CSharpClassInstance.Inactive;
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 AddError($"This class could not be instantiated. Exception message: '{e.Message}'.");
                 return CSharpClassInstance.Inactive;
@@ -94,7 +93,7 @@ namespace DotvvmAcademy.BL.Validation.CSharp
             }
 
             var methodSymbol = methodSymbols.SingleOrDefault(s => ValidateParameterTypes(s.Parameters, parameters));
-            if(methodSymbol == default(IMethodSymbol))
+            if (methodSymbol == default(IMethodSymbol))
             {
                 AddError(errorMessage);
                 return CSharpMethod.Inactive;
@@ -115,6 +114,22 @@ namespace DotvvmAcademy.BL.Validation.CSharp
         }
 
         protected override void AddError(string message) => AddError(message, Node.Identifier.Span.Start, Node.Identifier.Span.End);
+
+        private string GetMethodSignature(string name, string returnType, params string[] parameterTypes)
+        {
+            var sb = new StringBuilder();
+            sb.Append($"{returnType} {name}(");
+            for (int i = 0; i < parameterTypes.Length; i++)
+            {
+                sb.Append(parameterTypes[i]);
+                if (i != parameterTypes.Length - 1)
+                {
+                    sb.Append(", ");
+                }
+            }
+            sb.Append(')');
+            return sb.ToString();
+        }
 
         private CSharpProperty Property(string typeFullname, string name, Func<ITypeSymbol, bool> typeCheck)
         {
@@ -168,7 +183,7 @@ namespace DotvvmAcademy.BL.Validation.CSharp
 
         private bool ValidateParameterTypes(ImmutableArray<IParameterSymbol> parameterSymbols, Type[] parameterTypes)
         {
-            if(parameterSymbols.Length != parameterTypes.Length)
+            if (parameterSymbols.Length != parameterTypes.Length)
             {
                 return false;
             }
@@ -177,29 +192,13 @@ namespace DotvvmAcademy.BL.Validation.CSharp
             {
                 var symbol = parameterSymbols[i];
                 var type = parameterTypes[i];
-                if(!symbol.Type.EqualsType(type))
+                if (!symbol.Type.EqualsType(type))
                 {
                     return false;
                 }
             }
 
             return true;
-        }
-
-        private string GetMethodSignature(string name, string returnType, params string[] parameterTypes)
-        {
-            var sb = new StringBuilder();
-            sb.Append($"{returnType} {name}(");
-            for (int i = 0; i < parameterTypes.Length; i++)
-            {
-                sb.Append(parameterTypes[i]);
-                if(i != parameterTypes.Length - 1)
-                {
-                    sb.Append(", ");
-                }
-            }
-            sb.Append(')');
-            return sb.ToString();
         }
     }
 }
