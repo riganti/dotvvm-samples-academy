@@ -18,6 +18,10 @@ namespace DotvvmAcademy.BL.Validation.Dothtml
 
         public void CommandBinding(params string[] expectedValues) => Binding<CommandBindingExpression>(expectedValues);
 
+        public void ControlCommandBinding(params string[] expectedValues) => Binding<ControlCommandBindingExpression>(expectedValues);
+
+        public void ControlPropertiesBinding(params string[] expectedValues) => Binding<ControlPropertyBindingExpression>(expectedValues);
+
         public void HardcodedValue(params object[] expectedValues)
         {
             if (!IsActive) return;
