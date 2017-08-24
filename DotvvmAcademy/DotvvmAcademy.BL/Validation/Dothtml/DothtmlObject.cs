@@ -1,7 +1,9 @@
 ﻿using DotVVM.Framework.Compilation.ControlTree.Resolved;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 using DotVVM.Framework.Controls;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace DotvvmAcademy.BL.Validation.Dothtml
 {
@@ -19,16 +21,18 @@ namespace DotvvmAcademy.BL.Validation.Dothtml
         {
             if (!IsActive) return DothtmlControl.Inactive;
 
-            var controls = GetControls<TControl>().ToList();
-            if (controls.Count > 1)
+            var controls = Controls<TControl>();
+            if (!controls.IsActive) return DothtmlControl.Inactive;
+
+            if (controls.Count() > 1)
             {
-                AddError($"This control should contain only one control of type '{typeof(TControl).Name}'.");
+                AddError($"There should be only one control of type '{typeof(TControl).Name}'.");
                 return DothtmlControl.Inactive;
             }
 
-            if (controls.Count == 0)
+            if (controls.Count() == 0)
             {
-                AddError($"This control should contain a control of type '{typeof(TControl).Name}'.");
+                AddError($"There should be a control of type '{typeof(TControl).Name}'.");
                 return DothtmlControl.Inactive;
             }
 
@@ -39,14 +43,18 @@ namespace DotvvmAcademy.BL.Validation.Dothtml
         {
             if (!IsActive) return DothtmlControlCollection.Inactive;
 
-            var controls = GetControls<TControl>();
+            var controls = Children();
+            controls.Controls = controls.Controls
+                .Where(c => c.Node.Metadata.Type == typeof(TControl))
+                .ToList();
+
             if (controls.Any())
             {
                 return controls;
             }
             else
             {
-                AddError($"This control doesn't contain any controls of type '{typeof(TControl).Name}'.");
+                AddError($"There should be child controls of type '{typeof(TControl).Name}'.");
                 return DothtmlControlCollection.Inactive;
             }
         }
@@ -55,87 +63,114 @@ namespace DotvvmAcademy.BL.Validation.Dothtml
         {
             if (!IsActive) return DothtmlControlCollection.Inactive;
 
-            var controls = GetControls<TControl>();
+            var controls = Controls<TControl>();
+            if(!controls.IsActive) return controls;
+
             if (controls.Count() == count)
             {
                 return controls;
             }
             else
             {
-                AddError($"This control should contain {count} controls of type '{typeof(TControl).Name}'.");
+                AddError($"There should be {count} child controls of type '{typeof(TControl).Name}'.");
                 return DothtmlControlCollection.Inactive;
             }
         }
 
-        public DothtmlControl Element(string elementTag)
+        public DothtmlControl Element(string tagName, string tagPrefix = null)
         {
             if (!IsActive) return DothtmlControl.Inactive;
 
-            var elements = GetElements(elementTag).ToList();
+            var elements = Elements(tagName, tagPrefix).Controls.ToList();
             if (elements.Count > 1)
             {
-                AddError($"This control should contain only one element with tag '{elementTag}'.");
+                AddError($"There should be only one child element with tag '{GetFullTag(tagName, tagPrefix)}'.");
                 return DothtmlControl.Inactive;
             }
 
             if (elements.Count == 0)
             {
-                AddError($"This control should contain an element with tag '{elementTag}'.");
+                AddError($"There should be a child element with tag '{GetFullTag(tagName, tagPrefix)}'.");
                 return DothtmlControl.Inactive;
             }
 
             return elements.Single();
         }
 
-        public DothtmlControlCollection Elements(string elementTag)
+        public DothtmlControlCollection Elements(string tagName, string tagPrefix = null)
         {
             if (!IsActive) return DothtmlControlCollection.Inactive;
 
-            var elements = GetElements(elementTag);
-            if (elements.Any())
+            var collection = Children();
+            collection.Controls = collection.Controls.Where(e =>
             {
-                return elements;
+                var node = (DothtmlElementNode)e.Node.DothtmlNode;
+                return node.TagName == tagName && node.TagPrefix == tagPrefix;
+            }).ToList();
+
+            if (collection.Any())
+            {
+                return collection;
             }
             else
             {
-                AddError($"This control doesn't contain any elements with tag '{elementTag}'.");
+                AddError($"This control should contain '{GetFullTag(tagName, tagPrefix)}' elements.");
                 return DothtmlControlCollection.Inactive;
             }
         }
 
-        public DothtmlControlCollection Elements(string elementTag, int count)
+        public DothtmlControlCollection Elements(int count, string tagName, string tagPrefix = null)
         {
             if (!IsActive) return DothtmlControlCollection.Inactive;
 
-            var elements = GetElements(elementTag);
+            var elements = Elements(tagName, tagPrefix);
             if (elements.Count() == count)
             {
                 return elements;
             }
             else
             {
-                AddError($"This control should contain {count} elements with tag '{elementTag}'.");
+                AddError($"There should be {count} child elements with tag '{GetFullTag(tagName, tagPrefix)}'.");
                 return DothtmlControlCollection.Inactive;
             }
         }
 
-        protected override void AddError(string message) => AddError(message, Node.DothtmlNode.StartPosition, Node.DothtmlNode.EndPosition);
-
-        protected DothtmlControlCollection GetControls<TControl>() where TControl : DotvvmControl
+        public DothtmlControlCollection Children(int count)
         {
-            return new DothtmlControlCollection(Validate,
-                Node.Content
-                .Where(c => c.Metadata.Type == typeof(TControl))
-                .Select(c => new DothtmlControl(Validate, c)));
+            if (!IsActive) return DothtmlControlCollection.Inactive;
+
+            var elements = Children();
+            var actualCount = elements.Count();
+            if (actualCount != count)
+            {
+                AddError($"This element should have {count} children.");
+                return DothtmlControlCollection.Inactive;
+            }
+            return elements;
         }
 
-        protected DothtmlControlCollection GetElements(string elementTag)
+        public DothtmlControlCollection Children()
         {
+            if (!IsActive) return DothtmlControlCollection.Inactive;
+
             return new DothtmlControlCollection(Validate,
                 Node.Content
                 .Where(c => c.DothtmlNode is DothtmlElementNode)
-                .Where(c => ((DothtmlElementNode)c.DothtmlNode).TagName == elementTag)
                 .Select(c => new DothtmlControl(Validate, c)));
+        }
+
+        protected override void AddError(string message) => AddError(message, Node.DothtmlNode.StartPosition, Node.DothtmlNode.EndPosition);
+
+        private string GetFullTag(string tagName, string tagPrefix = null)
+        {
+            var sb = new StringBuilder();
+            if (!string.IsNullOrEmpty(tagPrefix))
+            {
+                sb.Append(tagPrefix);
+                sb.Append(":");
+            }
+            sb.Append(tagName);
+            return sb.ToString();
         }
     }
 }

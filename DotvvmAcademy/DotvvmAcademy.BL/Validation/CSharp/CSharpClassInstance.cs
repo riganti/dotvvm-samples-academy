@@ -25,24 +25,32 @@ namespace DotvvmAcademy.BL.Validation.CSharp
 
             var methodInfo = Instance.GetType().GetMethod(method.Symbol.Name);
             var result = methodInfo.Invoke(Instance, arguments);
-            if(result != expectedResult)
+            if (result != expectedResult)
             {
                 AddError($"The '{method.Symbol.Name}' method produced an unexpected result: '{result}'. Expected: '{expectedResult}'.");
             }
         }
 
-        public void PropertyGetter(CSharpProperty property, object expectedValue)
+        public void PropertyGetter(CSharpProperty property, object expectedValue, string customErrorMessage = null)
+        {
+            Func<object, string> geErrorMessage = (value) =>
+            {
+                return customErrorMessage ?? $"The '{property.Symbol.Name}' property " +
+                $"contains an unexpected value: '{value}'. Expected: '{expectedValue}'.";
+            };
+            PropertyGetter(property, o => o?.Equals(expectedValue) == true, geErrorMessage);
+
+        }
+
+        public void PropertyGetter(CSharpProperty property, Predicate<object> isValid, Func<object, string> getErrorMessage)
         {
             if (!IsActive || !property.IsActive) return;
 
             var propertyInfo = Instance.GetType().GetProperty(property.Symbol.Name);
             var value = propertyInfo.GetValue(Instance);
-            if (!value.Equals(expectedValue))
+            if (!isValid(value))
             {
-                AddError($"The '{property.Symbol.Name}' property contains " +
-                    $"an unexpected value: '{value}'. Expected: '{expectedValue}'.", 
-                    property.Node.Identifier.Span.Start,
-                    property.Node.Identifier.Span.End);
+                AddError(getErrorMessage(value), property.Node.Identifier.Span.Start, property.Node.Identifier.Span.End);
             }
         }
 

@@ -28,6 +28,7 @@ namespace DotvvmAcademy.ViewModels
         public void ResetCode()
         {
             Code = DTO.IncorrectCode;
+            Errors.Clear();
             IsValid = false;
         }
 
@@ -40,7 +41,7 @@ namespace DotvvmAcademy.ViewModels
         public void Validate()
         {
             Errors.Clear();
-            Errors.AddRange(DTO.Validate(Code).Select(e => ValidationErrorViewModel.Create(e)));
+            Errors.AddRange(DTO.Validate(Code, DTO.Dependencies).Select(e => ValidationErrorViewModel.Create(e)));
             IsValid = Errors.Any();
         }
     }

@@ -11,7 +11,7 @@ namespace DotvvmAcademy.BL.Validators
         [Validator(nameof(Lesson1Step3Validator))]
         public static (DothtmlControlCollection textBoxes, DothtmlControl button) Lesson1Step3Validator(DothtmlValidate validate)
         {
-            var paragraphs = validate.Root.Elements("p", 2).ToList();
+            var paragraphs = validate.Root.Elements(2, "p").ToList();
             var first = paragraphs[0];
             var textBoxes = first.Controls<TextBox>(3);
 

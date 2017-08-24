@@ -2,6 +2,7 @@
 using DotVVM.Framework.Compilation.ControlTree.Resolved;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Tokenizer;
+using DotVVM.Framework.Controls;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,7 +32,34 @@ namespace DotvvmAcademy.BL.Validation.Dothtml
 
             if (TokensToString(attribute.ValueNode.Tokens) != expectedValue)
             {
-                AddError($"The '{name}' attribute contains incorrect value.", attribute.AttributeNameNode.StartPosition, attribute.AttributeNameNode.EndPosition);
+                AddError($"The '{name}' attribute contains incorrect value.", 
+                    attribute.AttributeNameNode.StartPosition, attribute.AttributeNameNode.EndPosition);
+            }
+        }
+
+        public void Tag(string tagName, string tagPrefix = null)
+        {
+            if (!IsActive) return;
+
+            var element = (DothtmlElementNode)Node.DothtmlNode;
+            if(element.TagName != tagName)
+            {
+                AddError($"This element has an invalid tag name. Expected: '{tagName}'.",
+                    element.TagNameNode.StartPosition, element.TagNameNode.EndPosition);
+            }
+
+            if(element.TagPrefix != null)
+            {
+                AddError($"This element has an invalid tag prefix. Expected: '{tagPrefix}'.",
+                    element.TagPrefixNode.StartPosition, element.TagPrefixNode.EndPosition);
+            }
+        }
+
+        public void Type<TControl>() where TControl : DotvvmControl
+        {
+            if(Node.Metadata.Type != typeof(TControl))
+            {
+                AddError($"This control should be of type '{typeof(TControl).Name}'");
             }
         }
 

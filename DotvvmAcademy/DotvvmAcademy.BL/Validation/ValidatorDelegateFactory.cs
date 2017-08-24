@@ -32,13 +32,14 @@ namespace DotvvmAcademy.BL.Validation
             }
         }
 
-        public ValidatorDelegate CreateValidator<TValidate>(MethodInfo validatorInfo) where TValidate : Validate
+        public ValidatorDelegate CreateValidator<TValidate>(MethodInfo validatorInfo)
+            where TValidate : Validate
         {
             var parameters = validatorInfo.GetParameters();
             ValidateParameters<TValidate>(validatorInfo, parameters);
-            return (code) =>
+            return (code, dependencies) =>
             {
-                Validate validate = (Validate)Activator.CreateInstance(typeof(TValidate), code);
+                Validate validate = (Validate)Activator.CreateInstance(typeof(TValidate), code, dependencies ?? Enumerable.Empty<string>());
                 List<object> arguments = new List<object>();
                 foreach (var parameter in parameters)
                 {

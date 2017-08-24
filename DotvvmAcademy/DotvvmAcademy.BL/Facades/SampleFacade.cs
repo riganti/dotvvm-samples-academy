@@ -3,6 +3,7 @@ using DotvvmAcademy.BL.DTO.Components;
 using DotvvmAcademy.DAL.Base.Providers;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 
 namespace DotvvmAcademy.BL.Facades
@@ -13,7 +14,7 @@ namespace DotvvmAcademy.BL.Facades
         private ISampleProvider sampleProvider;
         private ValidatorFacade validatorFacade;
 
-        public SampleFacade(ILessonProvider lessonProvider, ISampleProvider sampleProvider, ValidatorFacade validatorFacade) 
+        public SampleFacade(ILessonProvider lessonProvider, ISampleProvider sampleProvider, ValidatorFacade validatorFacade)
         {
             this.lessonProvider = lessonProvider;
             this.sampleProvider = sampleProvider;
@@ -35,6 +36,9 @@ namespace DotvvmAcademy.BL.Facades
                 CodeLanguage = correctPathLanguage,
                 CorrectCode = GetRawSample(component.LessonIndex, component.Language, component.StepIndex, component.CorrectPath),
                 IncorrectCode = GetRawSample(component.LessonIndex, component.Language, component.StepIndex, component.IncorrectPath),
+                Dependencies = component.Dependencies
+                    .Select(path => GetRawSample(component.LessonIndex, component.Language, component.StepIndex, path))
+                    .ToImmutableList(),
                 Validate = validatorFacade.GetValidator(component.Validator, correctPathLanguage)
             };
 

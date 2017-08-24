@@ -1,4 +1,6 @@
-﻿namespace DotvvmAcademy.BL.DTO.Components
+﻿using System.Collections.Generic;
+
+namespace DotvvmAcademy.BL.DTO.Components
 {
     public class SampleComponent : SourceComponent
     {
@@ -7,6 +9,8 @@
         }
 
         public string CorrectPath { get; internal set; }
+
+        public IEnumerable<string> Dependencies { get; internal set; }
 
         public string IncorrectPath { get; internal set; }
 

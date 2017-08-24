@@ -3,6 +3,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
 
@@ -10,13 +11,13 @@ namespace DotvvmAcademy.BL.Validation.CSharp
 {
     public sealed class CSharpValidate : Validate
     {
-        public CSharpValidate(string code) : base(code)
+        public CSharpValidate(string code, IEnumerable<string> dependencies) : base(code, dependencies)
         {
         }
 
         public CSharpRoot Root { get; private set; }
 
-        public string UserCodeAssemblyName => $"{nameof(DotvvmAcademy)}.UserCode.{Guid.NewGuid()}";
+        public string UserCodeAssemblyName => $"{nameof(DotvvmAcademy)}.UserCode.{Id}";
 
         internal Assembly Assembly { get; private set; }
 
@@ -29,7 +30,9 @@ namespace DotvvmAcademy.BL.Validation.CSharp
         protected override void Init()
         {
             Tree = CSharpSyntaxTree.ParseText(Code);
-            Compilation = CSharpCompilation.Create(UserCodeAssemblyName, new[] { Tree }, GetMetadataReferences(), GetCompilationOptions());
+            var trees = Dependencies.Select(d => CSharpSyntaxTree.ParseText(d)).ToList();
+            trees.Add(Tree);
+            Compilation = CSharpCompilation.Create(UserCodeAssemblyName, trees, GetMetadataReferences(), GetCompilationOptions());
             Model = Compilation.GetSemanticModel(Tree);
             Assembly = EmitToAssembly(Compilation);
             Root = new CSharpRoot(this, Tree.GetCompilationUnitRoot());

@@ -1,5 +1,6 @@
-﻿using DotvvmAcademy.BL.DTO;
-using DotvvmAcademy.BL.DTO.Components;
+﻿using DotvvmAcademy.BL.DTO.Components;
+using System.Collections.Immutable;
+using System.Linq;
 using System.Xml.Linq;
 
 namespace DotvvmAcademy.BL.CommonMark
@@ -7,11 +8,10 @@ namespace DotvvmAcademy.BL.CommonMark
     public class SampleComponentParser : IComponentParser<SampleComponent>
     {
         public const string CorrectAttributeName = "Correct";
-
+        public const string DependenciesElementName = "dependencies";
+        public const string DependencyElementName = "dependency";
         public const string ElementName = "sample";
-
         public const string IncorrectAttributeName = "Incorrect";
-
         public const string ValidatorAttributeName = "Validator";
 
         public bool CanParse(XElement element)
@@ -27,6 +27,16 @@ namespace DotvvmAcademy.BL.CommonMark
                 IncorrectPath = GetRequiredAttributeValue(element, IncorrectAttributeName),
                 Validator = GetRequiredAttributeValue(element, ValidatorAttributeName)
             };
+            var dependencies = element.Elements(XName.Get(DependenciesElementName)).SingleOrDefault();
+            if(dependencies != null)
+            {
+                var values = dependencies.Elements(XName.Get(DependencyElementName)).Select(e => e.Value);
+                sample.Dependencies = ImmutableList.CreateRange(values);
+            }
+            else
+            {
+                sample.Dependencies = Enumerable.Empty<string>();
+            }
             return sample;
         }
 

@@ -1,18 +1,27 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DotvvmAcademy.BL.Validation
 {
     public abstract class Validate
     {
-        public Validate(string code)
+        public Validate(string code, IEnumerable<string> dependencies)
         {
             Code = code;
+            Dependencies = dependencies;
             Init();
         }
 
         public string Code { get; }
 
         public List<ValidationError> ValidationErrors { get; set; } = new List<ValidationError>();
+
+        public IEnumerable<string> Dependencies { get; }
+
+        public Guid Id { get; } = Guid.NewGuid();
+
+        public string TestingValue => $"TestingValue{Id}";
 
         public void AddError(string message, int startPosition, int endPosition)
         {

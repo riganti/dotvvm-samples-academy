@@ -8,12 +8,12 @@ namespace DotvvmAcademy.BL.Validation.Dothtml
     {
         internal DothtmlControlCollection(DothtmlValidate validate, IEnumerable<DothtmlControl> controls, bool isActive = true) : base(validate, isActive)
         {
-            Controls = controls;
+            Controls = controls ?? Enumerable.Empty<DothtmlControl>();
         }
 
         public static DothtmlControlCollection Inactive => new DothtmlControlCollection(null, Enumerable.Empty<DothtmlControl>(), false);
 
-        public IEnumerable<DothtmlControl> Controls { get; private set; } = new List<DothtmlControl>();
+        public IEnumerable<DothtmlControl> Controls { get; internal set; }
 
         public DothtmlControl this[int i]
         {

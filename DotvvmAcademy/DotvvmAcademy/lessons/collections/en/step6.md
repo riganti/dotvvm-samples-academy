@@ -12,7 +12,4 @@ to `new List<TaskData>()`.
     <dependencies>
         <dependency>../samples/TaskDataCorrect.cs</dependency>
     </dependencies>
-    <allowedTypes>
-        <allowedType><![CDATA[System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>]]></allowedType>
-    </allowedTypes>
 </sample>]

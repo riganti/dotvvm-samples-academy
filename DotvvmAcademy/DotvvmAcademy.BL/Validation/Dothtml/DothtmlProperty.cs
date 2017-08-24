@@ -39,6 +39,13 @@ namespace DotvvmAcademy.BL.Validation.Dothtml
             }
         }
 
+        public DothtmlControlCollection TemplateContent()
+        {
+            if (!IsActive) return DothtmlControlCollection.Inactive;
+
+            return DothtmlControlCollection.Inactive;
+        }
+
         public void ResourceBinding(params string[] expectedValues) => Binding<ResourceBindingExpression>(expectedValues);
 
         public void StaticCommandBinding(params string[] expectedValues) => Binding<StaticCommandBindingExpression>(expectedValues);
