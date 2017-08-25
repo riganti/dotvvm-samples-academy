@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System;
 
 namespace DotvvmAcademy.BL.Validation.CSharp
 {
@@ -26,6 +27,8 @@ namespace DotvvmAcademy.BL.Validation.CSharp
                 AddError($"This property should be '{access.ToHumanReadable()}'.");
             }
         }
+
+        public override void AddError(string message) => AddError(message, Node.Identifier.Span.Start, Node.Identifier.Span.Start);
 
         public void Getter(CSharpAccessModifier access)
         {
@@ -79,6 +82,14 @@ namespace DotvvmAcademy.BL.Validation.CSharp
             }
         }
 
-        protected override void AddError(string message) => AddError(message, Node.Identifier.Span.Start, Node.Identifier.Span.Start);
+        public void Type(CSharpTypeDescriptor type)
+        {
+            if (!IsActive || !type.IsActive) return;
+
+            if(!Symbol.Type.GetDescriptor().Equals(type))
+            {
+                AddError($"This property should be of type: '{type.GetFriendlyName()}'.");
+            }
+        }
     }
 }

@@ -1,7 +1,10 @@
 ﻿using DotVVM.Framework.Binding.Expressions;
 using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Compilation.ControlTree.Resolved;
+using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 using System.Linq;
+using System.Collections.Immutable;
+
 
 namespace DotvvmAcademy.BL.Validation.Dothtml
 {
@@ -26,14 +29,13 @@ namespace DotvvmAcademy.BL.Validation.Dothtml
         {
             if (!IsActive) return;
 
-            if (!(Setter is ResolvedPropertyValue))
+            if (!(Setter is ResolvedPropertyValue value))
             {
                 AddError("This property should contain a hard-coded value.");
                 return;
             }
 
-            var value = ((ResolvedPropertyValue)Setter).Value;
-            if (!expectedValues.Contains(value))
+            if (!expectedValues.Contains(value.Value))
             {
                 AddError("This property contains an incorrect hard-coded value.");
             }
@@ -42,8 +44,16 @@ namespace DotvvmAcademy.BL.Validation.Dothtml
         public DothtmlControlCollection TemplateContent()
         {
             if (!IsActive) return DothtmlControlCollection.Inactive;
+            if(!(Setter is ResolvedPropertyTemplate template))
+            {
+                AddError("This property should contain a template.");
+                return DothtmlControlCollection.Inactive;
+            }
 
-            return DothtmlControlCollection.Inactive;
+            return new DothtmlControlCollection(Validate, template.Content
+                .Where(c => c.DothtmlNode is DothtmlElementNode)
+                .Select(c => new DothtmlControl(Validate, c))
+                .ToImmutableList(), template.Parent);
         }
 
         public void ResourceBinding(params string[] expectedValues) => Binding<ResourceBindingExpression>(expectedValues);
@@ -52,7 +62,7 @@ namespace DotvvmAcademy.BL.Validation.Dothtml
 
         public void ValueBinding(params string[] expectedValues) => Binding<ValueBindingExpression>(expectedValues);
 
-        protected override void AddError(string message) => AddError(message, Setter.DothtmlNode.StartPosition, Setter.DothtmlNode.EndPosition);
+        public override void AddError(string message) => AddError(message, Setter.DothtmlNode.StartPosition, Setter.DothtmlNode.EndPosition);
 
         private void Binding<TBinding>(params string[] expectedValues) where TBinding : BindingExpression
         {

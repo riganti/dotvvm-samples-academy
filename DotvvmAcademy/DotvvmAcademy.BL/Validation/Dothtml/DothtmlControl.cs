@@ -21,8 +21,12 @@ namespace DotvvmAcademy.BL.Validation.Dothtml
         {
             if (!IsActive) return;
 
-            var node = (DothtmlElementNode)Node.DothtmlNode;
-            var attribute = node.Attributes.SingleOrDefault(a => a.AttributeName == name);
+            if (!(Node.DothtmlNode is DothtmlElementNode element))
+            {
+                throw new DothtmlValidatorException("Attribute cannot be validated on a non-element based Dothtml control.", this);
+            }
+
+            var attribute = element.Attributes.SingleOrDefault(a => a.AttributeName == name);
 
             if (attribute == null)
             {
@@ -41,7 +45,12 @@ namespace DotvvmAcademy.BL.Validation.Dothtml
         {
             if (!IsActive) return;
 
-            var element = (DothtmlElementNode)Node.DothtmlNode;
+            if(!(Node.DothtmlNode is DothtmlElementNode element))
+            {
+                throw new DothtmlValidatorException("Tag cannot be validated on a non-element based Dothtml control.", this);
+            }
+
+            element = (DothtmlElementNode)Node.DothtmlNode;
             if(element.TagName != tagName)
             {
                 AddError($"This element has an invalid tag name. Expected: '{tagName}'.",
@@ -57,6 +66,8 @@ namespace DotvvmAcademy.BL.Validation.Dothtml
 
         public void Type<TControl>() where TControl : DotvvmControl
         {
+            if (!IsActive) return;
+
             if(Node.Metadata.Type != typeof(TControl))
             {
                 AddError($"This control should be of type '{typeof(TControl).Name}'");

@@ -1,30 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System.Linq;
 
 namespace DotvvmAcademy.BL.Validation.CSharp
 {
-    public sealed class CSharpClassInstance : CSharpObject<ClassDeclarationSyntax>
+    public sealed class CSharpClassInstance : ValidationObject<CSharpValidate>
     {
-        internal CSharpClassInstance(CSharpValidate validate, ClassDeclarationSyntax node, object instance, bool isActive = true) : base(validate, node, isActive)
+        internal CSharpClassInstance(CSharpValidate validate, object rawInstance, bool isActive = true) : base(validate, isActive)
         {
             if (!isActive) return;
-            Instance = instance;
+            RawInstance = rawInstance;
         }
 
-        public static CSharpClassInstance Inactive => new CSharpClassInstance(null, null, null, false);
+        public static CSharpClassInstance Inactive => new CSharpClassInstance(null, null, false);
 
-        public object Instance { get; }
+        public object RawInstance { get; }
+
+        public override void AddError(string message) => AddGlobalError(message);
 
         public void MethodExecution(CSharpMethod method, object expectedResult = null, params object[] arguments)
         {
             if (!IsActive || !method.IsActive) return;
 
-            var methodInfo = Instance.GetType().GetMethod(method.Symbol.Name);
-            var result = methodInfo.Invoke(Instance, arguments);
+            var methodInfo = RawInstance.GetType().GetMethod(method.Symbol.Name);
+            var result = methodInfo.Invoke(RawInstance, arguments);
             if (result != expectedResult)
             {
                 AddError($"The '{method.Symbol.Name}' method produced an unexpected result: '{result}'. Expected: '{expectedResult}'.");
@@ -39,15 +36,14 @@ namespace DotvvmAcademy.BL.Validation.CSharp
                 $"contains an unexpected value: '{value}'. Expected: '{expectedValue}'.";
             };
             PropertyGetter(property, o => o?.Equals(expectedValue) == true, geErrorMessage);
-
         }
 
         public void PropertyGetter(CSharpProperty property, Predicate<object> isValid, Func<object, string> getErrorMessage)
         {
             if (!IsActive || !property.IsActive) return;
 
-            var propertyInfo = Instance.GetType().GetProperty(property.Symbol.Name);
-            var value = propertyInfo.GetValue(Instance);
+            var propertyInfo = RawInstance.GetType().GetProperty(property.Symbol.Name);
+            var value = propertyInfo.GetValue(RawInstance);
             if (!isValid(value))
             {
                 AddError(getErrorMessage(value), property.Node.Identifier.Span.Start, property.Node.Identifier.Span.End);
@@ -58,11 +54,8 @@ namespace DotvvmAcademy.BL.Validation.CSharp
         {
             if (!IsActive || !property.IsActive) return;
 
-            var propertyInfo = Instance.GetType().GetProperty(property.Symbol.Name);
-            propertyInfo.SetValue(Instance, value);
+            var propertyInfo = RawInstance.GetType().GetProperty(property.Symbol.Name);
+            propertyInfo.SetValue(RawInstance, value);
         }
-
-        protected override void AddError(string message) => AddError(message, Node.Identifier.Span.Start, Node.Identifier.Span.End);
-
     }
 }

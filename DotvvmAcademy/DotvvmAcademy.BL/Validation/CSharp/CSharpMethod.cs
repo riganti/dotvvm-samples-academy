@@ -26,6 +26,6 @@ namespace DotvvmAcademy.BL.Validation.CSharp
             }
         }
 
-        protected override void AddError(string message) => AddError(message, Node.Identifier.Span.Start, Node.Identifier.Span.End);
+        public override void AddError(string message) => AddError(message, Node.Identifier.Span.Start, Node.Identifier.Span.End);
     }
 }

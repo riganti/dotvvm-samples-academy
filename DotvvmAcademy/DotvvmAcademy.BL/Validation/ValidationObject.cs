@@ -1,6 +1,6 @@
 ﻿namespace DotvvmAcademy.BL.Validation
 {
-    public abstract class ValidationObject<TValidate>
+    public abstract class ValidationObject<TValidate> : IValidationObject<TValidate>
         where TValidate : Validate
     {
         internal ValidationObject(TValidate validate, bool isActive = true)
@@ -13,7 +13,7 @@
 
         public TValidate Validate { get; }
 
-        protected abstract void AddError(string message);
+        public abstract void AddError(string message);
 
         protected void AddError(string message, int startPosition, int endPosition) => Validate.AddError(message, startPosition, endPosition);
 

@@ -14,7 +14,6 @@ namespace DotvvmAcademy.BL.Validators
             var paragraphs = validate.Root.Elements(2, "p").ToList();
             var first = paragraphs[0];
             var textBoxes = first.Controls<TextBox>(3);
-
             var second = paragraphs[1];
             var button = second.Control<Button>();
 
@@ -37,7 +36,7 @@ namespace DotvvmAcademy.BL.Validators
         public static void Lesson1Step5Validator(CSharpValidate validate)
         {
             var viewModel = Lesson1Step4Validator(validate);
-            var calculate = viewModel.Method("Calculate", typeof(void));
+            var calculate = viewModel.Method("Calculate", typeof(void).GetDescriptor(validate));
             var number1 = viewModel.Property<int>("Number1");
             var number2 = viewModel.Property<int>("Number2");
             var result = viewModel.Property<int>("Result");

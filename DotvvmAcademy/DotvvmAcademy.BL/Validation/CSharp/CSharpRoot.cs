@@ -52,6 +52,6 @@ namespace DotvvmAcademy.BL.Validation.CSharp
             return new CSharpNamespace(Validate, namespaces.Single());
         }
 
-        protected override void AddError(string message) => AddGlobalError(message);
+        public override void AddError(string message) => AddGlobalError(message);
     }
 }

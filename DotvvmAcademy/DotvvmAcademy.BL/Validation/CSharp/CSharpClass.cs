@@ -1,10 +1,8 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
 using System.Collections.Immutable;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 
 namespace DotvvmAcademy.BL.Validation.CSharp
@@ -22,116 +20,57 @@ namespace DotvvmAcademy.BL.Validation.CSharp
 
         public INamedTypeSymbol Symbol { get; }
 
-        public CSharpProperty AutoProperty<TProperty>(string name,
-            CSharpAccessModifier access = CSharpAccessModifier.Public,
-            bool hasGetter = true,
-            CSharpAccessModifier getterAccess = CSharpAccessModifier.Public,
-            bool hasSetter = true,
-            CSharpAccessModifier setterAccess = CSharpAccessModifier.Public)
-        {
-            var property = Property<TProperty>(name);
-            ValidateAutoProperty(property, access, hasGetter, getterAccess, hasSetter, setterAccess);
-            return property;
-        }
+        public override void AddError(string message) => AddError(message, Node.Identifier.Span.Start, Node.Identifier.Span.End);
 
-        public CSharpProperty AutoProperty(string typeFullName, string name,
-            CSharpAccessModifier access = CSharpAccessModifier.Public,
-            bool hasGetter = true,
-            CSharpAccessModifier getterAccess = CSharpAccessModifier.Public,
-            bool hasSetter = true,
-            CSharpAccessModifier setterAccess = CSharpAccessModifier.Public)
-        {
-            var property = Property(typeFullName, name);
-            ValidateAutoProperty(property, access, hasGetter, getterAccess, hasSetter, setterAccess);
-            return property;
-        }
+        public CSharpTypeDescriptor GetDescriptor() => Symbol.GetDescriptor();
 
-        public CSharpClassInstance Instance(params object[] constructorArguments)
+        public CSharpMethod Method(string name, CSharpTypeDescriptor returnType, params CSharpTypeDescriptor[] parameterTypes)
         {
-            if (!IsActive) return CSharpClassInstance.Inactive;
-            object instance;
-            try
-            {
-                instance = Validate.Assembly.CreateInstance(Symbol.ToString(), false, BindingFlags.CreateInstance, null, constructorArguments, null, null);
-                if (instance == null)
-                {
-                    AddError("This class could not be instantiated. Assembly.CreateInstance returned null.");
-                    return CSharpClassInstance.Inactive;
-                }
-            }
-            catch (Exception e)
-            {
-                AddError($"This class could not be instantiated. Exception message: '{e.Message}'.");
-                return CSharpClassInstance.Inactive;
-            }
-            return new CSharpClassInstance(Validate, Node, instance);
-        }
+            if (!IsActive || !returnType.IsActive || parameterTypes.Any(p=>!p.IsActive)) return CSharpMethod.Inactive;
 
-        public CSharpMethod Method(string name, Type returnType, params Type[] parameters)
-        {
-            if (!IsActive) return CSharpMethod.Inactive;
+            var methodSignature = GetMethodSignature(name, returnType, parameterTypes);
+            var missingErrorMessage = $"This class is missing the '{methodSignature}' method.";
 
-            var errorMessage = $"This class is missing the '{GetMethodSignature(name, returnType.Name, parameters.Select(p => p.Name).ToArray())}' method.";
             var methods = Node.Members
                 .OfType<MethodDeclarationSyntax>()
                 .Where(m => m.Identifier.ValueText == name)
                 .ToList();
             if (methods.Count == 0)
             {
-                AddError(errorMessage);
+                AddError(missingErrorMessage);
                 return CSharpMethod.Inactive;
             }
 
-            var methodSymbols = methods
-                .Select(m => Validate.Model.GetDeclaredSymbol(m))
-                .Where(s => s.ReturnType.EqualsType(returnType))
+            var methodTuples = methods
+                .Select(m => (Node: m, Symbol: Validate.Model.GetDeclaredSymbol(m)))
+                .Where(t => t.Symbol.ReturnType.GetDescriptor().Equals(returnType))
                 .ToList();
-            if (methodSymbols.Count == 0)
+            if (methodTuples.Count == 0)
             {
-                AddError(errorMessage);
+                AddError(missingErrorMessage);
                 return CSharpMethod.Inactive;
             }
 
-            var methodSymbol = methodSymbols.SingleOrDefault(s => ValidateParameterTypes(s.Parameters, parameters));
-            if (methodSymbol == default(IMethodSymbol))
+            methodTuples = methodTuples
+                .Where(t => ValidateParameterTypes(t.Symbol.Parameters, parameterTypes))
+                .ToList();
+
+            if (methodTuples.Count > 1)
             {
-                AddError(errorMessage);
+                AddError($"This class contains multiple '{methodSignature}' methods.");
                 return CSharpMethod.Inactive;
             }
 
-            return new CSharpMethod(Validate, methods.Single(m => Validate.Model.GetDeclaredSymbol(m) == methodSymbol));
-        }
-
-        public CSharpProperty Property<TProperty>(string name)
-        {
-            var type = typeof(TProperty);
-            return Property(type.FullName, name, s => s.EqualsType(type));
-        }
-
-        public CSharpProperty Property(string typeFullName, string name)
-        {
-            return Property(typeFullName, name, s => s.EqualsTypeFullName(typeFullName));
-        }
-
-        protected override void AddError(string message) => AddError(message, Node.Identifier.Span.Start, Node.Identifier.Span.End);
-
-        private string GetMethodSignature(string name, string returnType, params string[] parameterTypes)
-        {
-            var sb = new StringBuilder();
-            sb.Append($"{returnType} {name}(");
-            for (int i = 0; i < parameterTypes.Length; i++)
+            if (methodTuples.Count == 0)
             {
-                sb.Append(parameterTypes[i]);
-                if (i != parameterTypes.Length - 1)
-                {
-                    sb.Append(", ");
-                }
+                AddError(missingErrorMessage);
+                return CSharpMethod.Inactive;
             }
-            sb.Append(')');
-            return sb.ToString();
+
+            return new CSharpMethod(Validate, methodTuples.Single().Node);
         }
 
-        private CSharpProperty Property(string typeFullname, string name, Func<ITypeSymbol, bool> typeCheck)
+        public CSharpProperty Property(string name)
         {
             if (!IsActive) return CSharpProperty.Inactive;
 
@@ -148,51 +87,37 @@ namespace DotvvmAcademy.BL.Validation.CSharp
                 return CSharpProperty.Inactive;
             }
 
-            var property = properties.Single();
-            if (!typeCheck(Validate.Model.GetTypeInfo(property.Type).ConvertedType))
-            {
-                AddError($"This property should be of type: '{typeFullname}'.", property.Type.Span.Start, property.Type.Span.End);
-                return CSharpProperty.Inactive;
-            }
-
-            return new CSharpProperty(Validate, property);
+            return new CSharpProperty(Validate, properties.Single());
         }
 
-        private void ValidateAutoProperty(CSharpProperty property, CSharpAccessModifier access,
-            bool hasGetter, CSharpAccessModifier getterAccess, bool hasSetter, CSharpAccessModifier setterAccess)
+        private string GetMethodSignature(string name, CSharpTypeDescriptor returnType, CSharpTypeDescriptor[] parameterTypes)
         {
-            property.AccessModifier(access);
-            if (hasGetter)
+            var sb = new StringBuilder();
+            sb.Append($"{returnType.GetFriendlyName()} {name}(");
+            for (int i = 0; i < parameterTypes.Length; i++)
             {
-                property.Getter(getterAccess);
+                sb.Append(parameterTypes[i].GetFriendlyName());
+                if (i != parameterTypes.Length - 1)
+                {
+                    sb.Append(", ");
+                }
             }
-            else
-            {
-                property.NoGetter();
-            }
-
-            if (hasSetter)
-            {
-                property.Setter(setterAccess);
-            }
-            else
-            {
-                property.NoSetter();
-            }
+            sb.Append(')');
+            return sb.ToString();
         }
 
-        private bool ValidateParameterTypes(ImmutableArray<IParameterSymbol> parameterSymbols, Type[] parameterTypes)
+        private bool ValidateParameterTypes(ImmutableArray<IParameterSymbol> parameterSymbols, CSharpTypeDescriptor[] parameterTypes)
         {
             if (parameterSymbols.Length != parameterTypes.Length)
             {
                 return false;
             }
 
-            for (int i = 0; i < parameterSymbols.Length; i++)
+            for (int i = 0; i < parameterTypes.Length; i++)
             {
                 var symbol = parameterSymbols[i];
-                var type = parameterTypes[i];
-                if (!symbol.Type.EqualsType(type))
+                var descriptor = parameterTypes[i];
+                if (!symbol.Type.GetDescriptor().Equals(descriptor))
                 {
                     return false;
                 }

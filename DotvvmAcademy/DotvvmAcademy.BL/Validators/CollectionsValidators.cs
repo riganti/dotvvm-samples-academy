@@ -14,11 +14,17 @@ namespace DotvvmAcademy.BL.Validators
         [Validator(nameof(Lesson2Step10Validator))]
         public static void Lesson2Step10Validator(DothtmlValidate validate)
         {
+            var div = Lesson2Step9Validator(validate);
+            var link = div.Control<LinkButton>();
+            link.Property(HtmlGenericControl.VisibleProperty).ValueBinding("!IsCompleted");
         }
 
         [Validator(nameof(Lesson2Step11Validator))]
         public static void Lesson2Step11Validator(CSharpValidate validate)
         {
+            var viewModel = Lesson2Step7Validator(validate);
+            //var completeTask = viewModel.Method("CompleteTask");
+            //var instance = viewModel.Instance();
         }
 
         [Validator(nameof(Lesson2Step12Validator))]
@@ -34,11 +40,11 @@ namespace DotvvmAcademy.BL.Validators
         [Validator(nameof(Lesson2Step2Validator))]
         public static (DothtmlControl textBox, DothtmlControl button) Lesson2Step2Validator(DothtmlValidate validate)
         {
-            var children = validate.Root.Children(2);
-            children[0].Tag("p");
-            children[1].Tag("div");
-            var textBox = children[0].Control<TextBox>();
-            var button = children[0].Control<Button>();
+            var elements = validate.Root.Elements(2);
+            elements[0].Tag("p");
+            elements[1].Tag("div");
+            var textBox = elements[0].Control<TextBox>();
+            var button = elements[0].Control<Button>();
             button.Property(ButtonBase.TextProperty).HardcodedValue("Add Task", "add task");
             return (textBox, button);
         }
@@ -72,7 +78,8 @@ namespace DotvvmAcademy.BL.Validators
         {
             validate.Root.Usings("System", "System.Collections.Generic");
             var viewModel = ValidateViewModelStep3(validate);
-            var tasks = viewModel.AutoProperty("System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>", "Tasks");
+            var taskDataType = validate.Descriptor("DotvvmAcademy.Tutorial.ViewModels.TaskData");
+            var tasks = viewModel.AutoProperty(typeof(List<>).GetDescriptor(validate, taskDataType), "Tasks");
             viewModel.Instance().PropertyGetter(tasks, o =>
             {
                 if (o != null && o is IList list && list.Count == 0)
@@ -80,20 +87,21 @@ namespace DotvvmAcademy.BL.Validators
                     return true;
                 }
                 return false;
-            }, o => "The 'Tasks' proeperty should be initialized.");
+            }, o => "The 'Tasks' property should be initialized.");
             return viewModel;
         }
 
         [Validator(nameof(Lesson2Step7Validator))]
-        public static void Lesson2Step7Validator(CSharpValidate validate)
+        public static CSharpClass Lesson2Step7Validator(CSharpValidate validate)
         {
             var viewModel = Lesson2Step6Validator(validate);
             var addedTaskTitle = viewModel.Property<string>("AddedTaskTitle");
-            var tasks = viewModel.AutoProperty("System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>", "Tasks");
+            var taskDataType = validate.Descriptor("DotvvmAcademy.Tutorial.ViewModels.TaskData");
+            var tasks = viewModel.AutoProperty(typeof(List<>).GetDescriptor(validate, taskDataType), "Tasks");
             var instance = viewModel.Instance();
 
             instance.PropertySetter(addedTaskTitle, validate.TestingValue);
-            instance.MethodExecution(viewModel.Method("AddTask", typeof(void)));
+            instance.MethodExecution(viewModel.Method("AddTask", typeof(void).GetDescriptor(validate)));
             instance.PropertyGetter(addedTaskTitle, "", "The 'AddedTaskTitle' property should contain an empty string.");
             instance.PropertyGetter(tasks, o =>
             {
@@ -103,32 +111,35 @@ namespace DotvvmAcademy.BL.Validators
                 }
                 return false;
             }, o => "The 'Tasks' property doesn't contain a 'TaskData' object with its 'Title' property set to the correct value.");
+
+            return viewModel;
         }
 
         [Validator(nameof(Lesson2Step8Validator))]
         public static DothtmlControl Lesson2Step8Validator(DothtmlValidate validate)
         {
             Lesson2Step4Validator(validate);
-            var repeater = validate.Root.Children()[1].Control<Repeater>();
+            var repeater = validate.Root.Elements()[1].Control<Repeater>();
             repeater.Property(ItemsControl.DataSourceProperty).ValueBinding("Tasks");
             var itemTemplate = repeater.Property(Repeater.ItemTemplateProperty).TemplateContent();
-            var div = repeater.Element("div");
+            var div = itemTemplate.Element("div");
             div.Attribute("class", "task");
             return div;
         }
 
         [Validator(nameof(Lesson2Step9Validator))]
-        public static void Lesson2Step9Validator(DothtmlValidate validate)
+        public static DothtmlControl Lesson2Step9Validator(DothtmlValidate validate)
         {
             var div = Lesson2Step8Validator(validate);
             div.Control<Literal>().Property(Literal.TextProperty).ValueBinding("Title");
+            return div;
         }
 
         private static CSharpClass ValidateViewModelStep3(CSharpValidate validate)
         {
             var viewModel = validate.Root.Namespace("DotvvmAcademy.Tutorial.ViewModels").Class("Lesson2ViewModel");
             viewModel.AutoProperty<string>("AddedTaskTitle");
-            viewModel.Method("AddTask", typeof(void));
+            viewModel.Method("AddTask", typeof(void).GetDescriptor(validate));
             return viewModel;
         }
     }

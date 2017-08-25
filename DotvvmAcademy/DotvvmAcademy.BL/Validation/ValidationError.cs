@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace DotvvmAcademy.BL.Validation
 {
@@ -40,10 +41,12 @@ namespace DotvvmAcademy.BL.Validation
 
         public override int GetHashCode()
         {
-            return EndPosition.GetHashCode() ^
-                IsGlobal.GetHashCode() ^
-                Message.GetHashCode() ^
-                StartPosition.GetHashCode();
+            var hashCode = -2080722901;
+            hashCode = hashCode * -1521134295 + EndPosition.GetHashCode();
+            hashCode = hashCode * -1521134295 + IsGlobal.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Message);
+            hashCode = hashCode * -1521134295 + StartPosition.GetHashCode();
+            return hashCode;
         }
     }
 }

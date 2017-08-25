@@ -1,5 +1,7 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using DotVVM.Framework.Controls;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,6 +13,8 @@ namespace DotvvmAcademy.BL.Validation.CSharp
 {
     public sealed class CSharpValidate : Validate
     {
+        private Lazy<Assembly> assembly;
+
         public CSharpValidate(string code, IEnumerable<string> dependencies) : base(code, dependencies)
         {
         }
@@ -19,13 +23,57 @@ namespace DotvvmAcademy.BL.Validation.CSharp
 
         public string UserCodeAssemblyName => $"{nameof(DotvvmAcademy)}.UserCode.{Id}";
 
-        internal Assembly Assembly { get; private set; }
+        internal Assembly Assembly => assembly.Value;
 
         internal CSharpCompilation Compilation { get; private set; }
 
         internal SemanticModel Model { get; private set; }
 
         internal SyntaxTree Tree { get; private set; }
+
+        public CSharpClass Class(string fullName)
+        {
+            var descriptor = Descriptor(fullName);
+            if (!descriptor.IsActive) return CSharpClass.Inactive;
+            return new CSharpClass(this, GetClassDeclaration(descriptor.Symbol));
+        }
+
+        public CSharpTypeDescriptor Descriptor(string fullName, params CSharpTypeDescriptor[] genericParameters)
+        {
+            if (genericParameters.Any(p => !p.IsActive)) return CSharpTypeDescriptor.Inactive;
+
+            var symbol = Compilation.GetTypeByMetadataName(fullName);
+            if(symbol == null)
+            {
+                AddGlobalError($"The compilation is missing the '{fullName}' symbol.");
+                return CSharpTypeDescriptor.Inactive;
+            }
+
+            return symbol.GetDescriptor(genericParameters);
+        }
+
+        public CSharpClassInstance Instance(CSharpClass classObject, params object[] constructorArguments)
+        {
+            if (!classObject.IsActive) return CSharpClassInstance.Inactive;
+            object instance;
+            try
+            {
+                instance = Assembly.CreateInstance(classObject.Symbol.ToString(), false,
+                    BindingFlags.CreateInstance, null, constructorArguments, null, null);
+                if (instance == null)
+                {
+                    classObject.AddError("This class could not be instantiated. Assembly.CreateInstance returned null.");
+                    return CSharpClassInstance.Inactive;
+                }
+            }
+            catch (Exception e)
+            {
+                classObject.AddError($"This class could not be instantiated. Exception message: '{e.Message}'.");
+                return CSharpClassInstance.Inactive;
+            }
+
+            return new CSharpClassInstance(this, instance);
+        }
 
         protected override void Init()
         {
@@ -34,7 +82,7 @@ namespace DotvvmAcademy.BL.Validation.CSharp
             trees.Add(Tree);
             Compilation = CSharpCompilation.Create(UserCodeAssemblyName, trees, GetMetadataReferences(), GetCompilationOptions());
             Model = Compilation.GetSemanticModel(Tree);
-            Assembly = EmitToAssembly(Compilation);
+            assembly = new Lazy<Assembly>(() => EmitToAssembly(Compilation));
             Root = new CSharpRoot(this, Tree.GetCompilationUnitRoot());
         }
 
@@ -60,16 +108,22 @@ namespace DotvvmAcademy.BL.Validation.CSharp
                     return null;
                 }
                 stream.Position = 0;
-
                 return AssemblyLoadContext.Default.LoadFromStream(stream);
             }
+        }
+
+        private CSharpCompilationOptions GetCompilationOptions()
+        {
+            var options = new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary);
+            return options;
         }
 
         private IEnumerable<MetadataReference> GetMetadataReferences()
         {
             var types = new Type[]
             {
-                typeof(object)
+                typeof(object),
+                typeof(DotvvmControl)
             };
 
             foreach (var type in types)
@@ -78,10 +132,15 @@ namespace DotvvmAcademy.BL.Validation.CSharp
             }
         }
 
-        private CSharpCompilationOptions GetCompilationOptions()
+        private ClassDeclarationSyntax GetClassDeclaration(ITypeSymbol symbol)
         {
-            var options = new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary);
-            return options;
+            var declaringReference = symbol.DeclaringSyntaxReferences.Single();
+            var node = declaringReference.SyntaxTree.GetRoot().FindNode(declaringReference.Span);
+            if(!(node is ClassDeclarationSyntax classDeclaration))
+            {
+                throw new ArgumentException($"The provided {nameof(ITypeSymbol)} is not a class.");
+            }
+            return classDeclaration;
         }
     }
 }

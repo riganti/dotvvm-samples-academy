@@ -31,7 +31,7 @@ namespace DotvvmAcademy.BL.Validation.CSharp
             return new CSharpClass(Validate, classes.Single());
         }
 
-        protected override void AddError(string message)
+        public override void AddError(string message)
         {
             AddError(message, Node.Name.Span.Start, Node.Name.Span.End);
         }
