@@ -4,17 +4,15 @@ using System.Collections.Generic;
 
 namespace DotvvmAcademy.BL.Validation.CSharp
 {
-    public sealed class CSharpTypeDescriptor : IEquatable<CSharpTypeDescriptor>
+    public sealed class CSharpTypeDescriptor : ActivatableObject, IEquatable<CSharpTypeDescriptor>
     {
-        public CSharpTypeDescriptor(ITypeSymbol symbol, bool isActive = true)
+        public CSharpTypeDescriptor(ITypeSymbol symbol, bool isActive = true) : base(isActive)
         {
             if (!IsActive) return;
             Symbol = symbol;
         }
 
         public static CSharpTypeDescriptor Inactive { get; } = new CSharpTypeDescriptor(null, false);
-
-        public bool IsActive { get; }
 
         public ITypeSymbol Symbol { get; }
 

@@ -10,8 +10,8 @@ namespace DotvvmAcademy.BL.Validation.CSharp
         internal CSharpProperty(CSharpValidate validate, PropertyDeclarationSyntax node, bool isActive = true) : base(validate, node, isActive)
         {
             if (!IsActive) return;
-
-            Symbol = Validate.Model.GetDeclaredSymbol(Node);
+            var model = Validate.Compilation.GetSemanticModel(Node.SyntaxTree);
+            Symbol = model.GetDeclaredSymbol(Node);
         }
 
         public static CSharpProperty Inactive => new CSharpProperty(null, null, false);

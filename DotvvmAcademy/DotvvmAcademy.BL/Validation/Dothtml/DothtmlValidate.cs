@@ -18,29 +18,37 @@ namespace DotvvmAcademy.BL.Validation.Dothtml
 
         protected override void Init()
         {
-            var tokenizer = new DothtmlTokenizer();
-            var parser = new DothtmlParser();
-            var configuration = DotvvmConfiguration.CreateDefault();
-            var resolver = new DefaultControlTreeResolver(configuration);
+            try
+            {
+                var tokenizer = new DothtmlTokenizer();
+                var parser = new DothtmlParser();
+                var configuration = DotvvmConfiguration.CreateDefault();
+                var resolver = new DefaultControlTreeResolver(configuration);
 
-            tokenizer.Tokenize(Code);
-            var root = (ResolvedTreeRoot)resolver.ResolveTree(parser.Parse(tokenizer.Tokens), GetFileName());
-            Root = new DothtmlRoot(this, root);
-            AddCompilationErrors(root.DothtmlNode);
+                tokenizer.Tokenize(Code);
+                var root = (ResolvedTreeRoot)resolver.ResolveTree(parser.Parse(tokenizer.Tokens), GetFileName());
+                Root = new DothtmlRoot(this, root);
+                AddResolverErrors(root.DothtmlNode);
+            }
+            catch(Exception e)
+            {
+                AddGlobalError($"An exception occured during dothtml compilation: '{e}'.");
+                Root = DothtmlRoot.Inactive;
+            }
         }
 
-        private void AddCompilationErrors(DothtmlNode node)
+        private void AddResolverErrors(DothtmlNode node)
         {
             foreach (var error in node.NodeErrors)
             {
                 AddError(error, node.StartPosition, node.EndPosition);
             }
 
-            if(node is DothtmlNodeWithContent contentNode)
+            if (node is DothtmlNodeWithContent contentNode)
             {
                 foreach (var child in contentNode.Content)
                 {
-                    AddCompilationErrors(child);
+                    AddResolverErrors(child);
                 }
             }
         }

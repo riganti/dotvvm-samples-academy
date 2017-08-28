@@ -16,7 +16,7 @@ namespace DotvvmAcademy.BL.Validation.CSharp
 
         public override void AddError(string message) => AddGlobalError(message);
 
-        public void MethodExecution(CSharpMethod method, object expectedResult = null, params object[] arguments)
+        public void MethodCall(CSharpMethod method, object expectedResult = null, params object[] arguments)
         {
             if (!IsActive || !method.IsActive) return;
 
@@ -24,7 +24,7 @@ namespace DotvvmAcademy.BL.Validation.CSharp
             var result = methodInfo.Invoke(RawInstance, arguments);
             if (result != expectedResult)
             {
-                AddError($"The '{method.Symbol.Name}' method produced an unexpected result: '{result}'. Expected: '{expectedResult}'.");
+                method.AddError($"The '{method.Symbol.Name}' method produced an unexpected result: '{result}'. Expected: '{expectedResult}'.");
             }
         }
 
@@ -46,7 +46,7 @@ namespace DotvvmAcademy.BL.Validation.CSharp
             var value = propertyInfo.GetValue(RawInstance);
             if (!isValid(value))
             {
-                AddError(getErrorMessage(value), property.Node.Identifier.Span.Start, property.Node.Identifier.Span.End);
+                property.AddError(getErrorMessage(value));
             }
         }
 

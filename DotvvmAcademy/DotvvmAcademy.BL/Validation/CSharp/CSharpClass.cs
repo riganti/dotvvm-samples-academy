@@ -12,8 +12,8 @@ namespace DotvvmAcademy.BL.Validation.CSharp
         internal CSharpClass(CSharpValidate validate, ClassDeclarationSyntax node, bool isActive = true) : base(validate, node, isActive)
         {
             if (!IsActive) return;
-
-            Symbol = Validate.Model.GetDeclaredSymbol(Node);
+            var model = Validate.Compilation.GetSemanticModel(Node.SyntaxTree);
+            Symbol = model.GetDeclaredSymbol(Node);
         }
 
         public static CSharpClass Inactive => new CSharpClass(null, null, false);
@@ -22,11 +22,15 @@ namespace DotvvmAcademy.BL.Validation.CSharp
 
         public override void AddError(string message) => AddError(message, Node.Identifier.Span.Start, Node.Identifier.Span.End);
 
-        public CSharpTypeDescriptor GetDescriptor() => Symbol.GetDescriptor();
+        public CSharpTypeDescriptor GetDescriptor(params CSharpTypeDescriptor[] genericParameters) 
+            => Symbol.GetDescriptor(genericParameters);
 
-        public CSharpMethod Method(string name, CSharpTypeDescriptor returnType, params CSharpTypeDescriptor[] parameterTypes)
+        /// <param name="returnType">Null is considered as void.</param>
+        public CSharpMethod Method(string name, CSharpTypeDescriptor returnType = null, params CSharpTypeDescriptor[] parameterTypes)
         {
-            if (!IsActive || !returnType.IsActive || parameterTypes.Any(p=>!p.IsActive)) return CSharpMethod.Inactive;
+            if (!IsActive || returnType?.IsActive == false || parameterTypes.Any(p => p?.IsActive == false)) return CSharpMethod.Inactive;
+
+            returnType = returnType ?? Validate.Descriptor(typeof(void));
 
             var methodSignature = GetMethodSignature(name, returnType, parameterTypes);
             var missingErrorMessage = $"This class is missing the '{methodSignature}' method.";

@@ -36,7 +36,7 @@ namespace DotvvmAcademy.BL.Validators
         public static void Lesson1Step5Validator(CSharpValidate validate)
         {
             var viewModel = Lesson1Step4Validator(validate);
-            var calculate = viewModel.Method("Calculate", typeof(void).GetDescriptor(validate));
+            var calculate = viewModel.Method("Calculate");
             var number1 = viewModel.Property<int>("Number1");
             var number2 = viewModel.Property<int>("Number2");
             var result = viewModel.Property<int>("Result");
@@ -44,7 +44,7 @@ namespace DotvvmAcademy.BL.Validators
             var instance = viewModel.Instance();
             instance.PropertySetter(number1, 15);
             instance.PropertySetter(number2, 30);
-            instance.MethodExecution(calculate);
+            instance.MethodCall(calculate);
             instance.PropertyGetter(result, 45);
         }
 

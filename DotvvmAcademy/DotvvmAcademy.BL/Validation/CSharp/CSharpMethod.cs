@@ -9,7 +9,8 @@ namespace DotvvmAcademy.BL.Validation.CSharp
         internal CSharpMethod(CSharpValidate validate, MethodDeclarationSyntax node, bool isActive = true) : base(validate, node, isActive)
         {
             if (!IsActive) return;
-            Symbol = Validate.Model.GetDeclaredSymbol(Node);
+            var model = Validate.Compilation.GetSemanticModel(Node.SyntaxTree);
+            Symbol = model.GetDeclaredSymbol(Node);
         }
 
         public static CSharpMethod Inactive { get; } = new CSharpMethod(null, null, false);

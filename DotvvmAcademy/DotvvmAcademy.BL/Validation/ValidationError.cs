@@ -5,12 +5,20 @@ namespace DotvvmAcademy.BL.Validation
 {
     public class ValidationError : IEquatable<ValidationError>
     {
-        public ValidationError(string message, bool isGlobal = true, int startPosition = default(int), int endPosition = default(int))
+        public ValidationError(string message, int startPosition, int endPosition, IValidationObject<Validate> originator)
         {
             Message = message;
-            IsGlobal = isGlobal;
+            IsGlobal = false;
             StartPosition = startPosition;
             EndPosition = endPosition;
+            Originator = originator;
+        }
+
+        public ValidationError(string message, IValidationObject<Validate> originator = null)
+        {
+            Message = message;
+            IsGlobal = true;
+            Originator = originator;
         }
 
         public int EndPosition { get; }
@@ -18,6 +26,8 @@ namespace DotvvmAcademy.BL.Validation
         public bool IsGlobal { get; }
 
         public string Message { get; }
+
+        public IValidationObject<Validate> Originator { get; }
 
         public int StartPosition { get; }
 
@@ -33,15 +43,15 @@ namespace DotvvmAcademy.BL.Validation
 
         public bool Equals(ValidationError error)
         {
-            return EndPosition == error.EndPosition &&
-                IsGlobal == error.IsGlobal &&
-                Message == error.Message &&
-                StartPosition == error.StartPosition;
+            return EndPosition.Equals(error.EndPosition) &&
+                IsGlobal.Equals(error.IsGlobal) &&
+                Message.Equals(error.Message) &&
+                StartPosition.Equals(error.StartPosition);
         }
 
         public override int GetHashCode()
         {
-            var hashCode = -2080722901;
+            var hashCode = -165341017;
             hashCode = hashCode * -1521134295 + EndPosition.GetHashCode();
             hashCode = hashCode * -1521134295 + IsGlobal.GetHashCode();
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Message);

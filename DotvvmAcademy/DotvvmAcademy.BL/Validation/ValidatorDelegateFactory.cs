@@ -39,21 +39,29 @@ namespace DotvvmAcademy.BL.Validation
             ValidateParameters<TValidate>(validatorInfo, parameters);
             return (code, dependencies) =>
             {
-                Validate validate = (Validate)Activator.CreateInstance(typeof(TValidate), code, dependencies ?? Enumerable.Empty<string>());
-                List<object> arguments = new List<object>();
-                foreach (var parameter in parameters)
+                try
                 {
-                    if (parameter.ParameterType == typeof(TValidate))
+                    Validate validate = (Validate)Activator.CreateInstance(typeof(TValidate), code, dependencies ?? Enumerable.Empty<string>());
+                    List<object> arguments = new List<object>();
+                    foreach (var parameter in parameters)
                     {
-                        arguments.Add(validate);
+                        if (parameter.ParameterType == typeof(TValidate))
+                        {
+                            arguments.Add(validate);
+                        }
+                        else
+                        {
+                            arguments.Add(serviceProvider.GetService(parameter.ParameterType));
+                        }
                     }
-                    else
-                    {
-                        arguments.Add(serviceProvider.GetService(parameter.ParameterType));
-                    }
+                    validatorInfo.Invoke(null, arguments.ToArray());
+                    return validate.ValidationErrors;
                 }
-                validatorInfo.Invoke(null, arguments.ToArray());
-                return validate.ValidationErrors;
+                catch (Exception e)
+                {
+                    throw new ValidatorException($"An exception occured during the execution of the '{validatorInfo.Name}' validator method.",
+                        validatorInfo, e);
+                }
             };
         }
 

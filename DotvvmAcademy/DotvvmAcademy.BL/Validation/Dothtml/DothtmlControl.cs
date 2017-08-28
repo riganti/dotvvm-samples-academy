@@ -1,4 +1,5 @@
-﻿using DotVVM.Framework.Compilation.ControlTree;
+﻿using DotVVM.Framework.Binding;
+using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Compilation.ControlTree.Resolved;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Tokenizer;
@@ -17,28 +18,12 @@ namespace DotvvmAcademy.BL.Validation.Dothtml
 
         public static DothtmlControl Inactive => new DothtmlControl(null, null, false);
 
-        public void Attribute(string name, string expectedValue)
+        public DothtmlProperty Attribute(string name)
         {
-            if (!IsActive) return;
-
-            if (!(Node.DothtmlNode is DothtmlElementNode element))
-            {
-                throw new DothtmlValidatorException("Attribute cannot be validated on a non-element based Dothtml control.", this);
-            }
-
-            var attribute = element.Attributes.SingleOrDefault(a => a.AttributeName == name);
-
-            if (attribute == null)
-            {
-                AddError($"This control should have the '{name}' attribute set.");
-                return;
-            }
-
-            if (TokensToString(attribute.ValueNode.Tokens) != expectedValue)
-            {
-                AddError($"The '{name}' attribute contains incorrect value.", 
-                    attribute.AttributeNameNode.StartPosition, attribute.AttributeNameNode.EndPosition);
-            }
+            if (!IsActive) return DothtmlProperty.Inactive;
+            var attributeGroup = DotvvmPropertyGroup.GetPropertyGroups(typeof(HtmlGenericControl)).Single(g=>g.Name == "Attributes");
+            var property = attributeGroup.GetDotvvmProperty(name);
+            return Property(property);
         }
 
         public void Tag(string tagName, string tagPrefix = null)

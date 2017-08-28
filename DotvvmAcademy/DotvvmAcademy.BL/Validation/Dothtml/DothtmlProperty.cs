@@ -2,9 +2,9 @@
 using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Compilation.ControlTree.Resolved;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
-using System.Linq;
+using System.Collections.Generic;
 using System.Collections.Immutable;
-
+using System.Linq;
 
 namespace DotvvmAcademy.BL.Validation.Dothtml
 {
@@ -19,13 +19,34 @@ namespace DotvvmAcademy.BL.Validation.Dothtml
 
         public IAbstractPropertySetter Setter { get; }
 
-        public void CommandBinding(params string[] expectedValues) => Binding<CommandBindingExpression>(expectedValues);
+        public override void AddError(string message)
+        {
+            if (Setter is ResolvedPropertyBinding binding)
+            {
+                AddError(message, binding.Binding.DothtmlNode.StartPosition, binding.Binding.DothtmlNode.EndPosition);
+            }
+            else if (Setter.DothtmlNode != null)
+            {
+                AddError(message, Setter.DothtmlNode.StartPosition, Setter.DothtmlNode.EndPosition);
+            }
+            else
+            {
+                IAbstractTreeNode current = Setter.Parent;
+                while(current.Parent?.DothtmlNode == null)
+                {
+                    current = current.Parent;
+                }
+                AddError(message, current.DothtmlNode.StartPosition, current.DothtmlNode.EndPosition);
+            }
+        }
 
-        public void ControlCommandBinding(params string[] expectedValues) => Binding<ControlCommandBindingExpression>(expectedValues);
+        public void CommandBinding(IEnumerable<string> expectedValues) => Binding<CommandBindingExpression>(expectedValues);
 
-        public void ControlPropertiesBinding(params string[] expectedValues) => Binding<ControlPropertyBindingExpression>(expectedValues);
+        public void ControlCommandBinding(IEnumerable<string> expectedValues) => Binding<ControlCommandBindingExpression>(expectedValues);
 
-        public void HardcodedValue(params object[] expectedValues)
+        public void ControlPropertyBinding(IEnumerable<string> expectedValues) => Binding<ControlPropertyBindingExpression>(expectedValues);
+
+        public void HardcodedValue(IEnumerable<string> expectedValues)
         {
             if (!IsActive) return;
 
@@ -41,10 +62,14 @@ namespace DotvvmAcademy.BL.Validation.Dothtml
             }
         }
 
+        public void ResourceBinding(IEnumerable<string> expectedValues) => Binding<ResourceBindingExpression>(expectedValues);
+
+        public void StaticCommandBinding(IEnumerable<string> expectedValues) => Binding<StaticCommandBindingExpression>(expectedValues);
+
         public DothtmlControlCollection TemplateContent()
         {
             if (!IsActive) return DothtmlControlCollection.Inactive;
-            if(!(Setter is ResolvedPropertyTemplate template))
+            if (!(Setter is ResolvedPropertyTemplate template))
             {
                 AddError("This property should contain a template.");
                 return DothtmlControlCollection.Inactive;
@@ -56,20 +81,20 @@ namespace DotvvmAcademy.BL.Validation.Dothtml
                 .ToImmutableList(), template.Parent);
         }
 
-        public void ResourceBinding(params string[] expectedValues) => Binding<ResourceBindingExpression>(expectedValues);
+        public void ValueBinding(IEnumerable<string> expectedValues) => Binding<ValueBindingExpression>(expectedValues);
 
-        public void StaticCommandBinding(params string[] expectedValues) => Binding<StaticCommandBindingExpression>(expectedValues);
-
-        public void ValueBinding(params string[] expectedValues) => Binding<ValueBindingExpression>(expectedValues);
-
-        public override void AddError(string message) => AddError(message, Setter.DothtmlNode.StartPosition, Setter.DothtmlNode.EndPosition);
-
-        private void Binding<TBinding>(params string[] expectedValues) where TBinding : BindingExpression
+        private void Binding<TBinding>(IEnumerable<string> expectedValues) where TBinding : BindingExpression
         {
             if (!IsActive) return;
 
             if (Setter is ResolvedPropertyBinding binding && binding.Binding.BindingType == typeof(TBinding))
             {
+                if (binding.Binding.ParsingError != null)
+                {
+                    AddError($"This binding is not valid. Parsing exception: '{binding.Binding.ParsingError.Message}'.");
+                    return;
+                }
+
                 if (!expectedValues.Contains(binding.Binding.Value.Trim()))
                 {
                     AddError($"This {BindingExpressionUtils.GetHumanReadable<TBinding>()} contains an incorrect value.");

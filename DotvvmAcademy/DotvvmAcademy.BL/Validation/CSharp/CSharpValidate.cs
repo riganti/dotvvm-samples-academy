@@ -2,6 +2,7 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.Emit;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -43,7 +44,7 @@ namespace DotvvmAcademy.BL.Validation.CSharp
             if (genericParameters.Any(p => !p.IsActive)) return CSharpTypeDescriptor.Inactive;
 
             var symbol = Compilation.GetTypeByMetadataName(fullName);
-            if(symbol == null)
+            if (symbol == null)
             {
                 AddGlobalError($"The compilation is missing the '{fullName}' symbol.");
                 return CSharpTypeDescriptor.Inactive;
@@ -77,13 +78,36 @@ namespace DotvvmAcademy.BL.Validation.CSharp
 
         protected override void Init()
         {
-            Tree = CSharpSyntaxTree.ParseText(Code);
-            var trees = Dependencies.Select(d => CSharpSyntaxTree.ParseText(d)).ToList();
-            trees.Add(Tree);
-            Compilation = CSharpCompilation.Create(UserCodeAssemblyName, trees, GetMetadataReferences(), GetCompilationOptions());
-            Model = Compilation.GetSemanticModel(Tree);
-            assembly = new Lazy<Assembly>(() => EmitToAssembly(Compilation));
-            Root = new CSharpRoot(this, Tree.GetCompilationUnitRoot());
+            try
+            {
+                Tree = CSharpSyntaxTree.ParseText(Code);
+                var trees = Dependencies.Select(d => CSharpSyntaxTree.ParseText(d)).ToList();
+                trees.Add(Tree);
+                Compilation = CSharpCompilation.Create(UserCodeAssemblyName, trees, GetMetadataReferences(), GetCompilationOptions());
+                Model = Compilation.GetSemanticModel(Tree);
+                assembly = new Lazy<Assembly>(() => EmitToAssembly(Compilation));
+                Root = new CSharpRoot(this, Tree.GetCompilationUnitRoot());
+            }
+            catch (Exception e)
+            {
+                AddGlobalError($"An exception occured during C# compilation: '{e}'.");
+                Root = CSharpRoot.Inactive;
+            }
+        }
+
+        private void AddCompilationErrors(EmitResult result)
+        {
+            foreach (var diagnostic in result.Diagnostics)
+            {
+                if (diagnostic.Location.Kind == LocationKind.None)
+                {
+                    AddGlobalError(diagnostic.ToString());
+                }
+                else
+                {
+                    AddError(diagnostic.ToString(), diagnostic.Location.SourceSpan.Start, diagnostic.Location.SourceSpan.End, null);
+                }
+            }
         }
 
         private Assembly EmitToAssembly(CSharpCompilation compilation)
@@ -93,23 +117,23 @@ namespace DotvvmAcademy.BL.Validation.CSharp
                 var result = compilation.Emit(stream);
                 if (!result.Success)
                 {
-                    AddGlobalError("The code couldn't be compiled.");
-                    foreach (var diagnostic in result.Diagnostics)
-                    {
-                        if (diagnostic.Location.Kind == LocationKind.None)
-                        {
-                            AddGlobalError(diagnostic.ToString());
-                        }
-                        else
-                        {
-                            AddError(diagnostic.ToString(), diagnostic.Location.SourceSpan.Start, diagnostic.Location.SourceSpan.End);
-                        }
-                    }
+                    AddCompilationErrors(result);
                     return null;
                 }
                 stream.Position = 0;
                 return AssemblyLoadContext.Default.LoadFromStream(stream);
             }
+        }
+
+        private ClassDeclarationSyntax GetClassDeclaration(ITypeSymbol symbol)
+        {
+            var declaringReference = symbol.DeclaringSyntaxReferences.Single();
+            var node = declaringReference.SyntaxTree.GetRoot().FindNode(declaringReference.Span);
+            if (!(node is ClassDeclarationSyntax classDeclaration))
+            {
+                throw new ArgumentException($"The provided {nameof(ITypeSymbol)} is not a class.");
+            }
+            return classDeclaration;
         }
 
         private CSharpCompilationOptions GetCompilationOptions()
@@ -130,17 +154,6 @@ namespace DotvvmAcademy.BL.Validation.CSharp
             {
                 yield return MetadataReference.CreateFromFile(type.Assembly.Location);
             }
-        }
-
-        private ClassDeclarationSyntax GetClassDeclaration(ITypeSymbol symbol)
-        {
-            var declaringReference = symbol.DeclaringSyntaxReferences.Single();
-            var node = declaringReference.SyntaxTree.GetRoot().FindNode(declaringReference.Span);
-            if(!(node is ClassDeclarationSyntax classDeclaration))
-            {
-                throw new ArgumentException($"The provided {nameof(ITypeSymbol)} is not a class.");
-            }
-            return classDeclaration;
         }
     }
 }

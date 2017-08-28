@@ -1,7 +1,18 @@
 ﻿using System;
+using System.Reflection;
 
 namespace DotvvmAcademy.BL.Validation
 {
+    public class ValidatorException : Exception
+    {
+        public ValidatorException(string message, MethodInfo validator, Exception innerException) : base(message, innerException)
+        {
+            Validator = validator;
+        }
+
+        public MethodInfo Validator { get; }
+    }
+
     public abstract class ValidatorException<TValidate> : Exception
         where TValidate : Validate
     {
@@ -10,6 +21,7 @@ namespace DotvvmAcademy.BL.Validation
             ValidationObject = validationObject;
         }
 
-        public IValidationObject<TValidate> ValidationObject { get; set; }
+
+        public IValidationObject<TValidate> ValidationObject { get; }
     }
 }
