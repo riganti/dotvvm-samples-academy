@@ -4,11 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace DotvvmAcademy.Validation
 {
     public class ValidatorDelegateFactory
     {
+        public const int ValidatorTimeOut = 1000;
         private IServiceProvider serviceProvider;
 
         public ValidatorDelegateFactory(IServiceProvider serviceProvider)
@@ -18,65 +21,69 @@ namespace DotvvmAcademy.Validation
 
         public ValidatorDelegate CreateCSharpValidator(MethodInfo validatorInfo)
         {
-            return CreateValidator<CSharpValidate>(validatorInfo);
+            return CreateValidator(validatorInfo, (code, dependencies) => new CSharpValidate(code, dependencies));
         }
 
-        public ValidatorDelegate CreateDothtmlValidator(MethodInfo validatorInfo)
+        public ValidatorDelegate CreateDothtmlValidator(MethodInfo methodInfo)
         {
-            return CreateValidator<DothtmlValidate>(validatorInfo);
+            return CreateValidator(methodInfo, (code, dependencies) => new DothtmlValidate(code, dependencies));
         }
 
-        private ValidatorDelegate CreateValidator<TValidate>(MethodInfo validatorInfo)
+        private ValidatorDelegate CreateValidator<TValidate>(MethodInfo method, Func<string, IEnumerable<string>, TValidate> getValidate)
             where TValidate : Validate
         {
-            var parameters = validatorInfo.GetParameters();
-            ValidateParameters<TValidate>(validatorInfo, parameters);
-            return (code, dependencies) =>
+            var parameters = method.GetParameters();
+            CheckValidateParameter(method, typeof(TValidate), parameters);
+
+            return async (code, dependencies) =>
             {
-                try
+                TValidate validate = getValidate(code, dependencies ?? Enumerable.Empty<string>());
+                Exception threadException = null;
+                var thread = new Thread(() =>
                 {
-                    Validate validate = (Validate)Activator.CreateInstance(typeof(TValidate), code, dependencies ?? Enumerable.Empty<string>());
-                    List<object> arguments = new List<object>();
-                    foreach (var parameter in parameters)
+                    try
                     {
-                        if (parameter.ParameterType == typeof(TValidate))
-                        {
-                            arguments.Add(validate);
-                        }
-                        else
-                        {
-                            arguments.Add(serviceProvider.GetService(parameter.ParameterType));
-                        }
+                        method.Invoke(null, new[] { validate });
                     }
-                    validatorInfo.Invoke(null, arguments.ToArray());
-                    return validate.ValidationErrors;
-                }
-                catch (Exception e)
+                    catch(Exception e)
+                    {
+                        threadException = e;
+                    }
+                });
+                thread.Start();
+                await Task.Delay(ValidatorTimeOut);
+
+                if(thread.IsAlive)
                 {
-                    throw new ValidatorException($"An exception occured during the execution of the '{validatorInfo.Name}' validator method.",
-                        validatorInfo, e);
+                    thread.Abort();
+                    return new[] { new ValidationError("Your code timed out.") };
+                }
+                else
+                {
+                    if(threadException != null)
+                    {
+                        throw new ValidatorDesignException($"An exception caused by faulty design of the validator occured during " +
+                        $"the execution of the '{method.Name}' validator method.", method, threadException);
+                    }
+                    return validate.ValidationErrors;
                 }
             };
         }
 
-        private void ValidateParameters<TValidate>(MethodInfo validatorInfo, ParameterInfo[] parameters)
+        private void CheckValidateParameter(MethodInfo method, Type expectedValidateType, ParameterInfo[] parameters)
         {
-            var validates = parameters.Where(p => typeof(Validate).IsAssignableFrom(p.ParameterType)).ToList();
-            if (validates.Count > 1)
+            var validateParameters = parameters.Where(p => expectedValidateType.IsAssignableFrom(p.ParameterType)).ToList();
+            if (validateParameters.Count > 1)
             {
-                throw new NotSupportedException($"Cannot create validator '{validatorInfo.Name}' as it has multiple parameters inheriting from {nameof(Validate)}.");
+                throw new ValidatorDesignException($"Cannot create validator '{method.Name}' " +
+                    $"as it has multiple '{expectedValidateType.Name}' parameters.", method);
             }
 
-            if (validates.Count == 0)
+            if (validateParameters.Count == 0)
             {
-                throw new NotSupportedException($"Cannot create validator '{validatorInfo.Name}' as it has no parameters inherting from {nameof(Validate)}.");
-            }
-
-            var validateType = validates.Single().ParameterType;
-            if (validateType != typeof(TValidate))
-            {
-                throw new NotSupportedException($"Cannot create validator '{validatorInfo.Name}' as its parameter " +
-                    $"of type {validateType.Name} is not supported for the programming language of the validated sample.");
+                throw new ValidatorDesignException($"Cannot create validator '{method.Name}' " +
+                    $"as it has no '{expectedValidateType.Name}' parameters. Are you sure this is the" +
+                    $"right validator for the sample's programming language?", method);
             }
         }
     }

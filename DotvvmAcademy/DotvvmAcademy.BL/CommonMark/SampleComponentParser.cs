@@ -25,7 +25,7 @@ namespace DotvvmAcademy.BL.CommonMark
             {
                 CorrectPath = GetRequiredAttributeValue(element, CorrectAttributeName),
                 IncorrectPath = GetRequiredAttributeValue(element, IncorrectAttributeName),
-                Validator = GetRequiredAttributeValue(element, ValidatorAttributeName)
+                ValidatorKey = GetRequiredAttributeValue(element, ValidatorAttributeName)
             };
             var dependencies = element.Elements(XName.Get(DependenciesElementName)).SingleOrDefault();
             if(dependencies != null)

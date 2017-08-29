@@ -11,13 +11,11 @@ namespace DotvvmAcademy.BL.Facades
     {
         private ILessonProvider lessonProvider;
         private ISampleProvider sampleProvider;
-        private ValidatorFacade validatorFacade;
 
-        public SampleFacade(ILessonProvider lessonProvider, ISampleProvider sampleProvider, ValidatorFacade validatorFacade)
+        public SampleFacade(ILessonProvider lessonProvider, ISampleProvider sampleProvider)
         {
             this.lessonProvider = lessonProvider;
             this.sampleProvider = sampleProvider;
-            this.validatorFacade = validatorFacade;
         }
 
         public string GetRawSample(int lessonIndex, string lessonLanguage, int stepIndex, string path)
@@ -40,7 +38,9 @@ namespace DotvvmAcademy.BL.Facades
             {
                 CodeLanguage = correctPathLanguage,
                 CorrectCode = GetRawSample(component.LessonIndex, component.Language, component.StepIndex, component.CorrectPath),
-                IncorrectCode = GetRawSample(component.LessonIndex, component.Language, component.StepIndex, component.IncorrectPath)
+                IncorrectCode = GetRawSample(component.LessonIndex, component.Language, component.StepIndex, component.IncorrectPath),
+                ValidatorKey = component.ValidatorKey,
+                Dependencies = component.Dependencies,
             };
 
             return sample;

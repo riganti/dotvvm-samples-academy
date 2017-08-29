@@ -1,8 +1,8 @@
 ﻿using DotvvmAcademy.BL.CommonMark;
 using DotvvmAcademy.BL.DTO.Components;
 using DotvvmAcademy.BL.Facades;
-using DotvvmAcademy.BL.Services;
 using DotvvmAcademy.DAL.FileSystem;
+using DotvvmAcademy.Validation;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DotvvmAcademy.BL
@@ -23,7 +23,7 @@ namespace DotvvmAcademy.BL
                 parser.RegisterComponentParser(p.GetService<IComponentParser<SampleComponent>>());
                 return parser;
             });
-            services.AddSingleton<ValidatorCli>();
+            services.AddSingleton<ValidatorDelegateFactory>();
         }
     }
 }

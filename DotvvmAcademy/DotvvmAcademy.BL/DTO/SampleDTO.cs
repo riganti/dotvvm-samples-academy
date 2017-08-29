@@ -1,4 +1,6 @@
-﻿namespace DotvvmAcademy.BL.DTO
+﻿using System.Collections.Generic;
+
+namespace DotvvmAcademy.BL.DTO
 {
     public sealed class SampleDTO
     {
@@ -10,6 +12,8 @@
         }
 
         public SampleCodeLanguage CodeLanguage { get; internal set; }
+
+        public IEnumerable<string> Dependencies { get; internal set; }
 
         public string CorrectCode { get; internal set; }
 

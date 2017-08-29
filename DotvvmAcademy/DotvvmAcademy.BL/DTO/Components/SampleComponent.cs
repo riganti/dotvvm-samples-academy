@@ -14,6 +14,6 @@ namespace DotvvmAcademy.BL.DTO.Components
 
         public string IncorrectPath { get; internal set; }
 
-        public string Validator { get; internal set; }
+        public string ValidatorKey { get; internal set; }
     }
 }

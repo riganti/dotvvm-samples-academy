@@ -3,6 +3,7 @@ using DotvvmAcademy.BL.DTO;
 using DotvvmAcademy.BL.Facades;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace DotvvmAcademy.ViewModels
 {
@@ -33,10 +34,10 @@ namespace DotvvmAcademy.ViewModels
             IsValid = true;
         }
 
-        public void Validate()
+        public async Task Validate()
         {
             Errors.Clear();
-            var errorDtos = ValidatorFacade.Validate(DTO, Code);
+            var errorDtos = await ValidatorFacade.Validate(DTO, Code);
             Errors.AddRange(errorDtos.Select(e=> ValidationErrorViewModel.Create(e)));
             IsValid = Errors.Any();
         }
