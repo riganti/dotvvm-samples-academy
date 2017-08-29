@@ -1,4 +1,4 @@
-﻿using DotvvmAcademy.BL.Validation;
+﻿using DotvvmAcademy.BL.DTO;
 
 namespace DotvvmAcademy.ViewModels
 {
@@ -12,7 +12,7 @@ namespace DotvvmAcademy.ViewModels
 
         public int StartPosition { get; set; }
 
-        public static ValidationErrorViewModel Create(ValidationError error)
+        public static ValidationErrorViewModel Create(ValidationErrorDTO error)
         {
             var viewModel = new ValidationErrorViewModel
             {

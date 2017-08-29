@@ -3,7 +3,6 @@ using DotVVM.Framework.ViewModel;
 using DotvvmAcademy.BL.DTO;
 using DotvvmAcademy.BL.DTO.Components;
 using DotvvmAcademy.BL.Facades;
-using DotvvmAcademy.BL.Validation;
 using DotvvmAcademy.Services;
 using System;
 using System.Collections.Generic;
@@ -17,12 +16,14 @@ namespace DotvvmAcademy.ViewModels
         private LessonFacade lessonFacade;
         private SampleFacade sampleFacade;
         private StepFacade stepFacade;
+        private ValidatorFacade validatorFacade;
 
-        public LessonViewModel(LessonFacade lessonFacade, StepFacade stepFacade, SampleFacade sampleFacade)
+        public LessonViewModel(LessonFacade lessonFacade, StepFacade stepFacade, SampleFacade sampleFacade, ValidatorFacade validatorFacade)
         {
             this.lessonFacade = lessonFacade;
             this.stepFacade = stepFacade;
             this.sampleFacade = sampleFacade;
+            this.validatorFacade = validatorFacade;
         }
 
         public bool ContinueButtonVisible { get; set; } = true;
@@ -44,8 +45,6 @@ namespace DotvvmAcademy.ViewModels
         public StepDTO Step { get; set; }
 
         public int StepIndex { get; private set; }
-
-        public IEnumerable<ValidationError> Errors { get; set; }
 
         public void Continue()
         {
@@ -99,11 +98,17 @@ namespace DotvvmAcademy.ViewModels
                 var dto = sampleFacade.GetSample(component);
                 if(!Context.IsPostBack)
                 {
-                    Samples.Add(SampleViewModel.Create(dto));
+                    var sampleViewModel = new SampleViewModel
+                    {
+                        ValidatorFacade = validatorFacade,
+                        DTO = dto
+                    };
+                    Samples.Add(sampleViewModel);
                 }
                 else
                 {
                     Samples[i].DTO = dto;
+                    Samples[i].ValidatorFacade = validatorFacade;
                 }
             }
         }

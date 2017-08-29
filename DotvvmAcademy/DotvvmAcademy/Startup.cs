@@ -1,6 +1,7 @@
 using DotvvmAcademy.BL;
 using DotvvmAcademy.BL.DTO.Components;
 using DotvvmAcademy.Controls;
+using DotvvmAcademy.ViewModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;

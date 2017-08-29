@@ -4,7 +4,7 @@ namespace DotvvmAcademy.ViewModels
 {
     public class EmbeddedViewModel : LessonViewModel
     {
-        public EmbeddedViewModel(LessonFacade lessonFacade, StepFacade stepFacade, SampleFacade sampleFacade) : base(lessonFacade, stepFacade, sampleFacade)
+        public EmbeddedViewModel(LessonFacade lessonFacade, StepFacade stepFacade, SampleFacade sampleFacade, ValidatorFacade validatorFacade) : base(lessonFacade, stepFacade, sampleFacade, validatorFacade)
         {
         }
 

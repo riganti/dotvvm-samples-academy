@@ -3,7 +3,6 @@ using DotvvmAcademy.BL.DTO.Components;
 using DotvvmAcademy.DAL.Base.Providers;
 using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 
 namespace DotvvmAcademy.BL.Facades
@@ -21,6 +20,12 @@ namespace DotvvmAcademy.BL.Facades
             this.validatorFacade = validatorFacade;
         }
 
+        public string GetRawSample(int lessonIndex, string lessonLanguage, int stepIndex, string path)
+        {
+            var lesson = lessonProvider.Get(lessonIndex, lessonLanguage);
+            return sampleProvider.Get(lesson, stepIndex, path);
+        }
+
         public SampleDTO GetSample(SampleComponent component)
         {
             var correctPathLanguage = GetSampleLanguage(component.CorrectPath);
@@ -35,20 +40,10 @@ namespace DotvvmAcademy.BL.Facades
             {
                 CodeLanguage = correctPathLanguage,
                 CorrectCode = GetRawSample(component.LessonIndex, component.Language, component.StepIndex, component.CorrectPath),
-                IncorrectCode = GetRawSample(component.LessonIndex, component.Language, component.StepIndex, component.IncorrectPath),
-                Dependencies = component.Dependencies
-                    .Select(path => GetRawSample(component.LessonIndex, component.Language, component.StepIndex, path))
-                    .ToImmutableList(),
-                Validate = validatorFacade.GetValidator(component.Validator, correctPathLanguage)
+                IncorrectCode = GetRawSample(component.LessonIndex, component.Language, component.StepIndex, component.IncorrectPath)
             };
 
             return sample;
-        }
-
-        public string GetRawSample(int lessonIndex, string lessonLanguage, int stepIndex, string path)
-        {
-            var lesson = lessonProvider.Get(lessonIndex, lessonLanguage);
-            return sampleProvider.Get(lesson, stepIndex, path);
         }
 
         public IEnumerable<string> GetSamples(int lessonIndex, string lessonLanguage, int stepIndex, IEnumerable<string> paths)
@@ -64,8 +59,10 @@ namespace DotvvmAcademy.BL.Facades
             {
                 case "cs":
                     return SampleCodeLanguage.CSharp;
+
                 case "dothtml":
                     return SampleCodeLanguage.Dothtml;
+
                 default:
                     throw new NotSupportedException($"The sample '{path}' has an unrecognized file extension.");
             }

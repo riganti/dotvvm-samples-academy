@@ -1,15 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.26730.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotvvmAcademy", "DotvvmAcademy\DotvvmAcademy.csproj", "{F43E4F26-CFBD-4D50-9065-E6E0043D3895}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotvvmAcademy.BL", "DotvvmAcademy.BL\DotvvmAcademy.BL.csproj", "{117EAE40-5E01-42E3-BBBF-22893D306284}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotvvmAcademy.DAL.FileSystem", "DotvvmAcademy.DAL.FileSystem\DotvvmAcademy.DAL.FileSystem.csproj", "{2D42DC4E-E186-4E51-B528-927032B0ABA3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotvvmAcademy.DAL.FileSystem", "DotvvmAcademy.DAL.FileSystem\DotvvmAcademy.DAL.FileSystem.csproj", "{2D42DC4E-E186-4E51-B528-927032B0ABA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotvvmAcademy.DAL.Base", "DotvvmAcademy.DAL.Base\DotvvmAcademy.DAL.Base.csproj", "{3743D61A-FA26-4B11-A04E-0AA71EC9C74E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotvvmAcademy.DAL.Base", "DotvvmAcademy.DAL.Base\DotvvmAcademy.DAL.Base.csproj", "{3743D61A-FA26-4B11-A04E-0AA71EC9C74E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotvvmAcademy.Lessons.Validators", "DotvvmAcademy.Lessons.Validators\DotvvmAcademy.Lessons.Validators.csproj", "{3AE6BF16-D1E9-4A6B-B15E-2B70DF21D196}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotvvmAcademy.Validation", "DotvvmAcademy.Validation\DotvvmAcademy.Validation.csproj", "{59F7811D-D8A1-4746-ADC5-B1DD06374116}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,9 +37,20 @@ Global
 		{3743D61A-FA26-4B11-A04E-0AA71EC9C74E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3743D61A-FA26-4B11-A04E-0AA71EC9C74E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3743D61A-FA26-4B11-A04E-0AA71EC9C74E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AE6BF16-D1E9-4A6B-B15E-2B70DF21D196}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AE6BF16-D1E9-4A6B-B15E-2B70DF21D196}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AE6BF16-D1E9-4A6B-B15E-2B70DF21D196}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AE6BF16-D1E9-4A6B-B15E-2B70DF21D196}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59F7811D-D8A1-4746-ADC5-B1DD06374116}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59F7811D-D8A1-4746-ADC5-B1DD06374116}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59F7811D-D8A1-4746-ADC5-B1DD06374116}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59F7811D-D8A1-4746-ADC5-B1DD06374116}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3363B753-6091-4DB8-B5E7-679817C210B0}
 	EndGlobalSection
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True

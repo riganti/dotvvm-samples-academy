@@ -5,32 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="Resources\Validation.Dothtml.DothtmlValidate.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Validation.Dothtml.Designer.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="CommonMark.NET" Version="0.15.1" />
-    <PackageReference Include="DotVVM" Version="1.1.6-beta" />
-    <PackageReference Include="DotVVM.Core" Version="1.1.6-beta" />
+    <PackageReference Include="DotVVM.Core" Version="1.1.6-beta2" />
     <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.0.0" />
-    <PackageReference Include="System.ValueTuple" Version="4.4.0" />
+    <PackageReference Include="System.Collections.Immutable" Version="1.4.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\DotvvmAcademy.DAL.Base\DotvvmAcademy.DAL.Base.csproj" />
     <ProjectReference Include="..\DotvvmAcademy.DAL.FileSystem\DotvvmAcademy.DAL.FileSystem.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Resources\Validation.Dothtml.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Validation.Dothtml.DothtmlValidate.resx</DependentUpon>
-    </Compile>
   </ItemGroup>
 
 </Project>

@@ -1,7 +1,4 @@
-﻿using DotvvmAcademy.BL.Validation;
-using System.Collections.Generic;
-
-namespace DotvvmAcademy.BL.DTO
+﻿namespace DotvvmAcademy.BL.DTO
 {
     public sealed class SampleDTO
     {
@@ -16,8 +13,6 @@ namespace DotvvmAcademy.BL.DTO
 
         public string CorrectCode { get; internal set; }
 
-        public IEnumerable<string> Dependencies { get; internal set; }
-
         public string IncorrectCode { get; internal set; }
 
         public string Language { get; }
@@ -26,6 +21,6 @@ namespace DotvvmAcademy.BL.DTO
 
         public int StepIndex { get; }
 
-        public ValidatorDelegate Validate { get; internal set; }
+        public string ValidatorKey { get; internal set; }
     }
 }

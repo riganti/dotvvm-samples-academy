@@ -1,13 +1,17 @@
 ﻿using DotVVM.Framework.ViewModel;
 using DotvvmAcademy.BL.DTO;
+using DotvvmAcademy.BL.Facades;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace DotvvmAcademy.ViewModels
 {
-    public class SampleViewModel
+    public class SampleViewModel : DotvvmViewModelBase
     {
         public string Code { get; set; }
+
+        [Bind(Direction.None)]
+        public ValidatorFacade ValidatorFacade { get; set; }
 
         [Bind(Direction.None)]
         public SampleDTO DTO { get; set; }
@@ -15,15 +19,6 @@ namespace DotvvmAcademy.ViewModels
         public List<ValidationErrorViewModel> Errors { get; set; } = new List<ValidationErrorViewModel>();
 
         public bool IsValid { get; set; }
-
-        public static SampleViewModel Create(SampleDTO dto)
-        {
-            var sample = new SampleViewModel
-            {
-                DTO = dto
-            };
-            return sample;
-        }
 
         public void ResetCode()
         {
@@ -41,7 +36,8 @@ namespace DotvvmAcademy.ViewModels
         public void Validate()
         {
             Errors.Clear();
-            Errors.AddRange(DTO.Validate(Code, DTO.Dependencies).Select(e => ValidationErrorViewModel.Create(e)));
+            var errorDtos = ValidatorFacade.Validate(DTO, Code);
+            Errors.AddRange(errorDtos.Select(e=> ValidationErrorViewModel.Create(e)));
             IsValid = Errors.Any();
         }
     }
