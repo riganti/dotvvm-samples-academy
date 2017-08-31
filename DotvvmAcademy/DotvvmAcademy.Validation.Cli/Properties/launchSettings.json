@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "DotvvmAcademy.Validation.Cli": {
+      "commandName": "Project",
+      "commandLineArgs": "dothtml Lesson1Step3Validator"
+    }
+  }
+}

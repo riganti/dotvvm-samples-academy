@@ -5,6 +5,10 @@ namespace DotvvmAcademy.Validation
 {
     public class ValidatorDesignException : Exception
     {
+        public ValidatorDesignException(string message) : base(message)
+        {
+        }
+
         public ValidatorDesignException(string message, MethodInfo validator) : base(message)
         {
             Validator = validator;

@@ -12,11 +12,9 @@ namespace DotvvmAcademy.Validation
     public class ValidatorDelegateFactory
     {
         public const int ValidatorTimeOut = 1000;
-        private IServiceProvider serviceProvider;
 
-        public ValidatorDelegateFactory(IServiceProvider serviceProvider)
+        public ValidatorDelegateFactory()
         {
-            this.serviceProvider = serviceProvider;
         }
 
         public ValidatorDelegate CreateCSharpValidator(MethodInfo validatorInfo)
@@ -35,37 +33,18 @@ namespace DotvvmAcademy.Validation
             var parameters = method.GetParameters();
             CheckValidateParameter(method, typeof(TValidate), parameters);
 
-            return async (code, dependencies) =>
+            return (code, dependencies) =>
             {
                 TValidate validate = getValidate(code, dependencies ?? Enumerable.Empty<string>());
-                Exception threadException = null;
-                var thread = new Thread(() =>
+                try
                 {
-                    try
-                    {
-                        method.Invoke(null, new[] { validate });
-                    }
-                    catch(Exception e)
-                    {
-                        threadException = e;
-                    }
-                });
-                thread.Start();
-                await Task.Delay(ValidatorTimeOut);
-
-                if(thread.IsAlive)
-                {
-                    thread.Abort();
-                    return new[] { new ValidationError("Your code timed out.") };
-                }
-                else
-                {
-                    if(threadException != null)
-                    {
-                        throw new ValidatorDesignException($"An exception caused by faulty design of the validator occured during " +
-                        $"the execution of the '{method.Name}' validator method.", method, threadException);
-                    }
+                    method.Invoke(null, new[] { validate });
                     return validate.ValidationErrors;
+                }
+                catch (Exception e)
+                {
+                    throw new ValidatorDesignException($"An exception caused by faulty design of the validator occured during " +
+                        $"the execution of the '{method.Name}' validator method.", method, e);
                 }
             };
         }
@@ -82,7 +61,7 @@ namespace DotvvmAcademy.Validation
             if (validateParameters.Count == 0)
             {
                 throw new ValidatorDesignException($"Cannot create validator '{method.Name}' " +
-                    $"as it has no '{expectedValidateType.Name}' parameters. Are you sure this is the" +
+                    $"as it has no '{expectedValidateType.Name}' parameters. Are you sure this is the " +
                     $"right validator for the sample's programming language?", method);
             }
         }
