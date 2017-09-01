@@ -1,5 +1,5 @@
 ﻿using DotvvmAcademy.BL.DTO;
-using DotvvmAcademy.BL.Services;
+using DotvvmAcademy.Validation.Cli.Host;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,9 +17,13 @@ namespace DotvvmAcademy.BL.Facades
             this.validatorCli = validatorCli;
         }
 
-        public async Task<IEnumerable<ValidationErrorDTO>> Validate(SampleDTO dto, string code)
+        public async Task<IEnumerable<ValidationErrorDTO>> Validate(SampleDTO dto, string validatorAssemblyPath, string code)
         {
-            var errors = await validatorCli.Invoke(dto.CodeLanguage.ToString().ToLower(), dto.ValidatorKey, dto.Dependencies, code);
+            var arguments = new ValidatorCliArguments(dto.CodeLanguage.ToString().ToLower(), dto.ValidatorKey, validatorAssemblyPath)
+            {
+                Dependencies = dto.Dependencies.ToList()
+            };
+            var errors = await validatorCli.Invoke(arguments, code);
             return errors.Select(e => ValidationErrorDTO.Create(e));
         }
     }

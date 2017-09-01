@@ -12,7 +12,7 @@ namespace DotvvmAcademy.DAL.FileSystem.Providers
     public class FileSystemLessonProvider : FileSystemFileProvider, ILessonProvider
     {
         private readonly string rootLessonsDirectoryAbsolutePath;
-        private readonly string rootLessonsDirectoryRelativePath = $"./{LessonConstants.LessonsDirectoryName}";
+        private readonly string rootLessonsDirectoryRelativePath = $"./{ContentConstants.ContentDirectoryName}/{ContentConstants.LessonsDirectoryName}";
         private ILessonDeserializer deserializer;
 
         public FileSystemLessonProvider(string applicationRoot, ILessonDeserializer deserializer) : base(applicationRoot)
@@ -32,13 +32,13 @@ namespace DotvvmAcademy.DAL.FileSystem.Providers
         {
             if (!Directory.Exists(rootLessonsDirectoryAbsolutePath))
             {
-                throw new InvalidOperationException($"No lessons can be found because the '{LessonConstants.LessonsDirectoryName}' " +
+                throw new InvalidOperationException($"No lessons can be found because the '{ContentConstants.LessonsDirectoryName}' " +
                     $"directory doesn't exist in the provided root directory.");
             }
             var lessonDirectories = Directory.EnumerateDirectories(rootLessonsDirectoryAbsolutePath);
             foreach (var lessonDirectory in lessonDirectories)
             {
-                string configRelativePath = $"{lessonDirectory}/{LessonConstants.LessonConfigurationFileName}";
+                string configRelativePath = $"{lessonDirectory}/{ContentConstants.LessonConfigurationFileName}";
                 string configAbsolutePath = Path.Combine(rootLessonsDirectoryAbsolutePath, configRelativePath);
                 if (!File.Exists(configAbsolutePath))
                 {

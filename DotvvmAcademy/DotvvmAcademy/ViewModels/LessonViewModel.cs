@@ -13,17 +13,19 @@ namespace DotvvmAcademy.ViewModels
 {
     public class LessonViewModel : DotvvmAcademyViewModelBase
     {
-        private LessonFacade lessonFacade;
-        private SampleFacade sampleFacade;
-        private StepFacade stepFacade;
-        private ValidatorFacade validatorFacade;
+        private readonly LessonFacade lessonFacade;
+        private readonly SampleFacade sampleFacade;
+        private readonly StepFacade stepFacade;
+        private readonly ValidatorFacade validatorFacade;
+        private readonly ValidatorsBuilder validatorsBuilder;
 
-        public LessonViewModel(LessonFacade lessonFacade, StepFacade stepFacade, SampleFacade sampleFacade, ValidatorFacade validatorFacade)
+        public LessonViewModel(LessonFacade lessonFacade, StepFacade stepFacade, SampleFacade sampleFacade, ValidatorFacade validatorFacade, ValidatorsBuilder validatorsBuilder)
         {
             this.lessonFacade = lessonFacade;
             this.stepFacade = stepFacade;
             this.sampleFacade = sampleFacade;
             this.validatorFacade = validatorFacade;
+            this.validatorsBuilder = validatorsBuilder;
         }
 
         public bool ContinueButtonVisible { get; set; } = true;
@@ -101,7 +103,8 @@ namespace DotvvmAcademy.ViewModels
                     var sampleViewModel = new SampleViewModel
                     {
                         ValidatorFacade = validatorFacade,
-                        DTO = dto
+                        DTO = dto,
+                        ValidatorsBuilder = validatorsBuilder,
                     };
                     Samples.Add(sampleViewModel);
                 }
@@ -109,6 +112,7 @@ namespace DotvvmAcademy.ViewModels
                 {
                     Samples[i].DTO = dto;
                     Samples[i].ValidatorFacade = validatorFacade;
+                    Samples[i].ValidatorsBuilder = validatorsBuilder;
                 }
             }
         }

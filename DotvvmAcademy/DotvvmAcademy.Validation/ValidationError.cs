@@ -87,12 +87,13 @@ namespace DotvvmAcademy.Validation
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append($"{nameof(ValidationError)}\n");
-            sb.Append($"{Message}\n");
+            sb.Append($"\"{typeof(ValidationError).AssemblyQualifiedName}\" ");
+            sb.Append($"\"{Message}\"");
             if (!IsGlobal)
             {
+                sb.Append(' ');
                 sb.Append(StartPosition.ToString());
-                sb.Append('\n');
+                sb.Append(' ');
                 sb.Append(EndPosition.ToString());
             }
             return sb.ToString();

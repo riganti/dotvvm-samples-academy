@@ -15,7 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DotvvmAcademy.DAL.Base\DotvvmAcademy.DAL.Base.csproj" />
     <ProjectReference Include="..\DotvvmAcademy.DAL.FileSystem\DotvvmAcademy.DAL.FileSystem.csproj" />
-    <ProjectReference Include="..\DotvvmAcademy.Lessons.Validators\DotvvmAcademy.Lessons.Validators.csproj" />
+    <ProjectReference Include="..\DotvvmAcademy.Validation.Cli.Host\DotvvmAcademy.Validation.Cli.Host.csproj" />
     <ProjectReference Include="..\DotvvmAcademy.Validation\DotvvmAcademy.Validation.csproj" />
   </ItemGroup>
 

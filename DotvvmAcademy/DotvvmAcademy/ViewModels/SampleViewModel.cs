@@ -1,6 +1,7 @@
 ﻿using DotVVM.Framework.ViewModel;
 using DotvvmAcademy.BL.DTO;
 using DotvvmAcademy.BL.Facades;
+using DotvvmAcademy.Services;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,6 +14,9 @@ namespace DotvvmAcademy.ViewModels
 
         [Bind(Direction.None)]
         public ValidatorFacade ValidatorFacade { get; set; }
+
+        [Bind(Direction.None)]
+        public ValidatorsBuilder ValidatorsBuilder { get; set; }
 
         [Bind(Direction.None)]
         public SampleDTO DTO { get; set; }
@@ -37,7 +41,7 @@ namespace DotvvmAcademy.ViewModels
         public async Task Validate()
         {
             Errors.Clear();
-            var errorDtos = await ValidatorFacade.Validate(DTO, Code);
+            var errorDtos = await ValidatorFacade.Validate(DTO, ValidatorsBuilder.ValidatorAssemblyPath, Code);
             Errors.AddRange(errorDtos.Select(e=> ValidationErrorViewModel.Create(e)));
             IsValid = Errors.Any();
         }

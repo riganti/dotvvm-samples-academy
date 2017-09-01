@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk" DefaultTargets="BuildWithAllOutputs">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -10,8 +10,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DotvvmAcademy.Lessons.Validators\DotvvmAcademy.Lessons.Validators.csproj" />
     <ProjectReference Include="..\DotvvmAcademy.Validation\DotvvmAcademy.Validation.csproj" />
   </ItemGroup>
+
+  <Target Name="BuildWithAllOutputs" DependsOnTargets="$(BuildDependsOn)" Outputs="@(_AllOutputs->'%(FullPath)')">
+    <ItemGroup>
+      <_AllOutputs Include="$(OutputPath)\**\*" />
+    </ItemGroup>
+    <Message Text="@(_AllOutputs->'%(FullPath)')" Importance="high" />
+  </Target>
 
 </Project>
