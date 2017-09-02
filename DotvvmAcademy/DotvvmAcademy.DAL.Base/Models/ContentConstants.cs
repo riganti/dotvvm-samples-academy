@@ -1,4 +1,4 @@
-﻿namespace DotvvmAcademy.DAL.Base
+﻿namespace DotvvmAcademy.DAL.Base.Models
 {
     public static class ContentConstants
     {

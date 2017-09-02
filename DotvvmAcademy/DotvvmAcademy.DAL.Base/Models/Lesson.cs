@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DotvvmAcademy.DAL.Base.Entities
+namespace DotvvmAcademy.DAL.Base.Models
 {
     public class Lesson
     {

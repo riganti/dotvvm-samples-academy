@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DotvvmAcademy.DAL.Base
+namespace DotvvmAcademy.DAL.Base.Models
 {
     public sealed class LessonIdentifier : IEquatable<LessonIdentifier>
     {
-        public LessonIdentifier(int index, string language)
+        public LessonIdentifier(string lessonId, string language)
         {
-            Index = index;
+            LessonId = lessonId;
             Language = language;
         }
 
-        public int Index { get; }
-
         public string Language { get; }
+
+        public string LessonId { get; }
 
         public override bool Equals(object obj)
         {
@@ -29,14 +29,14 @@ namespace DotvvmAcademy.DAL.Base
         {
             return identifier != null &&
                 Language.Equals(identifier.Language) &&
-                Index.Equals(identifier.Index);
+                LessonId.Equals(identifier.LessonId);
         }
 
         public override int GetHashCode()
         {
-            var hashCode = -1263054562;
+            var hashCode = -1781179249;
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(LessonId);
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Language);
-            hashCode = hashCode * -1521134295 + Index.GetHashCode();
             return hashCode;
         }
     }

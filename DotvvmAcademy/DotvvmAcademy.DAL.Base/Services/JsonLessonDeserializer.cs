@@ -1,4 +1,4 @@
-﻿using DotvvmAcademy.DAL.Base.Entities;
+﻿using DotvvmAcademy.DAL.Base.Models;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 

@@ -1,22 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DotvvmAcademy.DAL.Base
+namespace DotvvmAcademy.DAL.Base.Models
 {
     public sealed class StepIdentifier : IEquatable<StepIdentifier>
     {
-        public StepIdentifier(int lessonIndex, string language, int index)
+        public StepIdentifier(string lessonId, string language, int stepIndex)
         {
-            LessonIndex = lessonIndex;
+            LessonId = lessonId;
             Language = language;
-            Index = index;
+            StepIndex = stepIndex;
         }
 
-        public int Index { get; }
+        public StepIdentifier(LessonIdentifier lessonIdentifier, int stepIndex)
+            : this(lessonIdentifier.LessonId, lessonIdentifier.Language, stepIndex)
+        {
+        }
 
         public string Language { get; }
 
-        public int LessonIndex { get; }
+        public string LessonId { get; }
+
+        public int StepIndex { get; }
 
         public override bool Equals(object obj)
         {
@@ -32,16 +37,16 @@ namespace DotvvmAcademy.DAL.Base
         {
             return identifier != null &&
                 Language.Equals(identifier.Language) &&
-                LessonIndex.Equals(identifier.LessonIndex) &&
-                Index.Equals(identifier.Index);
+                LessonId.Equals(identifier.LessonId) &&
+                StepIndex.Equals(identifier.StepIndex);
         }
 
         public override int GetHashCode()
         {
-            var hashCode = -142102651;
-            hashCode = hashCode * -1521134295 + Index.GetHashCode();
+            var hashCode = 622116884;
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Language);
-            hashCode = hashCode * -1521134295 + LessonIndex.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(LessonId);
+            hashCode = hashCode * -1521134295 + StepIndex.GetHashCode();
             return hashCode;
         }
     }
