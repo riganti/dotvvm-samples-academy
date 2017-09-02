@@ -39,7 +39,8 @@ namespace DotvvmAcademy
         private void ConfigureRoutes(DotvvmConfiguration config, string applicationPath)
         {
             config.RouteTable.Add("Default", "", "Views/default.dothtml");
-            config.RouteTable.Add("Lesson", "lesson{Lesson}/step{Step}", "Views/lesson.dothtml");
+            config.RouteTable.Add("Step", "{Language}/{LessonId}/{StepIndex:int}", "Views/step.dothtml",
+                new { Language = "en", LessonId = "basicMvvm", StepIndex = 0 });
         }
     }
 }
