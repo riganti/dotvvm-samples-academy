@@ -1,7 +1,6 @@
 using DotVVM.Framework.Hosting;
 using DotVVM.Framework.ViewModel;
 using DotvvmAcademy.BL.DTO;
-using DotvvmAcademy.BL.DTO.Components;
 using DotvvmAcademy.BL.Facades;
 using DotvvmAcademy.Services;
 using System;

@@ -1,0 +1,25 @@
+﻿@viewModel DotvvmAcademy.ViewModels.StepViewModel, DotvvmAcademy
+@masterPage Views/Master.dotmaster
+
+<dot:Content ContentPlaceHolderID="MainContent">
+    <div class="container-fluid">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 lesson">
+            <div class="container-fluid">
+                <div>
+                    <cc:StepRenderer Source="{value: Components}"
+                                     Samples="{value: Samples}" />
+                    <dot:LinkButton Click="{command: GoPrevious()}"
+                                    Enabled="{value: StepIndex != 0}"
+                                    class="btn btn-primary pull-left lesson-btn">
+                        <span class="glyphicon glyphicon-hand-left" /> Previous
+                    </dot:LinkButton>
+                    <dot:LinkButton Click="{command: GoNext()}"
+                                    Enabled="{value: StepIndex != StepCount - 1}"
+                                    class="btn btn-primary pull-right lesson-btn">
+                        <span class="glyphicon glyphicon-hand-right" /> Next
+                    </dot:LinkButton>
+                </div>
+            </div>
+        </div>
+    </div>
+</dot:Content>
