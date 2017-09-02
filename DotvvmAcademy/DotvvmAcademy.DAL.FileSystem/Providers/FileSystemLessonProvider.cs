@@ -1,5 +1,4 @@
-﻿using DotvvmAcademy.DAL.Base;
-using DotvvmAcademy.DAL.Base.Entities;
+﻿using DotvvmAcademy.DAL.Base.Models;
 using DotvvmAcademy.DAL.Base.Providers;
 using DotvvmAcademy.DAL.Base.Services;
 using System;
@@ -11,59 +10,78 @@ namespace DotvvmAcademy.DAL.FileSystem.Providers
 {
     public class FileSystemLessonProvider : FileSystemFileProvider, ILessonProvider
     {
-        private readonly string rootLessonsDirectoryAbsolutePath;
-        private readonly string rootLessonsDirectoryRelativePath = $"./{ContentConstants.ContentDirectoryName}/{ContentConstants.LessonsDirectoryName}";
+        private readonly string lessonsDirectoryAbsolutePath;
+        private readonly string lessonsDirectoryRelativePath = $"./{ContentConstants.ContentDirectoryName}/{ContentConstants.LessonsDirectoryName}";
         private ILessonDeserializer deserializer;
 
         public FileSystemLessonProvider(string applicationRoot, ILessonDeserializer deserializer) : base(applicationRoot)
         {
-            rootLessonsDirectoryAbsolutePath = Path.Combine(RootPath, rootLessonsDirectoryRelativePath);
+            lessonsDirectoryAbsolutePath = Path.Combine(RootPath, lessonsDirectoryRelativePath);
             this.deserializer = deserializer;
         }
 
-        public Lesson Get(int index, string language) => GetQueryable(index, language).Single();
-
-        public IQueryable<Lesson> GetQueryable(int? index = null, string language = null)
+        public Lesson Get(LessonIdentifier identifier)
         {
-            return GetLessons(index, language).OrderBy(l => l.Index).AsQueryable();
+            var lessons = GetLessons(identifier.LessonId, identifier.Language);
+            return lessons.Single();
         }
 
-        private IEnumerable<Lesson> GetLessons(int? index, string language)
+        public IQueryable<LessonIdentifier> GetQueryable(LessonFilter filter)
         {
-            if (!Directory.Exists(rootLessonsDirectoryAbsolutePath))
+            var lessons = GetLessons(filter.LessonId, filter.Language);
+            return lessons
+                .Select(l => new LessonIdentifier(l.LessonId, l.Language))
+                .OrderBy(i => i.LessonId)
+                .AsQueryable();
+        }
+
+        private IEnumerable<Lesson> GetLessons(string lessonId, string language)
+        {
+            if (!Directory.Exists(lessonsDirectoryAbsolutePath))
             {
                 throw new InvalidOperationException($"No lessons can be found because the '{ContentConstants.LessonsDirectoryName}' " +
                     $"directory doesn't exist in the provided root directory.");
             }
-            var lessonDirectories = Directory.EnumerateDirectories(rootLessonsDirectoryAbsolutePath);
-            foreach (var lessonDirectory in lessonDirectories)
+
+            foreach (var directory in Directory.EnumerateDirectories(lessonsDirectoryAbsolutePath))
             {
-                string configRelativePath = $"{lessonDirectory}/{ContentConstants.LessonConfigurationFileName}";
-                string configAbsolutePath = Path.Combine(rootLessonsDirectoryAbsolutePath, configRelativePath);
-                if (!File.Exists(configAbsolutePath))
+                if (TryGetLessonsFromDirectory(directory, out var lessons))
                 {
-                    continue;
-                }
+                    if (lessonId != null)
+                    {
+                        lessons = lessons.Where(l => l.LessonId.Equals(lessonId));
+                    }
 
-                var rawFile = GetFile(configAbsolutePath);
-                var deserializedLessons = deserializer.Deserialize(rawFile);
-                if (language != null)
-                {
-                    deserializedLessons = deserializedLessons.Where(l => l.Language == language);
-                }
+                    if(language != null)
+                    {
+                        lessons = lessons.Where(l => l.Language.Equals(language));
+                    }
 
-                if (index != null)
-                {
-                    deserializedLessons = deserializedLessons.Where(l => l.Index == index);
-                }
-
-                foreach (var lesson in deserializedLessons)
-                {
-                    lesson.ConfigPath = configAbsolutePath;
-                    lesson.DirectoryPath = configAbsolutePath.Substring(0, configAbsolutePath.LastIndexOf('/'));
-                    yield return lesson;
+                    foreach (var lesson in lessons)
+                    {
+                        yield return lesson;
+                    }
                 }
             }
+        }
+
+        private bool TryGetLessonsFromDirectory(string directory, out IEnumerable<Lesson> lessons)
+        {
+            string lessonsJsonPath = $"{directory}/{ContentConstants.LessonConfigurationFileName}";
+            lessonsJsonPath = Path.Combine(lessonsDirectoryAbsolutePath, lessonsJsonPath);
+            if (!File.Exists(lessonsJsonPath))
+            {
+                lessons = null;
+                return false;
+            }
+
+            lessons = deserializer.Deserialize(GetFile(lessonsJsonPath));
+            foreach (var lesson in lessons)
+            {
+
+                lesson.Path = lessonsJsonPath;
+            }
+            return true;
         }
     }
 }

@@ -20,11 +20,15 @@ namespace DotvvmAcademy.DAL.FileSystem
             });
             services.AddSingleton<IStepProvider, FileSystemStepProvider>(p => 
             {
-                return new FileSystemStepProvider(p.GetService<IHostingEnvironment>().ContentRootPath);
+                var contentRootPath = p.GetService<IHostingEnvironment>().ContentRootPath;
+                var lessonProvider = p.GetService<ILessonProvider>();
+                return new FileSystemStepProvider(contentRootPath, lessonProvider);
             });
             services.AddSingleton<ISampleProvider, FileSystemSampleProvider>(p =>
             {
-                return new FileSystemSampleProvider(p.GetService<IHostingEnvironment>().ContentRootPath);
+                var contentRootPath = p.GetService<IHostingEnvironment>().ContentRootPath;
+                var lessonProvider = p.GetService<ILessonProvider>();
+                return new FileSystemSampleProvider(contentRootPath, lessonProvider);
             });
         }
     }

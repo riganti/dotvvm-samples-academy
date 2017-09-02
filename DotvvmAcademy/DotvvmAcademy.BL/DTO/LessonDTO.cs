@@ -1,4 +1,4 @@
-﻿using DotvvmAcademy.DAL.Base.Entities;
+﻿using DotvvmAcademy.DAL.Base.Models;
 
 namespace DotvvmAcademy.BL.DTO
 {
@@ -12,9 +12,9 @@ namespace DotvvmAcademy.BL.DTO
 
         public string Language { get; private set; }
 
-        public string Name { get; private set; }
+        public string LessonId { get; private set; }
 
-        public int Index { get; private set; }
+        public string Name { get; private set; }
 
         public int StepCount { get; private set; }
 
@@ -27,8 +27,8 @@ namespace DotvvmAcademy.BL.DTO
                 IsReady = lesson.IsReady,
                 Language = lesson.Language,
                 Name = lesson.Name,
-                Index = lesson.Index,
-                StepCount = lesson.Steps.Count
+                LessonId = lesson.LessonId,
+                StepCount = lesson.StepPaths.Count
             };
             return dto;
         }

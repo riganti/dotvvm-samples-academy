@@ -1,5 +1,6 @@
 ﻿using DotvvmAcademy.BL.DTO;
 using DotvvmAcademy.BL.DTO.Components;
+using DotvvmAcademy.DAL.Base.Models;
 using DotvvmAcademy.DAL.Base.Providers;
 using System;
 using System.Collections.Generic;
@@ -18,10 +19,9 @@ namespace DotvvmAcademy.BL.Facades
             this.sampleProvider = sampleProvider;
         }
 
-        public string GetRawSample(int lessonIndex, string lessonLanguage, int stepIndex, string path)
+        public string GetRawSample(string lessonId, string lessonLanguage, int stepIndex, string path)
         {
-            var lesson = lessonProvider.Get(lessonIndex, lessonLanguage);
-            return sampleProvider.Get(lesson, stepIndex, path);
+            return sampleProvider.Get(new SampleIdentifier(lessonId, lessonLanguage, stepIndex, path));
         }
 
         public SampleDTO GetSample(SampleComponent component)

@@ -1,6 +1,6 @@
-﻿using DotvvmAcademy.DAL.Base.Entities;
+﻿using DotvvmAcademy.DAL.Base.Models;
 using DotvvmAcademy.DAL.Base.Providers;
-using System.Collections.Generic;
+using System;
 using System.IO;
 using System.Linq;
 
@@ -8,21 +8,23 @@ namespace DotvvmAcademy.DAL.FileSystem.Providers
 {
     public class FileSystemSampleProvider : FileSystemFileProvider, ISampleProvider
     {
-        public FileSystemSampleProvider(string applicationRoot) : base(applicationRoot)
+        private readonly ILessonProvider lessonProvider;
+
+        public FileSystemSampleProvider(string applicationRoot, ILessonProvider lessonProvider) : base(applicationRoot)
         {
+            this.lessonProvider = lessonProvider;
         }
 
-        public string Get(Lesson lesson, int stepIndex, string path)
+        public string Get(SampleIdentifier identifier)
         {
-            var stepPath = lesson.Steps[stepIndex];
-            stepPath = stepPath.Substring(0, stepPath.LastIndexOfAny(new[] { '\\', '/' }));
-            return GetFile(Path.Combine(lesson.DirectoryPath, stepPath, path));
+            var lesson = lessonProvider.Get(new LessonIdentifier(identifier.LessonId, identifier.Language));
+            var stepPath = lesson.StepPaths[identifier.StepIndex];
+            return GetFile(Path.Combine(lesson.Path, stepPath, identifier.Path));
         }
 
-        public IQueryable<string> GetQueryable(Lesson lesson, int stepIndex, IEnumerable<string> paths)
+        public IQueryable<SampleIdentifier> GetQueryable(SampleFilter filter)
         {
-            paths = paths.Select(p=> Get(lesson, stepIndex, p));
-            return GetFiles(paths).AsQueryable();
+            throw new NotImplementedException();
         }
     }
 }

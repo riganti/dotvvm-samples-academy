@@ -1,12 +1,8 @@
 ﻿using DotvvmAcademy.DAL.Base.Models;
-using System.Linq;
 
 namespace DotvvmAcademy.DAL.Base.Providers
 {
-    public interface IStepProvider
+    public interface IStepProvider : IProvider<StepIdentifier, StepFilter, string>
     {
-        string Get(Lesson lesson, int index);
-
-        IQueryable<string> GetQueryable(Lesson lesson);
     }
 }

@@ -1,12 +1,8 @@
 ﻿using DotvvmAcademy.DAL.Base.Models;
-using System.Linq;
 
 namespace DotvvmAcademy.DAL.Base.Providers
 {
-    public interface ILessonProvider
+    public interface ILessonProvider : IProvider<LessonIdentifier, LessonFilter, Lesson>
     {
-        Lesson Get(int index, string language);
-
-        IQueryable<Lesson> GetQueryable(int? index = null, string language = null);
     }
 }

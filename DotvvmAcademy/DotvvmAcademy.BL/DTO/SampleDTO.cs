@@ -4,9 +4,9 @@ namespace DotvvmAcademy.BL.DTO
 {
     public sealed class SampleDTO
     {
-        public SampleDTO(int lessonIndex, string language, int stepIndex)
+        public SampleDTO(string lessonId, string language, int stepIndex)
         {
-            LessonIndex = lessonIndex;
+            LessonId = lessonId;
             Language = language;
             StepIndex = stepIndex;
         }
@@ -21,7 +21,7 @@ namespace DotvvmAcademy.BL.DTO
 
         public string Language { get; }
 
-        public int LessonIndex { get; }
+        public string LessonId { get; }
 
         public int StepIndex { get; }
 

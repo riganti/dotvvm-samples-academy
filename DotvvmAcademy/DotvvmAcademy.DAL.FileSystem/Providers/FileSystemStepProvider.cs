@@ -1,5 +1,6 @@
-﻿using DotvvmAcademy.DAL.Base.Entities;
+﻿using DotvvmAcademy.DAL.Base.Models;
 using DotvvmAcademy.DAL.Base.Providers;
+using System;
 using System.IO;
 using System.Linq;
 
@@ -7,12 +8,22 @@ namespace DotvvmAcademy.DAL.FileSystem.Providers
 {
     public class FileSystemStepProvider : FileSystemFileProvider, IStepProvider
     {
-        public FileSystemStepProvider(string rootPath) : base(rootPath)
+        private readonly ILessonProvider lessonProvider;
+
+        public FileSystemStepProvider(string rootPath, ILessonProvider lessonProvider) : base(rootPath)
         {
+            this.lessonProvider = lessonProvider;
         }
 
-        public string Get(Lesson lesson, int index) => GetFile(Path.Combine(lesson.DirectoryPath, lesson.Steps[index]));
+        public string Get(StepIdentifier identifier)
+        {
+            var lesson = lessonProvider.Get(new LessonIdentifier(identifier.LessonId, identifier.Language));
+            return GetFile(Path.Combine(lesson.Path, lesson.StepPaths[identifier.StepIndex]));
+        }
 
-        public IQueryable<string> GetQueryable(Lesson lesson) => GetFiles(lesson.Steps).AsQueryable();
+        public IQueryable<StepIdentifier> GetQueryable(StepFilter filter)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

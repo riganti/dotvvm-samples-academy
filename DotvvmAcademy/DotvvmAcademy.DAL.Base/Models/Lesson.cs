@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace DotvvmAcademy.DAL.Base.Models
 {
     public class Lesson
     {
-        public Lesson(int index, string language)
+        public Lesson(string lessonId, string language)
         {
-            Index = index;
+            LessonId = lessonId;
             Language = language;
         }
 
         public string Annotation { get; set; }
-
-        public string ConfigPath { get; set; }
-
-        public string DirectoryPath { get; set; }
 
         public string ImageUrl { get; set; }
 
@@ -23,14 +18,12 @@ namespace DotvvmAcademy.DAL.Base.Models
 
         public string Language { get; }
 
+        public string LessonId { get; }
+
         public string Name { get; set; }
 
-        public int Index { get; }
+        public string Path { get; set; }
 
-        /// <summary>
-        /// The file paths pointing towards individual markdown step pages
-        /// relative to the directory the configuration file is in.
-        /// </summary>
-        public List<string> Steps { get; set; }
+        public List<string> StepPaths { get; set; }
     }
 }
