@@ -1,8 +1,8 @@
-﻿using DotvvmAcademy.DAL.Base.Models;
+﻿using DotvvmAcademy.DAL.Base.Entities;
 
 namespace DotvvmAcademy.DAL.Base.Providers
 {
-    public interface ISampleProvider : IProvider<SampleIdentifier, SampleFilter, string>
+    public interface ISampleProvider : IEntityProvider<Sample>
     {
     }
 }

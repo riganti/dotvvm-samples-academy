@@ -2,7 +2,7 @@
 
 namespace DotvvmAcademy.DAL.Base.Providers
 {
-    public interface IStepProvider : IEntityProvider<Step>
+    public interface IValidatorProvider : IEntityProvider<Validator>
     {
     }
 }

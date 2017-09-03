@@ -1,8 +1,8 @@
 ﻿using DotvvmAcademy.DAL.Base;
+using DotvvmAcademy.DAL.Base.Entities;
 using DotvvmAcademy.DAL.Base.Providers;
-using DotvvmAcademy.DAL.Base.Services;
 using DotvvmAcademy.DAL.FileSystem.Providers;
-using Microsoft.AspNetCore.Hosting;
+using DotvvmAcademy.DAL.FileSystem.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DotvvmAcademy.DAL.FileSystem
@@ -12,24 +12,16 @@ namespace DotvvmAcademy.DAL.FileSystem
         public static void AddDALFileSystem(this IServiceCollection services)
         {
             services.AddDALBase();
-            services.AddSingleton<ILessonProvider, FileSystemLessonProvider>(p =>
-            {
-                return new FileSystemLessonProvider(
-                    p.GetService<IHostingEnvironment>().ContentRootPath,
-                    p.GetService<ILessonDeserializer>());
-            });
-            services.AddSingleton<IStepProvider, FileSystemStepProvider>(p => 
-            {
-                var contentRootPath = p.GetService<IHostingEnvironment>().ContentRootPath;
-                var lessonProvider = p.GetService<ILessonProvider>();
-                return new FileSystemStepProvider(contentRootPath, lessonProvider);
-            });
-            services.AddSingleton<ISampleProvider, FileSystemSampleProvider>(p =>
-            {
-                var contentRootPath = p.GetService<IHostingEnvironment>().ContentRootPath;
-                var lessonProvider = p.GetService<ILessonProvider>();
-                return new FileSystemSampleProvider(contentRootPath, lessonProvider);
-            });
+            services.AddSingleton<ContentDirectoryEnvironment>();
+            services.AddSingleton<IEntityProvider<Lesson>, FileSystemLessonProvider>();
+            services.AddSingleton<IEntityProvider<Step>, FileSystemStepProvider>();
+            services.AddSingleton<IEntityProvider<Sample>, FileSystemSampleProvider>();
+            services.AddSingleton<IEntityProvider<Project>, FileSystemProjectProvider>();
+            services.AddSingleton<IEntityProvider<ValidatorAssembly>, FileSystemValidatorAssemblyProvider>();
+            services.AddSingleton<IEntityProvider<Validator>, FileSystemValidatorProvider>();
+            services.AddSingleton<IEntityProvider<CSharpSampleSourcePart>, FileSystemSourcePartProvider<CSharpSampleSourcePart>>();
+            services.AddSingleton<IEntityProvider<DothtmlSampleSourcePart>, FileSystemSourcePartProvider<DothtmlSampleSourcePart>>();
+            services.AddSingleton<IEntityProvider<MvvmSampleSourcePart>, FileSystemSourcePartProvider<MvvmSampleSourcePart>>();
         }
     }
 }

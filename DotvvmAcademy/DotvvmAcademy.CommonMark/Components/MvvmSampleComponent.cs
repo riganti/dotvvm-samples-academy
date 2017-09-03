@@ -1,4 +1,4 @@
-﻿namespace DotvvmAcademy.CommonMark.Components.Mvvm
+﻿namespace DotvvmAcademy.CommonMark.Components
 {
     public class MvvmSampleComponent : IComponent
     {
