@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using DotvvmAcademy.DAL.Base.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DotvvmAcademy.DAL.Base
 {
@@ -6,7 +7,7 @@ namespace DotvvmAcademy.DAL.Base
     {
         public static void AddDALBase(this IServiceCollection services)
         {
-            services.AddSingleton<DotvvmAcademyContext>();
+            services.AddSingleton<ILessonDeserializer, JsonLessonDeserializer>();
         }
     }
 }
