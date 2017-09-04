@@ -4,6 +4,6 @@ namespace DotvvmAcademy.DAL.FileSystem.Entities
 {
     public class FileSystemEntity : IEntity
     {
-        public int Id { get; set; }
+        public int Id => throw new System.NotImplementedException();
     }
 }

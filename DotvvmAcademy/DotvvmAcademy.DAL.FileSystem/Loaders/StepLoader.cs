@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace DotvvmAcademy.DAL.FileSystem.Services
 {
-    public class StepConverter
+    public class StepLoader
     {
         private readonly ComponentizedConverter converter;
 
-        public StepConverter()
+        public StepLoader()
         {
             converter = new ComponentizedConverter();
             converter.UseDefaultXmlParsers();

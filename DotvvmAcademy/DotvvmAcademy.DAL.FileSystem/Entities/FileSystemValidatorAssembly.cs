@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DotvvmAcademy.DAL.FileSystem.Entities
 {
-    public class FileSystemValidatorAssembly : IValidatorAssembly
+    public class FileSystemValidatorAssembly : FileSystemEntity, IValidatorAssembly
     {
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DotvvmAcademy.DAL.FileSystem.Entities
 {
-    public class FileSystemCSharpSourcePart : ICSharpSourcePart
+    public class FileSystemCSharpSourcePart : FileSystemEntity, ICSharpSourcePart
     {
         public List<ISample> Dependencies { get; set; }
 
@@ -12,7 +12,5 @@ namespace DotvvmAcademy.DAL.FileSystem.Entities
         public ISample Incorrect { get; set; }
 
         public string ValidatorId { get; set; }
-
-        public int Id { get; set; }
     }
 }

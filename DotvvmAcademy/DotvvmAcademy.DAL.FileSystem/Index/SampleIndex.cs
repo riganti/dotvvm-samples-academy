@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DotvvmAcademy.DAL.FileSystem.Entities
+namespace DotvvmAcademy.DAL.FileSystem.Index
 {
-    public class FileSystemProject : FileSystemEntity, IProject
+    public class SampleIndex : IIndex<ISample>
     {
     }
 }

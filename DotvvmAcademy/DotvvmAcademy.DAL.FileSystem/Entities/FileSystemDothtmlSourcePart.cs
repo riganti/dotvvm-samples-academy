@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DotvvmAcademy.DAL.FileSystem.Entities
 {
-    public class FileSystemDothtmlSourcePart : IDothtmlSourcePart
+    public class FileSystemDothtmlSourcePart : FileSystemEntity, IDothtmlSourcePart
     {
     }
 }

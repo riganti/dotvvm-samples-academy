@@ -9,13 +9,9 @@ namespace DotvvmAcademy.DAL.FileSystem.Providers
 {
     public class FileSystemLessonProvider : ILessonProvider
     {
-        private readonly LessonCrawler crawler;
-        private readonly LessonIndex index;
 
-        public FileSystemLessonProvider(LessonIndex index, LessonCrawler crawler)
+        public FileSystemLessonProvider(LessonIndex )
         {
-            this.index = index;
-            this.crawler = crawler;
         }
 
         public IQueryable<ILesson> GetQueryable()

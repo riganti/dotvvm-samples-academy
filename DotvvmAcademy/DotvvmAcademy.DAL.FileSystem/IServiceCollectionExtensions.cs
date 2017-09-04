@@ -1,6 +1,9 @@
 ﻿using DotvvmAcademy.DAL.Base;
 using DotvvmAcademy.DAL.Base.Entities;
 using DotvvmAcademy.DAL.Base.Providers;
+using DotvvmAcademy.DAL.FileSystem.Entities;
+using DotvvmAcademy.DAL.FileSystem.Index;
+using DotvvmAcademy.DAL.FileSystem.Index.Items;
 using DotvvmAcademy.DAL.FileSystem.Providers;
 using DotvvmAcademy.DAL.FileSystem.Services;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,15 +16,24 @@ namespace DotvvmAcademy.DAL.FileSystem
         {
             services.AddDALBase();
             services.AddSingleton<ContentDirectoryEnvironment>();
-            services.AddSingleton<IEntityProvider<ILesson>, FileSystemLessonProvider>();
-            services.AddSingleton<IEntityProvider<IStep>, FileSystemStepProvider>();
-            services.AddSingleton<IEntityProvider<ISample>, FileSystemSampleProvider>();
-            services.AddSingleton<IEntityProvider<IProject>, FileSystemProjectProvider>();
-            services.AddSingleton<IEntityProvider<IValidatorAssembly>, FileSystemValidatorAssemblyProvider>();
-            services.AddSingleton<IEntityProvider<IValidator>, FileSystemValidatorProvider>();
-            services.AddSingleton<IEntityProvider<ICSharpSourcePart>, FileSystemSourcePartProvider<ICSharpSourcePart>>();
-            services.AddSingleton<IEntityProvider<IDothtmlSourcePart>, FileSystemSourcePartProvider<IDothtmlSourcePart>>();
-            services.AddSingleton<IEntityProvider<IMvvmSourcePart>, FileSystemSourcePartProvider<IMvvmSourcePart>>();
+            AddIndices(services);
+            AddProviders(services);
+        }
+
+        private static void AddIndices(IServiceCollection services)
+        {
+            services.AddSingleton<IIndex<ILesson>, LessonIndex>();
+            services.AddSingleton<IIndex<IStep>, StepIndex>();
+            services.AddSingleton<IIndex<ISample>, SampleIndex>();
+            services.AddSingleton<IIndex<ICSharpSourcePart>, SourcePartIndex>();
+        }
+
+        private static void AddProviders(IServiceCollection services)
+        {
+            services.AddSingleton<IEntityProvider<ILesson>, FileSystemEntityProvider<FileSystemLesson>>();
+            services.AddSingleton<IEntityProvider<IStep>, FileSystemEntityProvider<FileSystemStep>>();
+            services.AddSingleton<IEntityProvider<ISample>, FileSystemEntityProvider<FileSystemSample>>();
+            services.AddSingleton<IEntityProvider<ICSharpSourcePart>, FileSystemEntityProvider<FileSystemCSharpSourcePart>>();
         }
     }
 }

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DotvvmAcademy.DAL.FileSystem.EntityIndex
+namespace DotvvmAcademy.DAL.FileSystem.Loaders
 {
-    class SampleIndex
+    class SourcePartLoader
     {
     }
 }

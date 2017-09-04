@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DotvvmAcademy.DAL.FileSystem.Entities
 {
-    public class FileSystemSample : ISample
+    public class FileSystemSample : FileSystemEntity, ISample
     {
     }
 }

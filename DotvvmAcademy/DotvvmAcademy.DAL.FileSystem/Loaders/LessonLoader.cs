@@ -1,17 +1,19 @@
-﻿using DotvvmAcademy.DAL.Base.FileSystem;
+﻿using DotvvmAcademy.DAL.Base.Entities;
+using DotvvmAcademy.DAL.Base.FileSystem;
+using DotvvmAcademy.DAL.FileSystem.Services;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DotvvmAcademy.DAL.FileSystem.Services
+namespace DotvvmAcademy.DAL.FileSystem.Loaders
 {
-    public class LessonCrawler
+    public class LessonLoader : ILoader<ILesson>
     {
         private readonly LessonsJsonDeserializer deserializer;
         private readonly ContentDirectoryEnvironment environment;
 
-        public LessonCrawler(ContentDirectoryEnvironment environment, LessonsJsonDeserializer deserializer)
+        public LessonLoader(ContentDirectoryEnvironment environment, LessonsJsonDeserializer deserializer)
         {
             this.environment = environment;
             this.deserializer = deserializer;
@@ -45,6 +47,16 @@ namespace DotvvmAcademy.DAL.FileSystem.Services
             }
 
             return Enumerable.Empty<LessonConfig>().ToList();
+        }
+
+        public ILesson LoadAll(IIndexItem<ILesson> item)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IEnumerable<ILesson> Load()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

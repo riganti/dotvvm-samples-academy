@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DotvvmAcademy.DAL.FileSystem.Entities
 {
-    public class FileSystemStep : IStep
+    public class FileSystemStep : FileSystemEntity, IStep
     {
     }
 }
