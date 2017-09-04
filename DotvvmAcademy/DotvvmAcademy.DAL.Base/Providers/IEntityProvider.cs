@@ -3,8 +3,8 @@ using System.Linq;
 
 namespace DotvvmAcademy.DAL.Base.Providers
 {
-    public interface IEntityProvider<TEntity>
-        where TEntity : class, IEntity, new()
+    public interface IEntityProvider<out TEntity>
+        where TEntity : class, IEntity
     {
         IQueryable<TEntity> GetQueryable();
     }
