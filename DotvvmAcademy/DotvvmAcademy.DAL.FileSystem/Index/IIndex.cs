@@ -13,6 +13,6 @@ namespace DotvvmAcademy.DAL.FileSystem.Index
 
         ILoader<TEntity> Loader { get; }
 
-        Task Create();
+        Task Load();
     }
 }

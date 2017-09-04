@@ -1,5 +1,6 @@
 ﻿using DotvvmAcademy.DAL.Base.Entities;
 using DotvvmAcademy.DAL.Base.FileSystem;
+using DotvvmAcademy.DAL.FileSystem.Index.Items;
 using DotvvmAcademy.DAL.FileSystem.Services;
 using System.Collections.Generic;
 using System.IO;
@@ -8,18 +9,27 @@ using System.Threading.Tasks;
 
 namespace DotvvmAcademy.DAL.FileSystem.Loaders
 {
-    public class LessonLoader : ILoader<ILesson>
+    public class LessonLoader : ILoader<ILesson, LessonItem>
     {
-        private readonly LessonsJsonDeserializer deserializer;
+        private readonly LessonConfigDeserializer deserializer;
         private readonly ContentDirectoryEnvironment environment;
 
-        public LessonLoader(ContentDirectoryEnvironment environment, LessonsJsonDeserializer deserializer)
+        public LessonLoader(ContentDirectoryEnvironment environment, LessonConfigDeserializer deserializer)
         {
             this.environment = environment;
             this.deserializer = deserializer;
         }
 
-        public async Task<List<LessonConfig>> GetLessons()
+        public Task<ILesson> Load(LessonItem item)
+        {
+        }
+
+        public Task<IEnumerable<ILesson>> LoadAll()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private async Task<List<LessonConfig>> GetLessons()
         {
             var directories = Directory.EnumerateDirectories(environment.ContentDirectoryPath);
             List<LessonConfig> lessons = new List<LessonConfig>();
@@ -31,7 +41,7 @@ namespace DotvvmAcademy.DAL.FileSystem.Loaders
             return lessons;
         }
 
-        public async Task<List<LessonConfig>> GetLessons(string directory)
+        private async Task<List<LessonConfig>> GetLessons(string directory)
         {
             var potentialLessonsConfig = Path.Combine(directory, ContentConstants.LessonConfig);
             if (File.Exists(potentialLessonsConfig))
@@ -47,16 +57,6 @@ namespace DotvvmAcademy.DAL.FileSystem.Loaders
             }
 
             return Enumerable.Empty<LessonConfig>().ToList();
-        }
-
-        public ILesson LoadAll(IIndexItem<ILesson> item)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public IEnumerable<ILesson> Load()
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

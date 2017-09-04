@@ -1,10 +1,12 @@
-﻿using System;
+﻿using DotvvmAcademy.DAL.Base.Entities;
+using DotvvmAcademy.DAL.FileSystem.Index.Items;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace DotvvmAcademy.DAL.FileSystem.Loaders
 {
-    class SourcePartLoader
+    public class SourcePartLoader : ILoader<ISourcePart, SourcePartItem>
     {
     }
 }

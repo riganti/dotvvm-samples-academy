@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DotvvmAcademy.DAL.FileSystem.Services
 {
-    public class LessonsJsonDeserializer
+    public class LessonConfigDeserializer
     {
         public Task<IEnumerable<LessonConfig>> Deserialize(StreamReader streamReader)
         {

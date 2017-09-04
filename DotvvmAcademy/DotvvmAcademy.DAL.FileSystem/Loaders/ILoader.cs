@@ -1,14 +1,15 @@
 ﻿using DotvvmAcademy.DAL.Base.Entities;
 using DotvvmAcademy.DAL.FileSystem.Index.Items;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace DotvvmAcademy.DAL.FileSystem.Loaders
 {
     public interface ILoader<TEntity>
-        where TEntity : IEntity
+        where TEntity : class, IEntity
     {
-        TEntity Load(IIndexItem<TEntity> item);
+        Task<TEntity> Load(IIndexItem<TEntity> item);
 
-        IEnumerable<TEntity> LoadAll();
+        Task<IEnumerable<TEntity>> LoadAll();
     }
 }

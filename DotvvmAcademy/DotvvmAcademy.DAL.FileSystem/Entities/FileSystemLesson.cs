@@ -1,4 +1,5 @@
 ﻿using DotvvmAcademy.DAL.Base.Entities;
+using Nito.AsyncEx;
 using System;
 using System.Collections.Generic;
 
@@ -6,22 +7,26 @@ namespace DotvvmAcademy.DAL.FileSystem.Entities
 {
     public class FileSystemLesson : FileSystemEntity, ILesson
     {
-        string ILesson.Annotation => throw new NotImplementedException();
+        string ILesson.Annotation => Config.Task.Result;
 
-        string ILesson.ImageUrl => throw new NotImplementedException();
+        string ILesson.ImageUrl => Config.Value.ImageUrl;
 
-        bool ILesson.IsReady => throw new NotImplementedException();
+        bool ILesson.IsReady => Config.Value.IsReady;
 
-        string ILesson.Language => throw new NotImplementedException();
+        string ILesson.Language => Config.Value.Language;
 
-        string ILesson.Moniker => throw new NotImplementedException();
+        string ILesson.Moniker => Config.Value.Moniker;
 
-        string ILesson.Name => throw new NotImplementedException();
+        string ILesson.Name => Config.Value.Name;
 
         IProject ILesson.Project => throw new NotImplementedException();
 
-        List<IStep> ILesson.Steps => throw new NotImplementedException();
+        List<IStep> ILesson.Steps => Steps.Value;
 
         IValidatorAssembly ILesson.ValidatorAssembly => throw new NotImplementedException();
+
+        internal AsyncLazy<LessonConfig> Config { get; set; }
+
+        internal AsyncLazy<List<IStep>> Steps { get; set; }
     }
 }

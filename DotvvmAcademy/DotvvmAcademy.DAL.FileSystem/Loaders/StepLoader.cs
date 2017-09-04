@@ -1,5 +1,7 @@
 ﻿using DotvvmAcademy.CommonMark;
 using DotvvmAcademy.DAL.Base.Entities;
+using DotvvmAcademy.DAL.FileSystem.Index.Items;
+using DotvvmAcademy.DAL.FileSystem.Loaders;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DotvvmAcademy.DAL.FileSystem.Services
 {
-    public class StepLoader
+    public class StepLoader : ILoader<IStep, StepItem>
     {
         private readonly ComponentizedConverter converter;
 
