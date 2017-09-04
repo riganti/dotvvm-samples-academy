@@ -2,7 +2,7 @@
 
 namespace DotvvmAcademy.DAL.Base.Providers
 {
-    public interface ILessonProvider : IEntityProvider<Lesson>
+    public interface ILessonProvider : IEntityProvider<ILesson>
     {
     }
 }

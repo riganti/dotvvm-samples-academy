@@ -7,7 +7,7 @@ namespace DotvvmAcademy.DAL.FileSystem.Providers
 {
     public class FileSystemProjectProvider : IProjectProvider
     {
-        public IQueryable<Project> GetQueryable()
+        public IQueryable<IProject> GetQueryable()
         {
             throw new NotImplementedException();
         }

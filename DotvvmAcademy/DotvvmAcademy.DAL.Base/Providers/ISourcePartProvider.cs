@@ -3,7 +3,7 @@
 namespace DotvvmAcademy.DAL.Base.Providers
 {
     public interface ISourcePartProvider<TSourcePart> : IEntityProvider<TSourcePart>
-        where TSourcePart : SourcePart, new()
+        where TSourcePart : ISourcePart, new()
     {
     }
 }

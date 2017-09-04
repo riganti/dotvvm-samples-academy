@@ -2,7 +2,7 @@
 
 namespace DotvvmAcademy.DAL.Base.Providers
 {
-    public interface IProjectProvider : IEntityProvider<Project>
+    public interface IProjectProvider : IEntityProvider<IProject>
     {
     }
 }

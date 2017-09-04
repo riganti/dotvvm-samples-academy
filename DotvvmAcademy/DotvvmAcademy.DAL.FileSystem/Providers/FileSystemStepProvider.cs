@@ -7,7 +7,7 @@ namespace DotvvmAcademy.DAL.FileSystem.Providers
 {
     public class FileSystemStepProvider : IStepProvider
     {
-        public IQueryable<Step> GetQueryable()
+        public IQueryable<IStep> GetQueryable()
         {
             throw new NotImplementedException();
         }

@@ -7,7 +7,7 @@ namespace DotvvmAcademy.DAL.FileSystem.Providers
 {
     public class FileSystemSampleProvider : ISampleProvider
     {
-        public IQueryable<Sample> GetQueryable()
+        public IQueryable<ISample> GetQueryable()
         {
             throw new NotImplementedException();
         }

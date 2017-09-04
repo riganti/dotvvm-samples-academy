@@ -5,6 +5,7 @@ using DotvvmAcademy.CommonMark.Components;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace DotvvmAcademy.CommonMark
 {
@@ -32,21 +33,24 @@ namespace DotvvmAcademy.CommonMark
             };
         }
 
-        public IEnumerable<IComponent> Convert(string markdown)
+        public Task<List<IComponent>> Convert(string markdown)
         {
-            lastWriterLength = 0;
-            components.Clear();
-            firstParser = ConstructParsers();
-            var parsedMarkdown = CommonMarkConverter.Parse(markdown, settings);
-            using (var writer = new StringWriter())
+            return Task.Run(() =>
             {
-                CommonMarkConverter.ProcessStage3(parsedMarkdown, writer, settings);
-                if (TryParseHtmlLiteral(writer, out var htmlLiteral))
+                lastWriterLength = 0;
+                components.Clear();
+                firstParser = ConstructParsers();
+                var parsedMarkdown = CommonMarkConverter.Parse(markdown, settings);
+                using (var writer = new StringWriter())
                 {
-                    components.Add(htmlLiteral);
+                    CommonMarkConverter.ProcessStage3(parsedMarkdown, writer, settings);
+                    if (TryParseHtmlLiteral(writer, out var htmlLiteral))
+                    {
+                        components.Add(htmlLiteral);
+                    }
                 }
-            }
-            return components;
+                return components;
+            });
         }
 
         public void Use<TComponentParser>()

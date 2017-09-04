@@ -1,7 +1,6 @@
 ﻿namespace DotvvmAcademy.DAL.Base.Entities
 {
-    public interface IEntity
+    public interface ISourcePart : IEntity
     {
-        int Id { get;}
     }
 }

@@ -7,7 +7,7 @@ namespace DotvvmAcademy.DAL.FileSystem.Providers
 {
     public class FileSystemValidatorAssemblyProvider : IValidatorAssemblyProvider
     {
-        public IQueryable<ValidatorAssembly> GetQueryable()
+        public IQueryable<IValidatorAssembly> GetQueryable()
         {
             throw new NotImplementedException();
         }

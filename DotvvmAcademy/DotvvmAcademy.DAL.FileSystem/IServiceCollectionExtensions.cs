@@ -13,15 +13,15 @@ namespace DotvvmAcademy.DAL.FileSystem
         {
             services.AddDALBase();
             services.AddSingleton<ContentDirectoryEnvironment>();
-            services.AddSingleton<IEntityProvider<Lesson>, FileSystemLessonProvider>();
-            services.AddSingleton<IEntityProvider<Step>, FileSystemStepProvider>();
-            services.AddSingleton<IEntityProvider<Sample>, FileSystemSampleProvider>();
-            services.AddSingleton<IEntityProvider<Project>, FileSystemProjectProvider>();
-            services.AddSingleton<IEntityProvider<ValidatorAssembly>, FileSystemValidatorAssemblyProvider>();
-            services.AddSingleton<IEntityProvider<Validator>, FileSystemValidatorProvider>();
-            services.AddSingleton<IEntityProvider<CSharpSampleSourcePart>, FileSystemSourcePartProvider<CSharpSampleSourcePart>>();
-            services.AddSingleton<IEntityProvider<DothtmlSampleSourcePart>, FileSystemSourcePartProvider<DothtmlSampleSourcePart>>();
-            services.AddSingleton<IEntityProvider<MvvmSampleSourcePart>, FileSystemSourcePartProvider<MvvmSampleSourcePart>>();
+            services.AddSingleton<IEntityProvider<ILesson>, FileSystemLessonProvider>();
+            services.AddSingleton<IEntityProvider<IStep>, FileSystemStepProvider>();
+            services.AddSingleton<IEntityProvider<ISample>, FileSystemSampleProvider>();
+            services.AddSingleton<IEntityProvider<IProject>, FileSystemProjectProvider>();
+            services.AddSingleton<IEntityProvider<IValidatorAssembly>, FileSystemValidatorAssemblyProvider>();
+            services.AddSingleton<IEntityProvider<IValidator>, FileSystemValidatorProvider>();
+            services.AddSingleton<IEntityProvider<ICSharpSourcePart>, FileSystemSourcePartProvider<ICSharpSourcePart>>();
+            services.AddSingleton<IEntityProvider<IDothtmlSourcePart>, FileSystemSourcePartProvider<IDothtmlSourcePart>>();
+            services.AddSingleton<IEntityProvider<IMvvmSourcePart>, FileSystemSourcePartProvider<IMvvmSourcePart>>();
         }
     }
 }

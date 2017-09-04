@@ -2,7 +2,7 @@
 
 namespace DotvvmAcademy.DAL.Base.Providers
 {
-    public interface ISampleProvider : IEntityProvider<Sample>
+    public interface ISampleProvider : IEntityProvider<ISample>
     {
     }
 }
