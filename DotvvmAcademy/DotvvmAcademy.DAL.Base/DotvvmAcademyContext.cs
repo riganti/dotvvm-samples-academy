@@ -12,12 +12,11 @@ namespace DotvvmAcademy.DAL.Base
 
         public DotvvmAcademyContext(IServiceProvider serviceProvider)
         {
-            Set<ILesson>();
             this.serviceProvider = serviceProvider;
         }
 
         public IQueryable<TEntity> Set<TEntity>()
-            where TEntity : class, IEntity
+            where TEntity : class, IEntity, new()
         {
             var entityProvider = serviceProvider.GetService<IEntityProvider<TEntity>>();
             return entityProvider.GetQueryable();
