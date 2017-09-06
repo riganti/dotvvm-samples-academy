@@ -35,7 +35,7 @@ namespace DotvvmAcademy.DAL
             builder.RegisterType<ContentDirectoryEnvironment>()
                 .SingleInstance();
 
-            builder.RegisterType<ComponentizedConverter>()
+            builder.RegisterType<SegmentizedConverter>()
                 .SingleInstance();
         }
     }

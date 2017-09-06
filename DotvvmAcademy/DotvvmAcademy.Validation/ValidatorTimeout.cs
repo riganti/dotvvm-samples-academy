@@ -1,5 +1,5 @@
-﻿
-namespace DotvvmAcademy.Validation.Cli
+
+namespace DotvvmAcademy.Validation
 {
     public class ValidatorTimeout
     {

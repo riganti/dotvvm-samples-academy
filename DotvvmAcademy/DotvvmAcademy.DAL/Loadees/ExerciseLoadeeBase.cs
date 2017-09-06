@@ -1,8 +1,8 @@
-﻿using System.IO;
+using System.IO;
 
-namespace DotvvmAcademy.DAL.Components
+namespace DotvvmAcademy.DAL.Loadees
 {
-    public abstract class ExerciseComponentBase
+    public abstract class ExerciseLoadeeBase
     {
         public FileInfo Correct { get; set; }
 

@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace DotvvmAcademy.Tutorial.ViewModels
+namespace DotvvmAcademy.Content.Lessons.ValidationDataContext.samples
 {
     public class Lesson4ViewModel
     {

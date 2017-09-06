@@ -10,7 +10,7 @@ namespace DotvvmAcademy.DAL.Profiles
         {
             CreateMap<StepSource, Step>()
                 .ForMember(d => d.Path, ex => ex.MapFrom(s => s.File))
-                .ForMember(d => d.Source, ex => ex.MapFrom(s => s.Components));
+                .ForMember(d => d.Source, ex => ex.MapFrom(s => s.Source));
         }
     }
 }

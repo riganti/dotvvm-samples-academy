@@ -1,20 +1,20 @@
-﻿using DotvvmAcademy.CommonMark.Components;
+using DotvvmAcademy.CommonMark.Segments;
 using System.IO;
 
-namespace DotvvmAcademy.DAL.Components
+namespace DotvvmAcademy.DAL.Loadees
 {
-    public class MvvmExerciseComponent : ICommonMarkComponent
+    public class MvvmExerciseSegment : ISegment
     {
         public ViewExercise View { get; set; }
 
         public ViewModelExercise ViewModel { get; set; }
 
-        public class ViewExercise : ExerciseComponentBase
+        public class ViewExercise : ExerciseLoadeeBase
         {
             public FileInfo MasterPage { get; set; }
         }
 
-        public class ViewModelExercise : ExerciseComponentBase
+        public class ViewModelExercise : ExerciseLoadeeBase
         {
             public FileInfo[] Dependencies { get; set; }
         }

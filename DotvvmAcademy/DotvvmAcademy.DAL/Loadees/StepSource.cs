@@ -1,4 +1,4 @@
-﻿using DotvvmAcademy.CommonMark.Components;
+﻿using DotvvmAcademy.CommonMark.Segments;
 using System.Collections.Generic;
 using System.IO;
 
@@ -8,6 +8,6 @@ namespace DotvvmAcademy.DAL.Loadees
     {
         public FileInfo File { get; set; }
 
-        public List<ICommonMarkComponent> Components { get; set; }
+        public ISegment[] Source { get; set; }
     }
 }
