@@ -14,13 +14,17 @@ namespace DotvvmAcademy.BL.Profiles
                 .IncludeBase<IStepPart, IStepPartDto>();
 
             CreateMap<ExerciseStepPartBase, ExerciseDto>()
+                .IncludeBase<IStepPart, IStepPartDto>()
                 .ForMember(d => d.CodeLanguage, ex => ex.ResolveUsing(s => GetCodeLanguage(s.CorrectPath)));
 
-            CreateMap<CSharpExerciseStepPart, CSharpExerciseStepPartDto>();
+            CreateMap<CSharpExerciseStepPart, CSharpExerciseStepPartDto>()
+                .IncludeBase<ExerciseStepPartBase, ExerciseDto>();
 
-            CreateMap<DothtmlExerciseStepPart, DothtmlExerciseStepPartDto>();
+            CreateMap<DothtmlExerciseStepPart, DothtmlExerciseStepPartDto>()
+                .IncludeBase<ExerciseStepPartBase, ExerciseDto>();
 
             CreateMap<MvvmExerciseStepPart, MvvmExerciseStepPartDto>()
+                .IncludeBase<IStepPart, IStepPartDto>()
                 .ForMember(d => d.ViewExercise, ex => ex.ResolveUsing(part =>
                     {
                         var view = new ViewExerciseDto

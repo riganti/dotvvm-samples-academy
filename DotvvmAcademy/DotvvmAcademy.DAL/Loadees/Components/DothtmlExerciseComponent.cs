@@ -3,7 +3,7 @@ using System.IO;
 
 namespace DotvvmAcademy.DAL.Components
 {
-    internal class DothtmlExerciseComponent : ExerciseComponentBase, ICommonMarkComponent
+    public class DothtmlExerciseComponent : ExerciseComponentBase, ICommonMarkComponent
     {
         public FileInfo MasterPage { get; set; }
 

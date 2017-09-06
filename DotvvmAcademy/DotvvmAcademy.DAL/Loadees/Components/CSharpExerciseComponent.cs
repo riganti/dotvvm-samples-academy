@@ -3,7 +3,7 @@ using System.IO;
 
 namespace DotvvmAcademy.DAL.Components
 {
-    internal class CSharpExerciseComponent : ExerciseComponentBase, ICommonMarkComponent
+    public class CSharpExerciseComponent : ExerciseComponentBase, ICommonMarkComponent
     {
         public FileInfo[] Dependencies { get; set; }
     }

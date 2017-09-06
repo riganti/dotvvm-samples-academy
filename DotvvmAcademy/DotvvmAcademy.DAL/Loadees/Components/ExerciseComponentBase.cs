@@ -2,7 +2,7 @@
 
 namespace DotvvmAcademy.DAL.Components
 {
-    internal abstract class ExerciseComponentBase
+    public abstract class ExerciseComponentBase
     {
         public FileInfo Correct { get; set; }
 
