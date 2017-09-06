@@ -1,52 +1,49 @@
+using AutoMapper;
 using DotVVM.Framework.ViewModel;
+using DotvvmAcademy.BL.Dtos;
 using DotvvmAcademy.BL.Facades;
-using DotvvmAcademy.CommonMark.Components;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DotvvmAcademy.ViewModels
 {
     public class StepViewModel : DotvvmAcademyViewModelBase
     {
+        private readonly ExerciseFacade exerciseFacade;
         private readonly LessonFacade lessonFacade;
         private readonly StepFacade stepFacade;
-        private readonly SampleFacade sampleFacade;
         private readonly ValidatorFacade validatorFacade;
 
-        public StepViewModel(LessonFacade lessonFacade, StepFacade stepFacade, 
-            SampleFacade sampleFacade, ValidatorFacade validatorFacade)
+        public StepViewModel(LessonFacade lessonFacade, StepFacade stepFacade, ValidatorFacade validatorFacade, ExerciseFacade exerciseFacade)
         {
             this.lessonFacade = lessonFacade;
             this.stepFacade = stepFacade;
-            this.sampleFacade = sampleFacade;
             this.validatorFacade = validatorFacade;
+            this.exerciseFacade = exerciseFacade;
         }
 
-        public List<SampleViewModel> Samples { get; set; }
-
-        public List<IComponent> Components { get; set; }
+        public List<ExerciseViewModel> Exercises { get; set; }
 
         [FromRoute("Language")]
         public string Language { get; set; }
 
-        [FromRoute("LessonId")]
-        public string LessonId { get; set; }
+        public LessonOverviewDto Lesson { get; set; }
+
+        [FromRoute("Moniker")]
+        public string Moniker { get; set; }
+
+        [Bind(Direction.None)]
+        public StepDto Step { get; set; }
 
         [FromRoute("StepIndex")]
         public int StepIndex { get; set; }
 
-        public int StepCount { get; set; }
-
-        public override Task Load()
-        {
-            return Task.CompletedTask;
-        }
-
         public void GoNext()
         {
-            if(StepIndex != StepCount - 1)
+            if (StepIndex != Lesson.StepCount - 1)
             {
-                var parameters = new { LessonId = LessonId, Language = Language, StepIndex = ++StepIndex };
+                var parameters = new { Moniker = Moniker, Language = Language, StepIndex = ++StepIndex };
                 Context.RedirectToRoute("Step", parameters);
             }
         }
@@ -55,9 +52,30 @@ namespace DotvvmAcademy.ViewModels
         {
             if (StepIndex != 0)
             {
-                var parameters = new { LessonId = LessonId, Language = Language, StepIndex = --StepIndex };
+                var parameters = new { Moniker = Moniker, Language = Language, StepIndex = --StepIndex };
                 Context.RedirectToRoute("Step", parameters);
             }
+        }
+
+        public override async Task Init()
+        {
+            Lesson = await lessonFacade.GetOverview(Moniker, Language);
+            Step = await stepFacade.GetStep(Lesson, StepIndex);
+
+            if (!Context.IsPostBack)
+            {
+                Exercises = exerciseFacade.GetExercises(Step).Select(e => Mapper.Map<ExerciseDto, ExerciseViewModel>(e)).ToList();
+            }
+        }
+
+        public override Task Load()
+        {
+            foreach (var exercise in Exercises)
+            {
+                exercise.ValidatorFacade = validatorFacade;
+            }
+
+            return Task.CompletedTask;
         }
     }
 }

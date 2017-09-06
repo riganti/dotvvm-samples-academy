@@ -11,6 +11,6 @@ namespace DotvvmAcademy.CommonMark.ComponentParsers
 
         protected ComponentParser Next { get; }
 
-        public abstract IComponent Parse(string placeholder);
+        public abstract ICommonMarkComponent Parse(string placeholder);
     }
 }

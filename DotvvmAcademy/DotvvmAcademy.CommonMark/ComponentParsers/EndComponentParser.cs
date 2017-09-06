@@ -8,7 +8,7 @@ namespace DotvvmAcademy.CommonMark.ComponentParsers
         {
         }
 
-        public override IComponent Parse(string placeholder)
+        public override ICommonMarkComponent Parse(string placeholder)
         {
             return null;
         }

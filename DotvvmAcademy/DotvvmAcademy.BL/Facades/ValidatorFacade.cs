@@ -1,4 +1,8 @@
-﻿using DotvvmAcademy.BL.DTO;
+﻿using AutoMapper;
+using DotvvmAcademy.BL.Dtos;
+using DotvvmAcademy.DAL.Entities;
+using DotvvmAcademy.DAL.Providers;
+using DotvvmAcademy.Validation;
 using DotvvmAcademy.Validation.Cli.Host;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,25 +10,29 @@ using System.Threading.Tasks;
 
 namespace DotvvmAcademy.BL.Facades
 {
-    public sealed class ValidatorFacade
+    public class ValidatorFacade : IFacade
     {
-        private readonly SampleFacade sampleFacade;
-        private readonly ValidatorCli validatorCli;
+        private readonly ValidatorCli cli;
+        private readonly ValidatorAssemblyProvider provider;
+        private ValidatorAssembly validatorAssembly;
 
-        public ValidatorFacade(SampleFacade sampleFacade, ValidatorCli validatorCli)
+        public ValidatorFacade(ValidatorCli cli, ValidatorAssemblyProvider provider)
         {
-            this.sampleFacade = sampleFacade;
-            this.validatorCli = validatorCli;
+            this.cli = cli;
+            this.provider = provider;
         }
 
-        public async Task<IEnumerable<ValidationErrorDTO>> Validate(SampleDTO dto, string validatorAssemblyPath, string code)
+        public async Task RebuildAssembly()
         {
-            var arguments = new ValidatorCliArguments(dto.CodeLanguage.ToString().ToLower(), dto.ValidatorKey, validatorAssemblyPath)
-            {
-                Dependencies = dto.Dependencies.ToList()
-            };
-            var errors = await validatorCli.Invoke(arguments, code);
-            return errors.Select(e => ValidationErrorDTO.Create(e));
+            validatorAssembly = await provider.Get();
+        }
+
+        public async Task<IEnumerable<ValidationErrorDto>> Validate(ExerciseDto exerciseDto, string code)
+        {
+            var codeLanguage = exerciseDto.CodeLanguage.ToString().ToLower();
+            var args = new ValidatorCliArguments(codeLanguage, exerciseDto.ValidatorId, validatorAssembly.AbsolutePath);
+            var errors = await cli.Invoke(args, code);
+            return errors.Select(e => Mapper.Map<ValidationError, ValidationErrorDto>(e));
         }
     }
 }

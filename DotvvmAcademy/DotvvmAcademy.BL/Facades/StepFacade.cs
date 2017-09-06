@@ -1,32 +1,28 @@
-﻿using DotvvmAcademy.BL.CommonMark;
-using DotvvmAcademy.BL.DTO;
-using DotvvmAcademy.DAL.Base.Providers;
+﻿using AutoMapper;
+using DotvvmAcademy.BL.Dtos;
+using DotvvmAcademy.DAL.Entities;
+using DotvvmAcademy.DAL.Providers;
+using System.Threading.Tasks;
 
 namespace DotvvmAcademy.BL.Facades
 {
-    public class StepFacade
+    public class StepFacade : IFacade
     {
-        private ILessonProvider lessonProvider;
-        private IStepProvider stepProvider;
-        private StepParser parser;
+        private readonly LessonProvider lessonProvider;
+        private readonly StepProvider stepProvider;
 
-        public StepFacade(ILessonProvider lessonProvider, IStepProvider stepProvider, StepParser parser)
+        public StepFacade(LessonProvider lessonProvider, StepProvider stepProvider)
         {
             this.lessonProvider = lessonProvider;
             this.stepProvider = stepProvider;
-            this.parser = parser;
         }
 
-        public StepDTO GetStep(int lessonIndex, string language, int index)
+        public async Task<StepDto> GetStep(LessonOverviewDto lessonDto, int index)
         {
-            var source = GetStepRawSource(lessonIndex, language, index);
-            return parser.Parse(lessonIndex, language, index, source);
-        }
-
-        public string GetStepRawSource(int lessonIndex, string language, int index)
-        {
-            var lesson = lessonProvider.Get(lessonIndex, language);
-            return stepProvider.Get(lesson, index);
+            var lesson = await lessonProvider.Get(lessonDto.Moniker, lessonDto.Language);
+            var path = lesson.StepPaths[index];
+            var step = await stepProvider.Get(path);
+            return Mapper.Map<Step, StepDto>(step);
         }
     }
 }

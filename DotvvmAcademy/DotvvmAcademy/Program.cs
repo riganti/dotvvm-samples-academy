@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+using Autofac.Extensions.DependencyInjection;
 
 namespace DotvvmAcademy
 {
@@ -10,6 +11,7 @@ namespace DotvvmAcademy
         {
             var host = new WebHostBuilder()
                 .UseKestrel()
+                .ConfigureServices(services => services.AddAutofac())
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
                 .UseStartup<Startup>()

@@ -36,6 +36,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.0" />
     <PackageReference Include="DotVVM" Version="1.1.6.1" />
     <PackageReference Include="DotVVM.AspNetCore" Version="1.1.6.1" />
     <PackageReference Include="DotVVM.Core" Version="1.1.6.1" />
@@ -46,6 +47,8 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DotvvmAcademy.BL\DotvvmAcademy.BL.csproj" />
-    <ProjectReference Include="..\DotvvmAcademy.CommonMark\DotvvmAcademy.CommonMark.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Profiles\" />
   </ItemGroup>
 </Project>

@@ -1,8 +1,7 @@
 ﻿using DotVVM.Framework.Binding;
 using DotVVM.Framework.Controls;
-using System;
 using DotVVM.Framework.Hosting;
-using DotvvmAcademy.BL.DTO;
+using DotvvmAcademy.BL.Dtos;
 
 namespace DotvvmAcademy.Controls
 {
@@ -12,7 +11,7 @@ namespace DotvvmAcademy.Controls
             = DotvvmProperty.Register<string, AceEditor>(c => c.Code, null);
 
         public static readonly DotvvmProperty LanguageProperty
-            = DotvvmProperty.Register<SampleCodeLanguage, AceEditor>(c => c.Language, SampleCodeLanguage.Dothtml);
+            = DotvvmProperty.Register<CodeLanguageDto, AceEditor>(c => c.Language, CodeLanguageDto.Dothtml);
 
         public AceEditor() : base("div")
         {
@@ -26,9 +25,9 @@ namespace DotvvmAcademy.Controls
         }
 
         [MarkupOptions(AllowBinding = false)]
-        public SampleCodeLanguage Language
+        public CodeLanguageDto Language
         {
-            get { return (SampleCodeLanguage)GetValue(LanguageProperty); }
+            get { return (CodeLanguageDto)GetValue(LanguageProperty); }
             set { SetValue(LanguageProperty, value); }
         }
 

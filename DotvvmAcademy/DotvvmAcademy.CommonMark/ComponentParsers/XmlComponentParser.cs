@@ -6,13 +6,13 @@ using System.Xml.Serialization;
 namespace DotvvmAcademy.CommonMark.ComponentParsers
 {
     public class XmlComponentParser<TComponent> : ComponentParser
-        where TComponent : IComponent
+        where TComponent : ICommonMarkComponent
     {
         public XmlComponentParser(ComponentParser next) : base(next)
         {
         }
 
-        public override IComponent Parse(string placeholder)
+        public override ICommonMarkComponent Parse(string placeholder)
         {
             var serializer = new XmlSerializer(typeof(TComponent));
 

@@ -1,36 +1,31 @@
 ﻿using DotVVM.Framework.Binding;
-using DotVVM.Framework.Binding.Expressions;
 using DotVVM.Framework.Controls;
 using DotVVM.Framework.Hosting;
-using DotvvmAcademy.BL.DTO;
-using DotvvmAcademy.BL.DTO.Components;
-using DotvvmAcademy.BL.Facades;
+using DotvvmAcademy.BL.Dtos;
 using DotvvmAcademy.ViewModels;
-using System;
 using System.Collections.Generic;
 
 namespace DotvvmAcademy.Controls
 {
     public class StepRenderer : DotvvmControl
     {
-        public List<SampleViewModel> Samples
+        public List<ExerciseViewModel> Exercises
         {
-            get { return (List<SampleViewModel>)GetValue(SamplesProperty); }
-            set { SetValue(SamplesProperty, value); }
+            get { return (List<ExerciseViewModel>)GetValue(ExercisesProperty); }
+            set { SetValue(ExercisesProperty, value); }
         }
 
-        public static readonly DotvvmProperty SamplesProperty
-            = DotvvmProperty.Register<List<SampleViewModel>, StepRenderer>(c => c.Samples, null);
+        public static readonly DotvvmProperty ExercisesProperty
+            = DotvvmProperty.Register<List<ExerciseViewModel>, StepRenderer>(c => c.Exercises, null);
 
-
-        public List<SourceComponent> Source
+        public IStepPartDto[] Source
         {
-            get { return (List<SourceComponent>)GetValue(SourceProperty); }
+            get { return (IStepPartDto[])GetValue(SourceProperty); }
             set { SetValue(SourceProperty, value); }
         }
 
         public static readonly DotvvmProperty SourceProperty
-            = DotvvmProperty.Register<List<SourceComponent>, StepRenderer>(c => c.Source, null);
+            = DotvvmProperty.Register<IStepPartDto[], StepRenderer>(c => c.Source, null);
 
         protected override void AddAttributesToRender(IHtmlWriter writer, IDotvvmRequestContext context)
         {
@@ -40,12 +35,12 @@ namespace DotvvmAcademy.Controls
         protected override void OnLoad(IDotvvmRequestContext context)
         {
             var provider = context.Configuration.ServiceLocator.GetServiceProvider();
-            foreach (var component in Source)
+            foreach (var part in Source)
             {
-                var rendererType = typeof(SourceComponentRenderer<>).MakeGenericType(component.GetType());
-                var renderer = (SourceComponentRendererBase)provider.GetService(rendererType);
-                renderer.SetComponent(component);
-                Children.Add(renderer);
+                var rendererType = typeof(StepPartRenderer<>).MakeGenericType(part.GetType());
+                var renderer = (IStepPartRenderer)provider.GetService(rendererType);
+                renderer.SetPart(part);
+                Children.Add((DotvvmControl)renderer);
                 renderer.SetBindings(this);
             }
         }

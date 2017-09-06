@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.0" />
     <PackageReference Include="DotVVM.Core" Version="1.1.6.1" />
     <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.0.0" />
@@ -12,8 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DotvvmAcademy.DAL.Base\DotvvmAcademy.DAL.Base.csproj" />
-    <ProjectReference Include="..\DotvvmAcademy.DAL.FileSystem\DotvvmAcademy.DAL.FileSystem.csproj" />
+    <ProjectReference Include="..\DotvvmAcademy.DAL\DotvvmAcademy.DAL.csproj" />
     <ProjectReference Include="..\DotvvmAcademy.Validation.Cli.Host\DotvvmAcademy.Validation.Cli.Host.csproj" />
     <ProjectReference Include="..\DotvvmAcademy.Validation\DotvvmAcademy.Validation.csproj" />
   </ItemGroup>

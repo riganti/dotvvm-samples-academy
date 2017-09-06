@@ -13,8 +13,7 @@
                         </div>
                         <dot:RouteLink RouteName="Step"
                                        Param-Language="{value: Language}"
-                                       Param-LessonId="{value: LessonId}"
-                                       Enabled="{value: IsReady}">
+                                       Param-Moniker="{value: Moniker}">
                             <img src="{value: ImageUrl}" 
                                  class="img-responsive" />
                         </dot:RouteLink>
@@ -34,17 +33,15 @@
                     <div class="button">
                         <dot:RouteLink RouteName="Step" 
                                        Param-Language="{value: Language}"
-                                       Param-LessonId="{value: LessonId}"
+                                       Param-Moniker="{value: Moniker}"
                                        Text="Start Lesson" 
-                                       Enabled="{value: IsReady}" 
                                        class="aa" />
                     </div>
                     <div class="button-mobile">
                         <dot:RouteLink RouteName="Step"
                                        Param-Language="{value: Language}"
-                                       Param-LessonId="{value: LessonId}"
+                                       Param-Moniker="{value: Moniker}"
                                        Text="Start Lesson"
-                                       Enabled="{value: IsReady}"
                                        class="aa" />
                     </div>
                 </div>

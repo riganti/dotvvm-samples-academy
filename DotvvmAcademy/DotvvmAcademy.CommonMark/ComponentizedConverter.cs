@@ -5,6 +5,7 @@ using DotvvmAcademy.CommonMark.Components;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace DotvvmAcademy.CommonMark
 {
@@ -12,7 +13,7 @@ namespace DotvvmAcademy.CommonMark
     {
         private CommonMarkSettings settings;
         private int lastWriterLength = 0;
-        private List<IComponent> components = new List<IComponent>();
+        private List<ICommonMarkComponent> components = new List<ICommonMarkComponent>();
         private ComponentParser firstParser;
         private List<Type> componentParserTypes = new List<Type>();
 
@@ -32,21 +33,24 @@ namespace DotvvmAcademy.CommonMark
             };
         }
 
-        public IEnumerable<IComponent> Convert(string markdown)
+        public Task<List<ICommonMarkComponent>> Convert(string markdown)
         {
-            lastWriterLength = 0;
-            components.Clear();
-            firstParser = ConstructParsers();
-            var parsedMarkdown = CommonMarkConverter.Parse(markdown, settings);
-            using (var writer = new StringWriter())
+            return Task.Run(() =>
             {
-                CommonMarkConverter.ProcessStage3(parsedMarkdown, writer, settings);
-                if (TryParseHtmlLiteral(writer, out var htmlLiteral))
+                lastWriterLength = 0;
+                components.Clear();
+                firstParser = ConstructParsers();
+                var parsedMarkdown = CommonMarkConverter.Parse(markdown, settings);
+                using (var writer = new StringWriter())
                 {
-                    components.Add(htmlLiteral);
+                    CommonMarkConverter.ProcessStage3(parsedMarkdown, writer, settings);
+                    if (TryParseHtmlLiteral(writer, out var htmlLiteral))
+                    {
+                        components.Add(htmlLiteral);
+                    }
                 }
-            }
-            return components;
+                return components;
+            });
         }
 
         public void Use<TComponentParser>()
@@ -79,7 +83,7 @@ namespace DotvvmAcademy.CommonMark
             var component = firstParser.Parse(placeholder);
             if (component != null)
             {
-                if(TryParseHtmlLiteral(writer, out var htmlLiteral))
+                if (TryParseHtmlLiteral(writer, out var htmlLiteral))
                 {
                     components.Add(htmlLiteral);
                 }

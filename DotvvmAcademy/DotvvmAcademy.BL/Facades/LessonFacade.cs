@@ -1,33 +1,36 @@
-﻿using DotvvmAcademy.BL.DTO;
-using DotvvmAcademy.DAL.Base.Models;
-using DotvvmAcademy.DAL.Base.Providers;
+﻿using AutoMapper;
+using DotvvmAcademy.BL.Dtos;
+using DotvvmAcademy.DAL.Entities;
+using DotvvmAcademy.DAL.Providers;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace DotvvmAcademy.BL.Facades
 {
-    public class LessonFacade
+    public class LessonFacade : IFacade
     {
-        private ILessonProvider lessonProvider;
+        private readonly LessonProvider provider;
 
-        public LessonFacade(ILessonProvider lessonProvider)
+        public LessonFacade(LessonProvider provider)
         {
-            this.lessonProvider = lessonProvider;
+            this.provider = provider;
         }
 
-        public IEnumerable<LessonDTO> GetAllLessons(string lessonId = null, string language = null)
+        public async Task<LessonOverviewDto> GetOverview(string moniker, string language)
         {
-            var filter = new LessonFilter { Language = language, LessonId = lessonId };
-            foreach (var lessonIdentifier in lessonProvider.GetQueryable(filter))
+            var lesson = await provider.Get(moniker, language);
+            if (lesson.IsReady)
             {
-                var lesson = lessonProvider.Get(lessonIdentifier);
-                yield return LessonDTO.Create(lesson);
+                return Mapper.Map<Lesson, LessonOverviewDto>(lesson);
             }
+            return null;
         }
 
-        public int GetLessonStepCount(string lessonId, string language)
+        public async Task<IEnumerable<LessonOverviewDto>> GetOverviews(string language)
         {
-            var lesson = lessonProvider.Get(new LessonIdentifier(lessonId, language));
-            return lesson.StepPaths.Count;
+            var lessons = await provider.GetMany(language: language);
+            return lessons.Where(l => l.IsReady).Select(l => Mapper.Map<Lesson, LessonOverviewDto>(l));
         }
     }
 }
