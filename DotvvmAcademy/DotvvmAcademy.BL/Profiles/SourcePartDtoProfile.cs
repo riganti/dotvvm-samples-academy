@@ -10,7 +10,8 @@ namespace DotvvmAcademy.BL.Profiles
         {
             CreateMap<IStepPart, IStepPartDto>();
 
-            CreateMap<HtmlStepPart, HtmlStepPartDto>();
+            CreateMap<HtmlStepPart, HtmlStepPartDto>()
+                .IncludeBase<IStepPart, IStepPartDto>();
 
             CreateMap<ExerciseStepPartBase, ExerciseDto>()
                 .ForMember(d => d.CodeLanguage, ex => ex.ResolveUsing(s => GetCodeLanguage(s.CorrectPath)));
