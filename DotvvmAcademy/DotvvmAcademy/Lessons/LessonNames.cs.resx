@@ -157,7 +157,7 @@
     <value>Storno</value>
   </data>
   <data name="SamplesText" xml:space="preserve">
-    <value>Příklady</value>
+    <value>Vzorové aplikace</value>
   </data>
   <data name="ShowCorrectCodeBtn" xml:space="preserve">
     <value>Zobrazit správné řešení</value>
@@ -169,6 +169,6 @@
     <value>Krok</value>
   </data>
   <data name="TutorialsText" xml:space="preserve">
-    <value>Vzorové aplikace</value>
+    <value>Návody</value>
   </data>
 </root>
