@@ -1,0 +1,8 @@
+﻿@viewModel DotvvmAcademy.ViewModels.ErrorViewModel, DotvvmAcademy
+@masterPage Views/Master.dotmaster
+
+<dot:Content ContentPlaceHolderID="MainContent">
+    <h1>Error {{value: StatusCode}}</h1>
+    <h2>{{value: Message}}</h2>
+</dot:Content>
+

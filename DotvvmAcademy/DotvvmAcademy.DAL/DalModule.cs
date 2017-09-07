@@ -1,9 +1,11 @@
 ﻿using Autofac;
 using AutoMapper;
 using DotvvmAcademy.CommonMark;
+using DotvvmAcademy.DAL.Loadees;
 using DotvvmAcademy.DAL.Loaders;
 using DotvvmAcademy.DAL.Providers;
 using DotvvmAcademy.DAL.Services;
+using System;
 
 namespace DotvvmAcademy.DAL
 {
@@ -29,14 +31,16 @@ namespace DotvvmAcademy.DAL
             builder.RegisterType<LessonConfigDeserializer>()
                 .SingleInstance();
 
-            builder.RegisterType<LessonConfigPathConverter>()
-                .SingleInstance();
+            builder.RegisterType<PathConverter>();
 
             builder.RegisterType<ContentDirectoryEnvironment>()
                 .SingleInstance();
 
-            builder.RegisterType<SegmentizedConverter>()
-                .SingleInstance();
+            builder.RegisterType<SegmentizedConverterBuilder>();
+
+            builder.RegisterType<ExerciseNamingStrategy>();
+
+            builder.RegisterType<ExercisePlaceholderParser>();
         }
     }
 }

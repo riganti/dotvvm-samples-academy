@@ -43,6 +43,7 @@ namespace DotvvmAcademy
                 new { Language = "en"});
             config.RouteTable.Add("Step", "step/{Language}/{Moniker}/{StepIndex:int}", "Views/Step.dothtml",
                 new { Language = "en", Moniker = "basicMvvm", StepIndex = 0 });
+            config.RouteTable.Add("Error", "error/{StatusCode:int}", "Views/Error.dothtml", new { StatusCode = 404 });
         }
     }
 }

@@ -16,6 +16,7 @@ namespace DotvvmAcademy
     {
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, AutoMapperInitializer autoMapperInitializer)
         {
+            env.EnvironmentName = EnvironmentName.Development;
             autoMapperInitializer.Initialize();
             var applicationPhysicalPath = env.ContentRootPath;
             var dotvvmConfiguration = app.UseDotVVM<DotvvmStartup>(applicationPhysicalPath);
@@ -23,6 +24,7 @@ namespace DotvvmAcademy
             {
                 FileProvider = new PhysicalFileProvider(Path.Combine(applicationPhysicalPath, "wwwroot"))
             });
+            app.UseStatusCodePagesWithRedirects("/error/{0}");
         }
 
         public void ConfigureServices(IServiceCollection services)

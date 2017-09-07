@@ -1,5 +1,6 @@
 ﻿using DotvvmAcademy.DAL.Loadees;
 using Newtonsoft.Json;
+using System;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -7,11 +8,11 @@ namespace DotvvmAcademy.DAL.Services
 {
     public class LessonConfigDeserializer
     {
-        private readonly LessonConfigPathConverter pathConverter;
+        private readonly Func<string, PathConverter> converterFactory;
 
-        public LessonConfigDeserializer(LessonConfigPathConverter pathConverter)
+        public LessonConfigDeserializer(Func<string, PathConverter> converterFactory)
         {
-            this.pathConverter = pathConverter;
+            this.converterFactory = converterFactory;
         }
 
         public Task<LessonConfig> Deserialize(FileInfo file)
@@ -26,9 +27,10 @@ namespace DotvvmAcademy.DAL.Services
                 using (var streamReader = file.OpenText())
                 {
                     var jsonTextReader = new JsonTextReader(streamReader);
-                    pathConverter.Path = file.Directory.FullName;
+                    var settings = new JsonSerializerSettings();
+                    var converter = converterFactory(file.Directory.FullName);
                     var serializer = new JsonSerializer();
-                    serializer.Converters.Add(pathConverter);
+                    serializer.Converters.Add(converter);
                     return serializer.Deserialize<LessonConfig>(jsonTextReader);
                 }
             });

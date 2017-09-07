@@ -17,13 +17,34 @@ namespace DotvvmAcademy.DAL.Services
             ValidatorsDirectory = new DirectoryInfo(validatorsPath);
         }
 
-        public bool IsDevelopment { get; set; }
-
         public DirectoryInfo ContentDirectory { get; }
+
+        public bool IsDevelopment { get; set; }
 
         public DirectoryInfo LessonsDirectory { get; }
 
         public DirectoryInfo ValidatorsDirectory { get; }
+
+        public string GetAbsolute(string relative)
+        {
+            return Path.Combine(ContentDirectory.FullName, relative);
+        }
+
+        public TInfo GetAbsolute<TInfo>(string relative)
+                    where TInfo : FileSystemInfo
+        {
+            var absolute = GetAbsolute(relative);
+            if (typeof(TInfo) == typeof(FileInfo))
+            {
+                var file = new FileInfo(absolute);
+                return file as TInfo;
+            }
+            else
+            {
+                var directory = new DirectoryInfo(absolute);
+                return directory as TInfo;
+            }
+        }
 
         /// <summary>
         /// From the passed absolute path makes a new path relative to the 'Content' directory.
@@ -34,11 +55,6 @@ namespace DotvvmAcademy.DAL.Services
             var uriString = new Uri(ContentDirectory.FullName).MakeRelativeUri(new Uri(absolute)).OriginalString;
             var contentNameLength = ContentConstants.ContentDirectory.Length;
             return '.' + uriString.Substring(contentNameLength, uriString.Length - contentNameLength);
-        }
-
-        public string GetAbsolute(string relative)
-        {
-            return Path.Combine(ContentDirectory.FullName, relative);
         }
     }
 }

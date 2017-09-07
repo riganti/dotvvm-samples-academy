@@ -4,9 +4,14 @@ using System.IO;
 
 namespace DotvvmAcademy.DAL.Services
 {
-    public class LessonConfigPathConverter : JsonConverter
+    public class PathConverter : JsonConverter
     {
-        public string Path { get; set; }
+        private readonly string basePath;
+
+        public PathConverter(string basePath)
+        {
+            this.basePath = basePath;
+        }
 
         public override bool CanConvert(Type objectType)
         {
@@ -16,8 +21,8 @@ namespace DotvvmAcademy.DAL.Services
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             var relativePath = (string)reader.Value;
-            var path = System.IO.Path.Combine(Path, relativePath);
-            return Activator.CreateInstance(objectType, path);
+            var absolutePath = Path.Combine(basePath, relativePath);
+            return Activator.CreateInstance(objectType, absolutePath);
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)

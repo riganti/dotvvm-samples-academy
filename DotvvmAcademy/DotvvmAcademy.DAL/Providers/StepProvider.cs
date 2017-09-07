@@ -21,7 +21,7 @@ namespace DotvvmAcademy.DAL.Providers
 
         public async Task<Step> Get(string path)
         {
-            var file = new FileInfo(Path.Combine(environment.ContentDirectory.FullName, path));
+            var file = environment.GetAbsolute<FileInfo>(path);
             var source = await stepLoader.LoadStep(file);
             return Mapper.Map<StepSource, Step>(source);
         }

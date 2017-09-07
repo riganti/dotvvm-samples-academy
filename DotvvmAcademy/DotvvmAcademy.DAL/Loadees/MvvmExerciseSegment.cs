@@ -1,9 +1,8 @@
-using DotvvmAcademy.CommonMark.Segments;
 using System.IO;
 
 namespace DotvvmAcademy.DAL.Loadees
 {
-    public class MvvmExerciseSegment : ISegment
+    public class MvvmExerciseSegment : IExerciseSegment
     {
         public ViewExercise View { get; set; }
 
