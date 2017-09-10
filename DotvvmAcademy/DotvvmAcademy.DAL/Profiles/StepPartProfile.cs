@@ -19,10 +19,12 @@ namespace DotvvmAcademy.DAL.Profiles
                 .ForMember(d => d.IncorrectPath, ex => ex.MapFrom(s => s.Incorrect));
 
             CreateMap<CSharpExerciseSegment, CSharpExerciseStepPart>()
+                .IncludeBase<ISegment, IStepPart>()
                 .IncludeBase<ExerciseLoadeeBase, ExerciseStepPartBase>()
                 .ForMember(d => d.DependencyPaths, ex => ex.MapFrom(s => s.Dependencies));
 
             CreateMap<DothtmlExerciseSegment, DothtmlExerciseStepPart>()
+                .IncludeBase<ISegment, IStepPart>()
                 .IncludeBase<ExerciseLoadeeBase, ExerciseStepPartBase>()
                 .ForMember(d => d.MasterPagePath, ex => ex.MapFrom(s => s.MasterPage))
                 .ForMember(d => d.ViewModelPath, ex => ex.MapFrom(s => s.ViewModel));

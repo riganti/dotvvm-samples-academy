@@ -4,11 +4,11 @@ using DotvvmAcademy.DAL.Entities;
 
 namespace DotvvmAcademy.BL.Profiles
 {
-    public class StepDtoProfile : Profile
+    public class SampleProfile : Profile
     {
-        public StepDtoProfile()
+        public SampleProfile()
         {
-            CreateMap<Step, StepDto>();
+            CreateMap<Sample, SampleDto>();
         }
     }
 }

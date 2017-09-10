@@ -6,7 +6,7 @@ using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace DotvvmAcademy.Lessons.Validators
+namespace DotvvmAcademy.Content.Validators
 {
     public static class CollectionsValidators
     {

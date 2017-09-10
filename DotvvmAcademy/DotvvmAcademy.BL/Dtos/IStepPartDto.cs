@@ -2,6 +2,5 @@
 {
     public interface IStepPartDto
     {
-        StepDto Step { get;}
     }
 }

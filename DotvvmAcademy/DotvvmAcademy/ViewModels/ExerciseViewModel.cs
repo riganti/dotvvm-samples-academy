@@ -7,34 +7,52 @@ using System.Threading.Tasks;
 
 namespace DotvvmAcademy.ViewModels
 {
-    public class ExerciseViewModel
+    public class ExerciseViewModel : DotvvmViewModelBase
     {
+        private SampleFacade sampleFacade;
+        private ValidatorFacade validatorFacade;
+
+        public ExerciseViewModel()
+        {
+        }
+
+        public ExerciseViewModel(ValidatorFacade validatorFacade, SampleFacade sampleFacade)
+        {
+            this.validatorFacade = validatorFacade;
+            this.sampleFacade = sampleFacade;
+        }
+
+        public void InjectServices(ValidatorFacade validatorFacade, SampleFacade sampleFacade)
+        {
+            // This is because dotvvm doesn't resolve the properties it creates, it expects them to a parameterless constructor
+            this.validatorFacade = validatorFacade;
+            this.sampleFacade = sampleFacade;
+        }
+
         public string Code { get; set; }
 
-        [Protect(ProtectMode.EncryptData)]
         public ExerciseDto Dto { get; set; }
 
-        public List<ValidationErrorDto> Errors { get; set; }
+        public List<ValidationErrorDto> Errors { get; set; } = new List<ValidationErrorDto>();
+
+        [Protect(ProtectMode.EncryptData)]
+        public int Index { get; set; }
 
         [Protect(ProtectMode.EncryptData)]
         public bool IsValid { get; set; }
 
-        [Bind(Direction.None)]
-        public ValidatorFacade ValidatorFacade { get; set; }
-
-        [Protect(ProtectMode.EncryptData)]
-        public string ValidatorId { get; set; }
-
-        public void ResetCode()
+        public async Task ResetCode()
         {
-            Code = Dto.Incorrect;
+            var sample = await sampleFacade.GetSample(Dto.IncorrectPath);
+            Code = sample.Source;
             Errors.Clear();
             IsValid = false;
         }
 
-        public void ShowCorrectCode()
+        public async Task ShowCorrectCode()
         {
-            Code = Dto.Correct;
+            var sample = await sampleFacade.GetSample(Dto.CorrectPath);
+            Code = sample.Source;
             Errors.Clear();
             IsValid = true;
         }
@@ -42,7 +60,7 @@ namespace DotvvmAcademy.ViewModels
         public async Task Validate()
         {
             Errors.Clear();
-            Errors = (await ValidatorFacade.Validate(Dto, Code)).ToList();
+            Errors = (await validatorFacade.Validate(Dto, Code)).ToList();
             IsValid = Errors.Any();
         }
     }

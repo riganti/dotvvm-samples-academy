@@ -1,4 +1,4 @@
-﻿@viewModel DotvvmAcademy.ViewModels.SampleViewModel, DotvvmAcademy
+﻿@viewModel DotvvmAcademy.ViewModels.ExerciseViewModel, DotvvmAcademy
 
 <div class="code-editor-buttons">
     <dot:LinkButton Click="{command: ResetCode()}" 

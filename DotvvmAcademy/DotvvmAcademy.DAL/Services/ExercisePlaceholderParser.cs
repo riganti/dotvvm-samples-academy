@@ -17,9 +17,9 @@ namespace DotvvmAcademy.DAL.Services
         private const string Suffix = "Segment";
         private readonly PathConverter converter;
         private readonly List<Type> exerciseTypes;
-        private readonly ExerciseNamingStrategy namingStrategy;
+        private readonly XmlNamingStrategy namingStrategy;
 
-        public ExercisePlaceholderParser(PathConverter converter, ExerciseNamingStrategy namingStrategy)
+        public ExercisePlaceholderParser(PathConverter converter, XmlNamingStrategy namingStrategy)
         {
             this.converter = converter;
             this.namingStrategy = namingStrategy;

@@ -10,7 +10,8 @@ using System.Linq;
 
 namespace DotvvmAcademy.Controls
 {
-    public class ExerciseStepPartRenderer : StepPartRenderer<IExerciseStepPartDto>
+    public abstract class ExerciseStepPartRenderer<TExerciseStepPartDto> : StepPartRenderer<TExerciseStepPartDto>
+        where TExerciseStepPartDto : class, IExerciseStepPartDto
     {
         private AceEditor ace;
         private DotvvmControl buttons;
@@ -24,7 +25,7 @@ namespace DotvvmAcademy.Controls
         }
 
         public static readonly DotvvmProperty ExerciseProperty
-            = DotvvmProperty.Register<ExerciseViewModel, ExerciseStepPartRenderer>(c => c.Exercise, null);
+            = DotvvmProperty.Register<ExerciseViewModel, ExerciseStepPartRenderer<TExerciseStepPartDto>>(c => c.Exercise, null);
 
         public override void SetBindings(StepRenderer renderer)
         {
@@ -57,7 +58,7 @@ namespace DotvvmAcademy.Controls
             base.OnLoad(context);
             if (!context.IsPostBack)
             {
-                Exercise.ResetCode();
+                Exercise.ResetCode().Wait();
             }
         }
 

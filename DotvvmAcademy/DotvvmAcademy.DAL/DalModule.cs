@@ -6,6 +6,7 @@ using DotvvmAcademy.DAL.Loaders;
 using DotvvmAcademy.DAL.Providers;
 using DotvvmAcademy.DAL.Services;
 using System;
+using System.Linq;
 
 namespace DotvvmAcademy.DAL
 {
@@ -38,7 +39,7 @@ namespace DotvvmAcademy.DAL
 
             builder.RegisterType<SegmentizedConverterBuilder>();
 
-            builder.RegisterType<ExerciseNamingStrategy>();
+            builder.RegisterType<XmlNamingStrategy>();
 
             builder.RegisterType<ExercisePlaceholderParser>();
         }

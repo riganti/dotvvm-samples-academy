@@ -56,14 +56,17 @@ namespace DotvvmAcademy.CommonMark
 
         private void ParsePlaceholder(string placeholder, StringWriter writer)
         {
-            var context = new PlaceholderParsingContext(placeholder, segments, writer);
+            var parsedSegments = new List<ISegment>();
+            var context = new PlaceholderParsingContext(placeholder, parsedSegments, writer);
+            var handled = false;
             for (int i = 0; i < placeholderParsers.Count; i++)
             {
-                var handled = placeholderParsers[i].Parse(context).Result;
+                handled = placeholderParsers[i].Parse(context).Result;
                 if (handled)
                 {
                     var htmlSegment = ParseHtmlSegment(writer).Result;
                     segments.Add(htmlSegment);
+                    segments.AddRange(parsedSegments);
                     break;
                 }
             }
@@ -71,7 +74,7 @@ namespace DotvvmAcademy.CommonMark
 
         private void Reset()
         {
-            writerPosition = 0;
+            writerPosition = -1;
             segments.Clear();
         }
 

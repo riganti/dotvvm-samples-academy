@@ -8,8 +8,6 @@ namespace DotvvmAcademy.BL.Dtos
 
         public string ViewModelPath { get; internal set; }
 
-        public StepDto Step => throw new System.NotImplementedException();
-
         public IEnumerable<ExerciseDto> GetExercises()
         {
             yield return this;

@@ -2,7 +2,7 @@
 
 namespace DotvvmAcademy.DAL.Services
 {
-    public class ExerciseNamingStrategy : NamingStrategy
+    public class XmlNamingStrategy : NamingStrategy
     {
         protected override string ResolvePropertyName(string name)
         {

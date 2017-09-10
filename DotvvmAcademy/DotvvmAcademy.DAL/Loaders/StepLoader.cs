@@ -14,9 +14,9 @@ namespace DotvvmAcademy.DAL.Loaders
         private readonly Func<SegmentizedConverterBuilder> builderFactory;
         private readonly ContentDirectoryEnvironment environment;
         private readonly Func<string, PathConverter> pathConverterFactory;
-        private readonly Func<string, ExercisePlaceholderParser> parserFactory;
+        private readonly Func<PathConverter, ExercisePlaceholderParser> parserFactory;
 
-        public StepLoader(ContentDirectoryEnvironment environment, Func<SegmentizedConverterBuilder> builderFactory, Func<string, PathConverter> pathConverterFactory, Func<string, ExercisePlaceholderParser> parserFactory)
+        public StepLoader(ContentDirectoryEnvironment environment, Func<SegmentizedConverterBuilder> builderFactory, Func<string, PathConverter> pathConverterFactory, Func<PathConverter, ExercisePlaceholderParser> parserFactory)
         {
             this.environment = environment;
             this.builderFactory = builderFactory;
@@ -46,7 +46,7 @@ namespace DotvvmAcademy.DAL.Loaders
         {
             var builder = builderFactory();
             var pathConverter = pathConverterFactory(file.Directory.FullName);
-            var parser = parserFactory(file.Directory.FullName);
+            var parser = parserFactory(pathConverter);
             builder.UsePlaceholderParser(parser);
             return builder.Build();
         }

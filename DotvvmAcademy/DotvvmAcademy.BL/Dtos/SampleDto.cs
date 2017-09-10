@@ -1,7 +1,9 @@
 ﻿namespace DotvvmAcademy.BL.Dtos
 {
-    public sealed class HtmlStepPartDto : IStepPartDto
+    public class SampleDto
     {
+        public string Path { get; internal set; }
+
         public string Source { get; internal set; }
     }
 }

@@ -32,7 +32,7 @@ namespace DotvvmAcademy.Validation.Cli.Host
             sb.Append(ValidatorKey);
             sb.Append(' ');
             sb.Append($"\"{ValidatorAssemblyPath}\"");
-            if (Dependencies.Count > 0)
+            if (Dependencies?.Count > 0)
             {
                 sb.Append(' ');
                 sb.Append("-d");

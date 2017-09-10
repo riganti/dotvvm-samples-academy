@@ -4,7 +4,7 @@ using DotvvmAcademy.Validation.CSharp;
 using DotvvmAcademy.Validation.Dothtml;
 using System.Linq;
 
-namespace DotvvmAcademy.Lessons.Validators
+namespace DotvvmAcademy.Content.Validators
 {
     public static class BasicMvvmValidators
     {

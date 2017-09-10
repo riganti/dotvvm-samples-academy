@@ -29,8 +29,8 @@ namespace DotvvmAcademy.BL.Profiles
                     {
                         var view = new ViewExerciseDto
                         {
-                            Correct = part.CorrectViewPath,
-                            Incorrect = part.IncorrectViewPath,
+                            CorrectPath = part.CorrectViewPath,
+                            IncorrectPath = part.IncorrectViewPath,
                             ValidatorId = part.ViewValidatorId,
                             MasterPagePath = part.MasterPagePath,
                             CodeLanguage = GetCodeLanguage(part.CorrectViewPath)
@@ -41,8 +41,8 @@ namespace DotvvmAcademy.BL.Profiles
                     {
                         var viewModel = new ViewModelExerciseDto
                         {
-                            Correct = part.CorrectViewModelPath,
-                            Incorrect = part.IncorrectViewModelPath,
+                            CorrectPath = part.CorrectViewModelPath,
+                            IncorrectPath = part.IncorrectViewModelPath,
                             ValidatorId = part.ViewModelValidatorId,
                             DependencyPaths = part.ViewModelDependencies,
                             CodeLanguage = GetCodeLanguage(part.CorrectViewModelPath)

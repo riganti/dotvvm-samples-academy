@@ -14,7 +14,6 @@ namespace DotvvmAcademy.BL.Facades
     {
         private readonly ValidatorCli cli;
         private readonly ValidatorAssemblyProvider provider;
-        private ValidatorAssembly validatorAssembly;
 
         public ValidatorFacade(ValidatorCli cli, ValidatorAssemblyProvider provider)
         {
@@ -22,14 +21,10 @@ namespace DotvvmAcademy.BL.Facades
             this.provider = provider;
         }
 
-        public async Task RebuildAssembly()
-        {
-            validatorAssembly = await provider.Get();
-        }
-
         public async Task<IEnumerable<ValidationErrorDto>> Validate(ExerciseDto exerciseDto, string code)
         {
             var codeLanguage = exerciseDto.CodeLanguage.ToString().ToLower();
+            var validatorAssembly = await provider.Get();
             var args = new ValidatorCliArguments(codeLanguage, exerciseDto.ValidatorId, validatorAssembly.AbsolutePath);
             var errors = await cli.Invoke(args, code);
             return errors.Select(e => Mapper.Map<ValidationError, ValidationErrorDto>(e));

@@ -1,4 +1,6 @@
 using Autofac;
+using AutoMapper;
+using DotVVM.Framework.ViewModel;
 using DotvvmAcademy.BL;
 using DotvvmAcademy.Controls;
 using DotvvmAcademy.Services;
@@ -45,6 +47,10 @@ namespace DotvvmAcademy
 
             builder.RegisterAssemblyTypes(typeof(Startup).Assembly)
                 .AsClosedTypesOf(typeof(StepPartRenderer<>));
+
+            builder.RegisterAssemblyTypes(typeof(Startup).Assembly)
+                .AssignableTo<IDotvvmViewModel>()
+                .AsSelf();
         }
     }
 }

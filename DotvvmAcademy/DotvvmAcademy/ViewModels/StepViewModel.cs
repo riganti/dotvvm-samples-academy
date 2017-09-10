@@ -1,7 +1,7 @@
-using AutoMapper;
 using DotVVM.Framework.ViewModel;
 using DotvvmAcademy.BL.Dtos;
 using DotvvmAcademy.BL.Facades;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,16 +11,21 @@ namespace DotvvmAcademy.ViewModels
     public class StepViewModel : DotvvmAcademyViewModelBase
     {
         private readonly ExerciseFacade exerciseFacade;
+        private readonly SampleFacade sampleFacade;
+        private readonly ValidatorFacade validatorFacade;
+        private readonly Func<ExerciseViewModel> exerciseFactory;
         private readonly LessonFacade lessonFacade;
         private readonly StepFacade stepFacade;
-        private readonly ValidatorFacade validatorFacade;
 
-        public StepViewModel(LessonFacade lessonFacade, StepFacade stepFacade, ValidatorFacade validatorFacade, ExerciseFacade exerciseFacade)
+        public StepViewModel(LessonFacade lessonFacade, StepFacade stepFacade, ExerciseFacade exerciseFacade, 
+            SampleFacade sampleFacade, ValidatorFacade validatorFacade, Func<ExerciseViewModel> exerciseFactory)
         {
             this.lessonFacade = lessonFacade;
             this.stepFacade = stepFacade;
-            this.validatorFacade = validatorFacade;
             this.exerciseFacade = exerciseFacade;
+            this.sampleFacade = sampleFacade;
+            this.validatorFacade = validatorFacade;
+            this.exerciseFactory = exerciseFactory;
         }
 
         public List<ExerciseViewModel> Exercises { get; set; }
@@ -61,18 +66,26 @@ namespace DotvvmAcademy.ViewModels
         {
             Lesson = await lessonFacade.GetOverview(Moniker, Language);
             Step = await stepFacade.GetStep(Lesson, StepIndex);
-
-            if (!Context.IsPostBack)
-            {
-                Exercises = exerciseFacade.GetExercises(Step).Select(e => Mapper.Map<ExerciseDto, ExerciseViewModel>(e)).ToList();
-            }
         }
 
         public override Task Load()
         {
+            var exerciseDtos = exerciseFacade.GetExercises(Step).ToArray();
+            if (!Context.IsPostBack)
+            {
+                Exercises = exerciseDtos.Select((dto, i) =>
+                {
+                    var exercise = exerciseFactory();
+                    exercise.Dto = dto;
+                    exercise.Index = i;
+                    return exercise;
+                }).ToList();
+                return Task.CompletedTask;
+            }
             foreach (var exercise in Exercises)
             {
-                exercise.ValidatorFacade = validatorFacade;
+                exercise.Dto = exerciseDtos[exercise.Index];
+                exercise.InjectServices(validatorFacade, sampleFacade);
             }
 
             return Task.CompletedTask;

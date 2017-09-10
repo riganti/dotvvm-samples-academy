@@ -2,7 +2,7 @@
 @masterPage Views/Master.dotmaster
 <dot:Content ContentPlaceHolderID="MainContent">
 
-    <div class="container-fluid content-padding">
+    <div class="container-fluid content-padding" RenderSettings.Mode="Server">
         <dot:Repeater DataSource="{value: Lessons}"
                       class="row">
             <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 lesson">
