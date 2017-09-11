@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotvvmAcademy.CommonMark", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotvvmAcademy.DAL", "DotvvmAcademy.DAL\DotvvmAcademy.DAL.csproj", "{44D9141E-9FF1-4331-ACEF-D63B73533B20}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotvvmAcademy.Content.Validators", "DotvvmAcademy.Content.Validators\DotvvmAcademy.Content.Validators.csproj", "{BE651171-A182-40A4-8771-4B3A052B7C10}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotvvmAcademy.Validators", "DotvvmAcademy.Validators\DotvvmAcademy.Validators.csproj", "{DF8AFEA2-80D0-4149-A456-36142551115E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,10 +53,10 @@ Global
 		{44D9141E-9FF1-4331-ACEF-D63B73533B20}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44D9141E-9FF1-4331-ACEF-D63B73533B20}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44D9141E-9FF1-4331-ACEF-D63B73533B20}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BE651171-A182-40A4-8771-4B3A052B7C10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BE651171-A182-40A4-8771-4B3A052B7C10}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BE651171-A182-40A4-8771-4B3A052B7C10}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BE651171-A182-40A4-8771-4B3A052B7C10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF8AFEA2-80D0-4149-A456-36142551115E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF8AFEA2-80D0-4149-A456-36142551115E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF8AFEA2-80D0-4149-A456-36142551115E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF8AFEA2-80D0-4149-A456-36142551115E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

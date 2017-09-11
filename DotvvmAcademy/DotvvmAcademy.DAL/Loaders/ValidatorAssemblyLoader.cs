@@ -11,6 +11,8 @@ namespace DotvvmAcademy.DAL.Loaders
     {
         private readonly ContentDirectoryEnvironment environment;
 
+        public const string ValidatorAssemblyName = "DotvvmAcademy.Validators";
+
         public ValidatorAssemblyLoader(ContentDirectoryEnvironment environment)
         {
             this.environment = environment;
@@ -19,7 +21,7 @@ namespace DotvvmAcademy.DAL.Loaders
         public Task<ValidatorAssemblyLoadee> LoadValidatorAssembly(DirectoryInfo directory = null)
         {
             //var dllPath = await Build(GetProjectFile(directory ?? environment.ValidatorsDirectory).FullName);
-            var dllPath = Assembly.Load(new AssemblyName("DotvvmAcademy.Content.Validators")).Location;
+            var dllPath = Assembly.Load(new AssemblyName(ValidatorAssemblyName)).Location;
             var validatorAssembly = new ValidatorAssemblyLoadee
             {
                 Dll = new FileInfo(dllPath),

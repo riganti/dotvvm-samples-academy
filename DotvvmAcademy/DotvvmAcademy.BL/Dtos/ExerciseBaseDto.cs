@@ -1,6 +1,6 @@
 ﻿namespace DotvvmAcademy.BL.Dtos
 {
-    public class ExerciseDto
+    public abstract class ExerciseBaseDto
     {
         public string CorrectPath { get; internal set; }
 

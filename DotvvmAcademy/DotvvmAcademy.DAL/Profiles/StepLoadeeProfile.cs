@@ -4,13 +4,13 @@ using DotvvmAcademy.DAL.Loadees;
 
 namespace DotvvmAcademy.DAL.Profiles
 {
-    public class LessonProfile : Profile
+    public class StepLoadeeProfile : Profile
     {
-        public LessonProfile()
+        public StepLoadeeProfile()
         {
-            CreateMap<LessonConfig, Lesson>()
+            CreateMap<StepLoadee, Step>()
                 .ForMember(d => d.Path, ex => ex.MapFrom(s => s.File))
-                .ForMember(d => d.StepPaths, ex => ex.MapFrom(s => s.Steps));
+                .ForMember(d => d.Source, ex => ex.MapFrom(s => s.Segments));
         }
     }
 }

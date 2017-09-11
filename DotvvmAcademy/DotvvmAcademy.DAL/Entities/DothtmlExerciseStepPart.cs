@@ -1,6 +1,6 @@
 ﻿namespace DotvvmAcademy.DAL.Entities
 {
-    public class DothtmlExerciseStepPart : ExerciseStepPartBase
+    public class DothtmlExerciseStepPart : ExerciseBase, IStepPart
     {
         public string ViewModelPath { get; set; }
 

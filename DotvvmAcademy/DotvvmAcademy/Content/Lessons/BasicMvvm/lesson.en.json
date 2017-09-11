@@ -4,13 +4,13 @@
   "ImageUrl": "/img/basics.png",
   "IsReady": true,
   "Steps": [
-    "./en/step1.md",
-    "./en/step2.md",
-    "./en/step3.md",
-    "./en/step4.md",
-    "./en/step5.md",
-    "./en/step6.md",
-    "./en/step7.md",
-    "./en/step8.md"
+    "./en/1_prerequisites.md",
+    "./en/2_introduction.md",
+    "./en/3_basic_controls.md",
+    "./en/4_viewModel_properties.md",
+    "./en/5_viewModel_command.md",
+    "./en/6_data-binding_textboxes.md",
+    "./en/7_data-binding_button.md",
+    "./en/8_congratulations.md"
   ]
 }

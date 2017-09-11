@@ -53,8 +53,13 @@ namespace DotvvmAcademy.DAL.Services
         public string GetRelative(string absolute)
         {
             var uriString = new Uri(ContentDirectory.FullName).MakeRelativeUri(new Uri(absolute)).OriginalString;
-            var contentNameLength = ContentConstants.ContentDirectory.Length;
-            return '.' + uriString.Substring(contentNameLength, uriString.Length - contentNameLength);
+            if (uriString.StartsWith(ContentConstants.ContentDirectory))
+            {
+                var contentNameLength = ContentConstants.ContentDirectory.Length;
+                uriString = uriString.Substring(contentNameLength, uriString.Length - contentNameLength);
+            }
+
+            return $".{uriString}";
         }
     }
 }

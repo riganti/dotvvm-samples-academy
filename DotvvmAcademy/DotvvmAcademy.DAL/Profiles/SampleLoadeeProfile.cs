@@ -4,11 +4,11 @@ using DotvvmAcademy.DAL.Loadees;
 
 namespace DotvvmAcademy.DAL.Profiles
 {
-    public class SampleProfile : Profile
+    public class SampleLoadeeProfile : Profile
     {
-        public SampleProfile()
+        public SampleLoadeeProfile()
         {
-            CreateMap<SampleSource, Sample>()
+            CreateMap<SampleLoadee, Sample>()
                 .ForMember(d => d.Path, ex => ex.MapFrom(s => s.File));
         }
     }

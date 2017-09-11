@@ -2,7 +2,7 @@
 
 namespace DotvvmAcademy.DAL.Loadees
 {
-    public class SampleSource
+    public class SampleLoadee
     {
         public FileInfo File { get; set; }
 

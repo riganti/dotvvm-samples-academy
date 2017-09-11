@@ -6,9 +6,10 @@ namespace DotvvmAcademy.BL.Facades
 {
     public class ExerciseFacade : IFacade
     {
-        public IEnumerable<ExerciseDto> GetExercises(StepDto stepDto)
+        public IEnumerable<ExerciseBaseDto> GetExercises(StepDto stepDto)
         {
-            foreach (var part in stepDto.Source.OfType<IExerciseStepPartDto>())
+            var parts = stepDto?.Source.OfType<IExerciseStepPartDto>() ?? Enumerable.Empty<IExerciseStepPartDto>();
+            foreach (var part in parts)
             {
                 foreach (var exercise in part.GetExercises())
                 {

@@ -49,6 +49,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DotvvmAcademy.BL\DotvvmAcademy.BL.csproj" />
-    <ProjectReference Include="..\DotvvmAcademy.Content.Validators\DotvvmAcademy.Content.Validators.csproj" />
+    <ProjectReference Include="..\DotvvmAcademy.Validators\DotvvmAcademy.Validators.csproj" />
   </ItemGroup>
 </Project>

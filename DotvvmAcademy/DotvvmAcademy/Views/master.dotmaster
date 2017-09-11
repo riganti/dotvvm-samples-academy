@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 </head>
-<body>
+<body RenderSettings.Mode="Server">
     <div class="fix-height">
         <div class="container-fluid header">
             <div class="container header-con-padding">

@@ -1,6 +1,6 @@
 ﻿namespace DotvvmAcademy.DAL.Entities
 {
-    public class CSharpExerciseStepPart : ExerciseStepPartBase
+    public class CSharpExerciseStepPart : ExerciseBase, IStepPart
     {
         public string[] DependencyPaths { get; set; }
     }

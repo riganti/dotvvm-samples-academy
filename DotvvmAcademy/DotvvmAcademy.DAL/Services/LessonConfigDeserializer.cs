@@ -15,11 +15,11 @@ namespace DotvvmAcademy.DAL.Services
             this.converterFactory = converterFactory;
         }
 
-        public Task<LessonConfig> Deserialize(FileInfo file)
+        public Task<LessonConfigLoadee> Deserialize(FileInfo file)
         {
             if(!file.Exists)
             {
-                return Task.FromResult<LessonConfig>(null);
+                return Task.FromResult<LessonConfigLoadee>(null);
             }
 
             return Task.Run(() =>
@@ -31,7 +31,7 @@ namespace DotvvmAcademy.DAL.Services
                     var converter = converterFactory(file.Directory.FullName);
                     var serializer = new JsonSerializer();
                     serializer.Converters.Add(converter);
-                    return serializer.Deserialize<LessonConfig>(jsonTextReader);
+                    return serializer.Deserialize<LessonConfigLoadee>(jsonTextReader);
                 }
             });
         }

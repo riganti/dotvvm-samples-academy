@@ -6,14 +6,14 @@ namespace DotvvmAcademy.DAL.Loaders
 {
     public class SampleLoader : ILoader
     {
-        public async Task<SampleSource> LoadSample(FileInfo file)
+        public async Task<SampleLoadee> LoadSample(FileInfo file)
         {
             if (!file.Exists)
             {
                 return null;
             }
 
-            var sample = new SampleSource { File = file };
+            var sample = new SampleLoadee { File = file };
             using (var streamReader = file.OpenText())
             {
                 sample.Source = await streamReader.ReadToEndAsync();

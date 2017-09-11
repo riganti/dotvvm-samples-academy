@@ -4,9 +4,9 @@ using DotvvmAcademy.DAL.Entities;
 
 namespace DotvvmAcademy.BL.Profiles
 {
-    public class SampleProfile : Profile
+    public class SampleDtoProfile : Profile
     {
-        public SampleProfile()
+        public SampleDtoProfile()
         {
             CreateMap<Sample, SampleDto>();
         }

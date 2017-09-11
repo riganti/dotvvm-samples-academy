@@ -25,20 +25,20 @@ namespace DotvvmAcademy.DAL.Providers
         {
             var file = new FileInfo(Path.Combine(environment.ContentDirectory.FullName, path));
             var config = await lessonLoader.LoadLesson(file);
-            return Mapper.Map<LessonConfig, Lesson>(config);
+            return Mapper.Map<LessonConfigLoadee, Lesson>(config);
         }
 
         public async Task<Lesson> Get(string moniker, string language)
         {
             var configs = (await lessonLoader.LoadLessons(moniker, language)).ToList();
 
-            return Mapper.Map<LessonConfig, Lesson>(configs.Single());
+            return Mapper.Map<LessonConfigLoadee, Lesson>(configs.Single());
         }
 
         public async Task<IEnumerable<Lesson>> GetMany(string moniker = null, string language = null)
         {
             var configs = await lessonLoader.LoadLessons(moniker, language);
-            return configs.Select(c => Mapper.Map<LessonConfig, Lesson>(c));
+            return configs.Select(c => Mapper.Map<LessonConfigLoadee, Lesson>(c));
         }
     }
 }

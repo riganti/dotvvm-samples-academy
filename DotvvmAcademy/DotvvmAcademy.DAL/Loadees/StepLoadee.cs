@@ -3,10 +3,10 @@ using System.IO;
 
 namespace DotvvmAcademy.DAL.Loadees
 {
-    public class StepSource
+    public class StepLoadee
     {
         public FileInfo File { get; set; }
 
-        public ISegment[] Source { get; set; }
+        public ISegment[] Segments { get; set; }
     }
 }

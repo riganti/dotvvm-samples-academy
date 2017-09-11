@@ -21,7 +21,7 @@ namespace DotvvmAcademy.BL.Facades
             this.provider = provider;
         }
 
-        public async Task<IEnumerable<ValidationErrorDto>> Validate(ExerciseDto exerciseDto, string code)
+        public async Task<IEnumerable<ValidationErrorDto>> Validate(ExerciseBaseDto exerciseDto, string code)
         {
             var codeLanguage = exerciseDto.CodeLanguage.ToString().ToLower();
             var validatorAssembly = await provider.Get();

@@ -7,17 +7,26 @@
             <div class="container-fluid">
                 <div>
                     <cc:StepRenderer Source="{value: Step.Source}"
-                                     Exercises="{value: Exercises}" />
-                    <dot:LinkButton Click="{command: GoPrevious()}"
-                                    Enabled="{value: StepIndex != 0}"
-                                    class="btn btn-primary pull-left lesson-btn">
-                        <span class="glyphicon glyphicon-hand-left" /> Previous
-                    </dot:LinkButton>
-                    <dot:LinkButton Click="{command: GoNext()}"
-                                    Enabled="{value: StepIndex != Lesson.StepCount - 1}"
-                                    class="btn btn-primary pull-right lesson-btn">
-                        <span class="glyphicon glyphicon-hand-right" /> Next
-                    </dot:LinkButton>
+                                     Exercises="{value: Exercises}" 
+                                     RenderSettings.Mode="Client"/>
+
+                    <dot:RouteLink RouteName="Step"
+                                   Param-Language="{value: Language}"
+                                   Param-Moniker="{value: Moniker}"
+                                   Param-StepIndex="{value: StepIndex - 1}"
+                                   Visible="{resource: CanGoPrevious}"
+                                   class="btn btn-primary pull-left lesson-btn">
+                        <span class="glyphicon glyphicon-chevron-left" /> Previous
+                    </dot:RouteLink>
+
+                    <dot:RouteLink RouteName="Step"
+                                   Param-Language="{value: Language}"
+                                   Param-Moniker="{value: Moniker}"
+                                   Param-StepIndex="{value: StepIndex + 1}"
+                                   Visible="{resource: CanGoNext}"
+                                   class="btn btn-primary pull-right lesson-btn">
+                        Next <span class="glyphicon glyphicon-chevron-right" />
+                    </dot:RouteLink>
                 </div>
             </div>
         </div>

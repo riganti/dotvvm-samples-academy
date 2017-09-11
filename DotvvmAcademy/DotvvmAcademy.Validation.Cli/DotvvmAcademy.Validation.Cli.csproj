@@ -17,7 +17,6 @@
     <ItemGroup>
       <_AllOutputs Include="$(OutputPath)\**\*" />
     </ItemGroup>
-    <Message Text="@(_AllOutputs->'%(FullPath)')" Importance="high" />
   </Target>
 
 </Project>

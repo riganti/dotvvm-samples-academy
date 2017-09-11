@@ -23,7 +23,7 @@ namespace DotvvmAcademy.DAL.Providers
         {
             var file = new FileInfo(Path.Combine(environment.ContentDirectory.FullName, path));
             var source = await sampleLoader.LoadSample(file);
-            return Mapper.Map<SampleSource, Sample>(source);
+            return Mapper.Map<SampleLoadee, Sample>(source);
         }
     }
 }

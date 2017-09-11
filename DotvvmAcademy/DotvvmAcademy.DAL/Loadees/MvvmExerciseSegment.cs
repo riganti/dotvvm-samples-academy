@@ -4,16 +4,16 @@ namespace DotvvmAcademy.DAL.Loadees
 {
     public class MvvmExerciseSegment : IExerciseSegment
     {
-        public ViewExercise View { get; set; }
+        public ViewExerciseLoadee View { get; set; }
 
-        public ViewModelExercise ViewModel { get; set; }
+        public ViewModelExerciseLoadee ViewModel { get; set; }
 
-        public class ViewExercise : ExerciseLoadeeBase
+        public class ViewExerciseLoadee : ExerciseLoadeeBase
         {
             public FileInfo MasterPage { get; set; }
         }
 
-        public class ViewModelExercise : ExerciseLoadeeBase
+        public class ViewModelExerciseLoadee : ExerciseLoadeeBase
         {
             public FileInfo[] Dependencies { get; set; }
         }

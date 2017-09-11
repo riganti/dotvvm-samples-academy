@@ -6,8 +6,8 @@ So instead of `<input type="text" />` we use `<dot:TextBox />`. Also, we have a 
 
 Now, try to create a page with 3 textboxes and 1 button. 
 
-[<DothtmlExercise Incorrect="../samples/TextBoxUsageIncorrect.dothtml"
-                  Correct="../samples/TextBoxUsageCorrect.dothtml"
+[<DothtmlExercise Incorrect="../samples/CalculatorView_Stage1.dothtml"
+                  Correct="../samples/CalculatorView_Stage2.dothtml"
                   ValidatorId="Lesson1Step3Validator" />]
 
 > Don't forget to end the elements with ` />`. It means that the control doesn't have the end tag. In pure HTML, it is not necessary, but it is a good practice to make sure that all elements are closed.

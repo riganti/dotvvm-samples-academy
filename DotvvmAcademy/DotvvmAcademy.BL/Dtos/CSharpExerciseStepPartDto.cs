@@ -2,11 +2,16 @@
 
 namespace DotvvmAcademy.BL.Dtos
 {
-    public sealed class CSharpExerciseStepPartDto : ExerciseDto, IExerciseStepPartDto
+    public sealed class CSharpExerciseStepPartDto : ExerciseBaseDto, IExerciseStepPartDto
     {
+        public CSharpExerciseStepPartDto()
+        {
+            CodeLanguage = CodeLanguageDto.CSharp;
+        }
+
         public string[] DependencyPaths { get; internal set; }
 
-        public IEnumerable<ExerciseDto> GetExercises()
+        public IEnumerable<ExerciseBaseDto> GetExercises()
         {
             yield return this;
         }

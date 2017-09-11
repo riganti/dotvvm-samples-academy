@@ -1,25 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace DotvvmAcademy.DAL.Entities
 {
     public class MvvmExerciseStepPart
     {
-        public string CorrectViewPath { get; set; }
+        public ViewExercise View { get; set; }
 
-        public string CorrectViewModelPath { get; set; }
+        public ViewModelExercise ViewModel { get; set; }
 
-        public string IncorrectViewPath { get; set; }
+        public class ViewExercise : ExerciseBase
+        {
+            public string MasterPagePath { get; set; }
+        }
 
-        public string IncorrectViewModelPath { get; set; }
-
-        public string ViewValidatorId { get; set; }
-
-        public string ViewModelValidatorId { get; set; }
-
-        public string MasterPagePath { get; set; }
-
-        public string[] ViewModelDependencies { get; set; }
+        public class ViewModelExercise : ExerciseBase
+        {
+            public IEnumerable<string> DependencyPaths { get; set; }
+        }
     }
 }

@@ -6,6 +6,6 @@ namespace DotvvmAcademy.BL.Dtos
 {
     public interface IExerciseStepPartDto : IStepPartDto
     {
-        IEnumerable<ExerciseDto> GetExercises();
+        IEnumerable<ExerciseBaseDto> GetExercises();
     }
 }

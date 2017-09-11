@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DotvvmAcademy.DAL.Entities
+﻿namespace DotvvmAcademy.DAL.Entities
 {
-    public class ExerciseStepPartBase : IStepPart
+    public abstract class ExerciseBase
     {
         public string CorrectPath { get; set; }
 

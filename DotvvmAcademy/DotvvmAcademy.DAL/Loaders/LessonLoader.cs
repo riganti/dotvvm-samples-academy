@@ -20,7 +20,7 @@ namespace DotvvmAcademy.DAL.Loaders
             this.environment = environment;
         }
 
-        public async Task<IEnumerable<LessonConfig>> LoadLessons(string moniker = null, string language = null)
+        public async Task<IEnumerable<LessonConfigLoadee>> LoadLessons(string moniker = null, string language = null)
         {
             var directories = environment.LessonsDirectory.EnumerateDirectories();
             if(moniker != null)
@@ -31,14 +31,14 @@ namespace DotvvmAcademy.DAL.Loaders
             return (await Task.WhenAll(tasks)).SelectMany(a => a);
         }
 
-        public Task<LessonConfig[]> LoadLessons(DirectoryInfo directory, string language = null)
+        public Task<LessonConfigLoadee[]> LoadLessons(DirectoryInfo directory, string language = null)
         {
             var configs = directory.EnumerateFiles(GetConfigSearchPattern(language));
             var tasks = configs.Select(config => LoadLesson(config));
             return Task.WhenAll(tasks);
         }
 
-        public async Task<LessonConfig> LoadLesson(FileInfo file)
+        public async Task<LessonConfigLoadee> LoadLesson(FileInfo file)
         {
             if (file.Exists)
             {

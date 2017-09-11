@@ -23,7 +23,7 @@ namespace DotvvmAcademy.DAL.Providers
         {
             var file = environment.GetAbsolute<FileInfo>(path);
             var source = await stepLoader.LoadStep(file);
-            return Mapper.Map<StepSource, Step>(source);
+            return Mapper.Map<StepLoadee, Step>(source);
         }
     }
 }

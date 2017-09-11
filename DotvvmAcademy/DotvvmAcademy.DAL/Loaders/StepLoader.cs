@@ -24,19 +24,19 @@ namespace DotvvmAcademy.DAL.Loaders
             this.parserFactory = parserFactory;
         }
 
-        public async Task<StepSource> LoadStep(FileInfo file)
+        public async Task<StepLoadee> LoadStep(FileInfo file)
         {
             if (!file.Exists)
             {
                 return null;
             }
 
-            var step = new StepSource();
+            var step = new StepLoadee();
             using (var streamReader = file.OpenText())
             {
                 var converter = GetConverter(file);
                 var markdown = await streamReader.ReadToEndAsync();
-                step.Source = (await converter.Convert(markdown)).ToArray();
+                step.Segments = (await converter.Convert(markdown)).ToArray();
                 step.File = file;
             }
             return step;

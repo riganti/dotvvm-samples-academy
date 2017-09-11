@@ -3,7 +3,7 @@ using System.IO;
 
 namespace DotvvmAcademy.DAL.Loadees
 {
-    public class LessonConfig
+    public class LessonConfigLoadee
     {
         public string Annotation { get; set; }
 

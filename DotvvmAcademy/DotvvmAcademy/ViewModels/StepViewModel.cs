@@ -28,6 +28,10 @@ namespace DotvvmAcademy.ViewModels
             this.exerciseFactory = exerciseFactory;
         }
 
+        public bool CanGoNext { get; set; }
+
+        public bool CanGoPrevious { get; set; }
+
         public List<ExerciseViewModel> Exercises { get; set; }
 
         [FromRoute("Language")]
@@ -44,28 +48,12 @@ namespace DotvvmAcademy.ViewModels
         [FromRoute("StepIndex")]
         public int StepIndex { get; set; }
 
-        public void GoNext()
-        {
-            if (StepIndex != Lesson.StepCount - 1)
-            {
-                var parameters = new { Moniker = Moniker, Language = Language, StepIndex = ++StepIndex };
-                Context.RedirectToRoute("Step", parameters);
-            }
-        }
-
-        public void GoPrevious()
-        {
-            if (StepIndex != 0)
-            {
-                var parameters = new { Moniker = Moniker, Language = Language, StepIndex = --StepIndex };
-                Context.RedirectToRoute("Step", parameters);
-            }
-        }
-
         public override async Task Init()
         {
             Lesson = await lessonFacade.GetOverview(Moniker, Language);
             Step = await stepFacade.GetStep(Lesson, StepIndex);
+            CanGoNext = StepIndex != Lesson.StepCount - 1;
+            CanGoPrevious = StepIndex != 0;
         }
 
         public override Task Load()
