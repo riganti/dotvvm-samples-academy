@@ -6,6 +6,7 @@ using System.Linq;
 
 namespace DotvvmAcademy.Validators
 {
+    [ValidatorClass("DotvvmAcademy.Lessons.BasicMvvm")]
     public static class BasicMvvmValidators
     {
         [Validator(nameof(Lesson1Step3Validator))]

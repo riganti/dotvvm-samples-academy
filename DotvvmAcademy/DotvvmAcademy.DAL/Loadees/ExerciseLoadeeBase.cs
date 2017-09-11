@@ -1,13 +1,14 @@
-using Newtonsoft.Json;
 using System.IO;
 
 namespace DotvvmAcademy.DAL.Loadees
 {
     public abstract class ExerciseLoadeeBase
     {
-        public FileInfo Correct { get; set; }
+        public string DisplayName { get; set; }
 
-        public FileInfo Incorrect { get; set; }
+        public FileInfo Final { get; set; }
+
+        public FileInfo Initial { get; set; }
 
         public string ValidatorId { get; set; }
     }

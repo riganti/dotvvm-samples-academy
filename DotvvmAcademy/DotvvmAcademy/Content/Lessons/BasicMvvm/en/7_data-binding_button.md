@@ -14,6 +14,7 @@ we don't have to store it in the viewmodel. We can declare it directly in DOTHTM
 ```DOTHTML
 <dot:Button Text="Calculate!" />
 ```
-[<DothtmlExercise Incorrect="../samples/CalculatorView_Stage3.dothtml"
-                  Correct="../samples/CalculatorView_Stage3.dothtml"
+[<DothtmlExercise Initial="../samples/CalculatorView_Stage3.dothtml"
+                  Final="../samples/CalculatorView_Stage3.dothtml"
+                  DisplayName="CalculatorView.dothtml"
                   ValidatorId="Lesson1Step7Validator" />]

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 
 namespace DotvvmAcademy.Validators
 {
+    [ValidatorClass("DotvvmAcademy.Lessons.Collections")]
     public static class CollectionsValidators
     {
         [Validator(nameof(Lesson2Step10Validator))]

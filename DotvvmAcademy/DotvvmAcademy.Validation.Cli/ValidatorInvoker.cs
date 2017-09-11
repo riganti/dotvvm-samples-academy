@@ -59,7 +59,7 @@ namespace DotvvmAcademy.Validation.Cli
             var methods = assembly.GetTypes()
                 .SelectMany(t => t.GetMethods(BindingFlags.Static | BindingFlags.Public))
                 .Select(m => (MethodInfo: m, Attribute: m.GetCustomAttribute<ValidatorAttribute>()))
-                .Where(o => o.Attribute != null && o.Attribute.Key == validatorKey)
+                .Where(o => o.Attribute != null && o.Attribute.Id == validatorKey)
                 .Select(o => o.MethodInfo)
                 .ToList();
             if (methods.Count == 0)

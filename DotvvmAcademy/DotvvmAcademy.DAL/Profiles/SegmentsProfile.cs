@@ -17,8 +17,8 @@ namespace DotvvmAcademy.DAL.Profiles
                 .IncludeBase<ISegment, IStepPart>();
 
             CreateMap<ExerciseLoadeeBase, ExerciseBase>()
-                .ForMember(d => d.CorrectPath, ex => ex.MapFrom(s => s.Correct))
-                .ForMember(d => d.IncorrectPath, ex => ex.MapFrom(s => s.Incorrect));
+                .ForMember(d => d.FinalPath, ex => ex.MapFrom(s => s.Final))
+                .ForMember(d => d.InitialPath, ex => ex.MapFrom(s => s.Initial));
 
             CreateMap<CSharpExerciseSegment, CSharpExerciseStepPart>()
                 .IncludeBase<ISegment, IStepPart>()

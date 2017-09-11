@@ -44,7 +44,7 @@ namespace DotvvmAcademy.ViewModels
 
         public async Task ResetCode()
         {
-            var sample = await sampleFacade.GetSample(Dto.IncorrectPath);
+            var sample = await sampleFacade.GetSample(Dto.InitialPath);
             Code = sample.Source;
             Errors.Clear();
             IsValid = false;
@@ -52,7 +52,7 @@ namespace DotvvmAcademy.ViewModels
 
         public async Task ShowCorrectCode()
         {
-            var sample = await sampleFacade.GetSample(Dto.CorrectPath);
+            var sample = await sampleFacade.GetSample(Dto.FinalPath);
             Code = sample.Source;
             Errors.Clear();
             IsValid = true;
