@@ -20,7 +20,7 @@ namespace DotvvmAcademy.BL.Facades
         public async Task<LessonOverviewDto> GetOverview(string moniker, string language)
         {
             var lesson = await provider.Get(moniker, language);
-            if (lesson.IsReady)
+            if (lesson?.IsReady == true)
             {
                 return Mapper.Map<Lesson, LessonOverviewDto>(lesson);
             }

@@ -1,11 +1,20 @@
 using DotVVM.Framework.Configuration;
 using DotVVM.Framework.ResourceManagement;
 using DotvvmAcademy.Controls;
+using System.Collections.Generic;
+using System.Globalization;
 
 namespace DotvvmAcademy
 {
     public class DotvvmStartup : IDotvvmStartup
     {
+        private List<CultureInfo> supportedCultures = new List<CultureInfo>
+        {
+            new CultureInfo("en"),
+            new CultureInfo("cs"),
+            new CultureInfo("ru")
+        };
+
         public void Configure(DotvvmConfiguration config, string applicationPath)
         {
             ConfigureRoutes(config, applicationPath);
@@ -38,12 +47,17 @@ namespace DotvvmAcademy
 
         private void ConfigureRoutes(DotvvmConfiguration config, string applicationPath)
         {
-            config.RouteTable.Add("Default", "", "Views/LessonsOverview.dothtml");
-            config.RouteTable.Add("LessonsOverview", "lessons/{Language}", "Views/LessonsOverview.dothtml",
-                new { Language = "en"});
-            config.RouteTable.Add("Step", "step/{Language}/{Moniker}/{StepIndex:int}", "Views/Step.dothtml",
-                new { Language = "en", Moniker = "basicMvvm", StepIndex = 0 });
-            config.RouteTable.Add("Error", "error/{StatusCode:int}", "Views/Error.dothtml", new { StatusCode = 404 });
+            config.RouteConstraints.Add("culture", new CultureRouteConstraint(supportedCultures));
+            config.RouteTable.Add("Default", "{Language?:culture}", "Views/LessonsOverview.dothtml",
+                new { Language = supportedCultures[0] });
+            config.RouteTable.Add("ErrorNoCulture", "error/{StatusCode:int}", "Views/Error.dothtml",
+                new { Language = supportedCultures[0], StatusCode = 404 });
+            config.RouteTable.Add("Error", "{Language:culture}/error/{StatusCode:int}", "Views/Error.dothtml",
+                new { Language = supportedCultures[0], StatusCode = 404 });
+            config.RouteTable.Add("StepNoCulture", "{Moniker}/{StepIndex:int}", "Views/Step.dothtml",
+                new { Language = supportedCultures[0], Moniker = "BasicMvvm", StepIndex = 0 });
+            config.RouteTable.Add("Step", "{Language:culture}/{Moniker}/{StepIndex:int}", "Views/Step.dothtml",
+                new { Language = supportedCultures[0], Moniker = "BasicMvvm", StepIndex = 0 });
         }
     }
 }

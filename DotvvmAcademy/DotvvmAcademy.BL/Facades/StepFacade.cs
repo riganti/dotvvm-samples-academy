@@ -20,6 +20,11 @@ namespace DotvvmAcademy.BL.Facades
         public async Task<StepDto> GetStep(LessonOverviewDto lessonDto, int index)
         {
             var lesson = await lessonProvider.Get(lessonDto.Moniker, lessonDto.Language);
+            if(index >= lesson.StepPaths.Length || index < 0)
+            {
+                return null;
+            }
+
             var path = lesson.StepPaths[index];
             var step = await stepProvider.Get(path);
             return Mapper.Map<Step, StepDto>(step);

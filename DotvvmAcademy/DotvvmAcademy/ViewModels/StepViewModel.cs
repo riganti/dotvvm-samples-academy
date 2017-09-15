@@ -3,6 +3,7 @@ using DotvvmAcademy.BL.Dtos;
 using DotvvmAcademy.BL.Facades;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -34,9 +35,6 @@ namespace DotvvmAcademy.ViewModels
 
         public List<ExerciseViewModel> Exercises { get; set; }
 
-        [FromRoute("Language")]
-        public string Language { get; set; }
-
         public LessonOverviewDto Lesson { get; set; }
 
         [FromRoute("Moniker")]
@@ -50,8 +48,19 @@ namespace DotvvmAcademy.ViewModels
 
         public override async Task Init()
         {
-            Lesson = await lessonFacade.GetOverview(Moniker, Language);
+            await base.Init();
+            Lesson = await lessonFacade.GetOverview(Moniker, Language.TwoLetterISOLanguageName);
+            if(Lesson == null)
+            {
+                Context.RedirectToRoute("Error", new { Language = Language, StatusCode = 404 });
+            }
+
             Step = await stepFacade.GetStep(Lesson, StepIndex);
+            if (Step == null)
+            {
+                Context.RedirectToRoute("Error", new { Language = Language, StatusCode = 404 });
+            }
+
             CanGoNext = StepIndex != Lesson.StepCount - 1;
             CanGoPrevious = StepIndex != 0;
         }

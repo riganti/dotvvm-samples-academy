@@ -1,4 +1,3 @@
-using DotVVM.Framework.ViewModel;
 using DotvvmAcademy.BL.Dtos;
 using DotvvmAcademy.BL.Facades;
 using System.Collections.Generic;
@@ -16,18 +15,12 @@ namespace DotvvmAcademy.ViewModels
             this.lessonFacade = lessonFacade;
         }
 
-        [FromRoute("Language")]
-        public string Language { get; set; }
-
         public List<LessonOverviewDto> Lessons { get; private set; }
 
         public override async Task Init()
         {
-            if(string.IsNullOrEmpty(Language))
-            {
-                Language = "en";
-            }
-            Lessons = (await lessonFacade.GetOverviews(Language)).ToList();
+            await base.Init();
+            Lessons = (await lessonFacade.GetOverviews(Language.TwoLetterISOLanguageName)).ToList();
         }
     }
 }

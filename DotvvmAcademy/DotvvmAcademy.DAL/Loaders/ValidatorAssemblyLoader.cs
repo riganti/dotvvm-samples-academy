@@ -51,7 +51,7 @@ namespace DotvvmAcademy.DAL.Loaders
 
         private FileInfo GetProjectFile(DirectoryInfo directory)
         {
-            return directory.EnumerateFiles("*.csproj").Single();
+            return directory.EnumerateFiles("*.csproj").SingleOrDefault();
         }
     }
 }

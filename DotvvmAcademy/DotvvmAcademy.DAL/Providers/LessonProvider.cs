@@ -32,7 +32,7 @@ namespace DotvvmAcademy.DAL.Providers
         {
             var configs = (await lessonLoader.LoadLessons(moniker, language)).ToList();
 
-            return Mapper.Map<LessonConfigLoadee, Lesson>(configs.Single());
+            return Mapper.Map<LessonConfigLoadee, Lesson>(configs.SingleOrDefault());
         }
 
         public async Task<IEnumerable<Lesson>> GetMany(string moniker = null, string language = null)

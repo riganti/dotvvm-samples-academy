@@ -1,17 +1,18 @@
-using System.Threading.Tasks;
 using DotVVM.Framework.ViewModel;
+using System.Threading.Tasks;
 
 namespace DotvvmAcademy.ViewModels
 {
     public class ErrorViewModel : DotvvmAcademyViewModelBase
     {
+        public string Message { get; set; }
+
         [FromRoute(nameof(StatusCode))]
         public int StatusCode { get; set; }
 
-        public string Message { get; set; }
-
         public override Task Init()
         {
+            base.Init().Wait();
             switch (StatusCode)
             {
                 case 500:
@@ -28,7 +29,7 @@ namespace DotvvmAcademy.ViewModels
                     Message = "Something bad happened and we have no idea what";
                     break;
             }
-            return base.Init();
+            return Task.CompletedTask;
         }
     }
 }
