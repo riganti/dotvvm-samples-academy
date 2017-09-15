@@ -6,8 +6,8 @@ So instead of `<input type="text" />` we use `<dot:TextBox />`. Also, we have a 
 
 Now, try to create a page with 3 textboxes and 1 button. 
 
-[<DothtmlExercise Initial="../samples/CalculatorView_Stage1.dothtml"
-                  Final="../samples/CalculatorView_Stage2.dothtml"
+[<DothtmlExercise Initial="samples/CalculatorView_Stage1.dothtml"
+                  Final="samples/CalculatorView_Stage2.dothtml"
                   DisplayName="CalculatorView.dothtml"
                   ValidatorId="Lesson1Step3Validator"/>]
 

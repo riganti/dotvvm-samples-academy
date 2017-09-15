@@ -6,8 +6,8 @@ The viewmodel is a C# class and the data are stored in public properties.
 
 Declare 3 properties – `Number1`, `Number2` and `Result`, all of them should be of type `int`.
 
-[<CSharpExercise Initial="../samples/CalculatorViewModel_Stage1.cs"
-                 Final="../samples/CalculatorViewModel_Stage2.cs"
+[<CSharpExercise Initial="samples/CalculatorViewModel_Stage1.cs"
+                 Final="samples/CalculatorViewModel_Stage2.cs"
                  DisplayName="CalculatorViewModel.cs"
                  ValidatorId="Lesson1Step4Validator" />]
 

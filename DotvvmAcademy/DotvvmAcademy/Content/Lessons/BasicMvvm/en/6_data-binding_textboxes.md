@@ -10,8 +10,8 @@ This mechanism is called the **data-binding**. To bind the textbox to a property
 ```
 Bind the textboxes to corresponding viewmodel properties.
 
-[<DothtmlExercise Initial="../samples/CalculatorView_Stage2.dothtml"
-                  Final="../samples/CalculatorView_Stage3.dothtml"
-                  ViewModel="../samples/CalculatorViewModel_Stage2.dothtml"
+[<DothtmlExercise Initial="samples/CalculatorView_Stage2.dothtml"
+                  Final="samples/CalculatorView_Stage3.dothtml"
+                  ViewModel="samples/CalculatorViewModel_Stage2.cs"
                   DisplayName="CalculatorView.dothtml"
                   ValidatorId="Lesson1Step6Validator"/>]
