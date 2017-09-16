@@ -1,0 +1,8 @@
+﻿{
+  "Name": "Advanced Forms",
+  "Annotation": "Попробуйте поработать с расширенными элементами управления, такими как ComboBox и RadioButton.",
+  "ImageUrl": "/img/intermediate.png",
+  "IsReady": false,
+  "Steps": [
+  ]
+}

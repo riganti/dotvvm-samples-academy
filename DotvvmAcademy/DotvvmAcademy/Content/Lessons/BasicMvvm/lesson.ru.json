@@ -1,0 +1,8 @@
+﻿{
+  "Name": "Basic MVVM",
+  "Annotation": "Понимание базовых принципов DotVVM и MVVM паттерна.",
+  "ImageUrl": "/img/basics.png",
+  "IsReady": true,
+  "Steps": [
+  ]
+}

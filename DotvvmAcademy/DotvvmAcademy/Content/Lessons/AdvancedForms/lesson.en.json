@@ -1,6 +1,6 @@
 ﻿{
   "Name": "Advanced Forms",
-  "Annotation": "Try out working with advanced form controls like <code>ComboBox</code> and <code>RadioButton</code>.",
+  "Annotation": "Try out working with advanced form controls like ComboBox and RadioButton.",
   "ImageUrl": "/img/intermediate.png",
   "IsReady": false,
   "Steps": [

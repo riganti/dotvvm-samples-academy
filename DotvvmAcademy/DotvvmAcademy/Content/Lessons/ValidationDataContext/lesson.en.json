@@ -1,6 +1,6 @@
 {
   "Name": "Validation and DataContext",
-  "Annotation": "Learn how validation works and <code>DataContext</code> works.",
+  "Annotation": "Learn how Validation and DataContext works.",
   "ImageUrl": "/img/advanced.png",
   "IsReady": false,
   "Steps": [

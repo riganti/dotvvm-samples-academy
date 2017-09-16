@@ -1,0 +1,8 @@
+﻿{
+  "Name": "Validace a DataContext",
+  "Annotation": "Naučíte se, jak validace a DataContext fungují.",
+  "ImageUrl": "/img/advanced.png",
+  "IsReady": false,
+  "Steps": [
+  ]
+}

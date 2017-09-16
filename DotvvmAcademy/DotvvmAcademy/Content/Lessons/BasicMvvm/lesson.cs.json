@@ -1,0 +1,8 @@
+﻿{
+  "Name": "Základy MVVM",
+  "Annotation": "Pochopíte základy DotVVM a návrhového vzoru MVVM.",
+  "ImageUrl": "/img/basics.png",
+  "IsReady": true,
+  "Steps": [
+  ]
+}
