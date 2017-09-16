@@ -1,7 +1,0 @@
-<p>
-    <dot:TextBox Text="{value: AddedTaskTitle}" />
-    <dot:Button Text="Add Task" Click="{command: AddTask()}" />
-</p>
-<div>
-    <!-- place the Repeater control here -->
-</div>

@@ -1,7 +1,0 @@
-<p>
-    <dot:TextBox Text="{value: AddedTaskTitle}" />
-    <dot:Button Text="Add Task" Click="{command: AddTask()}" />
-</p>
-<div>
-    <!-- we'll display a list of tasks here later -->
-</div>

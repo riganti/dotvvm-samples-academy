@@ -1,0 +1,9 @@
+@viewModel DotvvmAcademy.Lessons.Collections.ViewModels.ToDoListViewModel, DotvvmAcademy.Lessons.Collections
+
+<p>
+    <dot:TextBox />
+    <dot:Button Text="Add Task" />
+</p>
+<div>
+    <!-- we'll display a list of tasks here later -->
+</div>

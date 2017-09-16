@@ -54,7 +54,7 @@ namespace DotvvmAcademy.CommonMark
             };
         }
 
-        private void ParsePlaceholder(string placeholder, StringWriter writer)
+        private bool TryParsePlaceholder(string placeholder, StringWriter writer)
         {
             var parsedSegments = new List<ISegment>();
             var context = new PlaceholderParsingContext(placeholder, parsedSegments, writer);
@@ -70,6 +70,7 @@ namespace DotvvmAcademy.CommonMark
                     break;
                 }
             }
+            return handled;
         }
 
         private void Reset()
@@ -86,8 +87,8 @@ namespace DotvvmAcademy.CommonMark
                 var formatter = new HtmlFormatter(output, s);
                 formatter.PlaceholderResolver = p =>
                 {
-                    ParsePlaceholder(p, (StringWriter)output);
-                    return "";
+                    var success = TryParsePlaceholder(p, (StringWriter)output);
+                    return success ? "" : null;
                 };
                 formatter.WriteDocument(block);
             };

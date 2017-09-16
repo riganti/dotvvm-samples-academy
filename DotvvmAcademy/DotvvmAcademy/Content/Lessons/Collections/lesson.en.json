@@ -1,0 +1,22 @@
+﻿{
+  "Name": "Working with Collections",
+  "Annotation": "Learn how to use the <code>Repeater</code> control and how to work with collections.",
+  "ImageUrl": "/img/elementary.png",
+  "IsReady": true,
+  "Steps": [
+    "en/1_objective.md",
+    "en/2_adding_new_task_part1.md",
+    "en/3_adding_new_task_part2.md",
+    "en/4_adding_new_task_part3.md",
+    "en/5_representing_tasks_part1.md",
+    "en/6_representing_tasks_part2.md",
+    "en/7_adding_new_task_part4.md",
+    "en/8_rendering_the_tasks_part1.md",
+    "en/9_rendering_the_tasks_part2.md",
+    "en/10_rendering_the_tasks_part3.md",
+    "en/11_completing_the_task_part1.md",
+    "en/12_completing_the_task_part2.md",
+    "en/13_completing_the_task_part3.md",
+    "en/14_congratulations.md"
+  ]
+}
