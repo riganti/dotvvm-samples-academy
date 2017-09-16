@@ -1,4 +1,4 @@
-﻿Add CountryInfo Class
+﻿Adding CountryInfo Class
 =====================
 Create a new class called `CountryInfo` with `Id` property of type `int` and `Name` property of type `string`.
 

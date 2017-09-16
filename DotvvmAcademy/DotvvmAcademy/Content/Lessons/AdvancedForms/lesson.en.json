@@ -1,0 +1,24 @@
+﻿{
+  "Name": "Advanced Forms",
+  "Annotation": "Try out working with advanced form controls like <code>ComboBox</code> and <code>RadioButton</code>.",
+  "ImageUrl": "/img/intermediate.png",
+  "IsReady": true,
+  "Steps": [
+    "en/1_form_controls.md",
+    "en/2_adding_firstname_and_lastname_properties.md",
+    "en/3_using_textboxes.md",
+    "en/4_adding_role_property.md",
+    "en/5_using_radiobuttons.md",
+    "en/6_adding_interests_property.md",
+    "en/7_using_checkboxes.md",
+    "en/8_adding_countryinfo_class.md",
+    "en/9_adding_the_countries_collection.md",
+    "en/10_initialize_countries_collection.md",
+    "en/11_using_combobox.md",
+    "en/12_the_customerinfo_class.md",
+    "en/13_adding_customerinfo_property.md",
+    "en/14_using_datacontext_property.md",
+    "en/15_fix_the_combobox_error.md",
+    "en/16_congratulations.md"
+  ]
+}

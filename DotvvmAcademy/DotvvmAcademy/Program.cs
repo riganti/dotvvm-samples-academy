@@ -1,7 +1,6 @@
-﻿using System;
+﻿using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
-using Autofac.Extensions.DependencyInjection;
 
 namespace DotvvmAcademy
 {

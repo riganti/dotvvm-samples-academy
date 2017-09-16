@@ -1,4 +1,4 @@
-﻿Add the Countries Collection
+﻿Adding the Countries Collection
 ============================
 Declare the `Countries` property of type `List<CountryInfo>` and `SelectedCountryId` property of type `int`.
 
