@@ -1,10 +1,11 @@
 using System;
 
-namespace DotvvmAcademy.Tutorial.ViewModels
+namespace DotvvmAcademy.Lessons.AdvancedForms.ViewModels
 {
-    public class Lesson3ViewModel
+    public class CustomerDetailViewModel
     {
         public string FirstName { get; set; }
+
         public string LastName { get; set; }
     }
 }

@@ -1,0 +1,16 @@
+<p>
+    <dot:TextBox Text="{value: FirstName}" />
+    <dot:TextBox Text="{value: LastName}" />
+</p>
+<p>
+    Role:
+    <dot:RadioButton CheckedItem="{value: Role}"
+                     CheckedValue="A"
+                     Text="Admin" />
+    <dot:RadioButton CheckedItem="{value: Role}"
+                     CheckedValue="U"
+                     Text="User" />
+</p>
+<p>
+    <!-- place 3 CheckBoxes here -->
+</p>

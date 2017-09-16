@@ -1,13 +1,16 @@
+using System;
 using System.Collections.Generic;
 
-namespace DotvvmAcademy.Tutorial.ViewModels
+namespace DotvvmAcademy.Lessons.AdvancedForms.ViewModels
 {
-    public class Lesson3ViewModel
+    public class CustomerDetailViewModel
     {
         public string FirstName { get; set; }
+
         public string LastName { get; set; }
+
         public string Role { get; set; }
-        // declare Countries collection
-        // declare SelectedCountryId
+
+        // add Interests property and initialize
     }
 }

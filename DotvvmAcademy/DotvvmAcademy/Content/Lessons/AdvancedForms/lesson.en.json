@@ -2,7 +2,7 @@
   "Name": "Advanced Forms",
   "Annotation": "Try out working with advanced form controls like <code>ComboBox</code> and <code>RadioButton</code>.",
   "ImageUrl": "/img/intermediate.png",
-  "IsReady": true,
+  "IsReady": false,
   "Steps": [
     "en/1_form_controls.md",
     "en/2_adding_firstname_and_lastname_properties.md",

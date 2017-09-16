@@ -1,0 +1,21 @@
+<div DataContext="{value: NewCustomer}">
+    <p>
+        <dot:TextBox Text="{value: FirstName}" />
+        <dot:TextBox Text="{value: LastName}" />
+    </p>
+    <p>
+        Role:
+        <dot:RadioButton CheckedItem="{value: Role}"
+                         CheckedValue="A"
+                         Text="Admin" />
+        <dot:RadioButton CheckedItem="{value: Role}"
+                         CheckedValue="U"
+                         Text="User" />
+    </p>
+    <p>
+        <dot:ComboBox DataSource="{value: _parent.Countries}"
+                      SelectedValue="{value: SelectedCountryId}"
+                      ValueMember="Id"
+                      DisplayMember="Name" />
+    </p>
+</div>
