@@ -1,0 +1,616 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Lesson>
+	<ValidatorsNamespace>DotvvmAcademy.Steps.Validation.Validators.Lesson4</ValidatorsNamespace>
+	<Steps>
+		<!--1-->
+		<Step Type="Info">
+			<Title>Введение</Title>
+			<Description>
+				<![CDATA[
+В этом уроке, мы будем играть с проверкой в DotVVM.
+
+Вы увидите, как использовать атрибуты Data Annotations в ViewModels, и как писать более сложную логику проверки.
+								]]>
+			</Description>
+		</Step>
+
+		<!--2-->
+		<Step Type="CsharpCode">
+			<!--Required element-->
+			<Title>Атрибуты проверки</Title>
+			<!--Required element-->
+			<ValidationKey>Lesson4Step2Validator</ValidationKey>
+			<!--Required element-->
+			<Description>
+				<![CDATA[
+Отметьте свойства `City` and `ZIP` атрибутом `[Required]`. Проверка удостоверится, что эти значения не остались пустыми.
+
+Отметьте свойство `Email` атрибутом `[EmailAddress]`. Проверка удостоверится, что это свойство не осталось пустым а также, что адрес электронной почты записан в правильном формате.
+]]>
+			</Description>
+			<StartupCode>
+				<![CDATA[
+using System.ComponentModel.DataAnnotations;
+
+namespace DotvvmAcademy.Tutorial.ViewModels 
+{
+	public class Lesson4ViewModel 
+	{
+		//добавьте атрибут Required
+		public string City { get; set; }
+		//добавьте атрибут Required
+		public string ZIP { get; set; }
+		//добавьте атрибут EmailAddress
+		public string Email { get; set; }
+	}
+}
+]]>
+			</StartupCode>
+			<!--Required element-->
+			<FinalCode>
+				<![CDATA[
+using System.ComponentModel.DataAnnotations;
+
+namespace DotvvmAcademy.Tutorial.ViewModels 
+{
+	public class Lesson4ViewModel 
+	{
+		[Required]
+		public string City { get; set; }
+		[Required]
+		public string ZIP { get; set; }
+		[EmailAddress]
+		public string Email { get; set; }
+	}
+}
+]]>
+			</FinalCode>
+
+			<AllowedTypesConstructed>
+				<AllowedType>
+					<![CDATA[
+System.ComponentModel.DataAnnotations.EmailAddressAttribute
+												]]>
+				</AllowedType>
+				<AllowedType>
+					<![CDATA[
+System.ComponentModel.DataAnnotations.RequiredAttribute
+												]]>
+				</AllowedType>
+			</AllowedTypesConstructed>
+		</Step>
+
+		<!--3-->
+		<Step Type="DothtmlCode">
+			<!--Required element-->
+			<Title>Основы Валидаторов</Title>
+			<!--Required element-->
+			<ValidationKey>Lesson4Step3Validator</ValidationKey>
+			<Description>
+				<![CDATA[
+На странице, вы можете вызвать проверку (Валидатор) с помощью свойства `Validator.Value`.
+В зависимости от настроек проверки, она может, например, добавить класс CSS, когда какое-то свойство не является действительным.
+
+Вы можете добавить это свойство к любому элементу HTML или DotVVM.
+Добавьте свойство `Validator.Value` к каждому `div` и свяжите его со свойством, которой используется внутри `TextBox`.
+								]]>
+			</Description>
+
+			<StartupCode>
+				<![CDATA[
+ <!--свяжите div с Validator.Value для текущего свойства-->
+<div>
+		<dot:TextBox Text="{value: City}"/>
+</div>
+ <!--свяжите div с Validator.Value для текущего свойства-->
+<div>
+	<dot:TextBox Text="{value: ZIP}"/>
+</div>
+ <!--свяжите div с Validator.Value для текущего свойства-->
+<div>
+	<dot:TextBox Text="{value: Email}"/>
+</div>
+								]]>
+			</StartupCode>
+			<!--Required element-->
+			<FinalCode>
+				<![CDATA[
+<div Validator.Value="{value: City}">
+	<dot:TextBox Text="{value: City}"/>
+</div>
+<div Validator.Value="{value: ZIP}">
+	<dot:TextBox Text="{value: ZIP}"/>
+</div>
+<div Validator.Value="{value: Email}">
+	<dot:TextBox Text="{value: Email}"/>
+</div>
+								]]>
+			</FinalCode>
+		</Step>
+
+		<!--4-->
+		<Step Type="DothtmlCode">
+			<!--Required element-->
+			<Title>Используем Validation.InvalidCssClass</Title>
+			<!--Required element-->
+			<ValidationKey>Lesson4Step4Validator</ValidationKey>
+			<Description>
+				<![CDATA[
+Мы отметили элементы, которые могут взаимодействовать с проверками отдельных свойств.
+
+Теперь мы должны определить, что должно произойти, когда свойство не является действительным.
+Мы хотели бы, добавить CSS класс `has-error` ко всем `div`-ам, которые не являются действительными. Это позволит выделить текстовые поля внутри.
+
+Добавьте `Validation.InvalidCssClass="has-error"` каждому `div`.								
+								]]>
+			</Description>
+
+			<!--Required element-->
+			<StartupCode>
+				<![CDATA[
+<!--добавьте Validator.InvalidCssClass-->
+<div Validator.Value="{value: City}">
+	<dot:TextBox Text="{value: City}"/>
+</div>
+<!--добавьте Validator.InvalidCssClass-->
+<div Validator.Value="{value: ZIP}">
+	<dot:TextBox Text="{value: ZIP}"/>
+</div>
+<!--добавьте Validator.InvalidCssClass-->
+<div Validator.Value="{value: Email}">
+	<dot:TextBox Text="{value: Email}"/>
+</div>
+								]]>
+			</StartupCode>
+			<!--Required element-->
+			<FinalCode>
+				<![CDATA[
+<div Validator.Value="{value: City}" Validator.InvalidCssClass="has-error">
+	<dot:TextBox Text="{value: City}"/>
+</div>
+<div Validator.Value="{value: ZIP}" Validator.InvalidCssClass="has-error">
+	<dot:TextBox Text="{value: ZIP}"/>
+</div>
+<div Validator.Value="{value: Email}" Validator.InvalidCssClass="has-error">
+	<dot:TextBox Text="{value: Email}"/>
+</div>
+								]]>
+			</FinalCode>
+
+		</Step>
+
+		<!--5-->
+		<Step Type="DothtmlCode">
+			<!--Required element-->
+			<Title>Глобальные настройки Валидаторов</Title>
+			<!--Required element-->
+			<ValidationKey>Lesson4Step5Validator</ValidationKey>
+			<Description>
+				<![CDATA[
+Указание `Validator.InvalidCssClass` на каждом проверяемом элементе очень раздражает. Но, вы можете использовать это свойство на любом элементе, и он будет распространяться на все свои дочерние элементы.
+Таким образом, вы можете установить это свойство глобально, например, на `body`.
+
+Итак, теперь вы можете удалить `Validator.InvalidCssClass` из`div`-ов, оберните форму в `form` и используйте свойство на `form`.
+								]]>
+			</Description>
+
+			<!--Required element-->
+			<StartupCode>
+				<![CDATA[
+<!-- оберните контент в элемент form с установленным Validator.InvalidCssClass -->
+	
+  <!--удалите лишний Validator.InvalidCssClass-->
+	<div Validator.Value="{value: City}" Validator.InvalidCssClass="has-error">
+		<dot:TextBox Text="{value: City}"/>
+	</div>
+	<!--удалите лишний Validator.InvalidCssClass-->
+	<div Validator.Value="{value: ZIP}" Validator.InvalidCssClass="has-error">
+		<dot:TextBox Text="{value: ZIP}"/>
+	</div>
+	<!--удалите лишний Validator.InvalidCssClass-->
+	<div Validator.Value="{value: Email}" Validator.InvalidCssClass="has-error">
+		<dot:TextBox Text="{value: Email}"/>
+	</div>
+<!--не забудьте закрыть элемент form-->
+								]]>
+			</StartupCode>
+			<!--Required element-->
+			<FinalCode>
+				<![CDATA[
+<form Validator.InvalidCssClass="has-error">
+	<div Validator.Value="{value: City}">
+		<dot:TextBox Text="{value: City}"/>
+	</div>
+	<div Validator.Value="{value: ZIP}">
+		<dot:TextBox Text="{value: ZIP}"/>
+	</div>
+	<div Validator.Value="{value: Email}">
+		<dot:TextBox Text="{value: Email}"/>
+	</div>
+</form>
+								]]>
+			</FinalCode>
+
+		</Step>
+
+		<!--6-->
+		<Step Type="Info">
+			<!--Required element-->
+			<Title>Элемент Validator</Title>
+			<!--Required element-->
+			<Description>
+				<![CDATA[
+Если вам просто нужно, чтобы отобразить сообщение об ошибке, вы можете использовать `dot:Validator`.
+
+Есть свойства `ShowErrorMessageText` и `SetToolTipText`. Если они установлены, сообщение об ошибке генерируется как `[Required]`, атрибут будет отображаться в `Validator` или отображаться в качестве текста подсказки на элементе.
+
+Чтобы узнать больше о `Validator` читайте [documentation] (https://www.dotvvm.com/docs/controls/builtin/Validator/latest).
+								]]>
+			</Description>
+		</Step>
+
+		<!--7-->
+		<Step Type="DothtmlCode">
+			<!--Required element-->
+			<Title>Используем Validator</Title>
+			<!--Required element-->
+			<ValidationKey>Lesson4Step7Validator</ValidationKey>
+			<Description>
+				<![CDATA[
+Добавьте `Validator` к третьему `div` и установите его `Value` как `Email` в ViewModel.
+
+Кроме того, установите свойство `ShowErrorMessageText` как "true".
+								]]>
+			</Description>
+			<!--Optional element-->
+			<!--Required element-->
+			<StartupCode>
+				<![CDATA[
+<form Validator.InvalidCssClass="has-error">
+	<div Validator.Value="{value: City}">
+		<dot:TextBox Text="{value: City}"/>
+	</div>
+	<div Validator.Value="{value: ZIP}">
+		<dot:TextBox Text="{value: ZIP}"/>
+	</div>
+	<div Validator.Value="{value: Email}">
+		<dot:TextBox Text="{value: Email}"/>
+		<!--используйте Validator с ShowErrorMessageText на свойстве Email-->
+	</div>
+</form>
+								]]>
+			</StartupCode>
+			<!--Required element-->
+			<FinalCode>
+				<![CDATA[
+<form Validator.InvalidCssClass="has-error">
+	<div Validator.Value="{value: City}">
+		<dot:TextBox Text="{value: City}"/>
+	</div>
+	<div Validator.Value="{value: ZIP}">
+		<dot:TextBox Text="{value: ZIP}"/>
+	</div>
+	<div Validator.Value="{value: Email}">
+		<dot:TextBox Text="{value: Email}"/>
+		<dot:Validator Value="{value: Email}" ShowErrorMessageText="true"/>
+	</div>
+</form>
+								]]>
+			</FinalCode>
+
+		</Step>
+
+		<!--8-->
+		<Step Type="DothtmlCode">
+			<!--Required element-->
+			<Title>Используем ValidationSummary</Title>
+			<!--Required element-->
+			<ValidationKey>Lesson4Step8Validator</ValidationKey>
+			<Description>
+				<![CDATA[
+Чтобы отобразить все ошибки из формы, вы можете использовать `ValidationSummary`.
+
+Добавьте его в конец формы.
+								]]>
+			</Description>
+			<!--Required element-->
+			<StartupCode>
+				<![CDATA[
+<form Validator.InvalidCssClass="has-error">
+	<div Validator.Value="{value: City}">
+		<dot:TextBox Text="{value: City}"/>
+	</div>
+	<div Validator.Value="{value: ZIP}">
+		<dot:TextBox Text="{value: ZIP}"/>
+	</div>
+	<div Validator.Value="{value: Email}">
+		<dot:TextBox Text="{value: Email}"/>
+	</div>
+</form>
+<!-- добавьте ValidationSummary -->
+								]]>
+			</StartupCode>
+			<!--Required element-->
+			<FinalCode>
+				<![CDATA[
+<form Validator.InvalidCssClass="has-error">
+	<div Validator.Value="{value: City}">
+		<dot:TextBox Text="{value: City}"/>
+	</div>
+	<div Validator.Value="{value: ZIP}">
+		<dot:TextBox Text="{value: ZIP}"/>
+	</div>
+	<div Validator.Value="{value: Email}">
+		<dot:TextBox Text="{value: Email}"/>
+	</div>
+</form>
+<dot:ValidationSummary />
+								]]>
+			</FinalCode>
+
+		</Step>
+
+		<!--9-->
+		<Step Type="Info">
+			<!--Required element-->
+			<Title>Частичная проверка</Title>
+			<!--Required element-->
+			<Description>
+				<![CDATA[
+По умолчанию все кнопки запускают проверку на всей ViewModel, и если есть какая-либо ошибка, то команда в ViewModel не выполняется вообще.
+
+Тем не менее, ViewModel часто содержит некоторые дочерние объекты и вы не хотели бы проверять их все.
+
+В таком случае вы можете использовать `Validation.Target="{value: Property}"`. Вы можете применить это свойство к любому элементу DotVVM.
+
+Внутри этого элемента, правила проверки будут проверены только на `Validation.Target`, указанные Вами.
+								]]>
+			</Description>
+		</Step>
+
+		<!--10-->
+		<Step Type="Info">
+			<!--Required element-->
+			<Title>Частичная проверка II</Title>
+			<!--Required element-->
+			<Description>
+				<![CDATA[
+Вы также можете отключить проверку полностью, добавив `Validation.Enabled="false"`. Опять же, это может быть установлено на любом элементе, и это отключит
+все проверки на этом элементе и всех его дочерних элементах.
+
+Обратите внимание, что проверка инициируется с помощью привязок `{command: something}`.
+
+Вот почему вы должны применить `Validation.Enabled` или `Validation.Target` всегда к кнопке или элемента управления с командой привязки.
+Выключение проверки только на областях формы ничего не дает.
+								]]>
+			</Description>
+		</Step>
+
+		<!--11-->
+		<Step Type="CsharpCode">
+			<!--Required element-->
+			<Title>Добавление свойств ViewModel</Title>
+			<!--Required element-->
+			<ValidationKey>Lesson4Step11Validator</ValidationKey>
+			<!--Required element-->
+			<Description>
+				<![CDATA[
+Объявите свойства `SubscriptionFrom` и `SubscriptionTo` типа `DateTime` в viewmodel.
+
+Нам нужно будет убедиться, что первый из них содержит меньшее значение, чем второй.
+]]>
+			</Description>
+
+			<!--Required element-->
+			<StartupCode>
+				<![CDATA[
+using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace DotvvmAcademy.Tutorial.ViewModels 
+{
+	public class Lesson4ViewModel 
+	{
+		[Required]
+		public string City { get; set; }
+		[Required]
+		public string ZIP { get; set; }
+		[EmailAddress]
+		public string Email { get; set; }
+    
+		// добавьте свойство SubscriptionFrom
+		// добавьте свойство SubscriptionTo
+	}
+}
+]]>
+			</StartupCode>
+			<!--Required element-->
+			<FinalCode>
+				<![CDATA[
+using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace DotvvmAcademy.Tutorial.ViewModels 
+{
+	public class Lesson4ViewModel 
+	{
+		[Required]
+		public string City { get; set; }
+		[Required]
+		public string ZIP { get; set; }
+		[EmailAddress]
+		public string Email { get; set; }
+    
+		public DateTime SubscriptionFrom { get; set; }
+		public DateTime SubscriptionTo { get; set; }
+	}
+}
+]]>
+			</FinalCode>
+
+			<AllowedTypesConstructed>
+				<AllowedType>
+					<![CDATA[
+System.ComponentModel.DataAnnotations.EmailAddressAttribute
+												]]>
+				</AllowedType>
+				<AllowedType>
+					<![CDATA[
+System.ComponentModel.DataAnnotations.RequiredAttribute
+												]]>
+				</AllowedType>
+				<AllowedType>
+					<![CDATA[
+System.DateTime
+												]]>
+				</AllowedType>
+			</AllowedTypesConstructed>
+
+			<AllowedMethodsCalled>
+				<AllowedMethod>
+					<![CDATA[
+System.ComponentModel.DataAnnotations.RequiredAttribute.IsValid
+												]]>
+				</AllowedMethod>
+				<AllowedMethod>
+					<![CDATA[
+System.ComponentModel.DataAnnotations.EmailAddressAttribute.IsValid
+												]]>
+				</AllowedMethod>
+			</AllowedMethodsCalled>
+		</Step>
+
+		<!--13-->
+		<Step Type="CsharpCode">
+			<!--Required element-->
+			<Title>Реализация IValidatableObject</Title>
+			<!--Required element-->
+			<ValidationKey>Lesson4Step13Validator</ValidationKey>
+			<!--Required element-->
+			<Description>
+				<![CDATA[
+Чтобы убедиться в том, что `SubscriptionFrom` меньше, чем `SubscriptionTo`, нам нужно проверить объект с помощью C#.
+
+`Lesson4ViewModel` должен реализовывать интерфейс `IValidatableObject`. Этот интерфейс содержит метод `Validate`, который должен возвращать список ошибок проверки.
+Они объединены с ошибками, возвращенных атрибутов проверки, так что вам не нужно заботиться о других свойствах.
+
+Вы можете вернуть ошибку с помощью `yield return new ValidationResult("error message")`. Верните его, если `SubscriptionFrom` больше` SubscriptionTo`.
+]]>
+			</Description>
+			<!--Optional element-->
+			<StartupCode>
+				<![CDATA[
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+namespace DotvvmAcademy.Tutorial.ViewModels 
+{
+	public class Lesson4ViewModel : IValidatableObject
+	{
+		[Required]
+		public string City { get; set; }
+		[Required]
+		public string ZIP { get; set; }
+		[EmailAddress]
+		public string Email { get; set; }
+		public DateTime SubscriptionFrom { get; set; }
+		public DateTime SubscriptionTo { get; set; }
+
+		public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+		{
+			// проверьте условие и верните ошибку используя yield return new ValidationResult("error message");
+		}
+	}
+}
+]]>
+			</StartupCode>
+			<!--Required element-->
+			<FinalCode>
+				<![CDATA[
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+namespace DotvvmAcademy.Tutorial.ViewModels 
+{
+	public class Lesson4ViewModel : IValidatableObject
+	{
+		[Required]
+		public string City { get; set; }
+		[Required]
+		public string ZIP { get; set; }
+		[EmailAddress]
+		public string Email { get; set; }
+		public DateTime SubscriptionFrom { get; set; }
+		public DateTime SubscriptionTo { get; set; }
+
+		public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+		{
+			if (SubscriptionFrom > SubscriptionTo)
+			{
+				yield return new ValidationResult("SubscriptionFrom shold be less that SubscriptionTo!");
+			}
+		}
+	}
+}
+]]>
+			</FinalCode>
+
+			<AllowedTypesConstructed>
+				<AllowedType>
+					<![CDATA[
+System.ComponentModel.DataAnnotations.EmailAddressAttribute
+												]]>
+				</AllowedType>
+				<AllowedType>
+					<![CDATA[
+System.ComponentModel.DataAnnotations.RequiredAttribute
+												]]>
+				</AllowedType>
+				<AllowedType>
+					<![CDATA[
+System.DateTime
+												]]>
+				</AllowedType>
+				<AllowedType>
+					<![CDATA[
+System.ComponentModel.DataAnnotations.IValidatableObject
+												]]>
+				</AllowedType>
+				<AllowedType>
+					<![CDATA[
+System.Collections.Generic.List<System.ComponentModel.DataAnnotations.ValidationResult>
+												]]>
+				</AllowedType>
+				<AllowedType>
+					<![CDATA[
+System.ComponentModel.DataAnnotations.ValidationResult
+												]]>
+				</AllowedType>
+			</AllowedTypesConstructed>
+			<AllowedMethodsCalled>
+				<AllowedMethod>
+					<![CDATA[
+System.Collections.Generic.List<System.ComponentModel.DataAnnotations.ValidationResult>.Add
+												]]>
+				</AllowedMethod>
+			</AllowedMethodsCalled>
+
+		</Step>
+
+		<!--Required element-->
+		<Step Type="Info">
+			<Title>Поздравляем</Title>
+			<Description>
+				<![CDATA[
+**Вы закончили четвертый урок!**
+
+Вы научились использовать проверку в DotVVM!
+								]]>
+			</Description>
+		</Step>
+
+	</Steps>
+
+</Lesson>

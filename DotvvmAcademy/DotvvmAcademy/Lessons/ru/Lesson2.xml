@@ -1,0 +1,730 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Lesson>
+	<ValidatorsNamespace>DotvvmAcademy.Steps.Validation.Validators.Lesson2</ValidatorsNamespace>
+	<Steps>
+
+		<!-- 1-->
+		<Step Type="Info">
+			<Title>Задача</Title>
+			<Description>
+				<![CDATA[
+В этом уроке мы создадим простой TO-DO лист.
+
+<img src="/img/lesson2_step1.gif" alt="Animation" />
+				]]>
+			</Description>
+		</Step>
+
+		<!-- 2-->
+		<Step Type="DothtmlCode">
+			<Title>Добавление новой задачи</Title>
+			<ValidationKey>Lesson2Step2Validator</ValidationKey>
+			<Description>
+				<![CDATA[
+Во-первых, мы должны создать элементы управления, которые добавляют новую задачу.
+
+Добавьте `TextBox` и `Button` на страницу. Пусть на кнопке будет текст "Add Task".
+								]]>
+			</Description>
+			<StartupCode>
+				<![CDATA[
+<p>
+	<!-- поместите Textbox и Button для добавления задачи, здесь -->
+</p>
+<div>
+	<!-- мы будем отображать список задач здесь позже -->
+</p>
+</p>
+								]]>
+			</StartupCode>
+			<FinalCode>
+				<![CDATA[
+<p>
+	<dot:TextBox />
+	<dot:Button Text="Add Task" />
+</p>
+<div>
+	<!-- мы будем отображать список задач здесь позже -->
+</p>
+								]]>
+			</FinalCode>
+		</Step>
+
+		<!-- 3-->
+		<Step Type="CsharpCode">
+			<Title>Добавление новой задачи</Title>
+			<ValidationKey>Lesson2Step3Validator</ValidationKey>
+			<Description>
+				<![CDATA[
+Теперь мы должны добавить свойство, которое будет представлять название новой задачи. Давайте назовем его `AddedTaskTitle`.
+Не забудьте, что каждый `TextBox` должен иметь соответствующее свойство во viewmodel, иначе, значение введенное пользователем будет потеряно.
+
+Кроме того,нам будет нужен метод `AddTask()` во ViewModel. На данный момент, сделайте его просто пустым. Он не должен возвращать никаких значениий.
+]]>
+			</Description>
+
+			<StartupCode>
+				<![CDATA[
+using System;
+
+namespace DotvvmAcademy.Tutorial.ViewModels 
+{
+	public class Lesson2ViewModel 
+	{
+		//объявите свойство AddedTaskTitle и метод AddTask() здесь
+	}
+}
+]]>
+			</StartupCode>
+			<FinalCode>
+				<![CDATA[
+using System;
+
+namespace DotvvmAcademy.Tutorial.ViewModels 
+{
+	public class Lesson2ViewModel 
+	{
+		public string AddedTaskTitle { get; set; }
+
+		public void AddTask() 
+		{
+		}
+	}
+}
+]]>
+			</FinalCode>
+		</Step>
+
+		<!-- 4-->
+		<Step Type="DothtmlCode">
+			<Title>Добавление новой задачи</Title>
+			<ValidationKey>Lesson2Step4Validator</ValidationKey>
+			<Description>
+				<![CDATA[
+Теперь, нам нужно связать текст в `TextBox` со свойством `AddedTaskTitle`, и `Button` с методом `AddTask()`.
+								]]>
+			</Description>
+			<StartupCode>
+				<![CDATA[
+<p>
+	<dot:TextBox />
+	<dot:Button Text="Add Task" />
+</p>
+<div>
+	<!-- мы будем отображать список задач здесь позже -->
+</p>
+</p>
+								]]>
+			</StartupCode>
+			<FinalCode>
+				<![CDATA[
+<p>
+	<dot:TextBox Text="{value: AddedTaskTitle}" />
+	<dot:Button Text="Add Task" Click="{command: AddTask()}" />
+</p>
+<div>
+	<!-- мы будем отображать список задач здесь позже -->
+</p>
+								]]>
+			</FinalCode>
+		</Step>
+
+		<!-- 5-->
+		<Step Type="CsharpCode">
+			<Title>Предоставление задач</Title>
+			<ValidationKey>Lesson2Step5Validator</ValidationKey>
+			<Description>
+				<![CDATA[
+Мы готовы создать список задач. Но, нам нужен класс для представления самой задачи.
+
+Каждая задача должна иметь свойство `Title` типа `string`, а также свойство `IsCompleted` типа `bool`.
+
+Создайте класс с именем `TaskData` и объявить два свойства.
+]]>
+			</Description>
+
+			<StartupCode>
+				<![CDATA[
+using System;
+
+namespace DotvvmAcademy.Tutorial.ViewModels 
+{
+	//объявите класс здесь
+}
+]]>
+			</StartupCode>
+			<FinalCode>
+				<![CDATA[
+using System;
+
+namespace DotvvmAcademy.Tutorial.ViewModels 
+{
+	public class TaskData
+	{
+		public string Title { get; set; }
+		public bool IsCompleted { get; set; }
+	}
+}
+]]>
+			</FinalCode>
+
+			<ShadowBoxDescription>
+				<![CDATA[
+В Visual Studio, этот класс будет объявлен в отдельном файле.
+]]>
+			</ShadowBoxDescription>
+		</Step>
+
+		<!-- 6-->
+		<Step Type="CsharpCode">
+			<Title>Предоставление задач</Title>
+			<ValidationKey>Lesson2Step6Validator</ValidationKey>
+			<Description>
+				<![CDATA[
+Теперь давайте вернемся к нашей ViewModel. Нам нужно добавить список объектов `TaskData` в ViewModel,
+поэтому мы можем сделать это на странице.
+
+Добавьте свойство `Tasks` во ViewModel. Его тип должен быть `List <TaskData>` и он должен быть инициализирован
+в `new List<TaskData>()`.
+]]>
+			</Description>
+
+			<StartupCode>
+				<![CDATA[
+using System;
+using System.Collections.Generic;
+
+namespace DotvvmAcademy.Tutorial.ViewModels 
+{
+	public class Lesson2ViewModel 
+	{
+		public string AddedTaskTitle { get; set; }
+
+		//объявите свойство Tasks здесь
+
+		public void AddTask() 
+		{
+		}
+	}
+}
+]]>
+			</StartupCode>
+			<FinalCode>
+				<![CDATA[
+using System;
+using System.Collections.Generic;
+
+namespace DotvvmAcademy.Tutorial.ViewModels 
+{
+	public class Lesson2ViewModel 
+	{
+		public string AddedTaskTitle { get; set; }
+
+		public List<TaskData> Tasks { get; set; } = new List<TaskData>();
+
+		public void AddTask() 
+		{
+		}
+	}
+}
+]]>
+			</FinalCode>
+			<CodeDependencies>
+				<CodeDependency>
+					<![CDATA[
+using System;
+
+namespace DotvvmAcademy.Tutorial.ViewModels 
+{
+	public class TaskData
+	{
+		public string Title { get; set; }
+		public bool IsCompleted { get; set; }
+	}
+}
+										]]>
+				</CodeDependency>
+
+			</CodeDependencies>
+			<AllowedTypesConstructed>
+				<AllowedType>
+					<![CDATA[
+System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>
+										]]>
+				</AllowedType>
+
+			</AllowedTypesConstructed>
+		</Step>
+
+
+		<!-- 7-->
+		<Step Type="CsharpCode">
+			<Title>Добавление новой Задачи</Title>
+			<ValidationKey>Lesson2Step7Validator</ValidationKey>
+			<Description>
+				<![CDATA[
+Теперь мы можем реализовать метод `AddTask()`. Он должен добавлять новый объект `TaskData` в лист `Tasks`, в котором свойство `Title` принимает значение `AddedTaskTitle`.
+
+Кроме того, мы хотели бы сбросить свойство `AddedTaskTitle`, поэтому, после создания задачи, присвоим ему пустую строку.
+]]>
+			</Description>
+
+			<StartupCode>
+				<![CDATA[
+using System;
+using System.Collections.Generic;
+
+namespace DotvvmAcademy.Tutorial.ViewModels 
+{
+	public class Lesson2ViewModel 
+	{
+		public string AddedTaskTitle { get; set; }
+
+		public List<TaskData> Tasks { get; set; } = new List<TaskData>();
+
+		public void AddTask() 
+		{
+			//добавьте новый task, в котором  title принимает значение из AddedTaskTitle, здесь
+						
+			//присвойте AddedTaskTitle пустую строку
+		}
+	}
+}
+]]>
+			</StartupCode>
+			<FinalCode>
+				<![CDATA[
+using System;
+using System.Collections.Generic;
+
+namespace DotvvmAcademy.Tutorial.ViewModels 
+{
+	public class Lesson2ViewModel 
+	{
+		public string AddedTaskTitle { get; set; }
+
+		public List<TaskData> Tasks { get; set; } = new List<TaskData>();
+
+		public void AddTask() 
+		{
+			Tasks.Add(new TaskData() { Title = AddedTaskTitle });
+			AddedTaskTitle = "";
+		}
+	}
+}
+]]>
+			</FinalCode>
+
+			<CodeDependencies>
+				<CodeDependency>
+					<![CDATA[
+using System;
+
+namespace DotvvmAcademy.Tutorial.ViewModels 
+{
+	public class TaskData
+	{
+		public string Title { get; set; }
+		public bool IsCompleted { get; set; }
+	}
+}
+										]]>
+				</CodeDependency>
+			</CodeDependencies>
+
+			<AllowedTypesConstructed>
+				<AllowedType>
+					<![CDATA[
+System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>
+										]]>
+				</AllowedType>
+				<AllowedType>
+					<![CDATA[
+DotvvmAcademy.Tutorial.ViewModels.TaskData
+										]]>
+				</AllowedType>
+			</AllowedTypesConstructed>
+
+			<AllowedMethodsCalled>
+				<AllowedMethod>
+					<![CDATA[
+System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>.Add
+										]]>
+				</AllowedMethod>
+			</AllowedMethodsCalled>
+		</Step>
+
+		<!-- 8-->
+		<Step Type="DothtmlCode">
+			<Title>Отображение Задач</Title>
+			<ValidationKey>Lesson2Step8Validator</ValidationKey>
+			<Description>
+				<![CDATA[
+Мы готовы показать список задач. Для каждой задачи, мы хотели бы, использовать этот фрагмент кода HTML:
+
+```
+<div class="task">
+		...
+</div>
+```
+
+Для этого мы будем использовать `<dot:Repeater>`. Добавьте его на страницу, свяжите его свойство `DataSource` со свойством `Tasks` во ViewModel,
+и внутри `<dot:Repeater>`, поместите элемент `<div class="task"></div>`. Он будет повторять `div` для каждого объекта в коллекции.
+								]]>
+			</Description>
+			<StartupCode>
+				<![CDATA[
+<p>
+	<dot:TextBox Text="{value: AddedTaskTitle}" />
+	<dot:Button Text="Add Task" Click="{command: AddTask()}" />
+</p>
+<div>
+	<!-- добавьте Repeater здесь -->
+</p>
+</p>
+								]]>
+			</StartupCode>
+			<FinalCode>
+				<![CDATA[
+<p>
+	<dot:TextBox Text="{value: AddedTaskTitle}" />
+	<dot:Button Text="Add Task" Click="{command: AddTask()}" />
+</p>
+<div>
+	<dot:Repeater DataSource="{value: Tasks}">
+		<div class="task"></div>
+	</dot:Repeater>
+</p>
+								]]>
+			</FinalCode>
+		</Step>
+
+		<!-- 9-->
+		<Step Type="DothtmlCode">
+			<Title>Отображение задач</Title>
+			<ValidationKey>Lesson2Step9Validator</ValidationKey>
+			<Description>
+				<![CDATA[
+Внутри `<div>`, мы хотели бы, отобразить название задачи. Если вы хотите вывести текст непосредственно на странице,
+вы можете использовать синтаксис привязки данных с двойными фигурными скобками, например: `{{value: Title}}`.
+
+Кроме того, вы можете использовать `<dot:Literal Text="{value: Title}" />`, чтобы написать текст.
+
+Таким образом, отобразим `Title` каждой задачи внутри `<div>`. Кроме того, добавьте `<dot:LinkButton>` внутри `<div>`. Мы будем использовать эту кнопку для обозначения задачи, как выполненную.
+								]]>
+			</Description>
+			<StartupCode>
+				<![CDATA[
+<p>
+	<dot:TextBox Text="{value: AddedTaskTitle}" />
+	<dot:Button Text="Add Task" Click="{command: AddTask()}" />
+</p>
+<div>
+	<dot:Repeater DataSource="{value: Tasks}">
+		<div class="task">
+			<!-- опишите task, title и LinkButton здесь -->
+		</div>
+	</dot:Repeater>
+</p>
+								]]>
+			</StartupCode>
+			<FinalCode>
+				<![CDATA[
+<p>
+	<dot:TextBox Text="{value: AddedTaskTitle}" />
+	<dot:Button Text="Add Task" Click="{command: AddTask()}" />
+</p>
+<div>
+	<dot:Repeater DataSource="{value: Tasks}">
+		<div class="task">
+			{{value: Title}}
+			<dot:LinkButton />
+		</div>
+	</dot:Repeater>
+</p>
+								]]>
+			</FinalCode>
+			<ShadowBoxDescription>
+				<![CDATA[
+`LinkButton` работает точно также как и `Button`, но представляет собой ссылку.
+								]]>
+			</ShadowBoxDescription>
+		</Step>
+
+
+		<!-- 10-->
+		<Step Type="DothtmlCode">
+			<Title>Скрытие LinkButton</Title>
+			<ValidationKey>Lesson2Step10Validator</ValidationKey>
+			<Description>
+				<![CDATA[
+LinkButton должен быть виден только для задач, которые не завершены.
+
+В DotVVM, есть свойство `Visible`, которое можно использовать в любом элементе HTML или DotVVM. Он может показать или скрыть элемент.
+
+Свяжите значение свойства `IsCompleted` со свойством `Visible` элемента `LinkButton`, чтобы кнопка не отображалась, когда задача выполнена.
+								]]>
+			</Description>
+			<StartupCode>
+				<![CDATA[
+<p>
+	<dot:TextBox Text="{value: AddedTaskTitle}" />
+	<dot:Button Text="Add Task" Click="{command: AddTask()}" />
+</p>
+<div>
+	<dot:Repeater DataSource="{value: Tasks}">
+		<div class="task">
+			{{value: Title}}
+			<dot:LinkButton />
+		</div>
+	</dot:Repeater>
+</p>
+								]]>
+			</StartupCode>
+			<FinalCode>
+				<![CDATA[
+<p>
+	<dot:TextBox Text="{value: AddedTaskTitle}" />
+	<dot:Button Text="Add Task" Click="{command: AddTask()}" />
+</p>
+<div>
+	<dot:Repeater DataSource="{value: Tasks}">
+		<div class="task">
+			{{value: Title}}
+			<dot:LinkButton Visible="{value: !IsCompleted}" />
+		</div>
+	</dot:Repeater>
+</p>
+								]]>
+			</FinalCode>
+			<ShadowBoxDescription>
+				<![CDATA[
+Обратите внимание, что свойство `Visible` может быть использовано также на любом элементе HTML.
+								]]>
+			</ShadowBoxDescription>
+		</Step>
+
+		<!-- 11-->
+		<Step Type="CsharpCode">
+			<Title>Выполнение задачи</Title>
+			<ValidationKey>Lesson2Step11Validator</ValidationKey>
+			<Description>
+				<![CDATA[
+Когда пользователь нажмет на `LinkButton`, нам нужно вызвать метод в ViewModel.
+
+Метод должен знать, какая задача была выполнена. Мы можем передать задачу методу в качестве параметра.
+
+Объявите метод `CompleteTask` который принимает один параметр типа `TaskData`, и устанавливает его свойство `IsCompleted` как `true`.
+]]>
+			</Description>
+
+			<StartupCode>
+				<![CDATA[
+using System;
+using System.Collections.Generic;
+
+namespace DotvvmAcademy.Tutorial.ViewModels 
+{
+	public class Lesson2ViewModel 
+	{
+		public string AddedTaskTitle { get; set; }
+
+		public List<TaskData> Tasks { get; set; } = new List<TaskData>();
+
+		public void AddTask() 
+		{
+			Tasks.Add(new TaskData() { Title = AddedTaskTitle });
+			AddedTaskTitle = "";
+		}
+
+		//разместите метод CompleteTask здесь
+	}
+}
+]]>
+			</StartupCode>
+			<FinalCode>
+				<![CDATA[
+using System;
+using System.Collections.Generic;
+
+namespace DotvvmAcademy.Tutorial.ViewModels 
+{
+	public class Lesson2ViewModel 
+	{
+		public string AddedTaskTitle { get; set; }
+
+		public List<TaskData> Tasks { get; set; } = new List<TaskData>();
+
+		public void AddTask() 
+		{
+			Tasks.Add(new TaskData() { Title = AddedTaskTitle });
+			AddedTaskTitle = "";
+		}
+
+		public void CompleteTask(TaskData task) 
+		{
+			task.IsCompleted = true;
+		}
+	}
+}
+]]>
+			</FinalCode>
+
+			<CodeDependencies>
+				<CodeDependency>
+					<![CDATA[
+using System;
+namespace DotvvmAcademy.Tutorial.ViewModels 
+{
+	public class TaskData
+	{
+		public string Title { get; set; }
+		public bool IsCompleted { get; set; }
+	}
+}
+										]]>
+				</CodeDependency>
+			</CodeDependencies>
+			<AllowedTypesConstructed>
+				<AllowedType>
+					<![CDATA[
+System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>
+										]]>
+				</AllowedType>
+				<AllowedType>
+					<![CDATA[
+DotvvmAcademy.Tutorial.ViewModels.TaskData
+										]]>
+				</AllowedType>
+			</AllowedTypesConstructed>
+			<AllowedMethodsCalled>
+				<AllowedMethod>
+					<![CDATA[
+System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>.Add
+										]]>
+				</AllowedMethod>
+			</AllowedMethodsCalled>
+
+
+		</Step>
+
+		<!-- 12-->
+		<Step Type="DothtmlCode">
+			<Title>Выполнение задачи</Title>
+			<ValidationKey>Lesson2Step12Validator</ValidationKey>
+			<Description>
+				<![CDATA[
+Теперь нам нужно установить свойство `Click` кнопки-ссылки на вызов метода `CompleteTask`.
+
+Обратите внимание, что все привязки внутри `Repeater` не описаны в /*текущей*/ ViewModel, но находятся в соответствующем объекте `TaskData`.
+Но метод `CompleteTask` в родительской области, так как мы объявили его в /*текущей*/ ViewModel.
+
+Вы можете использовать `_parent.CompleteTask()` для ссылки на метод из родительской области.
+При передаче аргументов метода, вы находитесь также в контексте `TaskData`, так что вы можете использовать` _this`, что бы обратиться к 
+нужному методу объекта `TaskData`.
+								]]>
+			</Description>
+			<StartupCode>
+				<![CDATA[
+<p>
+	<dot:TextBox Text="{value: AddedTaskTitle}" />
+	<dot:Button Text="Add Task" Click="{command: AddTask()}" />
+</p>
+<div>
+	<dot:Repeater DataSource="{value: Tasks}">
+		<div class="task">
+			{{value: Title}}
+			<dot:LinkButton Visible="{value: !IsCompleted}" />
+		</div>
+	</dot:Repeater>
+</p>
+								]]>
+			</StartupCode>
+			<FinalCode>
+				<![CDATA[
+<p>
+	<dot:TextBox Text="{value: AddedTaskTitle}" />
+	<dot:Button Text="Add Task" Click="{command: AddTask()}" />
+</p>
+<div>
+	<dot:Repeater DataSource="{value: Tasks}">
+		<div class="task">
+			{{value: Title}}
+			<dot:LinkButton Visible="{value: !IsCompleted}"
+							Click="{command: _parent.CompleteTask(_this)}" />
+		</div>
+	</dot:Repeater>
+</p>
+								]]>
+			</FinalCode>
+		</Step>
+
+		<!-- 13-->
+		<Step Type="DothtmlCode">
+			<Title>Выполнение задачи</Title>
+			<ValidationKey>Lesson2Step13Validator</ValidationKey>
+			<Description>
+				<![CDATA[
+Последнее, что мы хотим сделать, вычеркнуть задачи, которые были завершены.
+
+Если задача выполнена, мы хотели бы отобразить это как `<div class="task-completed"></div>`.
+
+Нам нужно использовать привязки данных для определения свойства `class` у тэга `<div>`.
+
+Вам нужно будет использовать форму типа `expression ? truePart : falsePart`, чтобы сделать это.
+Также обратите внимание, что вы можете использовать одиночные кавычки (апостроф), а не двойные кавычки, чтобы использовать строки в data-bindings.
+								]]>
+			</Description>
+			<StartupCode>
+				<![CDATA[
+<p>
+	<dot:TextBox Text="{value: AddedTaskTitle}" />
+	<dot:Button Text="Add Task" Click="{command: AddTask()}" />
+</p>
+<div>
+	<dot:Repeater DataSource="{value: Tasks}">
+		<div class="task">
+			{{value: Title}}
+			<dot:LinkButton Visible="{value: !IsCompleted}"
+							Click="{command: _parent.CompleteTask(_this)}" />
+		</div>
+	</dot:Repeater>
+</p>
+								]]>
+			</StartupCode>
+			<FinalCode>
+				<![CDATA[
+<p>
+	<dot:TextBox Text="{value: AddedTaskTitle}" />
+	<dot:Button Text="Add Task" Click="{command: AddTask()}" />
+</p>
+<div>
+	<dot:Repeater DataSource="{value: Tasks}">
+		<div class="{value: IsCompleted ? 'task-completed' : 'task'}">
+			{{value: Title}}
+			<dot:LinkButton Visible="{value: !IsCompleted}"
+							Click="{command: _parent.CompleteTask(_this)}" />
+		</div>
+	</dot:Repeater>
+</p>
+								]]>
+			</FinalCode>
+		</Step>
+
+		<!-- 14-->
+		<Step Type="Info">
+			<Title>Поздравляем</Title>
+			<Description>
+				<![CDATA[
+**Вы закончили второй урок!**
+
+Вы научились использовать `Repeater` и коллекции в ViewModel!
+								]]>
+			</Description>
+			<ShadowBoxDescription />
+		</Step>
+
+
+	</Steps>
+</Lesson>
