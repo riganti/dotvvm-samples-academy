@@ -31,6 +31,9 @@
     <Content Include="Views\*.dotmaster" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Content\Lessons\LessonNames.Designer.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Update="wwwroot\**\*;Views\**\*;web.config;Controls\**\*;Content\**\*">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
@@ -50,5 +53,8 @@
   <ItemGroup>
     <ProjectReference Include="..\DotvvmAcademy.BL\DotvvmAcademy.BL.csproj" />
     <ProjectReference Include="..\DotvvmAcademy.Validators\DotvvmAcademy.Validators.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Content\Lessons\AdvancedForms\ru\" />
   </ItemGroup>
 </Project>
