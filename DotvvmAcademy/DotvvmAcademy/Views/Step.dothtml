@@ -1,5 +1,6 @@
 ﻿@viewModel DotvvmAcademy.ViewModels.StepViewModel, DotvvmAcademy
 @masterPage Views/Master.dotmaster
+@import DotvvmAcademy.Resources
 
 <dot:Content ContentPlaceHolderID="MainContent">
     <div class="container-fluid">
@@ -16,7 +17,7 @@
                                    Param-StepIndex="{value: StepIndex - 1}"
                                    Visible="{resource: CanGoPrevious}"
                                    class="btn btn-primary pull-left lesson-btn">
-                        <span class="glyphicon glyphicon-chevron-left" /> Previous
+                        <span class="glyphicon glyphicon-chevron-left" /> {{resource: UIResources.Previous}}
                     </dot:RouteLink>
 
                     <dot:RouteLink RouteName="Step"
@@ -25,7 +26,7 @@
                                    Param-StepIndex="{value: StepIndex + 1}"
                                    Visible="{resource: CanGoNext}"
                                    class="btn btn-primary pull-right lesson-btn">
-                        Next <span class="glyphicon glyphicon-chevron-right" />
+                        {{resource: UIResources.Next}} <span class="glyphicon glyphicon-chevron-right" />
                     </dot:RouteLink>
                 </div>
             </div>

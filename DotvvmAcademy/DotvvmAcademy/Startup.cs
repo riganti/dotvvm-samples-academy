@@ -1,4 +1,5 @@
 using Autofac;
+using DotVVM.Framework.Hosting;
 using DotVVM.Framework.ViewModel;
 using DotvvmAcademy.BL;
 using DotvvmAcademy.Controls;
@@ -38,6 +39,11 @@ namespace DotvvmAcademy
             builder.RegisterAssemblyTypes(typeof(Startup).Assembly)
                 .AssignableTo<IDotvvmViewModel>()
                 .AsSelf();
+            builder.RegisterType<DotvvmPresenter>()
+                .SingleInstance();
+            builder.RegisterInstance(LocalizedPresenter.BasedOnParameter("Language")())
+                .As<IDotvvmPresenter>()
+                .SingleInstance();
         }
 
         public void ConfigureServices(IServiceCollection services)

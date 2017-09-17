@@ -1,23 +1,66 @@
 ﻿@viewModel DotvvmAcademy.ViewModels.DotvvmAcademyViewModelBase, DotvvmAcademy
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="utf-8" />
     <title>DotVVM Academy</title>
     <dot:RequiredResource Name="google-analytics" />
-    <link href="~/Styles/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/Styles/site.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Styles/bootstrap.min.css"
+          rel="stylesheet" />
+    <link href="~/Styles/site.css"
+          rel="stylesheet" />
+    <script src="~/Scripts/jquery-2.2.4.js" />
+    <script src="~/Scripts/bootstrap.js" />
+    <link href="https://fonts.googleapis.com/css?family=Montserrat"
+          rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"
+          rel="stylesheet"
+          type="text/css" />
 </head>
+
 <body RenderSettings.Mode="Server">
     <div class="fix-height">
         <div class="container-fluid header">
             <div class="container header-con-padding">
-                <img src="/img/dotvvm-logo.png" class="img-responsive header-logo" />
+                <img src="/img/dotvvm-logo.png"
+                     class="img-responsive header-logo" />
                 <div class="header-block">
-                    <h1 class="header-1">DotVVM <span class="span-academy">Academy</span></h1>
-                    <h3 class="header-3">online course</h3>
+                    <dot:RouteLink RouteName="Default"
+                                   Param-Language="{value: Language}"
+                                   class="nounderline">
+                        <h1 class="header-1">DotVVM <span class="span-academy">Academy</span></h1>
+                        <h3 class="header-3">{{resource: OnlineCourse}}</h3>
+                    </dot:RouteLink>
+                </div>
+                <div class="header-block-right">
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle"
+                                type="button"
+                                ID="dropdownMenu1"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="true">
+                            <i class="fa fa-language" aria-hidden="true"></i>
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu"
+                            aria-labelledby="dropdownMenu1">
+                            <li>
+                                <dot:RouteLink RouteName="{resource: Context.Route.RouteName}"
+                                               Param-Language="en">English</dot:RouteLink>
+                            </li>
+                            <li>
+                                <dot:RouteLink RouteName="{resource: Context.Route.RouteName}"
+                                               Param-Language="cs">Česky</dot:RouteLink>
+                            </li>
+                            <li>
+                                <dot:RouteLink RouteName="{resource: Context.Route.RouteName}"
+                                               Param-Language="ru">Русский</dot:RouteLink>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -37,15 +80,23 @@
             <div class="row">
                 <div class="col-md-6 left">
                     <div style="display: inline-block; vertical-align: middle;">
-                        <h3><a target="_blank" href="https://www.dotvvm.com/">www.dotvvm.com</a></h3>
+                        <h3>
+                            <a target="_blank"
+                               href="https://www.dotvvm.com/">www.dotvvm.com</a>
+                        </h3>
                     </div>
                 </div>
                 <div class="col-md-6 right">
                     <div style="display: inline-block; vertical-align: middle;">
                         <p style="padding-top: 20px">
-                            <a target="_blank" href="https://www.dotvvm.com/docs/latest">Documentation</a> |
-                            <a target="_blank" href="https://www.dotvvm.com/docs/tutorials/introduction/latest"> Tutorials</a> |
-                            <a target="_blank" href="https://www.dotvvm.com/docs/samples/latest">Samples</a>
+                            <a target="_blank"
+                               href="https://www.dotvvm.com/docs/latest">{{resource: Documentation}}</a>
+                            <span> | </span>
+                            <a target="_blank"
+                               href="https://www.dotvvm.com/docs/tutorials/introduction/latest">{{resource: Tutorials}}</a>
+                            <span> | </span>
+                            <a target="_blank"
+                               href="https://www.dotvvm.com/docs/samples/latest">{{resource: Samples}}</a>
                         </p>
                     </div>
                 </div>
@@ -53,4 +104,5 @@
         </div>
     </div>
 </body>
+
 </html>

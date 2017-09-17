@@ -2,7 +2,7 @@
   "Name": "Working with Collections",
   "Annotation": "Learn how to use the Repeater control and how to work with collections.",
   "ImageUrl": "/img/elementary.png",
-  "IsReady": true,
+  "IsReady": false,
   "Steps": [
     "en/1_objective.md",
     "en/2_adding_new_task_part1.md",

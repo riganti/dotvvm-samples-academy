@@ -117,58 +117,49 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DocumentationText" xml:space="preserve">
-    <value>Documentation</value>
+  <data name="Documentation" xml:space="preserve">
+    <value>Dokumentace</value>
   </data>
-  <data name="IsCreatedLessonBtnText" xml:space="preserve">
-    <value>Coming Soon</value>
+  <data name="Error404" xml:space="preserve">
+    <value>Stránka nebyla nalezena</value>
   </data>
-  <data name="IsFinishedLessonBtnText" xml:space="preserve">
-    <value>Repeat Lesson</value>
+  <data name="Error500" xml:space="preserve">
+    <value>Interní chyba serveru</value>
   </data>
-  <data name="IsVisitedLessonBtnText" xml:space="preserve">
-    <value>Continue</value>
+  <data name="ErrorOther" xml:space="preserve">
+    <value>Něco se pokazilo</value>
   </data>
-  <data name="Lesson1" xml:space="preserve">
-    <value>Understand basic principles of DotVVM and the MVVM pattern.</value>
+  <data name="Lesson" xml:space="preserve">
+    <value>Kurz</value>
   </data>
-  <data name="Lesson2" xml:space="preserve">
-    <value>Learn how to use the &lt;code&gt;Repeater&lt;/code&gt; control and how to work with collections.</value>
+  <data name="Next" xml:space="preserve">
+    <value>Následující</value>
   </data>
-  <data name="Lesson3" xml:space="preserve">
-    <value>Try out working with advanced form controls like &lt;code&gt;ComboBox&lt;/code&gt; and &lt;code&gt;RadioButton&lt;/code&gt;.</value>
+  <data name="OnlineCourse" xml:space="preserve">
+    <value>Online kurz</value>
   </data>
-  <data name="Lesson4" xml:space="preserve">
-    <value>Learn how validation works and &lt;code&gt;DataContext&lt;/code&gt; works.</value>
+  <data name="Previous" xml:space="preserve">
+    <value>Předchozí</value>
   </data>
-  <data name="LessonText" xml:space="preserve">
-    <value>Lesson</value>
-  </data>
-  <data name="NextBtnText" xml:space="preserve">
-    <value>Continue</value>
-  </data>
-  <data name="OnlineCourseText" xml:space="preserve">
-    <value>online course</value>
-  </data>
-  <data name="PreviousBtnText" xml:space="preserve">
-    <value>Previous</value>
-  </data>
-  <data name="ResetBtn" xml:space="preserve">
+  <data name="Reset" xml:space="preserve">
     <value>Reset</value>
   </data>
-  <data name="SamplesText" xml:space="preserve">
-    <value>Samples</value>
+  <data name="Samples" xml:space="preserve">
+    <value>Vzorové aplikace</value>
   </data>
-  <data name="ShowCorrectCodeBtn" xml:space="preserve">
-    <value>Show Correct Code</value>
+  <data name="ShowCorrectCode" xml:space="preserve">
+    <value>Zobrazit správné řešení</value>
   </data>
-  <data name="StartLessonBtnText" xml:space="preserve">
-    <value>Start Lesson</value>
+  <data name="StartLesson" xml:space="preserve">
+    <value>Začít kurz</value>
   </data>
-  <data name="StepBtnText" xml:space="preserve">
-    <value>Step</value>
+  <data name="Step" xml:space="preserve">
+    <value>Krok</value>
   </data>
-  <data name="TutorialsText" xml:space="preserve">
-    <value>Tutorials</value>
+  <data name="Tutorials" xml:space="preserve">
+    <value>Tutoriály</value>
+  </data>
+  <data name="Validate" xml:space="preserve">
+    <value>Zkontrolovat</value>
   </data>
 </root>

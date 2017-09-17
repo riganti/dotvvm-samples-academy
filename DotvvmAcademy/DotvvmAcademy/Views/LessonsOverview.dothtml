@@ -1,4 +1,4 @@
-﻿@viewModel DotvvmAcademy.ViewModels.LessonsOverviewViewModel, DotvvmAcademy
+﻿@viewModel DotvvmAcademy.ViewModels.LessonsOverviewViewModel, DotvvmAcademy 
 @masterPage Views/Master.dotmaster
 <dot:Content ContentPlaceHolderID="MainContent">
 
@@ -6,7 +6,7 @@
         <dot:Repeater DataSource="{value: Lessons}"
                       class="row">
             <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 lesson">
-                <div class="part" 
+                <div class="part"
                      onclick="document.location.href = $(this).find('a:first').attr('href');">
                     <div class="img-part">
                         <div class="img-part-a">
@@ -14,7 +14,7 @@
                         <dot:RouteLink RouteName="Step"
                                        Param-Language="{value: Language}"
                                        Param-Moniker="{value: Moniker}">
-                            <img src="{value: ImageUrl}" 
+                            <img src="{value: ImageUrl}"
                                  class="img-responsive" />
                         </dot:RouteLink>
                     </div>
@@ -22,19 +22,16 @@
 
                         <h3 class="lesson-h3">
                             {{value: Name}}
-                            <%--<i class="fa fa-check-square-o" 
-                               Visible="{value: _root.LastStepIndices[Index] == StepCount }" 
-                               aria-hidden="true"></i>--%>
                         </h3>
-                        <dot:HtmlLiteral Html="{value: Annotation}" 
+                        <dot:HtmlLiteral Html="{value: Annotation}"
                                          WrapperTagName="p" />
                     </div>
 
                     <div class="button">
-                        <dot:RouteLink RouteName="Step" 
+                        <dot:RouteLink RouteName="Step"
                                        Param-Language="{value: Language}"
                                        Param-Moniker="{value: Moniker}"
-                                       Text="Start Lesson" 
+                                       Text="Start Lesson"
                                        class="aa" />
                     </div>
                     <div class="button-mobile">

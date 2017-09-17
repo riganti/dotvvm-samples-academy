@@ -1,6 +1,6 @@
 ﻿{
   "Name": "Basic MVVM",
-  "Annotation": "Understand basic principles of DotVVM and MVVM pattern.",
+  "Annotation": "Understand basic principles of DotVVM and the MVVM pattern.",
   "ImageUrl": "/img/basics.png",
   "IsReady": true,
   "Steps": [

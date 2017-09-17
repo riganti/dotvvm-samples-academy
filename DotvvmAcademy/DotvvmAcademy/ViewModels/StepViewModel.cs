@@ -1,6 +1,8 @@
 using DotVVM.Framework.ViewModel;
 using DotvvmAcademy.BL.Dtos;
 using DotvvmAcademy.BL.Facades;
+using DotvvmAcademy.Resources;
+using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -18,8 +20,10 @@ namespace DotvvmAcademy.ViewModels
         private readonly LessonFacade lessonFacade;
         private readonly StepFacade stepFacade;
 
-        public StepViewModel(LessonFacade lessonFacade, StepFacade stepFacade, ExerciseFacade exerciseFacade, 
-            SampleFacade sampleFacade, ValidatorFacade validatorFacade, Func<ExerciseViewModel> exerciseFactory)
+        public StepViewModel(IStringLocalizer<UIResources> localizer, LessonFacade lessonFacade, StepFacade stepFacade,
+            ExerciseFacade exerciseFacade, SampleFacade sampleFacade, ValidatorFacade validatorFacade,
+            Func<ExerciseViewModel> exerciseFactory)
+            : base(localizer)
         {
             this.lessonFacade = lessonFacade;
             this.stepFacade = stepFacade;
@@ -50,7 +54,7 @@ namespace DotvvmAcademy.ViewModels
         {
             await base.Init();
             Lesson = await lessonFacade.GetOverview(Moniker, Language.TwoLetterISOLanguageName);
-            if(Lesson == null)
+            if (Lesson == null)
             {
                 Context.RedirectToRoute("Error", new { Language = Language, StatusCode = 404 });
             }
