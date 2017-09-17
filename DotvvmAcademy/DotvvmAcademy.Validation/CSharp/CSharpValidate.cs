@@ -2,7 +2,9 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Emit;
+using Microsoft.CodeAnalysis.Host;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -90,7 +92,7 @@ namespace DotvvmAcademy.Validation.CSharp
             }
             catch (Exception e)
             {
-                AddGlobalError($"An exception occured during C# compilation: '{e}'.");
+                AddGlobalError($"An exception occurred during C# compilation: '{e}'.");
                 Root = CSharpRoot.Inactive;
             }
         }
