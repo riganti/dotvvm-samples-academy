@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace DotvvmAcademy.Validation
 {
     public abstract class Validate
     {
-        public Validate(string code, IEnumerable<string> dependencies)
+        public Validate(MethodInfo validator, string code, IEnumerable<string> dependencies)
         {
+            Validator = validator;
             Code = code;
             Dependencies = dependencies;
             Init();
@@ -21,6 +23,8 @@ namespace DotvvmAcademy.Validation
         public string TestingValue => $"TestingValue{Id}";
 
         public List<ValidationError> ValidationErrors { get; set; } = new List<ValidationError>();
+
+        internal MethodInfo Validator { get; }
 
         public void AddError(string message, int startPosition, int endPosition, IValidationObject<Validate> originator)
         {

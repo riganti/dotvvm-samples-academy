@@ -5,12 +5,13 @@ using DotVVM.Framework.Compilation.Parser.Dothtml.Tokenizer;
 using DotVVM.Framework.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace DotvvmAcademy.Validation.Dothtml
 {
     public sealed class DothtmlValidate : Validate
     {
-        public DothtmlValidate(string code, IEnumerable<string> dependencies) : base(code, dependencies)
+        public DothtmlValidate(MethodInfo validator, string code, IEnumerable<string> dependencies) : base(validator, code, dependencies)
         {
         }
 

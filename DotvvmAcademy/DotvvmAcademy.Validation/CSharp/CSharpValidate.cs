@@ -7,6 +7,8 @@ using Microsoft.CodeAnalysis.Emit;
 using Microsoft.CodeAnalysis.Host;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -18,7 +20,7 @@ namespace DotvvmAcademy.Validation.CSharp
     {
         private Lazy<Assembly> assembly;
 
-        public CSharpValidate(string code, IEnumerable<string> dependencies) : base(code, dependencies)
+        public CSharpValidate(MethodInfo validator, string code, IEnumerable<string> dependencies) : base(validator, code, dependencies)
         {
         }
 
@@ -29,6 +31,8 @@ namespace DotvvmAcademy.Validation.CSharp
         internal Assembly Assembly => assembly.Value;
 
         internal CSharpCompilation Compilation { get; private set; }
+
+        internal CompilationWithAnalyzers CompilationWithAnalyzers { get; set; }
 
         internal SemanticModel Model { get; private set; }
 
@@ -58,6 +62,7 @@ namespace DotvvmAcademy.Validation.CSharp
         public CSharpClassInstance Instance(CSharpClass classObject, params object[] constructorArguments)
         {
             if (!classObject.IsActive) return CSharpClassInstance.Inactive;
+            if (ValidationErrors.Count > 0) return CSharpClassInstance.Inactive;
             object instance;
             try
             {
@@ -82,12 +87,19 @@ namespace DotvvmAcademy.Validation.CSharp
         {
             try
             {
+                var allowedIdentifiers = Validator.GetCustomAttribute<AllowedIdentifiersAttribute>()?.AllowedIdentifiers.ToList();
+                allowedIdentifiers.AddRange(GetDefaultAllowedIdentifiers());
                 Tree = CSharpSyntaxTree.ParseText(Code);
                 var trees = Dependencies.Select(d => CSharpSyntaxTree.ParseText(d)).ToList();
                 trees.Add(Tree);
                 Compilation = CSharpCompilation.Create(UserCodeAssemblyName, trees, GetMetadataReferences(), GetCompilationOptions());
+                var allowedIdentifierAnalyzer = new AllowedIdentifierAnalyzer(GetSymbols(allowedIdentifiers).ToImmutableArray());
+                var analyzers = ImmutableArray.Create<DiagnosticAnalyzer>(allowedIdentifierAnalyzer);
+                var compilationWithAnalyzersOptions = new CompilationWithAnalyzersOptions(null, OnAnalyzerException, true, true);
+                CompilationWithAnalyzers = new CompilationWithAnalyzers(Compilation, analyzers, compilationWithAnalyzersOptions);
                 Model = Compilation.GetSemanticModel(Tree);
                 assembly = new Lazy<Assembly>(() => EmitToAssembly(Compilation));
+                AddErrorsFromDiagnostics(CompilationWithAnalyzers.GetAllDiagnosticsAsync().Result);
                 Root = new CSharpRoot(this, Tree.GetCompilationUnitRoot());
             }
             catch (Exception e)
@@ -97,9 +109,14 @@ namespace DotvvmAcademy.Validation.CSharp
             }
         }
 
-        private void AddCompilationErrors(EmitResult result)
+        private void OnAnalyzerException(Exception exception, DiagnosticAnalyzer analyzer, Diagnostic diagnostic)
         {
-            foreach (var diagnostic in result.Diagnostics)
+
+        }
+
+        private void AddErrorsFromDiagnostics(IEnumerable<Diagnostic> diagnostics)
+        {
+            foreach (var diagnostic in diagnostics)
             {
                 if (diagnostic.Location.Kind == LocationKind.None)
                 {
@@ -119,7 +136,7 @@ namespace DotvvmAcademy.Validation.CSharp
                 var result = compilation.Emit(stream);
                 if (!result.Success)
                 {
-                    AddCompilationErrors(result);
+                    AddErrorsFromDiagnostics(result.Diagnostics);
                     return null;
                 }
                 stream.Position = 0;
@@ -156,6 +173,23 @@ namespace DotvvmAcademy.Validation.CSharp
             {
                 yield return MetadataReference.CreateFromFile(type.Assembly.Location);
             }
+        }
+
+        private IEnumerable<string> GetDefaultAllowedIdentifiers()
+        {
+            return new[]
+            {
+                typeof(string).FullName,
+                typeof(int).FullName,
+                typeof(float).FullName,
+                typeof(double).FullName,
+                typeof(decimal).FullName
+            };
+        }
+
+        private IEnumerable<ISymbol> GetSymbols(IEnumerable<string> identifiers)
+        {
+            return Compilation.GetSymbolsWithName(name => identifiers.Contains(name));
         }
     }
 }

@@ -19,12 +19,12 @@ namespace DotvvmAcademy.Validation
 
         public ValidatorDelegate CreateCSharpValidator(MethodInfo validatorInfo)
         {
-            return CreateValidator(validatorInfo, (code, dependencies) => new CSharpValidate(code, dependencies));
+            return CreateValidator(validatorInfo, (code, dependencies) => new CSharpValidate(validatorInfo, code, dependencies));
         }
 
-        public ValidatorDelegate CreateDothtmlValidator(MethodInfo methodInfo)
+        public ValidatorDelegate CreateDothtmlValidator(MethodInfo validatorInfo)
         {
-            return CreateValidator(methodInfo, (code, dependencies) => new DothtmlValidate(code, dependencies));
+            return CreateValidator(validatorInfo, (code, dependencies) => new DothtmlValidate(validatorInfo, code, dependencies));
         }
 
         private ValidatorDelegate CreateValidator<TValidate>(MethodInfo method, Func<string, IEnumerable<string>, TValidate> getValidate)
