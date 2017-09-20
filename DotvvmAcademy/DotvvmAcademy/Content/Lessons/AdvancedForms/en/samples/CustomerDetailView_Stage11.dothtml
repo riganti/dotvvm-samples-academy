@@ -13,7 +13,8 @@
                          Text="User" />
     </p>
     <p>
-        <dot:ComboBox DataSource="{value: _parent.Countries}"
+        <!--Change the DataSource binding to use the parent binding context-->
+        <dot:ComboBox DataSource="{value: Countries}"
                       SelectedValue="{value: SelectedCountryId}"
                       ValueMember="Id"
                       DisplayMember="Name" />

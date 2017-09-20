@@ -10,6 +10,7 @@ This property tells DotVVM that all bindings inside this element or control are 
 
 So, set the DataContext on the `p` start tag like this: `<p DataContext="{value: NewCustomer}">`. You can keep the databindings inside as they are.
 
-[<sample Correct="../samples/UsingDataContextCorrect.dothtml"
-         Incorrect="../samples/UsingDataContextIncorrect.dothtml"
-         Validator="Lesson3Step14Validator"/>]
+[<DothtmlExercise Initial="samples/CustomerDetailView_Stage9.dothtml"
+        Final="samples/CustomerDetailView_Stage10.dothtml"
+        DisplayName="CustomerDetailView.dothtml"
+        ValidatorId="Lesson3Step11Validator" />]

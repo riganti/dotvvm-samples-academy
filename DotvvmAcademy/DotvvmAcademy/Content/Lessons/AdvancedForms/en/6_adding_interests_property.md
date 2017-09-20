@@ -1,11 +1,8 @@
 ﻿Adding Interests Property
 =========================
 Declare a property named `Interests` of type `List<string>`.
-
-[<sample Correct="../samples/AddingInterestsPropertyCorrect.cs"
-         Incorrect="../samples/AddingInterestsPropertyIncorrect.cs"
-         Validator="Lesson3Step6Validator">
-    <allowedTypes>
-        <allowedType>System.Collections.Generic.List</allowedType>
-    </allowedTypes>
-</sample>]
+ 
+[<CSharpExercise Initial="samples/CustomerDetailViewModel_Stage5.cs"
+        Final="samples/CustomerDetailViewModel_Stage6.cs"
+        DisplayName="CustomerDetailViewModel.cs"
+        ValidatorId="Lesson3Step6Validator" />]

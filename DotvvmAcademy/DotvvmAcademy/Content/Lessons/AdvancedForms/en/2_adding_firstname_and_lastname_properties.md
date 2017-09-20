@@ -2,6 +2,7 @@
 ========================================
 Declare the `FirstName` and `LastName` properties of type `string` in the following class.
 
-[<sample Correct="../samples/AddingNamePropertiesCorrect.cs"
-         Incorrect="../samples/AddingNamePropertiesIncorrect.cs"
-         Validator="Lesson3Step2Validator" />]
+[<CSharpExercise Initial="samples/CustomerDetailViewModel_Stage1.cs"
+        Final="samples/CustomerDetailViewModel_Stage2.cs"
+        DisplayName="CustomerDetailViewModel.cs"
+        ValidatorId="Lesson3Step2Validator" />]

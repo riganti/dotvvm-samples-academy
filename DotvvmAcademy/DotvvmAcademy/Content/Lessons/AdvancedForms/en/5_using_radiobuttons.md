@@ -8,6 +8,7 @@ The `CheckedItem` specifies which viewmodel property will be used. Set this to `
 
 And finally, the `CheckedValue` specifies the value that will be stored in the `Role` property. Set the first one to "A" and the second one to "U".
 
-[<sample Correct="../samples/UsingRadioButtonsCorrect.dothtml"
-         Incorrect="../samples/UsingRadioButtonsIncorrect.dothtml"
-         Validator="Lesson3Step5Validator" />]
+[<DothtmlExercise Initial="samples/CustomerDetailView_Stage3.dothtml"
+        Final="samples/CustomerDetailView_Stage4.dothtml"
+        DisplayName="CustomerDetailView.dothtml"
+        ValidatorId="Lesson3Step5Validator" />]

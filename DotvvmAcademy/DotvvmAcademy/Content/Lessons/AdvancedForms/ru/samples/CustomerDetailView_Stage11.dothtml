@@ -1,0 +1,22 @@
+﻿<div DataContext="{value: NewCustomer}">
+    <p>
+        <dot:TextBox Text="{value: FirstName}" />
+        <dot:TextBox Text="{value: LastName}" />
+    </p>
+    <p>
+        Role:
+        <dot:RadioButton CheckedItem="{value: Role}"
+                         CheckedValue="A"
+                         Text="Admin" />
+        <dot:RadioButton CheckedItem="{value: Role}"
+                         CheckedValue="U"
+                         Text="User" />
+    </p>
+    <p>
+        <!--Измените привязку DataSource что бы использовать родительский контекст-->
+        <dot:ComboBox DataSource="{value: Countries}"
+                      SelectedValue="{value: SelectedCountryId}"
+                      ValueMember="Id"
+                      DisplayMember="Name" />
+    </p>
+</div>

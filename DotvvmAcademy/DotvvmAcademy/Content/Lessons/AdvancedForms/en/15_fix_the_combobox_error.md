@@ -12,6 +12,7 @@ Change the binding of the `DataSource` control to `_parent.Countries` to fix the
 > * `_this` is actual context
 > * `_root` is always the viewmodel of the whole page.
 
-[<sample Correct="../samples/FixComboBoxCorrect.dothtml"
-         Incorrect="../samples/FixComboBoxIncorrect.dothtml"
-         Validator="Lesson3Step15Validator" />]
+[<DothtmlExercise Initial="samples/CustomerDetailView_Stage11.dothtml"
+        Final="samples/CustomerDetailView_Stage12.dothtml"
+        DisplayName="CustomerDetailView.dothtml"
+        ValidatorId="Lesson3Step11Validator" />]

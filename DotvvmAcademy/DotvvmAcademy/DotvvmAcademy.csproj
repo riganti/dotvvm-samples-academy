@@ -21,6 +21,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Controls\*.dotcontrol" />
+    <None Remove="Content\Lessons\AdvancedForms\en\samples\CustomerDetailView_Stage11.dothtml" />
     <None Remove="dotvvm_serialized_config.json.tmp" />
     <None Remove="Resources\Test.restext" />
     <None Remove="Views\*.dothtml" />
@@ -75,5 +76,10 @@
     <EmbeddedResource Update="Resources\UIResources.ru.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="Content\Lessons\AdvancedForms\en\samples\CustomerDetailView_Stage11.dothtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 </Project>

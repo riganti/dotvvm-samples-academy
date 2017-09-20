@@ -1,0 +1,9 @@
+﻿<p>
+    <dot:TextBox Text="{value: FirstName}" />
+    <dot:TextBox Text="{value: LastName}" />
+</p>
+<p>
+    Role:
+    <!-- разместите первый RadioButton здесь -->
+    <!-- разместите второй RadioButton здесь -->
+</p>

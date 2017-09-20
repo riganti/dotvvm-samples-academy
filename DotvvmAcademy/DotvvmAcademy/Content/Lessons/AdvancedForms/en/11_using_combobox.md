@@ -8,6 +8,7 @@ When the user selects some item, we want to use the `Id` from the selected `Coun
 
 And finally, we have to specify where the selected value will be stored. Bind the `SelectedValue` to the `SelectedCountryId` property in the viewmodel.
 
-[<sample Correct="../samples/UsingComboBoxCorrect.dothtml"
-         Incorrect="../samples/UsingComboBoxIncorrect.dothtml"
-         Validator="Lesson3Step11Validator" />]
+[<DothtmlExercise Initial="samples/CustomerDetailView_Stage7.dothtml"
+        Final="samples/CustomerDetailView_Stage8.dothtml"
+        DisplayName="CustomerDetailView.dothtml"
+        ValidatorId="Lesson3Step11Validator" />]

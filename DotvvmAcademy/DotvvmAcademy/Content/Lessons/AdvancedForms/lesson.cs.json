@@ -4,5 +4,21 @@
   "ImageUrl": "/img/intermediate.png",
   "IsReady": false,
   "Steps": [
+    "cs/1_form_controls.md",
+    "cs/2_adding_firstname_and_lastname_properties.md",
+    "cs/3_using_textboxes.md",
+    "cs/4_adding_role_property.md",
+    "cs/5_using_radiobuttons.md",
+    "cs/6_adding_interests_property.md",
+    "cs/7_using_checkboxes.md",
+    "cs/8_adding_countryinfo_class.md",
+    "cs/9_adding_the_countries_collection.md",
+    "cs/10_initialize_countries_collection.md",
+    "cs/11_using_combobox.md",
+    "cs/12_the_customerinfo_class.md",
+    "cs/13_adding_customerinfo_property.md",
+    "cs/14_using_datacontext_property.md",
+    "cs/15_fix_the_combobox_error.md",
+    "cs/16_congratulations.md"
   ]
 }
