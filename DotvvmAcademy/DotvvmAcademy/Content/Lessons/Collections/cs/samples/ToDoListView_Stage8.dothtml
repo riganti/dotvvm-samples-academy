@@ -1,0 +1,14 @@
+@viewModel DotvvmAcademy.Lessons.Collections.ViewModels.ToDoListViewModel, DotvvmAcademy.Lessons.Collections
+
+<p>
+    <dot:TextBox Text="{value: AddedTaskTitle}" />
+    <dot:Button Text="Add Task" Click="{command: AddTask()}" />
+</p>
+<div>
+    <dot:Repeater DataSource="{value: Tasks}">
+        <div class="task">
+            {{value: Title}}
+            <dot:LinkButton Visible="{value: !IsCompleted}" />
+        </div>
+    </dot:Repeater>
+</div>

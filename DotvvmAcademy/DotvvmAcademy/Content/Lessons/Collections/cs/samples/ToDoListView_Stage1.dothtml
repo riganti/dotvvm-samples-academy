@@ -1,0 +1,8 @@
+@viewModel DotvvmAcademy.Lessons.Collections.ViewModels.ToDoListViewModel, DotvvmAcademy.Lessons.Collections
+
+<p>
+    <!-- zde úmístìte textové pole a tlaèítko -->
+</p>
+<div>
+    <!-- pozdìji zde zobrazíme seznam úkolù -->
+</div>
