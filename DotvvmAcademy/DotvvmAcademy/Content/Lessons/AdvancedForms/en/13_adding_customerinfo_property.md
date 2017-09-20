@@ -1,6 +1,6 @@
-﻿Přidání vlastnosti CustomerInfo
-===============================
-Nadeklarujte vlastnost `NewCustomer` typu `CustomerInfo`.
+﻿Adding CustomerInfo Property
+============================
+Declare a new property called `NewCustomer` of type `CustomerInfo`.
 
 [<CSharpExercise Initial="samples/CustomerDetailViewModel_Stage11.cs"
         Final="samples/CustomerDetailViewModel_Stage12.cs"
