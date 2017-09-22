@@ -4,18 +4,18 @@
   "ImageUrl": "/img/advanced.png",
   "IsReady": false,
   "Steps": [
-    "./en/step1.md",
-    "./en/step2.md",
-    "./en/step3.md",
-    "./en/step4.md",
-    "./en/step5.md",
-    "./en/step6.md",
-    "./en/step7.md",
-    "./en/step8.md",
-    "./en/step9.md",
-    "./en/step10.md",
-    "./en/step11.md",
-    "./en/step12.md",
-    "./en/step13.md"
+    "./en/1_introduction.md",
+    "./en/2_validation_attributes.md",
+    "./en/3_validation_basics.md",
+    "./en/4_using_invalidcssclass.md",
+    "./en/5_global_validation_settings.md",
+    "./en/6_validation_control.md",
+    "./en/7_using_validator.md",
+    "./en/8_validation_summary.md",
+    "./en/9_partial_validation.md",
+    "./en/10_partial_validation_2.md",
+    "./en/11_add_viewmodel_properties.md",
+    "./en/12_implement_ivalidatableobject.md",
+    "./en/13_congratulations.md"
   ]
 }

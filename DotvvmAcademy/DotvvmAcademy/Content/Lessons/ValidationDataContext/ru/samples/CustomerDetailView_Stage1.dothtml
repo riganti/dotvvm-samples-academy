@@ -1,0 +1,12 @@
+﻿ <!--свяжите div с Validator.Value для текущего свойства-->
+<div>
+    <dot:TextBox Text="{value: City}" />
+</div>
+<!--свяжите div с Validator.Value для текущего свойства-->
+<div>
+    <dot:TextBox Text="{value: ZIP}" />
+</div>
+<!--свяжите div с Validator.Value для текущего свойства-->
+<div>
+    <dot:TextBox Text="{value: Email}" />
+</div>

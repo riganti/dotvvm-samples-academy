@@ -4,5 +4,18 @@
   "ImageUrl": "/img/advanced.png",
   "IsReady": false,
   "Steps": [
+    "./ru/1_introduction.md",
+    "./ru/2_validation_attributes.md",
+    "./ru/3_validation_basics.md",
+    "./ru/4_using_invalidcssclass.md",
+    "./ru/5_global_validation_settings.md",
+    "./ru/6_validation_control.md",
+    "./ru/7_using_validator.md",
+    "./ru/8_validation_summary.md",
+    "./ru/9_partial_validation.md",
+    "./ru/10_partial_validation_2.md",
+    "./ru/11_add_viewmodel_properties.md",
+    "./ru/12_implement_ivalidatableobject.md",
+    "./ru/13_congratulations.md"
   ]
 }

@@ -1,0 +1,14 @@
+﻿<!-- оберните контент в элемент form с установленным Validator.InvalidCssClass -->
+    <!--удалите лишний Validator.InvalidCssClass-->
+    <div Validator.Value="{value: City}" Validator.InvalidCssClass="has-error">
+        <dot:TextBox Text="{value: City}" />
+    </div>
+    <!--удалите лишний Validator.InvalidCssClass-->
+    <div Validator.Value="{value: ZIP}" Validator.InvalidCssClass="has-error">
+        <dot:TextBox Text="{value: ZIP}" />
+    </div>
+    <!--удалите лишний Validator.InvalidCssClass-->
+    <div Validator.Value="{value: Email}" Validator.InvalidCssClass="has-error">
+        <dot:TextBox Text="{value: Email}" />
+    </div>
+<!--не забудьте закрыть элемент form-->
