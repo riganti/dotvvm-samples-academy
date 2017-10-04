@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <ProjectReference Include="..\DotvvmAcademy.Validation.CSharp\DotvvmAcademy.Validation.CSharp.csproj" />
     <ProjectReference Include="..\DotvvmAcademy.Validation\DotvvmAcademy.Validation.csproj" />
   </ItemGroup>
 

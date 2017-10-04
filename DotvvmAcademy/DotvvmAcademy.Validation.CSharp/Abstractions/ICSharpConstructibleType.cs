@@ -19,8 +19,6 @@ namespace DotvvmAcademy.Validation.CSharp.Abstractions
 
         ICSharpField Field(string name);
 
-        ICSharpIndexer Indexer(IEnumerable<ICSharpTypeDescriptor> parameters);
-
         ICSharpMemberedType Interface(string name);
 
         ICSharpMethod Operator(string operationName);

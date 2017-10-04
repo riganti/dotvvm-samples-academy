@@ -13,6 +13,8 @@
 
         ICSharpInterface Interface(string name);
 
+        ICSharpNamespace Namespace(string name);
+
         ICSharpStruct Struct(string name);
     }
 }
