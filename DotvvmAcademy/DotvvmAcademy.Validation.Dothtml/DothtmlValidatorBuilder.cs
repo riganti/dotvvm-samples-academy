@@ -2,7 +2,7 @@
 
 namespace DotvvmAcademy.Validation.Dothtml
 {
-    public class Class1
+    public class DothtmlValidatorBuilder : IValidatorBuilder
     {
     }
 }

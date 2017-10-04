@@ -2,7 +2,7 @@
 
 namespace DotvvmAcademy.Validation.CSharp
 {
-    public class Class1
+    public class CSharpValidatorBuilder : IValidatorBuilder
     {
     }
 }
