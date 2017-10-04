@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DotvvmAcademy.Validation.CSharp
 {
-    pulic class CSharpValidator
+    public class CSharpValidator
     {
     }
 }
