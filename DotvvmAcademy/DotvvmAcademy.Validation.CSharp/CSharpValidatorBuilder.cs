@@ -8,10 +8,10 @@ namespace DotvvmAcademy.Validation.CSharp
     {
         public CSharpValidator Build()
         {
-            throw new NotImplementedException();
+            var validator = new CSharpValidator()
         }
 
-        public void UseValidationMethod(MethodInfo method)
+        public void AddValidationMethod(string name, MethodInfo method)
         {
             throw new NotImplementedException();
         }

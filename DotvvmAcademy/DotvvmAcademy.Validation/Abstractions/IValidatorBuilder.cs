@@ -9,6 +9,6 @@ namespace DotvvmAcademy.Validation.Abstractions
     {
         TValidator Build();
 
-        void UseValidationMethod(MethodInfo method);
+        void AddValidationMethod(string name, MethodInfo method);
     }
 }
