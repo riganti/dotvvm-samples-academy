@@ -118,19 +118,19 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="IncorrectAccessModifierMessage" xml:space="preserve">
-    <value>Member '{0}' has to be {1}.</value>
+    <value>Member '{0}' has to be marked as '{1}'.</value>
   </data>
   <data name="IncorrectAccessModifierTitle" xml:space="preserve">
     <value>Incorrect Access Modifier</value>
   </data>
   <data name="MissingMemberMessage" xml:space="preserve">
-    <value>The {0} '{1}' is missing.</value>
+    <value>Required member '{0}' is missing.</value>
   </data>
   <data name="MissingMemberTitle" xml:space="preserve">
     <value>Missing Member</value>
   </data>
   <data name="RedundantMemberMessage" xml:space="preserve">
-    <value>The {0} '{1}' is redundant.</value>
+    <value>Member '{0}' is redundant.</value>
   </data>
   <data name="RedundantMemberTitle" xml:space="preserve">
     <value>Redundant Member</value>

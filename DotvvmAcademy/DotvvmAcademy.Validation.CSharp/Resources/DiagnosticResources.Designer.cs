@@ -61,7 +61,7 @@ namespace DotvvmAcademy.Validation.CSharp.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Member &apos;{0}&apos; has to be {1}..
+        ///   Looks up a localized string similar to Member &apos;{0}&apos; has to be marked as &apos;{1}&apos;..
         /// </summary>
         public static string IncorrectAccessModifierMessage {
             get {
@@ -79,7 +79,7 @@ namespace DotvvmAcademy.Validation.CSharp.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The {0} &apos;{1}&apos; is missing..
+        ///   Looks up a localized string similar to Required member &apos;{0}&apos; is missing..
         /// </summary>
         public static string MissingMemberMessage {
             get {
@@ -97,7 +97,7 @@ namespace DotvvmAcademy.Validation.CSharp.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The {0} &apos;{1}&apos; is redundant..
+        ///   Looks up a localized string similar to Member &apos;{0}&apos; is redundant..
         /// </summary>
         public static string RedundantMemberMessage {
             get {
