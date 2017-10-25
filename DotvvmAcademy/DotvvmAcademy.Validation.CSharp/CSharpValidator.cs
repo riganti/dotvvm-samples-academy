@@ -1,6 +1,12 @@
-﻿namespace DotvvmAcademy.Validation.CSharp
+﻿using DotvvmAcademy.Validation.Abstractions;
+
+namespace DotvvmAcademy.Validation.CSharp
 {
-    public class CSharpValidator
+    public class CSharpValidator : IValidator<CSharpValidationRequest, CSharpValidationResponse>
     {
+        public CSharpValidationResponse Validate(CSharpValidationRequest request)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
