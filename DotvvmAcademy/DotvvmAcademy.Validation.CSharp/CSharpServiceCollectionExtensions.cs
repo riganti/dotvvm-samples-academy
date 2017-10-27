@@ -8,12 +8,17 @@ namespace DotvvmAcademy.Validation.CSharp
         public static void AddCSharpValidation(this IServiceCollection collection)
         {
             collection.AddTransient<ICSharpValidatorBuilder, DefaultCSharpValidatorBuilder>();
+            collection.AddSingleton<ICSharpValidationRequestFactory, DefaultCSharpValidationRequestFactory>();
         }
 
         public static void AddCSharpValidationInternalServices(this IServiceCollection collection)
         {
             collection.AddScoped<ICSharpFactory, DefaultCSharpFactory>();
-            collection.AddTransient<ICSharpDocument, DefaultCSharpDocument>();
+            collection.AddScoped<ICSharpDocument, DefaultCSharpDocument>();
+            collection.AddTransient<ICSharpNamespace, DefaultCSharpNamespace>();
+            collection.AddTransient<ICSharpClass, DefaultCSharpClass>();
+            collection.AddTransient<ICSharpMethod, DefaultCSharpMethod>();
+            collection.AddTransient<ICSharpProperty, DefaultCSharpProperty>();
         }
     }
 }

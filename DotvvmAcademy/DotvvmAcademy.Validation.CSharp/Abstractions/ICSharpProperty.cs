@@ -8,5 +8,8 @@
         ICSharpAccessor Getter();
 
         ICSharpAccessor Setter();
+
+        void Type(CSharpTypeDescriptor type);
+
     }
 }

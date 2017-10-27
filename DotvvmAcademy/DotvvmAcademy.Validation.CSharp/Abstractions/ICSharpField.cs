@@ -5,6 +5,6 @@
     /// </summary>
     public interface ICSharpField : ICSharpAllowsAccessModifier, ICSharpAllowsVolatileModifier, ICSharpAllowsConstModifier, ICSharpAllowsStaticModifier
     {
-        void Type(ICSharpTypeDescriptor type);
+        void Type(CSharpTypeDescriptor type);
     }
 }

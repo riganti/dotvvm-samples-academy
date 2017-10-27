@@ -7,9 +7,9 @@ namespace DotvvmAcademy.Validation.CSharp.Abstractions
     /// </summary>
     public interface ICSharpConstructibleType : ICSharpMemberedType
     {
-        ICSharpConstructor Constructor(IEnumerable<ICSharpTypeDescriptor> parameters);
+        ICSharpConstructor Constructor(IEnumerable<CSharpTypeDescriptor> parameters);
 
-        void ConversionOperator(ICSharpTypeDescriptor parameterType, ICSharpTypeDescriptor returnType);
+        void ConversionOperator(CSharpTypeDescriptor parameterType, CSharpTypeDescriptor returnType);
 
         ICSharpDelegate Delegate(string name);
 

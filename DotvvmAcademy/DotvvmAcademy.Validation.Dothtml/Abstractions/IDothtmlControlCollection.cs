@@ -1,4 +1,4 @@
-﻿using DotvvmAcademy.Validation.CSharp.Abstractions;
+﻿using DotvvmAcademy.Validation.CSharp;
 
 namespace DotvvmAcademy.Validation.Dothtml.Abstractions
 {
@@ -11,7 +11,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Abstractions
 
         void Count(int count);
 
-        IDothtmlControlCollection OfControlType(ICSharpTypeDescriptor type);
+        IDothtmlControlCollection OfControlType(CSharpTypeDescriptor type);
 
         IDothtmlControlCollection OfTag(string tag);
 

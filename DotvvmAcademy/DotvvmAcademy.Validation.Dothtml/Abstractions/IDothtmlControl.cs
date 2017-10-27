@@ -1,4 +1,4 @@
-﻿using DotvvmAcademy.Validation.CSharp.Abstractions;
+﻿using DotvvmAcademy.Validation.CSharp;
 
 namespace DotvvmAcademy.Validation.Dothtml.Abstractions
 {
@@ -15,6 +15,6 @@ namespace DotvvmAcademy.Validation.Dothtml.Abstractions
 
         void Tag(string tag);
 
-        void Type(ICSharpTypeDescriptor controlType);
+        void Type(CSharpTypeDescriptor controlType);
     }
 }

@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.16
+VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotvvmAcademy", "DotvvmAcademy\DotvvmAcademy.csproj", "{F43E4F26-CFBD-4D50-9065-E6E0043D3895}"
 EndProject
@@ -17,6 +17,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotvvmAcademy.Validation.CSharp", "DotvvmAcademy.Validation.CSharp\DotvvmAcademy.Validation.CSharp.csproj", "{371737B7-CA49-45C6-B9BA-2F900B7309D5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotvvmAcademy.Validation.Dothtml", "DotvvmAcademy.Validation.Dothtml\DotvvmAcademy.Validation.Dothtml.csproj", "{C59EBF36-9DDE-49B2-9F48-74212733C45A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotvvmAcademy.Validation.Tests", "DotvvmAcademy.Validation.Tests\DotvvmAcademy.Validation.Tests.csproj", "{1C8DA7FA-32ED-4E65-920C-58B06FF31D71}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -124,6 +126,18 @@ Global
 		{C59EBF36-9DDE-49B2-9F48-74212733C45A}.Release|x64.Build.0 = Release|Any CPU
 		{C59EBF36-9DDE-49B2-9F48-74212733C45A}.Release|x86.ActiveCfg = Release|Any CPU
 		{C59EBF36-9DDE-49B2-9F48-74212733C45A}.Release|x86.Build.0 = Release|Any CPU
+		{1C8DA7FA-32ED-4E65-920C-58B06FF31D71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C8DA7FA-32ED-4E65-920C-58B06FF31D71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C8DA7FA-32ED-4E65-920C-58B06FF31D71}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1C8DA7FA-32ED-4E65-920C-58B06FF31D71}.Debug|x64.Build.0 = Debug|Any CPU
+		{1C8DA7FA-32ED-4E65-920C-58B06FF31D71}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1C8DA7FA-32ED-4E65-920C-58B06FF31D71}.Debug|x86.Build.0 = Debug|Any CPU
+		{1C8DA7FA-32ED-4E65-920C-58B06FF31D71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C8DA7FA-32ED-4E65-920C-58B06FF31D71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C8DA7FA-32ED-4E65-920C-58B06FF31D71}.Release|x64.ActiveCfg = Release|Any CPU
+		{1C8DA7FA-32ED-4E65-920C-58B06FF31D71}.Release|x64.Build.0 = Release|Any CPU
+		{1C8DA7FA-32ED-4E65-920C-58B06FF31D71}.Release|x86.ActiveCfg = Release|Any CPU
+		{1C8DA7FA-32ED-4E65-920C-58B06FF31D71}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

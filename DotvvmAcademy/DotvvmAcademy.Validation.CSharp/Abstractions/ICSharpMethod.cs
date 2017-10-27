@@ -1,4 +1,6 @@
-﻿namespace DotvvmAcademy.Validation.CSharp.Abstractions
+﻿using System.Collections.Generic;
+
+namespace DotvvmAcademy.Validation.CSharp.Abstractions
 {
 
     /// <summary>
@@ -6,6 +8,8 @@
     /// </summary>
     public interface ICSharpMethod : ICSharpAllowsAccessModifier, ICSharpAllowsAbstractModifier, ICSharpAllowsAsyncModifier, ICSharpAllowsGenericParameters, ICSharpAllowsStaticModifier, ICSharpAllowsVirtualModifier
     {
-        void ReturnType(ICSharpTypeDescriptor type);
+        void ReturnType(CSharpTypeDescriptor type);
+
+        void Parameters(IEnumerable<CSharpTypeDescriptor> parameters);
     }
 }

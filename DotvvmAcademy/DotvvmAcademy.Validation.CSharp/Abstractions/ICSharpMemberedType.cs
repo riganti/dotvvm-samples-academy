@@ -7,10 +7,10 @@ namespace DotvvmAcademy.Validation.CSharp.Abstractions
     /// </summary>
     public interface ICSharpMemberedType : ICSharpAllowsAccessModifier, ICSharpAllowsGenericParameters
     {
-        ICSharpIndexer Indexer(IEnumerable<ICSharpTypeDescriptor> parameters);
+        ICSharpIndexer Indexer(IEnumerable<CSharpTypeDescriptor> parameters);
 
-        ICSharpMethod Method();
+        ICSharpMethod Method(string name);
 
-        ICSharpProperty Property();
+        ICSharpProperty Property(string name);
     }
 }
