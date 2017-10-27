@@ -1,4 +1,5 @@
 ﻿using DotvvmAcademy.Validation.Abstractions;
+using DotvvmAcademy.Validation.CSharp.Abstractions;
 using DotvvmAcademy.Validation.CSharp.Analyzers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
@@ -9,21 +10,21 @@ using System.Threading.Tasks;
 
 namespace DotvvmAcademy.Validation.CSharp
 {
-    public class CSharpValidator : IValidator<CSharpValidationRequest, CSharpValidationResponse>
+    public class DefaultCSharpValidator : ICSharpValidator
     {
         public ImmutableArray<DiagnosticAnalyzer> Analyzers = new ImmutableArray<DiagnosticAnalyzer>()
         {
             new RequiredMemberAnalyzer()
         };
 
-        public CSharpValidator(ImmutableDictionary<string, CSharpResolvedValidationMethod> resolvedMethods)
+        public DefaultCSharpValidator(ImmutableDictionary<string, CSharpValidationMethod> resolvedMethods)
         {
             ResolvedMethods = resolvedMethods;
         }
 
         public CompilationWithAnalyzersOptions Options { get; } = new CompilationWithAnalyzersOptions(null, null, false, false);
 
-        public ImmutableDictionary<string, CSharpResolvedValidationMethod> ResolvedMethods { get; }
+        public ImmutableDictionary<string, CSharpValidationMethod> ResolvedMethods { get; }
 
         public async Task<CSharpValidationResponse> Validate(CSharpValidationRequest request)
         {

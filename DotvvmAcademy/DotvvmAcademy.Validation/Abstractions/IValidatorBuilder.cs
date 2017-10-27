@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-
-namespace DotvvmAcademy.Validation.Abstractions
+﻿namespace DotvvmAcademy.Validation.Abstractions
 {
     public interface IValidatorBuilder<TValidator, TRequest, TResponse>
         where TRequest : IValidationRequest
@@ -8,7 +6,5 @@ namespace DotvvmAcademy.Validation.Abstractions
         where TValidator : IValidator<TRequest, TResponse>
     {
         TValidator Build();
-
-        void AddValidationMethod(string name, MethodInfo method);
     }
 }

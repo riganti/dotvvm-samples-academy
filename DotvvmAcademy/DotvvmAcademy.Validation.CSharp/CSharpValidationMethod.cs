@@ -4,13 +4,13 @@ using System.Linq;
 
 namespace DotvvmAcademy.Validation.CSharp
 {
-    public class CSharpResolvedValidationMethod
+    public class CSharpValidationMethod
     {
         public ImmutableDictionary<string, RequiredMemberInfo> RequiredMembers { get; set; }
 
-        public CSharpResolvedValidationMethod Merge(CSharpResolvedValidationMethod other)
+        public CSharpValidationMethod Merge(CSharpValidationMethod other)
         {
-            var method = new CSharpResolvedValidationMethod
+            var method = new CSharpValidationMethod
             {
                 RequiredMembers = RequiredMembers.Concat(other.RequiredMembers).ToImmutableDictionary()
             };

@@ -9,7 +9,7 @@ namespace DotvvmAcademy.Validation.CSharp.Abstractions
     {
         ICSharpConstructor Constructor(IEnumerable<ICSharpTypeDescriptor> parameters);
 
-        ICSharpProperty ConversionOperator(ICSharpTypeDescriptor parameterType, ICSharpTypeDescriptor returnType);
+        void ConversionOperator(ICSharpTypeDescriptor parameterType, ICSharpTypeDescriptor returnType);
 
         ICSharpDelegate Delegate(string name);
 
@@ -19,10 +19,10 @@ namespace DotvvmAcademy.Validation.CSharp.Abstractions
 
         ICSharpField Field(string name);
 
-        ICSharpMemberedType Interface(string name);
+        ICSharpInterface Interface(string name);
 
         ICSharpMethod Operator(string operationName);
 
-        ICSharpMemberedType Struct(string name);
+        ICSharpStruct Struct(string name);
     }
 }

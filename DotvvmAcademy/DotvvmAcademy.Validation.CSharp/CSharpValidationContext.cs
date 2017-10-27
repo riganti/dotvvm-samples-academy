@@ -7,7 +7,7 @@ namespace DotvvmAcademy.Validation.CSharp
     public class CSharpValidationContext : IValidationContext<CSharpValidationRequest, CSharpValidationResponse>
     {
         public CSharpValidationContext(CSharpValidationRequest request, CSharpValidationResponse response, 
-            CSharpResolvedValidationMethod method, ImmutableArray<CSharpSyntaxTree> validatedTrees)
+            CSharpValidationMethod method, ImmutableArray<CSharpSyntaxTree> validatedTrees)
         {
             Request = request;
             Response = response;
@@ -15,7 +15,7 @@ namespace DotvvmAcademy.Validation.CSharp
             ValidatedTrees = validatedTrees;
         }
 
-        public CSharpResolvedValidationMethod Method { get; }
+        public CSharpValidationMethod Method { get; }
 
         public CSharpValidationRequest Request { get; }
 

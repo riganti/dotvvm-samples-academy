@@ -1,9 +1,9 @@
-using System.Collections.Generic;
+using System.Collections.Immutable;
 
 namespace DotvvmAcademy.Validation.Abstractions
 {
     public interface IValidationResponse
     {
-        List<ValidationDiagnostic> Diagnostics { get; }
+        ImmutableArray<ValidationDiagnostic> Diagnostics { get; }
     }
 }
