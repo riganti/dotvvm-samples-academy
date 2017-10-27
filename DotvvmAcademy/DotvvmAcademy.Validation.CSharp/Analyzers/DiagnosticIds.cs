@@ -2,6 +2,8 @@
 {
     public static class DiagnosticIds
     {
+        public const string ValidatorException = "DA1001";
+
         public const string RedundantMember = "DA1001";
         public const string MissingMember = "DA1002";
         public const string IncorrectAccessModifier = "DA1003";

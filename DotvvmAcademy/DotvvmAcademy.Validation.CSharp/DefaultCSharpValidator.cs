@@ -1,8 +1,9 @@
-﻿using DotvvmAcademy.Validation.Abstractions;
-using DotvvmAcademy.Validation.CSharp.Abstractions;
+﻿using DotvvmAcademy.Validation.CSharp.Abstractions;
 using DotvvmAcademy.Validation.CSharp.Analyzers;
+using DotvvmAcademy.Validation.CSharp.Resources;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
@@ -12,34 +13,46 @@ namespace DotvvmAcademy.Validation.CSharp
 {
     public class DefaultCSharpValidator : ICSharpValidator
     {
-        public ImmutableArray<DiagnosticAnalyzer> Analyzers = new ImmutableArray<DiagnosticAnalyzer>()
+        private readonly ImmutableArray<DiagnosticAnalyzer> Analyzers = new ImmutableArray<DiagnosticAnalyzer>()
         {
             new RequiredMemberAnalyzer()
         };
 
-        public DefaultCSharpValidator(ImmutableDictionary<string, CSharpValidationMethod> resolvedMethods)
+        private readonly ImmutableDictionary<string, CSharpValidationMethod> methods;
+        private readonly IServiceProvider serviceProvider;
+        private CompilationWithAnalyzersOptions options = new CompilationWithAnalyzersOptions(null, null, false, false);
+
+        protected internal DefaultCSharpValidator(ImmutableDictionary<string, CSharpValidationMethod> methods, IServiceProvider serviceProvider)
         {
-            ResolvedMethods = resolvedMethods;
+            this.methods = methods ?? throw new ArgumentNullException(nameof(methods));
+            this.serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
         }
-
-        public CompilationWithAnalyzersOptions Options { get; } = new CompilationWithAnalyzersOptions(null, null, false, false);
-
-        public ImmutableDictionary<string, CSharpValidationMethod> ResolvedMethods { get; }
 
         public async Task<CSharpValidationResponse> Validate(CSharpValidationRequest request)
         {
-            ClearAnalyzerContext();
             var response = new CSharpValidationResponse();
-            var validatedTrees = request.ValidationUnits.Select(u => u.SyntaxTree).ToImmutableArray();
-            var method = request.ValidationUnits
-                .SelectMany(u => u.ValidationMethods)
-                .Select(m => ResolvedMethods[m])
-                .Aggregate((first, second) => first.Merge(second));
-            var context = new CSharpValidationContext(request, response, method, validatedTrees);
-            SetAnalyzerContext(context);
-            var compilation = new CompilationWithAnalyzers(request.Compilation, Analyzers, Options);
-            var diagnostics = await compilation.GetAllDiagnosticsAsync();
-            response.Diagnostics = ConvertDiagnostics(diagnostics);
+            ClearAnalyzerContext();
+            try
+            {
+                var validatedTrees = request.ValidationUnits.Select(u => u.SyntaxTree).ToImmutableArray();
+                var method = request.ValidationUnits
+                    .SelectMany(u => u.ValidationMethods)
+                    .Select(m => methods[m])
+                    .Aggregate((first, second) => first.Merge(second));
+                var context = new CSharpValidationContext(request, response, method, validatedTrees);
+                SetAnalyzerContext(context);
+                var compilation = new CompilationWithAnalyzers(request.Compilation, Analyzers, options);
+                var diagnostics = await compilation.GetAllDiagnosticsAsync();
+                response.Diagnostics = ConvertDiagnostics(diagnostics);
+            }
+            catch (Exception e)
+            {
+                var message = string.Format(DiagnosticResources.ValidatorExceptionMessage, e.GetType().Name);
+                response.Diagnostics = new ImmutableArray<ValidationDiagnostic>
+                {
+                    new ValidationDiagnostic(DiagnosticIds.ValidatorException, message, DiagnosticLocation.None)
+                };
+            }
             return response;
         }
 

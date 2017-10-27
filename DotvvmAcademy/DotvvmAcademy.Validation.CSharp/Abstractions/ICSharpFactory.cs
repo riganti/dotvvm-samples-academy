@@ -22,10 +22,12 @@
 
         ICSharpMethod CreateMethod();
 
-        ICSharpNamespace CreateNamespace();
+        ICSharpNamespace CreateNamespace(string name = "");
 
         ICSharpProperty CreateProperty();
 
         ICSharpStruct CreateStruct();
+
+        CSharpValidationMethod CreateValidationMethod();
     }
 }

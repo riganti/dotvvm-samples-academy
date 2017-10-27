@@ -135,4 +135,7 @@
   <data name="RedundantMemberTitle" xml:space="preserve">
     <value>Redundant Member</value>
   </data>
+  <data name="ValidatorExceptionMessage" xml:space="preserve">
+    <value>An exception of type '{0}' was thrown during the validator's execution.</value>
+  </data>
 </root>

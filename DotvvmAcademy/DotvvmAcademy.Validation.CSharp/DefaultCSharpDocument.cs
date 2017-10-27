@@ -1,20 +1,24 @@
 ﻿using DotvvmAcademy.Validation.CSharp.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DotvvmAcademy.Validation.CSharp
 {
     public class DefaultCSharpDocument : ICSharpDocument
     {
+        private readonly ICSharpFactory factory;
+
+        public DefaultCSharpDocument(ICSharpFactory factory)
+        {
+            this.factory = factory;
+        }
+
         public ICSharpNamespace GlobalNamespace()
         {
-            throw new NotImplementedException();
+            return factory.CreateNamespace();
         }
 
         public ICSharpNamespace Namespace(string name)
         {
-            throw new NotImplementedException();
+            return factory.CreateNamespace(name);
         }
     }
 }

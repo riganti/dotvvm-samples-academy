@@ -1,4 +1,5 @@
 ﻿using DotvvmAcademy.Validation.Abstractions;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Reflection;
 
@@ -10,8 +11,8 @@ namespace DotvvmAcademy.Validation.CSharp.Abstractions
 
         void AddValidationMethod(MethodInfo method);
 
-        void AddValidationMethods(Assembly assembly);
+        void AddValidationAssembly(Assembly assembly);
 
-        void SetServiceProvider(IServiceProvider provider);
+        void ConfigureServiceCollection(Action<IServiceCollection> configureCollection);
     }
 }

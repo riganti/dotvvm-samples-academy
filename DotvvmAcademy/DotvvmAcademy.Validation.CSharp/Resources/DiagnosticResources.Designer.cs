@@ -113,5 +113,14 @@ namespace DotvvmAcademy.Validation.CSharp.Resources {
                 return ResourceManager.GetString("RedundantMemberTitle", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An exception of type &apos;{0}&apos; was thrown during the validator&apos;s execution..
+        /// </summary>
+        public static string ValidatorExceptionMessage {
+            get {
+                return ResourceManager.GetString("ValidatorExceptionMessage", resourceCulture);
+            }
+        }
     }
 }
