@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Immutable;
 using System.Linq;
 
 namespace DotvvmAcademy.Validation.CSharp
@@ -18,12 +19,21 @@ namespace DotvvmAcademy.Validation.CSharp
 
         public CSharpValidationMethod CreateValidationMethod()
         {
-            throw new NotImplementedException();
+            var method = new CSharpValidationMethod
+            {
+                RequiredSymbols = GetRequiredSymbols()
+            };
+            return method;
+        }
+
+        public ICSharpDocument GetDocument()
+        {
+            return provider.GetRequiredService<ICSharpDocument>();
         }
 
         public TCSharpObject GetObject<TCSharpObject>(string fullName) where TCSharpObject : ICSharpObject
         {
-            var value = cache.GetOrAdd(fullName, s => 
+            var value = cache.GetOrAdd(fullName, s =>
             {
                 var service = provider.GetRequiredService<TCSharpObject>();
                 service.SetUniqueFullName(s);
@@ -47,6 +57,11 @@ namespace DotvvmAcademy.Validation.CSharp
             {
                 cache.TryRemove(pair.Key, out _);
             }
+        }
+
+        private ImmutableArray<string> GetRequiredSymbols()
+        {
+            return cache.Keys.ToImmutableArray();
         }
     }
 }

@@ -15,7 +15,7 @@ namespace DotvvmAcademy.Validation.CSharp
     {
         private readonly ImmutableArray<DiagnosticAnalyzer> Analyzers = new ImmutableArray<DiagnosticAnalyzer>()
         {
-            new RequiredMemberAnalyzer()
+            new RequiredSymbolAnalyzer()
         };
 
         private readonly ImmutableDictionary<string, CSharpValidationMethod> methods;

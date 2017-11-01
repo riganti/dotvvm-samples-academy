@@ -77,7 +77,7 @@ namespace DotvvmAcademy.Validation.CSharp
                     using (var scope = provider.CreateScope())
                     {
                         var factory = scope.ServiceProvider.GetRequiredService<ICSharpFactory>();
-                        method.Invoke(instance, new[] { factory.CreateDocument() });
+                        method.Invoke(instance, new[] { factory.GetDocument() });
                         methods.Add(name, factory.CreateValidationMethod());
                     }
                 }
