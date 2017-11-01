@@ -1,16 +1,19 @@
 ﻿using DotvvmAcademy.Validation.CSharp.Abstractions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DotvvmAcademy.Validation.CSharp
 {
-    public class DefaultCSharpClass : ICSharpClass
+    public class DefaultCSharpClass : DefaultCSharpObject, ICSharpClass
     {
         private readonly ICSharpFactory factory;
+        private readonly ICSharpFullNameProvider nameProvider;
 
-        public DefaultCSharpClass(ICSharpFactory factory)
+        public DefaultCSharpClass(ICSharpFactory factory, ICSharpFullNameProvider nameProvider)
         {
             this.factory = factory;
+            this.nameProvider = nameProvider;
         }
 
         public CSharpAccessModifier AccessModifier { get; set; }
@@ -26,6 +29,16 @@ namespace DotvvmAcademy.Validation.CSharp
         public bool IsSealed { get; set; }
 
         public bool IsStatic { get; set; }
+
+        public ICSharpClass GetClass(string name, IEnumerable<CSharpGenericParameterDescriptor> genericParameters)
+        {
+            name = nameProvider.GetMemberName(FullName, name);
+            if (genericParameters != null)
+            {
+                name = nameProvider.GetGenericName(name, genericParameters.Select(p => p.Name));
+            }
+            return factory.GetObject<ICSharpClass>(name);
+        }
 
         public ICSharpConstructor GetConstructor(IEnumerable<CSharpTypeDescriptor> parameters)
         {
@@ -69,20 +82,27 @@ namespace DotvvmAcademy.Validation.CSharp
 
         public ICSharpMethod GetMethod(string name, IEnumerable<CSharpTypeDescriptor> parameters, IEnumerable<CSharpGenericParameterDescriptor> genericParameters)
         {
+            name = nameProvider.GetMemberName(FullName, name);
+            if (genericParameters != null)
+            {
+                name = nameProvider.GetGenericName(name, genericParameters.Select(p => p.Name));
+            }
+            name = nameProvider.GetInvokableName(name, parameters.Select(p => p.FullName));
+            return factory.GetObject<ICSharpMethod>(name);
+        }
+
+        public ICSharpMethod GetOperator(string operationName)
+        {
             throw new NotImplementedException();
         }
 
         public ICSharpProperty GetProperty(string name)
         {
-            throw new NotImplementedException();
+            name = nameProvider.GetMemberName(FullName, name);
+            return factory.GetObject<ICSharpProperty>(name);
         }
 
-        public ICSharpMethod Operator(string operationName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ICSharpStruct Struct(string name, IEnumerable<CSharpGenericParameterDescriptor> genericParameters)
+        public ICSharpStruct GetStruct(string name, IEnumerable<CSharpGenericParameterDescriptor> genericParameters)
         {
             throw new NotImplementedException();
         }

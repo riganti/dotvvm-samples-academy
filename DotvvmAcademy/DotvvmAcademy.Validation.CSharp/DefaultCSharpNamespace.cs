@@ -1,9 +1,11 @@
 ﻿using DotvvmAcademy.Validation.CSharp.Abstractions;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DotvvmAcademy.Validation.CSharp
 {
-    public class DefaultCSharpNamespace : ICSharpNamespace
+    public class DefaultCSharpNamespace : DefaultCSharpObject, ICSharpNamespace
     {
         private readonly ICSharpFactory factory;
         private readonly ICSharpFullNameProvider nameProvider;
@@ -14,34 +16,38 @@ namespace DotvvmAcademy.Validation.CSharp
             this.nameProvider = nameProvider;
         }
 
-        public string FullName { get; set; }
+        public ICSharpClass GetClass(string name, IEnumerable<CSharpGenericParameterDescriptor> genericParameters)
+        {
+            name = nameProvider.GetMemberName(FullName, name);
+            if (genericParameters != null)
+            {
+                name = nameProvider.GetGenericName(name, genericParameters.Select(p => p.Name));
+            }
+            return factory.GetObject<ICSharpClass>(name);
+        }
 
-        public ICSharpClass Class(string name)
+        public ICSharpDelegate GetDelegate(string name)
         {
             throw new NotImplementedException();
         }
 
-        public ICSharpDelegate Delegate(string name)
+        public ICSharpEnum GetEnum(string name)
         {
             throw new NotImplementedException();
         }
 
-        public ICSharpEnum Enum(string name)
+        public ICSharpInterface GetInterface(string name, IEnumerable<CSharpGenericParameterDescriptor> genericParameters)
         {
             throw new NotImplementedException();
         }
 
-        public ICSharpInterface Interface(string name)
+        public ICSharpNamespace GetNamespace(string name)
         {
-            throw new NotImplementedException();
+            name = nameProvider.GetMemberName(FullName, name);
+            return factory.GetObject<ICSharpNamespace>(name);
         }
 
-        public ICSharpNamespace Namespace(string name)
-        {
-            return factory.CreateNamespace(nameProvider.GetNestedNamespaceFullName(FullName, name));
-        }
-
-        public ICSharpStruct Struct(string name)
+        public ICSharpStruct GetStruct(string name, IEnumerable<CSharpGenericParameterDescriptor> genericParameters)
         {
             throw new NotImplementedException();
         }

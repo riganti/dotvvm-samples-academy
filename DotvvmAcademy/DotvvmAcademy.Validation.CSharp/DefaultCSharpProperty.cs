@@ -1,50 +1,42 @@
 ﻿using DotvvmAcademy.Validation.CSharp.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DotvvmAcademy.Validation.CSharp
 {
-    public class DefaultCSharpProperty : ICSharpProperty
+    public class DefaultCSharpProperty : DefaultCSharpObject, ICSharpProperty
     {
-        public void Abstract()
+        private readonly ICSharpFactory factory;
+        private readonly ICSharpFullNameProvider nameProvider;
+
+        public DefaultCSharpProperty(ICSharpFactory factory, ICSharpFullNameProvider nameProvider)
         {
-            throw new NotImplementedException();
+            this.factory = factory;
+            this.nameProvider = nameProvider;
         }
 
-        public void AccessModifier(CSharpAccessModifier modifier)
+        public CSharpAccessModifier AccessModifier { get; set; }
+
+        public bool IsAbstract { get; set; }
+
+        public bool IsOverriding { get; set; }
+
+        public bool IsStatic { get; set; }
+
+        public bool IsVirtual { get; set; }
+
+        public CSharpTypeDescriptor Type { get; set; }
+
+        public ICSharpAccessor GetGetter()
         {
-            throw new NotImplementedException();
+            var name = nameProvider.GetMemberName(FullName, CSharpConstants.GetterName);
+            name = nameProvider.GetInvokableName(name, null);
+            return factory.GetObject<ICSharpAccessor>(name);
         }
 
-        public ICSharpAccessor Getter()
+        public ICSharpAccessor GetSetter()
         {
-            throw new NotImplementedException();
-        }
-
-        public void Override()
-        {
-            throw new NotImplementedException();
-        }
-
-        public ICSharpAccessor Setter()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Static()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Type(CSharpTypeDescriptor type)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Virtual()
-        {
-            throw new NotImplementedException();
+            var name = nameProvider.GetMemberName(FullName, CSharpConstants.SetterName);
+            name = nameProvider.GetInvokableName(name, null);
+            return factory.GetObject<ICSharpAccessor>(name);
         }
     }
 }

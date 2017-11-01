@@ -7,6 +7,8 @@ namespace DotvvmAcademy.Validation.CSharp.Abstractions
     /// </summary>
     public interface ICSharpConstructibleType : ICSharpMemberedType, ICSharpObject
     {
+        ICSharpClass GetClass(string name, IEnumerable<CSharpGenericParameterDescriptor> genericParameters);
+
         ICSharpConstructor GetConstructor(IEnumerable<CSharpTypeDescriptor> parameters);
 
         ICSharpConversionOperator GetConversionOperator(CSharpTypeDescriptor parameterType, CSharpTypeDescriptor returnType);
@@ -21,8 +23,8 @@ namespace DotvvmAcademy.Validation.CSharp.Abstractions
 
         ICSharpInterface GetInterface(string name, IEnumerable<CSharpGenericParameterDescriptor> genericParameters);
 
-        ICSharpMethod Operator(string operationName);
+        ICSharpMethod GetOperator(string operationName);
 
-        ICSharpStruct Struct(string name, IEnumerable<CSharpGenericParameterDescriptor> genericParameters);
+        ICSharpStruct GetStruct(string name, IEnumerable<CSharpGenericParameterDescriptor> genericParameters);
     }
 }

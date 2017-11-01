@@ -2,64 +2,51 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Concurrent;
+using System.Linq;
 
 namespace DotvvmAcademy.Validation.CSharp
 {
     public class DefaultCSharpFactory : ICSharpFactory
     {
-        private readonly ConcurrentDictionary<string, DefaultCSharpClass> classes = new ConcurrentDictionary<string, DefaultCSharpClass>();
-        private readonly ConcurrentDictionary<string, ICSharpConstructor> constructors = new ConcurrentDictionary<string, ICSharpConstructor>();
-        private readonly ConcurrentDictionary<string, ICSharpDelegate> delegates = new ConcurrentDictionary<string, ICSharpDelegate>();
-        private readonly ConcurrentDictionary<string, ICSharpEnum> enums = new ConcurrentDictionary<string, ICSharpEnum>();
-        private readonly ConcurrentDictionary<string, ICSharpEvent> events = new ConcurrentDictionary<string, ICSharpEvent>();
-        private readonly ConcurrentDictionary<string, ICSharpField> fields = new ConcurrentDictionary<string, ICSharpField>();
-        private readonly ConcurrentDictionary<string, ICSharpIndexer> indexers = new ConcurrentDictionary<string, ICSharpIndexer>();
-        private readonly ConcurrentDictionary<string, ICSharpInterface> interfaces = new ConcurrentDictionary<string, ICSharpInterface>();
-        private readonly ConcurrentDictionary<string, DefaultCSharpMethod> methods = new ConcurrentDictionary<string, DefaultCSharpMethod>();
-        private readonly ConcurrentDictionary<string, DefaultCSharpNamespace> namespaces = new ConcurrentDictionary<string, DefaultCSharpNamespace>();
-        private readonly ConcurrentDictionary<string, DefaultCSharpProperty> properties = new ConcurrentDictionary<string, DefaultCSharpProperty>();
+        private readonly ConcurrentDictionary<string, ICSharpObject> cache = new ConcurrentDictionary<string, ICSharpObject>();
         private readonly IServiceProvider provider;
-        private readonly ConcurrentDictionary<string, ICSharpStruct> structs = new ConcurrentDictionary<string, ICSharpStruct>();
 
         public DefaultCSharpFactory(IServiceProvider provider)
         {
             this.provider = provider;
         }
 
-        public ICSharpClass CreateClass(string fullName) => GetOrAdd(classes, fullName);
-
-        public ICSharpConstructor CreateConstructor(string fullName) => GetOrAdd(constructors, fullName);
-
-        public ICSharpDelegate CreateDelegate(string fullName) => GetOrAdd(delegates, fullName);
-
-        public ICSharpDocument CreateDocument() => provider.GetRequiredService<ICSharpDocument>();
-
-        public ICSharpEnum CreateEnum(string fullName) => GetOrAdd(enums, fullName);
-
-        public ICSharpEvent CreateEvent(string fullName) => GetOrAdd(events, fullName);
-
-        public ICSharpField CreateField(string fullName) => GetOrAdd(fields, fullName);
-
-        public ICSharpIndexer CreateIndexer(string fullName) => GetOrAdd(indexers, fullName);
-
-        public ICSharpInterface CreateInterface(string fullName) => GetOrAdd(interfaces, fullName);
-
-        public ICSharpMethod CreateMethod(string fullName) => GetOrAdd(methods, fullName);
-
-        public ICSharpNamespace CreateNamespace(string fullName) => GetOrAdd(namespaces, fullName);
-
-        public ICSharpProperty CreateProperty(string fullName) => GetOrAdd(properties, fullName);
-
-        public ICSharpStruct CreateStruct(string fullName) => GetOrAdd(structs, fullName);
-
         public CSharpValidationMethod CreateValidationMethod()
         {
             throw new NotImplementedException();
         }
 
-        private TCSharp GetOrAdd<TCSharp>(ConcurrentDictionary<string, TCSharp> dict, string fullName)
+        public TCSharpObject GetObject<TCSharpObject>(string fullName) where TCSharpObject : ICSharpObject
         {
-            return dict.GetOrAdd(fullName, _ => provider.GetRequiredService<TCSharp>());
+            var value = cache.GetOrAdd(fullName, s => 
+            {
+                var service = provider.GetRequiredService<TCSharpObject>();
+                service.SetUniqueFullName(s);
+                return service;
+            });
+            if (value is TCSharpObject castObject)
+            {
+                return castObject;
+            }
+            else
+            {
+                throw new InvalidOperationException($"No '{typeof(TCSharpObject).Name}' with full name '{fullName}' has been found. " +
+                    $"The cache already contains a '{value.GetType().Name}' with the same name.");
+            }
+        }
+
+        public void RemoveObject<TCSharpObject>(TCSharpObject csharpObject) where TCSharpObject : ICSharpObject
+        {
+            var values = cache.Where((k, v) => ReferenceEquals(v, csharpObject));
+            foreach (var pair in values)
+            {
+                cache.TryRemove(pair.Key, out _);
+            }
         }
     }
 }

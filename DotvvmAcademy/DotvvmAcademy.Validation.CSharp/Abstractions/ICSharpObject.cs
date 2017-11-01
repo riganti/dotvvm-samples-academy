@@ -2,5 +2,8 @@
 {
     public interface ICSharpObject
     {
+        string FullName { get; }
+
+        void SetUniqueFullName(string fullName);
     }
 }

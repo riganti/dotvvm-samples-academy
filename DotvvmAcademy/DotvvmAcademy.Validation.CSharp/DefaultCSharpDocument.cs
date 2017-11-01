@@ -13,17 +13,17 @@ namespace DotvvmAcademy.Validation.CSharp
 
         public ICSharpNamespace GetGlobalNamespace()
         {
-            return factory.CreateNamespace("");
+            return factory.GetObject<ICSharpNamespace>("");
         }
 
         public ICSharpNamespace GetNamespace(string name)
         {
-            return factory.CreateNamespace(name);
+            return factory.GetObject<ICSharpNamespace>(name);
         }
 
         public void Remove<TCSharpObject>(TCSharpObject csharpObject) where TCSharpObject : ICSharpObject
         {
-            throw new System.NotImplementedException();
+            factory.RemoveObject(csharpObject);
         }
     }
 }

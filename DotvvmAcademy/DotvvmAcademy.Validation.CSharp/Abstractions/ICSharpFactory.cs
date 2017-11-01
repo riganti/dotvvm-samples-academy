@@ -2,31 +2,11 @@
 {
     public interface ICSharpFactory
     {
-        ICSharpClass CreateClass(string fullName);
+        TCSharpObject GetObject<TCSharpObject>(string fullName)
+            where TCSharpObject : ICSharpObject;
 
-        ICSharpConstructor CreateConstructor(string fullName);
-
-        ICSharpDelegate CreateDelegate(string fullName);
-
-        ICSharpDocument CreateDocument();
-
-        ICSharpEnum CreateEnum(string fullName);
-
-        ICSharpEvent CreateEvent(string fullName);
-
-        ICSharpField CreateField(string fullName);
-
-        ICSharpIndexer CreateIndexer(string fullName);
-
-        ICSharpInterface CreateInterface(string fullName);
-
-        ICSharpMethod CreateMethod(string fullName);
-
-        ICSharpNamespace CreateNamespace(string fullName);
-
-        ICSharpProperty CreateProperty(string fullName);
-
-        ICSharpStruct CreateStruct(string fullName);
+        void RemoveObject<TCSharpObject>(TCSharpObject csharpObject)
+            where TCSharpObject : ICSharpObject;
 
         CSharpValidationMethod CreateValidationMethod();
     }
