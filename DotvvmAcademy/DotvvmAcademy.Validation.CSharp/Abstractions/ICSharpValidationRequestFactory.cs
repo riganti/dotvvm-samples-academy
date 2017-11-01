@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DotvvmAcademy.Validation.CSharp.Abstractions
 {
-    public interface ICSharpValidationRequestFactory
+    public interface ICSharpValidationRequestFactory : ICSharpObject
     {
         CSharpValidationRequest CreateRequest(string source, string validationMethodName);
     }

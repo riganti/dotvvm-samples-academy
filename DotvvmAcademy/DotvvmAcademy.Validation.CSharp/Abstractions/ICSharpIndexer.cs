@@ -3,7 +3,7 @@
     /// <summary>
     /// A C# indexer.
     /// </summary>
-    public interface ICSharpIndexer : ICSharpAllowsAccessModifier, ICSharpAllowsAbstractModifier, ICSharpAllowsVirtualModifier
+    public interface ICSharpIndexer : ICSharpAllowsAccessModifier, ICSharpAllowsAbstractModifier, ICSharpAllowsVirtualModifier, ICSharpObject
     {
         CSharpTypeDescriptor ReturnType { get; set; }
 

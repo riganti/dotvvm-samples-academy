@@ -1,82 +1,78 @@
 ﻿using DotvvmAcademy.Validation.CSharp.Abstractions;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace DotvvmAcademy.Validation.CSharp
 {
-    public class DefaultCSharpClass<TClass>: ICSharpClass
+    public class DefaultCSharpClass : ICSharpClass
     {
+        private readonly ICSharpFactory factory;
+
+        public DefaultCSharpClass(ICSharpFactory factory)
+        {
+            this.factory = factory;
+        }
+
+        public CSharpAccessModifier AccessModifier { get; set; }
+
+        public IList<CSharpTypeDescriptor> BaseTypes { get; set; } = new List<CSharpTypeDescriptor>();
+
+        public bool HasDestructor { get; set; }
+
         public bool IsAbstract { get; set; }
 
-        public CSharpAccessModifier AccessModifier { get; set; } = CSharpAccessModifier.Public;
+        public bool IsOverriding { get; set; }
 
-        public void Abstract()
+        public bool IsSealed { get; set; }
+
+        public bool IsStatic { get; set; }
+
+        public ICSharpConstructor GetConstructor(IEnumerable<CSharpTypeDescriptor> parameters)
         {
             throw new NotImplementedException();
         }
 
-        public void AccessModifier(CSharpAccessModifier modifier)
+        public ICSharpConversionOperator GetConversionOperator(CSharpTypeDescriptor parameterType, CSharpTypeDescriptor returnType)
         {
             throw new NotImplementedException();
         }
 
-        public ICSharpConstructor Constructor(IEnumerable<CSharpTypeDescriptor> parameters)
+        public ICSharpDelegate GetDelegate(string name, IEnumerable<CSharpGenericParameterDescriptor> genericParameters)
         {
             throw new NotImplementedException();
         }
 
-        public void ConversionOperator(CSharpTypeDescriptor parameterType, CSharpTypeDescriptor returnType)
+        public ICSharpEnum GetEnum(string name)
         {
             throw new NotImplementedException();
         }
 
-        public ICSharpDelegate Delegate(string name)
+        public ICSharpEvent GetEvent(string name)
         {
             throw new NotImplementedException();
         }
 
-        public void Destructor()
+        public ICSharpField GetField(string name)
         {
             throw new NotImplementedException();
         }
 
-        public ICSharpEnum Enum(string name)
+        public ICSharpIndexer GetIndexer(IEnumerable<CSharpTypeDescriptor> parameters)
         {
             throw new NotImplementedException();
         }
 
-        public ICSharpEvent Event(string name)
+        public ICSharpInterface GetInterface(string name, IEnumerable<CSharpGenericParameterDescriptor> genericParameters)
         {
             throw new NotImplementedException();
         }
 
-        public ICSharpField Field(string name)
+        public ICSharpMethod GetMethod(string name, IEnumerable<CSharpTypeDescriptor> parameters, IEnumerable<CSharpGenericParameterDescriptor> genericParameters)
         {
             throw new NotImplementedException();
         }
 
-        public ICSharpGenericParameter GenericParameter(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ICSharpIndexer Indexer(IEnumerable<CSharpTypeDescriptor> parameters)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void InheritsFrom(IEnumerable<CSharpTypeDescriptor> baseTypes)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ICSharpInterface Interface(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ICSharpMethod Method(string name, IEnumerable<CSharpTypeDescriptor> parameters)
+        public ICSharpProperty GetProperty(string name)
         {
             throw new NotImplementedException();
         }
@@ -86,27 +82,7 @@ namespace DotvvmAcademy.Validation.CSharp
             throw new NotImplementedException();
         }
 
-        public void Override()
-        {
-            throw new NotImplementedException();
-        }
-
-        public ICSharpProperty Property(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Sealed()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Static()
-        {
-            throw new NotImplementedException();
-        }
-
-        public ICSharpStruct Struct(string name)
+        public ICSharpStruct Struct(string name, IEnumerable<CSharpGenericParameterDescriptor> genericParameters)
         {
             throw new NotImplementedException();
         }

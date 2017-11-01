@@ -3,7 +3,7 @@
     /// <summary>
     /// A C# property accessor.
     /// </summary>
-    public interface ICSharpAccessor : ICSharpAllowsAccessModifier
+    public interface ICSharpAccessor : ICSharpAllowsAccessModifier, ICSharpObject
     {
     }
 }

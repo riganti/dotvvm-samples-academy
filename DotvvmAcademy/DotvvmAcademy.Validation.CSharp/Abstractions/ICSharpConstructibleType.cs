@@ -5,7 +5,7 @@ namespace DotvvmAcademy.Validation.CSharp.Abstractions
     /// <summary>
     /// A C# type that can be constructed i.e. a class or a struct.
     /// </summary>
-    public interface ICSharpConstructibleType : ICSharpMemberedType
+    public interface ICSharpConstructibleType : ICSharpMemberedType, ICSharpObject
     {
         ICSharpConstructor GetConstructor(IEnumerable<CSharpTypeDescriptor> parameters);
 

@@ -3,7 +3,7 @@
     /// <summary>
     /// A C# interface.
     /// </summary>
-    public interface ICSharpInterface : ICSharpAllowsInheritance, ICSharpMemberedType
+    public interface ICSharpInterface : ICSharpAllowsInheritance, ICSharpMemberedType, ICSharpObject
     {
     }
 }

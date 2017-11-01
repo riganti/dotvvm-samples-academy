@@ -11,14 +11,19 @@ namespace DotvvmAcademy.Validation.CSharp
             this.factory = factory;
         }
 
-        public ICSharpNamespace GlobalNamespace()
+        public ICSharpNamespace GetGlobalNamespace()
         {
             return factory.CreateNamespace("");
         }
 
-        public ICSharpNamespace Namespace(string name)
+        public ICSharpNamespace GetNamespace(string name)
         {
             return factory.CreateNamespace(name);
+        }
+
+        public void Remove<TCSharpObject>(TCSharpObject csharpObject) where TCSharpObject : ICSharpObject
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

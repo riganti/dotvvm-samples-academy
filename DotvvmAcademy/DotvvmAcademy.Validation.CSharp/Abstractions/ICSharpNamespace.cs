@@ -5,7 +5,7 @@ namespace DotvvmAcademy.Validation.CSharp.Abstractions
     /// <summary>
     /// A C# namespace.
     /// </summary>
-    public interface ICSharpNamespace
+    public interface ICSharpNamespace : ICSharpObject
     {
         ICSharpClass GetClass(string name, IEnumerable<CSharpGenericParameterDescriptor> genericParameters);
 

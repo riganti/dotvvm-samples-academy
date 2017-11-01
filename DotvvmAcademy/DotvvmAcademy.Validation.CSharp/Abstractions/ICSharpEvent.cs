@@ -3,7 +3,7 @@
     /// <summary>
     /// A C# event field or property.
     /// </summary>
-    public interface ICSharpEvent : ICSharpAllowsAccessModifier, ICSharpAllowsAbstractModifier, ICSharpAllowsStaticModifier, ICSharpAllowsVirtualModifier
+    public interface ICSharpEvent : ICSharpAllowsAccessModifier, ICSharpAllowsAbstractModifier, ICSharpAllowsStaticModifier, ICSharpAllowsVirtualModifier, ICSharpObject
     {
         CSharpTypeDescriptor Type { get; set; }
 

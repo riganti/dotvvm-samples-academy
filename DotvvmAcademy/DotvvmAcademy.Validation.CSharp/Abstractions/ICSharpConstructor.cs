@@ -3,7 +3,7 @@
     /// <summary>
     /// A C# constructor of a class or a struct.
     /// </summary>
-    public interface ICSharpConstructor : ICSharpAllowsAccessModifier, ICSharpAllowsStaticModifier
+    public interface ICSharpConstructor : ICSharpAllowsAccessModifier, ICSharpAllowsStaticModifier, ICSharpObject
     {
     }
 }

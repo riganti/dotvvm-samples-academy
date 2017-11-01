@@ -8,5 +8,8 @@
         ICSharpNamespace GetGlobalNamespace();
 
         ICSharpNamespace GetNamespace(string name);
+
+        void Remove<TCSharpObject>(TCSharpObject csharpObject)
+            where TCSharpObject : ICSharpObject;
     }
 }
