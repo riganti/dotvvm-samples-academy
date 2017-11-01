@@ -1,100 +1,65 @@
 ﻿using DotvvmAcademy.Validation.CSharp.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Collections.Concurrent;
 
 namespace DotvvmAcademy.Validation.CSharp
 {
     public class DefaultCSharpFactory : ICSharpFactory
     {
+        private readonly ConcurrentDictionary<string, ICSharpClass> classes = new ConcurrentDictionary<string, ICSharpClass>();
+        private readonly ConcurrentDictionary<string, ICSharpConstructor> constructors = new ConcurrentDictionary<string, ICSharpConstructor>();
+        private readonly ConcurrentDictionary<string, ICSharpDelegate> delegates = new ConcurrentDictionary<string, ICSharpDelegate>();
+        private readonly ConcurrentDictionary<string, ICSharpEnum> enums = new ConcurrentDictionary<string, ICSharpEnum>();
+        private readonly ConcurrentDictionary<string, ICSharpEvent> events = new ConcurrentDictionary<string, ICSharpEvent>();
+        private readonly ConcurrentDictionary<string, ICSharpField> fields = new ConcurrentDictionary<string, ICSharpField>();
+        private readonly ConcurrentDictionary<string, ICSharpIndexer> indexers = new ConcurrentDictionary<string, ICSharpIndexer>();
+        private readonly ConcurrentDictionary<string, ICSharpInterface> interfaces = new ConcurrentDictionary<string, ICSharpInterface>();
+        private readonly ConcurrentDictionary<string, ICSharpMethod> methods = new ConcurrentDictionary<string, ICSharpMethod>();
+        private readonly ConcurrentDictionary<string, ICSharpNamespace> namespaces = new ConcurrentDictionary<string, ICSharpNamespace>();
+        private readonly ConcurrentDictionary<string, ICSharpProperty> properties = new ConcurrentDictionary<string, ICSharpProperty>();
         private readonly IServiceProvider provider;
-        private readonly Dictionary<string, ICSharpClass> classes = new Dictionary<string, ICSharpClass>();
-        private readonly Dictionary<string, ICSharpConstructor> constructors = new Dictionary<string, ICSharpConstructor>();
-        private readonly Dictionary<string, ICSharpDelegate> delegates = new Dictionary<string, ICSharpDelegate>();
-        private readonly Dictionary<string, ICSharpEnum> enums = new Dictionary<string, ICSharpEnum>();
-        private readonly Dictionary<string, ICSharpEvent> events = new Dictionary<string, ICSharpEvent>();
-        private readonly Dictionary<string, ICSharpField> fields = new Dictionary<string, ICSharpField>();
-        private readonly Dictionary<string, ICSharpIndexer> indexers = new Dictionary<string, ICSharpIndexer>();
-        private readonly Dictionary<string, ICSharpInterface> interfaces = new Dictionary<string, ICSharpInterface>();
-        private readonly Dictionary<string, ICSharpMethod> methods = new Dictionary<string, ICSharpMethod>();
-        private readonly Dictionary<string, ICSharpNamespace> namespaces = new Dictionary<string, ICSharpNamespace>();
-        private readonly Dictionary<string, ICSharpProperty> properties = new Dictionary<string, ICSharpProperty>();
-        private readonly Dictionary<string, ICSharpStruct> structs = new Dictionary<string, ICSharpStruct>();
+        private readonly ConcurrentDictionary<string, ICSharpStruct> structs = new ConcurrentDictionary<string, ICSharpStruct>();
 
         public DefaultCSharpFactory(IServiceProvider provider)
         {
             this.provider = provider;
         }
 
-        public ICSharpClass CreateClass(string fullName)
-        {
-            throw new NotImplementedException();
-        }
+        public ICSharpClass CreateClass(string fullName) => GetOrAdd(classes, fullName);
 
-        public ICSharpConstructor CreateConstructor(string fullName)
-        {
-            throw new NotImplementedException();
-        }
+        public ICSharpConstructor CreateConstructor(string fullName) => GetOrAdd(constructors, fullName);
 
-        public ICSharpDelegate CreateDelegate(string fullName)
-        {
-            throw new NotImplementedException();
-        }
+        public ICSharpDelegate CreateDelegate(string fullName) => GetOrAdd(delegates, fullName);
 
-        public ICSharpDocument CreateDocument()
-        {
-            return provider.GetRequiredService<ICSharpDocument>();
-        }
+        public ICSharpDocument CreateDocument() => provider.GetRequiredService<ICSharpDocument>();
 
-        public ICSharpEnum CreateEnum(string fullName)
-        {
-            throw new NotImplementedException();
-        }
+        public ICSharpEnum CreateEnum(string fullName) => GetOrAdd(enums, fullName);
 
-        public ICSharpEvent CreateEvent(string fullName)
-        {
-            throw new NotImplementedException();
-        }
+        public ICSharpEvent CreateEvent(string fullName) => GetOrAdd(events, fullName);
 
-        public ICSharpField CreateField(string fullName)
-        {
-            throw new NotImplementedException();
-        }
+        public ICSharpField CreateField(string fullName) => GetOrAdd(fields, fullName);
 
-        public ICSharpIndexer CreateIndexer(string fullName)
-        {
-            throw new NotImplementedException();
-        }
+        public ICSharpIndexer CreateIndexer(string fullName) => GetOrAdd(indexers, fullName);
 
-        public ICSharpInterface CreateInterface(string fullName)
-        {
-            throw new NotImplementedException();
-        }
+        public ICSharpInterface CreateInterface(string fullName) => GetOrAdd(interfaces, fullName);
 
-        public ICSharpMethod CreateMethod(string fullName)
-        {
-            throw new NotImplementedException();
-        }
+        public ICSharpMethod CreateMethod(string fullName) => GetOrAdd(methods, fullName);
 
-        public ICSharpNamespace CreateNamespace(string fullName)
-        {
-            throw new NotImplementedException();
-        }
+        public ICSharpNamespace CreateNamespace(string fullName) => GetOrAdd(namespaces, fullName);
 
-        public ICSharpProperty CreateProperty(string fullName)
-        {
-            throw new NotImplementedException();
-        }
+        public ICSharpProperty CreateProperty(string fullName) => GetOrAdd(properties, fullName);
 
-        public ICSharpStruct CreateStruct(string fullName)
-        {
-            throw new NotImplementedException();
-        }
+        public ICSharpStruct CreateStruct(string fullName) => GetOrAdd(structs, fullName);
 
         public CSharpValidationMethod CreateValidationMethod()
         {
             throw new NotImplementedException();
+        }
+
+        private TCSharp GetOrAdd<TCSharp>(ConcurrentDictionary<string, TCSharp> dict, string fullName)
+        {
+            return dict.GetOrAdd(fullName, _ => provider.GetRequiredService<TCSharp>());
         }
     }
 }

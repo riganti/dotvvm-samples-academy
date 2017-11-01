@@ -9,7 +9,7 @@ namespace DotvvmAcademy.Validation.CSharp.Abstractions
     {
         ICSharpIndexer Indexer(IEnumerable<CSharpTypeDescriptor> parameters);
 
-        ICSharpMethod Method(string name);
+        ICSharpMethod Method(string name, IEnumerable<CSharpTypeDescriptor> parameters);
 
         ICSharpProperty Property(string name);
     }
