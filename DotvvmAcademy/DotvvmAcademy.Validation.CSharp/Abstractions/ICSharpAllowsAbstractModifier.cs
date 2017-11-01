@@ -5,6 +5,6 @@
     /// </summary>
     public interface ICSharpAllowsAbstractModifier : ICSharpAllowsOverrideModifier
     {
-        void Abstract();
+        bool IsAbstract { get; set; }
     }
 }

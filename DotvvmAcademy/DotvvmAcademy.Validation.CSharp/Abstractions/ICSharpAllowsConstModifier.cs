@@ -5,6 +5,6 @@
     /// </summary>
     public interface ICSharpAllowsConstModifier
     {
-        void Constant();
+        bool IsConstant { get; set; }
     }
 }

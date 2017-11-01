@@ -5,6 +5,6 @@
     /// </summary>
     public interface ICSharpAllowsAccessModifier
     {
-        void AccessModifier(CSharpAccessModifier modifier);
+        CSharpAccessModifier AccessModifier { get; set; }
     }
 }

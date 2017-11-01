@@ -5,11 +5,11 @@
     /// </summary>
     public interface ICSharpProperty : ICSharpAllowsAccessModifier, ICSharpAllowsAbstractModifier, ICSharpAllowsStaticModifier, ICSharpAllowsVirtualModifier
     {
-        ICSharpAccessor Getter();
+        ICSharpAccessor GetGetter();
 
-        ICSharpAccessor Setter();
+        ICSharpAccessor GetSetter();
 
-        void Type(CSharpTypeDescriptor type);
+        CSharpTypeDescriptor Type { get; set; }
 
     }
 }

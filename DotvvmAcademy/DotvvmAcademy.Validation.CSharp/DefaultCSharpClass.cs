@@ -5,8 +5,12 @@ using System.Text;
 
 namespace DotvvmAcademy.Validation.CSharp
 {
-    public class DefaultCSharpClass : ICSharpClass
+    public class DefaultCSharpClass<TClass>: ICSharpClass
     {
+        public bool IsAbstract { get; set; }
+
+        public CSharpAccessModifier AccessModifier { get; set; } = CSharpAccessModifier.Public;
+
         public void Abstract()
         {
             throw new NotImplementedException();
@@ -72,7 +76,7 @@ namespace DotvvmAcademy.Validation.CSharp
             throw new NotImplementedException();
         }
 
-        public ICSharpMethod Method(string name)
+        public ICSharpMethod Method(string name, IEnumerable<CSharpTypeDescriptor> parameters)
         {
             throw new NotImplementedException();
         }

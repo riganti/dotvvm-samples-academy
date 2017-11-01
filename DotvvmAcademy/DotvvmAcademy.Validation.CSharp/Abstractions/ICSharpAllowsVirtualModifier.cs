@@ -5,6 +5,6 @@
     /// </summary>
     public interface ICSharpAllowsVirtualModifier : ICSharpAllowsOverrideModifier
     {
-        void Virtual();
+        bool IsVirtual { get; set; }
     }
 }

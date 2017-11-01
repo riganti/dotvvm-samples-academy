@@ -5,8 +5,8 @@
     /// </summary>
     public interface ICSharpDocument
     {
-        ICSharpNamespace GlobalNamespace();
+        ICSharpNamespace GetGlobalNamespace();
 
-        ICSharpNamespace Namespace(string name);
+        ICSharpNamespace GetNamespace(string name);
     }
 }

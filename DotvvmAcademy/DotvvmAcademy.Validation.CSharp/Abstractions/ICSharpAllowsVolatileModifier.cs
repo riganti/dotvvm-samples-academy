@@ -5,6 +5,6 @@
     /// </summary>
     public interface ICSharpAllowsVolatileModifier
     {
-        void Volatile();
+        bool IsVolatile { get; set; }
     }
 }

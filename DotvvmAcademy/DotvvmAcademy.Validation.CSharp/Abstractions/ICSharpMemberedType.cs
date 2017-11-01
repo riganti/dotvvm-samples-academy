@@ -5,12 +5,12 @@ namespace DotvvmAcademy.Validation.CSharp.Abstractions
     /// <summary>
     /// A C# type that can contain members i.e. a class, a struct or an interface.
     /// </summary>
-    public interface ICSharpMemberedType : ICSharpAllowsAccessModifier, ICSharpAllowsGenericParameters
+    public interface ICSharpMemberedType : ICSharpAllowsAccessModifier
     {
-        ICSharpIndexer Indexer(IEnumerable<CSharpTypeDescriptor> parameters);
+        ICSharpIndexer GetIndexer(IEnumerable<CSharpTypeDescriptor> parameters);
 
-        ICSharpMethod Method(string name, IEnumerable<CSharpTypeDescriptor> parameters);
+        ICSharpMethod GetMethod(string name, IEnumerable<CSharpTypeDescriptor> parameters, IEnumerable<CSharpGenericParameterDescriptor> genericParameters);
 
-        ICSharpProperty Property(string name);
+        ICSharpProperty GetProperty(string name);
     }
 }

@@ -5,6 +5,6 @@
     /// </summary>
     public interface ICSharpAllowsOverrideModifier
     {
-        void Override();
+        bool IsOverriding { get; set; }
     }
 }

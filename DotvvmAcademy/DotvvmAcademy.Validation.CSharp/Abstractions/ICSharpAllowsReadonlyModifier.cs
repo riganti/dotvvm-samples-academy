@@ -5,6 +5,6 @@
     /// </summary>
     public interface ICSharpAllowsReadonlyModifier
     {
-        void Readonly();
+        bool IsReadonly { get; set; }
     }
 }

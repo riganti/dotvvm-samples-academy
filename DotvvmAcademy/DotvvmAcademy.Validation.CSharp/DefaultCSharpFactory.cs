@@ -7,7 +7,7 @@ namespace DotvvmAcademy.Validation.CSharp
 {
     public class DefaultCSharpFactory : ICSharpFactory
     {
-        private readonly ConcurrentDictionary<string, ICSharpClass> classes = new ConcurrentDictionary<string, ICSharpClass>();
+        private readonly ConcurrentDictionary<string, DefaultCSharpClass> classes = new ConcurrentDictionary<string, DefaultCSharpClass>();
         private readonly ConcurrentDictionary<string, ICSharpConstructor> constructors = new ConcurrentDictionary<string, ICSharpConstructor>();
         private readonly ConcurrentDictionary<string, ICSharpDelegate> delegates = new ConcurrentDictionary<string, ICSharpDelegate>();
         private readonly ConcurrentDictionary<string, ICSharpEnum> enums = new ConcurrentDictionary<string, ICSharpEnum>();
@@ -15,9 +15,9 @@ namespace DotvvmAcademy.Validation.CSharp
         private readonly ConcurrentDictionary<string, ICSharpField> fields = new ConcurrentDictionary<string, ICSharpField>();
         private readonly ConcurrentDictionary<string, ICSharpIndexer> indexers = new ConcurrentDictionary<string, ICSharpIndexer>();
         private readonly ConcurrentDictionary<string, ICSharpInterface> interfaces = new ConcurrentDictionary<string, ICSharpInterface>();
-        private readonly ConcurrentDictionary<string, ICSharpMethod> methods = new ConcurrentDictionary<string, ICSharpMethod>();
-        private readonly ConcurrentDictionary<string, ICSharpNamespace> namespaces = new ConcurrentDictionary<string, ICSharpNamespace>();
-        private readonly ConcurrentDictionary<string, ICSharpProperty> properties = new ConcurrentDictionary<string, ICSharpProperty>();
+        private readonly ConcurrentDictionary<string, DefaultCSharpMethod> methods = new ConcurrentDictionary<string, DefaultCSharpMethod>();
+        private readonly ConcurrentDictionary<string, DefaultCSharpNamespace> namespaces = new ConcurrentDictionary<string, DefaultCSharpNamespace>();
+        private readonly ConcurrentDictionary<string, DefaultCSharpProperty> properties = new ConcurrentDictionary<string, DefaultCSharpProperty>();
         private readonly IServiceProvider provider;
         private readonly ConcurrentDictionary<string, ICSharpStruct> structs = new ConcurrentDictionary<string, ICSharpStruct>();
 

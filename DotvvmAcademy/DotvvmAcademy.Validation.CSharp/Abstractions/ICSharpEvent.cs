@@ -5,10 +5,8 @@
     /// </summary>
     public interface ICSharpEvent : ICSharpAllowsAccessModifier, ICSharpAllowsAbstractModifier, ICSharpAllowsStaticModifier, ICSharpAllowsVirtualModifier
     {
-        void Type(CSharpTypeDescriptor type);
+        CSharpTypeDescriptor Type { get; set; }
 
-        void AddAccessor();
-
-        void RemoveAccessor();
+        bool IsProperty { get; set; }
     }
 }

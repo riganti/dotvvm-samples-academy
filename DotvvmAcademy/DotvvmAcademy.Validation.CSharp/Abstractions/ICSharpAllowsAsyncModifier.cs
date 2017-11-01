@@ -5,6 +5,6 @@
     /// </summary>
     public interface ICSharpAllowsAsyncModifier
     {
-        void Async();
+        bool IsAsync { get; set; }
     }
 }

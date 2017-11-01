@@ -5,10 +5,10 @@
     /// </summary>
     public interface ICSharpIndexer : ICSharpAllowsAccessModifier, ICSharpAllowsAbstractModifier, ICSharpAllowsVirtualModifier
     {
-        void ReturnType(CSharpTypeDescriptor returnType);
+        CSharpTypeDescriptor ReturnType { get; set; }
 
-        ICSharpAccessor Getter();
+        ICSharpAccessor GetGetter();
 
-        ICSharpAccessor Setter();
+        ICSharpAccessor GetSetter();
     }
 }

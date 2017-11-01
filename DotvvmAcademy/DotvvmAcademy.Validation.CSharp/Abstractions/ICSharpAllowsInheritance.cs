@@ -7,6 +7,6 @@ namespace DotvvmAcademy.Validation.CSharp.Abstractions
     /// </summary>
     public interface ICSharpAllowsInheritance
     {
-        void InheritsFrom(IEnumerable<CSharpTypeDescriptor> baseTypes);
+        IList<CSharpTypeDescriptor> BaseTypes { get; set; }
     }
 }

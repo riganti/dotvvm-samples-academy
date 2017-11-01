@@ -7,8 +7,8 @@ namespace DotvvmAcademy.Validation.CSharp.Abstractions
     /// </summary>
     public interface ICSharpDelegate : ICSharpAllowsAccessModifier
     {
-        void Parameters(IEnumerable<CSharpTypeDescriptor> parameters);
+        IList<CSharpTypeDescriptor> Parameters { get; set; }
 
-        void ReturnType(CSharpTypeDescriptor type);
+        IList<CSharpTypeDescriptor> ReturnType { get; set; }
     }
 }

@@ -5,6 +5,6 @@
     /// </summary>
     public interface ICSharpAllowsStaticModifier
     {
-        void Static();
+        bool IsStatic { get; set; }
     }
 }

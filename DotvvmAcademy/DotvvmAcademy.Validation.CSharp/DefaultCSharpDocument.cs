@@ -13,7 +13,7 @@ namespace DotvvmAcademy.Validation.CSharp
 
         public ICSharpNamespace GlobalNamespace()
         {
-            return factory.CreateNamespace();
+            return factory.CreateNamespace("");
         }
 
         public ICSharpNamespace Namespace(string name)

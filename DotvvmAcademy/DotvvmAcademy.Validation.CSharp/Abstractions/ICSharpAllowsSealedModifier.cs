@@ -5,6 +5,6 @@
     /// </summary>
     public interface ICSharpAllowsSealedModifier
     {
-        void Sealed();
+        bool IsSealed { get; set; }
     }
 }

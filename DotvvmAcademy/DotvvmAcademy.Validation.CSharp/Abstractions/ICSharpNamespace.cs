@@ -1,20 +1,22 @@
-﻿namespace DotvvmAcademy.Validation.CSharp.Abstractions
+﻿using System.Collections.Generic;
+
+namespace DotvvmAcademy.Validation.CSharp.Abstractions
 {
     /// <summary>
     /// A C# namespace.
     /// </summary>
     public interface ICSharpNamespace
     {
-        ICSharpClass Class(string name);
+        ICSharpClass GetClass(string name, IEnumerable<CSharpGenericParameterDescriptor> genericParameters);
 
-        ICSharpDelegate Delegate(string name);
+        ICSharpDelegate GetDelegate(string name);
 
-        ICSharpEnum Enum(string name);
+        ICSharpEnum GetEnum(string name);
 
-        ICSharpInterface Interface(string name);
+        ICSharpInterface GetInterface(string name, IEnumerable<CSharpGenericParameterDescriptor> genericParameters);
 
-        ICSharpNamespace Namespace(string name);
+        ICSharpNamespace GetNamespace(string name);
 
-        ICSharpStruct Struct(string name);
+        ICSharpStruct GetStruct(string name, IEnumerable<CSharpGenericParameterDescriptor> genericParameters);
     }
 }
