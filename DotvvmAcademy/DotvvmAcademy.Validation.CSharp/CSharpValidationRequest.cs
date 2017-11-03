@@ -6,13 +6,7 @@ namespace DotvvmAcademy.Validation.CSharp
 {
     public class CSharpValidationRequest : IValidationRequest
     {
-        public bool AllowAssemblyRewrite { get; set; } = true;
-
-        public bool AllowCompilerDiagnostics { get; set; } = true;
-
-        public bool AllowDynamicAnalysis { get; set; } = true;
-
-        public bool AllowStaticAnalysis { get; set; } = true;
+        public CSharpValidationExtent ValidationExtent { get; set; } = CSharpValidationExtent.All;
 
         public CSharpCompilation Compilation { get; set; }
 
