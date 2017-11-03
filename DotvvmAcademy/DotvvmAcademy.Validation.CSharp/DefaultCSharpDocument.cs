@@ -13,7 +13,7 @@ namespace DotvvmAcademy.Validation.CSharp
 
         public ICSharpNamespace GetGlobalNamespace()
         {
-            return factory.GetObject<ICSharpNamespace>("");
+            return factory.GetObject<ICSharpNamespace>(CSharpConstants.GlobalNamespaceName);
         }
 
         public ICSharpNamespace GetNamespace(string name)

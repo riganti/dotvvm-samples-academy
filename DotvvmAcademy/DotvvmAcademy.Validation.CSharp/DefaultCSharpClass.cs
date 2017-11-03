@@ -35,7 +35,7 @@ namespace DotvvmAcademy.Validation.CSharp
             name = nameProvider.GetMemberName(FullName, name);
             if (genericParameters != null)
             {
-                name = nameProvider.GetGenericName(name, genericParameters.Select(p => p.Name));
+                name = nameProvider.GetGenericName(name, genericParameters?.Select(p => p.Name));
             }
             return factory.GetObject<ICSharpClass>(name);
         }
@@ -87,7 +87,7 @@ namespace DotvvmAcademy.Validation.CSharp
             {
                 name = nameProvider.GetGenericName(name, genericParameters.Select(p => p.Name));
             }
-            name = nameProvider.GetInvokableName(name, parameters.Select(p => p.FullName));
+            name = nameProvider.GetInvokableName(name, parameters?.Select(p => p.FullName));
             return factory.GetObject<ICSharpMethod>(name);
         }
 

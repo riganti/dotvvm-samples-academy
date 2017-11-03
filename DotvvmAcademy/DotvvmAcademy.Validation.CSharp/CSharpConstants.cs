@@ -8,5 +8,6 @@ namespace DotvvmAcademy.Validation.CSharp
     {
         public const string GetterName = "get";
         public const string SetterName = "set";
+        public const string GlobalNamespaceName = "";
     }
 }

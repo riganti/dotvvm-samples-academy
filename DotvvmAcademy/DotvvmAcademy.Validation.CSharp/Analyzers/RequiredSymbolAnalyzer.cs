@@ -10,11 +10,8 @@ namespace DotvvmAcademy.Validation.CSharp.Analyzers
     {
         private List<string> foundMembers = new List<string>();
 
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; } = new ImmutableArray<DiagnosticDescriptor>
-        {
-            DiagnosticDescriptors.MissingMember,
-            DiagnosticDescriptors.RedundantMember
-        };
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; } = ImmutableArray.Create(
+            DiagnosticDescriptors.MissingMember, DiagnosticDescriptors.RedundantMember);
 
         public override void Initialize(AnalysisContext context)
         {

@@ -1,14 +1,14 @@
 ﻿namespace DotvvmAcademy.Validation
 {
-    public class DiagnosticLocation
+    public class ValidationDiagnosticLocation
     {
-        public DiagnosticLocation(int startPosition, int endPosition)
+        public ValidationDiagnosticLocation(int startPosition, int endPosition)
         {
             StartPosition = startPosition;
             EndPosition = endPosition;
         }
 
-        public static DiagnosticLocation None = new DiagnosticLocation(-1, -1);
+        public static ValidationDiagnosticLocation None = new ValidationDiagnosticLocation(-1, -1);
 
         public int EndPosition { get; }
 

@@ -8,10 +8,8 @@ namespace DotvvmAcademy.Validation.CSharp
 {
     public class DefaultCSharpValidationRequestFactory : ICSharpValidationRequestFactory
     {
-        private readonly ImmutableArray<MetadataReference> defaultReferences = new ImmutableArray<MetadataReference>
-        {
-            MetadataReference.CreateFromFile(typeof(object).Assembly.Location)
-        };
+        private readonly ImmutableArray<MetadataReference> defaultReferences = ImmutableArray.Create<MetadataReference>(
+            MetadataReference.CreateFromFile(typeof(object).Assembly.Location));
 
         public CSharpValidationRequest CreateRequest(string source, string validationMethodName)
         {

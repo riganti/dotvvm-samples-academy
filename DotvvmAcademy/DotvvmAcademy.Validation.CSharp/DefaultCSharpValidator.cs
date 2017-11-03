@@ -13,11 +13,7 @@ namespace DotvvmAcademy.Validation.CSharp
 {
     public class DefaultCSharpValidator : ICSharpValidator
     {
-        private readonly ImmutableArray<DiagnosticAnalyzer> Analyzers = new ImmutableArray<DiagnosticAnalyzer>()
-        {
-            new RequiredSymbolAnalyzer()
-        };
-
+        private readonly ImmutableArray<DiagnosticAnalyzer> Analyzers = ImmutableArray.Create((DiagnosticAnalyzer)new RequiredSymbolAnalyzer());
         private readonly ImmutableDictionary<string, CSharpValidationMethod> methods;
         private readonly IServiceProvider serviceProvider;
         private CompilationWithAnalyzersOptions options = new CompilationWithAnalyzersOptions(null, null, false, false);
@@ -50,7 +46,7 @@ namespace DotvvmAcademy.Validation.CSharp
                 var message = string.Format(DiagnosticResources.ValidatorExceptionMessage, e.GetType().Name);
                 response.Diagnostics = new ImmutableArray<ValidationDiagnostic>
                 {
-                    new ValidationDiagnostic(DiagnosticIds.ValidatorException, message, DiagnosticLocation.None)
+                    new ValidationDiagnostic(ValidationDiagnosticIds.ValidatorException, message, ValidationDiagnosticLocation.None)
                 };
             }
             return response;
@@ -70,7 +66,7 @@ namespace DotvvmAcademy.Validation.CSharp
             for (int i = 0; i < diagnostics.Length; i++)
             {
                 var diagnostic = diagnostics[i];
-                var location = diagnostic.Location.Kind == LocationKind.None ? DiagnosticLocation.None : new DiagnosticLocation(diagnostic.Location.SourceSpan.Start, diagnostic.Location.SourceSpan.End);
+                var location = diagnostic.Location.Kind == LocationKind.None ? ValidationDiagnosticLocation.None : new ValidationDiagnosticLocation(diagnostic.Location.SourceSpan.Start, diagnostic.Location.SourceSpan.End);
                 var validationDiagnostic = new ValidationDiagnostic(diagnostic.Id, diagnostic.GetMessage(), location);
                 validationDiagnostics.Add(validationDiagnostic);
             }

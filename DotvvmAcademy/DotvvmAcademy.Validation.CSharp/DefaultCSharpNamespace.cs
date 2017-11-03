@@ -18,7 +18,10 @@ namespace DotvvmAcademy.Validation.CSharp
 
         public ICSharpClass GetClass(string name, IEnumerable<CSharpGenericParameterDescriptor> genericParameters)
         {
-            name = nameProvider.GetMemberName(FullName, name);
+            if (FullName != CSharpConstants.GlobalNamespaceName)
+            {
+                name = nameProvider.GetMemberName(FullName, name);
+            }
             if (genericParameters != null)
             {
                 name = nameProvider.GetGenericName(name, genericParameters.Select(p => p.Name));

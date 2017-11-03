@@ -2,7 +2,7 @@
 {
     public class ValidationDiagnostic
     {
-        public ValidationDiagnostic(string id, string message, DiagnosticLocation location)
+        public ValidationDiagnostic(string id, string message, ValidationDiagnosticLocation location)
         {
             Id = id;
             Message = message;
@@ -11,7 +11,7 @@
 
         public string Id { get; set; }
 
-        public DiagnosticLocation Location { get; set; }
+        public ValidationDiagnosticLocation Location { get; set; }
 
         public string Message { get; set; }
     }

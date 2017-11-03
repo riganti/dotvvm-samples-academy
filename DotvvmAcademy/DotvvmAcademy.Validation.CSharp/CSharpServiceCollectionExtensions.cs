@@ -13,6 +13,7 @@ namespace DotvvmAcademy.Validation.CSharp
 
         public static void AddCSharpValidationInternalServices(this IServiceCollection collection)
         {
+            collection.AddSingleton<ICSharpFullNameProvider, DefaultCSharpFullNameProvider>();
             collection.AddScoped<ICSharpFactory, DefaultCSharpFactory>();
             collection.AddScoped<ICSharpDocument, DefaultCSharpDocument>();
             collection.AddTransient<ICSharpNamespace, DefaultCSharpNamespace>();

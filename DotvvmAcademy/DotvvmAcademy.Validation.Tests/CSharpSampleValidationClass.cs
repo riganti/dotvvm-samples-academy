@@ -8,11 +8,11 @@ namespace DotvvmAcademy.Validation.Tests
         [ValidationMethod]
         public void SampleValidationMethod(ICSharpDocument document)
         {
-            var testClass = document.GlobalNamespace().Class("Test");
-            var testProperty = testClass.Property("TestProperty");
-            testProperty.Type(typeof(int));
-            var testMethod = testClass.Method("TestMethod");
-            testMethod.ReturnType(typeof(string));
+            var testClass = document.GetGlobalNamespace().GetClass("Test");
+            var testProperty = testClass.GetProperty("TestProperty");
+            testProperty.Type = typeof(int);
+            var testMethod = testClass.GetMethod("TestMethod");
+            testMethod.ReturnType = typeof(string);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace DotvvmAcademy.Validation.CSharp
 
         public void SetUniqueFullName(string fullName)
         {
-            if (string.IsNullOrEmpty(fullName))
+            if (string.IsNullOrEmpty(this.fullName))
             {
                 this.fullName = fullName;
             }
