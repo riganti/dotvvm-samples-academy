@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.CodeAnalysis.CSharp;
 
 namespace DotvvmAcademy.Validation.CSharp.Analyzers
 {
     public class RequiredSymbolMetadata : IValidationAnalyzerMetadata
     {
+        public SyntaxKind SyntaxKind { get; set; }
     }
 }

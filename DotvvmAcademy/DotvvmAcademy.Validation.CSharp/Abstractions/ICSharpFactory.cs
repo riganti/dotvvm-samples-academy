@@ -1,8 +1,10 @@
-﻿namespace DotvvmAcademy.Validation.CSharp.Abstractions
+﻿using DotvvmAcademy.Validation.CSharp.Analyzers;
+
+namespace DotvvmAcademy.Validation.CSharp.Abstractions
 {
     public interface ICSharpFactory
     {
-        CSharpValidationMethod CreateValidationMethod();
+        ValidationAnalyzerContext GetValidationAnalyzerContext();
 
         ICSharpDocument GetDocument();
 

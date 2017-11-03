@@ -7,12 +7,10 @@ namespace DotvvmAcademy.Validation.CSharp.Abstractions
 {
     public interface ICSharpValidatorBuilder : IValidatorBuilder<ICSharpValidator, CSharpValidationRequest, CSharpValidationResponse>
     {
-        void AddValidationMethod(string name, CSharpValidationMethod method);
+        void RegisterValidationMethod(MethodInfo method);
 
-        void AddValidationMethod(MethodInfo method);
+        void RegisterAssembly(Assembly assembly);
 
-        void AddValidationAssembly(Assembly assembly);
-
-        void ConfigureServiceCollection(Action<IServiceCollection> configureCollection);
+        Action<IServiceCollection> ConfigureServices { get; set; }
     }
 }

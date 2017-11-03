@@ -4,6 +4,9 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Immutable;
 using System.Linq;
+using DotvvmAcademy.Validation.CSharp.Analyzers;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace DotvvmAcademy.Validation.CSharp
 {
@@ -11,19 +14,12 @@ namespace DotvvmAcademy.Validation.CSharp
     {
         private readonly ConcurrentDictionary<string, ICSharpObject> cache = new ConcurrentDictionary<string, ICSharpObject>();
         private readonly IServiceProvider provider;
+        private readonly IEnumerable<IMetadataExtractor> extractors;
 
-        public DefaultCSharpFactory(IServiceProvider provider)
+        public DefaultCSharpFactory(IServiceProvider provider, IEnumerable<IMetadataExtractor> extractors)
         {
             this.provider = provider;
-        }
-
-        public CSharpValidationMethod CreateValidationMethod()
-        {
-            var method = new CSharpValidationMethod
-            {
-                RequiredSymbols = GetRequiredSymbols()
-            };
-            return method;
+            this.extractors = extractors;
         }
 
         public ICSharpDocument GetDocument()
@@ -50,6 +46,18 @@ namespace DotvvmAcademy.Validation.CSharp
             }
         }
 
+        public ValidationAnalyzerContext GetValidationAnalyzerContext()
+        {
+            var immutableCache = cache.ToImmutableDictionary();
+            var metadata = Immutable
+            var context = new ValidationAnalyzerContext();
+            foreach (var extractor in extractors)
+            {
+                context.AddMetadata(extractor.ExtractMetadata(immutableCache));
+            }
+            return context;
+        }
+
         public void RemoveObject<TCSharpObject>(TCSharpObject csharpObject) where TCSharpObject : ICSharpObject
         {
             var values = cache.Where((k, v) => ReferenceEquals(v, csharpObject));
@@ -57,11 +65,6 @@ namespace DotvvmAcademy.Validation.CSharp
             {
                 cache.TryRemove(pair.Key, out _);
             }
-        }
-
-        private ImmutableArray<string> GetRequiredSymbols()
-        {
-            return cache.Keys.ToImmutableArray();
         }
     }
 }

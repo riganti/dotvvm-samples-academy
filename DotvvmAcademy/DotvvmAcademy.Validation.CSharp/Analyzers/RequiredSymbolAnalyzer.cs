@@ -2,41 +2,49 @@
 using Microsoft.CodeAnalysis.Diagnostics;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq;
 
 namespace DotvvmAcademy.Validation.CSharp.Analyzers
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class RequiredSymbolAnalyzer : ValidationAnalyzer
     {
-        private List<string> foundMembers = new List<string>();
+        private List<string> foundRequiredSymbols = new List<string>();
+        private ImmutableDictionary<string, RequiredSymbolMetadata> requiredSymbols;
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; } = ImmutableArray.Create(
             DiagnosticDescriptors.MissingMember, DiagnosticDescriptors.RedundantMember);
 
         public override void Initialize(AnalysisContext context)
         {
-            foundMembers.Clear();
-            //context.RegisterSyntaxNodeAction(ValidateNode, SyntaxKindArrays.Members);
+            requiredSymbols = ValidationAnalyzerContext.GetMetadata<RequiredSymbolMetadata>();
+            foundRequiredSymbols.Clear();
+            context.RegisterSyntaxNodeAction(ValidateNode, SyntaxKindPresets.Declarations);
             context.RegisterCompilationAction(ValidateCompilation);
         }
 
         private void ValidateCompilation(CompilationAnalysisContext context)
         {
-            //var missingMembers = Context.Method.RequiredSymbols.Keys.Except(foundMembers);
-            //foreach (string missingMember in missingMembers)
-            //{
-            //    context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.MissingMember, Location.None, missingMember));
-            //}
+            var missingSymbols = requiredSymbols.Keys.Except(foundRequiredSymbols);
+            foreach (string missingSymbol in missingSymbols)
+            {
+                context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.MissingMember, Location.None, missingSymbol));
+            }
         }
 
-        //private void ValidateNode(SyntaxNodeAnalysisContext context)
-        //{
-        //    var fullName = context.ContainingSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
-        //    var requiredMember = Context.Method.RequiredSymbols.GetValueOrDefault(fullName);
-        //    if (requiredMember == null || !context.Node.IsKind(requiredMember.Kind))
-        //    {
-        //        context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.RedundantMember, context.Node.GetLocation(), fullName));
-        //    }
-        //}
+        private void ValidateNode(SyntaxNodeAnalysisContext context)
+        {
+            if (!ValidationAnalyzerContext.ValidatedTrees.Contains(context.Node.SyntaxTree))
+            {
+                return;
+            }
+
+            var fullName = context.ContainingSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
+            var requiredSymbol = requiredSymbols.GetValueOrDefault(fullName);
+            if (requiredSymbol == null || !context.Node.IsKind(requiredSymbol.SyntaxKind))
+            {
+                context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.RedundantMember, context.Node.GetLocation(), fullName));
+            }
+        }
     }
 }

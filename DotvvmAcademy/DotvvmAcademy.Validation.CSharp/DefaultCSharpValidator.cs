@@ -13,16 +13,17 @@ namespace DotvvmAcademy.Validation.CSharp
 {
     public class DefaultCSharpValidator : ICSharpValidator
     {
-        private readonly ImmutableArray<DiagnosticAnalyzer> Analyzers = ImmutableArray.Create((DiagnosticAnalyzer)new RequiredSymbolAnalyzer());
-        private readonly ImmutableDictionary<string, CSharpValidationMethod> methods;
         private readonly IServiceProvider serviceProvider;
+        private readonly ImmutableArray<ValidationAnalyzer> analyzers;
         private CompilationWithAnalyzersOptions options = new CompilationWithAnalyzersOptions(null, null, false, false);
 
-        protected internal DefaultCSharpValidator(ImmutableDictionary<string, CSharpValidationMethod> methods, IServiceProvider serviceProvider)
+        protected internal DefaultCSharpValidator(IServiceProvider serviceProvider, IEnumerable<ValidationAnalyzer> analyzers)
         {
-            this.methods = methods ?? throw new ArgumentNullException(nameof(methods));
-            this.serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
+            this.serviceProvider = serviceProvider;
+            this.analyzers = analyzers.ToImmutableArray();
         }
+
+        public ImmutableDictionary<string, ValidationAnalyzerContext> StaticAnalysisContexts { private get; set; }
 
         public async Task<CSharpValidationResponse> Validate(CSharpValidationRequest request)
         {
@@ -30,14 +31,13 @@ namespace DotvvmAcademy.Validation.CSharp
             ClearAnalyzerContext();
             try
             {
-                var validatedTrees = request.ValidationUnits.Select(u => u.SyntaxTree).ToImmutableArray();
-                var method = request.ValidationUnits
+                var contexts = request.ValidationUnits
                     .SelectMany(u => u.ValidationMethods)
-                    .Select(m => methods[m])
-                    .Aggregate((first, second) => first.Merge(second));
-                var context = new CSharpValidationContext(request, response, method, validatedTrees);
+                    .Select(m => StaticAnalysisContexts[m]);
+                var context = ValidationAnalyzerContext.Merge(contexts);
+                context.ValidatedTrees = request.ValidationUnits.Select(u => u.SyntaxTree).ToImmutableArray();
                 SetAnalyzerContext(context);
-                var compilation = new CompilationWithAnalyzers(request.Compilation, Analyzers, options);
+                var compilation = new CompilationWithAnalyzers(request.Compilation, analyzers.CastArray<DiagnosticAnalyzer>(), options);
                 var diagnostics = await compilation.GetAllDiagnosticsAsync();
                 response.Diagnostics = ConvertDiagnostics(diagnostics);
             }
@@ -46,7 +46,7 @@ namespace DotvvmAcademy.Validation.CSharp
                 var message = string.Format(DiagnosticResources.ValidatorExceptionMessage, e.GetType().Name);
                 response.Diagnostics = new ImmutableArray<ValidationDiagnostic>
                 {
-                    new ValidationDiagnostic(ValidationDiagnosticIds.ValidatorException, message, ValidationDiagnosticLocation.None)
+                    new ValidationDiagnostic(DiagnosticIds.ValidatorException, message, ValidationDiagnosticLocation.None)
                 };
             }
             return response;
@@ -54,9 +54,9 @@ namespace DotvvmAcademy.Validation.CSharp
 
         private void ClearAnalyzerContext()
         {
-            foreach (var analyzer in Analyzers.OfType<ValidationAnalyzer>())
+            foreach (var analyzer in analyzers)
             {
-                analyzer.Context = null;
+                analyzer.ValidationAnalyzerContext = null;
             }
         }
 
@@ -73,11 +73,11 @@ namespace DotvvmAcademy.Validation.CSharp
             return validationDiagnostics.ToImmutableArray();
         }
 
-        private void SetAnalyzerContext(CSharpValidationContext context)
+        private void SetAnalyzerContext(ValidationAnalyzerContext context)
         {
-            foreach (var analyzer in Analyzers.OfType<ValidationAnalyzer>())
+            foreach (var analyzer in analyzers)
             {
-                analyzer.Context = context;
+                analyzer.ValidationAnalyzerContext = context;
             }
         }
     }
