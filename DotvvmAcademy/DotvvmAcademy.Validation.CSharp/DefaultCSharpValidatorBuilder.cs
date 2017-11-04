@@ -1,4 +1,5 @@
-﻿using DotvvmAcademy.Validation.CSharp.Abstractions;
+﻿using DotvvmAcademy.Validation.Abstractions;
+using DotvvmAcademy.Validation.CSharp.Abstractions;
 using DotvvmAcademy.Validation.CSharp.Analyzers;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -16,7 +17,7 @@ namespace DotvvmAcademy.Validation.CSharp
 
         public Action<IServiceCollection> ConfigureServices { get; set; }
 
-        public ICSharpValidator Build()
+        public virtual ICSharpValidator Build()
         {
             var collection = new ServiceCollection();
             // add default implementations
@@ -24,39 +25,32 @@ namespace DotvvmAcademy.Validation.CSharp
             // let the user override the default implementations
             ConfigureServices?.Invoke(collection);
             var provider = collection.BuildServiceProvider();
-            ProcessAssemblies();
+            var locatedMethods = ProcessAssemblies(provider);
+            methods.AddRange(locatedMethods);
             var staticContexts = ProcessMethods(provider);
             var validator = provider.GetRequiredService<ICSharpValidator>();
             validator.StaticAnalysisContexts = staticContexts;
             return validator;
         }
 
-        public void RegisterAssembly(Assembly assembly)
+        public virtual void RegisterAssembly(Assembly assembly)
         {
             assemblies.Add(assembly);
         }
 
-        public void RegisterValidationMethod(MethodInfo method)
+        public virtual void RegisterValidationMethod(MethodInfo method)
         {
             methods.Add(method);
         }
 
-        protected virtual string GetValidationMethodName(MethodInfo info)
+        protected virtual IEnumerable<MethodInfo> ProcessAssemblies(IServiceProvider provider)
         {
-            var attribute = info.GetCustomAttribute<ValidationMethodAttribute>();
-            return attribute.Name ?? info.Name;
-        }
-
-        protected virtual void ProcessAssemblies()
-        {
-            foreach (var assembly in assemblies)
+            if (assemblies.Count == 0)
             {
-                var assemblyMethods = assembly.GetTypes()
-                    .Where(t => t.GetCustomAttribute<ValidationClassAttribute>() != null)
-                    .SelectMany(t => t.GetMethods(BindingFlags.Public | BindingFlags.Instance))
-                    .Where(m => m.GetCustomAttribute<ValidationMethodAttribute>() != null);
-                methods.AddRange(assemblyMethods);
+                return Enumerable.Empty<MethodInfo>();
             }
+            var locator = provider.GetRequiredService<IValidationMethodLocator>();
+            return assemblies.SelectMany(a => locator.LocateMethods(a));
         }
 
         protected ImmutableDictionary<string, CSharpStaticAnalysisContext> ProcessMethods(IServiceProvider provider)
@@ -68,7 +62,7 @@ namespace DotvvmAcademy.Validation.CSharp
                 var instance = Activator.CreateInstance(group.Key);
                 foreach (var method in group)
                 {
-                    var name = GetValidationMethodName(method);
+                    var name = GetValidationMethodName(method, provider);
                     using (var scope = provider.CreateScope())
                     {
                         var factory = scope.ServiceProvider.GetRequiredService<ICSharpFactory>();
@@ -78,6 +72,19 @@ namespace DotvvmAcademy.Validation.CSharp
                 }
             }
             return contexts.ToImmutable();
+        }
+
+        private string GetValidationMethodName(MethodInfo method, IServiceProvider provider)
+        {
+            var resolvers = provider.GetRequiredService<IEnumerable<IValidationMethodNameResolver>>();
+            foreach (var resolver in resolvers)
+            {
+                if(resolver.TryResolveName(method, out var name))
+                {
+                    return name;
+                }
+            }
+            throw new ArgumentException($"The name of the ValidationMethod '{method.ToString()}' could not be determined.");
         }
     }
 }
