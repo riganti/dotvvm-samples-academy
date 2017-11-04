@@ -3,7 +3,7 @@ using Microsoft.CodeAnalysis;
 using System;
 using System.Resources;
 
-namespace DotvvmAcademy.Validation.CSharp.Analyzers
+namespace DotvvmAcademy.Validation.CSharp.StaticAnalysis
 {
     public static class DiagnosticDescriptors
     {
@@ -11,7 +11,7 @@ namespace DotvvmAcademy.Validation.CSharp.Analyzers
         private static Type resourcesType = typeof(DiagnosticResources);
 
         public static readonly DiagnosticDescriptor MissingMember = new DiagnosticDescriptor(
-            ValidationDiagnosticIds.MissingMember,
+            DiagnosticIds.MissingMember,
             new LocalizableResourceString(nameof(DiagnosticResources.MissingMemberTitle), manager, resourcesType),
             new LocalizableResourceString(nameof(DiagnosticResources.MissingMemberMessage), manager, resourcesType),
             DiagnosticCategories.ValidationErrors,
@@ -19,7 +19,7 @@ namespace DotvvmAcademy.Validation.CSharp.Analyzers
             true);
 
         public static readonly DiagnosticDescriptor RedundantMember = new DiagnosticDescriptor(
-            ValidationDiagnosticIds.RedundantMember,
+            DiagnosticIds.RedundantMember,
             new LocalizableResourceString(nameof(DiagnosticResources.RedundantMemberTitle), manager, resourcesType),
             new LocalizableResourceString(nameof(DiagnosticResources.RedundantMemberMessage), manager, resourcesType),
             DiagnosticCategories.ValidationErrors,
@@ -27,7 +27,7 @@ namespace DotvvmAcademy.Validation.CSharp.Analyzers
             true);
 
         public static readonly DiagnosticDescriptor IncorrectAccessModifier = new DiagnosticDescriptor(
-            ValidationDiagnosticIds.IncorrectAccessModifier,
+            DiagnosticIds.IncorrectAccessModifier,
             new LocalizableResourceString(nameof(DiagnosticResources.IncorrectAccessModifierTitle), manager, resourcesType),
             new LocalizableResourceString(nameof(DiagnosticResources.IncorrectAccessModifierMessage), manager, resourcesType),
             DiagnosticCategories.ValidationErrors,

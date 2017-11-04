@@ -1,4 +1,4 @@
-﻿namespace DotvvmAcademy.Validation.CSharp.Analyzers
+﻿namespace DotvvmAcademy.Validation.CSharp.StaticAnalysis
 {
     public static class DiagnosticIds
     {

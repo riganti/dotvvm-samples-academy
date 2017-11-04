@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
-namespace DotvvmAcademy.Validation.CSharp.Analyzers
+namespace DotvvmAcademy.Validation.CSharp.StaticAnalysis
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class RequiredSymbolAnalyzer : ValidationAnalyzer

@@ -1,7 +1,7 @@
 ﻿using DotvvmAcademy.Validation.CSharp.Abstractions;
 using System.Collections.Immutable;
 
-namespace DotvvmAcademy.Validation.CSharp.Analyzers
+namespace DotvvmAcademy.Validation.CSharp.StaticAnalysis
 {
     public interface IMetadataExtractor
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.CodeAnalysis.Diagnostics;
 
-namespace DotvvmAcademy.Validation.CSharp.Analyzers
+namespace DotvvmAcademy.Validation.CSharp.StaticAnalysis
 {
     public abstract class ValidationAnalyzer : DiagnosticAnalyzer
     {
