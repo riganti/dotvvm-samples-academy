@@ -4,6 +4,6 @@ namespace DotvvmAcademy.Validation.CSharp.Analyzers
 {
     public abstract class ValidationAnalyzer : DiagnosticAnalyzer
     {
-        public CSharpStaticAnalysisContext ValidationAnalyzerContext { get; set; }
+        public CSharpStaticAnalysisContext StaticAnalysis { get; set; }
     }
 }

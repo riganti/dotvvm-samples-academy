@@ -3,17 +3,17 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 
-namespace DotvvmAcademy.Validation.CSharp.Analyzers
+namespace DotvvmAcademy.Validation.CSharp
 {
-    using ImmutableMetadataDictionary = ImmutableDictionary<string, object>;
-
     public class CSharpStaticAnalysisContext
     {
-        private ImmutableMetadataDictionary metadataStorage;
+        private Dictionary<Type, object> metadataStorage = new Dictionary<Type, object>();
+
+        public ImmutableArray<CSharpSyntaxTree> ValidatedTrees { get; set; }
 
         public static CSharpStaticAnalysisContext Merge(IEnumerable<CSharpStaticAnalysisContext> contexts)
         {
-            var mergedContext = new CSharpStaticAnalysisContext();
+            var validatedTreesBuilder = ImmutableArray.CreateBuilder<CSharpSyntaxTree>();
             var metadataStorageBuilder = ImmutableDictionary.CreateBuilder<string, object>();
             foreach (var context in contexts)
             {
@@ -34,7 +34,7 @@ namespace DotvvmAcademy.Validation.CSharp.Analyzers
         }
 
         public ImmutableDictionary<string, TMetadata> GetMetadata<TMetadata>()
-                    where TMetadata : IValidationAnalyzerMetadata
+            where TMetadata : IValidationAnalyzerMetadata
         {
             return metadataStorage[typeof(TMetadata).FullName] as ImmutableDictionary<string, TMetadata>;
         }

@@ -1,14 +1,18 @@
 ﻿using DotvvmAcademy.Validation.CSharp.Abstractions;
-using System;
 using System.Collections.Immutable;
 
 namespace DotvvmAcademy.Validation.CSharp.Analyzers
 {
     public class RequiredSymbolMetadataExtractor : IMetadataExtractor
     {
-        public ImmutableDictionary<string, IValidationAnalyzerMetadata> ExtractMetadata(ImmutableDictionary<string, ICSharpObject> csharpObjects)
+        public void ExtractMetadata(CSharpStaticAnalysisContext context, ImmutableDictionary<string, ICSharpObject> csharpObjects)
         {
-            
+            var builder = ImmutableDictionary.CreateBuilder<string, RequiredSymbolMetadata>();
+            foreach (var pair in csharpObjects)
+            {
+                builder.Add(pair.Key, new RequiredSymbolMetadata { PossibleKind = pair.Value.GetRepresentingKind() });
+            }
+            context.AddMetadata(builder.ToImmutable());
         }
     }
 }

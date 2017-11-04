@@ -1,9 +1,10 @@
 ﻿using Microsoft.CodeAnalysis.CSharp;
+using System.Collections.Immutable;
 
 namespace DotvvmAcademy.Validation.CSharp.Analyzers
 {
     public class RequiredSymbolMetadata : IValidationAnalyzerMetadata
     {
-        public SyntaxKind SyntaxKind { get; set; }
+        public ImmutableArray<SyntaxKind> PossibleKind { get; set; }
     }
 }

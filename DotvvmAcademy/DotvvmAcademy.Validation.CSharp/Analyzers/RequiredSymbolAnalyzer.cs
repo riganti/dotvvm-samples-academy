@@ -17,7 +17,7 @@ namespace DotvvmAcademy.Validation.CSharp.Analyzers
 
         public override void Initialize(AnalysisContext context)
         {
-            requiredSymbols = ValidationAnalyzerContext.GetMetadata<RequiredSymbolMetadata>();
+            requiredSymbols = StaticAnalysis.GetMetadata<RequiredSymbolMetadata>();
             foundRequiredSymbols.Clear();
             context.RegisterSyntaxNodeAction(ValidateNode, SyntaxKindPresets.Declarations);
             context.RegisterCompilationAction(ValidateCompilation);
@@ -34,14 +34,14 @@ namespace DotvvmAcademy.Validation.CSharp.Analyzers
 
         private void ValidateNode(SyntaxNodeAnalysisContext context)
         {
-            if (!ValidationAnalyzerContext.ValidatedTrees.Contains(context.Node.SyntaxTree))
+            if (!StaticAnalysis.ValidatedTrees.Contains(context.Node.SyntaxTree))
             {
                 return;
             }
 
             var fullName = context.ContainingSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
             var requiredSymbol = requiredSymbols.GetValueOrDefault(fullName);
-            if (requiredSymbol == null || !context.Node.IsKind(requiredSymbol.SyntaxKind))
+            if (requiredSymbol == null || requiredSymbol.PossibleKind.All(k=>!context.Node.IsKind(k)))
             {
                 context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.RedundantMember, context.Node.GetLocation(), fullName));
             }

@@ -5,12 +5,10 @@ namespace DotvvmAcademy.Validation.CSharp
     [Flags]
     public enum CSharpValidationExtent
     {
-        AllowedSymbolsAnalyzer = 1,
-        AssemblyRewrite = 2,
-        ExplicitStaticAnalysis = 4,
-        ExplicitDynamicAnalysis = 8,
-        ValidationMethods = ExplicitStaticAnalysis | ExplicitDynamicAnalysis,
-        General = AllowedSymbolsAnalyzer | AssemblyRewrite,
-        All = General | ValidationMethods
+        None = 0b000,
+        StaticAnalysis = 0b001,
+        DynamicAnalysis = 0b010,
+        AssemblyRewrite = 0b100,
+        All = StaticAnalysis | DynamicAnalysis | AssemblyRewrite
     }
 }
