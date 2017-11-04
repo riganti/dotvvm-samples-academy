@@ -8,7 +8,5 @@ namespace DotvvmAcademy.Validation
         public ValidationClassAttribute()
         {
         }
-
-        public string CompiledAssemblyName { get; set; }
     }
 }

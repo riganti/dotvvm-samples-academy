@@ -1,4 +1,5 @@
-﻿using DotvvmAcademy.Validation.CSharp.Abstractions;
+﻿using DotvvmAcademy.Validation.Abstractions;
+using DotvvmAcademy.Validation.CSharp.Abstractions;
 using DotvvmAcademy.Validation.CSharp.Analyzers;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -33,6 +34,9 @@ namespace DotvvmAcademy.Validation.CSharp
         {
             collection.AddScoped<ICSharpFactory, DefaultCSharpFactory>();
             collection.AddSingleton<ICSharpFullNameProvider, DefaultCSharpFullNameProvider>();
+            collection.AddSingleton<IValidationMethodNameResolver, MethodNameValidationMethodNameResolver>();
+            collection.AddSingleton<IValidationMethodNameResolver, AttributeValidationMethodNameResolver>();
+            collection.AddSingleton<IValidationMethodLocator, DefaultValidationMethodLocator>();
         }
 
         private static void AddValidationAnalyzers(IServiceCollection collection)
