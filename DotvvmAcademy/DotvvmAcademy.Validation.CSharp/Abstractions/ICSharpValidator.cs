@@ -6,6 +6,6 @@ namespace DotvvmAcademy.Validation.CSharp.Abstractions
 {
     public interface ICSharpValidator : IValidator<CSharpValidationRequest, CSharpValidationResponse>
     {
-        ImmutableDictionary<string, ValidationAnalyzerContext> StaticAnalysisContexts { set; }
+        ImmutableDictionary<string, CSharpStaticAnalysisContext> StaticAnalysisContexts { set; }
     }
 }

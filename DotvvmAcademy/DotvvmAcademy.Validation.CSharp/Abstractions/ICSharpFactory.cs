@@ -1,10 +1,10 @@
-﻿using DotvvmAcademy.Validation.CSharp.Analyzers;
+﻿using System.Collections.Immutable;
 
 namespace DotvvmAcademy.Validation.CSharp.Abstractions
 {
     public interface ICSharpFactory
     {
-        ValidationAnalyzerContext GetValidationAnalyzerContext();
+        ImmutableDictionary<string, ICSharpObject> GetAllObjects();
 
         ICSharpDocument GetDocument();
 

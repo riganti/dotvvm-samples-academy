@@ -7,13 +7,13 @@ namespace DotvvmAcademy.Validation.CSharp.Analyzers
 {
     using ImmutableMetadataDictionary = ImmutableDictionary<string, object>;
 
-    public class ValidationAnalyzerContext
+    public class CSharpStaticAnalysisContext
     {
         private ImmutableMetadataDictionary metadataStorage;
 
-        public static ValidationAnalyzerContext Merge(IEnumerable<ValidationAnalyzerContext> contexts)
+        public static CSharpStaticAnalysisContext Merge(IEnumerable<CSharpStaticAnalysisContext> contexts)
         {
-            var mergedContext = new ValidationAnalyzerContext();
+            var mergedContext = new CSharpStaticAnalysisContext();
             var metadataStorageBuilder = ImmutableDictionary.CreateBuilder<string, object>();
             foreach (var context in contexts)
             {

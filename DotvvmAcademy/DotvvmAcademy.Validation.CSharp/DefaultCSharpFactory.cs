@@ -1,25 +1,24 @@
 ﻿using DotvvmAcademy.Validation.CSharp.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Immutable;
 using System.Linq;
-using DotvvmAcademy.Validation.CSharp.Analyzers;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace DotvvmAcademy.Validation.CSharp
 {
     public class DefaultCSharpFactory : ICSharpFactory
     {
-        private readonly ConcurrentDictionary<string, ICSharpObject> cache = new ConcurrentDictionary<string, ICSharpObject>();
+        private readonly ImmutableDictionary<string, ICSharpObject>.Builder cache = ImmutableDictionary.CreateBuilder<string, ICSharpObject>();
         private readonly IServiceProvider provider;
-        private readonly IEnumerable<IMetadataExtractor> extractors;
 
-        public DefaultCSharpFactory(IServiceProvider provider, IEnumerable<IMetadataExtractor> extractors)
+        public DefaultCSharpFactory(IServiceProvider provider)
         {
             this.provider = provider;
-            this.extractors = extractors;
+        }
+
+        public ImmutableDictionary<string, ICSharpObject> GetAllObjects()
+        {
+            return cache.ToImmutable();
         }
 
         public ICSharpDocument GetDocument()
@@ -29,12 +28,13 @@ namespace DotvvmAcademy.Validation.CSharp
 
         public TCSharpObject GetObject<TCSharpObject>(string fullName) where TCSharpObject : ICSharpObject
         {
-            var value = cache.GetOrAdd(fullName, s =>
+            cache.TryGetValue(fullName, out var value);
+            if (value == null)
             {
-                var service = provider.GetRequiredService<TCSharpObject>();
-                service.SetUniqueFullName(s);
-                return service;
-            });
+                value = provider.GetRequiredService<TCSharpObject>();
+                value.SetUniqueFullName(fullName);
+            }
+
             if (value is TCSharpObject castObject)
             {
                 return castObject;
@@ -46,24 +46,12 @@ namespace DotvvmAcademy.Validation.CSharp
             }
         }
 
-        public ValidationAnalyzerContext GetValidationAnalyzerContext()
-        {
-            var immutableCache = cache.ToImmutableDictionary();
-            var metadata = Immutable
-            var context = new ValidationAnalyzerContext();
-            foreach (var extractor in extractors)
-            {
-                context.AddMetadata(extractor.ExtractMetadata(immutableCache));
-            }
-            return context;
-        }
-
         public void RemoveObject<TCSharpObject>(TCSharpObject csharpObject) where TCSharpObject : ICSharpObject
         {
             var values = cache.Where((k, v) => ReferenceEquals(v, csharpObject));
             foreach (var pair in values)
             {
-                cache.TryRemove(pair.Key, out _);
+                cache.Remove(pair.Key);
             }
         }
     }

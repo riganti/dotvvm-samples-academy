@@ -8,6 +8,6 @@ namespace DotvvmAcademy.Validation.CSharp.Analyzers
     {
         Type ExtractedMetadataType { get; }
 
-        void ExtractMetadata(ValidationAnalyzerContext context, ImmutableDictionary<string, ICSharpObject> csharpObjects);
+        void ExtractMetadata(CSharpStaticAnalysisContext context, ImmutableDictionary<string, ICSharpObject> csharpObjects);
     }
 }

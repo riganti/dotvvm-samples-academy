@@ -23,7 +23,7 @@ namespace DotvvmAcademy.Validation.CSharp
             this.analyzers = analyzers.ToImmutableArray();
         }
 
-        public ImmutableDictionary<string, ValidationAnalyzerContext> StaticAnalysisContexts { private get; set; }
+        public ImmutableDictionary<string, CSharpStaticAnalysisContext> StaticAnalysisContexts { private get; set; }
 
         public async Task<CSharpValidationResponse> Validate(CSharpValidationRequest request)
         {
@@ -34,7 +34,7 @@ namespace DotvvmAcademy.Validation.CSharp
                 var contexts = request.ValidationUnits
                     .SelectMany(u => u.ValidationMethods)
                     .Select(m => StaticAnalysisContexts[m]);
-                var context = ValidationAnalyzerContext.Merge(contexts);
+                var context = CSharpStaticAnalysisContext.Merge(contexts);
                 context.ValidatedTrees = request.ValidationUnits.Select(u => u.SyntaxTree).ToImmutableArray();
                 SetAnalyzerContext(context);
                 var compilation = new CompilationWithAnalyzers(request.Compilation, analyzers.CastArray<DiagnosticAnalyzer>(), options);
@@ -73,7 +73,7 @@ namespace DotvvmAcademy.Validation.CSharp
             return validationDiagnostics.ToImmutableArray();
         }
 
-        private void SetAnalyzerContext(ValidationAnalyzerContext context)
+        private void SetAnalyzerContext(CSharpStaticAnalysisContext context)
         {
             foreach (var analyzer in analyzers)
             {

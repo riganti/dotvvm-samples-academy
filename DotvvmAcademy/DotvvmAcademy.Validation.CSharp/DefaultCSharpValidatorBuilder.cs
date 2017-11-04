@@ -59,9 +59,9 @@ namespace DotvvmAcademy.Validation.CSharp
             }
         }
 
-        protected ImmutableDictionary<string, ValidationAnalyzerContext> ProcessMethods(IServiceProvider provider)
+        protected ImmutableDictionary<string, CSharpStaticAnalysisContext> ProcessMethods(IServiceProvider provider)
         {
-            var contexts = new Dictionary<string, ValidationAnalyzerContext>();
+            var contexts = ImmutableDictionary.CreateBuilder<string, CSharpStaticAnalysisContext>();
             var groupedMethods = methods.GroupBy(m => m.DeclaringType);
             foreach (var group in groupedMethods)
             {
@@ -73,11 +73,11 @@ namespace DotvvmAcademy.Validation.CSharp
                     {
                         var factory = scope.ServiceProvider.GetRequiredService<ICSharpFactory>();
                         method.Invoke(instance, new[] { factory.GetDocument() });
-                        contexts.Add(name, factory.GetValidationAnalyzerContext());
+                        var csharpObjects = factory.GetAllObjects();
                     }
                 }
             }
-            return contexts.ToImmutableDictionary();
+            return contexts.ToImmutable();
         }
     }
 }
