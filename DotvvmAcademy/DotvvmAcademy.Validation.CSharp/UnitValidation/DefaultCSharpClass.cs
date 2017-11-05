@@ -1,7 +1,9 @@
-﻿using DotvvmAcademy.Validation.CSharp.Abstractions;
+﻿using DotvvmAcademy.Validation.CSharp.UnitValidation.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.CodeAnalysis.CSharp;
+using System.Collections.Immutable;
 
 namespace DotvvmAcademy.Validation.CSharp.UnitValidation
 {
@@ -29,6 +31,8 @@ namespace DotvvmAcademy.Validation.CSharp.UnitValidation
         public bool IsSealed { get; set; }
 
         public bool IsStatic { get; set; }
+
+        public ImmutableArray<SyntaxKind> Kinds 
 
         public ICSharpClass GetClass(string name, IEnumerable<CSharpGenericParameterDescriptor> genericParameters)
         {
@@ -100,6 +104,11 @@ namespace DotvvmAcademy.Validation.CSharp.UnitValidation
         {
             name = nameProvider.GetMemberName(FullName, name);
             return factory.GetObject<ICSharpProperty>(name);
+        }
+
+        public ImmutableArray<SyntaxKind> GetRepresentingKind()
+        {
+            throw new NotImplementedException();
         }
 
         public ICSharpStruct GetStruct(string name, IEnumerable<CSharpGenericParameterDescriptor> genericParameters)

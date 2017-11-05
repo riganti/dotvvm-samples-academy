@@ -1,4 +1,4 @@
-﻿using DotvvmAcademy.Validation.CSharp.Abstractions;
+﻿using DotvvmAcademy.Validation.CSharp.UnitValidation.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Immutable;

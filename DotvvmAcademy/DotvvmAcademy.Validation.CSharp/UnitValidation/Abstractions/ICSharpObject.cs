@@ -7,7 +7,7 @@ namespace DotvvmAcademy.Validation.CSharp.UnitValidation.Abstractions
     {
         string FullName { get; }
 
-        ImmutableArray<SyntaxKind> GetRepresentingKind();
+        ImmutableArray<SyntaxKind> Kinds { get; }
 
         void SetUniqueFullName(string fullName);
     }

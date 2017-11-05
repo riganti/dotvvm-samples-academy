@@ -21,5 +21,7 @@ namespace DotvvmAcademy.Validation.Tests
                 Debug.WriteLine($"ValidationDiagnostic: '{diagnostic.Id}', '{diagnostic.Message}'.");
             }
         }
+
+
     }
 }
