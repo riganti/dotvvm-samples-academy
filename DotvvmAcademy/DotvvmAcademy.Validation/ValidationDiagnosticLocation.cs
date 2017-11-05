@@ -2,16 +2,19 @@
 {
     public class ValidationDiagnosticLocation
     {
-        public ValidationDiagnosticLocation(int startPosition, int endPosition)
+        public ValidationDiagnosticLocation(int start, int end, string fileKey)
         {
-            StartPosition = startPosition;
-            EndPosition = endPosition;
+            Start = start;
+            End = end;
+            FileKey = fileKey;
         }
 
-        public static ValidationDiagnosticLocation None = new ValidationDiagnosticLocation(-1, -1);
+        public static ValidationDiagnosticLocation None = new ValidationDiagnosticLocation(-1, -1, null);
 
-        public int EndPosition { get; }
+        public int End { get; }
 
-        public int StartPosition { get; }
+        public int Start { get; }
+
+        public string FileKey { get; }
     }
 }

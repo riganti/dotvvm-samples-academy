@@ -1,25 +1,24 @@
 ﻿using DotvvmAcademy.Validation.CSharp.Abstractions;
-using DotvvmAcademy.Validation.CSharp.Analyzers;
+using DotvvmAcademy.Validation.CSharp.StaticAnalysis;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DotvvmAcademy.Validation.CSharp
 {
     public class DefaultCSharpValidator : ICSharpValidator
     {
-        private readonly ImmutableArray<ValidationAnalyzer> analyzers;
-        private readonly IServiceProvider serviceProvider;
-        private CompilationWithAnalyzersOptions options = new CompilationWithAnalyzersOptions(null, null, false, false);
+        private readonly CompilationWithAnalyzersOptions options = new CompilationWithAnalyzersOptions(null, null, true, false);
+        private readonly IServiceProvider provider;
 
-        protected internal DefaultCSharpValidator(IServiceProvider serviceProvider)
+        protected internal DefaultCSharpValidator(IServiceProvider provider)
         {
-            this.serviceProvider = serviceProvider;
-            analyzers = serviceProvider.GetRequiredService<IEnumerable<ValidationAnalyzer>>().ToImmutableArray();
+            this.provider = provider;
         }
 
         public async Task<CSharpValidationResponse> Validate(CSharpValidationRequest request)
@@ -60,6 +59,7 @@ namespace DotvvmAcademy.Validation.CSharp
 
         protected virtual async Task RunStaticAnalysis(CSharpValidationRequest request, CSharpValidationResponse response)
         {
+            var analyzers = provider.GetRequiredService<IEnumerable<ValidationAnalyzer>>().ToImmutableArray();
             foreach (var analyzer in analyzers)
             {
                 analyzer.StaticAnalysis = request.StaticAnalysis;
@@ -72,17 +72,28 @@ namespace DotvvmAcademy.Validation.CSharp
             var diagnostics = ImmutableArray.CreateBuilder<ValidationDiagnostic>();
             foreach (var roslynDiagnostic in roslynDiagnostics)
             {
-                var location = roslynDiagnostic.Location.Kind == LocationKind.None
-                    ? ValidationDiagnosticLocation.None
-                    : new ValidationDiagnosticLocation(
-                        startPosition: roslynDiagnostic.Location.SourceSpan.Start,
-                        endPosition: roslynDiagnostic.Location.SourceSpan.End);
                 diagnostics.Add(new ValidationDiagnostic(
                     id: roslynDiagnostic.Id,
                     message: roslynDiagnostic.GetMessage(),
-                    location: location));
+                    location: GetLocation(request, roslynDiagnostic)));
             }
             response.Diagnostics = diagnostics.ToImmutable();
+        }
+
+        private ValidationDiagnosticLocation GetLocation(CSharpValidationRequest request, Diagnostic roslynDiagnostic)
+        {
+            if (roslynDiagnostic.Location.Kind == LocationKind.None)
+            {
+                return ValidationDiagnosticLocation.None;
+            }
+
+            var fileKey = request.FileTable
+                .SingleOrDefault(pair => pair.Value == roslynDiagnostic.Location.SourceTree)
+                .Key;
+            return new ValidationDiagnosticLocation(
+                start: roslynDiagnostic.Location.SourceSpan.Start,
+                end: roslynDiagnostic.Location.SourceSpan.End,
+                fileKey: fileKey);
         }
     }
 }
