@@ -1,9 +1,9 @@
 ﻿using DotvvmAcademy.Validation.CSharp.UnitValidation.Abstractions;
+using Microsoft.CodeAnalysis.CSharp;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Microsoft.CodeAnalysis.CSharp;
 using System.Collections.Immutable;
+using System.Linq;
 
 namespace DotvvmAcademy.Validation.CSharp.UnitValidation
 {
@@ -12,7 +12,7 @@ namespace DotvvmAcademy.Validation.CSharp.UnitValidation
         private readonly ICSharpFactory factory;
         private readonly ICSharpFullNameProvider nameProvider;
 
-        public DefaultCSharpClass(ICSharpFactory factory, ICSharpFullNameProvider nameProvider)
+        public DefaultCSharpClass(string fullName, ICSharpFactory factory, ICSharpFullNameProvider nameProvider) : base(fullName)
         {
             this.factory = factory;
             this.nameProvider = nameProvider;
@@ -26,13 +26,9 @@ namespace DotvvmAcademy.Validation.CSharp.UnitValidation
 
         public bool IsAbstract { get; set; }
 
-        public bool IsOverriding { get; set; }
-
         public bool IsSealed { get; set; }
 
         public bool IsStatic { get; set; }
-
-        public ImmutableArray<SyntaxKind> Kinds 
 
         public ICSharpClass GetClass(string name, IEnumerable<CSharpGenericParameterDescriptor> genericParameters)
         {

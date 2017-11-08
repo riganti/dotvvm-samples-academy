@@ -28,4 +28,5 @@ namespace DotvvmAcademy.Validation.CSharp.StaticAnalysis
                 SyntaxKind.AddAccessorDeclaration,
                 SyntaxKind.RemoveAccessorDeclaration,
                 SyntaxKind.UnknownAccessorDeclaration);
+    }
 }

@@ -1,24 +1,19 @@
-﻿using DotvvmAcademy.Validation.CSharp.Abstractions;
-using System;
+﻿using DotvvmAcademy.Validation.CSharp.UnitValidation.Abstractions;
 
 namespace DotvvmAcademy.Validation.CSharp.UnitValidation
 {
     public class DefaultCSharpObject : ICSharpObject
     {
-        private string fullName;
-
-        public string FullName => fullName;
-
-        public void SetUniqueFullName(string fullName)
+        public DefaultCSharpObject(string fullName)
         {
-            if (string.IsNullOrEmpty(this.fullName))
+            if (string.IsNullOrEmpty(fullName))
             {
-                this.fullName = fullName;
+                throw new System.ArgumentException("message", nameof(fullName));
             }
-            else
-            {
-                throw new InvalidOperationException($"The unique full name of this '{nameof(ICSharpObject)}' is already set.");
-            }
+
+            FullName = fullName;
         }
+
+        public string FullName { get; }
     }
 }
