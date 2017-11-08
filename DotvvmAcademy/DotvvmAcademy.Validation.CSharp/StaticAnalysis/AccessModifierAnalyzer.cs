@@ -15,6 +15,11 @@ namespace DotvvmAcademy.Validation.CSharp.StaticAnalysis
         public override void Initialize(AnalysisContext context)
         {
             metadata = Request.StaticAnalysis.GetMetadata<AccessModifierMetadata>();
+            if(metadata == null)
+            {
+                return;
+            }
+
             context.RegisterSymbolAction(ValidateSymbol, SymbolKindPresets.All);
         }
 

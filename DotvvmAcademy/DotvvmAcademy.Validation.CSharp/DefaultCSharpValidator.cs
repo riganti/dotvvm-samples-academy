@@ -1,5 +1,4 @@
-﻿using DotvvmAcademy.Validation.CSharp.Abstractions;
-using DotvvmAcademy.Validation.CSharp.StaticAnalysis;
+﻿using DotvvmAcademy.Validation.CSharp.StaticAnalysis;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,7 +15,7 @@ namespace DotvvmAcademy.Validation.CSharp
         private readonly CompilationWithAnalyzersOptions options = new CompilationWithAnalyzersOptions(null, null, true, false);
         private readonly IServiceProvider provider;
 
-        protected internal DefaultCSharpValidator(IServiceProvider provider)
+        public DefaultCSharpValidator(IServiceProvider provider)
         {
             this.provider = provider;
         }

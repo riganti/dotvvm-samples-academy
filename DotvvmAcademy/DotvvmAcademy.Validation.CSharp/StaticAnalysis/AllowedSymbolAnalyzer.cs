@@ -15,6 +15,11 @@ namespace DotvvmAcademy.Validation.CSharp.StaticAnalysis
         public override void Initialize(AnalysisContext context)
         {
             metadata = Request.StaticAnalysis.GetMetadata<AllowedSymbolMetadata>();
+            if(metadata == null)
+            {
+                return;
+            }
+
             context.RegisterSyntaxNodeAction(ValidateNode, ImmutableArray.Create(SyntaxKind.IdentifierName));
         }
 

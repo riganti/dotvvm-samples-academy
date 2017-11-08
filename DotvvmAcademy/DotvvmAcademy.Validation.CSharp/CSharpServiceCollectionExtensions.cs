@@ -1,4 +1,5 @@
-﻿using DotvvmAcademy.Validation.CSharp.UnitValidation;
+﻿using DotvvmAcademy.Validation.CSharp.StaticAnalysis;
+using DotvvmAcademy.Validation.CSharp.UnitValidation;
 using DotvvmAcademy.Validation.CSharp.UnitValidation.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,6 +17,13 @@ namespace DotvvmAcademy.Validation.CSharp
             collection.AddTransient<ICSharpClass, DefaultCSharpClass>();
             collection.AddTransient<ICSharpMethod, DefaultCSharpMethod>();
             collection.AddTransient<ICSharpProperty, DefaultCSharpProperty>();
+        }
+
+        public static void AddCSharpValidationAnalyzers(this IServiceCollection collection)
+        {
+            collection.AddTransient<ValidationAnalyzer, AllowedSymbolAnalyzer>();
+            collection.AddTransient<ValidationAnalyzer, RequiredSymbolAnalyzer>();
+            collection.AddTransient<ValidationAnalyzer, AccessModifierAnalyzer>();
         }
     }
 }
