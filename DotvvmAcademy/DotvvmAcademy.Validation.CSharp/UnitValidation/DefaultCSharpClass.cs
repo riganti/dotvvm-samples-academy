@@ -6,10 +6,10 @@ namespace DotvvmAcademy.Validation.CSharp.UnitValidation
 {
     public class DefaultCSharpClass : DefaultCSharpObject, ICSharpClass
     {
-        private readonly ICSharpFactory factory;
+        private readonly ICSharpObjectFactory factory;
         private readonly ICSharpNameFormatter formatter;
 
-        public DefaultCSharpClass(ICSharpNameStack nameStack, ICSharpFactory factory, ICSharpNameFormatter formatter) : base(nameStack)
+        public DefaultCSharpClass(ICSharpNameStack nameStack, ICSharpObjectFactory factory, ICSharpNameFormatter formatter) : base(nameStack)
         {
             this.factory = factory;
             this.formatter = formatter;

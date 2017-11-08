@@ -1,53 +1,21 @@
-﻿using DotvvmAcademy.Validation.Abstractions;
-using DotvvmAcademy.Validation.CSharp.Abstractions;
-using DotvvmAcademy.Validation.CSharp.Analyzers;
+﻿using DotvvmAcademy.Validation.CSharp.UnitValidation;
+using DotvvmAcademy.Validation.CSharp.UnitValidation.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DotvvmAcademy.Validation.CSharp
 {
     public static class CSharpServiceCollectionExtensions
     {
-        public static void AddCSharpValidation(this IServiceCollection collection)
+        public static void AddCSharpUnitValidation(this IServiceCollection collection)
         {
-            collection.AddTransient<ICSharpValidatorBuilder, DefaultCSharpValidatorBuilder>();
-            collection.AddSingleton<ICSharpValidationRequestFactory, DefaultCSharpValidationRequestFactory>();
-        }
-
-        internal static void AddDefaultCSharpValidation(this IServiceCollection collection)
-        {
-            collection.AddTransient<ICSharpValidator, DefaultCSharpValidator>();
-            AddCSharpObjects(collection);
-            AddInternalServices(collection);
-            AddValidationAnalyzers(collection);
-        }
-
-        private static void AddCSharpObjects(IServiceCollection collection)
-        {
+            collection.AddSingleton<ICSharpNameFormatter, DefaultCSharpNameFormatter>();
+            collection.AddScoped<ICSharpNameStack, DefaultCSharpNameStack>();
+            collection.AddScoped<ICSharpObjectFactory, DefaultCSharpObjectFactory>();
             collection.AddScoped<ICSharpDocument, DefaultCSharpDocument>();
             collection.AddTransient<ICSharpNamespace, DefaultCSharpNamespace>();
             collection.AddTransient<ICSharpClass, DefaultCSharpClass>();
             collection.AddTransient<ICSharpMethod, DefaultCSharpMethod>();
             collection.AddTransient<ICSharpProperty, DefaultCSharpProperty>();
-        }
-
-        private static void AddInternalServices(IServiceCollection collection)
-        {
-            collection.AddScoped<ICSharpFactory, DefaultCSharpFactory>();
-            collection.AddSingleton<ICSharpFullNameProvider, DefaultCSharpFullNameProvider>();
-            collection.AddSingleton<IValidationMethodNameResolver, MethodNameValidationMethodNameResolver>();
-            collection.AddSingleton<IValidationMethodNameResolver, AttributeValidationMethodNameResolver>();
-            collection.AddSingleton<IValidationMethodLocator, DefaultValidationMethodLocator>();
-        }
-
-        private static void AddValidationAnalyzers(IServiceCollection collection)
-        {
-            collection.AddSingleton<ValidationAnalyzer, RequiredSymbolAnalyzer>();
-            collection.AddSingleton<ValidationAnalyzer, AccessModifierAnalyzer>();
-        }
-
-        private static void AddMetadataExtractors(IServiceCollection collection)
-        {
-            collection.AddSingleton<IMetadataExtractor, RequiredSymbolMetadataExtractor>();
         }
     }
 }

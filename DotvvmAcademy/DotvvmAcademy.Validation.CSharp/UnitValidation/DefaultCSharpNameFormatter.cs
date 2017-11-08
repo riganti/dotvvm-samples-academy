@@ -9,6 +9,10 @@ namespace DotvvmAcademy.Validation.CSharp.UnitValidation
     {
         public string AppendMember(string baseName, string memberName)
         {
+            if(string.IsNullOrEmpty(baseName))
+            {
+                return memberName;
+            }
             return $"{baseName}.{memberName}";
         }
 

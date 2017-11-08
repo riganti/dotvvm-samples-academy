@@ -1,16 +1,16 @@
-﻿using DotvvmAcademy.Validation.CSharp.Abstractions;
+﻿using DotvvmAcademy.Validation.CSharp.UnitValidation.Abstractions;
 
 namespace DotvvmAcademy.Validation.CSharp.UnitValidation
 {
     public class DefaultCSharpProperty : DefaultCSharpObject, ICSharpProperty
     {
-        private readonly ICSharpFactory factory;
-        private readonly ICSharpFullNameProvider nameProvider;
+        private readonly ICSharpObjectFactory factory;
+        private readonly ICSharpNameFormatter formatter;
 
-        public DefaultCSharpProperty(ICSharpFactory factory, ICSharpFullNameProvider nameProvider)
+        public DefaultCSharpProperty(ICSharpNameStack nameStack, ICSharpObjectFactory factory, ICSharpNameFormatter formatter) : base(nameStack)
         {
             this.factory = factory;
-            this.nameProvider = nameProvider;
+            this.formatter = formatter;
         }
 
         public CSharpAccessModifier AccessModifier { get; set; }
@@ -27,15 +27,15 @@ namespace DotvvmAcademy.Validation.CSharp.UnitValidation
 
         public ICSharpAccessor GetGetter()
         {
-            var name = nameProvider.GetMemberName(FullName, CSharpConstants.GetterName);
-            name = nameProvider.GetInvokableName(name, null);
+            var name = formatter.AppendMember(FullName, CSharpConstants.GetterName);
+            name = formatter.GetInvokableName(name, null);
             return factory.GetObject<ICSharpAccessor>(name);
         }
 
         public ICSharpAccessor GetSetter()
         {
-            var name = nameProvider.GetMemberName(FullName, CSharpConstants.SetterName);
-            name = nameProvider.GetInvokableName(name, null);
+            var name = formatter.AppendMember(FullName, CSharpConstants.SetterName);
+            name = formatter.GetInvokableName(name, null);
             return factory.GetObject<ICSharpAccessor>(name);
         }
     }

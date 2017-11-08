@@ -2,7 +2,7 @@
 
 namespace DotvvmAcademy.Validation.CSharp.UnitValidation.Abstractions
 {
-    public interface ICSharpFactory
+    public interface ICSharpObjectFactory
     {
         ImmutableDictionary<string, ICSharpObject> GetAllObjects();
 

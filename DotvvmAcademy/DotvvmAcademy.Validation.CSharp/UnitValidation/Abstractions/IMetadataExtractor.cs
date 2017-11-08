@@ -2,6 +2,6 @@
 {
     public interface IMetadataExtractor
     {
-        void ExtractMetadata(ICSharpFactory factory, CSharpValidationRequest request);
+        void ExtractMetadata(ICSharpObjectFactory factory, CSharpValidationRequest request);
     }
 }

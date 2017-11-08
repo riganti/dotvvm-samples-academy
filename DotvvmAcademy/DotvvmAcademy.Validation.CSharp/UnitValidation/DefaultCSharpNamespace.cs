@@ -1,31 +1,24 @@
-﻿using DotvvmAcademy.Validation.CSharp.Abstractions;
+﻿using DotvvmAcademy.Validation.CSharp.UnitValidation.Abstractions;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace DotvvmAcademy.Validation.CSharp.UnitValidation
 {
     public class DefaultCSharpNamespace : DefaultCSharpObject, ICSharpNamespace
     {
-        private readonly ICSharpFactory factory;
-        private readonly ICSharpFullNameProvider nameProvider;
+        private readonly ICSharpObjectFactory factory;
+        private readonly ICSharpNameFormatter formatter;
 
-        public DefaultCSharpNamespace(ICSharpFactory factory, ICSharpFullNameProvider nameProvider)
+        public DefaultCSharpNamespace(ICSharpNameStack nameStack, ICSharpObjectFactory factory, ICSharpNameFormatter formatter) : base(nameStack)
         {
             this.factory = factory;
-            this.nameProvider = nameProvider;
+            this.formatter = formatter;
         }
 
         public ICSharpClass GetClass(string name, IEnumerable<CSharpGenericParameterDescriptor> genericParameters)
         {
-            if (FullName != CSharpConstants.GlobalNamespaceName)
-            {
-                name = nameProvider.GetMemberName(FullName, name);
-            }
-            if (genericParameters != null)
-            {
-                name = nameProvider.GetGenericName(name, genericParameters.Select(p => p.Name));
-            }
+            name = formatter.AppendMember(FullName, name);
+            name = formatter.GetGenericName(name, genericParameters);
             return factory.GetObject<ICSharpClass>(name);
         }
 
@@ -46,7 +39,7 @@ namespace DotvvmAcademy.Validation.CSharp.UnitValidation
 
         public ICSharpNamespace GetNamespace(string name)
         {
-            name = nameProvider.GetMemberName(FullName, name);
+            name = formatter.AppendMember(FullName, name);
             return factory.GetObject<ICSharpNamespace>(name);
         }
 

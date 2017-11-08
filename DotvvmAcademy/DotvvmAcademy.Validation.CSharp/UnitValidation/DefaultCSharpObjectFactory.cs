@@ -6,13 +6,13 @@ using System.Linq;
 
 namespace DotvvmAcademy.Validation.CSharp.UnitValidation
 {
-    public class DefaultCSharpFactory : ICSharpFactory
+    public class DefaultCSharpObjectFactory : ICSharpObjectFactory
     {
         private readonly ImmutableDictionary<string, ICSharpObject>.Builder objects = ImmutableDictionary.CreateBuilder<string, ICSharpObject>();
         private readonly IServiceProvider provider;
         private readonly ICSharpNameStack nameStack;
 
-        public DefaultCSharpFactory(IServiceProvider provider)
+        public DefaultCSharpObjectFactory(IServiceProvider provider)
         {
             this.provider = provider;
             nameStack = provider.GetRequiredService<ICSharpNameStack>();

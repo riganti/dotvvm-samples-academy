@@ -4,9 +4,9 @@ namespace DotvvmAcademy.Validation.CSharp.UnitValidation
 {
     public class DefaultCSharpDocument : ICSharpDocument
     {
-        private readonly ICSharpFactory factory;
+        private readonly ICSharpObjectFactory factory;
 
-        public DefaultCSharpDocument(ICSharpFactory factory)
+        public DefaultCSharpDocument(ICSharpObjectFactory factory)
         {
             this.factory = factory;
         }
