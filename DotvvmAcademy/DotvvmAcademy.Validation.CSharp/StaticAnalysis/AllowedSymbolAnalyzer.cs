@@ -25,7 +25,7 @@ namespace DotvvmAcademy.Validation.CSharp.StaticAnalysis
 
         private void ValidateNode(SyntaxNodeAnalysisContext context)
         {
-            var fullName = context.ContainingSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
+            var fullName = context.ContainingSymbol.ToDisplayString(CommonDisplayFormat);
             if(!metadata.TryGetKey(fullName, out var _))
             {
                 context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.DisallowedSymbol, context.Node.GetLocation(), fullName));

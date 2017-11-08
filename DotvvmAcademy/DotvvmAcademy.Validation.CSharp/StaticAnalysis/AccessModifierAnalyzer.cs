@@ -25,7 +25,7 @@ namespace DotvvmAcademy.Validation.CSharp.StaticAnalysis
 
         private void ValidateSymbol(SymbolAnalysisContext context)
         {
-            var fullName = context.Symbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
+            var fullName = context.Symbol.ToDisplayString(CommonDisplayFormat);
             if (metadata.TryGetValue(fullName, out var value))
             {
                 if (context.Symbol.DeclaredAccessibility != value.Accessibility)
