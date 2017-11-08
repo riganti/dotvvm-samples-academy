@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DotvvmAcademy.Validation.CSharp.UnitValidation.Abstractions;
+using System;
 
 namespace DotvvmAcademy.Validation.CSharp.UnitValidation
 {
@@ -16,8 +17,7 @@ namespace DotvvmAcademy.Validation.CSharp.UnitValidation
 
         public static implicit operator CSharpTypeDescriptor(Type type)
         {
-            var descriptor = new CSharpTypeDescriptor(type.FullName);
-            return descriptor;
+           return new CSharpTypeDescriptor(type.FullName);
         }
     }
 }

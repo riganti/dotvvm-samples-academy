@@ -1,21 +1,18 @@
 ﻿using DotvvmAcademy.Validation.CSharp.UnitValidation.Abstractions;
-using Microsoft.CodeAnalysis.CSharp;
 using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
 
 namespace DotvvmAcademy.Validation.CSharp.UnitValidation
 {
     public class DefaultCSharpClass : DefaultCSharpObject, ICSharpClass
     {
         private readonly ICSharpFactory factory;
-        private readonly ICSharpFullNameProvider nameProvider;
+        private readonly ICSharpNameFormatter formatter;
 
-        public DefaultCSharpClass(string fullName, ICSharpFactory factory, ICSharpFullNameProvider nameProvider) : base(fullName)
+        public DefaultCSharpClass(ICSharpNameStack nameStack, ICSharpFactory factory, ICSharpNameFormatter formatter) : base(nameStack)
         {
             this.factory = factory;
-            this.nameProvider = nameProvider;
+            this.formatter = formatter;
         }
 
         public CSharpAccessModifier AccessModifier { get; set; }
@@ -32,11 +29,7 @@ namespace DotvvmAcademy.Validation.CSharp.UnitValidation
 
         public ICSharpClass GetClass(string name, IEnumerable<CSharpGenericParameterDescriptor> genericParameters)
         {
-            name = nameProvider.GetMemberName(FullName, name);
-            if (genericParameters != null)
-            {
-                name = nameProvider.GetGenericName(name, genericParameters?.Select(p => p.Name));
-            }
+            name = formatter.GetComplexName(FullName, name, genericParameters);
             return factory.GetObject<ICSharpClass>(name);
         }
 
@@ -55,9 +48,15 @@ namespace DotvvmAcademy.Validation.CSharp.UnitValidation
             throw new NotImplementedException();
         }
 
+        public CSharpTypeDescriptor GetDescriptor()
+        {
+            return new CSharpTypeDescriptor(FullName);
+        }
+
         public ICSharpEnum GetEnum(string name)
         {
-            throw new NotImplementedException();
+            name = formatter.AppendMember(FullName, name);
+            return factory.GetObject<ICSharpEnum>(name);
         }
 
         public ICSharpEvent GetEvent(string name)
@@ -80,14 +79,9 @@ namespace DotvvmAcademy.Validation.CSharp.UnitValidation
             throw new NotImplementedException();
         }
 
-        public ICSharpMethod GetMethod(string name, IEnumerable<CSharpTypeDescriptor> parameters, IEnumerable<CSharpGenericParameterDescriptor> genericParameters)
+        public ICSharpMethod GetMethod(string name, IEnumerable<CSharpGenericParameterDescriptor> genericParameters, IEnumerable<CSharpTypeDescriptor> parameters)
         {
-            name = nameProvider.GetMemberName(FullName, name);
-            if (genericParameters != null)
-            {
-                name = nameProvider.GetGenericName(name, genericParameters.Select(p => p.Name));
-            }
-            name = nameProvider.GetInvokableName(name, parameters?.Select(p => p.FullName));
+            name = formatter.GetComplexInvokableName(FullName, name, genericParameters, parameters);
             return factory.GetObject<ICSharpMethod>(name);
         }
 
@@ -98,13 +92,8 @@ namespace DotvvmAcademy.Validation.CSharp.UnitValidation
 
         public ICSharpProperty GetProperty(string name)
         {
-            name = nameProvider.GetMemberName(FullName, name);
+            name = formatter.AppendMember(FullName, name);
             return factory.GetObject<ICSharpProperty>(name);
-        }
-
-        public ImmutableArray<SyntaxKind> GetRepresentingKind()
-        {
-            throw new NotImplementedException();
         }
 
         public ICSharpStruct GetStruct(string name, IEnumerable<CSharpGenericParameterDescriptor> genericParameters)

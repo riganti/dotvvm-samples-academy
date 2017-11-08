@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using System.Collections.Generic;
 
 namespace DotvvmAcademy.Validation.CSharp.UnitValidation.Abstractions
 {
@@ -6,6 +8,8 @@ namespace DotvvmAcademy.Validation.CSharp.UnitValidation.Abstractions
     /// <summary>
     /// A C# method.
     /// </summary>
+    [SyntaxKind(SyntaxKind.MethodDeclaration)]
+    [SymbolKind(SymbolKind.Method)]
     public interface ICSharpMethod : ICSharpAllowsAccessModifier, ICSharpAllowsAbstractModifier, ICSharpAllowsAsyncModifier, ICSharpAllowsStaticModifier, ICSharpAllowsVirtualModifier, ICSharpObject, ICSharpAllowsOverrideModifier
     {
         CSharpTypeDescriptor ReturnType { get; set; }

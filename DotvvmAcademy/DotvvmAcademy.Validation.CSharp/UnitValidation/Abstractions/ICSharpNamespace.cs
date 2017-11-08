@@ -1,10 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using System.Collections.Generic;
 
 namespace DotvvmAcademy.Validation.CSharp.UnitValidation.Abstractions
 {
     /// <summary>
     /// A C# namespace.
     /// </summary>
+    [SyntaxKind(SyntaxKind.NamespaceDeclaration)]
+    [SymbolKind(SymbolKind.Namespace)]
     public interface ICSharpNamespace : ICSharpObject
     {
         ICSharpClass GetClass(string name, IEnumerable<CSharpGenericParameterDescriptor> genericParameters);

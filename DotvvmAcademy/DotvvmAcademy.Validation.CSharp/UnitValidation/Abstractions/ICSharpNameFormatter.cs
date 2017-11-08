@@ -2,9 +2,11 @@
 
 namespace DotvvmAcademy.Validation.CSharp.UnitValidation.Abstractions
 {
-    public interface ICSharpFullNameProvider
+    public interface ICSharpNameFormatter
     {
-        string GetMemberName(string baseName, string memberName);
+        string AppendMember(string baseName, string memberName);
+
+        string GetMemberName(string fullName);
 
         string GetInvokableName(string baseName, IEnumerable<string> parameterTypes);
 

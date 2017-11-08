@@ -1,4 +1,6 @@
-﻿namespace DotvvmAcademy.Validation.CSharp.UnitValidation
+﻿using Microsoft.CodeAnalysis.CSharp;
+
+namespace DotvvmAcademy.Validation.CSharp.UnitValidation
 {
     /// <summary>
     /// The allowed access modifiers of <see cref="ICSharpAllowsAccessModifier"/>.

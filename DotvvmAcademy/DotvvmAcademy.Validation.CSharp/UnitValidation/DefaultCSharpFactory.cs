@@ -8,31 +8,33 @@ namespace DotvvmAcademy.Validation.CSharp.UnitValidation
 {
     public class DefaultCSharpFactory : ICSharpFactory
     {
-        private readonly ImmutableDictionary<string, ICSharpObject>.Builder cache = ImmutableDictionary.CreateBuilder<string, ICSharpObject>();
+        private readonly ImmutableDictionary<string, ICSharpObject>.Builder objects = ImmutableDictionary.CreateBuilder<string, ICSharpObject>();
         private readonly IServiceProvider provider;
+        private readonly ICSharpNameStack nameStack;
 
         public DefaultCSharpFactory(IServiceProvider provider)
         {
             this.provider = provider;
+            nameStack = provider.GetRequiredService<ICSharpNameStack>();
         }
 
-        public ImmutableDictionary<string, ICSharpObject> GetAllObjects()
+        public virtual ImmutableDictionary<string, ICSharpObject> GetAllObjects()
         {
-            return cache.ToImmutable();
+            return objects.ToImmutable();
         }
 
-        public ICSharpDocument GetDocument()
+        public virtual ICSharpDocument GetDocument()
         {
             return provider.GetRequiredService<ICSharpDocument>();
         }
 
-        public TCSharpObject GetObject<TCSharpObject>(string fullName) where TCSharpObject : ICSharpObject
+        public virtual TCSharpObject GetObject<TCSharpObject>(string fullName) where TCSharpObject : ICSharpObject
         {
-            cache.TryGetValue(fullName, out var value);
+            objects.TryGetValue(fullName, out var value);
             if (value == null)
             {
-                value = provider.GetRequiredService<TCSharpObject>();
-                value.SetUniqueFullName(fullName);
+                nameStack.PushName(fullName);
+                return provider.GetRequiredService<TCSharpObject>();
             }
 
             if (value is TCSharpObject castObject)
@@ -48,10 +50,10 @@ namespace DotvvmAcademy.Validation.CSharp.UnitValidation
 
         public void RemoveObject<TCSharpObject>(TCSharpObject csharpObject) where TCSharpObject : ICSharpObject
         {
-            var values = cache.Where((k, v) => ReferenceEquals(v, csharpObject));
+            var values = objects.Where((k, v) => ReferenceEquals(v, csharpObject));
             foreach (var pair in values)
             {
-                cache.Remove(pair.Key);
+                objects.Remove(pair.Key);
             }
         }
     }

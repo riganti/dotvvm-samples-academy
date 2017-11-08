@@ -1,9 +1,14 @@
 ﻿using DotvvmAcademy.Validation.CSharp.Abstractions;
+using DotvvmAcademy.Validation.CSharp.UnitValidation.Abstractions;
 
 namespace DotvvmAcademy.Validation.CSharp.UnitValidation
 {
     public class DefaultCSharpMethod : DefaultCSharpObject, ICSharpMethod
     {
+        public DefaultCSharpMethod(ICSharpNameStack nameStack) : base(nameStack)
+        {
+        }
+
         public CSharpAccessModifier AccessModifier { get; set; }
 
         public bool IsAbstract { get; set; }

@@ -4,14 +4,9 @@ namespace DotvvmAcademy.Validation.CSharp.UnitValidation
 {
     public class DefaultCSharpObject : ICSharpObject
     {
-        public DefaultCSharpObject(string fullName)
+        public DefaultCSharpObject(ICSharpNameStack nameStack)
         {
-            if (string.IsNullOrEmpty(fullName))
-            {
-                throw new System.ArgumentException("message", nameof(fullName));
-            }
-
-            FullName = fullName;
+            FullName = nameStack.PopName();
         }
 
         public string FullName { get; }
