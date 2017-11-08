@@ -7,7 +7,5 @@
         public const string RedundantSymbol = "DA1003";
         public const string MissingSymbol = "DA1004";
         public const string IncorrectAccessModifier = "DA1005";
-        public const string MissingPropertyGetter = "DA1006";
-        public const string MissingPropertySetter = "DA1007";
     }
 }
