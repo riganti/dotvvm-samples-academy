@@ -117,23 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DisallowedSymbolMessage" xml:space="preserve">
+    <value>Symbol '{0}' is not allowed in the current context.</value>
+  </data>
+  <data name="DisallowedSymbolTitle" xml:space="preserve">
+    <value>Disallowed Symbol</value>
+  </data>
   <data name="IncorrectAccessModifierMessage" xml:space="preserve">
-    <value>Member '{0}' has to be marked as '{1}'.</value>
+    <value>Symbol '{0}' has to be '{1}'.</value>
   </data>
   <data name="IncorrectAccessModifierTitle" xml:space="preserve">
     <value>Incorrect Access Modifier</value>
   </data>
-  <data name="MissingMemberMessage" xml:space="preserve">
-    <value>Required member '{0}' is missing.</value>
+  <data name="MissingSymbolMessage" xml:space="preserve">
+    <value>Required symbol '{0}' is missing.</value>
   </data>
-  <data name="MissingMemberTitle" xml:space="preserve">
-    <value>Missing Member</value>
+  <data name="MissingSymbolTitle" xml:space="preserve">
+    <value>Missing Symbol</value>
   </data>
-  <data name="RedundantMemberMessage" xml:space="preserve">
-    <value>Member '{0}' is redundant.</value>
+  <data name="RedundantSymbolMessage" xml:space="preserve">
+    <value>Symbol '{0}' is redundant.</value>
   </data>
-  <data name="RedundantMemberTitle" xml:space="preserve">
-    <value>Redundant Member</value>
+  <data name="RedundantSymbolTitle" xml:space="preserve">
+    <value>Redundant Symbol</value>
   </data>
   <data name="ValidatorExceptionMessage" xml:space="preserve">
     <value>An exception of type '{0}' was thrown during the validator's execution.</value>

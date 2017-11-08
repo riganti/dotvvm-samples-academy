@@ -61,7 +61,25 @@ namespace DotvvmAcademy.Validation.CSharp.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Member &apos;{0}&apos; has to be marked as &apos;{1}&apos;..
+        ///   Looks up a localized string similar to Symbol &apos;{0}&apos; is not allowed in the current context..
+        /// </summary>
+        public static string DisallowedSymbolMessage {
+            get {
+                return ResourceManager.GetString("DisallowedSymbolMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disallowed Symbol.
+        /// </summary>
+        public static string DisallowedSymbolTitle {
+            get {
+                return ResourceManager.GetString("DisallowedSymbolTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Symbol &apos;{0}&apos; has to be &apos;{1}&apos;..
         /// </summary>
         public static string IncorrectAccessModifierMessage {
             get {
@@ -79,38 +97,38 @@ namespace DotvvmAcademy.Validation.CSharp.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Required member &apos;{0}&apos; is missing..
+        ///   Looks up a localized string similar to Required symbol &apos;{0}&apos; is missing..
         /// </summary>
-        public static string MissingMemberMessage {
+        public static string MissingSymbolMessage {
             get {
-                return ResourceManager.GetString("MissingMemberMessage", resourceCulture);
+                return ResourceManager.GetString("MissingSymbolMessage", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Missing Member.
+        ///   Looks up a localized string similar to Missing Symbol.
         /// </summary>
-        public static string MissingMemberTitle {
+        public static string MissingSymbolTitle {
             get {
-                return ResourceManager.GetString("MissingMemberTitle", resourceCulture);
+                return ResourceManager.GetString("MissingSymbolTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Member &apos;{0}&apos; is redundant..
+        ///   Looks up a localized string similar to Symbol &apos;{0}&apos; is redundant..
         /// </summary>
-        public static string RedundantMemberMessage {
+        public static string RedundantSymbolMessage {
             get {
-                return ResourceManager.GetString("RedundantMemberMessage", resourceCulture);
+                return ResourceManager.GetString("RedundantSymbolMessage", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Redundant Member.
+        ///   Looks up a localized string similar to Redundant Symbol.
         /// </summary>
-        public static string RedundantMemberTitle {
+        public static string RedundantSymbolTitle {
             get {
-                return ResourceManager.GetString("RedundantMemberTitle", resourceCulture);
+                return ResourceManager.GetString("RedundantSymbolTitle", resourceCulture);
             }
         }
         

@@ -10,18 +10,18 @@ namespace DotvvmAcademy.Validation.CSharp.StaticAnalysis
         private static ResourceManager manager = DiagnosticResources.ResourceManager;
         private static Type resourcesType = typeof(DiagnosticResources);
 
-        public static readonly DiagnosticDescriptor MissingMember = new DiagnosticDescriptor(
-            DiagnosticIds.MissingMember,
-            new LocalizableResourceString(nameof(DiagnosticResources.MissingMemberTitle), manager, resourcesType),
-            new LocalizableResourceString(nameof(DiagnosticResources.MissingMemberMessage), manager, resourcesType),
+        public static readonly DiagnosticDescriptor MissingSymbol = new DiagnosticDescriptor(
+            DiagnosticIds.MissingSymbol,
+            new LocalizableResourceString(nameof(DiagnosticResources.MissingSymbolTitle), manager, resourcesType),
+            new LocalizableResourceString(nameof(DiagnosticResources.MissingSymbolMessage), manager, resourcesType),
             DiagnosticCategories.ValidationErrors,
             DiagnosticSeverity.Error,
             true);
 
-        public static readonly DiagnosticDescriptor RedundantMember = new DiagnosticDescriptor(
-            DiagnosticIds.RedundantMember,
-            new LocalizableResourceString(nameof(DiagnosticResources.RedundantMemberTitle), manager, resourcesType),
-            new LocalizableResourceString(nameof(DiagnosticResources.RedundantMemberMessage), manager, resourcesType),
+        public static readonly DiagnosticDescriptor RedundantSymbol = new DiagnosticDescriptor(
+            DiagnosticIds.RedundantSymbol,
+            new LocalizableResourceString(nameof(DiagnosticResources.RedundantSymbolTitle), manager, resourcesType),
+            new LocalizableResourceString(nameof(DiagnosticResources.RedundantSymbolMessage), manager, resourcesType),
             DiagnosticCategories.ValidationErrors,
             DiagnosticSeverity.Error,
             true);
@@ -30,6 +30,14 @@ namespace DotvvmAcademy.Validation.CSharp.StaticAnalysis
             DiagnosticIds.IncorrectAccessModifier,
             new LocalizableResourceString(nameof(DiagnosticResources.IncorrectAccessModifierTitle), manager, resourcesType),
             new LocalizableResourceString(nameof(DiagnosticResources.IncorrectAccessModifierMessage), manager, resourcesType),
+            DiagnosticCategories.ValidationErrors,
+            DiagnosticSeverity.Error,
+            true);
+
+        public static readonly DiagnosticDescriptor DisallowedSymbol = new DiagnosticDescriptor(
+            DiagnosticIds.DisallowedSymbol,
+            new LocalizableResourceString(nameof(DiagnosticResources.DisallowedSymbolTitle), manager, resourcesType),
+            new LocalizableResourceString(nameof(DiagnosticResources.DisallowedSymbolMessage), manager, resourcesType),
             DiagnosticCategories.ValidationErrors,
             DiagnosticSeverity.Error,
             true);

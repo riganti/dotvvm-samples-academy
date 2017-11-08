@@ -13,7 +13,7 @@ namespace DotvvmAcademy.Validation.CSharp.StaticAnalysis
         private ImmutableDictionary<string, RequiredSymbolMetadata> requiredSymbols;
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; } = ImmutableArray.Create(
-            DiagnosticDescriptors.MissingMember, DiagnosticDescriptors.RedundantMember);
+            DiagnosticDescriptors.MissingSymbol, DiagnosticDescriptors.RedundantSymbol);
 
         public override void Initialize(AnalysisContext context)
         {
@@ -28,7 +28,7 @@ namespace DotvvmAcademy.Validation.CSharp.StaticAnalysis
             var missingSymbols = requiredSymbols.Keys.Except(foundRequiredSymbols);
             foreach (string missingSymbol in missingSymbols)
             {
-                context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.MissingMember, Location.None, missingSymbol));
+                context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.MissingSymbol, Location.None, missingSymbol));
             }
         }
 
@@ -43,7 +43,7 @@ namespace DotvvmAcademy.Validation.CSharp.StaticAnalysis
             var requiredSymbol = requiredSymbols.GetValueOrDefault(fullName);
             if (requiredSymbol == null || requiredSymbol.PossibleKind.All(k=>!context.Node.IsKind(k)))
             {
-                context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.RedundantMember, context.Node.GetLocation(), fullName));
+                context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.RedundantSymbol, context.Node.GetLocation(), fullName));
             }
         }
     }

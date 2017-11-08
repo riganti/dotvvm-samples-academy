@@ -9,8 +9,6 @@ namespace DotvvmAcademy.Validation.CSharp.StaticAnalysis
     {
         private ConcurrentDictionary<Type, object> metadataStorage = new ConcurrentDictionary<Type, object>();
 
-        public ImmutableArray<CSharpSyntaxTree> ValidatedTrees { get; set; }
-
         public void AddMetadata<TMetadata>(ImmutableDictionary<string, TMetadata> metadata)
             where TMetadata : IStaticAnalysisMetadata
         {

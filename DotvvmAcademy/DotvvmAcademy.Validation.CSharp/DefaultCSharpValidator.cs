@@ -62,7 +62,7 @@ namespace DotvvmAcademy.Validation.CSharp
             var analyzers = provider.GetRequiredService<IEnumerable<ValidationAnalyzer>>().ToImmutableArray();
             foreach (var analyzer in analyzers)
             {
-                analyzer.StaticAnalysis = request.StaticAnalysis;
+                analyzer.Request = request;
             }
             var compilation = new CompilationWithAnalyzers(
                 compilation: request.Compilation,
