@@ -20,6 +20,7 @@ namespace DotvvmAcademy.Validation.CSharp
             collection.AddTransient<ICSharpClass, DefaultCSharpClass>();
             collection.AddTransient<ICSharpMethod, DefaultCSharpMethod>();
             collection.AddTransient<ICSharpProperty, DefaultCSharpProperty>();
+            collection.AddTransient<ICSharpAccessor, DefaultCSharpAccessor>();
         }
 
         public static void AddCSharpValidationAnalyzers(this IServiceCollection collection)

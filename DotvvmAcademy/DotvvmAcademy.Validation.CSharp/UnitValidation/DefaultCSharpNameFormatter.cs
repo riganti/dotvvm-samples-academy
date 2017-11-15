@@ -9,11 +9,11 @@ namespace DotvvmAcademy.Validation.CSharp.UnitValidation
     {
         public string AppendMember(string baseName, string memberName)
         {
-            if(string.IsNullOrEmpty(baseName))
+            if(baseName == CSharpConstants.GlobalNamespaceName)
             {
-                return memberName;
+                return $"{baseName}{CSharpConstants.NamespaceAliasQualifier}{memberName}";
             }
-            return $"{baseName}.{memberName}";
+            return $"{baseName}{CSharpConstants.MemberAccessOperator}{memberName}";
         }
 
         public string GetGenericName(string baseName, IEnumerable<string> genericParameters)

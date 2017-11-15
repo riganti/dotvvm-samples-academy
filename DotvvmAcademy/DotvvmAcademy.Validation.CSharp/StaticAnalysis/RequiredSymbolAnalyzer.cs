@@ -24,6 +24,7 @@ namespace DotvvmAcademy.Validation.CSharp.StaticAnalysis
             }
 
             foundRequiredSymbols.Clear();
+            foundRequiredSymbols.Add(CSharpConstants.GlobalNamespaceName);
             context.RegisterCompilationStartAction(c =>
             {
                 c.RegisterSyntaxNodeAction(ValidateNode, SyntaxKindPresets.Declarations);

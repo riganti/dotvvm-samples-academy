@@ -28,14 +28,12 @@ namespace DotvvmAcademy.Validation.CSharp.UnitValidation
         public ICSharpAccessor GetGetter()
         {
             var name = formatter.AppendMember(FullName, CSharpConstants.GetterName);
-            name = formatter.GetInvokableName(name, null);
             return factory.GetObject<ICSharpAccessor>(name);
         }
 
         public ICSharpAccessor GetSetter()
         {
             var name = formatter.AppendMember(FullName, CSharpConstants.SetterName);
-            name = formatter.GetInvokableName(name, null);
             return factory.GetObject<ICSharpAccessor>(name);
         }
     }

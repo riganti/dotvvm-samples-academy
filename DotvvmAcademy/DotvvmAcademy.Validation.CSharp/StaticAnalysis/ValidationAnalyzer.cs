@@ -6,13 +6,13 @@ namespace DotvvmAcademy.Validation.CSharp.StaticAnalysis
     public abstract class ValidationAnalyzer : DiagnosticAnalyzer
     {
         public static SymbolDisplayFormat CommonDisplayFormat = new SymbolDisplayFormat(
-                SymbolDisplayGlobalNamespaceStyle.Omitted,
+                SymbolDisplayGlobalNamespaceStyle.Included,
                 SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces,
                 SymbolDisplayGenericsOptions.IncludeTypeParameters,
-                SymbolDisplayMemberOptions.IncludeContainingType | SymbolDisplayMemberOptions.IncludeParameters,
+                SymbolDisplayMemberOptions.IncludeContainingType| SymbolDisplayMemberOptions.IncludeParameters,
                 SymbolDisplayDelegateStyle.NameOnly,
                 SymbolDisplayExtensionMethodStyle.StaticMethod,
-                SymbolDisplayParameterOptions.IncludeType,
+                SymbolDisplayParameterOptions.None,
                 SymbolDisplayPropertyStyle.NameOnly,
                 SymbolDisplayLocalOptions.None,
                 SymbolDisplayKindOptions.None,
