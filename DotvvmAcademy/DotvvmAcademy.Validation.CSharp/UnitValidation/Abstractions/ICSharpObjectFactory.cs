@@ -1,9 +1,12 @@
-﻿using System.Collections.Immutable;
+﻿using System;
+using System.Collections.Immutable;
 
 namespace DotvvmAcademy.Validation.CSharp.UnitValidation.Abstractions
 {
     public interface ICSharpObjectFactory
     {
+        IServiceProvider Provider { get; }
+
         ImmutableDictionary<string, ICSharpObject> GetAllObjects();
 
         ICSharpDocument GetDocument();

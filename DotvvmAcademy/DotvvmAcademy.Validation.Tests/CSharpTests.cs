@@ -18,6 +18,24 @@ namespace DotvvmAcademy.Validation.Tests
             var request = CSharpValidationUtilities.CreateRequest(CSharpSampleSources.Sample);
             request.StaticAnalysis = GetStaticContext();
             var response = validator.Validate(request).Result;
+            WriteDebugResponse(response);
+        }
+
+        [TestMethod]
+        public void UnitValidationTest()
+        {
+            var validator = CSharpValidationUtilities.CreateValidator();
+            var request = CSharpValidationUtilities.CreateRequest(CSharpSampleSources.Sample);
+            var runner = CSharpValidationUtilities.CreateRunner();
+            var method = typeof(CSharpSampleValidationClass).GetMethod(nameof(CSharpSampleValidationClass.SampleValidationMethod));
+            (var staticContext, var _) = runner.Run(method);
+            request.StaticAnalysis = staticContext;
+            var response = validator.Validate(request).Result;
+            WriteDebugResponse(response);
+        }
+
+        private void WriteDebugResponse(CSharpValidationResponse response)
+        {
             foreach (var diagnostic in response.Diagnostics)
             {
                 Debug.WriteLine($"ValidationDiagnostic {diagnostic.Id}: \"{diagnostic.Message}\".");

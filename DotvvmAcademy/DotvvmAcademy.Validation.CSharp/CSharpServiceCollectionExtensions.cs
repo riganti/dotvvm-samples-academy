@@ -10,6 +10,9 @@ namespace DotvvmAcademy.Validation.CSharp
         public static void AddCSharpUnitValidation(this IServiceCollection collection)
         {
             collection.AddSingleton<ICSharpNameFormatter, DefaultCSharpNameFormatter>();
+            collection.AddSingleton<IMetadataExtractor, AllowedSymbolMetadataExtractor>();
+            collection.AddSingleton<IMetadataExtractor, RequiredSymbolMetadataExtractor>();
+            collection.AddSingleton<IMetadataExtractor, AccessModifierMetadataExtractor>();
             collection.AddScoped<ICSharpNameStack, DefaultCSharpNameStack>();
             collection.AddScoped<ICSharpObjectFactory, DefaultCSharpObjectFactory>();
             collection.AddScoped<ICSharpDocument, DefaultCSharpDocument>();

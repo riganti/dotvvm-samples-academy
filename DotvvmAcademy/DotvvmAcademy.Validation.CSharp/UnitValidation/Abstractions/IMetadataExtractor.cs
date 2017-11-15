@@ -1,7 +1,10 @@
-﻿namespace DotvvmAcademy.Validation.CSharp.UnitValidation.Abstractions
+﻿using DotvvmAcademy.Validation.CSharp.StaticAnalysis;
+using System.Collections.Immutable;
+
+namespace DotvvmAcademy.Validation.CSharp.UnitValidation.Abstractions
 {
     public interface IMetadataExtractor
     {
-        void ExtractMetadata(ICSharpObjectFactory factory, CSharpValidationRequest request);
+        void ExtractMetadata(ImmutableDictionary<string, ICSharpObject> csharpObjects, CSharpStaticAnalysisContext context);
     }
 }

@@ -15,8 +15,11 @@ namespace DotvvmAcademy.Validation.CSharp.UnitValidation
         public DefaultCSharpObjectFactory(IServiceProvider provider)
         {
             this.provider = provider;
+            Provider = provider;
             nameStack = provider.GetRequiredService<ICSharpNameStack>();
         }
+
+        public IServiceProvider Provider { get; set; }
 
         public virtual ImmutableDictionary<string, ICSharpObject> GetAllObjects()
         {
@@ -34,7 +37,9 @@ namespace DotvvmAcademy.Validation.CSharp.UnitValidation
             if (value == null)
             {
                 nameStack.PushName(fullName);
-                return provider.GetRequiredService<TCSharpObject>();
+                var csharpObject = provider.GetRequiredService<TCSharpObject>();
+                objects.Add(fullName, csharpObject);
+                return csharpObject;
             }
 
             if (value is TCSharpObject castObject)

@@ -1,4 +1,6 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using DotvvmAcademy.Validation.CSharp.UnitValidation;
+using DotvvmAcademy.Validation.CSharp.UnitValidation.Abstractions;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -30,9 +32,11 @@ namespace DotvvmAcademy.Validation.CSharp
             return validator;
         }
 
-        public static void RunValidationMethod(CSharpValidationRequest request, MethodInfo methodInfo)
+        public static ICSharpUnitValidationRunner CreateRunner()
         {
-            throw new NotImplementedException();
+            var collection = new ServiceCollection();
+            collection.AddCSharpUnitValidation();
+            return new DefaultCSharpUnitValidationRunner(collection.BuildServiceProvider());
         }
     }
 }
