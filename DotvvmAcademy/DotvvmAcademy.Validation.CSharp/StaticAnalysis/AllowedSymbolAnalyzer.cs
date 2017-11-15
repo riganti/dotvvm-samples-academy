@@ -20,12 +20,13 @@ namespace DotvvmAcademy.Validation.CSharp.StaticAnalysis
                 return;
             }
 
-            context.RegisterSyntaxNodeAction(ValidateNode, ImmutableArray.Create(SyntaxKind.IdentifierName));
+            context.RegisterSyntaxNodeAction(ValidateNode, SyntaxKindPresets.Identifiers);
         }
 
         private void ValidateNode(SyntaxNodeAnalysisContext context)
         {
-            var fullName = context.ContainingSymbol.ToDisplayString(CommonDisplayFormat);
+            var info = context.SemanticModel.GetSymbolInfo(context.Node);
+            var fullName = info.Symbol.ToDisplayString(CommonDisplayFormat);
             if(!metadata.TryGetKey(fullName, out var _))
             {
                 context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.DisallowedSymbol, context.Node.GetLocation(), fullName));

@@ -28,5 +28,9 @@ namespace DotvvmAcademy.Validation.CSharp.StaticAnalysis
                 SyntaxKind.AddAccessorDeclaration,
                 SyntaxKind.RemoveAccessorDeclaration,
                 SyntaxKind.UnknownAccessorDeclaration);
+
+        public static readonly ImmutableArray<SyntaxKind> Identifiers = ImmutableArray.Create(
+            SyntaxKind.PredefinedType,
+            SyntaxKind.IdentifierName);
     }
 }
