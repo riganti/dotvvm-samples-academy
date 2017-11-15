@@ -13,7 +13,7 @@ namespace DotvvmAcademy.Validation.CSharp.UnitValidation
 
         public void ExtractMetadata(ImmutableDictionary<string, ICSharpObject> csharpObjects, CSharpStaticAnalysisContext context)
         {
-            var builder = ImmutableDictionary.CreateBuilder<string, RequiredSymbolMetadata>();
+            var builder = ImmutableDictionary.CreateBuilder<string, IStaticAnalysisMetadata>();
             foreach (var pair in csharpObjects)
             {
                 var kinds = pair.Value.GetType().GetInterfaces()
@@ -24,7 +24,7 @@ namespace DotvvmAcademy.Validation.CSharp.UnitValidation
                 };
                 builder.Add(pair.Key, metadata);
             }
-            context.AddMetadata(builder.ToImmutable());
+            context.AddMetadata<RequiredSymbolAnalyzer>(builder.ToImmutable());
         }
 
         private static ImmutableDictionary<Type, ImmutableArray<SyntaxKind>> GetSyntaxKinds()

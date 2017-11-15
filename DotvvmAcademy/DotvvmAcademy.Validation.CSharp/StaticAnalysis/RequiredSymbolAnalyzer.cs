@@ -10,18 +10,14 @@ namespace DotvvmAcademy.Validation.CSharp.StaticAnalysis
     public class RequiredSymbolAnalyzer : ValidationAnalyzer
     {
         private List<string> foundRequiredSymbols = new List<string>();
-        private ImmutableDictionary<string, RequiredSymbolMetadata> metadata;
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; } = ImmutableArray.Create(
             DiagnosticDescriptors.MissingSymbol, DiagnosticDescriptors.RedundantSymbol);
 
         public override void Initialize(AnalysisContext context)
         {
-            metadata = Request.StaticAnalysis.GetMetadata<RequiredSymbolMetadata>();
-            if(metadata == null)
-            {
-                return;
-            }
+            base.Initialize(context);
+            if (Metadata == null) return;
 
             foundRequiredSymbols.Clear();
             foundRequiredSymbols.Add(CSharpConstants.GlobalNamespaceName);
@@ -34,7 +30,7 @@ namespace DotvvmAcademy.Validation.CSharp.StaticAnalysis
 
         private void ValidateCompilation(CompilationAnalysisContext context)
         {
-            var missingSymbols = metadata.Keys.Except(foundRequiredSymbols);
+            var missingSymbols = Metadata.Pairs.Keys.Except(foundRequiredSymbols);
             foreach (string missingSymbol in missingSymbols)
             {
                 context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.MissingSymbol, Location.None, missingSymbol));
@@ -48,7 +44,7 @@ namespace DotvvmAcademy.Validation.CSharp.StaticAnalysis
                 return;
             }
             var fullName = context.ContainingSymbol.ToDisplayString(CommonDisplayFormat);
-            var requiredSymbol = metadata.GetValueOrDefault(fullName);
+            var requiredSymbol = (RequiredSymbolMetadata)Metadata.Pairs.GetValueOrDefault(fullName);
             if (requiredSymbol == null || requiredSymbol.PossibleKind.All(k => !context.Node.IsKind(k)))
             {
                 context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.RedundantSymbol, context.Node.GetLocation(), fullName));

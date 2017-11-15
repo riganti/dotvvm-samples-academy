@@ -1,5 +1,4 @@
-﻿using Microsoft.CodeAnalysis.CSharp;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Immutable;
 
@@ -7,33 +6,48 @@ namespace DotvvmAcademy.Validation.CSharp.StaticAnalysis
 {
     public class CSharpStaticAnalysisContext
     {
-        private ConcurrentDictionary<Type, object> metadataStorage = new ConcurrentDictionary<Type, object>();
+        public static CSharpStaticAnalysisContext Default = GetDefaultStaticAnalysisContext();
 
-        public void AddMetadata<TMetadata>(ImmutableDictionary<string, TMetadata> metadata)
-            where TMetadata : IStaticAnalysisMetadata
+        private ConcurrentDictionary<Type, StaticAnalysisMetadataCollection> storage
+            = new ConcurrentDictionary<Type, StaticAnalysisMetadataCollection>();
+
+        public void AddMetadata(Type analyzerType, StaticAnalysisMetadataCollection metadata)
         {
-            var type = typeof(TMetadata);
-            metadataStorage.AddOrUpdate(type, metadata, (key, value) =>
-            {
-                var existingMetadata = (ImmutableDictionary<string, TMetadata>)value;
-                var builder = ImmutableDictionary.CreateBuilder<string, TMetadata>();
-                builder.AddRange(metadata);
-                foreach (var existingPair in existingMetadata)
-                {
-                    if (!builder.ContainsKey(existingPair.Key))
-                    {
-                        builder.Add(existingPair);
-                    }
-                }
-                return builder.ToImmutable();
-            });
+            storage.AddOrUpdate(analyzerType, metadata, (key, value) => value + metadata);
         }
 
-        public ImmutableDictionary<string, TMetadata> GetMetadata<TMetadata>()
-            where TMetadata : IStaticAnalysisMetadata
+        public StaticAnalysisMetadataCollection GetMetadata(Type analyzerType)
         {
-            metadataStorage.TryGetValue(typeof(TMetadata), out var value);
-            return (ImmutableDictionary<string, TMetadata>)value ?? null;
+            storage.TryGetValue(analyzerType, out var value);
+            return value;
+        }
+
+        private static CSharpStaticAnalysisContext GetDefaultStaticAnalysisContext()
+        {
+            var allowedSymbols = ImmutableHashSet.Create(
+                "global::System.Boolean",
+                "global::System.Byte",
+                "global::System.SByte",
+                "global::System.Char",
+                "global::System.Decimal",
+                "global::System.Double",
+                "global::System.Single",
+                "global::System.Int32",
+                "global::System.UInt32",
+                "global::System.Int64",
+                "global::System.UInt64",
+                "global::System.Object",
+                "global::System.Int16",
+                "global::System.UInt16",
+                "global::System.String",
+                "global::System.Void",
+                "global::System.Object.ToString()",
+                "global::System.Object.Equals(object)",
+                "global::System.Object.ReferenceEquals(object, object)",
+                "global::System.Object.GetHashCode()");
+            var context = new CSharpStaticAnalysisContext();
+            context.AddMetadata<AllowedSymbolAnalyzer>(allowedSymbols);
+            return context;
         }
     }
 }

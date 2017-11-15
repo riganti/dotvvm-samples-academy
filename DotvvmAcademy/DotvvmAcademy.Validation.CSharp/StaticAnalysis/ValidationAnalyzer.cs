@@ -19,5 +19,13 @@ namespace DotvvmAcademy.Validation.CSharp.StaticAnalysis
                 SymbolDisplayMiscellaneousOptions.None);
 
         public CSharpValidationRequest Request { get; set; }
+
+        public StaticAnalysisMetadataCollection Metadata { get; set; }
+
+        public override void Initialize(AnalysisContext context)
+        {
+            context.EnableConcurrentExecution();
+            Metadata = Request.StaticAnalysis.GetMetadata(GetType());
+        }
     }
 }

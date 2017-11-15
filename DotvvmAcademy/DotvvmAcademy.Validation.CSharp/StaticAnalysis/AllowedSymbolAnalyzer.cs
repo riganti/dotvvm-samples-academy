@@ -8,17 +8,12 @@ namespace DotvvmAcademy.Validation.CSharp.StaticAnalysis
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class AllowedSymbolAnalyzer : ValidationAnalyzer
     {
-        private ImmutableDictionary<string, AllowedSymbolMetadata> metadata;
-
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; } = ImmutableArray.Create(DiagnosticDescriptors.DisallowedSymbol);
 
         public override void Initialize(AnalysisContext context)
         {
-            metadata = Request.StaticAnalysis.GetMetadata<AllowedSymbolMetadata>();
-            if(metadata == null)
-            {
-                return;
-            }
+            base.Initialize(context);
+            if(Metadata == null) return;
 
             context.RegisterSyntaxNodeAction(ValidateNode, SyntaxKindPresets.Identifiers);
         }
@@ -27,7 +22,7 @@ namespace DotvvmAcademy.Validation.CSharp.StaticAnalysis
         {
             var info = context.SemanticModel.GetSymbolInfo(context.Node);
             var fullName = info.Symbol.ToDisplayString(CommonDisplayFormat);
-            if(!metadata.TryGetKey(fullName, out var _))
+            if(!Metadata.FullNames.Contains(fullName))
             {
                 context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.DisallowedSymbol, context.Node.GetLocation(), fullName));
             }

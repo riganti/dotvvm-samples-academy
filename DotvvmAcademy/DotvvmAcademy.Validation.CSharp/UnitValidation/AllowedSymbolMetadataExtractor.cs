@@ -8,12 +8,7 @@ namespace DotvvmAcademy.Validation.CSharp.UnitValidation
     {
         public void ExtractMetadata(ImmutableDictionary<string, ICSharpObject> csharpObjects, CSharpStaticAnalysisContext context)
         {
-            var builder = ImmutableDictionary.CreateBuilder<string, AllowedSymbolMetadata>();
-            foreach (var pair in csharpObjects)
-            {
-                builder.Add(pair.Key, new AllowedSymbolMetadata());
-            }
-            context.AddMetadata(builder.ToImmutable());
+            context.AddMetadata<AllowedSymbolAnalyzer>(csharpObjects.Keys.ToImmutableHashSet());
         }
     }
 }

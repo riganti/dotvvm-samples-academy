@@ -45,17 +45,17 @@ namespace DotvvmAcademy.Validation.Tests
         private CSharpStaticAnalysisContext GetStaticContext()
         {
             var context = new CSharpStaticAnalysisContext();
-            var allowed = ImmutableDictionary.CreateBuilder<string, AllowedSymbolMetadata>();
-            allowed.Add("System.String", new AllowedSymbolMetadata());
-            var accessModifiers = ImmutableDictionary.CreateBuilder<string, AccessModifierMetadata>();
+            var allowed = ImmutableHashSet.CreateBuilder<string>();
+            allowed.Add("System.String");
+            var accessModifiers = ImmutableDictionary.CreateBuilder<string, IStaticAnalysisMetadata>();
             accessModifiers.Add("Test", new AccessModifierMetadata { Accessibility = Accessibility.Public });
             accessModifiers.Add("Test.TestMethod()", new AccessModifierMetadata { Accessibility = Accessibility.Internal });
-            var required = ImmutableDictionary.CreateBuilder<string, RequiredSymbolMetadata>();
+            var required = ImmutableDictionary.CreateBuilder<string, IStaticAnalysisMetadata>();
             required.Add("Test", new RequiredSymbolMetadata { PossibleKind = ImmutableArray.Create(SyntaxKind.ClassDeclaration) });
             required.Add("Test.NonExistentMethod(string)", new RequiredSymbolMetadata { PossibleKind = ImmutableArray.Create(SyntaxKind.MethodDeclaration) });
-            context.AddMetadata(required.ToImmutable());
-            context.AddMetadata(accessModifiers.ToImmutable());
-            context.AddMetadata(allowed.ToImmutable());
+            context.AddMetadata<RequiredSymbolAnalyzer>(required.ToImmutable());
+            context.AddMetadata<AccessModifierAnalyzer>(accessModifiers.ToImmutable());
+            context.AddMetadata<AllowedSymbolAnalyzer>(allowed.ToImmutable());
             return context;
         }
     }

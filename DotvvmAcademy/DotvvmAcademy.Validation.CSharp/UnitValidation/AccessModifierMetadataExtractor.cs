@@ -10,7 +10,7 @@ namespace DotvvmAcademy.Validation.CSharp.UnitValidation
     {
         public void ExtractMetadata(ImmutableDictionary<string, ICSharpObject> csharpObjects, CSharpStaticAnalysisContext context)
         {
-            var builder = ImmutableDictionary.CreateBuilder<string, AccessModifierMetadata>();
+            var builder = ImmutableDictionary.CreateBuilder<string, IStaticAnalysisMetadata>();
             var accessible = csharpObjects.Values.OfType<ICSharpAllowsAccessModifier>();
             foreach (var csharpObject in accessible)
             {
@@ -19,7 +19,7 @@ namespace DotvvmAcademy.Validation.CSharp.UnitValidation
                     Accessibility = ToAccessibility(csharpObject.AccessModifier)
                 });
             }
-            context.AddMetadata(builder.ToImmutable());
+            context.AddMetadata<AccessModifierAnalyzer>(builder.ToImmutable());
         }
 
         private Accessibility ToAccessibility(CSharpAccessModifier accessModifier)

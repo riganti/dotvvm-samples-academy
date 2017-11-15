@@ -31,7 +31,7 @@ namespace DotvvmAcademy.Validation.CSharp.UnitValidation
                     owner = ActivatorUtilities.CreateInstance(scope.ServiceProvider, method.DeclaringType);
                 }
                 method.Invoke(owner, new[] { document });
-                var staticContext = new CSharpStaticAnalysisContext();
+                var staticContext = CSharpStaticAnalysisContext.Default;
                 var csharpObjects = factory.GetAllObjects();
                 foreach (var extractor in extractors)
                 {
