@@ -1,4 +1,5 @@
-﻿using DotvvmAcademy.Validation.CSharp.Resources;
+﻿using DotvvmAcademy.Validation.CSharp.AssemblyAnalysis;
+using DotvvmAcademy.Validation.CSharp.Resources;
 using DotvvmAcademy.Validation.CSharp.StaticAnalysis;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
@@ -69,7 +70,7 @@ namespace DotvvmAcademy.Validation.CSharp
             }
         }
 
-        protected virtual async Task RunDynamicAnalysis(CSharpValidationRequest request, CSharpValidationResponse response)
+        protected virtual Task RunDynamicAnalysis(CSharpValidationRequest request, CSharpValidationResponse response)
         {
             throw new NotImplementedException();
         }

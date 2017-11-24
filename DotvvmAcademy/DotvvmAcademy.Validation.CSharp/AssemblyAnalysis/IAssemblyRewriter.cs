@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
 
-namespace DotvvmAcademy.Validation.CSharp
+namespace DotvvmAcademy.Validation.CSharp.AssemblyAnalysis
 {
     public interface IAssemblyRewriter
     {

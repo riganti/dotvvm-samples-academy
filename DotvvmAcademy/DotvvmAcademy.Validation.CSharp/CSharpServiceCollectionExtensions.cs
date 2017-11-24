@@ -1,4 +1,5 @@
-﻿using DotvvmAcademy.Validation.CSharp.StaticAnalysis;
+﻿using DotvvmAcademy.Validation.CSharp.AssemblyAnalysis;
+using DotvvmAcademy.Validation.CSharp.StaticAnalysis;
 using DotvvmAcademy.Validation.CSharp.UnitValidation;
 using DotvvmAcademy.Validation.CSharp.UnitValidation.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
