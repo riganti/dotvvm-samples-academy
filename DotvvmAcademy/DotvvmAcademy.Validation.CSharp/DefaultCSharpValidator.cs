@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
+using System.Runtime.Loader;
 using System.Threading.Tasks;
 
 namespace DotvvmAcademy.Validation.CSharp
@@ -64,7 +65,7 @@ namespace DotvvmAcademy.Validation.CSharp
                 }
                 var rewriter = provider.GetRequiredService<IAssemblyRewriter>();
                 await rewriter.Rewrite(source, target);
-                response.EmittedAssembly = AssemblyLoadContext
+                response.EmittedAssembly = AssemblyLoadContext.Default.LoadFromStream(target);
             }
         }
 
