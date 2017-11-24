@@ -28,6 +28,7 @@ namespace DotvvmAcademy.Validation.CSharp
             collection.AddTransient<ValidationAnalyzer, AllowedSymbolAnalyzer>();
             collection.AddTransient<ValidationAnalyzer, RequiredSymbolAnalyzer>();
             collection.AddTransient<ValidationAnalyzer, AccessModifierAnalyzer>();
+            collection.AddSingleton<IAssemblyRewriter, DefaultAssemblyRewriter>();
         }
     }
 }

@@ -61,6 +61,24 @@ namespace DotvvmAcademy.Validation.CSharp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Assembly rewrite failed..
+        /// </summary>
+        public static string AssemblyRewriteFailureMessage {
+            get {
+                return ResourceManager.GetString("AssemblyRewriteFailureMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Assembly Rewrite Failure.
+        /// </summary>
+        public static string AssemblyRewriteFailureTitle {
+            get {
+                return ResourceManager.GetString("AssemblyRewriteFailureTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Symbol &apos;{0}&apos; is not allowed in the current context..
         /// </summary>
         public static string DisallowedSymbolMessage {

@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AssemblyRewriteFailureMessage" xml:space="preserve">
+    <value>Assembly rewrite failed.</value>
+  </data>
+  <data name="AssemblyRewriteFailureTitle" xml:space="preserve">
+    <value>Assembly Rewrite Failure</value>
+  </data>
   <data name="DisallowedSymbolMessage" xml:space="preserve">
     <value>Symbol '{0}' is not allowed in the current context.</value>
   </data>

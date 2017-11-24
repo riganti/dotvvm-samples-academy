@@ -1,10 +1,12 @@
-﻿using DotvvmAcademy.Validation.CSharp.StaticAnalysis;
+﻿using DotvvmAcademy.Validation.CSharp.Resources;
+using DotvvmAcademy.Validation.CSharp.StaticAnalysis;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -48,7 +50,22 @@ namespace DotvvmAcademy.Validation.CSharp
 
         protected virtual async Task RewriteAssembly(CSharpValidationRequest request, CSharpValidationResponse response)
         {
-            throw new NotImplementedException();
+            using (var source = new MemoryStream())
+            using (var target = new MemoryStream())
+            {
+                var emitResult = request.Compilation.Emit(source);
+                if (!emitResult.Success)
+                {
+                    response.Diagnostics.Add(new ValidationDiagnostic(
+                        DiagnosticIds.AssemblyRewriteFailure,
+                        DiagnosticResources.AssemblyRewriteFailureMessage,
+                        ValidationDiagnosticLocation.None));
+                    return;
+                }
+                var rewriter = provider.GetRequiredService<IAssemblyRewriter>();
+                await rewriter.Rewrite(source, target);
+                response.EmittedAssembly = AssemblyLoadContext
+            }
         }
 
         protected virtual async Task RunDynamicAnalysis(CSharpValidationRequest request, CSharpValidationResponse response)
