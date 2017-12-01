@@ -17,7 +17,7 @@ namespace DotvvmAcademy.Validation.CSharp
                 assemblyName: Guid.NewGuid().ToString(),
                 syntaxTrees: new[] { tree },
                 references: new[] { MetadataReference.CreateFromFile(typeof(object).Assembly.Location) },
-                options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+                options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, optimizationLevel: OptimizationLevel.Release));
             var request = new CSharpValidationRequest();
             request.FileTable.Add(Guid.NewGuid().ToString(), tree);
             request.Compilation = compilation;

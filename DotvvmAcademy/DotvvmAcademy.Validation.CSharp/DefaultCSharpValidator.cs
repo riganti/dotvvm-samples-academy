@@ -64,8 +64,10 @@ namespace DotvvmAcademy.Validation.CSharp
                         ValidationDiagnosticLocation.None));
                     return;
                 }
+                source.Position = 0;
                 var rewriter = provider.GetRequiredService<IAssemblyRewriter>();
                 await rewriter.Rewrite(source, target);
+                target.Position = 0;
                 response.EmittedAssembly = AssemblyLoadContext.Default.LoadFromStream(target);
             }
         }

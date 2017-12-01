@@ -13,5 +13,29 @@
                 return ""Sample output"";
             }
         }";
+
+        public const string NeverEndingSample = @"
+        public class Test
+        {
+            public void TestMethod()
+            {
+                var s = 0;
+                while(true)
+                {
+                    s++;
+                }
+            }
+        }";
+
+        public const string NeverEndingSample2 = @"
+        public class Test
+        {
+            public void TestMethod()
+            {
+                while(true)
+                {
+                }
+            }
+        }";
     }
 }
