@@ -30,10 +30,6 @@ namespace DotvvmAcademy.Validation.CSharp.AssemblyAnalysis
                     }
                 }
                 assembly.Write(target);
-                using (var file = new FileStream("C:/dev/ASP/test.dll", FileMode.Create))
-                {
-                    assembly.Write(file);
-                }
             });
         }
 
