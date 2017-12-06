@@ -2,7 +2,6 @@
 using AutoMapper;
 using DotvvmAcademy.BL.Facades;
 using DotvvmAcademy.DAL;
-using DotvvmAcademy.Validation.Cli.Host;
 
 namespace DotvvmAcademy.BL
 {
@@ -20,8 +19,6 @@ namespace DotvvmAcademy.BL
                 .Where(t => t.IsAssignableTo<Profile>())
                 .As<Profile>()
                 .SingleInstance();
-
-            builder.RegisterType<ValidatorCli>();
         }
     }
 }
