@@ -30,7 +30,7 @@ namespace DotvvmAcademy.Validation
                     return name;
                 }
             }
-            throw new ArgumentException("The validation method name couldn't be inferred.")
+            throw new ArgumentException("The validation method name couldn't be inferred.");
         }
     }
 }

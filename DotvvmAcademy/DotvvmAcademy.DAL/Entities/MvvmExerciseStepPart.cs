@@ -2,7 +2,7 @@
 
 namespace DotvvmAcademy.DAL.Entities
 {
-    public class MvvmExerciseStepPart
+    public class MvvmExerciseStepPart : IStepPart
     {
         public ViewExercise View { get; set; }
 
