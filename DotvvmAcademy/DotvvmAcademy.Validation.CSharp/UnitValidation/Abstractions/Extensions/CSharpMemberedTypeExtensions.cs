@@ -9,5 +9,12 @@
             property.GetSetter();
             return property;
         }
+
+        public static ICSharpProperty GetAutoProperty<TType>(this ICSharpMemberedType type, string name)
+        {
+            var property = GetAutoProperty(type, name);
+            property.Type = typeof(TType);
+            return property
+        }
     }
 }

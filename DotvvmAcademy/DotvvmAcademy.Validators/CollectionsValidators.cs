@@ -1,30 +1,29 @@
 ﻿using DotVVM.Framework.Controls;
 using DotvvmAcademy.Validation;
-using DotvvmAcademy.Validation.CSharp;
-using DotvvmAcademy.Validation.Dothtml;
 using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
+using DotvvmAcademy.Validation.CSharp.UnitValidation.Abstractions;
 
 namespace DotvvmAcademy.Validators
 {
-    [ValidatorClass("DotvvmAcademy.Lessons.Collections")]
+    [ValidationClass]
     public static class CollectionsValidators
     {
-        [Validator(nameof(Lesson2Step10Validator))]
-        public static DothtmlControl Lesson2Step10Validator(DothtmlValidate validate)
-        {
-            var div = Lesson2Step9Validator(validate);
-            var link = div.Control<LinkButton>();
-            link.Property(HtmlGenericControl.VisibleProperty).ValueBinding("!IsCompleted");
-            return div;
-        }
+        //[ValidationMethod]
+        //public static DothtmlControl Lesson2Step10Validator(DothtmlValidate validate)
+        //{
+        //    var div = Lesson2Step9Validator(validate);
+        //    var link = div.Control<LinkButton>();
+        //    link.Property(HtmlGenericControl.VisibleProperty).ValueBinding("!IsCompleted");
+        //    return div;
+        //}
 
-        [Validator(nameof(Lesson2Step11Validator))]
-        public static void Lesson2Step11Validator(CSharpValidate validate)
+        [ValidationMethod]
+        public static void Lesson2Step11Validator(ICSharpDocument document)
         {
-            var viewModel = Lesson2Step7Validator(validate);
-            var taskData = validate.Class("DotvvmAcademy.Tutorial.ViewModels.TaskData");
+            var viewModel = Lesson2Step7Validator(document);
+            var taskData = document.Class("DotvvmAcademy.Tutorial.ViewModels.TaskData");
             var completeTask = viewModel.Method("CompleteTask", null, taskData.GetDescriptor());
             var viewModelInstance = viewModel.Instance();
             var taskDataInstance = taskData.Instance();
@@ -32,35 +31,35 @@ namespace DotvvmAcademy.Validators
             taskDataInstance.PropertyGetter(taskData.Property("IsCompleted"), true);
         }
 
-        [Validator(nameof(Lesson2Step12Validator))]
-        public static DothtmlControl Lesson2Step12Validator(DothtmlValidate validate)
-        {
-            var div = Lesson2Step10Validator(validate);
-            var link = div.Control<LinkButton>();
-            link.Property(ButtonBase.ClickProperty).CommandBinding("_parent.CompleteTask(_this)", "_root.CompleteTask(_this)");
-            return div;
-        }
+        //[ValidationMethod]
+        //public static DothtmlControl Lesson2Step12Validator(DothtmlValidate validate)
+        //{
+        //    var div = Lesson2Step10Validator(validate);
+        //    var link = div.Control<LinkButton>();
+        //    link.Property(ButtonBase.ClickProperty).CommandBinding("_parent.CompleteTask(_this)", "_root.CompleteTask(_this)");
+        //    return div;
+        //}
 
-        [Validator(nameof(Lesson2Step13Validator))]
-        public static void Lesson2Step13Validator(DothtmlValidate validate)
-        {
-            var div = Lesson2Step10Validator(validate);
-            div.Attribute("class").ValueBinding("{value: IsCompleted ? 'task-completed' : 'task'}");
-        }
+        //[ValidationMethod]
+        //public static void Lesson2Step13Validator(DothtmlValidate validate)
+        //{
+        //    var div = Lesson2Step10Validator(validate);
+        //    div.Attribute("class").ValueBinding("{value: IsCompleted ? 'task-completed' : 'task'}");
+        //}
 
-        [Validator(nameof(Lesson2Step2Validator))]
-        public static (DothtmlControl textBox, DothtmlControl button) Lesson2Step2Validator(DothtmlValidate validate)
-        {
-            var elements = validate.Root.Elements(2);
-            elements[0].Tag("p");
-            elements[1].Tag("div");
-            var textBox = elements[0].Control<TextBox>();
-            var button = elements[0].Control<Button>();
-            button.Property(ButtonBase.TextProperty).HardcodedValue("Add Task", "add task");
-            return (textBox, button);
-        }
+        //[ValidationMethod]
+        //public static (DothtmlControl textBox, DothtmlControl button) Lesson2Step2Validator(DothtmlValidate validate)
+        //{
+        //    var elements = validate.Root.Elements(2);
+        //    elements[0].Tag("p");
+        //    elements[1].Tag("div");
+        //    var textBox = elements[0].Control<TextBox>();
+        //    var button = elements[0].Control<Button>();
+        //    button.Property(ButtonBase.TextProperty).HardcodedValue("Add Task", "add task");
+        //    return (textBox, button);
+        //}
 
-        [Validator(nameof(Lesson2Step3Validator))]
+        [ValidationMethod]
         public static CSharpClass Lesson2Step3Validator(CSharpValidate validate, params string[] additionalUsings)
         {
             var usings = additionalUsings == null ? new List<string>() : additionalUsings.ToList();
@@ -72,7 +71,7 @@ namespace DotvvmAcademy.Validators
             return viewModel;
         }
 
-        [Validator(nameof(Lesson2Step4Validator))]
+        [ValidationMethod]
         public static void Lesson2Step4Validator(DothtmlValidate validate)
         {
             (var textBox, var button) = Lesson2Step2Validator(validate);
@@ -80,7 +79,7 @@ namespace DotvvmAcademy.Validators
             button.Property(ButtonBase.ClickProperty).CommandBinding("AddTask()");
         }
 
-        [Validator(nameof(Lesson2Step5Validator))]
+        [ValidationMethod]
         public static void Lesson2Step5Validator(CSharpValidate validate)
         {
             validate.Root.Usings("System");
@@ -89,7 +88,7 @@ namespace DotvvmAcademy.Validators
             taskData.AutoProperty<bool>("IsCompleted");
         }
 
-        [Validator(nameof(Lesson2Step6Validator))]
+        [ValidationMethod]
         public static CSharpClass Lesson2Step6Validator(CSharpValidate validate)
         {
             var viewModel = Lesson2Step3Validator(validate, "System.Collections.Generic");
@@ -106,7 +105,7 @@ namespace DotvvmAcademy.Validators
             return viewModel;
         }
 
-        [Validator(nameof(Lesson2Step7Validator))]
+        [ValidationMethod]
         public static CSharpClass Lesson2Step7Validator(CSharpValidate validate)
         {
             var viewModel = Lesson2Step6Validator(validate);
@@ -130,26 +129,26 @@ namespace DotvvmAcademy.Validators
             return viewModel;
         }
 
-        [Validator(nameof(Lesson2Step8Validator))]
-        public static DothtmlControl Lesson2Step8Validator(DothtmlValidate validate)
-        {
-            Lesson2Step4Validator(validate);
-            var repeater = validate.Root.Elements()[1].Control<Repeater>();
-            repeater.Property(ItemsControl.DataSourceProperty).ValueBinding("Tasks");
-            var itemTemplate = repeater.Property(Repeater.ItemTemplateProperty).TemplateContent();
-            var div = itemTemplate.Element("div");
-            div.Attribute("class").HardcodedValue("task");
-            return div;
-        }
+        //[ValidationMethod]
+        //public static DothtmlControl Lesson2Step8Validator(DothtmlValidate validate)
+        //{
+        //    Lesson2Step4Validator(validate);
+        //    var repeater = validate.Root.Elements()[1].Control<Repeater>();
+        //    repeater.Property(ItemsControl.DataSourceProperty).ValueBinding("Tasks");
+        //    var itemTemplate = repeater.Property(Repeater.ItemTemplateProperty).TemplateContent();
+        //    var div = itemTemplate.Element("div");
+        //    div.Attribute("class").HardcodedValue("task");
+        //    return div;
+        //}
 
-        [Validator(nameof(Lesson2Step9Validator))]
-        public static DothtmlControl Lesson2Step9Validator(DothtmlValidate validate)
-        {
-            var div = Lesson2Step8Validator(validate);
-            var literal = div.Control<Literal>();
-            literal.Property(Literal.TextProperty).ValueBinding("Title");
-            var link = div.Control<LinkButton>();
-            return div;
-        }
+        //[ValidationMethod]
+        //public static DothtmlControl Lesson2Step9Validator(DothtmlValidate validate)
+        //{
+        //    var div = Lesson2Step8Validator(validate);
+        //    var literal = div.Control<Literal>();
+        //    literal.Property(Literal.TextProperty).ValueBinding("Title");
+        //    var link = div.Control<LinkButton>();
+        //    return div;
+        //}
     }
 }
