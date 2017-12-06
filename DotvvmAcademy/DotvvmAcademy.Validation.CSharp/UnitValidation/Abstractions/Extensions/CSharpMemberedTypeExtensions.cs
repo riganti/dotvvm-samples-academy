@@ -14,7 +14,7 @@
         {
             var property = GetAutoProperty(type, name);
             property.Type = typeof(TType);
-            return property
+            return property;
         }
     }
 }

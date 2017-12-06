@@ -1,0 +1,8 @@
+{
+  "version": "1.0.0",
+  "name": "dotvvm-samples-academy",
+  "private": true,
+  "dependencies": {
+    "monaco-editor": "^0.10.1"
+  }
+}

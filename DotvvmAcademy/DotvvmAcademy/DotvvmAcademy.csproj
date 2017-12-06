@@ -81,4 +81,11 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
   </ItemGroup>
+  <Target Name="CopyMonaco" AfterTargets="Build">
+    <ItemGroup>
+      <_Monaco Include=".\node_modules\monaco-editor\**\*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(_Monaco)" DestinationFiles="@(_Monaco->'.\wwwroot\monaco-editor\%(RecursiveDir)%(Filename)%(Extension)')"/>
+    <Message Importance="High" Text="Copied monaco-editor" />
+  </Target>
 </Project>
