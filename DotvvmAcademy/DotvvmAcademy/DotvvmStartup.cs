@@ -25,6 +25,7 @@ namespace DotvvmAcademy
         private void ConfigureControls(DotvvmConfiguration config, string applicationPath)
         {
             config.Markup.AddCodeControls("cc", typeof(AceEditor));
+            config.Markup.AddCodeControls("cc", typeof(MonacoEditor));
         }
 
         private void ConfigureResources(DotvvmConfiguration config, string applicationPath)
@@ -43,10 +44,16 @@ namespace DotvvmAcademy
                 Location = new FileResourceLocation("~/wwwroot/Scripts/google-analytics.js"),
                 RenderPosition = ResourceRenderPosition.Head
             });
+            config.Resources.Register("monaco-loader", new ScriptResource()
+            {
+                Location = new FileResourceLocation("~/wwwroot/monaco-editor/min/vs/loader.js"),
+                RenderPosition = ResourceRenderPosition.Body
+            });
         }
 
         private void ConfigureRoutes(DotvvmConfiguration config, string applicationPath)
         {
+            config.RouteTable.Add("Monaco", "monaco", "Views/MonacoTest.dothtml");
             config.RouteConstraints.Add("culture", new CultureRouteConstraint(supportedCultures));
             config.RouteTable.Add("Default", "{Language?:culture}", "Views/LessonsOverview.dothtml",
                 new { Language = supportedCultures[0] });

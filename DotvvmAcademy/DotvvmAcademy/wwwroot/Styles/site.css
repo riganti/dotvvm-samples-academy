@@ -326,3 +326,7 @@ ol {
 .opacity1 {
     opacity: 1 !important;
 }
+
+.monaco-editor-wrapper {
+    height: 500px;
+}
