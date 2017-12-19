@@ -1,6 +1,6 @@
 ﻿ko.bindingHandlers["dotvvm-monaco"] = {
     init: function (element, valueAccessor) {
-        require.config({ paths: { 'vs': 'monaco-editor/min/vs' } });
+        require.config({ baseUrl: "/", paths: { 'vs': 'monaco-editor/min/vs' } });
         require(['vs/editor/editor.main'], function () {
             let binding = valueAccessor();
             var editor = monaco.editor.create(element, {
@@ -8,6 +8,8 @@
                 language: ko.unwrap(binding.language),
                 theme: ko.unwrap(binding.theme),
                 codeLens: false,
+                scrollBeyondLastLine: false,
+                fontSize: 16,
                 minimap: {
                     enabled: false
                 }

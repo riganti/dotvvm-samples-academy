@@ -13,7 +13,7 @@ namespace DotvvmAcademy.Controls
     public abstract class ExerciseStepPartRenderer<TExerciseStepPartDto> : StepPartRenderer<TExerciseStepPartDto>
         where TExerciseStepPartDto : class, IExerciseStepPartDto
     {
-        private AceEditor ace;
+        private MonacoEditor monaco;
         private DotvvmControl buttons;
         private DotvvmControl errorList;
         private int uniqueIdIndex = 0;
@@ -32,8 +32,8 @@ namespace DotvvmAcademy.Controls
             var exercise = renderer.Exercises.Single(e => e.Dto == Part);
             var sampleIndex = renderer.Exercises.IndexOf(exercise);
             SetBinding(ExerciseProperty, GetExerciseBinding(renderer, sampleIndex));
-            ace.SetBinding(AceEditor.CodeProperty, GetCodeBinding());
-            ace.Language = Exercise.Dto.CodeLanguage;
+            monaco.SetBinding(MonacoEditor.CodeProperty, GetCodeBinding());
+            monaco.Language = MonacoLanguageExtensions.FromDto(exercise.Dto.CodeLanguage);
             buttons.SetBinding(DataContextProperty, GetBinding(ExerciseProperty));
             errorList.SetBinding(DataContextProperty, GetBinding(ExerciseProperty));
         }
@@ -42,8 +42,8 @@ namespace DotvvmAcademy.Controls
         {
             var editorWrapper = new HtmlGenericControl("div");
             editorWrapper.Attributes.Add("class", "editor-wrapper");
-            ace = new AceEditor();
-            editorWrapper.Children.Add(ace);
+            monaco = new MonacoEditor();
+            editorWrapper.Children.Add(monaco);
             Children.Add(editorWrapper);
             errorList = GetErrorList(context);
             Children.Add(errorList);
