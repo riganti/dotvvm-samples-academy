@@ -24,20 +24,35 @@ namespace DotvvmAcademy
 
         private void ConfigureControls(DotvvmConfiguration config, string applicationPath)
         {
-            config.Markup.AddCodeControls("cc", typeof(AceEditor));
             config.Markup.AddCodeControls("cc", typeof(MonacoEditor));
         }
 
         private void ConfigureResources(DotvvmConfiguration config, string applicationPath)
         {
-            config.Resources.Register("ace", new ScriptResource()
+            config.Resources.Register("font-awesome", new StylesheetResource()
             {
-                Location = new FileResourceLocation("~/wwwroot/Scripts/ace/ace.js")
+                Location = new UrlResourceLocation("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"),
+                RenderPosition = ResourceRenderPosition.Head
             });
-            config.Resources.Register("dotvvm-ace", new ScriptResource()
+            config.Resources.Register("montserrat", new StylesheetResource()
             {
-                Location = new FileResourceLocation("~/wwwroot/Scripts/dotvvm-ace.js"),
-                Dependencies = new[] { "dotvvm", "ace" }
+                Location = new UrlResourceLocation("https://fonts.googleapis.com/css?family=Montserrat"),
+                RenderPosition = ResourceRenderPosition.Head
+            });
+            config.Resources.Register("site", new StylesheetResource()
+            {
+                Location = new FileResourceLocation("~/wwwroot/Styles/site.css"),
+                RenderPosition = ResourceRenderPosition.Head
+            });
+            config.Resources.Register("bootstrap", new ScriptResource()
+            {
+                Location = new FileResourceLocation("~/wwwroot/Scripts/bootstrap.min.js"),
+                RenderPosition = ResourceRenderPosition.Head
+            });
+            config.Resources.Register("jquery", new ScriptResource()
+            {
+                Location = new FileResourceLocation("~/wwwroot/Scripts/jquery-2.2.4.js"),
+                RenderPosition = ResourceRenderPosition.Head
             });
             config.Resources.Register("google-analytics", new ScriptResource()
             {

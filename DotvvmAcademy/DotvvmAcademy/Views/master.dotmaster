@@ -7,17 +7,12 @@
     <meta charset="utf-8" />
     <title>DotVVM Academy</title>
     <dot:RequiredResource Name="google-analytics" />
-    <link href="~/Styles/bootstrap.min.css"
-          rel="stylesheet" />
-    <link href="~/Styles/site.css"
-          rel="stylesheet" />
-    <script src="~/Scripts/jquery-2.2.4.js" />
-    <script src="~/Scripts/bootstrap.js" />
-    <link href="https://fonts.googleapis.com/css?family=Montserrat"
-          rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"
-          rel="stylesheet"
-          type="text/css" />
+    <link href="~/Styles/bootstrap.min.css" rel="stylesheet" />
+    <dot:RequiredResource Name="site" />
+    <dot:RequiredResource Name="jquery" />
+    <dot:RequiredResource Name="bootstrap" />
+    <dot:RequiredResource Name="montserrat" />
+    <dot:RequiredResource Name="font-awesome" />
 </head>
 
 <body RenderSettings.Mode="Server">
