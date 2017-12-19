@@ -49,6 +49,12 @@ namespace DotvvmAcademy
                 Location = new FileResourceLocation("~/wwwroot/monaco-editor/min/vs/loader.js"),
                 RenderPosition = ResourceRenderPosition.Body
             });
+            config.Resources.Register("dotvvm-monaco", new ScriptResource()
+            {
+                Location = new FileResourceLocation("~/wwwroot/Scripts/dotvvm-monaco.js"),
+                RenderPosition = ResourceRenderPosition.Body,
+                Dependencies = new[] { "monaco-loader" }
+            });
         }
 
         private void ConfigureRoutes(DotvvmConfiguration config, string applicationPath)

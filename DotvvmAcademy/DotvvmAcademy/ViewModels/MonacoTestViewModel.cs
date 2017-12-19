@@ -8,5 +8,6 @@ namespace DotvvmAcademy.ViewModels
 {
     public class MonacoTestViewModel : DotvvmViewModelBase
     {
+        public string Code { get; set; }
     }
 }

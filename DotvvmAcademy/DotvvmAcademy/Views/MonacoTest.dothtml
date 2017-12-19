@@ -10,7 +10,7 @@
     <title></title>
 </head>
 <body>
-    <cc:MonacoEditor/>
+    <cc:MonacoEditor Code="{value: Code}"/>
 </body>
 </html>
 

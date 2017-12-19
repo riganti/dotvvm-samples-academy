@@ -11,62 +11,49 @@ namespace DotvvmAcademy.Controls
             = DotvvmProperty.Register<string, MonacoEditor>(c => c.Code, null);
 
         public static readonly DotvvmProperty LanguageProperty
-            = DotvvmProperty.Register<MonacoLanguages, MonacoEditor>(c => c.Language, MonacoLanguages.Html);
+            = DotvvmProperty.Register<MonacoLanguage, MonacoEditor>(c => c.Language, MonacoLanguage.Html);
+
+        public static readonly DotvvmProperty ThemeProperty
+            = DotvvmProperty.Register<MonacoTheme, MonacoEditor>(c => c.Theme, MonacoTheme.Dark);
 
         public static string CssClass = "monaco-editor-wrapper";
 
-        private static int editorCount;
-
-        private static string loaderScript =
-@"require.config({{ paths: {{ ""vs"": ""monaco-editor/min/vs"" }}}});
-    require([""vs/editor/editor.main""], function() {{
-        var editor = monaco.editor.create(document.getElementById(""{0}""), {{
-            value: [
-                ""function x() {{"",
-                ""\tconsole.log(\""Hello world!\"");"",
-                ""}}""
-            ].join(""\n""),
-            language: ""{1}""
-        }});
-    }});";
-
-        private int editorId;
-
-        public MonacoEditor()
-        {
-            editorCount++;
-            editorId = editorCount;
-        }
-
+        [MarkupOptions(AllowHardCodedValue = false, MappingMode = MappingMode.Attribute, Required = true)]
         public string Code
         {
             get { return (string)GetValue(CodeProperty); }
             set { SetValue(CodeProperty, value); }
         }
 
-        public MonacoLanguages Language
+        public MonacoLanguage Language
         {
-            get { return (MonacoLanguages)GetValue(LanguageProperty); }
+            get { return (MonacoLanguage)GetValue(LanguageProperty); }
             set { SetValue(LanguageProperty, value); }
+        }
+
+        public MonacoTheme Theme
+        {
+            get { return (MonacoTheme)GetValue(ThemeProperty); }
+            set { SetValue(ThemeProperty, value); }
         }
 
         public override void Render(IHtmlWriter writer, IDotvvmRequestContext context)
         {
-            var id = $"monaco{editorId}";
-            var language = typeof(MonacoLanguages)
-                .GetField(Language.ToString())
-                .GetCustomAttribute<MonacoLanguageAttribute>()
-                .Value;
-            writer.AddAttribute("id", id);
+            var theme = MonacoValueAttribute.GetValue(Theme);
+            var language = MonacoValueAttribute.GetValue(Language);
+            var group = new KnockoutBindingGroup();
+            group.Add("code", this, CodeProperty);
+            group.Add("language", language, true);
+            group.Add("theme", theme, true);
             writer.AddAttribute("class", CssClass, true);
+            writer.AddKnockoutDataBind("dotvvm-monaco", group);
             writer.RenderBeginTag("div");
             writer.RenderEndTag();
-            context.ResourceManager.AddStartupScript("monaco-init", string.Format(loaderScript, id, language), "monaco-loader");
         }
 
         protected override void OnPreRender(IDotvvmRequestContext context)
         {
-            context.ResourceManager.AddRequiredResource("monaco-loader");
+            context.ResourceManager.AddRequiredResource("dotvvm-monaco");
             base.OnPreRender(context);
         }
     }
