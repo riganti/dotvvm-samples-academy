@@ -46,17 +46,17 @@ namespace DotvvmAcademy
             });
             config.Resources.Register("bootstrap", new ScriptResource()
             {
-                Location = new FileResourceLocation("~/wwwroot/Scripts/bootstrap.min.js"),
+                Location = new FileResourceLocation("~/wwwroot/js/bootstrap.min.js"),
                 RenderPosition = ResourceRenderPosition.Head
             });
             config.Resources.Register("jquery", new ScriptResource()
             {
-                Location = new FileResourceLocation("~/wwwroot/Scripts/jquery-2.2.4.js"),
+                Location = new FileResourceLocation("~/wwwroot/js/jquery-2.2.4.js"),
                 RenderPosition = ResourceRenderPosition.Head
             });
             config.Resources.Register("google-analytics", new ScriptResource()
             {
-                Location = new FileResourceLocation("~/wwwroot/Scripts/google-analytics.js"),
+                Location = new FileResourceLocation("~/wwwroot/js/google-analytics.js"),
                 RenderPosition = ResourceRenderPosition.Head
             });
             config.Resources.Register("monaco-loader", new ScriptResource()
@@ -66,7 +66,7 @@ namespace DotvvmAcademy
             });
             config.Resources.Register("dotvvm-monaco", new ScriptResource()
             {
-                Location = new FileResourceLocation("~/wwwroot/Scripts/dotvvm-monaco.js"),
+                Location = new FileResourceLocation("~/wwwroot/js/dotvvm-monaco.js"),
                 RenderPosition = ResourceRenderPosition.Body,
                 Dependencies = new[] { "monaco-loader" }
             });
@@ -74,8 +74,8 @@ namespace DotvvmAcademy
 
         private void ConfigureRoutes(DotvvmConfiguration config, string applicationPath)
         {
-            config.RouteTable.Add("Monaco", "monaco", "Views/MonacoTest.dothtml");
             config.RouteConstraints.Add("culture", new CultureRouteConstraint(supportedCultures));
+            config.RouteTable.Add("Monaco", "monaco", "Views/MonacoTest.dothtml");
             config.RouteTable.Add("Default", "{Language?:culture}", "Views/LessonsOverview.dothtml",
                 new { Language = supportedCultures[0] });
             config.RouteTable.Add("ErrorNoCulture", "error/{StatusCode:int}", "Views/Error.dothtml",

@@ -9,6 +9,7 @@
                 theme: ko.unwrap(binding.theme),
                 codeLens: false,
                 scrollBeyondLastLine: false,
+                contextmenu: false,
                 fontSize: 16,
                 minimap: {
                     enabled: false
@@ -28,12 +29,26 @@
     },
     update: function (element, valueAccessor) {
         let binding = valueAccessor();
-        let code = ko.unwrap(binding.code);
-        if (element.dotvvmIgnoreUpdate || element.monaco === undefined) {
+        binding.code.subscribe((n) => this.updateValue(n, element));
+        binding.markers.subscribe((n)=>this.updateMarkers(n, element));
+        //if (element.dotvvmIgnoreUpdate || element.monaco === undefined) {
+        //    element.dotvvmIgnoreUpdate = false;
+        //    return;
+        //}
+        //element.dotvvmIgnoreUpdate = true;
+        //element.monaco.setValue(code);
+        //let model = element.monaco.getModel();
+        //monaco.editor.setModelMarkers(markers);
+    },
+    updateValue: function (newValue, element) {
+        if (element.dotvvmIgnoreUpdate) {
             element.dotvvmIgnoreUpdate = false;
             return;
         }
-        element.dotvvmIgnoreUpdate = true;
-        element.monaco.setValue(code);
+        element.monaco.setValue(newValue);
+    },
+    updateMarkers: function (newMarkers, element) {
+        let model = element.monaco.getModel();
+        monaco.editor.setModelMarkers(markers);
     }
 }

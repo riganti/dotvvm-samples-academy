@@ -3,12 +3,72 @@
     public enum MonacoLanguage
     {
         [MonacoValue("text/plain")]
-        PlainText,
-
+        PlainText = 0,
+        [MonacoValue("bat")]
+        Batch,
+        [MonacoValue("cpp")]
+        CPlusPlus,
         [MonacoValue("csharp")]
         CSharp,
-
+        [MonacoValue("coffee")]
+        CoffeeScript,
+        [MonacoValue("css")]
+        Css,
+        [MonacoValue("dockerfile")]
+        DockerFile,
+        [MonacoValue("fsharp")]
+        FSharp,
+        [MonacoValue("go")]
+        Go,
+        [MonacoValue("handlebars")]
+        Handlebars,
         [MonacoValue("html")]
-        Html
+        Html,
+        [MonacoValue("ini")]
+        Ini,
+        [MonacoValue("java")]
+        Java,
+        [MonacoValue("less")]
+        Less,
+        [MonacoValue("lua")]
+        Lua,
+        [MonacoValue("markdown")]
+        Markdown,
+        [MonacoValue("msdax")]
+        MicrosoftDynamicsAx,
+        [MonacoValue("objective-c")]
+        ObjectiveC,
+        [MonacoValue("php")]
+        Php,
+        [MonacoValue("postiats")]
+        Postiats,
+        [MonacoValue("powershell")]
+        Powershell,
+        [MonacoValue("pug")]
+        Pug,
+        [MonacoValue("python")]
+        Python,
+        [MonacoValue("r")]
+        RLang,
+        [MonacoValue("razor")]
+        Razor,
+        [MonacoValue("ruby")]
+        Ruby,
+        [MonacoValue("sb")]
+        Scratch,
+        [MonacoValue("scss")]
+        Sass,
+        [MonacoValue("solidity")]
+        Solidity,
+        [MonacoValue("sql")]
+        Sql,
+        [MonacoValue("swift")]
+        Swift,
+        [MonacoValue("vb")]
+        VisualBasic,
+        [MonacoValue("xml")]
+        Xml,
+        [MonacoValue("yaml")]
+        Yaml
     }
 }

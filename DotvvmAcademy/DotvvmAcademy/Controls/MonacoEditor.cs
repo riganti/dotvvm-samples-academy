@@ -1,7 +1,7 @@
 ﻿using DotVVM.Framework.Binding;
 using DotVVM.Framework.Controls;
 using DotVVM.Framework.Hosting;
-using System.Reflection;
+using System.Collections.Generic;
 
 namespace DotvvmAcademy.Controls
 {
@@ -13,8 +13,11 @@ namespace DotvvmAcademy.Controls
         public static readonly DotvvmProperty LanguageProperty
             = DotvvmProperty.Register<MonacoLanguage, MonacoEditor>(c => c.Language, MonacoLanguage.Html);
 
+        public static readonly DotvvmProperty MarkersProperty
+            = DotvvmProperty.Register<List<MonacoMarker>, MonacoEditor>(c => c.Markers, null);
+
         public static readonly DotvvmProperty ThemeProperty
-            = DotvvmProperty.Register<MonacoTheme, MonacoEditor>(c => c.Theme, MonacoTheme.Dark);
+                    = DotvvmProperty.Register<MonacoTheme, MonacoEditor>(c => c.Theme, MonacoTheme.Dark);
 
         public static string CssClass = "monaco-editor-wrapper";
 
@@ -31,6 +34,12 @@ namespace DotvvmAcademy.Controls
             set { SetValue(LanguageProperty, value); }
         }
 
+        public List<MonacoMarker> Markers
+        {
+            get { return (List<MonacoMarker>)GetValue(MarkersProperty); }
+            set { SetValue(MarkersProperty, value); }
+        }
+
         public MonacoTheme Theme
         {
             get { return (MonacoTheme)GetValue(ThemeProperty); }
@@ -45,6 +54,7 @@ namespace DotvvmAcademy.Controls
             group.Add("code", this, CodeProperty);
             group.Add("language", language, true);
             group.Add("theme", theme, true);
+            group.Add("markers", this, MarkersProperty);
             writer.AddAttribute("class", CssClass, true);
             writer.AddKnockoutDataBind("dotvvm-monaco", group);
             writer.RenderBeginTag("div");

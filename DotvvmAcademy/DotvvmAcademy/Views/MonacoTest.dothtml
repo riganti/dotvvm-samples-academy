@@ -10,8 +10,9 @@
     <title></title>
 </head>
 <body>
-    <cc:MonacoEditor Code="{value: Code}"/>
+    <cc:MonacoEditor Code="{value: Code}"
+                     Language="CSharp"
+                     Theme="Dark"
+                     Markers="{value: Markers}"/>
 </body>
 </html>
-
-
