@@ -7,7 +7,9 @@ var DotvvmAcademy;
         }
         MonacoEditor.prototype.initialize = function () {
             this.binding.code.subscribe(this.onCodeChanged.bind(this));
-            this.binding.markers.subscribe(this.onMarkersChanged.bind(this));
+            if (this.binding.markers) {
+                this.binding.markers.subscribe(this.onMarkersChanged.bind(this));
+            }
             require.config({ baseUrl: "/", paths: { 'vs': 'monaco-editor/min/vs' } });
             require(['vs/editor/editor.main'], this.onMonacoLoaded.bind(this));
         };
@@ -24,6 +26,7 @@ var DotvvmAcademy;
                     enabled: false
                 }
             });
+            this.onMarkersChanged(this.binding.markers());
             this.editor.onDidChangeModelContent(this.onModelChanged.bind(this));
         };
         MonacoEditor.prototype.onCodeChanged = function (newCode) {

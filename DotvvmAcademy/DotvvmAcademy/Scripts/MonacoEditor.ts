@@ -23,7 +23,9 @@ namespace DotvvmAcademy {
 
         initialize() {
             this.binding.code.subscribe(this.onCodeChanged.bind(this));
-            this.binding.markers.subscribe(this.onMarkersChanged.bind(this));
+            if (this.binding.markers) {
+                this.binding.markers.subscribe(this.onMarkersChanged.bind(this));
+            }
 
             require.config({ baseUrl: "/", paths: { 'vs': 'monaco-editor/min/vs' } });
             require(['vs/editor/editor.main'], this.onMonacoLoaded.bind(this))
@@ -42,11 +44,12 @@ namespace DotvvmAcademy {
                     enabled: false
                 }
             });
+            this.onMarkersChanged(this.binding.markers());
             this.editor.onDidChangeModelContent(this.onModelChanged.bind(this));
         }
 
         onCodeChanged(newCode) {
-            if(this.ignoreCodeChanged) {
+            if (this.ignoreCodeChanged) {
                 this.ignoreCodeChanged = false;
                 return;
             }
@@ -59,7 +62,7 @@ namespace DotvvmAcademy {
         }
 
         onModelChanged(args) {
-            if(this.ignoreModelChanged) {
+            if (this.ignoreModelChanged) {
                 this.ignoreModelChanged = false;
                 return;
             }
