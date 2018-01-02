@@ -32,10 +32,8 @@ namespace DotvvmAcademy
         {
             builder.RegisterModule<BLModule>();
             builder.RegisterType<AutoMapperInitializer>();
-
             builder.RegisterAssemblyTypes(typeof(Startup).Assembly)
                 .AsClosedTypesOf(typeof(StepPartRenderer<>));
-
             builder.RegisterAssemblyTypes(typeof(Startup).Assembly)
                 .AssignableTo<IDotvvmViewModel>()
                 .AsSelf();
