@@ -1,5 +1,5 @@
 ﻿@viewModel DotvvmAcademy.ViewModels.ErrorViewModel, DotvvmAcademy
-@masterPage Views/Master.dotmaster
+@masterPage Views/MasterPage.dotmaster
 
 <dot:Content ContentPlaceHolderID="MainContent">
     <h1>{{resource: StatusCode}}</h1>

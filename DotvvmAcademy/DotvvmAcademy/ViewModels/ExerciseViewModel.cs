@@ -39,7 +39,8 @@ namespace DotvvmAcademy.ViewModels
 
         public List<MonacoMarker> Markers { get; set; }
 
-        public MonacoLanguage Language { get; set; }
+        [Bind(Direction.ServerToClientFirstRequest)]
+        public MonacoLanguage CodeLanguage => Dto.CodeLanguage.ToMonacoLanguage();
 
         [Protect(ProtectMode.EncryptData)]
         public int Index { get; set; }

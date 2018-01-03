@@ -28,9 +28,9 @@ namespace DotvvmAcademy.ViewModels
             this.exerciseFactory = exerciseFactory;
         }
 
-        public bool CanGoNext { get; set; }
+        public bool IsNextEnabled { get; set; }
 
-        public bool CanGoPrevious { get; set; }
+        public bool IsPreviousEnabled { get; set; }
 
         public List<ExerciseViewModel> Exercises { get; set; }
 
@@ -60,8 +60,8 @@ namespace DotvvmAcademy.ViewModels
                 Context.RedirectToRoute("Error", new { Language, StatusCode = 404 });
             }
 
-            CanGoNext = StepIndex != Lesson.StepCount - 1;
-            CanGoPrevious = StepIndex != 0;
+            IsNextEnabled = StepIndex != Lesson.StepCount - 1;
+            IsPreviousEnabled = StepIndex != 0;
         }
 
         public override Task Load()
@@ -76,6 +76,10 @@ namespace DotvvmAcademy.ViewModels
                     exercise.Index = i;
                     return exercise;
                 }).ToList();
+                foreach (var exercise in Exercises)
+                {
+                    exercise.ResetCode();
+                }
                 return Task.CompletedTask;
             }
 

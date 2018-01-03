@@ -1,5 +1,5 @@
 ﻿@viewModel DotvvmAcademy.ViewModels.StepViewModel, DotvvmAcademy
-@masterPage Views/Master.dotmaster
+@masterPage Views/MasterPage.dotmaster
 @import DotvvmAcademy.Resources
 
 <dot:Content ContentPlaceHolderID="MainContent">
@@ -15,7 +15,7 @@
                                    Param-Language="{value: Language}"
                                    Param-Moniker="{value: Moniker}"
                                    Param-StepIndex="{value: StepIndex - 1}"
-                                   Visible="{resource: CanGoPrevious}"
+                                   Visible="{resource: IsPreviousEnabled}"
                                    class="btn btn-primary pull-left lesson-btn">
                         <span class="glyphicon glyphicon-chevron-left" /> {{resource: UIResources.Previous}}
                     </dot:RouteLink>
@@ -24,7 +24,7 @@
                                    Param-Language="{value: Language}"
                                    Param-Moniker="{value: Moniker}"
                                    Param-StepIndex="{value: StepIndex + 1}"
-                                   Visible="{resource: CanGoNext}"
+                                   Visible="{resource: IsNextEnabled}"
                                    class="btn btn-primary pull-right lesson-btn">
                         {{resource: UIResources.Next}} <span class="glyphicon glyphicon-chevron-right" />
                     </dot:RouteLink>

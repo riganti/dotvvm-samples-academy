@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace DotvvmAcademy.ViewModels
 {
-    public class LessonsOverviewViewModel : DotvvmAcademyViewModelBase
+    public class IndexViewModel : DotvvmAcademyViewModelBase
     {
         private LessonFacade lessonFacade;
 
-        public LessonsOverviewViewModel(LessonFacade lessonFacade, IStringLocalizer<UIResources> localizer)
+        public IndexViewModel(LessonFacade lessonFacade, IStringLocalizer<UIResources> localizer)
              : base(localizer)
         {
             this.lessonFacade = lessonFacade;

@@ -4,7 +4,7 @@ namespace DotvvmAcademy.Controls
 {
     public static class MonacoLanguageExtensions
     {
-        public static MonacoLanguage FromDto(this CodeLanguageDto dto)
+        public static MonacoLanguage ToMonacoLanguage(this CodeLanguageDto dto)
         {
             switch (dto)
             {

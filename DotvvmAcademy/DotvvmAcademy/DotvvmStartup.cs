@@ -76,7 +76,7 @@ namespace DotvvmAcademy
         {
             config.RouteConstraints.Add("culture", new CultureRouteConstraint(supportedCultures));
             config.RouteTable.Add("Monaco", "monaco", "Views/MonacoTest.dothtml");
-            config.RouteTable.Add("Default", "{Language?:culture}", "Views/LessonsOverview.dothtml",
+            config.RouteTable.Add("Default", "{Language?:culture}", "Views/Index.dothtml",
                 new { Language = supportedCultures[0] });
             config.RouteTable.Add("ErrorNoCulture", "error/{StatusCode:int}", "Views/Error.dothtml",
                 new { Language = supportedCultures[0], StatusCode = 404 });

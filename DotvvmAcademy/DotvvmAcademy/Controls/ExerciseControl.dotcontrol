@@ -3,7 +3,7 @@
 
 <div class="exercise">
     <cc:MonacoEditor Code="{value: Code}"
-                     Language="{value: Language}"
+                     Language="{value: CodeLanguage}"
                      Markers="{value: Markers}"
                      Theme="Dark" />
     <dot:Repeater DataSource="{value: Errors}">
