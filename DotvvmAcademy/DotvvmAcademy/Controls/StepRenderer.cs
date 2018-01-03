@@ -1,31 +1,35 @@
 ﻿using DotVVM.Framework.Binding;
+using DotVVM.Framework.Binding.Expressions;
+using DotVVM.Framework.Binding.Properties;
 using DotVVM.Framework.Controls;
 using DotVVM.Framework.Hosting;
 using DotvvmAcademy.BL.Dtos;
 using DotvvmAcademy.ViewModels;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DotvvmAcademy.Controls
 {
     public class StepRenderer : DotvvmControl
     {
+        public static readonly DotvvmProperty ExercisesProperty
+            = DotvvmProperty.Register<List<ExerciseViewModel>, StepRenderer>(c => c.Exercises, null);
+
+        public static readonly DotvvmProperty SourceProperty
+            = DotvvmProperty.Register<IStepPartDto[], StepRenderer>(c => c.Source, null);
+
         public List<ExerciseViewModel> Exercises
         {
             get { return (List<ExerciseViewModel>)GetValue(ExercisesProperty); }
             set { SetValue(ExercisesProperty, value); }
         }
 
-        public static readonly DotvvmProperty ExercisesProperty
-            = DotvvmProperty.Register<List<ExerciseViewModel>, StepRenderer>(c => c.Exercises, null);
-
         public IStepPartDto[] Source
         {
             get { return (IStepPartDto[])GetValue(SourceProperty); }
             set { SetValue(SourceProperty, value); }
         }
-
-        public static readonly DotvvmProperty SourceProperty
-            = DotvvmProperty.Register<IStepPartDto[], StepRenderer>(c => c.Source, null);
 
         protected override void AddAttributesToRender(IHtmlWriter writer, IDotvvmRequestContext context)
         {
@@ -34,14 +38,24 @@ namespace DotvvmAcademy.Controls
 
         protected override void OnLoad(IDotvvmRequestContext context)
         {
-            var provider = context.Configuration.ServiceLocator.GetServiceProvider();
             foreach (var part in Source)
             {
-                var rendererType = typeof(StepPartRenderer<>).MakeGenericType(part.GetType());
-                var renderer = (IStepPartRenderer)provider.GetService(rendererType);
-                renderer.SetPart(part);
-                Children.Add((DotvvmControl)renderer);
-                renderer.SetBindings(this);
+                switch (part)
+                {
+                    case HtmlStepPartDto htmlPart:
+                        Children.Add(new HtmlLiteral { Html = htmlPart.Source });
+                        break;
+
+                    case ExerciseStepPartDto exercisePart:
+                        var exerciseControl = GetExerciseControl(context);
+                        var index = Source.OfType<ExerciseStepPartDto>().ToList().IndexOf(exercisePart);
+                        exerciseControl.SetBinding(DataContextProperty, GetExerciseBinding(index));
+                        Children.Add(exerciseControl);
+                        break;
+
+                    default:
+                        throw new NotSupportedException($"{nameof(StepRenderer)} does not support {part.GetType().Name}.");
+                }
             }
         }
 
@@ -54,5 +68,15 @@ namespace DotvvmAcademy.Controls
         {
             writer.RenderEndTag();
         }
+
+        private IValueBinding GetExerciseBinding(int index)
+        {
+            var exercisesBinding = GetValueBinding(ExercisesProperty);
+            var expression = exercisesBinding.GetProperty<OriginalStringBindingProperty>();
+            expression = new OriginalStringBindingProperty($"{expression.Code}[{index}]");
+            return exercisesBinding.DeriveBinding(new object[] { expression });
+        }
+
+        private DotvvmControl GetExerciseControl(IDotvvmRequestContext context) => context.GetDotControl("Controls/ExerciseControl.dotcontrol");
     }
 }

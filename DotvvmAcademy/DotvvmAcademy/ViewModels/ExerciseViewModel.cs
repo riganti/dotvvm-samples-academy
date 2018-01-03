@@ -25,7 +25,7 @@ namespace DotvvmAcademy.ViewModels
 
         public void InjectServices(ValidatorFacade validatorFacade, SampleFacade sampleFacade)
         {
-            // This is because dotvvm doesn't resolve the properties it creates, it expects them to have a parameterless constructor
+            // dotvvm requires a parameterless constructor
             this.validatorFacade = validatorFacade;
             this.sampleFacade = sampleFacade;
         }
@@ -33,7 +33,7 @@ namespace DotvvmAcademy.ViewModels
         public string Code { get; set; }
 
         [Bind(Direction.None)]
-        public ExerciseBaseDto Dto { get; set; }
+        public ExerciseStepPartDto Dto { get; set; }
 
         public List<ValidationErrorDto> Errors { get; set; } = new List<ValidationErrorDto>();
 

@@ -8,7 +8,7 @@
             <div class="container-fluid">
                 <div>
                     <cc:StepRenderer Source="{value: Step.Source}"
-                                     Exercises="{value: Exercises}" 
+                                     Exercises="{value: Exercises}"
                                      RenderSettings.Mode="Client"/>
 
                     <dot:RouteLink RouteName="Step"

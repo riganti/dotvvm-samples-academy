@@ -5,7 +5,6 @@ using DotvvmAcademy.Resources;
 using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,21 +12,17 @@ namespace DotvvmAcademy.ViewModels
 {
     public class StepViewModel : DotvvmAcademyViewModelBase
     {
-        private readonly ExerciseFacade exerciseFacade;
-        private readonly SampleFacade sampleFacade;
-        private readonly ValidatorFacade validatorFacade;
         private readonly Func<ExerciseViewModel> exerciseFactory;
         private readonly LessonFacade lessonFacade;
+        private readonly SampleFacade sampleFacade;
         private readonly StepFacade stepFacade;
+        private readonly ValidatorFacade validatorFacade;
 
         public StepViewModel(IStringLocalizer<UIResources> localizer, LessonFacade lessonFacade, StepFacade stepFacade,
-            ExerciseFacade exerciseFacade, SampleFacade sampleFacade, ValidatorFacade validatorFacade,
-            Func<ExerciseViewModel> exerciseFactory)
-            : base(localizer)
+            SampleFacade sampleFacade, ValidatorFacade validatorFacade, Func<ExerciseViewModel> exerciseFactory) : base(localizer)
         {
             this.lessonFacade = lessonFacade;
             this.stepFacade = stepFacade;
-            this.exerciseFacade = exerciseFacade;
             this.sampleFacade = sampleFacade;
             this.validatorFacade = validatorFacade;
             this.exerciseFactory = exerciseFactory;
@@ -56,13 +51,13 @@ namespace DotvvmAcademy.ViewModels
             Lesson = await lessonFacade.GetOverview(Moniker, Language.TwoLetterISOLanguageName);
             if (Lesson == null)
             {
-                Context.RedirectToRoute("Error", new { Language = Language, StatusCode = 404 });
+                Context.RedirectToRoute("Error", new { Language, StatusCode = 404 });
             }
 
             Step = await stepFacade.GetStep(Lesson, StepIndex);
             if (Step == null)
             {
-                Context.RedirectToRoute("Error", new { Language = Language, StatusCode = 404 });
+                Context.RedirectToRoute("Error", new { Language, StatusCode = 404 });
             }
 
             CanGoNext = StepIndex != Lesson.StepCount - 1;
@@ -71,7 +66,7 @@ namespace DotvvmAcademy.ViewModels
 
         public override Task Load()
         {
-            var exerciseDtos = exerciseFacade.GetExercises(Step).ToArray();
+            var exerciseDtos = Step.Source.OfType<ExerciseStepPartDto>().ToArray();
             if (!Context.IsPostBack)
             {
                 Exercises = exerciseDtos.Select((dto, i) =>
@@ -83,6 +78,7 @@ namespace DotvvmAcademy.ViewModels
                 }).ToList();
                 return Task.CompletedTask;
             }
+
             foreach (var exercise in Exercises)
             {
                 exercise.Dto = exerciseDtos[exercise.Index];

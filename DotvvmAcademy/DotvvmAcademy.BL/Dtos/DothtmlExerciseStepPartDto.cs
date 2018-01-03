@@ -1,21 +1,18 @@
-﻿using System.Collections.Generic;
-
-namespace DotvvmAcademy.BL.Dtos
+﻿namespace DotvvmAcademy.BL.Dtos
 {
-    public sealed class DothtmlExerciseStepPartDto : ExerciseBaseDto, IExerciseStepPartDto
+    public sealed class DothtmlExerciseStepPartDto : ExerciseStepPartDto
     {
-        public DothtmlExerciseStepPartDto()
+        public DothtmlExerciseStepPartDto(string displayName, string finalPath, string initialPath, string validatorId,
+            string viewModelPath, string masterPagePath = null) : base(displayName, finalPath, initialPath, validatorId)
         {
-            CodeLanguage = CodeLanguageDto.Dothtml;
+            ViewModelPath = viewModelPath;
+            MasterPagePath = masterPagePath;
         }
 
-        public string MasterPagePath { get; internal set; }
+        public override CodeLanguageDto CodeLanguage => CodeLanguageDto.Dothtml;
 
-        public string ViewModelPath { get; internal set; }
+        public string MasterPagePath { get; }
 
-        public IEnumerable<ExerciseBaseDto> GetExercises()
-        {
-            yield return this;
-        }
+        public string ViewModelPath { get; }
     }
 }

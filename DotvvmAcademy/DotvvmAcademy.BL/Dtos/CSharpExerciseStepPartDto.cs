@@ -1,19 +1,15 @@
-﻿using System.Collections.Generic;
-
-namespace DotvvmAcademy.BL.Dtos
+﻿namespace DotvvmAcademy.BL.Dtos
 {
-    public sealed class CSharpExerciseStepPartDto : ExerciseBaseDto, IExerciseStepPartDto
+    public sealed class CSharpExerciseStepPartDto : ExerciseStepPartDto
     {
-        public CSharpExerciseStepPartDto()
+        public CSharpExerciseStepPartDto(string displayName, string finalPath, string initialPath, string validatorId, string[] dependencyPaths = null)
+            : base(displayName, finalPath, initialPath, validatorId)
         {
-            CodeLanguage = CodeLanguageDto.CSharp;
+            DependencyPaths = dependencyPaths;
         }
 
-        public string[] DependencyPaths { get; internal set; }
+        public override CodeLanguageDto CodeLanguage => CodeLanguageDto.CSharp;
 
-        public IEnumerable<ExerciseBaseDto> GetExercises()
-        {
-            yield return this;
-        }
+        public string[] DependencyPaths { get; }
     }
 }
