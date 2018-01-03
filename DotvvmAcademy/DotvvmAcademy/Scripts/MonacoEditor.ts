@@ -2,11 +2,22 @@
 
 namespace DotvvmAcademy {
 
+    interface ServerMonacoMarker {
+        Code: KnockoutObservable<string>
+        EndColumn: KnockoutObservable<number>
+        EndLineNumber: KnockoutObservable<number>
+        Message: KnockoutObservable<string>
+        Source: KnockoutObservable<string>
+        Severity: KnockoutObservable<number>
+        StartColumn: KnockoutObservable<number>
+        StartLineNumber: KnockoutObservable<number>
+    }
+
     interface MonacoBinding {
         code: KnockoutObservable<string>
         language: string
         theme: string
-        markers: KnockoutObservableArray<any>
+        markers: KnockoutObservableArray<KnockoutObservable<ServerMonacoMarker>>
     }
 
     class MonacoEditor {
@@ -44,7 +55,7 @@ namespace DotvvmAcademy {
                     enabled: false
                 }
             });
-            this.onMarkersChanged(this.binding.markers());
+            this.onMarkersChanged(this.binding.markers.peek());
             this.editor.onDidChangeModelContent(this.onModelChanged.bind(this));
         }
 
@@ -57,8 +68,9 @@ namespace DotvvmAcademy {
             this.editor.setValue(this.binding.code())
         }
 
-        onMarkersChanged(newMarkers) {
-            monaco.editor.setModelMarkers(this.editor.getModel(), "test", newMarkers);
+        onMarkersChanged(serverMarkers: KnockoutObservable<ServerMonacoMarker>[]) {
+            let markers = serverMarkers.map(mapMonacoMarker);
+            monaco.editor.setModelMarkers(this.editor.getModel(), null, markers);
         }
 
         onModelChanged(args) {
@@ -79,5 +91,20 @@ namespace DotvvmAcademy {
             }
         }
     }
+
+    function mapMonacoMarker(serverMarkerObservable: KnockoutObservable<ServerMonacoMarker>): monaco.editor.IMarkerData {
+        let serverMarker = serverMarkerObservable.peek();
+        return {
+            code: serverMarker.Code.peek(),
+            endColumn: serverMarker.EndColumn.peek(),
+            endLineNumber: serverMarker.EndLineNumber.peek(),
+            message: serverMarker.Message.peek(),
+            severity: serverMarker.Severity.peek(),
+            source: serverMarker.Source.peek(),
+            startColumn: serverMarker.StartColumn.peek(),
+            startLineNumber: serverMarker.StartLineNumber.peek()
+        };
+    }
+
     MonacoEditor.installBindingHandler();
 }

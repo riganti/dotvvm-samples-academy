@@ -26,7 +26,7 @@ var DotvvmAcademy;
                     enabled: false
                 }
             });
-            this.onMarkersChanged(this.binding.markers());
+            this.onMarkersChanged(this.binding.markers.peek());
             this.editor.onDidChangeModelContent(this.onModelChanged.bind(this));
         };
         MonacoEditor.prototype.onCodeChanged = function (newCode) {
@@ -37,8 +37,9 @@ var DotvvmAcademy;
             this.ignoreModelChanged = true;
             this.editor.setValue(this.binding.code());
         };
-        MonacoEditor.prototype.onMarkersChanged = function (newMarkers) {
-            monaco.editor.setModelMarkers(this.editor.getModel(), "test", newMarkers);
+        MonacoEditor.prototype.onMarkersChanged = function (serverMarkers) {
+            var markers = serverMarkers.map(mapMonacoMarker);
+            monaco.editor.setModelMarkers(this.editor.getModel(), null, markers);
         };
         MonacoEditor.prototype.onModelChanged = function (args) {
             if (this.ignoreModelChanged) {
@@ -58,5 +59,18 @@ var DotvvmAcademy;
         };
         return MonacoEditor;
     }());
+    function mapMonacoMarker(serverMarkerObservable) {
+        var serverMarker = serverMarkerObservable.peek();
+        return {
+            code: serverMarker.Code.peek(),
+            endColumn: serverMarker.EndColumn.peek(),
+            endLineNumber: serverMarker.EndLineNumber.peek(),
+            message: serverMarker.Message.peek(),
+            severity: serverMarker.Severity.peek(),
+            source: serverMarker.Source.peek(),
+            startColumn: serverMarker.StartColumn.peek(),
+            startLineNumber: serverMarker.StartLineNumber.peek()
+        };
+    }
     MonacoEditor.installBindingHandler();
 })(DotvvmAcademy || (DotvvmAcademy = {}));

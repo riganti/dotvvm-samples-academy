@@ -1,5 +1,8 @@
-﻿namespace DotvvmAcademy.Controls
+﻿using Newtonsoft.Json;
+
+namespace DotvvmAcademy.Controls
 {
+    [JsonConverter(typeof(IntEnumConverter))]
     public enum MonacoSeverity
     {
         Ignore = 0,
