@@ -1,6 +1,7 @@
 ﻿using DotVVM.Framework.ViewModel;
 using DotvvmAcademy.BL.Dtos;
 using DotvvmAcademy.BL.Facades;
+using DotvvmAcademy.Controls;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -35,6 +36,10 @@ namespace DotvvmAcademy.ViewModels
         public ExerciseBaseDto Dto { get; set; }
 
         public List<ValidationErrorDto> Errors { get; set; } = new List<ValidationErrorDto>();
+
+        public List<MonacoMarker> Markers { get; set; }
+
+        public MonacoLanguage Language { get; set; }
 
         [Protect(ProtectMode.EncryptData)]
         public int Index { get; set; }
