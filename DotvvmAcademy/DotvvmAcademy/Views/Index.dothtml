@@ -1,5 +1,5 @@
 ﻿@viewModel DotvvmAcademy.ViewModels.IndexViewModel, DotvvmAcademy 
-@masterPage Views/MasterPage.dotmaster
+@masterPage Views/Master.dotmaster
 <dot:Content ContentPlaceHolderID="MainContent">
 
     <div class="container-fluid content-padding">

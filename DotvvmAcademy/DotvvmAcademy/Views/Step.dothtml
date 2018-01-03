@@ -1,5 +1,5 @@
 ﻿@viewModel DotvvmAcademy.ViewModels.StepViewModel, DotvvmAcademy
-@masterPage Views/MasterPage.dotmaster
+@masterPage Views/Master.dotmaster
 @import DotvvmAcademy.Resources
 
 <dot:Content ContentPlaceHolderID="MainContent">
