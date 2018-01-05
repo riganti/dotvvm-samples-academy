@@ -9,32 +9,73 @@
 }
 
 .header {
-    background-image: url('/img/pattern.png');
-    width: auto;
-    height: 189px;
+    background: url('/img/pattern.png') top no-repeat;
 }
 
-.header-con-padding {
-    padding-left: 50px;
+.flex-header {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    padding: 25px 0;
+    padding-right: 20px;
+    box-sizing: border-box;
 }
 
-.header-logo {
-    width: 10%;
-    display: inline-block;
-    vertical-align: middle;
-}
+    .flex-header .flex-item {
+        flex: 1 0 77%;
+    }
 
-.header-block {
-    display: inline-block;
-    vertical-align: middle;
-}
+        .flex-header .flex-item:first-child, .flex-header .flex-item:last-child {
+            flex: 1 0 11%;
+        }
 
-.header-block-right {
-    margin-top: 35px;
-    margin-right: 10px;
-    float: right;
-}
+        .flex-header .flex-item img {
+            width: 100%;
+        }
 
+        .flex-header .flex-item h1 {
+            color: #2980b9;
+            font-size: 60px;
+        }
+
+        .flex-header .flex-item h3 {
+            color: #2980b9;
+            font-size: 26px;
+        }
+
+        .flex-header .flex-item span {
+            color: #333;
+        }
+
+    .flex-header .dropdown button {
+        float: right;
+    }
+
+    .flex-header .dropdown .dropdown-menu {
+        top: 35px;
+        right: 0;
+        left: unset;
+    }
+
+@media screen and (max-width: 991px) {
+
+    .flex-header .flex-item {
+        flex: 1 0 69%;
+    }
+
+        .flex-header .flex-item:first-child, .flex-header .flex-item:last-child {
+            flex: 1 0 15%;
+        }
+
+        .flex-header .flex-item h1 {
+            font-size: 45px;
+        }
+
+        .flex-header .flex-item h1, .flex-header .flex-item h3 {
+            text-align: center;
+        }
+}
 
 .header-1, .header-2, .header-3 {
     font-family: 'Montserrat', sans-serif;
@@ -54,10 +95,6 @@
     font-size: 26px;
 }
 
-.span-academy {
-    color: #333;
-}
-
 .lesson-h3 {
     font-family: 'Montserrat', sans-serif;
 }
@@ -74,9 +111,9 @@ a {
     text-decoration: none;
 }
 
-.nounderline:hover {
-    text-decoration: none;
-}
+    .nounderline:hover {
+        text-decoration: none;
+    }
 
     .nounderline:active {
         text-decoration: none;
@@ -195,6 +232,7 @@ a {
         font-size: 16px;
         font-family: Lato-Medium;
     }
+
     .step a {
         color: black;
     }
@@ -249,6 +287,33 @@ a {
 
 .footer-padding {
     padding-left: 60px;
+    padding-bottom: 8px;
+}
+
+    .footer-padding a:hover, .footer-padding a:focus {
+        color: #8ab1df;
+        text-decoration: none;
+    }
+
+.footer-links {
+    vertical-align: middle;
+}
+
+    .footer-links > p {
+        float: right;
+    }
+
+
+@media screen and (max-width: 991px) {
+
+    .footer-links {
+        text-align: center;
+    }
+
+        .footer-links > h3, .footer-links > p {
+            display: inline-block;
+            float: unset;
+        }
 }
 
 .finished {
@@ -263,14 +328,16 @@ a {
         color: white;
     }
 
-    h3 a{
-        font-size: 24px;
-    }
 
-    .right a:hover {
-        text-decoration: none;
-        color: #8ab1df;
-    }
+
+h3 a {
+    font-size: 24px;
+}
+
+.right a:hover {
+    text-decoration: none;
+    color: #8ab1df;
+}
 
 .center {
     text-align: center;
