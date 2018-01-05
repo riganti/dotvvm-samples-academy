@@ -4,8 +4,6 @@ using DotVVM.Framework.Controls;
 using DotVVM.Framework.Hosting;
 using DotvvmAcademy.Steps;
 
-using System;
-
 namespace DotvvmAcademy.Controls
 {
     public class StepRenderer : HtmlGenericControl
