@@ -417,7 +417,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 		public string ZIP { get; set; }
 		[EmailAddress]
 		public string Email { get; set; }
-    
+	
 		// добавьте свойство SubscriptionFrom
 		// добавьте свойство SubscriptionTo
 	}
@@ -440,7 +440,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 		public string ZIP { get; set; }
 		[EmailAddress]
 		public string Email { get; set; }
-    
+	
 		public DateTime SubscriptionFrom { get; set; }
 		public DateTime SubscriptionTo { get; set; }
 	}

@@ -419,7 +419,7 @@ Tohoho tlačítka využijem k tomu, abychom mohli úkoly označovat jako hotové
 	<dot:Repeater DataSource="{value: Tasks}">
 		<div class="task">
 			<!-- dopiště zde data-binding pro zobrazení názvu úkolu -->
-      <!-- zde doplňte komponentu LinkButton -->
+	  <!-- zde doplňte komponentu LinkButton -->
 		</div>
 	</dot:Repeater>
 </div>
@@ -455,7 +455,7 @@ Komponenta `<dot:LinkButton>` funguje stejně jako `Button`, ale do stránky se 
 			<Description>
 				<![CDATA[
 Komponenta LinkButton musí být zobrazená pouze v případě, že úkol ještě není splněn.        
-        
+		
 V DotVVM má kazdý HTML tag nebo komponenta vlastnost `Visible`.
 Nastavením této vlastnosti můžeme schovávat nebo zobrazovat jednotlivé komponenty a tagy.
 
@@ -509,7 +509,7 @@ Vlastnost `Visible` může být v DotVVM nastavena na kterémkoli elementu v HTM
 			<Description>
 				<![CDATA[
 Když uživatel klikne na komponentu `LinkButton`, musí se spustit funkce ve viewmodelu.        
-        
+		
 Samotná metoda musí vědět, na kterém úkolu byla spuštěná, proto musíme nastavit objekt úkolu jako parametr.
 
 Nadeklarujte metodu `CompleteTask` s parametrem typu `TaskData`.
@@ -612,7 +612,7 @@ System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.TaskData>.Add
 			<Description>
 				<![CDATA[
 Teď musíme nastavit vlastnost `Click` komponenty `LinkButton` na metodu `CompleteTask`.
-        
+		
 Všimněte si, že všechny bindings uvniř komponenty `Repeater` neodkazují na vlastnosti a příkazy ve
 viewmodelu, ale na vlastnosti objektu `TaskData`.
 Metoda `CompleteTask` je však deklarována o vrstvu výš, ve viewmodelu.
@@ -665,7 +665,7 @@ do argumentu dodáme celý objekt.
 				<![CDATA[
 Poslední věc, kterou bychom chtěli udělat, je přeškrtnout všechny úkoly,
 které jsou již hotové.
-        
+		
 Pokud je úkol hotový, chtěli bychom ho vygenerovat takto `<div class="task-completed"></div>`.
 
 Využijeme data-binding a nastavíme vlastnost `class` tagu `<div>`.
