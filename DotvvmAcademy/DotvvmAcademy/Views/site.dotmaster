@@ -1,7 +1,7 @@
 ﻿@viewModel DotvvmAcademy.ViewModels.SiteViewModel, DotvvmAcademy
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>    
+<head>
     <meta charset="utf-8" />
     <title>DotVVM Academy</title>
     <link href="~/Styles/bootstrap.min.css" rel="stylesheet" />
@@ -14,7 +14,7 @@
         <div class="container-fluid header">
             <div class="container content-wrap flex-header">
                 <div class="flex-item">
-                    <img src="/img/dotvvm-logo.png"/>
+                    <img src="/img/dotvvm-logo.png" />
                 </div>
                 <div class="flex-item">
                     <dot:RouteLink RouteName="Default" class="nounderline">
@@ -24,7 +24,7 @@
                 </div>
                 <div class="flex-item">
                     <div class="dropdown">
-                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <button class="btn btn-default dropdown-toggle" type="button" ID="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                             <i class="fa fa-language" aria-hidden="true"></i>
                             <span class="caret"></span>
                         </button>
@@ -36,7 +36,7 @@
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
         <div class="container-fluid">
             <div class="container content-wrap">
                 <content>
@@ -51,13 +51,13 @@
     <div class="container-fluid footer">
         <div class="container footer-padding">
             <div class="row">
-                <div class="col-md-6 left">
-                    <div style="display: inline-block; vertical-align: middle;">
+                <div class="col-md-6 col-sm-12 col-xs-12">
+                    <div class="footer-links">
                         <h3><a target="_blank" href="https://www.dotvvm.com/">www.dotvvm.com</a></h3>
                     </div>
                 </div>
-                <div class="col-md-6 right">
-                    <div style="display: inline-block; vertical-align: middle;">
+                <div class="col-md-6 col-sm-12 col-xs-12">
+                    <div class="footer-links">
                         <p style="padding-top: 20px">
                             <a target="_blank" href="https://www.dotvvm.com/docs/latest">{{resource: LessonNames.DocumentationText}}</a> |
                             <a target="_blank" href="https://www.dotvvm.com/docs/tutorials/introduction/latest">{{resource: LessonNames.TutorialsText}}</a> |

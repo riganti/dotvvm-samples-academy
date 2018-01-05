@@ -287,6 +287,33 @@ a {
 
 .footer-padding {
     padding-left: 60px;
+    padding-bottom: 8px;
+}
+
+    .footer-padding a:hover, .footer-padding a:focus {
+        color: #8ab1df;
+        text-decoration: none;
+    }
+
+.footer-links {
+    vertical-align: middle;
+}
+
+    .footer-links > p {
+        float: right;
+    }
+
+
+@media screen and (max-width: 991px) {
+
+    .footer-links {
+        text-align: center;
+    }
+
+        .footer-links > h3, .footer-links > p {
+            display: inline-block;
+            float: unset;
+        }
 }
 
 .finished {
@@ -300,6 +327,8 @@ a {
     .right h3, a {
         color: white;
     }
+
+
 
 h3 a {
     font-size: 24px;
