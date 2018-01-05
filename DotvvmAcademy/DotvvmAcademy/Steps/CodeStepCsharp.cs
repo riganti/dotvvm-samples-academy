@@ -17,20 +17,15 @@ namespace DotvvmAcademy.Steps
 {
     public class CodeStepCsharp : CodeStepBase<ICSharpCodeValidationObject>
     {
-        public CodeStepCsharp()
+        private MetadataReference[] metadataReferences = new MetadataReference[]
         {
-            ReferencedAssemblies = new List<string>
-            {
-                GetAssemblyLocationFromType(typeof(object)),
-                GetAssemblyLocationFromType(typeof(DotvvmConfiguration)),
-                GetAssemblyLocationFromType(typeof(BindAttribute)),
-                GetAssemblyLocationFromType(typeof(RequiredAttribute)),
-                GetAssemblyLocationFromType(typeof(Attribute)),
-                GetAssemblyLocationFromType(typeof(ExtensionAttribute)),
-                Assembly.Load(new AssemblyName("System.Runtime")).Location,
-                Assembly.Load(new AssemblyName("mscorlib")).Location
-            };
-        }
+            GetMetadataReference("netstandard"),
+            GetMetadataReference<object>(),
+            GetMetadataReference("System.Runtime"),
+            GetMetadataReference<BindAttribute>(),
+            GetMetadataReference<RequiredAttribute>(),
+            GetMetadataReference<DotvvmConfiguration>()
+        };
 
         [Bind(Direction.None)]
         public List<string> AllowedMethodsCalled { get; private set; } = new List<string>();
@@ -52,14 +47,12 @@ namespace DotvvmAcademy.Steps
             {
                 var tree = (CSharpSyntaxTree)CSharpSyntaxTree.ParseText(Code);
 
-                var portableExecutableReferences =
-                    ReferencedAssemblies.Select(path => MetadataReference.CreateFromFile(path)).ToArray();
                 var syntaxTrees = new[] { tree }.Concat(OtherCodeDependencies.Select(c => CSharpSyntaxTree.ParseText(c)));
 
                 var compilation = CSharpCompilation.Create(
                     Guid.NewGuid().ToString(),
                     syntaxTrees,
-                    portableExecutableReferences,
+                    metadataReferences,
                     new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)
                 );
 
@@ -77,9 +70,14 @@ namespace DotvvmAcademy.Steps
             }
         }
 
-        private static string GetAssemblyLocationFromType(Type type)
+        private static MetadataReference GetMetadataReference<TType>()
         {
-            return type.GetTypeInfo().Assembly.Location;
+            return MetadataReference.CreateFromFile(typeof(TType).Assembly.Location);
+        }
+
+        private static MetadataReference GetMetadataReference(string name)
+        {
+            return MetadataReference.CreateFromFile(Assembly.Load(new AssemblyName(name)).Location);
         }
     }
 }
