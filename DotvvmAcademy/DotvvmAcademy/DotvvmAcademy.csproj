@@ -72,7 +72,6 @@
     <Content Include="Lessons\ru\Lesson2.xml" />
     <Content Include="Lessons\ru\Lesson3.xml" />
     <Content Include="Lessons\ru\Lesson4.xml" />
-    
     <Content Include="Views\default.dothtml" />
     <Content Include="Views\embedded.dothtml" />
     <Content Include="Views\lesson.dothtml" />
@@ -85,19 +84,11 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommonMark.NET" Version="0.15.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Localization" Version="2.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.0.0" />
-    <PackageReference Include="System.Linq" Version="4.3.0" />
-    <PackageReference Include="System.Reflection.Extensions" Version="4.3.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Server.IISIntegration" Version="2.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Server.IISIntegration.Tools" Version="1.1.0-preview4-final" />
-    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.0.0" />
-    <PackageReference Include="System.Runtime" Version="4.3.0" />
-    <PackageReference Include="DotVVM" Version="1.1.6-beta" />
-    <PackageReference Include="DotVVM.AspNetCore" Version="1.1.6-beta" />
-    <PackageReference Include="DotVVM.Core" Version="1.1.6-beta" />
-    <PackageReference Include="System.ValueTuple" Version="4.4.0" />
+    <PackageReference Include="DotVVM" Version="1.1.8" />
+    <PackageReference Include="DotVVM.AspNetCore" Version="1.1.8" />
+    <PackageReference Include="DotVVM.Core" Version="1.1.8" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.0.1" />
   </ItemGroup>
   <ItemGroup>
   		<Compile Update="Lessons\LessonNames.Designer.cs">
