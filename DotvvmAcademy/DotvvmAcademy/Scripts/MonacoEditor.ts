@@ -57,6 +57,7 @@ namespace DotvvmAcademy {
             });
             this.onMarkersChanged(this.binding.markers.peek());
             this.editor.onDidChangeModelContent(this.onModelChanged.bind(this));
+            window.addEventListener("resize", () => this.editor.layout());
         }
 
         onCodeChanged(newCode) {
@@ -69,6 +70,9 @@ namespace DotvvmAcademy {
         }
 
         onMarkersChanged(serverMarkers: KnockoutObservable<ServerMonacoMarker>[]) {
+            if (serverMarkers === null) {
+                return;
+            }
             let markers = serverMarkers.map(mapMonacoMarker);
             monaco.editor.setModelMarkers(this.editor.getModel(), null, markers);
         }

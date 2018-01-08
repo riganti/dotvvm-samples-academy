@@ -14,6 +14,7 @@ var DotvvmAcademy;
             require(['vs/editor/editor.main'], this.onMonacoLoaded.bind(this));
         };
         MonacoEditor.prototype.onMonacoLoaded = function () {
+            var _this = this;
             this.editor = monaco.editor.create(this.element, {
                 value: ko.unwrap(this.binding.code),
                 language: this.binding.language,
@@ -28,6 +29,7 @@ var DotvvmAcademy;
             });
             this.onMarkersChanged(this.binding.markers.peek());
             this.editor.onDidChangeModelContent(this.onModelChanged.bind(this));
+            window.addEventListener("resize", function () { return _this.editor.layout(); });
         };
         MonacoEditor.prototype.onCodeChanged = function (newCode) {
             if (this.ignoreCodeChanged) {
@@ -38,6 +40,9 @@ var DotvvmAcademy;
             this.editor.setValue(this.binding.code());
         };
         MonacoEditor.prototype.onMarkersChanged = function (serverMarkers) {
+            if (serverMarkers === null) {
+                return;
+            }
             var markers = serverMarkers.map(mapMonacoMarker);
             monaco.editor.setModelMarkers(this.editor.getModel(), null, markers);
         };

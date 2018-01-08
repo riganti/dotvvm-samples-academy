@@ -1,10 +1,6 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Serialization;
-
-namespace DotvvmAcademy.Controls
+﻿namespace DotvvmAcademy.Controls
 {
-    public sealed class MonacoMarker
+    public class MonacoMarker
     {
         public string Code { get; set; }
 
