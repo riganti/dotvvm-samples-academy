@@ -18,8 +18,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotvvmAcademy.Validation.Do
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotvvmAcademy.Validation.Tests", "DotvvmAcademy.Validation.Tests\DotvvmAcademy.Validation.Tests.csproj", "{1C8DA7FA-32ED-4E65-920C-58B06FF31D71}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotvvmAcademy.Validators", "DotvvmAcademy.Validators\DotvvmAcademy.Validators.csproj", "{D4766C99-B3C0-4570-B915-094CF0C606D5}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -126,18 +124,6 @@ Global
 		{1C8DA7FA-32ED-4E65-920C-58B06FF31D71}.Release|x64.Build.0 = Release|Any CPU
 		{1C8DA7FA-32ED-4E65-920C-58B06FF31D71}.Release|x86.ActiveCfg = Release|Any CPU
 		{1C8DA7FA-32ED-4E65-920C-58B06FF31D71}.Release|x86.Build.0 = Release|Any CPU
-		{D4766C99-B3C0-4570-B915-094CF0C606D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D4766C99-B3C0-4570-B915-094CF0C606D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D4766C99-B3C0-4570-B915-094CF0C606D5}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{D4766C99-B3C0-4570-B915-094CF0C606D5}.Debug|x64.Build.0 = Debug|Any CPU
-		{D4766C99-B3C0-4570-B915-094CF0C606D5}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{D4766C99-B3C0-4570-B915-094CF0C606D5}.Debug|x86.Build.0 = Debug|Any CPU
-		{D4766C99-B3C0-4570-B915-094CF0C606D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D4766C99-B3C0-4570-B915-094CF0C606D5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D4766C99-B3C0-4570-B915-094CF0C606D5}.Release|x64.ActiveCfg = Release|Any CPU
-		{D4766C99-B3C0-4570-B915-094CF0C606D5}.Release|x64.Build.0 = Release|Any CPU
-		{D4766C99-B3C0-4570-B915-094CF0C606D5}.Release|x86.ActiveCfg = Release|Any CPU
-		{D4766C99-B3C0-4570-B915-094CF0C606D5}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

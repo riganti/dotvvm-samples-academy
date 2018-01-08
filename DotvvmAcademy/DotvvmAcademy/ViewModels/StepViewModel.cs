@@ -64,7 +64,7 @@ namespace DotvvmAcademy.ViewModels
             IsPreviousEnabled = StepIndex != 0;
         }
 
-        public override Task Load()
+        public override async Task Load()
         {
             var exerciseDtos = Step.Source.OfType<ExerciseStepPartDto>().ToArray();
             if (!Context.IsPostBack)
@@ -78,9 +78,8 @@ namespace DotvvmAcademy.ViewModels
                 }).ToList();
                 foreach (var exercise in Exercises)
                 {
-                    exercise.ResetCode();
+                    await exercise.ResetCode();
                 }
-                return Task.CompletedTask;
             }
 
             foreach (var exercise in Exercises)
@@ -88,8 +87,6 @@ namespace DotvvmAcademy.ViewModels
                 exercise.Dto = exerciseDtos[exercise.Index];
                 exercise.InjectServices(validatorFacade, sampleFacade);
             }
-
-            return Task.CompletedTask;
         }
     }
 }

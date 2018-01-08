@@ -3,7 +3,7 @@ using DotvvmAcademy.Validation;
 using DotvvmAcademy.Validation.CSharp.UnitValidation.Abstractions;
 using System.Linq;
 
-namespace DotvvmAcademy.Validators
+namespace DotvvmAcademy.BL.Validators
 {
     [ValidationClass]
     public static class BasicMvvmValidators
