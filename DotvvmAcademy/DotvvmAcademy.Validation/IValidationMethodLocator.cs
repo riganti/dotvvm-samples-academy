@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
 
-namespace DotvvmAcademy.Validation.Abstractions
+namespace DotvvmAcademy.Validation
 {
     public interface IValidationMethodLocator
     {

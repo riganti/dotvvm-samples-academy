@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace DotvvmAcademy.Validation.Abstractions
+namespace DotvvmAcademy.Validation
 {
     public interface IValidationMethodNameResolver
     {

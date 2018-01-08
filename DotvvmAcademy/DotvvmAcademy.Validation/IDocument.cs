@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DotvvmAcademy.Validation.Abstractions
+namespace DotvvmAcademy.Validation
 {
     public interface IDocument
     {

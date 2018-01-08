@@ -2,7 +2,7 @@
 
 namespace DotvvmAcademy.Validation.CSharp
 {
-    public interface ICSharpValidator : IValidator<CSharpValidationRequest, CSharpValidationResponse>
+    public interface ICSharpValidator : IValidationService<CSharpValidationRequest, CSharpValidationResponse>
     {
     }
 }

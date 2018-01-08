@@ -5,10 +5,10 @@ namespace DotvvmAcademy.Validation.CSharp
     [Flags]
     public enum CSharpValidationExtent
     {
-        None = 0b000,
-        StaticAnalysis = 0b001,
-        DynamicAnalysis = 0b010,
-        AssemblyRewrite = 0b100,
+        None = 0,
+        StaticAnalysis = 1 << 0,
+        DynamicAnalysis = 1 << 1,
+        AssemblyRewrite = 1 << 2,
         All = StaticAnalysis | DynamicAnalysis | AssemblyRewrite
     }
 }
