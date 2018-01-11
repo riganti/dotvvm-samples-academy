@@ -4,7 +4,7 @@
     /// A unit of validation.
     /// </summary>
     /// <remarks>
-    /// A Validation Method is given a <see cref="IValidationUnit"/> as a parameter.
+    /// A Validation Method is given an <see cref="IValidationUnit"/> as a parameter.
     /// </remarks>
     public interface IValidationUnit
     {
