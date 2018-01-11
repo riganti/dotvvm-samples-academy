@@ -13,8 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DotvvmAcademy.Validation.CSharp\DotvvmAcademy.Validation.CSharp.csproj" />
-    <ProjectReference Include="..\DotvvmAcademy.Validation\DotvvmAcademy.Validation.csproj" />
+    <ProjectReference Include="..\..\src\DotvvmAcademy.Validation.CSharp\DotvvmAcademy.Validation.CSharp.csproj" />
+    <ProjectReference Include="..\..\src\DotvvmAcademy.Validation\DotvvmAcademy.Validation.csproj" />
   </ItemGroup>
 
 </Project>
