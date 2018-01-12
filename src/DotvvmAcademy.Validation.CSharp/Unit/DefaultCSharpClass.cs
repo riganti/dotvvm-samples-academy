@@ -1,8 +1,8 @@
-﻿using DotvvmAcademy.Validation.CSharp.UnitValidation.Abstractions;
+﻿using DotvvmAcademy.Validation.CSharp.Unit.Abstractions;
 using System;
 using System.Collections.Generic;
 
-namespace DotvvmAcademy.Validation.CSharp.UnitValidation
+namespace DotvvmAcademy.Validation.CSharp.Unit
 {
     public class DefaultCSharpClass : DefaultCSharpObject, ICSharpClass
     {

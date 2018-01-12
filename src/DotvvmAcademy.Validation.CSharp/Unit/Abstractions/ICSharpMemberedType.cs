@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace DotvvmAcademy.Validation.CSharp.UnitValidation.Abstractions
+namespace DotvvmAcademy.Validation.CSharp.Unit.Abstractions
 {
     /// <summary>
     /// A C# type that can contain members i.e. a class, a struct or an interface.

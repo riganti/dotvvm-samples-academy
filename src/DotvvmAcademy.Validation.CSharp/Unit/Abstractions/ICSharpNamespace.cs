@@ -2,7 +2,7 @@
 using Microsoft.CodeAnalysis.CSharp;
 using System.Collections.Generic;
 
-namespace DotvvmAcademy.Validation.CSharp.UnitValidation.Abstractions
+namespace DotvvmAcademy.Validation.CSharp.Unit.Abstractions
 {
     /// <summary>
     /// A C# namespace.

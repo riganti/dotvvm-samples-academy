@@ -1,8 +1,8 @@
 ﻿using DotvvmAcademy.Validation.CSharp.StaticAnalysis;
-using DotvvmAcademy.Validation.CSharp.UnitValidation.Abstractions;
+using DotvvmAcademy.Validation.CSharp.Unit.Abstractions;
 using System.Collections.Immutable;
 
-namespace DotvvmAcademy.Validation.CSharp.UnitValidation
+namespace DotvvmAcademy.Validation.CSharp.Unit
 {
     public class AllowedSymbolMetadataExtractor : IMetadataExtractor
     {

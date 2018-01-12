@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DotvvmAcademy.Validation.CSharp.UnitValidation
+namespace DotvvmAcademy.Validation.CSharp.Unit
 {
     [Flags]
     public enum CSharpParameterConstraint

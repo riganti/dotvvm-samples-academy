@@ -1,7 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 
-namespace DotvvmAcademy.Validation.CSharp.UnitValidation.Abstractions
+namespace DotvvmAcademy.Validation.CSharp.Unit.Abstractions
 {
     /// <summary>
     /// A C# conversion operator that is either explicit or implicit.

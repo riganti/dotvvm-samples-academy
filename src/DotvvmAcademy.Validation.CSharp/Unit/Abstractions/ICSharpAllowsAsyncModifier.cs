@@ -1,4 +1,4 @@
-﻿namespace DotvvmAcademy.Validation.CSharp.UnitValidation.Abstractions
+﻿namespace DotvvmAcademy.Validation.CSharp.Unit.Abstractions
 {
     /// <summary>
     /// A C# member or type that can be marked as async.

@@ -1,10 +1,10 @@
-﻿using DotvvmAcademy.Validation.CSharp.UnitValidation.Abstractions;
+﻿using DotvvmAcademy.Validation.CSharp.Unit.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Immutable;
 using System.Linq;
 
-namespace DotvvmAcademy.Validation.CSharp.UnitValidation
+namespace DotvvmAcademy.Validation.CSharp.Unit
 {
     public class DefaultCSharpObjectFactory : ICSharpObjectFactory
     {

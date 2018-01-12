@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace DotvvmAcademy.Validation.CSharp.UnitValidation.Abstractions
+namespace DotvvmAcademy.Validation.CSharp.Unit.Abstractions
 {
     public static class CSharpNameFormatterExtensions
     {

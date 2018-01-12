@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace DotvvmAcademy.Validation.CSharp.UnitValidation.Abstractions
+namespace DotvvmAcademy.Validation.CSharp.Unit.Abstractions
 {
     /// <summary>
     /// A C# type that can be constructed i.e. a class or a struct.

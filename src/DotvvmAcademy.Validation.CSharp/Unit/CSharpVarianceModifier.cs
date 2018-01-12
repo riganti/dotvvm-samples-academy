@@ -1,4 +1,4 @@
-﻿namespace DotvvmAcademy.Validation.CSharp.UnitValidation
+﻿namespace DotvvmAcademy.Validation.CSharp.Unit
 {
     public enum CSharpVarianceModifier
     {

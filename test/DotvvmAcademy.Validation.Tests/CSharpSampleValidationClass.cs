@@ -1,4 +1,4 @@
-﻿using DotvvmAcademy.Validation.CSharp.UnitValidation.Abstractions;
+﻿using DotvvmAcademy.Validation.CSharp.Unit.Abstractions;
 
 namespace DotvvmAcademy.Validation.Tests
 {

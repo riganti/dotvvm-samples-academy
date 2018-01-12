@@ -1,7 +1,7 @@
-﻿using DotvvmAcademy.Validation.CSharp.UnitValidation.Abstractions;
+﻿using DotvvmAcademy.Validation.CSharp.Unit.Abstractions;
 using System;
 
-namespace DotvvmAcademy.Validation.CSharp.UnitValidation
+namespace DotvvmAcademy.Validation.CSharp.Unit
 {
     /// <summary>
     /// A lightweight representation of a C# type (i.e. class, struct, interface or enum) from the validated code or a referenced assembly.

@@ -1,5 +1,5 @@
 ﻿using DotvvmAcademy.Validation;
-using DotvvmAcademy.Validation.CSharp.UnitValidation.Abstractions;
+using DotvvmAcademy.Validation.CSharp.Unit.Abstractions;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;

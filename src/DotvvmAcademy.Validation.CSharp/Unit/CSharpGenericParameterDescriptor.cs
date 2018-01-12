@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace DotvvmAcademy.Validation.CSharp.UnitValidation
+namespace DotvvmAcademy.Validation.CSharp.Unit
 {
     public class CSharpGenericParameterDescriptor
     {

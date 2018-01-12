@@ -1,4 +1,4 @@
-﻿namespace DotvvmAcademy.Validation.CSharp.UnitValidation.Abstractions
+﻿namespace DotvvmAcademy.Validation.CSharp.Unit.Abstractions
 {
     public static class CSharpNamespaceExtensions
     {
