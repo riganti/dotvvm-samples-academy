@@ -2,10 +2,12 @@ using System.Collections.Generic;
 
 namespace DotvvmAcademy.Validation
 {
-    public interface IValidationRequest
+    public interface IValidationRequest<TItem, TRequirement>
+        where TItem : IValidationItem
+        where TRequirement : IValidationRequirement
     {
-        IList<IValidationItem> Items { get; }
+        IList<TItem> Items { get; }
 
-        IList<IValidationRequirement> Requirements{ get; }
+        IList<TRequirement> Requirements{ get; }
     }
 }

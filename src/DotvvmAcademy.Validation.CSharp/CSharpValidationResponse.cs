@@ -1,13 +1,19 @@
-﻿using DotvvmAcademy.Validation.Abstractions;
-using System.Collections.Immutable;
-using System.Reflection;
+﻿using System.Reflection;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DotvvmAcademy.Validation.CSharp
 {
     public class CSharpValidationResponse : IValidationResponse
     {
-        public ImmutableArray<ValidationDiagnostic> Diagnostics { get; set; } = ImmutableArray.Create<ValidationDiagnostic>();
+        public CSharpValidationResponse(Assembly emittedAssembly, IEnumerable<ValidationDiagnostic> diagnostics)
+        {
+            EmittedAssembly = emittedAssembly;
+            Diagnostics = diagnostics;
+        }
 
-        public Assembly EmittedAssembly { get; set; }
+        public Assembly EmittedAssembly { get; }
+
+        public IEnumerable<ValidationDiagnostic> Diagnostics { get; }
     }
 }

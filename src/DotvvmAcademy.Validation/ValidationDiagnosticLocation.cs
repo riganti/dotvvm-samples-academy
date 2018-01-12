@@ -1,7 +1,7 @@
 ﻿namespace DotvvmAcademy.Validation
 {
     public class ValidationDiagnosticLocation
-    {192.168.88.134
+    {
         public ValidationDiagnosticLocation(int start, int end, IValidationItem item)
         {
             Start = start;
