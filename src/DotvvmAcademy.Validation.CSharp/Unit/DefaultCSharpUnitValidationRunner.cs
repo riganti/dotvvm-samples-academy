@@ -1,6 +1,6 @@
 ﻿using DotvvmAcademy.Validation.CSharp.DynamicAnalysis;
 using DotvvmAcademy.Validation.CSharp.StaticAnalysis;
-using DotvvmAcademy.Validation.CSharp.Unit.Abstractions;
+using DotvvmAcademy.Validation.CSharp.Unit;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;

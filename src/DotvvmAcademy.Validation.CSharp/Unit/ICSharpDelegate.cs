@@ -2,7 +2,7 @@
 using Microsoft.CodeAnalysis.CSharp;
 using System.Collections.Generic;
 
-namespace DotvvmAcademy.Validation.CSharp.Unit.Abstractions
+namespace DotvvmAcademy.Validation.CSharp.Unit
 {
     public delegate void Test();
 

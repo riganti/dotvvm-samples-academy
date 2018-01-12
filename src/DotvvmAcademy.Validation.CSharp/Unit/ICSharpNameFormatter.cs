@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace DotvvmAcademy.Validation.CSharp.Unit.Abstractions
+namespace DotvvmAcademy.Validation.CSharp.Unit
 {
     public interface ICSharpNameFormatter
     {

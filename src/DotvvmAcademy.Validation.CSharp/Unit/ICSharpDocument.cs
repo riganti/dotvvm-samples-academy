@@ -1,6 +1,6 @@
 ﻿using DotvvmAcademy.Validation.Abstractions;
 
-namespace DotvvmAcademy.Validation.CSharp.Unit.Abstractions
+namespace DotvvmAcademy.Validation.CSharp.Unit
 {
     /// <summary>
     /// A C# document.

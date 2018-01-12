@@ -1,6 +1,6 @@
 ﻿using DotVVM.Framework.Controls;
 using DotvvmAcademy.Validation;
-using DotvvmAcademy.Validation.CSharp.Unit.Abstractions;
+using DotvvmAcademy.Validation.CSharp.Unit;
 using System.Linq;
 
 namespace DotvvmAcademy.BL.Validators

@@ -1,4 +1,4 @@
-﻿namespace DotvvmAcademy.Validation.CSharp.Unit.Abstractions
+﻿namespace DotvvmAcademy.Validation.CSharp.Unit
 {
     /// <summary>
     /// A C# member or type that allows the sealed modifier.

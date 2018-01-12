@@ -1,4 +1,4 @@
-﻿using DotvvmAcademy.Validation.CSharp.Unit.Abstractions;
+﻿using DotvvmAcademy.Validation.CSharp.Unit;
 using System.Collections.Generic;
 
 namespace DotvvmAcademy.Validation.CSharp.Unit

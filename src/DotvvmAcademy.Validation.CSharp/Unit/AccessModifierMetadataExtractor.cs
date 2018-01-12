@@ -1,5 +1,5 @@
 ﻿using DotvvmAcademy.Validation.CSharp.StaticAnalysis;
-using DotvvmAcademy.Validation.CSharp.Unit.Abstractions;
+using DotvvmAcademy.Validation.CSharp.Unit;
 using Microsoft.CodeAnalysis;
 using System.Collections.Immutable;
 using System.Linq;

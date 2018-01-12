@@ -2,7 +2,7 @@
 using DotvvmAcademy.Validation.CSharp.StaticAnalysis;
 using System.Reflection;
 
-namespace DotvvmAcademy.Validation.CSharp.Unit.Abstractions
+namespace DotvvmAcademy.Validation.CSharp.Unit
 {
     public interface ICSharpUnitValidationRunner
     {

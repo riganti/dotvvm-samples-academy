@@ -1,5 +1,5 @@
 ﻿using DotvvmAcademy.Validation.CSharp.Unit;
-using DotvvmAcademy.Validation.CSharp.Unit.Abstractions;
+using DotvvmAcademy.Validation.CSharp.Unit;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.Extensions.DependencyInjection;
