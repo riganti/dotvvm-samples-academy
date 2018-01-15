@@ -136,10 +136,10 @@
     <value>Naučíte se pracovat s komponentou &lt;code&gt;Repeater&lt;/code&gt; a s kolekcemi.</value>
   </data>
   <data name="Lesson3" xml:space="preserve">
-    <value>Vyzkoušíme si práci s pokročilými komponentami &lt;code&gt;ComboBox&lt;/code&gt; a &lt;code&gt;RadioButton&lt;/code&gt;.</value>
+    <value>Vyzkoušíme si práci s pokročilými komponentami &lt;code&gt;ComboBox&lt;/code&gt;, &lt;code&gt;RadioButton&lt;/code&gt; a vlastností &lt;code&gt;DataContext&lt;/code&gt;.</value>
   </data>
   <data name="Lesson4" xml:space="preserve">
-    <value>Naučíte se jak funguje validace a vlastnost &lt;code&gt;DataContext&lt;/code&gt;.</value>
+    <value>Naučíte se jak funguje validace.</value>
   </data>
   <data name="LessonText" xml:space="preserve">
     <value>Kurz</value>
