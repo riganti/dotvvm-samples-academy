@@ -4,10 +4,10 @@
 <head>
     <meta charset="utf-8" />
     <title>DotVVM Academy</title>
-    <link href="~/Styles/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/Styles/site.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <dot:RequiredResource Name="site-css"/>
+
 </head>
 <body>
     <div class="fix-height">

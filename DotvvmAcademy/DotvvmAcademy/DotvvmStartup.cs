@@ -37,6 +37,13 @@ namespace DotvvmAcademy
             {
                 Dependencies = new[] { "dotvvm", "ace" }
             });
+
+            config.Resources.Register("bootstrap-css", new StylesheetResource(new FileResourceLocation("~/wwwroot/Styles/bootstrap.min.css")));
+
+            config.Resources.Register("site-css", new StylesheetResource(new FileResourceLocation("~/wwwroot/Styles/site.css"))
+            {
+                Dependencies = new[] { "bootstrap-css" }
+            });
         }
 
         private void ConfigureRoutes(DotvvmConfiguration config, string applicationPath)
