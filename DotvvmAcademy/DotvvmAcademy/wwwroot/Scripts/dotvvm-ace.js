@@ -1,6 +1,6 @@
 ﻿ko.bindingHandlers["aceEditor"] = {
     init: function (element, valueAccessor, allBindingsAccessor) {
-        ace.config.set("basePath", "../Scripts/ace");
+        ace.config.set("basePath", "/Scripts/ace");
 
         var editor = ace.edit(element);
         editor.setTheme("ace/theme/chrome");

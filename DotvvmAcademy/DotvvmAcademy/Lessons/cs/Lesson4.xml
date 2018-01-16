@@ -41,7 +41,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 		//přidjte atribut Required 
 		public string ZIP { get; set; }
 		//přidjte atribut EmailAddress
-    public string Email { get; set; }
+	public string Email { get; set; }
 	}
 }
 ]]>
@@ -138,7 +138,7 @@ Přidejte tuto vlastnost každému tagu `div` a vytvořte data-bind na stejnou v
 				<![CDATA[
 Pomocí vlastnosti `Validator.Value` jsme označili elementy, které se budou měnit v závislosti 
 na validačních nastaveních jednotlivých vlastností
-        
+		
 Teď musíme specifikovat, co se má stát, když vlastnost nebude validní.
 Dejme tomu, že bychom chtěli přidat CSS třídu `has-error` každému tagu `div`, když nebude validní.
 CSS třída `has-error` zvýrazní textové pole uvnitř tohoto tagu.
@@ -192,7 +192,7 @@ Uvádět vlastnost `Validator.InvalidCssClass` na každém validovaném elementu
 Nicméně tuto vlastnost můžete použít na kterémkoli elementu a to se promítne na všechny potomky.
 
 Takže tuto vlastnost můžete přidat globálně třeba na element `body`.
-        
+		
 Teď můžeme smazat vlastnost `Validator.InvalidCssClass` ze všech tagu `div` a obalit je elementem `form`, kterému tuto vlastnost přidáme.     
 								]]>
 			</Description>
@@ -380,7 +380,7 @@ Uvnitř tohoto elementu či komponenty se validace provede pouze nad objektem, k
 				<![CDATA[
 Úplně vypnout validaci můžete přidáním `Validation.Enabled="false"`. Toto nastavení se taktéž aplikuje na všechny potomky elementu, 
 na kterém je tato vlastnost nastavená.
-        
+		
 Všiměte si, že se validace spouští bindingem jako `{command: nejakyPrikaz()}`.
 
 Proto se vlastnost `Validation.Enabled` nebo `Validation.Target` musí nastavovat na tlačítku nebo komponentě, co ma binding na příkaz.

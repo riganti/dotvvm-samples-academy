@@ -5,9 +5,6 @@ using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 using DotVVM.Framework.Controls;
 using DotVVM.Framework.Utils;
 using DotvvmAcademy.Steps.Validation.Validators.PropertyAndControlType;
-
-using System;
-
 using System.Collections.Generic;
 using System.Linq;
 

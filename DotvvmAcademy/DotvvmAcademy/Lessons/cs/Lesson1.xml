@@ -40,7 +40,7 @@ se do třetího textového pole promítne součet dvou čísel
 V DotVVM máme speciální komponenty.
 
 Takže místo `<input type="text" />` používáme `<dot:TextBox />`. Stejně tak máme `<dot:Button />`, komponentu, která reprezentuje tlačítko.
-        
+		
 Zkuste vytvořit stránku s třemi textovými poli a jedním tlačítkem. 
 								]]>
 			</Description>
@@ -85,7 +85,7 @@ Nezapomeňte uzavřít nepárové elementy pomocí koncové značky ` />`. Kompo
 			<Description>
 				<![CDATA[
 V DotVVM má každá stránka (view) svůj viewmodel. Ve viewmodelu jsou uložené údaje z komponent na stránce nebo cokoli dalšího, co se může dynamicky měnit a interaktovat s uživatelem.
-        
+		
 Viewmodel je třída v jazyce C#, ve které údaje ze stránky jsou úloženy ve veřejných vlastnostech.
 
 Nadeklarujte tři vlastnoti - `Number1`, `Number2` and `Result`, všechny musí být typu `int`.
@@ -134,7 +134,7 @@ namespace DotvvmAcademy.Tutorial.ViewModels
 			<Description>
 				<![CDATA[
 Teď musíme napsat metodu, která spočítá součet dvou čísel. Tuto metodu musíme nadeklarovat v našem viewmodelu.        
-        
+		
 Vytvořte metodu s nazvem `Calculate`, která spočítá součet dvou čísel `Number1`, `Number2` a uloží výsledek do vlastnosti `Result`. 
 ]]>
 			</Description>
@@ -191,7 +191,7 @@ Metoda musí výt veřejná a musí být typu void (nevrací žádnou hodnotu).
 				<![CDATA[
 Teď musíme propojit naše textová pole s vlastnostmi ve viewmodelu. Poté, co uživatel zadá hodnotu do textového pole, hodnota se
 automaticky promítne do vlastnosti ve viewmodelu. Stejně tak, když programově změníte vlastnost ve viewmodelu, změní se i hodnota na stránce.
-        
+		
 Tento mechanismus se nazývá **data-binding**. K propojení textového pole a vlastosti ve viewmodelu, použíjte na stránce následujicí syntaxi:
 
 ```<dot:TextBox Text="{value: Number1}" />```
@@ -280,7 +280,7 @@ Můžeme text nadeklarovat rovnou do DotHTML kódu takto: `Text="Calculate!"`.
 **Dokončili jste první kurz**
 
 Naučili jste se, jak používat komponenty v DotVVM a používat data-binding s vlastnostmi a příkazy.
-        				]]>
+						]]>
 			</Description>
 		</Step>
 	</Steps>

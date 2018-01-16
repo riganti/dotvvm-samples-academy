@@ -100,13 +100,13 @@ Add the `Validator.Value` property to each `div` and bind it to the property whi
 				<![CDATA[
  <!--bind div to Validator.Value for current property-->
 <div>
-		<dot:TextBox Text="{value: City}" />
+	<dot:TextBox Text="{value: City}" />
 </div>
- <!--bind div to Validator.Value for current property-->
+<!--bind div to Validator.Value for current property-->
 <div>
-	<dot:TextBox Text="{value: ZIP}" />
+<dot:TextBox Text="{value: ZIP}" />
 </div>
- <!--bind div to Validator.Value for current property-->
+<!--bind div to Validator.Value for current property-->
 <div>
 	<dot:TextBox Text="{value: Email}" />
 </div>

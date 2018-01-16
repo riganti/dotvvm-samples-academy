@@ -733,40 +733,44 @@ You can set the property on any HTML element or DotVVM control.
 
 This property tells DotVVM that all bindings inside this element or control are evaluated on the expression you pass to the `DataContext`.
 
-So, set the DataContext on the `p` start tag like this: `<p DataContext="{value: NewCustomer}">`. You can keep the databindings inside as they are.
+So, set the DataContext on the `div` start tag like this: `<div DataContext="{value: NewCustomer}">`. You can keep the databindings inside as they are.
 								]]>
 			</Description>
 			<!--Required element-->
 			<StartupCode>
 				<![CDATA[
-<p>
-	<dot:TextBox Text="{value: FirstName}" />
-	<dot:TextBox Text="{value: LastName}" />
-	<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin" />
-	<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User" />
-	<dot:ComboBox DataSource="{value: Countries}"
-			SelectedValue="{value: SelectedCountryId}"
-			ValueMember="Id"
-			DisplayMember="Name">
-	</dot:ComboBox>
-</p>
+<div>
+	<p>
+		<dot:TextBox Text="{value: FirstName}" />
+		<dot:TextBox Text="{value: LastName}" />
+		<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin" />
+		<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User" />
+		<dot:ComboBox DataSource="{value: Countries}"
+				SelectedValue="{value: SelectedCountryId}"
+				ValueMember="Id"
+				DisplayMember="Name">
+		</dot:ComboBox>
+	</p>
+</div>
 
 								]]>
 			</StartupCode>
 			<!--Required element-->
 			<FinalCode>
 				<![CDATA[
-<p DataContext="{value: NewCustomer}">
-	<dot:TextBox Text="{value: FirstName}" />
-	<dot:TextBox Text="{value: LastName}" />
-	<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin" />
-	<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User" />
-	<dot:ComboBox DataSource="{value: Countries}"
-			SelectedValue="{value: SelectedCountryId}"
-			ValueMember="Id"
-			DisplayMember="Name">
-	</dot:ComboBox>
-</p>
+<div DataContext="{value: NewCustomer}">
+	<p>
+		<dot:TextBox Text="{value: FirstName}" />
+		<dot:TextBox Text="{value: LastName}" />
+		<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin" />
+		<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User" />
+		<dot:ComboBox DataSource="{value: Countries}"
+				SelectedValue="{value: SelectedCountryId}"
+				ValueMember="Id"
+				DisplayMember="Name">
+		</dot:ComboBox>
+	</p>
+</div>
 								]]>
 			</FinalCode>
 		</Step>

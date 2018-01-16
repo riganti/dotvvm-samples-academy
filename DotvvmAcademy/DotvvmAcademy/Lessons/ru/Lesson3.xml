@@ -566,9 +566,9 @@ System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>.A
 </p>
 <p>
 	<dot:ComboBox DataSource="{value: Countries}"
-        SelectedValue="{value: SelectedCountryId}"
-        ValueMember="Id"
-        DisplayMember="Name" />
+		SelectedValue="{value: SelectedCountryId}"
+		ValueMember="Id"
+		DisplayMember="Name" />
 </p>
 								]]>
 			</FinalCode>
@@ -742,17 +742,19 @@ System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>.A
 			<!--Required element-->
 			<StartupCode>
 				<![CDATA[
-<p>
-	<dot:TextBox Text="{value: FirstName}"/>
-	<dot:TextBox Text="{value: LastName}"/>
-	<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin"/>
-	<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User"/>
-	<dot:ComboBox DataSource="{value: Countries}"
-			SelectedValue="{value: SelectedCountryId}"
-			ValueMember="Id"
-			DisplayMember="Name">
-	</dot:ComboBox>
-</p>
+<div>
+	<p>
+		<dot:TextBox Text="{value: FirstName}"/>
+		<dot:TextBox Text="{value: LastName}"/>
+		<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin"/>
+		<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User"/>
+		<dot:ComboBox DataSource="{value: Countries}"
+				SelectedValue="{value: SelectedCountryId}"
+				ValueMember="Id"
+				DisplayMember="Name">
+		</dot:ComboBox>
+	</p>
+</div>
 
 								]]>
 			</StartupCode>
@@ -833,7 +835,7 @@ System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>.A
 		<dot:TextBox Text="{value: LastName}"/>
 		<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin"/>
 		<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User"/>
-    
+	
 		<dot:ComboBox DataSource="{value: _parent.Countries}"
 				SelectedValue="{value: SelectedCountryId}"
 				ValueMember="Id"

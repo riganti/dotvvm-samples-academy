@@ -136,10 +136,10 @@
     <value>Learn how to use the &lt;code&gt;Repeater&lt;/code&gt; control and how to work with collections.</value>
   </data>
   <data name="Lesson3" xml:space="preserve">
-    <value>Try out working with advanced form controls like &lt;code&gt;ComboBox&lt;/code&gt; and &lt;code&gt;RadioButton&lt;/code&gt;.</value>
+    <value>Try out working with the &lt;code&gt;DataContext&lt;/code&gt; property and advanced form controls like &lt;code&gt;ComboBox&lt;/code&gt; and &lt;code&gt;RadioButton&lt;/code&gt;.</value>
   </data>
   <data name="Lesson4" xml:space="preserve">
-    <value>Learn how validation works and &lt;code&gt;DataContext&lt;/code&gt; works.</value>
+    <value>Learn how validation works.</value>
   </data>
   <data name="LessonText" xml:space="preserve">
     <value>Lesson</value>

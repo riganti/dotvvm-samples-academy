@@ -248,13 +248,13 @@ System.Collections.Generic.List<string>
 			<Description>
 				<![CDATA[
 Přidejte na stránku tři komponenty `CheckBox` (zaškrtávací políčko).        
-        
+				
 Vytvořte bind jejich vlastnosti `CheckedItems` na vlastnost `Interests` ve viewmodelu.
 
 Tímto nastavíme, kde se budou ukládat zašktnuté hodnoty.
 
 Nastavte vlastnost `Text` u těchto tří komponent na "Music", "Sports" a "News".
-        
+				
 A jako poslední krok nastavíme vlastnosti `CheckedValue` na "M", "S" a "N".
 
 Tato vlastnost určuje, jaká hodnota bude uložená do vlastnosti `Interests` ve viewmodelu.               
@@ -522,7 +522,7 @@ System.Collections.Generic.List<DotvvmAcademy.Tutorial.ViewModels.CountryInfo>.A
 			<Description>
 				<![CDATA[
 Přidjete na stránku komponentu `ComboBox` a napojte vlastnost `DataSource` na kolekci `Countries` ve viewmodelu. Toto naplní rozbalovací nabídku objekty, které jsme inicializovali v konstruktoru.
-        
+				
 Teď musíme specifikovat která vlastnost objektu, kterými jsme naplnili komponentu ComboBox, se má v nabídce zobrazovat. Nastavte vlastnost komponenty `DisplayMember` na "Name".
 
 Jelikož chceme ukládat jen Id země, kterou z nabídky vybíráme, nastavte vlastnost komponenty `ValueMember` na "Id".
@@ -744,40 +744,44 @@ Tuto vlastnost můžete nastavit na kterémkoli elementu nebo komponentě.
 
 Tato vlastnost řiká, že všechny bindy uvnitř nastaveného elementu jsou vlastnostmi objektu nastavenému ve vlastnosti `DataContext`
 
-Nastavte vlastnost DataContext tagu `p` tímto způsobem : `<p DataContext="{value: NewCustomer}">`. Samotné databindingy se tím pádem nemusí přeposovat.
+Nastavte vlastnost DataContext tagu `div` tímto způsobem : `<div DataContext="{value: NewCustomer}">`. Samotné databindingy se tím pádem nemusí přeposovat.
 								]]>
 			</Description>
 			<!--Required element-->
 			<StartupCode>
 				<![CDATA[
-<p>
-	<dot:TextBox Text="{value: FirstName}" />
-	<dot:TextBox Text="{value: LastName}" />
-	<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin" />
-	<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User" />
-	<dot:ComboBox DataSource="{value: Countries}"
-			SelectedValue="{value: SelectedCountryId}"
-			ValueMember="Id"
-			DisplayMember="Name">
-	</dot:ComboBox>
-</p>
+<div>
+	<p>
+		<dot:TextBox Text="{value: FirstName}" />
+		<dot:TextBox Text="{value: LastName}" />
+		<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin" />
+		<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User" />
+		<dot:ComboBox DataSource="{value: Countries}"
+				SelectedValue="{value: SelectedCountryId}"
+				ValueMember="Id"
+				DisplayMember="Name">
+		</dot:ComboBox>
+	</p>
+</div>
 
 								]]>
 			</StartupCode>
 			<!--Required element-->
 			<FinalCode>
 				<![CDATA[
-<p DataContext="{value: NewCustomer}">
-	<dot:TextBox Text="{value: FirstName}" />
-	<dot:TextBox Text="{value: LastName}" />
-	<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin" />
-	<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User" />
-	<dot:ComboBox DataSource="{value: Countries}"
-			SelectedValue="{value: SelectedCountryId}"
-			ValueMember="Id"
-			DisplayMember="Name">
-	</dot:ComboBox>
-</p>
+<div DataContext="{value: NewCustomer}">
+	<p>
+		<dot:TextBox Text="{value: FirstName}" />
+		<dot:TextBox Text="{value: LastName}" />
+		<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="A" Text="Admin" />
+		<dot:RadioButton CheckedItem="{value: Role}" CheckedValue="U" Text="User" />
+		<dot:ComboBox DataSource="{value: Countries}"
+				SelectedValue="{value: SelectedCountryId}"
+				ValueMember="Id"
+				DisplayMember="Name">
+		</dot:ComboBox>
+	</p>
+</div>
 								]]>
 			</FinalCode>
 		</Step>

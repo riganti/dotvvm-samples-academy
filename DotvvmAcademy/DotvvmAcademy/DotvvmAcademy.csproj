@@ -72,7 +72,6 @@
     <Content Include="Lessons\ru\Lesson2.xml" />
     <Content Include="Lessons\ru\Lesson3.xml" />
     <Content Include="Lessons\ru\Lesson4.xml" />
-    
     <Content Include="Views\default.dothtml" />
     <Content Include="Views\embedded.dothtml" />
     <Content Include="Views\lesson.dothtml" />
