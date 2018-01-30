@@ -2,15 +2,27 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build",
-            "identifier": "build",
-            "command": "dotnet build ./DotvvmAcademy/DotvvmAcademy/DotvvmAcademy.csproj",
-            "type": "shell",
+            "label": "build-all",
             "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always"
-            },
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}",
+                "/property:GenerateFullPaths=true"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "build-academy",
+            "group": "build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/src/DotvvmAcademy/DotvvmAcademy.csproj",
+                "/property:GenerateFullPaths=true"
+            ],
             "problemMatcher": "$msCompile"
         }
     ]

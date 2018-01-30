@@ -1,14 +1,16 @@
 {
+   // Use IntelliSense to find out which attributes exist for C# debugging
+   // Use hover for the description of the existing attributes
+   // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
    "version": "0.2.0",
    "configurations": [
         {
             "name": "Launch DotvvmAcademy",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
-            "program": "${workspaceRoot}/DotvvmAcademy/DotvvmAcademy/bin/Debug/netcoreapp2.0/DotvvmAcademy.dll",
-            "args": [],
-            "cwd": "${workspaceRoot}/DotvvmAcademy/DotvvmAcademy",
+            "preLaunchTask": "build-all",
+            "program": "${workspaceFolder}/src/DotvvmAcademy/bin/Debug/netcoreapp2.0/DotvvmAcademy.dll",
+            "cwd": "${workspaceFolder}/src/DotvvmAcademy",
             "stopAtEntry": false,
             "internalConsoleOptions": "openOnSessionStart",
             "launchBrowser": {
@@ -27,9 +29,6 @@
             },
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
-            },
-            "sourceFileMap": {
-                "/Views": "${workspaceRoot}/Views"
             }
         }
     ]
