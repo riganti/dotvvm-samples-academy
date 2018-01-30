@@ -1,11 +1,11 @@
-﻿using DotvvmAcademy.Validation.Abstractions;
+﻿using DotvvmAcademy.Validation.Unit;
 
 namespace DotvvmAcademy.Validation.CSharp.Unit
 {
     /// <summary>
-    /// A C# document.
+    /// A C# project.
     /// </summary>
-    public interface ICSharpDocument : IDocument
+    public interface ICSharpDocument : IValidationUnit
     {
         ICSharpNamespace GetGlobalNamespace();
 
