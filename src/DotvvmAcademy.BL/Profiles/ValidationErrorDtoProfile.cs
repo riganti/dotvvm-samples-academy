@@ -8,9 +8,9 @@ namespace DotvvmAcademy.BL.Profiles
     {
         public ValidationErrorDtoProfile()
         {
-            CreateMap<ValidationDiagnostic, ValidationErrorDto>()
-                .ForMember(t => t.StartPosition, ex => ex.MapFrom(s => s.Location.Start))
-                .ForMember(t => t.EndPosition, ex => ex.MapFrom(s => s.Location.End));
+            // CreateMap<ValidationDiagnostic, ValidationErrorDto>()
+            //     .ForMember(t => t.StartPosition, ex => ex.MapFrom(s => s.Location.Start))
+            //     .ForMember(t => t.EndPosition, ex => ex.MapFrom(s => s.Location.End));
         }
     }
 }

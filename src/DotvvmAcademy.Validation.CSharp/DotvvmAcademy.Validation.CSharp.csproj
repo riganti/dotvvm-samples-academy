@@ -1,5 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <NoWarn>NU1701</NoWarn>
   </PropertyGroup>
   <ItemGroup>
@@ -11,20 +12,4 @@
   <ItemGroup>
     <ProjectReference Include="..\DotvvmAcademy.Validation\DotvvmAcademy.Validation.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Update="Resources\DiagnosticResources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>DiagnosticResources.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Update="Resources\DiagnosticResources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>DiagnosticResources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-  </PropertyGroup>
 </Project>
