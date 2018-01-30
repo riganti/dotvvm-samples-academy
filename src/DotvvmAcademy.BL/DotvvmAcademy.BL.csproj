@@ -14,8 +14,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DotvvmAcademy.DAL\DotvvmAcademy.DAL.csproj" />
-    <ProjectReference Include="..\DotvvmAcademy.Validation.CSharp\DotvvmAcademy.Validation.CSharp.csproj" />
     <ProjectReference Include="..\DotvvmAcademy.Validation\DotvvmAcademy.Validation.csproj" />
+    <ProjectReference Include="..\DotvvmAcademy.Validation.CSharp\DotvvmAcademy.Validation.CSharp.csproj" />
+    <ProjectReference Include="..\DotvvmAcademy.Validation.Dothtml\DotvvmAcademy.Validation.Dothtml.csproj" />
   </ItemGroup>
 
 </Project>
