@@ -8,7 +8,7 @@ namespace DotvvmAcademy.Validation.CSharp
 {
     public class DefaultAssemblyRewriter : IAssemblyRewriter
     {
-        public const string RewriterNamespace = "DotvvmAcademy.Validation.Rewritten";
+        public const string RewriterNamespace = "DotvvmAcademy.Validation.CSharp";
         public const string ContainingClassPrefix = "SafeguardContainer";
         public const string SafeguardFieldName = "Safeguard";
 
@@ -38,11 +38,13 @@ namespace DotvvmAcademy.Validation.CSharp
             // Create SafeContainer{Guid} class
             var containingClassName = $"{ContainingClassPrefix}{rewriteId.ToString("N")}";
             var typeAttributes = TypeAttributes.Class | TypeAttributes.Abstract | TypeAttributes.Sealed;
-            var containingClass = new TypeDefinition(RewriterNamespace, containingClassName, typeAttributes, module.Import(typeof(object)));
+            var containingClass = new TypeDefinition(RewriterNamespace, containingClassName,
+                typeAttributes, module.Import(typeof(object)));
 
             // Create Safeguard field
             var fieldAttributes = FieldAttributes.Static | FieldAttributes.Assembly;
-            var field = new FieldDefinition(SafeguardFieldName, fieldAttributes, module.Import(typeof(IAssemblySafeguard)));
+            var field = new FieldDefinition(SafeguardFieldName, fieldAttributes,
+                module.Import(typeof(IAssemblySafeguard)));
             containingClass.Fields.Add(field);
 
             // Create static constructor
@@ -52,9 +54,11 @@ namespace DotvvmAcademy.Validation.CSharp
                 MethodAttributes.Static |
                 MethodAttributes.SpecialName |
                 MethodAttributes.RTSpecialName;
-            var staticConstructor = new MethodDefinition(".cctor", methodAttributes, module.Import(typeof(void)));
+            var staticConstructor = new MethodDefinition(".cctor", methodAttributes,
+                module.Import(typeof(void)));
             var il = staticConstructor.Body.GetILProcessor();
-            var safeguardConstructor = module.Import(typeof(DefaultAssemblySafeguard).GetConstructor(new[] { typeof(int) }));
+            var safeguardConstructor = module.Import(typeof(DefaultAssemblySafeguard)
+                .GetConstructor(new[] { typeof(int) }));
             il.Emit(OpCodes.Ldc_I4_1);
             il.Emit(OpCodes.Newobj, safeguardConstructor);
             il.Emit(OpCodes.Stsfld, field);
@@ -65,7 +69,8 @@ namespace DotvvmAcademy.Validation.CSharp
             return field;
         }
 
-        private void InjectSafeguardIntoMethod(FieldDefinition safeguard, MethodDefinition method, ModuleDefinition module)
+        private void InjectSafeguardIntoMethod(FieldDefinition safeguard, MethodDefinition method,
+            ModuleDefinition module)
         {
             if (method.DeclaringType == safeguard.DeclaringType)
             {
@@ -73,7 +78,8 @@ namespace DotvvmAcademy.Validation.CSharp
             }
 
             var il = method.Body.GetILProcessor();
-            var onInstruction = module.Import(typeof(DefaultAssemblySafeguard).GetMethod(nameof(DefaultAssemblySafeguard.OnInstruction)));
+            var onInstruction = module.Import(typeof(DefaultAssemblySafeguard)
+                .GetMethod(nameof(DefaultAssemblySafeguard.OnInstruction)));
             var instructions = method.Body.Instructions.ToArray();
             for (int i = 0; i < instructions.Length; i++)
             {
