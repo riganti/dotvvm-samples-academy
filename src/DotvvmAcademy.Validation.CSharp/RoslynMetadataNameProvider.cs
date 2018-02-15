@@ -84,9 +84,22 @@ namespace DotvvmAcademy.Validation.CSharp
             }
 
             return MetadataName.CreateTypeName(
-                @namespace: namedType.ContainingNamespace.ToDisplayString(),
+                @namespace: GetNamespaceName(namedType.ContainingNamespace),
                 name: namedType.Name,
                 arity: namedType.Arity);
+        }
+
+        private string GetNamespaceName(INamespaceSymbol namespaceSymbol)
+        {
+            if (namespaceSymbol.IsGlobalNamespace)
+            {
+                return "";
+            }
+
+            var ancestor = GetNamespaceName(namespaceSymbol.ContainingNamespace);
+            return ancestor == string.Empty
+                ? namespaceSymbol.Name
+                : $"{ancestor}.{namespaceSymbol.Name}";
         }
 
         private MetadataName GetPropertyName(IPropertySymbol property)
