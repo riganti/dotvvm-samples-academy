@@ -25,7 +25,7 @@ namespace DotvvmAcademy.Validation.CSharp
             defaultSeverity: DiagnosticSeverity.Error,
             isEnabledByDefault: true);
         private readonly SymbolLocator locator;
-        private ImmutableArray<MetadataName> names;
+        private readonly ImmutableArray<MetadataName> names;
 
         public DeclarationExistenceAnalyzer(MetadataCollection metadata, SymbolLocator locator) : base(metadata)
         {
