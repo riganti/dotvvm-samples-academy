@@ -12,7 +12,7 @@ namespace DotvvmAcademy.Validation.CSharp
         public static readonly DiagnosticDescriptor DeclarationForbiddenDiagnostic = new DiagnosticDescriptor(
             id: "TEMP01",
             title: "Declaration Forbidden",
-            messageFormat: "A declaration for symbol {0} is forbidden.",
+            messageFormat: "Declaring symbol {0} is forbidden.",
             category: "Temporary",
             defaultSeverity: DiagnosticSeverity.Error,
             isEnabledByDefault: true);
@@ -24,12 +24,13 @@ namespace DotvvmAcademy.Validation.CSharp
             category: "Temporary",
             defaultSeverity: DiagnosticSeverity.Error,
             isEnabledByDefault: true);
-
+        private readonly SymbolLocator locator;
         private ImmutableArray<MetadataName> names;
 
-        public DeclarationExistenceAnalyzer(MetadataCollection metadata) : base(metadata)
+        public DeclarationExistenceAnalyzer(MetadataCollection metadata, SymbolLocator locator) : base(metadata)
         {
             names = metadata.GetNamesWithProperty(MetadataKey).ToImmutableArray();
+            this.locator = locator;
         }
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; }
@@ -45,7 +46,7 @@ namespace DotvvmAcademy.Validation.CSharp
             foreach (var name in names)
             {
                 var doesDeclarationExist = Metadata.RequireProperty<bool>(name, MetadataKey);
-                var symbolExists = TryGetSymbol(context.Compilation, name, out var symbol);
+                var symbolExists = locator.TryGetSymbol(name, out var symbol);
                 if (doesDeclarationExist && !symbolExists)
                 {
                     context.ReportDiagnostic(Diagnostic.Create(DeclarationRequiredDiagnostic, Location.None, name.FullName));

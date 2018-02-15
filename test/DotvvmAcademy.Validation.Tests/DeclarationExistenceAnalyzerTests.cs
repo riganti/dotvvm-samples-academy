@@ -1,5 +1,6 @@
 ﻿using DotvvmAcademy.Validation.CSharp;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DotvvmAcademy.Validation.Tests
@@ -43,8 +44,14 @@ namespace SampleNamespace
             metadata[integerProperty, DeclarationExistenceAnalyzer.MetadataKey] = true;
             metadata[getString, DeclarationExistenceAnalyzer.MetadataKey] = false;
 
-            var analyzer = new DeclarationExistenceAnalyzer(metadata);
-            var results = await TestAnalyzer(analyzer, BasicSample);
+            var compilation = GetCompilation(BasicSample);
+            var nameProvider = new RoslynMetadataNameProvider();
+            var locator = new SymbolLocator(compilation, nameProvider);
+            var analyzer = new DeclarationExistenceAnalyzer(metadata, locator);
+            var results = await TestAnalyzer(compilation, analyzer);
+
+            Assert.AreEqual(1, results.Length);
+            Assert.AreEqual(results.Single().Id, "TEMP01");
         }
     }
 }

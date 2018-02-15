@@ -7,9 +7,8 @@ namespace DotvvmAcademy.Validation.Tests
 {
     public class AnalyzerTestBase : CSharpTestBase
     {
-        public Task<ImmutableArray<Diagnostic>> TestAnalyzer(DiagnosticAnalyzer analyzer, string sample)
+        public Task<ImmutableArray<Diagnostic>> TestAnalyzer(Compilation compilation, DiagnosticAnalyzer analyzer)
         {
-            var compilation = GetCompilation(sample);
             var withAnalyzers = new CompilationWithAnalyzers(compilation,
                 ImmutableArray.Create(analyzer),
                 new CompilationWithAnalyzersOptions(null, null, false, false));
