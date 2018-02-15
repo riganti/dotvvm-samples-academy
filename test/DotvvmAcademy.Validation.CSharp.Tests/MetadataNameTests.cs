@@ -38,7 +38,7 @@ namespace DotvvmAcademy.Validation.CSharp.Tests
             tEntityType = CreateTypeParameterName("TEntity");
             iProviderConstructed = CreateConstructedTypeName(iProviderType, ImmutableArray.Create(cartDto));
             getKeyMethod = CreateMethodName(dtoType, "GetKey", keyType);
-            getMethod = CreateMethodName(entityCache, "Get", tEntityType, ImmutableArray.Create(tEntityType), ImmutableArray.Create(integer));
+            getMethod = CreateMethodName(entityCache, "Get", tEntityType, ImmutableArray.Create(integer), ImmutableArray.Create(tEntityType));
             boughtProductsProperty = CreatePropertyName(listOfProducts, customer, "BoughtProducts");
             productBoughtEvent = CreateFieldOrEventName(boughtProductHandler, customer, "ProductBought");
         }

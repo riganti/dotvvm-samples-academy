@@ -99,8 +99,8 @@ namespace DotvvmAcademy.Validation.CSharp
         }
 
         public static MetadataName CreateMethodName(MetadataName owner, string name, MetadataName returnType = null,
-            ImmutableArray<MetadataName> typeParameters = default(ImmutableArray<MetadataName>),
-            ImmutableArray<MetadataName> parameters = default(ImmutableArray<MetadataName>))
+            ImmutableArray<MetadataName> parameters = default(ImmutableArray<MetadataName>),
+            ImmutableArray<MetadataName> typeParameters = default(ImmutableArray<MetadataName>))
         {
             returnType = returnType ?? CreateTypeName("System", "Void");
 

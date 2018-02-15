@@ -1,10 +1,20 @@
-﻿using System;
+﻿using Microsoft.CodeAnalysis;
+using System;
 using System.Collections.Immutable;
+using System.Linq;
 
 namespace DotvvmAcademy.Validation.CSharp
 {
     public sealed partial class MetadataName : IEquatable<MetadataName>
     {
+        private static ImmutableArray<Type> supportedSymbols
+            = ImmutableArray.Create(
+                typeof(ITypeSymbol),
+                typeof(IMethodSymbol),
+                typeof(IPropertySymbol),
+                typeof(IEventSymbol),
+                typeof(IFieldSymbol));
+
         private readonly BuilderFunc build;
 
         private MetadataName(BuilderFunc build,
@@ -40,8 +50,6 @@ namespace DotvvmAcademy.Validation.CSharp
 
         public bool IsConstructedType { get; private set; }
 
-        public bool IsTypeParameter { get; private set; }
-
         public bool IsMember { get; private set; }
 
         public bool IsNestedType { get; private set; }
@@ -49,6 +57,8 @@ namespace DotvvmAcademy.Validation.CSharp
         public bool IsPointerType { get; private set; }
 
         public bool IsType { get; private set; }
+
+        public bool IsTypeParameter { get; private set; }
 
         public string Name { get; }
 
@@ -65,6 +75,18 @@ namespace DotvvmAcademy.Validation.CSharp
         public ImmutableArray<MetadataName> TypeArguments { get; }
 
         public ImmutableArray<MetadataName> TypeParameters { get; }
+
+        public static bool IsSupportedSymbol(ISymbol symbol)
+            => IsSupportedSymbol(symbol.GetType());
+
+        public static bool IsSupportedSymbol<TSymbol>()
+            where TSymbol : ISymbol
+            => IsSupportedSymbol(typeof(TSymbol));
+
+        public static bool IsSupportedSymbol(Type symbolType)
+        {
+            return supportedSymbols.Any(s => s.IsAssignableFrom(symbolType));
+        }
 
         public static bool operator !=(MetadataName name1, MetadataName name2)
         {
