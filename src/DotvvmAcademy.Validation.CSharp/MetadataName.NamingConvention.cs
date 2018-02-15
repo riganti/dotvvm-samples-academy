@@ -13,8 +13,8 @@ namespace DotvvmAcademy.Validation.CSharp
         public static readonly NamingConvention DefaultConvention = new NamingConvention();
 
         public static readonly NamingConvention ReflectionConvention = new NamingConvention(
-            genericParameterListPrefix: "[",
-            genericParameterListSuffix: "]",
+            typeParametersPrefix: "[",
+            typeParametersSuffix: "]",
             memberAccessOperator: ".",
             nestedTypeAccessOperator: "+",
             memberOptions: NamingConventionMemberOptions.None);
@@ -25,7 +25,7 @@ namespace DotvvmAcademy.Validation.CSharp
             None = 0,
             IncludeReturnType = 1 << 0,
             IncludeOwner = 1 << 1,
-            IncludeGenericParameters = 1 << 2,
+            IncludeTypeParameters = 1 << 2,
             IncludeParameters = 1 << 3
         }
 
@@ -35,9 +35,9 @@ namespace DotvvmAcademy.Validation.CSharp
                 string arityPrefix = "`",
                 string arrayEnd = "]",
                 string arrayStart = "[",
-                string genericParameterListPrefix = "<",
-                string genericParameterListSuffix = ">",
-                string genericParameterSeparator = ",",
+                string typeParametersPrefix = "<",
+                string typeParametersSuffix = ">",
+                string typeParameterSeparator = ",",
                 string memberAccessOperator = "::",
                 string nestedTypeAccessOperator = "/",
                 string parameterListPrefix = "(",
@@ -48,15 +48,15 @@ namespace DotvvmAcademy.Validation.CSharp
                 string typeAccessOperator = ".",
                 NamingConventionMemberOptions memberOptions = NamingConventionMemberOptions.IncludeReturnType
                     | NamingConventionMemberOptions.IncludeOwner
-                    | NamingConventionMemberOptions.IncludeGenericParameters
+                    | NamingConventionMemberOptions.IncludeTypeParameters
                     | NamingConventionMemberOptions.IncludeParameters)
             {
                 ArityPrefix = arityPrefix;
                 ArrayEnd = arrayEnd;
                 ArrayStart = arrayStart;
-                GenericParameterListPrefix = genericParameterListPrefix;
-                GenericParameterListSuffix = genericParameterListSuffix;
-                GenericParameterSeparator = genericParameterSeparator;
+                TypeParametersPrefix = typeParametersPrefix;
+                TypeParametersSuffix = typeParametersSuffix;
+                TypeParametersSeparator = typeParameterSeparator;
                 MemberAccessOperator = memberAccessOperator;
                 NestedTypeAccessOperator = nestedTypeAccessOperator;
                 ParameterListPrefix = parameterListPrefix;
@@ -74,11 +74,11 @@ namespace DotvvmAcademy.Validation.CSharp
 
             public string ArrayStart { get; }
 
-            public string GenericParameterListPrefix { get; }
+            public string TypeParametersPrefix { get; }
 
-            public string GenericParameterListSuffix { get; }
+            public string TypeParametersSuffix { get; }
 
-            public string GenericParameterSeparator { get; }
+            public string TypeParametersSeparator { get; }
 
             public string MemberAccessOperator { get; }
 
@@ -119,9 +119,9 @@ namespace DotvvmAcademy.Validation.CSharp
                        ArityPrefix == other.ArityPrefix &&
                        ArrayEnd == other.ArrayEnd &&
                        ArrayStart == other.ArrayStart &&
-                       GenericParameterListPrefix == other.GenericParameterListPrefix &&
-                       GenericParameterListSuffix == other.GenericParameterListSuffix &&
-                       GenericParameterSeparator == other.GenericParameterSeparator &&
+                       TypeParametersPrefix == other.TypeParametersPrefix &&
+                       TypeParametersSuffix == other.TypeParametersSuffix &&
+                       TypeParametersSeparator == other.TypeParametersSeparator &&
                        MemberAccessOperator == other.MemberAccessOperator &&
                        MemberOptions == other.MemberOptions &&
                        NestedTypeAccessOperator == other.NestedTypeAccessOperator &&
@@ -138,9 +138,9 @@ namespace DotvvmAcademy.Validation.CSharp
                 hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(ArityPrefix);
                 hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(ArrayEnd);
                 hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(ArrayStart);
-                hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(GenericParameterListPrefix);
-                hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(GenericParameterListSuffix);
-                hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(GenericParameterSeparator);
+                hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(TypeParametersPrefix);
+                hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(TypeParametersSuffix);
+                hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(TypeParametersSeparator);
                 hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(MemberAccessOperator);
                 hashCode = hashCode * -1521134295 + MemberOptions.GetHashCode();
                 hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(NestedTypeAccessOperator);

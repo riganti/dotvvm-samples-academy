@@ -47,9 +47,9 @@ namespace DotvvmAcademy.Validation.CSharp
             public Builder AppendGeneric(ImmutableArray<MetadataName> array)
             {
                 AppendList(
-                    prefix: convention.GenericParameterListPrefix,
-                    separator: convention.GenericParameterSeparator,
-                    suffix: convention.GenericParameterListSuffix,
+                    prefix: convention.TypeParametersPrefix,
+                    separator: convention.TypeParametersSeparator,
+                    suffix: convention.TypeParametersSuffix,
                     values: array,
                     allowEmpty: false);
                 return this;

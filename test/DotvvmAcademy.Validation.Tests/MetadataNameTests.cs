@@ -35,7 +35,7 @@ namespace DotvvmAcademy.Validation.Tests
             dtoType = CreateTypeName("BusinessLayer", "DTO");
             iProviderType = CreateTypeName("BusinessLayer", "IProvider", 1);
             keyType = CreateNestedTypeName(dtoType, "Key");
-            tEntityType = CreateGenericParameterTypeName("TEntity");
+            tEntityType = CreateTypeParameterName("TEntity");
             iProviderConstructed = CreateConstructedTypeName(iProviderType, ImmutableArray.Create(cartDto));
             getKeyMethod = CreateMethodName(dtoType, "GetKey", keyType);
             getMethod = CreateMethodName(entityCache, "Get", tEntityType, ImmutableArray.Create(tEntityType), ImmutableArray.Create(integer));

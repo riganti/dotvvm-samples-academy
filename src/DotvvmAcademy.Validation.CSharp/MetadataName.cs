@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Immutable;
 
 namespace DotvvmAcademy.Validation.CSharp
@@ -14,8 +13,8 @@ namespace DotvvmAcademy.Validation.CSharp
             string name = null,
             int arity = 0,
             MetadataName owner = null,
-            ImmutableArray<MetadataName> genericArguments = default(ImmutableArray<MetadataName>),
-            ImmutableArray<MetadataName> genericParameters = default(ImmutableArray<MetadataName>),
+            ImmutableArray<MetadataName> typeArguments = default(ImmutableArray<MetadataName>),
+            ImmutableArray<MetadataName> typeParameters = default(ImmutableArray<MetadataName>),
             ImmutableArray<MetadataName> parameters = default(ImmutableArray<MetadataName>))
         {
             this.build = build;
@@ -24,8 +23,8 @@ namespace DotvvmAcademy.Validation.CSharp
             Name = name;
             Arity = arity;
             Owner = owner;
-            GenericArguments = genericArguments;
-            GenericParameters = genericParameters;
+            TypeArguments = typeArguments;
+            TypeParameters = typeParameters;
             Parameters = parameters;
             FullName = build(DefaultConvention);
             ReflectionName = build(ReflectionConvention);
@@ -37,15 +36,11 @@ namespace DotvvmAcademy.Validation.CSharp
 
         public string FullName { get; }
 
-        public ImmutableArray<MetadataName> GenericArguments { get; }
-
-        public ImmutableArray<MetadataName> GenericParameters { get; }
-
         public bool IsArrayType { get; private set; }
 
         public bool IsConstructedType { get; private set; }
 
-        public bool IsGenericParameterType { get; private set; }
+        public bool IsTypeParameter { get; private set; }
 
         public bool IsMember { get; private set; }
 
@@ -66,6 +61,20 @@ namespace DotvvmAcademy.Validation.CSharp
         public string ReflectionName { get; }
 
         public MetadataName ReturnType { get; }
+
+        public ImmutableArray<MetadataName> TypeArguments { get; }
+
+        public ImmutableArray<MetadataName> TypeParameters { get; }
+
+        public static bool operator !=(MetadataName name1, MetadataName name2)
+        {
+            return !name1.Equals(name2);
+        }
+
+        public static bool operator ==(MetadataName name1, MetadataName name2)
+        {
+            return name1.Equals(name2);
+        }
 
         public override bool Equals(object obj)
         {
