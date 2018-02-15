@@ -1,7 +1,7 @@
 ﻿using Microsoft.CodeAnalysis.Emit;
 using System;
 
-namespace DotvvmAcademy.Validation.Tests
+namespace DotvvmAcademy.Validation.CSharp.Tests
 {
     [Serializable]
     public class CompilationUnsuccessfulException : Exception

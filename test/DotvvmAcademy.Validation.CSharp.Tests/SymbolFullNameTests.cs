@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.IO;
 
-namespace DotvvmAcademy.Validation.Tests
+namespace DotvvmAcademy.Validation.CSharp.Tests
 {
     [TestClass]
     public class SymbolFullNameTests : CSharpTestBase

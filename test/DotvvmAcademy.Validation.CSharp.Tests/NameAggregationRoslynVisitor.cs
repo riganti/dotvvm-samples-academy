@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace DotvvmAcademy.Validation.Tests
+namespace DotvvmAcademy.Validation.CSharp.Tests
 {
     public class NameAggregationRoslynVisitor : SymbolVisitor
     {

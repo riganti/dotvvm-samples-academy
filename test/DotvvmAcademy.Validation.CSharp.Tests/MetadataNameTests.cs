@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Immutable;
 using static DotvvmAcademy.Validation.CSharp.MetadataName;
 
-namespace DotvvmAcademy.Validation.Tests
+namespace DotvvmAcademy.Validation.CSharp.Tests
 {
     [TestClass]
     public class MetadataNameTests

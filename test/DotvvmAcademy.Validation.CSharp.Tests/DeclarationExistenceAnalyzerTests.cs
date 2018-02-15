@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DotvvmAcademy.Validation.Tests
+namespace DotvvmAcademy.Validation.CSharp.Tests
 {
     [TestClass]
     public class DeclarationExistenceAnalyzerTests : AnalyzerTestBase

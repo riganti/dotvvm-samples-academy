@@ -1,7 +1,7 @@
 ﻿using Mono.Cecil;
 using System;
 
-namespace DotvvmAcademy.Validation.Tests
+namespace DotvvmAcademy.Validation.CSharp.Tests
 {
     public abstract class CecilVisitor
     {

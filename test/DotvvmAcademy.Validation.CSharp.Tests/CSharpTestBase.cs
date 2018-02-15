@@ -5,7 +5,7 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.Loader;
 
-namespace DotvvmAcademy.Validation.Tests
+namespace DotvvmAcademy.Validation.CSharp.Tests
 {
     public class CSharpTestBase
     {

@@ -23,7 +23,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\DotvvmAcademy.Validation\DotvvmAcademy.Validation.csproj" />
     <ProjectReference Include="..\..\src\DotvvmAcademy.Validation.CSharp\DotvvmAcademy.Validation.CSharp.csproj" />
-    <ProjectReference Include="..\..\src\DotvvmAcademy.Validation.Dothtml\DotvvmAcademy.Validation.Dothtml.csproj" />
   </ItemGroup>
 
 </Project>
