@@ -3,7 +3,7 @@
 namespace DotvvmAcademy.Validation.CSharp
 {
     [Flags]
-    public enum DesiredAccessiblity
+    public enum DesiredAccessibility
     {
         /// <summary>
         /// Stands for 'private'.
