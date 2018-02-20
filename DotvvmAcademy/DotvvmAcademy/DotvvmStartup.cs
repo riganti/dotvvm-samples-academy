@@ -1,5 +1,6 @@
 using DotVVM.Framework.Compilation;
 using DotVVM.Framework.Configuration;
+using DotVVM.Framework.Hosting;
 using DotVVM.Framework.ResourceManagement;
 
 namespace DotvvmAcademy

@@ -199,7 +199,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
             ref List<string> propertiesBindings)
         {
             propertiesBindings.AddRange(resolvedContentNode.GetDescendantControls<ComboBox>()
-                .Select(c => c.GetValue(SelectorBase.DisplayMemberProperty)));
+                .Select(c => c.GetValue(SelectorBase.ItemValueBindingProperty)));
         }
 
         private static void FillComboBoxSelectedValueBinding(ResolvedContentNode resolvedContentNode,
@@ -213,7 +213,7 @@ namespace DotvvmAcademy.Steps.Validation.Validators.CommonValidators
             ref List<string> propertiesBindings)
         {
             propertiesBindings.AddRange(resolvedContentNode.GetDescendantControls<ComboBox>()
-                .Select(c => c.GetValue(SelectorBase.ValueMemberProperty)));
+                .Select(c => c.GetValue(SelectorBase.ItemValueBindingProperty)));
         }
 
         private static void FillDivClassValue(ResolvedContentNode resolvedContentNode,

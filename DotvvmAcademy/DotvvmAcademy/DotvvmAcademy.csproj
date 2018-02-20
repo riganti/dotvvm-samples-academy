@@ -93,9 +93,9 @@
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.0.1" />
     <PackageReference Include="System.Runtime" Version="4.3.0" />
-    <PackageReference Include="DotVVM" Version="1.1.8" />
-    <PackageReference Include="DotVVM.AspNetCore" Version="1.1.8" />
-    <PackageReference Include="DotVVM.Core" Version="1.1.8" />
+    <PackageReference Include="DotVVM" Version="2.0.0-preview02-25902" />
+    <PackageReference Include="DotVVM.AspNetCore" Version="2.0.0-preview02-25902" />
+    <PackageReference Include="DotVVM.Core" Version="2.0.0-preview02-25902" />
     <PackageReference Include="System.ValueTuple" Version="4.4.0" />
   </ItemGroup>
   <ItemGroup>

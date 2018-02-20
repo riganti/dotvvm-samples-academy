@@ -9,6 +9,7 @@ using DotvvmAcademy.Steps.Validation;
 using DotvvmAcademy.Steps.Validation.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DotvvmAcademy.Steps
 {
@@ -27,7 +28,9 @@ namespace DotvvmAcademy.Steps
                     tokenizer.Tokenize(Code);
                     var parser = new DothtmlParser();
                     var node = parser.Parse(tokenizer.Tokens);
-                    var resolver = new DefaultControlTreeResolver(DotvvmConfiguration.CreateDefault());
+                    var configuration = DotvvmConfiguration.CreateDefault();
+                    var resolver = configuration.ServiceProvider.GetService<IControlTreeResolver>();
+
                     root = (ResolvedTreeRoot)resolver.ResolveTree(node, Guid.NewGuid() + ".dothtml");
                 }
                 catch (Exception ex)

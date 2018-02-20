@@ -28,7 +28,7 @@ namespace DotvvmAcademy.ViewModels
                     LastStep = storage.GetLessonLastStep(1),
                     Title = LessonNames.ResourceManager.GetString("Lesson1", CultureInfo.CurrentCulture),
                     ImageUrl = "/img/basics.png",
-                    CurrentCulture = Context.GetCurrentCulture().Name
+                    CurrentCulture = CultureInfo.CurrentCulture.Name
                 },
                 new LessonDTO
                 {
@@ -36,7 +36,7 @@ namespace DotvvmAcademy.ViewModels
                     LastStep = storage.GetLessonLastStep(2),
                     Title = LessonNames.ResourceManager.GetString("Lesson2", CultureInfo.CurrentCulture),
                     ImageUrl = "/img/elementary.png",
-                    CurrentCulture = Context.GetCurrentCulture().Name
+                    CurrentCulture = CultureInfo.CurrentCulture.Name
                 },
                 new LessonDTO
                 {
@@ -44,7 +44,7 @@ namespace DotvvmAcademy.ViewModels
                     LastStep = storage.GetLessonLastStep(3),
                     Title = LessonNames.ResourceManager.GetString("Lesson3", CultureInfo.CurrentCulture),
                     ImageUrl = "/img/intermediate.png",
-                    CurrentCulture = Context.GetCurrentCulture().Name
+                    CurrentCulture = CultureInfo.CurrentCulture.Name
                 },
                 new LessonDTO
                 {
@@ -52,7 +52,7 @@ namespace DotvvmAcademy.ViewModels
                     LastStep = storage.GetLessonLastStep(4),
                     Title = LessonNames.ResourceManager.GetString("Lesson4", CultureInfo.CurrentCulture),
                     ImageUrl = "/img/advanced.png",
-                    CurrentCulture = Context.GetCurrentCulture().Name
+                    CurrentCulture = CultureInfo.CurrentCulture.Name
                 },
                 //new LessonDTO
                 //{
