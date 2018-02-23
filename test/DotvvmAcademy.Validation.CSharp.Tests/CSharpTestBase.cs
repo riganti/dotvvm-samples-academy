@@ -9,15 +9,15 @@ namespace DotvvmAcademy.Validation.CSharp.Tests
 {
     public class CSharpTestBase
     {
-        public readonly MetadataReference[] defaultReferences;
-
         public CSharpTestBase()
         {
-            defaultReferences = new[] {
+            DefaultReferences = new[] {
                 GetMetadataReference("System.Private.CoreLib"),
                 GetMetadataReference("System.Runtime")
             };
         }
+
+        public MetadataReference[] DefaultReferences { get; }
 
         public Assembly GetAssembly(CSharpCompilation compilation)
         {
@@ -30,7 +30,7 @@ namespace DotvvmAcademy.Validation.CSharp.Tests
 
         public AssemblyDefinition GetAssemblyDefinition(CSharpCompilation compilation)
         {
-            using(var stream = new MemoryStream())
+            using (var stream = new MemoryStream())
             {
                 Compile(compilation, stream);
                 return AssemblyDefinition.ReadAssembly(stream);
@@ -42,7 +42,7 @@ namespace DotvvmAcademy.Validation.CSharp.Tests
             var tree = CSharpSyntaxTree.ParseText(sample);
             return CSharpCompilation.Create(name,
                 new[] { tree },
-                defaultReferences,
+                DefaultReferences,
                 options);
         }
 
@@ -66,7 +66,7 @@ namespace DotvvmAcademy.Validation.CSharp.Tests
                 return;
             }
             stream.Close();
-            throw new CompilationUnsuccessfulException("The passed compilation could not be compiled.", result);
+            throw new CompilationUnsuccessfulException("The passed source code could not be compiled.", result);
         }
     }
 }
