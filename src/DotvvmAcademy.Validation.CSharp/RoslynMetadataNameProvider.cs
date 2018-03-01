@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace DotvvmAcademy.Validation.CSharp
 {
-    public class RoslynMetadataNameProvider
+    public class RoslynMetadataNameProvider : IMetadataNameProvider<ISymbol>
     {
         public MetadataName GetName(ISymbol symbol)
         {
@@ -27,7 +27,7 @@ namespace DotvvmAcademy.Validation.CSharp
                     return GetTypeName(type);
 
                 default:
-                    throw new ArgumentException($"Symbol kind {symbol.Kind} is not supported by {nameof(MetadataName)}.");
+                    throw new ArgumentException($"Symbol kind {symbol.Kind} is not supported by {nameof(RoslynMetadataNameProvider)}.");
             }
         }
 
