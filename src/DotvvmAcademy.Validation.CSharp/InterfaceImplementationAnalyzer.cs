@@ -61,13 +61,13 @@ namespace DotvvmAcademy.Validation.CSharp
         {
             foreach (var name in names)
             {
-                if (locator.TryGetSymbol(name, out var symbol)
+                if (locator.TryLocate(name, out var symbol)
                     && symbol is ITypeSymbol typeSymbol)
                 {
                     var interfaceNames = Metadata.RequireProperty<ImmutableArray<MetadataName>>(name, metadataKey);
                     foreach (var interfaceName in interfaceNames)
                     {
-                        if (locator.TryGetSymbol(interfaceName, out var possibleInterfaceSymbol)
+                        if (locator.TryLocate(interfaceName, out var possibleInterfaceSymbol)
                             && possibleInterfaceSymbol is INamedTypeSymbol interfaceSymbol
                             && typeSymbol.Interfaces.Contains(interfaceSymbol) == reportOnContains)
                         {

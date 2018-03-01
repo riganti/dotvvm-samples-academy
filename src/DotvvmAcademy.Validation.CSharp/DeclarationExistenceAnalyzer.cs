@@ -46,7 +46,7 @@ namespace DotvvmAcademy.Validation.CSharp
             foreach (var name in names)
             {
                 var doesDeclarationExist = Metadata.RequireProperty<bool>(name, MetadataKey);
-                var symbolExists = locator.TryGetSymbol(name, out var symbol);
+                var symbolExists = locator.TryLocate(name, out var symbol);
                 if (doesDeclarationExist && !symbolExists)
                 {
                     context.ReportDiagnostic(Diagnostic.Create(DeclarationRequiredDiagnostic, Location.None, name.FullName));

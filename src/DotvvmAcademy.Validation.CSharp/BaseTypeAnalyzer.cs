@@ -39,9 +39,9 @@ namespace DotvvmAcademy.Validation.CSharp
             foreach (var name in names)
             {
                 var baseType = Metadata.RequireProperty<MetadataName>(name, MetadataKey);
-                if (locator.TryGetSymbol(name, out var symbol)
+                if (locator.TryLocate(name, out var symbol)
                     && symbol is ITypeSymbol typeSymbol
-                    && locator.TryGetSymbol(baseType, out var baseTypeSymbol)
+                    && locator.TryLocate(baseType, out var baseTypeSymbol)
                     && !typeSymbol.BaseType.Equals(baseTypeSymbol))
                 {
                     foreach (var location in typeSymbol.Locations)

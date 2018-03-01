@@ -55,7 +55,7 @@ namespace DotvvmAcademy.Validation.CSharp
             foreach (var name in names)
             {
                 var isStatic = Metadata.RequireProperty<bool>(name, MetadataKey);
-                if (locator.TryGetSymbol(name, out var symbol))
+                if (locator.TryLocate(name, out var symbol))
                 {
                     if (isStatic && !symbol.IsStatic)
                     {

@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace DotvvmAcademy.Validation.CSharp
 {
-    public class SymbolLocator
+    public class SymbolLocator : ILocator<ISymbol>
     {
         private readonly Compilation compilation;
         private readonly RoslynMetadataNameProvider nameProvider;
@@ -16,7 +16,7 @@ namespace DotvvmAcademy.Validation.CSharp
             this.nameProvider = nameProvider;
         }
 
-        public bool TryGetSymbol(MetadataName name, out ISymbol symbol)
+        public bool TryLocate(MetadataName name, out ISymbol symbol)
         {
             try
             {
@@ -24,18 +24,18 @@ namespace DotvvmAcademy.Validation.CSharp
                     ? GetNamedTypeSymbol(name)
                     : GetMemberSymbol(name);
             }
-            catch(ArgumentException)
+            catch (ArgumentException)
             {
                 symbol = null;
             }
-                return symbol != null;
+            return symbol != null;
         }
 
         private ISymbol GetMemberSymbol(MetadataName name)
         {
             var containingType = GetNamedTypeSymbol(name.Owner);
             var members = containingType?.GetMembers(name.Name) ?? ImmutableArray.Create<ISymbol>();
-            return members.First(m => nameProvider.GetName(m).Equals(name));
+            return members.FirstOrDefault(m => nameProvider.GetName(m).Equals(name));
         }
 
         private INamedTypeSymbol GetNamedTypeSymbol(MetadataName name)
