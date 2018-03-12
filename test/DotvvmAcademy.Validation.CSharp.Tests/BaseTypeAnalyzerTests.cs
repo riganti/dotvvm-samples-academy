@@ -25,10 +25,10 @@ public class Three : Two
         [TestMethod]
         public async Task BasicBaseTypeAnalyzerTest()
         {
-            var @object = MetadataName.CreateTypeName("System", "Object");
-            var one = MetadataName.CreateTypeName("", "One");
-            var two = MetadataName.CreateTypeName("", "Two");
-            var three  = MetadataName.CreateTypeName("", "Three");
+            var @object = Factory.CreateTypeName("System", "Object");
+            var one = Factory.CreateTypeName("", "One");
+            var two = Factory.CreateTypeName("", "Two");
+            var three  = Factory.CreateTypeName("", "Three");
 
             var metadata = new MetadataCollection();
             metadata[one, BaseTypeAnalyzer.MetadataKey] = @object;
@@ -36,7 +36,7 @@ public class Three : Two
             metadata[three, BaseTypeAnalyzer.MetadataKey] = one;
 
             var compilation = GetCompilation(Sample);
-            var nameProvider = new RoslynMetadataNameProvider();
+            var nameProvider = new RoslynMetadataNameProvider(Factory);
             var locator = new SymbolLocator(compilation, nameProvider);
             var analyzer = new BaseTypeAnalyzer(metadata, locator);
 

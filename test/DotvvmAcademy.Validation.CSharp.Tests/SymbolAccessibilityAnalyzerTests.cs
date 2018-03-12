@@ -21,12 +21,12 @@ public class SampleClass
         [TestMethod]
         public async Task BasicSymbolAccessibilityAnalyzerTests()
         {
-            var @string = MetadataName.CreateTypeName("System", "String");
+            var @string = Factory.CreateTypeName("System", "String");
 
-            var sampleClass = MetadataName.CreateTypeName("", "SampleClass");
-            var testField = MetadataName.CreateFieldOrEventName(@string, sampleClass, "testField");
-            var testProperty = MetadataName.CreatePropertyName(@string, sampleClass, "TestProperty");
-            var testMethod = MetadataName.CreateMethodName(sampleClass, "TestMethod");
+            var sampleClass = Factory.CreateTypeName("", "SampleClass");
+            var testField = Factory.CreateFieldName(sampleClass, "testField", @string);
+            var testProperty = Factory.CreatePropertyName(sampleClass, "TestProperty", @string);
+            var testMethod = Factory.CreateMethodName(sampleClass, "TestMethod");
 
             var metadata = new MetadataCollection();
             metadata[sampleClass, SymbolAccessibilityAnalyzer.MetadataKey] = DesiredAccessibility.Public;
@@ -34,7 +34,7 @@ public class SampleClass
             metadata[testProperty, SymbolAccessibilityAnalyzer.MetadataKey] = DesiredAccessibility.Protected | DesiredAccessibility.Public;
 
             var compilation = GetCompilation(Sample);
-            var nameProvider = new RoslynMetadataNameProvider();
+            var nameProvider = new RoslynMetadataNameProvider(Factory);
             var locator = new SymbolLocator(compilation, nameProvider);
             var analyzer = new SymbolAccessibilityAnalyzer(metadata, locator);
 

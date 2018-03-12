@@ -35,7 +35,7 @@ namespace DotvvmAcademy.Validation.CSharp
         public void ValidateNode(SyntaxNodeAnalysisContext context)
         {
             var symbol = context.SemanticModel.GetSymbolInfo(context.Node).Symbol;
-            if (!MetadataName.IsSupportedSymbol(symbol))
+            if (!IsSupportedSymbol(symbol))
             {
                 return;
             }
@@ -45,6 +45,15 @@ namespace DotvvmAcademy.Validation.CSharp
             {
                 context.ReportDiagnostic(Diagnostic.Create(SymbolUsageForbiddenDiagnostic, context.Node.GetLocation(), symbolName));
             }
+        }
+
+        private bool IsSupportedSymbol(ISymbol symbol)
+        {
+            return symbol is ITypeSymbol
+                || symbol is IMethodSymbol
+                || symbol is IPropertySymbol
+                || symbol is IEventSymbol
+                || symbol is IFieldSymbol;
         }
     }
 }

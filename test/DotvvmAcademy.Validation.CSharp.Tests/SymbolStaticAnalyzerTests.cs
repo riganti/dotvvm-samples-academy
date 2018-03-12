@@ -29,12 +29,12 @@ public struct SampleStruct
         [TestMethod]
         public async Task BasicSymbolStaticAnalyzerTest()
         {
-            var @int = MetadataName.CreateTypeName("System", "Int32");
-            var sampleClass = MetadataName.CreateTypeName("", "SampleClass");
-            var sampleStruct = MetadataName.CreateTypeName("", "SampleStruct");
-            var classMethod = MetadataName.CreateMethodName(sampleClass, "ClassMethod");
-            var structMethod = MetadataName.CreateMethodName(sampleStruct, "StructMethod");
-            var property = MetadataName.CreatePropertyName(@int, sampleStruct, "Property");
+            var @int = Factory.CreateTypeName("System", "Int32");
+            var sampleClass = Factory.CreateTypeName("", "SampleClass");
+            var sampleStruct = Factory.CreateTypeName("", "SampleStruct");
+            var classMethod = Factory.CreateMethodName(sampleClass, "ClassMethod");
+            var structMethod = Factory.CreateMethodName(sampleStruct, "StructMethod");
+            var property = Factory.CreatePropertyName(sampleStruct, "Property", @int);
 
             var metadata = new MetadataCollection();
             metadata[sampleClass, SymbolStaticAnalyzer.MetadataKey] = true;
@@ -42,7 +42,7 @@ public struct SampleStruct
             metadata[classMethod, SymbolStaticAnalyzer.MetadataKey] = false;
 
             var compilation = GetCompilation(Sample);
-            var nameProvider = new RoslynMetadataNameProvider();
+            var nameProvider = new RoslynMetadataNameProvider(Factory);
             var locator = new SymbolLocator(compilation, nameProvider);
             var analyzer = new SymbolStaticAnalyzer(metadata, locator);
 

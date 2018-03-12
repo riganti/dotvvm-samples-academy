@@ -32,11 +32,11 @@ public class ThirdClass : FirstInterface, SecondInterface
         [TestMethod]
         public async Task BasicInterfaceImplementationAnalyzerTest()
         {
-            var firstInterface = MetadataName.CreateTypeName("", "FirstInterface");
-            var secondInterface = MetadataName.CreateTypeName("", "SecondInterface");
-            var firstClass = MetadataName.CreateTypeName("", "FirstClass");
-            var secondClass = MetadataName.CreateTypeName("", "SecondClass");
-            var thirdClass = MetadataName.CreateTypeName("", "ThirdClass");
+            var firstInterface = Factory.CreateTypeName("", "FirstInterface");
+            var secondInterface = Factory.CreateTypeName("", "SecondInterface");
+            var firstClass = Factory.CreateTypeName("", "FirstClass");
+            var secondClass = Factory.CreateTypeName("", "SecondClass");
+            var thirdClass = Factory.CreateTypeName("", "ThirdClass");
 
             var metadata = new MetadataCollection();
             metadata[firstClass, InterfaceImplementationAnalyzer.PositiveMetadataKey] = ImmutableArray.Create(firstInterface);
@@ -45,7 +45,7 @@ public class ThirdClass : FirstInterface, SecondInterface
             metadata[thirdClass, InterfaceImplementationAnalyzer.PositiveMetadataKey] = ImmutableArray.Create(firstInterface, secondInterface);
 
             var compilation = GetCompilation(Sample);
-            var nameProvider = new RoslynMetadataNameProvider();
+            var nameProvider = new RoslynMetadataNameProvider(Factory);
             var locator = new SymbolLocator(compilation, nameProvider);
             var analyzer = new InterfaceImplementationAnalyzer(metadata, locator);
 

@@ -28,10 +28,10 @@ public delegate void SampleDelegate();";
         [TestMethod]
         public async Task BasicTypeKingAnalyzerTest()
         {
-            var sampleClass = MetadataName.CreateTypeName("", "SampleClass");
-            var sampleStruct = MetadataName.CreateTypeName("", "SampleStruct");
-            var sampleEnum = MetadataName.CreateTypeName("", "SampleEnum");
-            var sampleDelegate = MetadataName.CreateTypeName("", "SampleDelegate");
+            var sampleClass = Factory.CreateTypeName("", "SampleClass");
+            var sampleStruct = Factory.CreateTypeName("", "SampleStruct");
+            var sampleEnum = Factory.CreateTypeName("", "SampleEnum");
+            var sampleDelegate = Factory.CreateTypeName("", "SampleDelegate");
 
             var metadata = new MetadataCollection();
             metadata[sampleClass, TypeKindAnalyzer.MetadataKey] = DesiredTypeKind.Class;
@@ -39,7 +39,7 @@ public delegate void SampleDelegate();";
             metadata[sampleEnum, TypeKindAnalyzer.MetadataKey] = DesiredTypeKind.Array | DesiredTypeKind.Pointer;
 
             var compilation = GetCompilation(Sample);
-            var nameProvider = new RoslynMetadataNameProvider();
+            var nameProvider = new RoslynMetadataNameProvider(Factory);
             var locator = new SymbolLocator(compilation, nameProvider);
             var analyzer = new TypeKindAnalyzer(metadata, locator);
 

@@ -7,6 +7,19 @@ namespace DotvvmAcademy.Validation.CSharp.Tests
 {
     public class AnalyzerTestBase : CSharpTestBase
     {
+        public AnalyzerTestBase()
+        {
+            Factory = new MetadataNameFactory(DefaultFormatter, ReflectionFormatter, UserFriendlyFormatter);
+        }
+
+        public MetadataNameFormatter DefaultFormatter { get; } = new MetadataNameFormatter();
+
+        public MetadataNameFactory Factory { get; }
+
+        public ReflectionMetadataNameFormatter ReflectionFormatter { get; } = new ReflectionMetadataNameFormatter();
+
+        public UserFriendlyMetadataNameFormatter UserFriendlyFormatter { get; } = new UserFriendlyMetadataNameFormatter();
+
         public Task<ImmutableArray<Diagnostic>> TestAnalyzer(Compilation compilation, DiagnosticAnalyzer analyzer)
         {
             var withAnalyzers = new CompilationWithAnalyzers(compilation,

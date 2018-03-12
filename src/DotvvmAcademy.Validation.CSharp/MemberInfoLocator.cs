@@ -17,7 +17,7 @@ namespace DotvvmAcademy.Validation.CSharp
 
         public bool TryLocate(MetadataName name, out MemberInfo metadataSource)
         {
-            metadataSource = name.IsType
+            metadataSource = name.Kind.HasFlag(MetadataNameKind.Type)
                 ? GetTypeMember(name)
                 : GetOtherMember(name);
             return metadataSource == null;

@@ -22,16 +22,16 @@ public class TestClass
         [TestMethod]
         public async Task BasicSymbolAllowedAnalyzerTest()
         {
-            var @void = MetadataName.CreateTypeName("System", "Void");
-            var @object = MetadataName.CreateTypeName("System", "Object");
-            var @int = MetadataName.CreateTypeName("System", "Int32");
-            var @string = MetadataName.CreateTypeName("System", "String");
-            var @bool = MetadataName.CreateTypeName("System", "Bool");
+            var @void = Factory.CreateTypeName("System", "Void");
+            var @object = Factory.CreateTypeName("System", "Object");
+            var @int = Factory.CreateTypeName("System", "Int32");
+            var @string = Factory.CreateTypeName("System", "String");
+            var @bool = Factory.CreateTypeName("System", "Bool");
 
-            var clone = MetadataName.CreateMethodName(@string, "Clone", @object);
-            var compareTo = MetadataName.CreateMethodName(@string, "CompareTo", @int, ImmutableArray.Create(@string));
-            var contains = MetadataName.CreateMethodName(@string, "Contains", @bool, ImmutableArray.Create(@string));
-            var endsWith = MetadataName.CreateMethodName(@string, "EndsWith", @bool, ImmutableArray.Create(@string));
+            var clone = Factory.CreateMethodName(@string, "Clone", @object);
+            var compareTo = Factory.CreateMethodName(@string, "CompareTo", @int, parameters: ImmutableArray.Create(@string));
+            var contains = Factory.CreateMethodName(@string, "Contains", @bool, parameters: ImmutableArray.Create(@string));
+            var endsWith = Factory.CreateMethodName(@string, "EndsWith", @bool, parameters: ImmutableArray.Create(@string));
 
             var metadata = new MetadataCollection();
             metadata[clone, SymbolAllowedAnalyzer.MetadataKey] = true;
@@ -40,7 +40,7 @@ public class TestClass
             metadata[@void, SymbolAllowedAnalyzer.MetadataKey] = true;
             metadata[contains, SymbolAllowedAnalyzer.MetadataKey] = false;
 
-            var nameProvider = new RoslynMetadataNameProvider();
+            var nameProvider = new RoslynMetadataNameProvider(Factory);
             var analyzer = new SymbolAllowedAnalyzer(metadata, nameProvider);
             var compilation = GetCompilation(Sample);
             var result = await TestAnalyzer(compilation, analyzer);

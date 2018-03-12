@@ -1,64 +1,46 @@
-﻿using Microsoft.CodeAnalysis;
-using System;
+﻿using System;
 using System.Collections.Immutable;
-using System.Linq;
 
 namespace DotvvmAcademy.Validation.CSharp
 {
-    public sealed partial class MetadataName : IEquatable<MetadataName>
+    public sealed class MetadataName : IEquatable<MetadataName>
     {
-        private static ImmutableArray<Type> supportedSymbols
-            = ImmutableArray.Create(
-                typeof(ITypeSymbol),
-                typeof(IMethodSymbol),
-                typeof(IPropertySymbol),
-                typeof(IEventSymbol),
-                typeof(IFieldSymbol));
+        private readonly Lazy<string> reflectionName;
+        private readonly Lazy<string> userFriendlyName;
 
-        private readonly BuilderFunc build;
-
-        private MetadataName(BuilderFunc build,
+        public MetadataName(
+            MetadataNameFormatter defaultFormatter,
+            ReflectionMetadataNameFormatter reflectionFormatter,
+            UserFriendlyMetadataNameFormatter userFriendlyFormatter,
+            MetadataNameKind kind,
             MetadataName returnType = null,
             string @namespace = null,
             string name = null,
             int arity = 0,
+            int rank = 0,
             MetadataName owner = null,
             ImmutableArray<MetadataName> typeArguments = default(ImmutableArray<MetadataName>),
-            ImmutableArray<MetadataName> typeParameters = default(ImmutableArray<MetadataName>),
             ImmutableArray<MetadataName> parameters = default(ImmutableArray<MetadataName>))
         {
-            this.build = build;
+            reflectionName = new Lazy<string>(() => reflectionFormatter.Format(this));
+            userFriendlyName = new Lazy<string>(() => userFriendlyFormatter.Format(this));
+            Kind = kind;
             ReturnType = returnType;
             Namespace = @namespace;
             Name = name;
             Arity = arity;
+            Rank = rank;
             Owner = owner;
             TypeArguments = typeArguments;
-            TypeParameters = typeParameters;
             Parameters = parameters;
-            FullName = build(DefaultConvention);
-            ReflectionName = build(ReflectionConvention);
+            FullName = defaultFormatter.Format(this);
         }
-
-        private delegate string BuilderFunc(NamingConvention convention);
 
         public int Arity { get; }
 
         public string FullName { get; }
 
-        public bool IsArrayType { get; private set; }
-
-        public bool IsConstructedType { get; private set; }
-
-        public bool IsMember { get; private set; }
-
-        public bool IsNestedType { get; private set; }
-
-        public bool IsPointerType { get; private set; }
-
-        public bool IsType { get; private set; }
-
-        public bool IsTypeParameter { get; private set; }
+        public MetadataNameKind Kind { get; }
 
         public string Name { get; }
 
@@ -68,25 +50,15 @@ namespace DotvvmAcademy.Validation.CSharp
 
         public ImmutableArray<MetadataName> Parameters { get; }
 
-        public string ReflectionName { get; }
+        public int Rank { get; }
+
+        public string ReflectionName => reflectionName.Value;
 
         public MetadataName ReturnType { get; }
 
         public ImmutableArray<MetadataName> TypeArguments { get; }
 
-        public ImmutableArray<MetadataName> TypeParameters { get; }
-
-        public static bool IsSupportedSymbol(ISymbol symbol)
-            => IsSupportedSymbol(symbol.GetType());
-
-        public static bool IsSupportedSymbol<TSymbol>()
-            where TSymbol : ISymbol
-            => IsSupportedSymbol(typeof(TSymbol));
-
-        public static bool IsSupportedSymbol(Type symbolType)
-        {
-            return supportedSymbols.Any(s => s.IsAssignableFrom(symbolType));
-        }
+        public string UserFriendlyName => userFriendlyName.Value;
 
         public static bool operator !=(MetadataName name1, MetadataName name2)
         {
@@ -118,14 +90,9 @@ namespace DotvvmAcademy.Validation.CSharp
             return FullName.GetHashCode();
         }
 
-        public string ToString(NamingConvention convention)
-        {
-            return build(convention);
-        }
-
         public override string ToString()
         {
-            return FullName;
+            return UserFriendlyName;
         }
     }
 }

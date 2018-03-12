@@ -7,6 +7,13 @@ namespace DotvvmAcademy.Validation.CSharp
 {
     public class RoslynMetadataNameProvider : IMetadataNameProvider<ISymbol>
     {
+        private readonly IMetadataNameFactory factory;
+
+        public RoslynMetadataNameProvider(IMetadataNameFactory factory)
+        {
+            this.factory = factory;
+        }
+
         public MetadataName GetName(ISymbol symbol)
         {
             switch (symbol)
@@ -35,30 +42,45 @@ namespace DotvvmAcademy.Validation.CSharp
         {
             var type = GetTypeName(@event.Type);
             var containingType = GetTypeName(@event.ContainingType);
-            return MetadataName.CreateFieldOrEventName(type, containingType, @event.Name);
+            return factory.CreateFieldName(
+                owner:containingType, 
+                name: @event.Name,
+                returnType: type);
         }
 
         private MetadataName GetFieldName(IFieldSymbol field)
         {
             var type = GetTypeName(field.Type);
             var containingType = GetTypeName(field.ContainingType);
-            return MetadataName.CreateFieldOrEventName(type, containingType, field.Name);
+            return factory.CreateFieldName(
+                owner: containingType,
+                name: field.Name,
+                returnType: type);
         }
 
         private MetadataName GetMethodName(IMethodSymbol method)
         {
+            if (method.ConstructedFrom != null)
+            {
+                var owner = GetMethodName(method.ConstructedFrom);
+                var typeArguments = method.TypeArguments
+                    .Select(tp => GetTypeName(tp))
+                    .ToImmutableArray();
+                return factory.CreateConstructedMethodName(
+                    owner: owner,
+                    typeArguments: typeArguments);
+            }
+
             var returnType = GetTypeName(method.ReturnType);
             var containingType = GetTypeName(method.ContainingType);
-            var typeParameters = method.TypeParameters.Select(tp => GetTypeName(tp))
-                .ToImmutableArray();
             var parameters = method.Parameters.Select(p => GetTypeName(p.Type))
                 .ToImmutableArray();
-            return MetadataName.CreateMethodName(
+            return factory.CreateMethodName(
                 owner: containingType,
                 name: method.Name,
                 returnType: returnType,
-                typeParameters: typeParameters,
-                parameters: parameters);
+                parameters: parameters,
+                arity: method.Arity);
         }
 
         private MetadataName GetNamedTypeName(INamedTypeSymbol namedType)
@@ -71,19 +93,19 @@ namespace DotvvmAcademy.Validation.CSharp
 
                 var owner = GetTypeName(namedType.ConstructedFrom);
 
-                return MetadataName.CreateConstructedTypeName(owner, genericArguments);
+                return factory.CreateConstructedTypeName(owner, genericArguments);
             }
 
             if (namedType.ContainingType != null)
             {
                 var owner = GetTypeName(namedType.ContainingType);
-                return MetadataName.CreateNestedTypeName(
+                return factory.CreateNestedTypeName(
                     owner: owner,
                     name: namedType.Name,
                     arity: namedType.Arity);
             }
 
-            return MetadataName.CreateTypeName(
+            return factory.CreateTypeName(
                 @namespace: GetNamespaceName(namedType.ContainingNamespace),
                 name: namedType.Name,
                 arity: namedType.Arity);
@@ -106,32 +128,33 @@ namespace DotvvmAcademy.Validation.CSharp
         {
             var type = GetTypeName(property.Type);
             var containingType = GetTypeName(property.ContainingType);
-            return MetadataName.CreatePropertyName(type, containingType, property.Name);
+            return factory.CreateMethodName(
+                owner:containingType, 
+                name: property.Name,
+                returnType: type);
         }
 
         private MetadataName GetTypeName(ITypeSymbol type)
         {
-            switch (type.TypeKind)
+            switch (type)
             {
-                case TypeKind.Array:
-                    var owner = GetTypeName(type.OriginalDefinition);
-                    return MetadataName.CreateArrayTypeName(owner);
+                case IArrayTypeSymbol arrayType:
+                    var owner = GetTypeName(arrayType.ElementType);
+                    return factory.CreateArrayTypeName(owner, arrayType.Rank);
 
-                case TypeKind.Pointer:
-                    owner = GetTypeName(type.OriginalDefinition);
-                    return MetadataName.CreatePointerType(owner);
+                case IPointerTypeSymbol pointerType:
+                    owner = GetTypeName(pointerType.PointedAtType);
+                    return factory.CreatePointerType(owner);
 
-                case TypeKind.TypeParameter:
-                    return MetadataName.CreateTypeParameterName(type.Name);
+                case ITypeParameterSymbol typeParameter:
+                    owner = GetName((ISymbol)typeParameter.DeclaringType ?? typeParameter.DeclaringMethod);
+                    return factory.CreateTypeParameterName(owner, typeParameter.Name);
 
-                default:
-                    if (type is INamedTypeSymbol namedType)
-                    {
-                        return GetNamedTypeName(namedType);
-                    }
-
-                    return null;
+                case INamedTypeSymbol namedType:
+                    return GetNamedTypeName(namedType);
             }
+
+            return null;
         }
     }
 }

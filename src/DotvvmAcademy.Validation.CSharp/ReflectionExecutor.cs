@@ -7,6 +7,62 @@ namespace DotvvmAcademy.Validation.CSharp
 {
     public class ReflectionExecutor : IExecutor
     {
+        public static readonly ValidationDiagnosticDescriptor BadMemberType
+            = new ValidationDiagnosticDescriptor(
+                id: "TEMP12",
+                name: "Bad Member Name",
+                message: "MemberInfo {1} is not a {1}.",
+                severity: ValidationDiagnosticSeverity.Error);
+
+        public static readonly ValidationDiagnosticDescriptor ConstructorException
+            = new ValidationDiagnosticDescriptor(
+                id: "TEMP14",
+                name: "Constructor Exception",
+                message: "Constructor of {0} threw exception of type {1}.",
+                severity: ValidationDiagnosticSeverity.Error);
+
+        public static readonly ValidationDiagnosticDescriptor GetFieldException
+            = new ValidationDiagnosticDescriptor(
+                id: "TEMP15",
+                name: "Get Field Exception",
+                message: "{0} has been thrown while getting the value of field {1}.",
+                severity: ValidationDiagnosticSeverity.Error);
+
+        public static readonly ValidationDiagnosticDescriptor GetPropertyException
+            = new ValidationDiagnosticDescriptor(
+                id: "TEMP16",
+                name: "Get Property Exception",
+                message: "{0} has been thrown while getting the value of property {1}.",
+                severity: ValidationDiagnosticSeverity.Error);
+
+        public static readonly ValidationDiagnosticDescriptor MemberNotLocated
+            = new ValidationDiagnosticDescriptor(
+                id: "TEMP11",
+                name: "Member Could Not Be Located",
+                message: "MemberInfo of {1} could not be located.",
+                severity: ValidationDiagnosticSeverity.Error);
+
+        public static readonly ValidationDiagnosticDescriptor MethodException
+            = new ValidationDiagnosticDescriptor(
+                id: "TEMP13",
+                name: "Method Invokation Exception",
+                message: "Method {0} threw {1} during its execution.",
+                severity: ValidationDiagnosticSeverity.Error);
+
+        public static readonly ValidationDiagnosticDescriptor SetFieldException
+            = new ValidationDiagnosticDescriptor(
+                id: "TEMP18",
+                name: "Set Field Exception",
+                message: "{0} has been thrown while setting the value of field {1}.",
+                severity: ValidationDiagnosticSeverity.Error);
+
+        public static readonly ValidationDiagnosticDescriptor SetPropertyException
+            = new ValidationDiagnosticDescriptor(
+                id: "TEMP17",
+                name: "Set Property Exception",
+                message: "{0} has been thrown while setting the value of property {1}.",
+                severity: ValidationDiagnosticSeverity.Error);
+
         private readonly MemberInfoLocator locator;
 
         public ReflectionExecutor(MemberInfoLocator locator)
@@ -27,10 +83,7 @@ namespace DotvvmAcademy.Validation.CSharp
             }
             catch (Exception e)
             {
-                diagnostic = new ValidationDiagnostic(
-                    id: "TEMP14",
-                    message: $"Constructor of {constructorName.Owner} threw {e.GetType().Name}.",
-                    severity: ValidationDiagnosticSeverity.Error);
+                diagnostic = new ExceptionValidationDiagnostic(ConstructorException, e, constructorName);
                 return null;
             }
         }
@@ -48,10 +101,7 @@ namespace DotvvmAcademy.Validation.CSharp
             }
             catch (Exception e)
             {
-                diagnostic = new ValidationDiagnostic(
-                    id: "TEMP15",
-                    message: $"{e.GetType().Name} has been thrown while getting the value of field {fieldName}.",
-                    severity: ValidationDiagnosticSeverity.Error);
+                diagnostic = new ExceptionValidationDiagnostic(GetFieldException, e, fieldName);
                 return null;
             }
         }
@@ -69,10 +119,7 @@ namespace DotvvmAcademy.Validation.CSharp
             }
             catch (Exception e)
             {
-                diagnostic = new ValidationDiagnostic(
-                    id: "TEMP16",
-                    message: $"{e.GetType().Name} has been thrown while getting the value of property {propertyName}.",
-                    severity: ValidationDiagnosticSeverity.Error);
+                diagnostic = new ExceptionValidationDiagnostic(GetPropertyException, e, propertyName);
                 return null;
             }
         }
@@ -90,17 +137,14 @@ namespace DotvvmAcademy.Validation.CSharp
             }
             catch (Exception e)
             {
-                diagnostic = new ValidationDiagnostic(
-                    id: "TEMP13",
-                    message: $"Method {methodName} threw {e.GetType().Name} during its execution.",
-                    severity: ValidationDiagnosticSeverity.Error);
+                diagnostic = new ExceptionValidationDiagnostic(MethodException, e, methodName);
                 return null;
             }
         }
 
         public void SetFieldValue(MetadataName fieldName, object instance, object value, out ValidationDiagnostic diagnostic)
         {
-            if(!TryLocateMember<FieldInfo>(fieldName, out var fieldInfo, out diagnostic))
+            if (!TryLocateMember<FieldInfo>(fieldName, out var fieldInfo, out diagnostic))
             {
                 return;
             }
@@ -109,12 +153,9 @@ namespace DotvvmAcademy.Validation.CSharp
             {
                 fieldInfo.SetValue(instance, value);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                diagnostic = new ValidationDiagnostic(
-                    id: "TEMP18",
-                    message: $"{e.GetType().Name} has been thrown while setting the value of field {fieldName}.",
-                    severity: ValidationDiagnosticSeverity.Error);
+                diagnostic = new ExceptionValidationDiagnostic(SetFieldException, e, fieldName);
             }
         }
 
@@ -131,10 +172,7 @@ namespace DotvvmAcademy.Validation.CSharp
             }
             catch (Exception e)
             {
-                diagnostic = new ValidationDiagnostic(
-                    id: "TEMP17",
-                    message: $"{e.GetType().Name} has been thrown while setting the value of property {propertyName}.",
-                    severity: ValidationDiagnosticSeverity.Error);
+                diagnostic = new ExceptionValidationDiagnostic(SetPropertyException, e, propertyName);
             }
         }
 
@@ -144,14 +182,14 @@ namespace DotvvmAcademy.Validation.CSharp
             if (!locator.TryLocate(name, out var memberInfo))
             {
                 member = null;
-                diagnostic = new ValidationDiagnostic("TEMP11", $"{nameof(MemberInfo)} {name} could not be located.", ValidationDiagnosticSeverity.Error);
+                diagnostic = ValidationDiagnostic.Create(MemberNotLocated, null, name);
                 return false;
             }
 
             if (!(memberInfo is TMemberInfo castInfo))
             {
                 member = null;
-                diagnostic = new ValidationDiagnostic("TEMP12", $"{nameof(MemberInfo)} {name} is not a {typeof(TMemberInfo).Name}.", ValidationDiagnosticSeverity.Error);
+                diagnostic = ValidationDiagnostic.Create(BadMemberType, null, name, nameof(TMemberInfo));
                 return false;
             }
 

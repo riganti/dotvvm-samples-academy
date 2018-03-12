@@ -1,7 +1,6 @@
 ﻿using DotvvmAcademy.Validation.CSharp;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Immutable;
-using static DotvvmAcademy.Validation.CSharp.MetadataName;
 
 namespace DotvvmAcademy.Validation.CSharp.Tests
 {
@@ -21,26 +20,31 @@ namespace DotvvmAcademy.Validation.CSharp.Tests
 
         public MetadataNameTests()
         {
-            var customer = CreateTypeName("DataAccessLayer", "Customer");
-            var product = CreateTypeName("DataAccessLayer", "Product");
-            var str = CreateTypeName("System", "String");
-            var list = CreateTypeName("System.Collections.Generic", "List", 1);
-            var listOfProducts = CreateConstructedTypeName(list, ImmutableArray.Create(product));
-            var entityCache = CreateTypeName("DataAccessLayer", "EntityCache");
-            var integer = CreateTypeName("System", "Int32");
-            var cartDto = CreateTypeName("BusinessLayer", "CartDTO");
-            var boughtProductHandler = CreateNestedTypeName(customer, "ProductBoughtHandler");
+            var defaultFormatter = new MetadataNameFormatter();
+            var reflectionFormatter = new ReflectionMetadataNameFormatter();
+            var userFriendlyFormatter = new UserFriendlyMetadataNameFormatter();
+            var factory = new MetadataNameFactory(defaultFormatter, reflectionFormatter, userFriendlyFormatter);
 
-            stringArrayType = CreateArrayTypeName(str);
-            dtoType = CreateTypeName("BusinessLayer", "DTO");
-            iProviderType = CreateTypeName("BusinessLayer", "IProvider", 1);
-            keyType = CreateNestedTypeName(dtoType, "Key");
-            tEntityType = CreateTypeParameterName("TEntity");
-            iProviderConstructed = CreateConstructedTypeName(iProviderType, ImmutableArray.Create(cartDto));
-            getKeyMethod = CreateMethodName(dtoType, "GetKey", keyType);
-            getMethod = CreateMethodName(entityCache, "Get", tEntityType, ImmutableArray.Create(integer), ImmutableArray.Create(tEntityType));
-            boughtProductsProperty = CreatePropertyName(listOfProducts, customer, "BoughtProducts");
-            productBoughtEvent = CreateFieldOrEventName(boughtProductHandler, customer, "ProductBought");
+            var customer = factory.CreateTypeName("DataAccessLayer", "Customer");
+            var product = factory.CreateTypeName("DataAccessLayer", "Product");
+            var str = factory.CreateTypeName("System", "String");
+            var list = factory.CreateTypeName("System.Collections.Generic", "List", 1);
+            var listOfProducts = factory.CreateConstructedTypeName(list, ImmutableArray.Create(product));
+            var entityCache = factory.CreateTypeName("DataAccessLayer", "EntityCache");
+            var integer = factory.CreateTypeName("System", "Int32");
+            var cartDto = factory.CreateTypeName("BusinessLayer", "CartDTO");
+            var boughtProductHandler = factory.CreateNestedTypeName(customer, "ProductBoughtHandler");
+
+            stringArrayType = factory.CreateArrayTypeName(str);
+            dtoType = factory.CreateTypeName("BusinessLayer", "DTO");
+            iProviderType = factory.CreateTypeName("BusinessLayer", "IProvider", 1);
+            keyType = factory.CreateNestedTypeName(dtoType, "Key");
+            tEntityType = factory.CreateTypeParameterName(entityCache, "TEntity");
+            iProviderConstructed = factory.CreateConstructedTypeName(iProviderType, ImmutableArray.Create(cartDto));
+            getKeyMethod = factory.CreateMethodName(dtoType, "GetKey", keyType);
+            getMethod = factory.CreateMethodName(entityCache, "Get", tEntityType, parameters: ImmutableArray.Create(integer));
+            boughtProductsProperty = factory.CreatePropertyName(customer, "BoughtProducts", listOfProducts);
+            productBoughtEvent = factory.CreateEventName(customer, "ProductBought", boughtProductHandler);
         }
 
         [TestMethod]

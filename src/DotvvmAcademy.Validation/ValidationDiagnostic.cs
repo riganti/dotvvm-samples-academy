@@ -1,18 +1,48 @@
-﻿namespace DotvvmAcademy.Validation
+﻿using System.Collections.Generic;
+using System.Collections.Immutable;
+
+namespace DotvvmAcademy.Validation
 {
-    public class ValidationDiagnostic
+    public abstract partial class ValidationDiagnostic
     {
-        public ValidationDiagnostic(string id, string message,
-            ValidationDiagnosticSeverity severity)
+        public abstract string Id { get; }
+
+        public abstract ValidationDiagnosticLocation Location { get; }
+
+        public abstract string Message { get; }
+
+        public abstract ImmutableArray<object> MessageArgs { get; }
+
+        public abstract string Name { get; }
+
+        public abstract ValidationDiagnosticSeverity Severity { get; }
+
+        public static ValidationDiagnostic Create(
+            ValidationDiagnosticDescriptor descriptor,
+            ValidationDiagnosticLocation location = null,
+            ImmutableArray<object> messageArgs = default(ImmutableArray<object>))
         {
-            Id = id;
-            Message = message;
+            location = location ?? ValidationDiagnosticLocation.Global;
+            return new DescribedDiagnostic(descriptor, location, messageArgs);
         }
 
-        public string Id { get; }
+        public static ValidationDiagnostic Create(
+            ValidationDiagnosticDescriptor descriptor,
+            ValidationDiagnosticLocation location = null,
+            IEnumerable<object> messageArgs = null)
+        {
+            var array = messageArgs == null
+                ? default(ImmutableArray<object>)
+                : messageArgs.ToImmutableArray();
+            return Create(descriptor, location, array);
+        }
 
-        public string Message { get; }
-
-        public ValidationDiagnosticSeverity Severity { get; }
+        public static ValidationDiagnostic Create(
+            ValidationDiagnosticDescriptor descriptor,
+            ValidationDiagnosticLocation location = null,
+            params object[] messageArgs)
+        {
+            return Create(descriptor, location, messageArgs.ToImmutableArray());
+        }
     }
 }

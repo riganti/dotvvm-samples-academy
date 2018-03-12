@@ -7,6 +7,13 @@ namespace DotvvmAcademy.Validation.CSharp
 {
     public class ReflectionMetadataNameProvider : IMetadataNameProvider<MemberInfo>
     {
+        private readonly IMetadataNameFactory factory;
+
+        public ReflectionMetadataNameProvider(IMetadataNameFactory factory)
+        {
+            this.factory = factory;
+        }
+
         public MetadataName GetName(MemberInfo source)
         {
             switch (source)
@@ -36,7 +43,7 @@ namespace DotvvmAcademy.Validation.CSharp
 
         private MetadataName GetEventName(EventInfo @event)
         {
-            return MetadataName.CreateFieldOrEventName(
+            return factory.CreateFieldName(
                 returnType: GetTypeName(@event.EventHandlerType),
                 owner: GetTypeName(@event.DeclaringType),
                 name: @event.Name);
@@ -44,7 +51,7 @@ namespace DotvvmAcademy.Validation.CSharp
 
         private MetadataName GetFieldName(FieldInfo field)
         {
-            return MetadataName.CreateFieldOrEventName(
+            return factory.CreateFieldName(
                 returnType: GetTypeName(field.FieldType),
                 owner: GetTypeName(field.DeclaringType),
                 name: field.Name);
@@ -56,7 +63,7 @@ namespace DotvvmAcademy.Validation.CSharp
             var parameters = constructor.GetParameters()
                 .Select(p => GetTypeName(p.ParameterType))
                 .ToImmutableArray();
-            return MetadataName.CreateMethodName(
+            return factory.CreateMethodName(
                 owner: declaringType,
                 name: constructor.Name,
                 parameters: parameters);
@@ -64,23 +71,29 @@ namespace DotvvmAcademy.Validation.CSharp
 
         private MetadataName GetMethodName(MethodInfo method)
         {
-            var parameters = method.GetParameters()
-                .Select(p => GetTypeName(p.ParameterType))
-                .ToImmutableArray();
+            if(!method.IsGenericMethod || method.IsGenericMethodDefinition)
+            {
+
+                var parameters = method.GetParameters()
+                    .Select(p => GetTypeName(p.ParameterType))
+                    .ToImmutableArray();
+                return factory.CreateMethodName(
+                    owner: GetTypeName(method.DeclaringType),
+                    name: method.Name,
+                    returnType: GetTypeName(method.ReturnType),
+                    parameters: parameters);
+            }
             var genericArguments = method.GetGenericArguments()
                 .Select(p => GetTypeName(p))
                 .ToImmutableArray();
-            return MetadataName.CreateMethodName(
-                owner: GetTypeName(method.DeclaringType),
-                name: method.Name,
-                returnType: GetTypeName(method.ReturnType),
-                parameters: parameters,
-                typeParameters: genericArguments);
+            return factory.CreateConstructedMethodName(
+                owner: GetMethodName(method.GetGenericMethodDefinition()),
+                typeArguments: genericArguments);
         }
 
         private MetadataName GetPropertyName(PropertyInfo property)
         {
-            return MetadataName.CreatePropertyName(
+            return factory.CreateMethodName(
                 returnType: GetTypeName(property.PropertyType),
                 owner: GetTypeName(property.DeclaringType),
                 name: property.Name);
@@ -90,35 +103,40 @@ namespace DotvvmAcademy.Validation.CSharp
         {
             if (type.IsPointer)
             {
-                return MetadataName.CreatePointerType(GetTypeName(type.DeclaringType));
+                return factory.CreatePointerType(
+                    owner: GetTypeName(type.DeclaringType));
             }
             else if (type.IsArray)
             {
-                return MetadataName.CreateArrayTypeName(GetTypeName(type.DeclaringType));
+                return factory.CreateArrayTypeName(
+                    owner: GetTypeName(type.DeclaringType),
+                    rank: type.GetArrayRank());
             }
-            else if (type.IsGenericType)
+            else if (type.IsGenericParameter)
             {
-                return MetadataName.CreateTypeParameterName(type.FullName);
+                return factory.CreateTypeParameterName(
+                    owner: GetTypeName(type.DeclaringType),
+                    name: type.Name);
             }
             else if (type.IsConstructedGenericType)
             {
                 var genericArguments = type.GetGenericArguments()
                     .Select(t => GetTypeName(t))
                     .ToImmutableArray();
-                return MetadataName.CreateConstructedTypeName(
+                return factory.CreateConstructedTypeName(
                     owner: GetTypeName(type.GetGenericTypeDefinition()),
                     typeArguments: genericArguments);
             }
             else if (type.IsNested)
             {
-                return MetadataName.CreateNestedTypeName(
+                return factory.CreateNestedTypeName(
                     owner: GetTypeName(type.DeclaringType),
                     name: type.Name,
                     arity: type.GenericTypeArguments.Length);
             }
             else
             {
-                return MetadataName.CreateTypeName(
+                return factory.CreateTypeName(
                     @namespace: type.Namespace,
                     name: type.Name,
                     arity: type.GenericTypeArguments.Length);

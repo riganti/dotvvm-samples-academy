@@ -28,12 +28,12 @@ namespace SampleNamespace
 
         public DeclarationExistenceAnalyzerTests()
         {
-            var int32 = MetadataName.CreateTypeName("System", "Int32");
-            var @string = MetadataName.CreateTypeName("System", "String");
+            var int32 = Factory.CreateTypeName("System", "Int32");
+            var @string = Factory.CreateTypeName("System", "String");
 
-            sampleClass = MetadataName.CreateTypeName("SampleNamespace", "SampleClass");
-            integerProperty = MetadataName.CreatePropertyName(int32, sampleClass, "IntegerProperty");
-            getString = MetadataName.CreateMethodName(sampleClass, "GetString", @string);
+            sampleClass = Factory.CreateTypeName("SampleNamespace", "SampleClass");
+            integerProperty = Factory.CreatePropertyName(sampleClass, "IntegerProperty", int32);
+            getString = Factory.CreateMethodName(sampleClass, "GetString", @string);
         }
 
         [TestMethod]
@@ -45,7 +45,7 @@ namespace SampleNamespace
             metadata[getString, DeclarationExistenceAnalyzer.MetadataKey] = false;
 
             var compilation = GetCompilation(BasicSample);
-            var nameProvider = new RoslynMetadataNameProvider();
+            var nameProvider = new RoslynMetadataNameProvider(Factory);
             var locator = new SymbolLocator(compilation, nameProvider);
             var analyzer = new DeclarationExistenceAnalyzer(metadata, locator);
             var results = await TestAnalyzer(compilation, analyzer);

@@ -20,7 +20,7 @@ namespace DotvvmAcademy.Validation.CSharp
         {
             try
             {
-                symbol = name.IsType
+                symbol = name.Kind.HasFlag(MetadataNameKind.Type)
                     ? GetNamedTypeSymbol(name)
                     : GetMemberSymbol(name);
             }
