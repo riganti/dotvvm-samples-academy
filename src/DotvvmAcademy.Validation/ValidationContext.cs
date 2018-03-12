@@ -4,7 +4,8 @@ namespace DotvvmAcademy.Validation
 {
     public class ValidationContext
     {
-        private ConcurrentDictionary<string, object> items = new ConcurrentDictionary<string, object>();
+        private ConcurrentDictionary<string, object> items 
+            = new ConcurrentDictionary<string, object>();
 
         public object GetItem(string key)
         {
