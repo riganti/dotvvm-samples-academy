@@ -8,10 +8,10 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DotvvmAcademy.Validation.CSharp.Tests
+namespace DotvvmAcademy.Validation.CSharp.Experiments
 {
     [TestClass]
-    public class CSharpScriptTests : CSharpTestBase
+    public class CSharpScriptTests : ExperimentTestBase
     {
         [TestMethod]
         public void InteractiveAssemblyLoaderTest()

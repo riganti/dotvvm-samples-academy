@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace DotvvmAcademy.Validation.CSharp.Tests
+namespace DotvvmAcademy.Validation.CSharp.Experiments
 {
     public abstract class ReflectionVisitor
     {

@@ -4,10 +4,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.IO;
 
-namespace DotvvmAcademy.Validation.CSharp.Tests
+namespace DotvvmAcademy.Validation.CSharp.Experiments
 {
     [TestClass]
-    public class SymbolFullNameTests : CSharpTestBase
+    public class SymbolFullNameTests : ExperimentTestBase
     {
         public const string SampleResourceName = "DotvvmAcademy.Validation.Tests.ShopSample.cs";
 
