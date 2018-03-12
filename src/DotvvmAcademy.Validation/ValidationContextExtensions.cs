@@ -4,6 +4,17 @@ namespace DotvvmAcademy.Validation
 {
     public static class ValidationContextExtensions
     {
+        public static TValue GetItem<TValue>(this ValidationContext context, string key)
+        {
+            var item = context.GetItem(key);
+            if (item is TValue value)
+            {
+                return value;
+            }
+
+            return default(TValue);
+        }
+
         public static TValue GetRequiredItem<TValue>(this ValidationContext context, string key)
         {
             return (TValue)GetRequiredItem(context, key, typeof(TValue));
