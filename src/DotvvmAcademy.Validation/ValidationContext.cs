@@ -1,9 +1,12 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 
 namespace DotvvmAcademy.Validation
 {
     public class ValidationContext
     {
+        public const string DiagnosticsKey = "Diagnostics";
+
         private ConcurrentDictionary<string, object> items 
             = new ConcurrentDictionary<string, object>();
 

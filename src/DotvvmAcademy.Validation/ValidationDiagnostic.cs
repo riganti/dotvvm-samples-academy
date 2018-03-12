@@ -11,8 +11,6 @@ namespace DotvvmAcademy.Validation
 
         public abstract string Message { get; }
 
-        public abstract ImmutableArray<object> MessageArgs { get; }
-
         public abstract string Name { get; }
 
         public abstract ValidationDiagnosticSeverity Severity { get; }

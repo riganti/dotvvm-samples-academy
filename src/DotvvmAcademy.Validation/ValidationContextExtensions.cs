@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace DotvvmAcademy.Validation
 {
@@ -34,6 +35,12 @@ namespace DotvvmAcademy.Validation
             }
 
             return item;
+        }
+
+        public static void ReportDiagnostic(this ValidationContext context, ValidationDiagnostic diagnostic)
+        {
+            var diagnostics = GetRequiredItem<IList<ValidationDiagnostic>>(context, ValidationContext.DiagnosticsKey);
+            diagnostics.Add(diagnostic);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Immutable;
+using System.Linq;
 
 namespace DotvvmAcademy.Validation
 {
@@ -9,7 +10,7 @@ namespace DotvvmAcademy.Validation
         {
             Descriptor = descriptor;
             Exception = exception;
-            MessageArgs = messageArgs;
+            Message = string.Format(descriptor.Message, messageArgs.CastArray<object>().ToArray());
         }
 
         public ExceptionValidationDiagnostic(ValidationDiagnosticDescriptor descriptor, Exception exception, params object[] messageArgs)
@@ -25,9 +26,7 @@ namespace DotvvmAcademy.Validation
 
         public override ValidationDiagnosticLocation Location => ValidationDiagnosticLocation.Global;
 
-        public override string Message => Descriptor.Message;
-
-        public override ImmutableArray<object> MessageArgs { get; }
+        public override string Message { get; }
 
         public override string Name => Descriptor.Name;
 
