@@ -1,0 +1,41 @@
+﻿@import "../Base/_global.scss";
+
+.button {
+    display: inline-block;
+    text-decoration: none;
+    background-color: $color-primary;
+    color: $color-white;
+    padding: 4px 8px;
+    border: 1px solid $color-primary;
+    cursor: pointer;
+    font-weight: 600;
+
+    &:hover {
+        text-decoration: none;
+        background-color: $color-white;
+        color: $color-primary;
+    }
+
+    &.button-secondary {
+        background-color: $color-white;
+        color: $color-primary;
+
+        &:hover {
+            background-color: $color-primary;
+            color: $color-white;
+        }
+    }
+
+    &.button-text {
+        border: none;
+        background-color: transparent;
+        text-transform: uppercase;
+        font-weight: 600;
+        color: $color-primary;
+
+        &:hover {
+            background-color: transparent;
+            color: $color-secondary;
+        }
+    }
+}

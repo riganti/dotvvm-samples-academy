@@ -1,0 +1,14 @@
+﻿@import "../Base/_global.scss";
+
+.pager {
+    padding-top: 3rem;
+    text-align: center;
+
+    > div {
+        display: inline-block;
+    }
+
+    li > * {
+        padding: .6rem 1.2rem ;
+    }
+}

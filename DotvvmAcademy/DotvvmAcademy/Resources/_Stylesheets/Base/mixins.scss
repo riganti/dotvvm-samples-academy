@@ -1,0 +1,16 @@
+﻿// To get all mixins in other *.scss file use: @import "/Base/global";
+
+@import "Mixins/grid-flex.scss";
+@import "Mixins/responsive.scss";
+
+@mixin set-outline() {
+    outline: none;
+    border-color: $color-outline !important;
+    box-shadow: 0 0 0 $outline-width $color-outline;
+}
+
+@mixin set-error-outline() {
+    outline: none;
+    border-color: $color-error !important;
+    box-shadow: 0 0 0 $outline-width $color-error !important;
+}

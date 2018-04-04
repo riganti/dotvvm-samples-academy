@@ -1,0 +1,41 @@
+{
+  "version": "1.0.0",
+  "name": "rigantitemplatename.app",
+  "private": true,
+  "devDependencies": {
+    "autoprefixer": "7.1.6",
+    "browser-sync": "2.23.2",
+    "clean-css-cli": "4.1.10",
+    "node-sass": "4.7.2",
+    "postcss-cli": "4.1.1",
+    "postcss-media-query-parser": "^0.2.3",
+    "postcss-value-parser": "^3.3.0",
+    "typescript": "2.6.1",
+    "uglify-js": "3.1.10",
+    "watch": "1.0.2"
+  },
+  "scripts": {
+    "bundle": "npm run bundle:css && npm run bundle:js",
+    "postcss": "npm run compile:scss && postcss Resources/CSS/style.css -o Resources/CSS/style.css",
+    "bundle:css": "npm run compile:scss && postcss Resources/CSS/style.css | cleancss -o Resources/CSS/style.min.css",
+    "bundle:js": "npm run compile:ts && uglifyjs -o Resources/JS/app.js -c -m -- Resources/JS/app.js",
+    "compile:scss": "node-sass --source-map=true Resources/_Stylesheets/style.scss Resources/CSS/style.css",
+    "compile:ts": "tsc",
+    "watch": "npm run watch:scss | npm run watch:ts",
+    "watch:scss": "npm run compile:scss && npm run compile:scss -- -w",
+    "watch:ts": "npm run compile:ts -- -w",
+    "browser-sync": "browser-sync start --proxy localhost:64434 --files=\"Resources/CSS/*.css\" \"Resources/JS/*.js\" \"Views/**/*.dothtml\" \"Controls/**/*.dotcontrol\" \"Views/**/*.dotmaster\""
+  },
+  "-vs-binding": {
+    "ProjectOpened": [
+      "watch",
+      "browser-sync"
+    ]
+  },
+  "main": "postcss.config.js",
+  "dependencies": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

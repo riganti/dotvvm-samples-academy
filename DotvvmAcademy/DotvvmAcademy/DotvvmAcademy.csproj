@@ -204,4 +204,12 @@
       <Generator></Generator>
     </EmbeddedResource>
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\fonts\" />
+    <Folder Include="Resources\images\Backgrounds\" />
+    <Folder Include="Resources\images\Icons\" />
+    <Folder Include="Resources\images\Logos\" />
+    <Folder Include="Resources\libs\" />
+  </ItemGroup>
 </Project>
