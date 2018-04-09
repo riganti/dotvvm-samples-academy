@@ -129,26 +129,23 @@
   <data name="IsVisitedLessonBtnText" xml:space="preserve">
     <value>Pokračovat</value>
   </data>
-  <data name="Lesson1" xml:space="preserve">
-    <value>Pochopíte základy DotVVM a návrhového vzoru MVVM.</value>
+  <data name="Lesson1_Desc" xml:space="preserve">
+    <value>Pochopíte základy DotVVM&lt;br /&gt; a návrhového vzoru MVVM.</value>
   </data>
-  <data name="Lesson2" xml:space="preserve">
-    <value>Naučíte se pracovat s komponentou &lt;code&gt;Repeater&lt;/code&gt; a s kolekcemi.</value>
+  <data name="Lesson2_Desc" xml:space="preserve">
+    <value>Naučíte se pracovat s komponentou&lt;br /&gt; Repeater a s kolekcemi.</value>
   </data>
-  <data name="Lesson3" xml:space="preserve">
-    <value>Vyzkoušíme si práci s pokročilými komponentami &lt;code&gt;ComboBox&lt;/code&gt;, &lt;code&gt;RadioButton&lt;/code&gt; a vlastností &lt;code&gt;DataContext&lt;/code&gt;.</value>
+  <data name="Lesson3_Desc" xml:space="preserve">
+    <value>Vyzkoušíme si práci s pokročilými komponentami ComboBox, RadioButton a vlastností DataContext.</value>
   </data>
-  <data name="Lesson4" xml:space="preserve">
+  <data name="Lesson4_Desc" xml:space="preserve">
     <value>Naučíte se jak funguje validace.</value>
-  </data>
-  <data name="LessonText" xml:space="preserve">
-    <value>Kurz</value>
   </data>
   <data name="NextBtnText" xml:space="preserve">
     <value>Pokračovat</value>
   </data>
   <data name="OnlineCourseText" xml:space="preserve">
-    <value>online kurzy</value>
+    <value>Ultimátní online kurz webového českého&lt;br /&gt;frameworku bez nutnosti psaní tun Javascriptu!&lt;br /&gt;Všechno co potřebujete vědět je &lt;strong&gt;C#&lt;/strong&gt;, &lt;strong&gt;HTML&lt;/strong&gt; a &lt;strong&gt;CSS&lt;/strong&gt;!</value>
   </data>
   <data name="PreviousBtnText" xml:space="preserve">
     <value>Zpět</value>
@@ -163,12 +160,27 @@
     <value>Zobrazit správné řešení</value>
   </data>
   <data name="StartLessonBtnText" xml:space="preserve">
-    <value>Začít kurz</value>
+    <value>Zahájit Lekci</value>
   </data>
   <data name="StepBtnText" xml:space="preserve">
     <value>Krok</value>
   </data>
   <data name="TutorialsText" xml:space="preserve">
     <value>Návody</value>
+  </data>
+  <data name="MainTitle" xml:space="preserve">
+    <value>naučte se dotvvm&lt;br /&gt; za &lt;strong&gt;pár&lt;/strong&gt; minut</value>
+  </data>
+  <data name="Lesson1_Title" xml:space="preserve">
+    <value>Dotvvm elementary 1</value>
+  </data>
+  <data name="Lesson2_Title" xml:space="preserve">
+    <value>Dotvvm elementary 2</value>
+  </data>
+  <data name="Lesson3_Title" xml:space="preserve">
+    <value>Dotvvm intermediate</value>
+  </data>
+  <data name="Lesson4_Title" xml:space="preserve">
+    <value>Dotvvm intermediate</value>
   </data>
 </root>

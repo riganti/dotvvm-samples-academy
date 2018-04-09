@@ -1,6 +1,6 @@
 ﻿@import "../Base/_global.scss";
 
-// IMPORTANT: Never include this file in other *.scss files 
+// IMPORTANT: Never include this file in other *.scss files
 
 // Reset all elements to default settings (It will reset default brwser settings)
 
@@ -33,13 +33,13 @@ body {
     color: $color-font;
     font-size: 1.4rem;
     margin: 0;
-    display: flex;
-    flex-flow: column wrap;
+    /*display: flex;
+    flex-flow: column wrap;*/
     width: 100%;
     min-height: 100%;
     overflow-x: hidden;
 
-    nav {
+    /*mav {
         flex: 0 0 auto;
     }
 
@@ -55,8 +55,7 @@ body {
 
     footer {
         flex: 0 0 auto;
-    }
-
+    }*/
 }
 
 ol, ul {

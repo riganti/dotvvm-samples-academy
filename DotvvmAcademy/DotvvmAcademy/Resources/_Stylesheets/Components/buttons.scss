@@ -3,39 +3,49 @@
 .button {
     display: inline-block;
     text-decoration: none;
-    background-color: $color-primary;
-    color: $color-white;
-    padding: 4px 8px;
-    border: 1px solid $color-primary;
+    background-color: $color-secondary;
+    color: $color-primary;
+    padding: .8rem 1.6rem;
+    border: .1rem solid $color-secondary;
     cursor: pointer;
     font-weight: 600;
+    text-decoration: none;
+    min-width: 15rem;
+    transition: $animate-all;
 
-    &:hover {
+    &:hover, &:focus {
         text-decoration: none;
-        background-color: $color-white;
-        color: $color-primary;
+        background-color: $color-hover;
+        transition: $animate-all;
+        outline: none;
     }
 
-    &.button-secondary {
-        background-color: $color-white;
-        color: $color-primary;
+    &.with-borders {
+        position: relative;
+        z-index: 9;
+        padding: .8rem 3rem;
+        overflow: hidden;
+        border: .1rem solid $color-primary;
 
-        &:hover {
+        &:before, &:after {
+            position: absolute;
+            display: block;
+            content: '';
+            z-index: 10;
+            height: 5rem;
             background-color: $color-primary;
-            color: $color-white;
+            top: 50%;
+            width: 5rem;
         }
-    }
 
-    &.button-text {
-        border: none;
-        background-color: transparent;
-        text-transform: uppercase;
-        font-weight: 600;
-        color: $color-primary;
+        &:before {
+            left: 0;
+            transform: translate(-90%, -50%) rotate(45deg);
+        }
 
-        &:hover {
-            background-color: transparent;
-            color: $color-secondary;
+        &:after {
+            right: 0;
+            transform: translate(90%, -50%) rotate(45deg);
         }
     }
 }

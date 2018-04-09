@@ -7,11 +7,9 @@ namespace DotvvmAcademy
 {
     public class DotvvmStartup : IDotvvmStartup
     {
-        // For more information about this class, visit https://dotvvm.com/docs/tutorials/basics-project-structure
         public void Configure(DotvvmConfiguration config, string applicationPath)
         {
             config.Markup.ImportedNamespaces.Add(new NamespaceImport("DotvvmAcademy.Lessons"));
-
             ConfigureRoutes(config, applicationPath);
             ConfigureControls(config, applicationPath);
             ConfigureResources(config, applicationPath);
@@ -21,11 +19,11 @@ namespace DotvvmAcademy
         {
             // register code-only controls and markup controls
             config.Markup.AddCodeControls("cc", typeof(Controls.AceEditor));
-
             config.Markup.AddMarkupControl("step", "InfoStep", "Controls/InfoStep.dotcontrol");
             config.Markup.AddMarkupControl("step", "ChoicesStep", "Controls/ChoicesStep.dotcontrol");
             config.Markup.AddMarkupControl("step", "DothtmlStep", "Controls/DothtmlStep.dotcontrol");
             config.Markup.AddMarkupControl("step", "CodeStep", "Controls/CodeStep.dotcontrol");
+            //config.Markup.AddCodeControls("cc", typeof(SvgToHtml));
         }
 
         private void ConfigureResources(DotvvmConfiguration config, string applicationPath)
@@ -39,22 +37,13 @@ namespace DotvvmAcademy
                 Dependencies = new[] { "dotvvm", "ace" }
             });
 
-            config.Resources.Register("bootstrap-css", new StylesheetResource(new FileResourceLocation("~/wwwroot/Styles/bootstrap.min.css")));
-
-            config.Resources.Register("site-css", new StylesheetResource(new FileResourceLocation("~/wwwroot/Styles/site.css"))
-            {
-                Dependencies = new[] { "bootstrap-css" }
-            });
+            config.Resources.Register("StyleCSS", new StylesheetResource(new FileResourceLocation("~/wwwroot/css/style.css")));
         }
 
         private void ConfigureRoutes(DotvvmConfiguration config, string applicationPath)
         {
             config.RouteTable.Add("Lesson", "{Lang}/lesson{Lesson}/step{Step}", "Views/lesson.dothtml", new { Lang = "en" }, presenterFactory: LocalizablePresenter.BasedOnParameter("Lang"));
-
             config.RouteTable.Add("Default", "{Lang:alpha}", "Views/default.dothtml", new { Lang = "en" }, presenterFactory: LocalizablePresenter.BasedOnParameter("Lang"));
-
-            // Uncomment the following line to auto-register all dothtml files in the Views folder
-            // config.RouteTable.AutoDiscoverRoutes(new DefaultRouteStrategy(config));
         }
     }
 }

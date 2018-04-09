@@ -13,14 +13,19 @@
     <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+    <TypeScriptToolsVersion>2.6</TypeScriptToolsVersion>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Views\cs\**" />
+    <Compile Remove="wwwroot\Resources\**" />
     <Content Remove="Views\cs\**" />
     <Content Remove="Lessons\**.xml" />
     <Content Remove="Lessons\**\*.xml" />
+    <Content Remove="wwwroot\Resources\**" />
     <EmbeddedResource Remove="Views\cs\**" />
+    <EmbeddedResource Remove="wwwroot\Resources\**" />
     <None Remove="Views\cs\**" />
+    <None Remove="wwwroot\Resources\**" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Controls\ChoicesStep.dotcontrol" />
@@ -76,6 +81,37 @@
     <Content Include="Views\embedded.dothtml" />
     <Content Include="Views\lesson.dothtml" />
     <Content Include="Views\site.dotmaster" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\css\style.css" />
+    <None Include="wwwroot\css\style.css.map" />
+    <None Include="wwwroot\css\style.min.css" />
+    <None Include="wwwroot\fonts\glyphicons-halflings-regular.eot" />
+    <None Include="wwwroot\fonts\glyphicons-halflings-regular.svg" />
+    <None Include="wwwroot\fonts\glyphicons-halflings-regular.ttf" />
+    <None Include="wwwroot\fonts\glyphicons-halflings-regular.woff" />
+    <None Include="wwwroot\fonts\glyphicons-halflings-regular.woff2" />
+    <None Include="wwwroot\fonts\lato\Lato-Black.ttf" />
+    <None Include="wwwroot\fonts\lato\Lato-BlackItalic.ttf" />
+    <None Include="wwwroot\fonts\lato\Lato-Bold.ttf" />
+    <None Include="wwwroot\fonts\lato\Lato-BoldItalic.ttf" />
+    <None Include="wwwroot\fonts\lato\Lato-Hairline.ttf" />
+    <None Include="wwwroot\fonts\lato\Lato-HairlineItalic.ttf" />
+    <None Include="wwwroot\fonts\lato\Lato-Heavy.ttf" />
+    <None Include="wwwroot\fonts\lato\Lato-HeavyItalic.ttf" />
+    <None Include="wwwroot\fonts\lato\Lato-Italic.ttf" />
+    <None Include="wwwroot\fonts\lato\Lato-Light.ttf" />
+    <None Include="wwwroot\fonts\lato\Lato-LightItalic.ttf" />
+    <None Include="wwwroot\fonts\lato\Lato-Medium.ttf" />
+    <None Include="wwwroot\fonts\lato\Lato-MediumItalic.ttf" />
+    <None Include="wwwroot\fonts\lato\Lato-Regular.ttf" />
+    <None Include="wwwroot\fonts\lato\Lato-Semibold.ttf" />
+    <None Include="wwwroot\fonts\lato\Lato-SemiboldItalic.ttf" />
+    <None Include="wwwroot\fonts\lato\Lato-Thin.ttf" />
+    <None Include="wwwroot\fonts\lato\Lato-ThinItalic.ttf" />
+    <None Include="wwwroot\Scripts\app.js" />
+    <None Include="wwwroot\Scripts\app.js.map" />
+    <None Include="wwwroot\sitemap.xml" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="wwwroot\**\*;Views\**\*;web.config;Controls\**\*;Lessons\*.xml;Lessons\**\*.xml">
@@ -206,10 +242,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Resources\fonts\" />
-    <Folder Include="Resources\images\Backgrounds\" />
-    <Folder Include="Resources\images\Icons\" />
-    <Folder Include="Resources\images\Logos\" />
-    <Folder Include="Resources\libs\" />
+    <Folder Include="wwwroot\images\Backgrounds\" />
   </ItemGroup>
 </Project>

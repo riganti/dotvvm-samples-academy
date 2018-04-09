@@ -4,4 +4,4 @@ Allow: /
 Allow: .js
 Allow: .css
 
-Sitemap: https://updateconference.net/resources/sitemap.xml
+Sitemap: https://academy.dotvvm.com/wwwroot/sitemap.xml

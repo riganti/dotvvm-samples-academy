@@ -3,14 +3,15 @@
 $color-white: #fff;
 $color-black: #000;
 $color-transparent: transparent;
-$color-primary: #3176bb;
-$color-secondary: #27bf89;
+$color-primary: #3c3d3b;
+$color-secondary: #ffd94f;
 $color-error: #d91313;
 $color-font: $color-black;
 $color-outline: lighten($color-primary, 20%);
 $color-background: #fcfcfc;
 $color-navigation: #f6f2f2;
 $color-border: #808080;
+$color-hover: darken($color-secondary, 10%);
 
 // Font family
 $font-header-h1: 'Open Sans', sans-serif;

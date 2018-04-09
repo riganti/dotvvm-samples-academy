@@ -97,47 +97,83 @@ namespace DotvvmAcademy.Lessons {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Understand basic principles of DotVVM and the MVVM pattern..
+        ///   Looks up a localized string similar to Understand basic principles of DotVVM&lt;br /&gt;and the MVVM pattern..
         /// </summary>
-        public static string Lesson1 {
+        public static string Lesson1_Desc {
             get {
-                return ResourceManager.GetString("Lesson1", resourceCulture);
+                return ResourceManager.GetString("Lesson1_Desc", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Learn how to use the &lt;code&gt;Repeater&lt;/code&gt; control and how to work with collections..
+        ///   Looks up a localized string similar to Dotvvm elementary 1.
         /// </summary>
-        public static string Lesson2 {
+        public static string Lesson1_Title {
             get {
-                return ResourceManager.GetString("Lesson2", resourceCulture);
+                return ResourceManager.GetString("Lesson1_Title", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Try out working with advanced form controls like &lt;code&gt;ComboBox&lt;/code&gt; and &lt;code&gt;RadioButton&lt;/code&gt;..
+        ///   Looks up a localized string similar to Learn how to use the Repeater control&lt;br /&gt; and how to work with collections..
         /// </summary>
-        public static string Lesson3 {
+        public static string Lesson2_Desc {
             get {
-                return ResourceManager.GetString("Lesson3", resourceCulture);
+                return ResourceManager.GetString("Lesson2_Desc", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Learn how validation works and &lt;code&gt;DataContext&lt;/code&gt; works..
+        ///   Looks up a localized string similar to Dotvvm elementary 2.
         /// </summary>
-        public static string Lesson4 {
+        public static string Lesson2_Title {
             get {
-                return ResourceManager.GetString("Lesson4", resourceCulture);
+                return ResourceManager.GetString("Lesson2_Title", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lesson.
+        ///   Looks up a localized string similar to Try out working with the DataContext property and advanced form controls like ComboBox and RadioButton..
         /// </summary>
-        public static string LessonText {
+        public static string Lesson3_Desc {
             get {
-                return ResourceManager.GetString("LessonText", resourceCulture);
+                return ResourceManager.GetString("Lesson3_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dotvvm intermediate.
+        /// </summary>
+        public static string Lesson3_Title {
+            get {
+                return ResourceManager.GetString("Lesson3_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Learn how validation works..
+        /// </summary>
+        public static string Lesson4_Desc {
+            get {
+                return ResourceManager.GetString("Lesson4_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dotvvm intermediate.
+        /// </summary>
+        public static string Lesson4_Title {
+            get {
+                return ResourceManager.GetString("Lesson4_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to naučte se dotvvm&lt;br /&gt; za &lt;strong&gt;pár&lt;/strong&gt; minut.
+        /// </summary>
+        public static string MainTitle {
+            get {
+                return ResourceManager.GetString("MainTitle", resourceCulture);
             }
         }
         
@@ -151,7 +187,7 @@ namespace DotvvmAcademy.Lessons {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to online course.
+        ///   Looks up a localized string similar to Ultimátní online kurz webového českého&lt;br /&gt;frameworku bez nutnosti psaní tun Javascriptu!&lt;br /&gt;Všechno co potřebujete vědět je &lt;strong&gt;C#&lt;/strong&gt;, &lt;strong&gt;HTML&lt;/strong&gt; a &lt;strong&gt;CSS&lt;/strong&gt;!.
         /// </summary>
         public static string OnlineCourseText {
             get {

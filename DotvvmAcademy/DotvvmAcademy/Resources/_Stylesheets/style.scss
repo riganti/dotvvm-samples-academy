@@ -15,6 +15,7 @@
 @import "Components/postback-loader.scss";
 @import "Components/section.scss";
 @import "Components/typography.scss";
+@import "Components/lessons-container.scss";
 
 // Modules
 @import "Modules/box-wrapper.scss";
@@ -25,5 +26,5 @@
 @import "Views/StyleGuide/style-guide.scss";
 @import "Views/Public/ErrorSites/error-code.scss";
 
-@import "Views/Public/login.scss";
-@import "Views/Authenticated/masterpage.scss";
+//Sections
+@import "views/public/sections/header";

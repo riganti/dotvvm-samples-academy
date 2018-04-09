@@ -16,20 +16,21 @@
   },
   "scripts": {
     "bundle": "npm run bundle:css && npm run bundle:js",
-    "postcss": "npm run compile:scss && postcss Resources/CSS/style.css -o Resources/CSS/style.css",
-    "bundle:css": "npm run compile:scss && postcss Resources/CSS/style.css | cleancss -o Resources/CSS/style.min.css",
-    "bundle:js": "npm run compile:ts && uglifyjs -o Resources/JS/app.js -c -m -- Resources/JS/app.js",
-    "compile:scss": "node-sass --source-map=true Resources/_Stylesheets/style.scss Resources/CSS/style.css",
+    "postcss": "npm run compile:scss && postcss wwwroot/css/style.css -o wwwroot/css/style.css",
+    "bundle:css": "npm run compile:scss && postcss wwwroot/css/style.css | cleancss -o wwwroot/css/style.min.css",
+    "bundle:js": "npm run compile:ts && uglifyjs -o wwwroot/Scripts/app.js -c -m -- wwwroot/Scripts/app.js",
+    "compile:scss": "node-sass --source-map=true Resources/_Stylesheets/style.scss wwwroot/css/style.css",
     "compile:ts": "tsc",
     "watch": "npm run watch:scss | npm run watch:ts",
     "watch:scss": "npm run compile:scss && npm run compile:scss -- -w",
     "watch:ts": "npm run compile:ts -- -w",
-    "browser-sync": "browser-sync start --proxy localhost:64434 --files=\"Resources/CSS/*.css\" \"Resources/JS/*.js\" \"Views/**/*.dothtml\" \"Controls/**/*.dotcontrol\" \"Views/**/*.dotmaster\""
+    "browser-sync": "browser-sync start --proxy localhost:2299 --files=\"wwwroot/css/*.css\" \"Resources/JS/*.js\" \"Views/**/*.dothtml\" \"Controls/**/*.dotcontrol\" \"Views/**/*.dotmaster\""
   },
   "-vs-binding": {
     "ProjectOpened": [
       "watch",
-      "browser-sync"
+      "browser-sync",
+      "postcss"
     ]
   },
   "main": "postcss.config.js",

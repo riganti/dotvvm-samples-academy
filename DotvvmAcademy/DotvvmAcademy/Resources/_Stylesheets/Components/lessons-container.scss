@@ -1,0 +1,50 @@
+﻿@import "../Base/_global.scss";
+
+.lessons-container {
+    @include flex-wrapper-row(0,0,24%, stretch);
+}
+
+.lessons-item {
+    background-color: $color-primary;
+    text-align: center;
+    color: $color-white;
+    padding: 2rem 4rem;
+    box-sizing: border-box;
+    padding-bottom: 10rem;
+    position: relative;
+
+
+    > img {
+        display: block;
+        width: 50%;
+        margin: 0 auto;
+        margin-bottom: 1rem;
+    }
+
+    h2 {
+        margin-bottom: 1rem;
+    }
+
+    p {
+        margin-bottom: 1.5rem;
+        font-size: $font-size-xs;
+    }
+
+    &:before, &:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        width: 50%;
+        height: 5rem;
+    }
+
+    &:before {
+        left: 0;
+        background: linear-gradient(166deg, $color-transparent 0%, $color-transparent 50%, $color-white 51%, $color-white 100%);
+    }
+
+    &:after {
+        right: 0;
+        background: linear-gradient(13.5deg, $color-white 0%, $color-white 50%, $color-transparent 51%, $color-transparent 100%);
+    }
+}

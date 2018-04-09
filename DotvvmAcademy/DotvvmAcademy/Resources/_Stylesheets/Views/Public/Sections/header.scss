@@ -1,0 +1,61 @@
+﻿@import "../../../Base/global";
+
+.main-header {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+
+    > div {
+        flex: 0 0 55%;
+        max-width: 55%;
+        width: 55%;
+
+        &:first-child {
+            background-color: $color-primary;
+            color: $color-white;
+            padding: 5rem;
+            box-sizing: border-box;
+        }
+
+        &:last-child {
+            flex: 0 0 45%;
+            max-width: 45%;
+            width: 45%;
+            position: relative;
+
+            > img {
+                height: 101%;
+                position: absolute;
+                top: 50%;
+                left: -2rem;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        h1 {
+            text-transform: uppercase;
+            font-size: $font-size-xxl;
+            line-height: calc($font-size-xxl + .2rem);
+            font-weight: 300;
+            position: relative;
+            padding-bottom: 5rem;
+
+            &:before {
+                position: absolute;
+                content: '';
+                top: calc(100% - 2.5rem);
+                left: 0;
+                width: 5rem;
+                height: .2rem;
+                transform: translateY(-50%);
+                background-color: $color-white;
+            }
+        }
+
+        p {
+            padding-bottom: 2.5rem;
+        }
+    }
+}

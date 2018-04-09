@@ -41,7 +41,7 @@ namespace DotvvmAcademy.DTO
         public int Number { get; set; }
 
         public int StepToOpen => IsFinished ? 1 : LastStep;
-
         public string Title { get; set; }
+        public string Description { get; set; }
     }
 }
