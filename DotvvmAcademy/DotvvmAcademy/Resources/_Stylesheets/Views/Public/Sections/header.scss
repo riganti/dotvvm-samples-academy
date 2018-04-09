@@ -25,11 +25,11 @@
             width: 45%;
             position: relative;
 
-            > img {
-                height: 101%;
+            > svg {
+                height: 100%;
                 position: absolute;
                 top: 50%;
-                left: -2rem;
+                left: -2.5rem;
                 transform: translate(-50%, -50%);
             }
         }

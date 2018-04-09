@@ -33,6 +33,7 @@
     <None Remove="Controls\CodeStep.dotcontrol" />
     <None Remove="Controls\DothtmlStep.dotcontrol" />
     <None Remove="Controls\InfoStep.dotcontrol" />
+    <None Remove="Controls\langSwitcher.dotcontrol" />
     <None Remove="dotvvm_serialized_config.json.tmp" />
     <None Remove="Lessons\cs\Lesson1.xml" />
     <None Remove="Lessons\cs\Lesson2.xml" />
@@ -57,6 +58,7 @@
     <Content Include="Controls\CodeStep.dotcontrol" />
     <Content Include="Controls\DothtmlStep.dotcontrol" />
     <Content Include="Controls\InfoStep.dotcontrol" />
+    <Content Include="Controls\LangSwitcher.dotcontrol" />
     <Content Include="Lessons\cs\Lesson1.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

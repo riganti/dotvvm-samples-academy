@@ -183,4 +183,22 @@
   <data name="Lesson4_Title" xml:space="preserve">
     <value>Dotvvm intermediate</value>
   </data>
+  <data name="LocalizeImg" xml:space="preserve">
+    <value>images/Icons/Flag_RU.svg</value>
+  </data>
+  <data name="LocalizeTitle_CZ" xml:space="preserve">
+    <value>чешский</value>
+  </data>
+  <data name="LocalizeTitle_US" xml:space="preserve">
+    <value>английский</value>
+  </data>
+  <data name="LocalizeTitle_RU" xml:space="preserve">
+    <value>русский</value>
+  </data>
+  <data name="LocalizeMainTitle" xml:space="preserve">
+    <value>Русский</value>
+  </data>
+  <data name="LocalizeClass" xml:space="preserve">
+    <value>ru</value>
+  </data>
 </root>

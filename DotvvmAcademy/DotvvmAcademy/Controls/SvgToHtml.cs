@@ -4,7 +4,7 @@ using System.Web;
 using DotVVM.Framework.Binding;
 using DotVVM.Framework.Controls;
 using DotVVM.Framework.Hosting;
-using Microsoft.AspNetCore.Hosting.Internal;
+using Microsoft.AspNetCore.Hosting;
 
 namespace DotvvmAcademy.Controls
 {
@@ -32,8 +32,9 @@ namespace DotvvmAcademy.Controls
         {
             if (RenderOnServer)
             {
+                var hostingEnvironment = context.Services.GetService(typeof(IHostingEnvironment)) as IHostingEnvironment;
                 //TODO This is not good idea at all, you have to use hostingEnvironment.WebRootPath / hostingEnvironment.ContentRootPath
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", VirtualPathToAbsolute(Source));
+                var path = Path.Combine(hostingEnvironment.WebRootPath, VirtualPathToAbsolute(Source));
                 if (path != null)
                 {
                     //var lines = File.ReadAllLines(path).Skip(1).ToArray();

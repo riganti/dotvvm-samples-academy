@@ -7,16 +7,17 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <dot:RequiredResource Name="StyleCSS" />
-
 </head>
 <body>
     <header>
-    <header>
         <nav>
             <dot:RouteLink RouteName="Default">
-                <img src="/images/Logos/logo-dotvvm.svg" alt="DotVVM Logo" />
+                <cc:SvgToHtml Source="images/Logos/logo-dotvvm.svg" RenderSettings.Mode="Server">
+                </cc:SvgToHtml>
                 &nbsp;<p>ACADEMY</p>
             </dot:RouteLink>
+            <cc:LangSwitcher Class-lang-switcher="true">
+            </cc:LangSwitcher>
         </nav>
         <section class="main-header no-padding">
             <div>
@@ -25,21 +26,9 @@
                 <dot:Button ButtonTagName="button" class="button with-borders" Text="Začít kurz udarma ještě teď">
             </div>
             <div>
-                <img src="/images/Illustrations/header-image.svg" alt="Dotvvm Academy" />
+                <cc:SvgToHtml Source="images/Illustrations/header-image.svg" RenderSettings.Mode="Server"/>
             </div>
         </section>
-
-        <%--<div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" ID="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                <i class="fa fa-language" aria-hidden="true"></i>
-                <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                <li><dot:RouteLink RouteName="{resource: Context.Route.RouteName}" Param-Lang="en">English</dot:RouteLink></li>
-                <li><dot:RouteLink RouteName="{resource: Context.Route.RouteName}" Param-Lang="cs">Česky</dot:RouteLink></li>
-                <li><dot:RouteLink RouteName="{resource: Context.Route.RouteName}" Param-Lang="ru">Русский</dot:RouteLink></li>
-            </ul>
-        </div>--%>
     </header>
     <main>
         <dot:ContentPlaceHolder ID="MainContent" />

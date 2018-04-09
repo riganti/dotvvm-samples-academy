@@ -1,0 +1,12 @@
+@viewModel DotvvmAcademy.ViewModels.SiteViewModel, DotvvmAcademy
+
+<div class="{resource:"lang-btn " +  LessonNames.LocalizeClass}">
+    <cc:SvgToHtml Source="{resource: LessonNames.LocalizeImg}" RenderSettings.Mode="Server">
+    </cc:SvgToHtml>
+    <p>{{resource: LessonNames.LocalizeMainTitle}}</p>
+</div>
+<div class="lang-switcher_list">
+    <dot:RouteLink RouteName="{resource: Context.Route.RouteName}" Param-Lang="en">{{resource: LessonNames.LocalizeTitle_US}}</dot:RouteLink>
+    <dot:RouteLink RouteName="{resource: Context.Route.RouteName}" Param-Lang="cs">{{resource: LessonNames.LocalizeTitle_CZ}}</dot:RouteLink>
+    <dot:RouteLink RouteName="{resource: Context.Route.RouteName}" Param-Lang="ru">{{resource: LessonNames.LocalizeTitle_RU}}</dot:RouteLink>
+</div>

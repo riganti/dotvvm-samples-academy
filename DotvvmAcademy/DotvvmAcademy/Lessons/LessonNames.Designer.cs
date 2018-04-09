@@ -169,6 +169,60 @@ namespace DotvvmAcademy.Lessons {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to en.
+        /// </summary>
+        public static string LocalizeClass {
+            get {
+                return ResourceManager.GetString("LocalizeClass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to images/Icons/Flag_US.svg.
+        /// </summary>
+        public static string LocalizeImg {
+            get {
+                return ResourceManager.GetString("LocalizeImg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to English.
+        /// </summary>
+        public static string LocalizeMainTitle {
+            get {
+                return ResourceManager.GetString("LocalizeMainTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Czech.
+        /// </summary>
+        public static string LocalizeTitle_CZ {
+            get {
+                return ResourceManager.GetString("LocalizeTitle_CZ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Russian.
+        /// </summary>
+        public static string LocalizeTitle_RU {
+            get {
+                return ResourceManager.GetString("LocalizeTitle_RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to English.
+        /// </summary>
+        public static string LocalizeTitle_US {
+            get {
+                return ResourceManager.GetString("LocalizeTitle_US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to naučte se dotvvm&lt;br /&gt; za &lt;strong&gt;pár&lt;/strong&gt; minut.
         /// </summary>
         public static string MainTitle {

@@ -1,0 +1,127 @@
+﻿@import "../Base/_global.scss";
+
+.lang-switcher {
+    position: relative;
+    width: 15rem;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: $color-primary;
+
+    &_list {
+        position: absolute;
+        top: 100%;
+        width: calc(100% - 4.7rem);
+        height: 0;
+        overflow: hidden;
+        transition: $animate-all;
+        left: 4.5rem;
+
+        a {
+            text-align: left;
+            display: block;
+            text-decoration: none;
+            color: $color-primary;
+            padding: .2rem 0;
+            padding-left: 1rem;
+            box-sizing: border-box;
+            transition: $animate-all;
+
+            &:hover {
+                color: $color-white;
+                transition: $animate-all;
+            }
+        }
+
+        &.open {
+            height: 5.2rem;
+            transition: $animate-all;
+            border: .1rem solid $color-transparent;
+        }
+    }
+}
+
+.lang-btn {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    cursor: pointer;
+    height: 3rem;
+    position: relative;
+
+    &:after {
+        position: absolute;
+        content: '';
+        width: 3rem;
+        height: 3rem;
+        top: 0;
+        right: -2.1rem;
+        background-color: $color-white;
+        transform: rotate(45deg);
+    }
+
+    svg {
+        height: 100%;
+        width: auto;
+    }
+
+    p {
+        padding-left: 1rem;
+        box-sizing: border-box;
+        color: $color-white;
+    }
+
+    &.en {
+        background-color: $color-en;
+
+        + div {
+            border-color: $color-en;
+            width: calc(100% - 5.9rem);
+            left: 5.7rem;
+
+            a:hover {
+                background-color: $color-en;
+            }
+
+            a:first-child {
+                display: none;
+            }
+        }
+    }
+
+    &.cz {
+        background-color: $color-cz;
+
+        + div {
+            border-color: $color-cz;
+
+            a:hover {
+                background-color: $color-cz;
+            }
+
+            a:nth-child(2) {
+                display: none;
+            }
+        }
+    }
+
+    &.ru {
+        background-color: $color-ru;
+
+        + div {
+            border-color: $color-ru;
+
+            a:hover {
+                background-color: $color-ru;
+            }
+
+            a:last-child {
+                display: none;
+            }
+        }
+    }
+}

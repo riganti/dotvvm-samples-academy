@@ -666,7 +666,7 @@ p, span, a {
   box-sizing: border-box;
   padding-bottom: 10rem;
   position: relative; }
-  .lessons-item > img {
+  .lessons-item > svg {
     display: block;
     width: 50%;
     margin: 0 auto;
@@ -688,6 +688,92 @@ p, span, a {
   .lessons-item:after {
     right: 0;
     background: linear-gradient(13.5deg, #fff 0%, #fff 50%, transparent 51%, transparent 100%); }
+
+.lang-switcher {
+  position: relative;
+  width: 15rem;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #3c3d3b; }
+  .lang-switcher_list {
+    position: absolute;
+    top: 100%;
+    width: calc(100% - 4.7rem);
+    height: 0;
+    overflow: hidden;
+    transition: all 0.3s;
+    left: 4.5rem; }
+    .lang-switcher_list a {
+      text-align: left;
+      display: block;
+      text-decoration: none;
+      color: #3c3d3b;
+      padding: .2rem 0;
+      padding-left: 1rem;
+      box-sizing: border-box;
+      transition: all 0.3s; }
+      .lang-switcher_list a:hover {
+        color: #fff;
+        transition: all 0.3s; }
+    .lang-switcher_list.open {
+      height: 5.2rem;
+      transition: all 0.3s;
+      border: 0.1rem solid transparent; }
+
+.lang-btn {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  cursor: pointer;
+  height: 3rem;
+  position: relative; }
+  .lang-btn:after {
+    position: absolute;
+    content: '';
+    width: 3rem;
+    height: 3rem;
+    top: 0;
+    right: -2.1rem;
+    background-color: #fff;
+    transform: rotate(45deg); }
+  .lang-btn svg {
+    height: 100%;
+    width: auto; }
+  .lang-btn p {
+    padding-left: 1rem;
+    box-sizing: border-box;
+    color: #fff; }
+  .lang-btn.en {
+    background-color: #3c3b6e; }
+    .lang-btn.en + div {
+      border-color: #3c3b6e;
+      width: calc(100% - 5.9rem);
+      left: 5.7rem; }
+      .lang-btn.en + div a:hover {
+        background-color: #3c3b6e; }
+      .lang-btn.en + div a:first-child {
+        display: none; }
+  .lang-btn.cz {
+    background-color: #11457e; }
+    .lang-btn.cz + div {
+      border-color: #11457e; }
+      .lang-btn.cz + div a:hover {
+        background-color: #11457e; }
+      .lang-btn.cz + div a:nth-child(2) {
+        display: none; }
+  .lang-btn.ru {
+    background-color: #0039a6; }
+    .lang-btn.ru + div {
+      border-color: #0039a6; }
+      .lang-btn.ru + div a:hover {
+        background-color: #0039a6; }
+      .lang-btn.ru + div a:last-child {
+        display: none; }
 
 .box-wrapper {
   border: 1px solid #808080;
@@ -838,9 +924,16 @@ div.dotvvm-bp-grid-view {
         background-color: #ed3232; }
 
 nav {
+  position: relative;
   padding: 0 5rem;
-  box-sizing: border-box; }
-  nav a {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 999; }
+  nav > a {
     display: flex;
     width: 20rem;
     padding: 1rem 0;
@@ -850,10 +943,11 @@ nav {
     align-items: flex-end;
     text-decoration: none;
     color: #3c3d3b; }
-  nav img {
-    height: 6rem; }
-  nav p {
-    font-weight: 500; }
+    nav > a svg {
+      height: 6rem; }
+    nav > a p {
+      font-weight: 500;
+      color: #3c3d3b; }
 
 .guide-container {
   display: block;
@@ -1111,11 +1205,11 @@ nav {
       max-width: 45%;
       width: 45%;
       position: relative; }
-      .main-header > div:last-child > img {
-        height: 101%;
+      .main-header > div:last-child > svg {
+        height: 100%;
         position: absolute;
         top: 50%;
-        left: -2rem;
+        left: -2.5rem;
         transform: translate(-50%, -50%); }
     .main-header > div h1 {
       text-transform: uppercase;

@@ -24,20 +24,23 @@ namespace DotvvmAcademy
             config.Markup.AddMarkupControl("step", "ChoicesStep", "Controls/ChoicesStep.dotcontrol");
             config.Markup.AddMarkupControl("step", "DothtmlStep", "Controls/DothtmlStep.dotcontrol");
             config.Markup.AddMarkupControl("step", "CodeStep", "Controls/CodeStep.dotcontrol");
+            config.Markup.AddMarkupControl("cc", "LangSwitcher", "Controls/LangSwitcher.dotcontrol");
             config.Markup.AddCodeControls("cc", typeof(SvgToHtml));
         }
 
         private void ConfigureResources(DotvvmConfiguration config, string applicationPath)
         {
             // register custom resources and adjust paths to the built-in resources
-            config.Resources.Register("ace", new ScriptResource(
-                new FileResourceLocation("~/wwwroot/Scripts/ace/ace.js")));
-            config.Resources.Register("dotvvm-ace", new ScriptResource(
-                new FileResourceLocation("~/wwwroot/Scripts/dotvvm-ace.js"))
+            config.Resources.Register("jQuery", new ScriptResource(new FileResourceLocation("~/wwwroot/Scripts/jquery-2.2.4.min.js")));
+            config.Resources.Register("ace", new ScriptResource(new FileResourceLocation("~/wwwroot/Scripts/ace/ace.min.js")));
+            config.Resources.Register("dotvvm-ace", new ScriptResource(new FileResourceLocation("~/wwwroot/Scripts/dotvvm-ace.min.js"))
             {
                 Dependencies = new[] { "dotvvm", "ace" }
             });
-            config.Resources.Register("AppJS", new ScriptResource(new FileResourceLocation("~/wwwroot/Scripts/app.min.js")));
+            config.Resources.Register("AppJS", new ScriptResource(new FileResourceLocation("~/wwwroot/Scripts/app.min.js"))
+            {
+                Dependencies = new[] { "jQuery" }
+            });
 
             config.Resources.Register("StyleCSS", new StylesheetResource(new FileResourceLocation("~/wwwroot/css/style.css")));
         }
