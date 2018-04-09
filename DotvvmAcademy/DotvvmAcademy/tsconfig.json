@@ -1,6 +1,6 @@
 ﻿{
   "compilerOptions": {
-    "outFile": "Resources/js/app.js",
+    "outFile": "wwwroot/Scripts/app.js",
     "lib": [ "dom", "es5", "es2015.core", "es2015.promise" ],
     "strictNullChecks": false,
     "noEmitOnError": true,

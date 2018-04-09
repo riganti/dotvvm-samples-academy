@@ -2,6 +2,7 @@ using DotVVM.Framework.Compilation;
 using DotVVM.Framework.Configuration;
 using DotVVM.Framework.Hosting;
 using DotVVM.Framework.ResourceManagement;
+using DotvvmAcademy.Controls;
 
 namespace DotvvmAcademy
 {
@@ -23,7 +24,7 @@ namespace DotvvmAcademy
             config.Markup.AddMarkupControl("step", "ChoicesStep", "Controls/ChoicesStep.dotcontrol");
             config.Markup.AddMarkupControl("step", "DothtmlStep", "Controls/DothtmlStep.dotcontrol");
             config.Markup.AddMarkupControl("step", "CodeStep", "Controls/CodeStep.dotcontrol");
-            //config.Markup.AddCodeControls("cc", typeof(SvgToHtml));
+            config.Markup.AddCodeControls("cc", typeof(SvgToHtml));
         }
 
         private void ConfigureResources(DotvvmConfiguration config, string applicationPath)
@@ -36,6 +37,7 @@ namespace DotvvmAcademy
             {
                 Dependencies = new[] { "dotvvm", "ace" }
             });
+            config.Resources.Register("AppJS", new ScriptResource(new FileResourceLocation("~/wwwroot/Scripts/app.min.js")));
 
             config.Resources.Register("StyleCSS", new StylesheetResource(new FileResourceLocation("~/wwwroot/css/style.css")));
         }

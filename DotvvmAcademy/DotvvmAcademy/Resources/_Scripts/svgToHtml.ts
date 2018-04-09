@@ -1,7 +1,4 @@
-var dotvvm = window.dotvvm;
-dotvvm.events.init.subscribe(function () {
-});
-var ko = window.ko;
+﻿var ko = (<any>window).ko;
 ko.bindingHandlers["svg"] = {
     init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
         var url = valueAccessor();
@@ -10,6 +7,7 @@ ko.bindingHandlers["svg"] = {
         request.onreadystatechange = function () {
             if (request.readyState === 4) {
                 if (request.status === 200 || request.status === 0) {
+                    //element.outerHTML = request.response;
                     $(element).replaceWith(request.response);
                 }
             }
@@ -17,4 +15,3 @@ ko.bindingHandlers["svg"] = {
         request.send();
     }
 };
-//# sourceMappingURL=app.js.map

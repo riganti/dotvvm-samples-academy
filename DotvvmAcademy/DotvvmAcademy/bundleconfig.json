@@ -1,32 +1,14 @@
 [
   {
-    "outputFileName": "Resources/Libs/slick/slick.min.js",
-    "inputFiles": [
-      "Resources/Libs/slick/slick.js"
-    ]
-  },
-  {
-    "outputFileName": "Resources/Libs/clamp/clamp.min.js",
-    "inputFiles": [
-      "Resources/Libs/clamp/clamp.js"
-    ]
-  },
-  {
-    "outputFileName": "Resources/JS/LandingNavSettings.min.js",
-    "inputFiles": [
-      "Resources/JS/LandingNavSettings.js"
-    ]
-  },
-  {
-    "outputFileName": "Resources/Libs/FancyBox/jquery.fancybox.min.js",
-    "inputFiles": [
-      "Resources/Libs/FancyBox/jquery.fancybox.js"
-    ]
-  },
-  {
     "outputFileName": "Resources/CSS/style.min.css",
     "inputFiles": [
       "Resources/CSS/style.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/Scripts/app.min.js",
+    "inputFiles": [
+      "wwwroot/Scripts/app.js"
     ]
   }
 ]

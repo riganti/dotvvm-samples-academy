@@ -79,7 +79,6 @@
     <Content Include="Lessons\ru\Lesson4.xml" />
     <Content Include="Views\default.dothtml" />
     <Content Include="Views\embedded.dothtml" />
-    <Content Include="Views\lesson.dothtml" />
     <Content Include="Views\site.dotmaster" />
   </ItemGroup>
   <ItemGroup>
@@ -109,8 +108,6 @@
     <None Include="wwwroot\fonts\lato\Lato-SemiboldItalic.ttf" />
     <None Include="wwwroot\fonts\lato\Lato-Thin.ttf" />
     <None Include="wwwroot\fonts\lato\Lato-ThinItalic.ttf" />
-    <None Include="wwwroot\Scripts\app.js" />
-    <None Include="wwwroot\Scripts\app.js.map" />
     <None Include="wwwroot\sitemap.xml" />
   </ItemGroup>
   <ItemGroup>

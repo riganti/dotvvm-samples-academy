@@ -4,11 +4,11 @@
 <dot:Content ContentPlaceHolderID="MainContent">
     <section class="section-lections">
         <div class="container-large">
-            <dot:Repeater DataSource="{value: Lessons}" class="lessons-container">
+            <dot:Repeater DataSource="{value: Lessons}" class="lessons-container" RenderSettings.Mode="Server">
                 <%-- {{value: Number}}, Visible="{value: IsFinished}" --%>
-
                 <div class="lessons-item">
-                    <img src="{value: ImageUrl}" alt="" />
+                    <cc:SvgToHtml Source="{value: ImageUrl}" >
+                    </cc:SvgToHtml>
                     <h2>{{value: Title}}</h2>
                     <dot:HtmlLiteral Html="{value: Description}" RenderWrapperTag="true" WrapperTagName="p" />
                     <dot:RouteLink RouteName="Lesson"
@@ -19,6 +19,8 @@
                                    Enabled="{value: IsCreated}"
                                    class="button" />
                 </div>
+
+                
             </dot:Repeater>
         </div>
     </section>
