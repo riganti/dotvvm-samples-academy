@@ -12,6 +12,9 @@
     text-decoration: none;
     min-width: 15rem;
     transition: $animate-all;
+    text-align: center;
+    font-family: $font-text;
+    font-size: $font-size-m;
 
     &:hover, &:focus {
         text-decoration: none;

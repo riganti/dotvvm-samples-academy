@@ -1,10 +1,21 @@
 ﻿@import "../Base/_global.scss";
 
 .lessons-container {
-    @include flex-wrapper-row(0,0,24%, stretch);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    @include res-max-tablet{
+        justify-content: center;
+    }
+
 }
 
 .lessons-item {
+    flex: 0 0 24%;
+    max-width: 24%;
+    width: 24%;
     background-color: $color-primary;
     text-align: center;
     color: $color-white;
@@ -13,11 +24,40 @@
     padding-bottom: 10rem;
     position: relative;
 
+    @include res-max-desktop-HD {
+        padding: 2rem;
+        padding-bottom: 7rem;
+    }
+
+    @include res-max-desktop-large {
+        flex: 0 0 49%;
+        max-width: 49%;
+        width: 49%;
+
+        &:first-child, &:nth-child(2){
+            margin-bottom: 3rem;
+        }
+    }
+
+    @include res-max-tablet {
+        flex: 0 0 65%;
+        max-width: 65%;
+        width: 65%;
+        margin-bottom: 3rem;
+    }
+
+    @include res-max-mobile {
+        flex: 0 0 100%;
+        max-width: 100%;
+        width: 100%;
+    }
+
     > svg {
         display: block;
         width: 50%;
         margin: 0 auto;
         margin-bottom: 1rem;
+        min-width: 15rem;
     }
 
     h2 {
@@ -25,6 +65,8 @@
     }
 
     p {
+        display: block;
+        min-height: 3.5rem;
         margin-bottom: 1.5rem;
         font-size: $font-size-xs;
     }

@@ -130,22 +130,19 @@
     <value>Continue</value>
   </data>
   <data name="Lesson1_Desc" xml:space="preserve">
-    <value>Understand basic principles of DotVVM&lt;br /&gt;and the MVVM pattern.</value>
+    <value>You’ll understand the basics of DotVVM and MVVM design pattern.</value>
   </data>
   <data name="Lesson2_Desc" xml:space="preserve">
-    <value>Learn how to use the Repeater control&lt;br /&gt; and how to work with collections.</value>
+    <value>You’ll see the Repeater control and how to work with collections.</value>
   </data>
   <data name="Lesson3_Desc" xml:space="preserve">
-    <value>Try out working with the DataContext property and advanced form controls like ComboBox and RadioButton.</value>
+    <value>You’ll use DotVVM ComboBox and RadioButton and learn about the DataContext property.</value>
   </data>
   <data name="Lesson4_Desc" xml:space="preserve">
     <value>Learn how validation works.</value>
   </data>
   <data name="NextBtnText" xml:space="preserve">
     <value>Continue</value>
-  </data>
-  <data name="OnlineCourseText" xml:space="preserve">
-    <value>Ultimátní online kurz webového českého&lt;br /&gt;frameworku bez nutnosti psaní tun Javascriptu!&lt;br /&gt;Všechno co potřebujete vědět je &lt;strong&gt;C#&lt;/strong&gt;, &lt;strong&gt;HTML&lt;/strong&gt; a &lt;strong&gt;CSS&lt;/strong&gt;!</value>
   </data>
   <data name="PreviousBtnText" xml:space="preserve">
     <value>Previous</value>
@@ -168,37 +165,49 @@
   <data name="TutorialsText" xml:space="preserve">
     <value>Tutorials</value>
   </data>
-  <data name="MainTitle" xml:space="preserve">
-    <value>naučte se dotvvm&lt;br /&gt; za &lt;strong&gt;pár&lt;/strong&gt; minut</value>
+  <data name="Base_MainTitle" xml:space="preserve">
+    <value>Learn DotVVM&lt;br&gt; in &lt;b&gt;few&lt;/b&gt; minutes</value>
   </data>
   <data name="Lesson1_Title" xml:space="preserve">
-    <value>Dotvvm elementary 1</value>
+    <value> Lesson 1: Basic principles</value>
   </data>
   <data name="Lesson2_Title" xml:space="preserve">
-    <value>Dotvvm elementary 2</value>
+    <value>Lesson 2: Collections</value>
   </data>
   <data name="Lesson3_Title" xml:space="preserve">
-    <value>Dotvvm intermediate</value>
+    <value>Lesson 3: Forms in DotVVM</value>
   </data>
   <data name="Lesson4_Title" xml:space="preserve">
-    <value>Dotvvm intermediate</value>
+    <value>Lesson 4: Validation</value>
   </data>
   <data name="LocalizeImg" xml:space="preserve">
     <value>images/Icons/Flag_US.svg</value>
   </data>
-  <data name="LocalizeTitle_CZ" xml:space="preserve">
-    <value>Czech</value>
-  </data>
-  <data name="LocalizeTitle_US" xml:space="preserve">
-    <value>English</value>
-  </data>
-  <data name="LocalizeTitle_RU" xml:space="preserve">
-    <value>Russian</value>
-  </data>
   <data name="LocalizeMainTitle" xml:space="preserve">
-    <value>English</value>
+    <value>Change language</value>
   </data>
   <data name="LocalizeClass" xml:space="preserve">
     <value>en</value>
+  </data>
+  <data name="Base_MainDesc" xml:space="preserve">
+    <value>Do you wonder how DotVVM works?&lt;br&gt;
+It’s easy – all you need to know is &lt;strong&gt;HTML&lt;/strong&gt;, &lt;strong&gt;C#&lt;/strong&gt; and basics of &lt;strong&gt;CSS&lt;/strong&gt;.&lt;br&gt;
+We will explain everything to you in a few easy lessons.</value>
+  </data>
+  <data name="Btn_StartCourse" xml:space="preserve">
+    <value>Run DotVVM Academy</value>
+  </data>
+  <data name="Base_ChooseLesson" xml:space="preserve">
+    <value>Choose a Lesson</value>
+  </data>
+  <data name="Base_CoffeeTitle" xml:space="preserve">
+    <value>Have a few minutes?&lt;br&gt;
+Watch &lt;strong&gt;DotVVM Coffee&lt;/strong&gt; videos!</value>
+  </data>
+  <data name="Base_CoffeeDesc" xml:space="preserve">
+    <value>A series of short videos that show various features and controls of DotVVM.</value>
+  </data>
+  <data name="Btn_Coffee" xml:space="preserve">
+    <value>DotVVM Coffee</value>
   </data>
 </root>

@@ -1,11 +1,5 @@
 [
   {
-    "outputFileName": "Resources/CSS/style.min.css",
-    "inputFiles": [
-      "Resources/CSS/style.css"
-    ]
-  },
-  {
     "outputFileName": "wwwroot/Scripts/app.min.js",
     "inputFiles": [
       "wwwroot/Scripts/app.js"
@@ -27,6 +21,12 @@
     "outputFileName": "wwwroot/Scripts/jquery-2.2.4.min.js",
     "inputFiles": [
       "wwwroot/Scripts/jquery-2.2.4.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/style.min.css",
+    "inputFiles": [
+      "wwwroot/css/style.css"
     ]
   }
 ]

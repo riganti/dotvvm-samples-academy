@@ -2,12 +2,18 @@
 
 .lang-switcher {
     position: relative;
-    width: 15rem;
+    min-width: 20rem;
     display: flex;
     flex-wrap: nowrap;
     justify-content: flex-start;
     align-items: center;
     background-color: $color-primary;
+    z-index: 10;
+
+    @include res-max-mobile {
+        width: auto;
+        min-width: unset;
+    }
 
     &_list {
         position: absolute;
@@ -16,7 +22,16 @@
         height: 0;
         overflow: hidden;
         transition: $animate-all;
+        background-color: $color-white;
         left: 4.5rem;
+        border: .1rem solid $color-transparent;
+        transform: translateY(-.2rem);
+        z-index: 9;
+
+        @include res-max-mobile {
+            width: calc(100% - .2rem);
+            left: 0;
+        }
 
         a {
             text-align: left;
@@ -35,9 +50,9 @@
         }
 
         &.open {
-            height: 5.2rem;
+            height: 7.8rem;
             transition: $animate-all;
-            border: .1rem solid $color-transparent;
+            transform: translateY(-.1rem);
         }
     }
 }
@@ -52,17 +67,7 @@
     cursor: pointer;
     height: 3rem;
     position: relative;
-
-    &:after {
-        position: absolute;
-        content: '';
-        width: 3rem;
-        height: 3rem;
-        top: 0;
-        right: -2.1rem;
-        background-color: $color-white;
-        transform: rotate(45deg);
-    }
+    text-align: center;
 
     svg {
         height: 100%;
@@ -70,9 +75,14 @@
     }
 
     p {
-        padding-left: 1rem;
+        display: inline-block;
+        margin: 0 auto;
         box-sizing: border-box;
         color: $color-white;
+
+        @include res-max-mobile {
+            display: none;
+        }
     }
 
     &.en {
@@ -83,12 +93,13 @@
             width: calc(100% - 5.9rem);
             left: 5.7rem;
 
-            a:hover {
-                background-color: $color-en;
+            @include res-max-mobile {
+                width: calc(100% - .2rem);
+                left: 0;
             }
 
-            a:first-child {
-                display: none;
+            a:hover {
+                background-color: $color-en;
             }
         }
     }
@@ -102,10 +113,6 @@
             a:hover {
                 background-color: $color-cz;
             }
-
-            a:nth-child(2) {
-                display: none;
-            }
         }
     }
 
@@ -117,10 +124,6 @@
 
             a:hover {
                 background-color: $color-ru;
-            }
-
-            a:last-child {
-                display: none;
             }
         }
     }

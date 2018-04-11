@@ -1,46 +1,74 @@
 ﻿@import "../../../Base/global";
 
 .main-header {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    background: -moz-linear-gradient(left, $color-primary 0%, $color-primary 65%, $color-white 65%, $color-white 100%);
+    background: -webkit-linear-gradient(left, $color-primary 0%,$color-primary 65%,$color-white 65%,$color-white 100%);
+    background: linear-gradient(to right, $color-primary 0%,$color-primary 65%,$color-white 65%,$color-white 100%);
 
+    @include res-max-desktop-HD {
+        background: -moz-linear-gradient(left, $color-primary 0%, $color-primary 80%, $color-white 80%, $color-white 100%);
+        background: -webkit-linear-gradient(left, $color-primary 0%,$color-primary 80%,$color-white 80%,$color-white 100%);
+        background: linear-gradient(to right, $color-primary 0%,$color-primary 80%,$color-white 80%,$color-white 100%);
+    }
 
-    > div {
-        flex: 0 0 55%;
-        max-width: 55%;
-        width: 55%;
+    @include res-max-desktop-large {
+        background: $color-primary;
+    }
 
-        &:first-child {
-            background-color: $color-primary;
-            color: $color-white;
-            padding: 5rem;
-            box-sizing: border-box;
+    @include res-max-desktop-small {
+        background: rgba(78, 78, 77, 0.90);
+    }
+
+    > div > div {
+        padding: 5rem 0;
+        position: relative;
+        color: $color-white;
+
+        @include res-max-desktop-small {
+            text-align: center;
+            padding: 3rem 0;
         }
 
-        &:last-child {
-            flex: 0 0 45%;
-            max-width: 45%;
-            width: 45%;
-            position: relative;
+        > svg {
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 60%;
+            transform: translateX(-50%);
+            transition: $animate-all;
 
-            > svg {
-                height: 100%;
-                position: absolute;
-                top: 50%;
-                left: -2.5rem;
-                transform: translate(-50%, -50%);
+            @include res-max-desktop-HD {
+                left: 75%;
+                transition: $animate-all;
+            }
+
+            @include res-max-desktop-large {
+                left: 85%;
+            }
+
+            @include res-max-desktop-small {
+                left: 45%;
+                z-index: -1;
+            }
+
+
+            @include res-max-mobile {
+                left: 40%;
             }
         }
 
-        h1 {
+        > h1 {
             text-transform: uppercase;
             font-size: $font-size-xxl;
             line-height: calc($font-size-xxl + .2rem);
             font-weight: 300;
             position: relative;
             padding-bottom: 5rem;
+
+            @include res-max-mobile {
+                font-size: $font-size-xl;
+                line-height: calc($font-size-xl + .2rem);
+            }
 
             &:before {
                 position: absolute;
@@ -51,6 +79,11 @@
                 height: .2rem;
                 transform: translateY(-50%);
                 background-color: $color-white;
+
+                @include res-max-desktop-small {
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                }
             }
         }
 

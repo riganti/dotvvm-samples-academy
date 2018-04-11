@@ -1,0 +1,42 @@
+﻿@import "../../../Base/global";
+
+.section-coffee {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    background-color: $color-bg;
+    padding: 15rem 0;
+
+    > div {
+        flex: 0 0 50%;
+        position: relative;
+
+        svg {
+            display: block;
+            height: auto;
+            width: 70%;
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+        }
+
+        h2 {
+            display: block;
+            margin-bottom: 3rem;
+            font-size: $font-size-xxl;
+            font-weight: 300;
+        }
+
+        p {
+            display: block;
+            margin-bottom: 2rem;
+            font-size: $font-size-l;
+        }
+
+        &:last-child {
+            flex: 0 0 50%;
+        }
+    }
+}

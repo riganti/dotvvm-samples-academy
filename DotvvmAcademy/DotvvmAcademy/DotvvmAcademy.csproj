@@ -84,9 +84,6 @@
     <Content Include="Views\site.dotmaster" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="wwwroot\css\style.css" />
-    <None Include="wwwroot\css\style.css.map" />
-    <None Include="wwwroot\css\style.min.css" />
     <None Include="wwwroot\fonts\glyphicons-halflings-regular.eot" />
     <None Include="wwwroot\fonts\glyphicons-halflings-regular.svg" />
     <None Include="wwwroot\fonts\glyphicons-halflings-regular.ttf" />
@@ -241,6 +238,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\css\" />
     <Folder Include="wwwroot\images\Backgrounds\" />
   </ItemGroup>
 </Project>

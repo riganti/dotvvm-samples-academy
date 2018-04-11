@@ -1,5 +1,10 @@
 ﻿@import "../Base/_global.scss";
 
+.progress-bar-title {
+    display: block;
+    margin-bottom: 1rem;
+}
+
 .lesson-progress-bar {
     display: flex;
     flex-wrap: nowrap;
@@ -9,6 +14,10 @@
     position: relative;
     height: 3rem;
     margin-bottom: 5rem;
+
+    @include res-max-desktop-small{
+        margin-bottom: 3rem;
+    }
 
     &:after {
         position: absolute;

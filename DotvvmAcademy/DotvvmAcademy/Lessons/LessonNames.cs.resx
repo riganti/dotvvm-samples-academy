@@ -130,22 +130,19 @@
     <value>Pokračovat</value>
   </data>
   <data name="Lesson1_Desc" xml:space="preserve">
-    <value>Pochopíte základy DotVVM&lt;br /&gt; a návrhového vzoru MVVM.</value>
+    <value>Pochopíte základy DotVVM a návrhového vzoru MVVM.</value>
   </data>
   <data name="Lesson2_Desc" xml:space="preserve">
-    <value>Naučíte se pracovat s komponentou&lt;br /&gt; Repeater a s kolekcemi.</value>
+    <value>Naučíte se pracovat s komponentou Repeater a s kolekcemi.</value>
   </data>
   <data name="Lesson3_Desc" xml:space="preserve">
-    <value>Vyzkoušíme si práci s pokročilými komponentami ComboBox, RadioButton a vlastností DataContext.</value>
+    <value>Vyzkoušíte si práci s pokročilými komponentami ComboBox, RadioButton a vlastností DataContext.</value>
   </data>
   <data name="Lesson4_Desc" xml:space="preserve">
-    <value>Naučíte se jak funguje validace.</value>
+    <value>Naučíte se, jak v DotVVM funguje validace dat.</value>
   </data>
   <data name="NextBtnText" xml:space="preserve">
     <value>Pokračovat</value>
-  </data>
-  <data name="OnlineCourseText" xml:space="preserve">
-    <value>Ultimátní online kurz webového českého&lt;br /&gt;frameworku bez nutnosti psaní tun Javascriptu!&lt;br /&gt;Všechno co potřebujete vědět je &lt;strong&gt;C#&lt;/strong&gt;, &lt;strong&gt;HTML&lt;/strong&gt; a &lt;strong&gt;CSS&lt;/strong&gt;!</value>
   </data>
   <data name="PreviousBtnText" xml:space="preserve">
     <value>Zpět</value>
@@ -168,37 +165,49 @@
   <data name="TutorialsText" xml:space="preserve">
     <value>Návody</value>
   </data>
-  <data name="MainTitle" xml:space="preserve">
-    <value>naučte se dotvvm&lt;br /&gt; za &lt;strong&gt;pár&lt;/strong&gt; minut</value>
+  <data name="Base_MainTitle" xml:space="preserve">
+    <value>Naučte se DotVVM&lt;br&gt; za &lt;b&gt;pár&lt;/b&gt; minut</value>
   </data>
   <data name="Lesson1_Title" xml:space="preserve">
-    <value>Dotvvm elementary 1</value>
+    <value>Lekce 1: Základní principy</value>
   </data>
   <data name="Lesson2_Title" xml:space="preserve">
-    <value>Dotvvm elementary 2</value>
+    <value>Lekce 2: Práce s kolekcemi</value>
   </data>
   <data name="Lesson3_Title" xml:space="preserve">
-    <value>Dotvvm intermediate</value>
+    <value>Lekce 3: Formuláře v DotVVM</value>
   </data>
   <data name="Lesson4_Title" xml:space="preserve">
-    <value>Dotvvm intermediate</value>
+    <value>Lekce 4: Validace</value>
   </data>
   <data name="LocalizeImg" xml:space="preserve">
     <value>images/Icons/Flag_CZ.svg</value>
   </data>
-  <data name="LocalizeTitle_CZ" xml:space="preserve">
-    <value>Česky</value>
-  </data>
-  <data name="LocalizeTitle_US" xml:space="preserve">
-    <value>Anglicky</value>
-  </data>
-  <data name="LocalizeTitle_RU" xml:space="preserve">
-    <value>Rusky</value>
-  </data>
   <data name="LocalizeMainTitle" xml:space="preserve">
-    <value>Česky</value>
+    <value>Změnit jazyk</value>
   </data>
   <data name="LocalizeClass" xml:space="preserve">
     <value>cz</value>
+  </data>
+  <data name="Base_MainDesc" xml:space="preserve">
+    <value>Zajímá vás, jak se v DotVVM vyvíjí webové aplikace?&lt;br&gt;
+Je to jednoduché - stačí umět &lt;strong&gt;HTML&lt;/strong&gt;, &lt;strong&gt;C#&lt;/strong&gt; a základy &lt;strong&gt;CSS&lt;/strong&gt;.&lt;br&gt;
+Vše ostatní vám vysvětlíme v několika jednoduchých lekcích.</value>
+  </data>
+  <data name="Btn_StartCourse" xml:space="preserve">
+    <value>Spustit kurz DotVVM</value>
+  </data>
+  <data name="Base_ChooseLesson" xml:space="preserve">
+    <value>Zvolte lekci</value>
+  </data>
+  <data name="Base_CoffeeTitle" xml:space="preserve">
+    <value>Máte volnou chvilku?&lt;br&gt;
+Pusťte si &lt;strong&gt;DotVVM Coffee!&lt;/strong&gt;</value>
+  </data>
+  <data name="Base_CoffeeDesc" xml:space="preserve">
+    <value>Sada krátkých videí, které vás během pár minut provedou různými&lt;br&gt;funkcemi a komponentami frameworku DotVVM.</value>
+  </data>
+  <data name="Btn_Coffee" xml:space="preserve">
+    <value>DotVVM Coffee</value>
   </data>
 </root>

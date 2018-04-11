@@ -6,7 +6,7 @@
     <p>{{resource: LessonNames.LocalizeMainTitle}}</p>
 </div>
 <div class="lang-switcher_list">
-    <dot:RouteLink RouteName="{resource: Context.Route.RouteName}" Param-Lang="en">{{resource: LessonNames.LocalizeTitle_US}}</dot:RouteLink>
-    <dot:RouteLink RouteName="{resource: Context.Route.RouteName}" Param-Lang="cs">{{resource: LessonNames.LocalizeTitle_CZ}}</dot:RouteLink>
-    <dot:RouteLink RouteName="{resource: Context.Route.RouteName}" Param-Lang="ru">{{resource: LessonNames.LocalizeTitle_RU}}</dot:RouteLink>
+    <dot:RouteLink RouteName="{resource: Context.Route.RouteName}" Param-Lang="en">En</dot:RouteLink>
+    <dot:RouteLink RouteName="{resource: Context.Route.RouteName}" Param-Lang="cs">Us</dot:RouteLink>
+    <dot:RouteLink RouteName="{resource: Context.Route.RouteName}" Param-Lang="ru">Ru</dot:RouteLink>
 </div>

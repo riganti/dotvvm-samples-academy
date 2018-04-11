@@ -1,1 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600"><defs><style>.cls-1{fill:#d7141a;}.cls-2{fill:#fff;}.cls-3{fill:#11457e;}</style></defs><title>aaAsset 1cz</title><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><rect class="cls-1" width="900" height="600"/><rect class="cls-2" width="900" height="300"/><path class="cls-3" d="M450,300,0,0V600Z"/></g></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600"><defs><style>
+                                                                        .cls-1 {
+                                                                            fill: #d7141a;
+                                                                        }
+
+                                                                        .cls-2 {
+                                                                            fill: #fff;
+                                                                        }
+
+                                                                        .cls-3 {
+                                                                            fill: #11457e;
+                                                                        }
+</style></defs><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><rect class="cls-1" width="900" height="600" /><rect class="cls-2" width="900" height="300" /><path class="cls-3" d="M450,300,0,0V600Z" /></g></g></svg>

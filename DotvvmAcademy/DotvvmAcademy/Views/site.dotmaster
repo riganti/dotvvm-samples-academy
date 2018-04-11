@@ -1,4 +1,5 @@
 ﻿@viewModel DotvvmAcademy.ViewModels.SiteViewModel, DotvvmAcademy
+
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -10,7 +11,7 @@
 </head>
 <body>
     <header>
-        <nav>
+        <nav class="container-large" RenderSettings.Mode="Server">
             <dot:RouteLink RouteName="Default">
                 <cc:SvgToHtml Source="images/Logos/logo-dotvvm.svg" RenderSettings.Mode="Server">
                 </cc:SvgToHtml>
@@ -19,21 +20,12 @@
             <cc:LangSwitcher Class-lang-switcher="true">
             </cc:LangSwitcher>
         </nav>
-        <section class="main-header no-padding">
-            <div>
-                <dot:HtmlLiteral Html="{resource: LessonNames.MainTitle}" RenderWrapperTag="true" WrapperTagName="h1" />
-                <dot:HtmlLiteral Html="{resource: LessonNames.OnlineCourseText}" RenderWrapperTag="true" WrapperTagName="p" /
-                <dot:Button ButtonTagName="button" class="button with-borders" Text="Začít kurz udarma ještě teď">
-            </div>
-            <div>
-                <cc:SvgToHtml Source="images/Illustrations/header-image.svg" RenderSettings.Mode="Server"/>
-            </div>
-        </section>
+        <dot:ContentPlaceHolder ID="HeaderContent" />
     </header>
     <main>
         <dot:ContentPlaceHolder ID="MainContent" />
     </main>
-    <footer>
+    <footer RenderSettings.Mode="Server">
         <div class="footer-links">
             <h3><a target="_blank" href="https://www.dotvvm.com/">www.dotvvm.com</a></h3>
         </div>

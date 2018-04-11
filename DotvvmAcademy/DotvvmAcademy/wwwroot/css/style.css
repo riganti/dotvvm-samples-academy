@@ -150,10 +150,13 @@ elements-of-type(html5-block) {
   font-weight: 600;
   text-decoration: none;
   min-width: 15rem;
-  transition: all 0.3s; }
+  transition: all 0.3s;
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.6rem; }
   .button:hover, .button:focus {
     text-decoration: none;
-    background-color: #ffce1c;
+    background-color: #ffc803;
     transition: all 0.3s;
     outline: none; }
   .button.with-borders {
@@ -602,63 +605,18 @@ p, span, a {
   font-family: "Open Sans", sans-serif; }
 
 .lessons-container {
-  width: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-flex;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-direction: normal;
-  -webkit-box-orient: horizontal;
-  -webkit-flex-direction: row;
-  -moz-flex-direction: row;
-  -ms-flex-direction: row;
   flex-direction: row;
-  -webkit-flex-wrap: wrap;
-  -moz-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  -webkit-justify-content: space-between;
-  -moz-justify-content: space-between;
-  justify-content: space-between;
-  -webkit-box-align: stretch;
-  -ms-flex-align: stretch;
-  -webkit-align-items: stretch;
-  -moz-align-items: stretch;
-  align-items: stretch; }
-  .lessons-container > * {
-    -webkit-box-flex: 0;
-    -webkit-flex-grow: 0;
-    -moz-flex-grow: 0;
-    -ms-flex-positive: 0;
-    flex-grow: 0;
-    -webkit-flex-shrink: 0;
-    -moz-flex-shrink: 0;
-    -ms-flex-negative: 0;
-    flex-shrink: 0;
-    -webkit-flex-basis: 24%;
-    -moz-flex-basis: 24%;
-    -ms-flex-preferred-size: 24%;
-    flex-basis: 24%;
-    width: 24%;
-    max-width: 24%;
-    box-sizing: border-box; }
-  @media only screen and (max-width: 480px) {
+  justify-content: space-between; }
+  @media only screen and (max-width: 768px) {
     .lessons-container {
-      -webkit-box-direction: normal;
-      -webkit-box-orient: vertical;
-      -webkit-flex-direction: column;
-      -moz-flex-direction: column;
-      -ms-flex-direction: column;
-      flex-direction: column; }
-      .lessons-container > * {
-        width: 100%; }
-        .lessons-container > *:not(:last-child) {
-          margin-bottom: 1rem; } }
+      justify-content: center; } }
 
 .lessons-item {
+  flex: 0 0 24%;
+  max-width: 24%;
+  width: 24%;
   background-color: #3c3d3b;
   text-align: center;
   color: #fff;
@@ -666,14 +624,39 @@ p, span, a {
   box-sizing: border-box;
   padding-bottom: 10rem;
   position: relative; }
+  @media only screen and (max-width: 1440px) {
+    .lessons-item {
+      padding: 2rem;
+      padding-bottom: 7rem; } }
+  @media only screen and (max-width: 1200px) {
+    .lessons-item {
+      flex: 0 0 49%;
+      max-width: 49%;
+      width: 49%; }
+      .lessons-item:first-child, .lessons-item:nth-child(2) {
+        margin-bottom: 3rem; } }
+  @media only screen and (max-width: 768px) {
+    .lessons-item {
+      flex: 0 0 65%;
+      max-width: 65%;
+      width: 65%;
+      margin-bottom: 3rem; } }
+  @media only screen and (max-width: 480px) {
+    .lessons-item {
+      flex: 0 0 100%;
+      max-width: 100%;
+      width: 100%; } }
   .lessons-item > svg {
     display: block;
     width: 50%;
     margin: 0 auto;
-    margin-bottom: 1rem; }
+    margin-bottom: 1rem;
+    min-width: 15rem; }
   .lessons-item h2 {
     margin-bottom: 1rem; }
   .lessons-item p {
+    display: block;
+    min-height: 3.5rem;
     margin-bottom: 1.5rem;
     font-size: 1.2rem; }
   .lessons-item:before, .lessons-item:after {
@@ -691,12 +674,17 @@ p, span, a {
 
 .lang-switcher {
   position: relative;
-  width: 15rem;
+  min-width: 20rem;
   display: flex;
   flex-wrap: nowrap;
   justify-content: flex-start;
   align-items: center;
-  background-color: #3c3d3b; }
+  background-color: #3c3d3b;
+  z-index: 10; }
+  @media only screen and (max-width: 480px) {
+    .lang-switcher {
+      width: auto;
+      min-width: unset; } }
   .lang-switcher_list {
     position: absolute;
     top: 100%;
@@ -704,7 +692,15 @@ p, span, a {
     height: 0;
     overflow: hidden;
     transition: all 0.3s;
-    left: 4.5rem; }
+    background-color: #fff;
+    left: 4.5rem;
+    border: 0.1rem solid transparent;
+    transform: translateY(-0.2rem);
+    z-index: 9; }
+    @media only screen and (max-width: 480px) {
+      .lang-switcher_list {
+        width: calc(100% - .2rem);
+        left: 0; } }
     .lang-switcher_list a {
       text-align: left;
       display: block;
@@ -718,9 +714,9 @@ p, span, a {
         color: #fff;
         transition: all 0.3s; }
     .lang-switcher_list.open {
-      height: 5.2rem;
+      height: 7.8rem;
       transition: all 0.3s;
-      border: 0.1rem solid transparent; }
+      transform: translateY(-0.1rem); }
 
 .lang-btn {
   display: flex;
@@ -731,49 +727,47 @@ p, span, a {
   width: 100%;
   cursor: pointer;
   height: 3rem;
-  position: relative; }
-  .lang-btn:after {
-    position: absolute;
-    content: '';
-    width: 3rem;
-    height: 3rem;
-    top: 0;
-    right: -2.1rem;
-    background-color: #fff;
-    transform: rotate(45deg); }
+  position: relative;
+  text-align: center; }
   .lang-btn svg {
     height: 100%;
     width: auto; }
   .lang-btn p {
-    padding-left: 1rem;
+    display: inline-block;
+    margin: 0 auto;
     box-sizing: border-box;
     color: #fff; }
+    @media only screen and (max-width: 480px) {
+      .lang-btn p {
+        display: none; } }
   .lang-btn.en {
     background-color: #3c3b6e; }
     .lang-btn.en + div {
       border-color: #3c3b6e;
       width: calc(100% - 5.9rem);
       left: 5.7rem; }
+      @media only screen and (max-width: 480px) {
+        .lang-btn.en + div {
+          width: calc(100% - .2rem);
+          left: 0; } }
       .lang-btn.en + div a:hover {
         background-color: #3c3b6e; }
-      .lang-btn.en + div a:first-child {
-        display: none; }
   .lang-btn.cz {
     background-color: #11457e; }
     .lang-btn.cz + div {
       border-color: #11457e; }
       .lang-btn.cz + div a:hover {
         background-color: #11457e; }
-      .lang-btn.cz + div a:nth-child(2) {
-        display: none; }
   .lang-btn.ru {
     background-color: #0039a6; }
     .lang-btn.ru + div {
       border-color: #0039a6; }
       .lang-btn.ru + div a:hover {
         background-color: #0039a6; }
-      .lang-btn.ru + div a:last-child {
-        display: none; }
+
+.progress-bar-title {
+  display: block;
+  margin-bottom: 1rem; }
 
 .lesson-progress-bar {
   display: flex;
@@ -784,6 +778,9 @@ p, span, a {
   position: relative;
   height: 3rem;
   margin-bottom: 5rem; }
+  @media only screen and (max-width: 980px) {
+    .lesson-progress-bar {
+      margin-bottom: 3rem; } }
   .lesson-progress-bar:after {
     position: absolute;
     left: 0;
@@ -985,7 +982,6 @@ div.dotvvm-bp-grid-view {
 
 nav {
   position: relative;
-  padding: 0 5rem;
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
@@ -1247,38 +1243,61 @@ nav {
       margin-top: 3rem; }
 
 .main-header {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between; }
-  .main-header > div {
-    flex: 0 0 55%;
-    max-width: 55%;
-    width: 55%; }
-    .main-header > div:first-child {
-      background-color: #3c3d3b;
-      color: #fff;
-      padding: 5rem;
-      box-sizing: border-box; }
-    .main-header > div:last-child {
-      flex: 0 0 45%;
-      max-width: 45%;
-      width: 45%;
-      position: relative; }
-      .main-header > div:last-child > svg {
-        height: 100%;
-        position: absolute;
-        top: 50%;
-        left: -2.5rem;
-        transform: translate(-50%, -50%); }
-    .main-header > div h1 {
+  background: -moz-linear-gradient(left, #3c3d3b 0%, #3c3d3b 65%, #fff 65%, #fff 100%);
+  background: -webkit-linear-gradient(left, #3c3d3b 0%, #3c3d3b 65%, #fff 65%, #fff 100%);
+  background: linear-gradient(to right, #3c3d3b 0%, #3c3d3b 65%, #fff 65%, #fff 100%); }
+  @media only screen and (max-width: 1440px) {
+    .main-header {
+      background: -moz-linear-gradient(left, #3c3d3b 0%, #3c3d3b 80%, #fff 80%, #fff 100%);
+      background: -webkit-linear-gradient(left, #3c3d3b 0%, #3c3d3b 80%, #fff 80%, #fff 100%);
+      background: linear-gradient(to right, #3c3d3b 0%, #3c3d3b 80%, #fff 80%, #fff 100%); } }
+  @media only screen and (max-width: 1200px) {
+    .main-header {
+      background: #3c3d3b; } }
+  @media only screen and (max-width: 980px) {
+    .main-header {
+      background: rgba(78, 78, 77, 0.9); } }
+  .main-header > div > div {
+    padding: 5rem 0;
+    position: relative;
+    color: #fff; }
+    @media only screen and (max-width: 980px) {
+      .main-header > div > div {
+        text-align: center;
+        padding: 3rem 0; } }
+    .main-header > div > div > svg {
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 60%;
+      transform: translateX(-50%);
+      transition: all 0.3s; }
+      @media only screen and (max-width: 1440px) {
+        .main-header > div > div > svg {
+          left: 75%;
+          transition: all 0.3s; } }
+      @media only screen and (max-width: 1200px) {
+        .main-header > div > div > svg {
+          left: 85%; } }
+      @media only screen and (max-width: 980px) {
+        .main-header > div > div > svg {
+          left: 45%;
+          z-index: -1; } }
+      @media only screen and (max-width: 480px) {
+        .main-header > div > div > svg {
+          left: 40%; } }
+    .main-header > div > div > h1 {
       text-transform: uppercase;
       font-size: 4.2rem;
       line-height: calc($font-size-xxl + .2rem);
       font-weight: 300;
       position: relative;
       padding-bottom: 5rem; }
-      .main-header > div h1:before {
+      @media only screen and (max-width: 480px) {
+        .main-header > div > div > h1 {
+          font-size: 2.2rem;
+          line-height: calc($font-size-xl + .2rem); } }
+      .main-header > div > div > h1:before {
         position: absolute;
         content: '';
         top: calc(100% - 2.5rem);
@@ -1287,7 +1306,41 @@ nav {
         height: .2rem;
         transform: translateY(-50%);
         background-color: #fff; }
-    .main-header > div p {
+        @media only screen and (max-width: 980px) {
+          .main-header > div > div > h1:before {
+            left: 50%;
+            transform: translate(-50%, -50%); } }
+    .main-header > div > div p {
       padding-bottom: 2.5rem; }
+
+.section-coffee {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background-color: #f2f2f2;
+  padding: 15rem 0; }
+  .section-coffee > div {
+    flex: 0 0 50%;
+    position: relative; }
+    .section-coffee > div svg {
+      display: block;
+      height: auto;
+      width: 70%;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%); }
+    .section-coffee > div h2 {
+      display: block;
+      margin-bottom: 3rem;
+      font-size: 4.2rem;
+      font-weight: 300; }
+    .section-coffee > div p {
+      display: block;
+      margin-bottom: 2rem;
+      font-size: 1.8rem; }
+    .section-coffee > div:last-child {
+      flex: 0 0 50%; }
 
 /*# sourceMappingURL=style.css.map */
