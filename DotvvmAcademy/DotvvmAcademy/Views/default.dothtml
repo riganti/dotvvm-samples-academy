@@ -4,10 +4,17 @@
 <dot:Content ContentPlaceHolderID="MainContent">
     <section class="section-lections">
         <div class="container-large">
+
+            <dot:Repeater DataSource="{value: Lessons}" class="lesson-progress-bar">
+                <div class="{value: IsFinished ? "progress-item completed" : "progress-item"}">
+                    <span>{{value: Number}}</span>
+                </div>
+            </dot:Repeater>
+
             <dot:Repeater DataSource="{value: Lessons}" class="lessons-container" RenderSettings.Mode="Server">
                 <%-- {{value: Number}}, Visible="{value: IsFinished}" --%>
                 <div class="lessons-item">
-                    <cc:SvgToHtml Source="{value: ImageUrl}" >
+                    <cc:SvgToHtml Source="{value: ImageUrl}">
                     </cc:SvgToHtml>
                     <h2>{{value: Title}}</h2>
                     <dot:HtmlLiteral Html="{value: Description}" RenderWrapperTag="true" WrapperTagName="p" />
@@ -20,7 +27,7 @@
                                    class="button" />
                 </div>
 
-                
+
             </dot:Repeater>
         </div>
     </section>

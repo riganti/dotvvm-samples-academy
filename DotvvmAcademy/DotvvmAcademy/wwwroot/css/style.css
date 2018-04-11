@@ -775,8 +775,68 @@ p, span, a {
       .lang-btn.ru + div a:last-child {
         display: none; }
 
+.lesson-progress-bar {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  height: 3rem;
+  margin-bottom: 5rem; }
+  .lesson-progress-bar:after {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    display: block;
+    width: 100%;
+    height: .2rem;
+    background-color: #aeaeae;
+    content: '';
+    transform: translateY(-50%);
+    z-index: -1; }
+
+.progress-item {
+  position: relative;
+  flex: 1 1 auto; }
+  .progress-item:after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 0%;
+    content: '';
+    height: .2rem;
+    background-color: #ffd94f;
+    transform: translateY(-50%);
+    z-index: 1;
+    transition: all 0.3s; }
+  .progress-item > span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    width: 3rem;
+    height: 3rem;
+    text-align: center;
+    border: 0.2rem solid #aeaeae;
+    border-radius: 100%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    line-height: 3rem;
+    color: #aeaeae;
+    z-index: 2; }
+  .progress-item.completed:after {
+    width: 100%;
+    transition: all 0.3s; }
+  .progress-item.completed > span {
+    border-color: #ffd94f;
+    color: #3c3d3b;
+    transition-property: all;
+    transition-delay: .15s;
+    transition-duration: .15s; }
+
 .box-wrapper {
-  border: 1px solid #808080;
+  border: 1px solid #aeaeae;
   border-radius: .5rem;
   padding: 2rem;
   display: inline-block;
@@ -832,16 +892,16 @@ div.dotvvm-bp-grid-view {
     content: "\f0de";
     height: 0.8rem; }
   div.dotvvm-bp-grid-view > table {
-    border: 1px solid #808080;
+    border: 1px solid #aeaeae;
     width: 100%; }
     div.dotvvm-bp-grid-view > table th, div.dotvvm-bp-grid-view > table td {
-      border: 1px solid #808080; }
+      border: 1px solid #aeaeae; }
     div.dotvvm-bp-grid-view > table > thead {
       background-color: #3c3d3b;
       color: #fff; }
       div.dotvvm-bp-grid-view > table > thead > tr > th {
         padding: 0.5rem 1.5rem 0.5rem 0.8rem;
-        border: 1px solid #808080; }
+        border: 1px solid #aeaeae; }
         div.dotvvm-bp-grid-view > table > thead > tr > th a, div.dotvvm-bp-grid-view > table > thead > tr > th span {
           color: #fff;
           font-weight: 500; }
