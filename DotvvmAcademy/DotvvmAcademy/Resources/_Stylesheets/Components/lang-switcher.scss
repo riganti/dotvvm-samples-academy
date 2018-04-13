@@ -72,6 +72,14 @@
     svg {
         height: 100%;
         width: auto;
+        position: relative;
+        z-index: 15;
+
+        @include res-max-mobile {
+            -webkit-box-shadow: 2px -2px 5px 0px rgba(191,191,191,1);
+            -moz-box-shadow: 2px -2px 5px 0px rgba(191,191,191,1);
+            box-shadow: 2px -2px 5px 0px rgba(191,191,191,1);
+        }
     }
 
     p {

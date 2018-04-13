@@ -731,7 +731,14 @@ p, span, a {
   text-align: center; }
   .lang-btn svg {
     height: 100%;
-    width: auto; }
+    width: auto;
+    position: relative;
+    z-index: 15; }
+    @media only screen and (max-width: 480px) {
+      .lang-btn svg {
+        -webkit-box-shadow: 2px -2px 5px 0px #bfbfbf;
+        -moz-box-shadow: 2px -2px 5px 0px #bfbfbf;
+        box-shadow: 2px -2px 5px 0px #bfbfbf; } }
   .lang-btn p {
     display: inline-block;
     margin: 0 auto;
