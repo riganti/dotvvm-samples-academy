@@ -1326,14 +1326,22 @@ nav {
   flex-wrap: wrap;
   justify-content: space-between;
   background-color: #f2f2f2;
-  padding: 15rem 0; }
+  padding: 10rem 0; }
+  @media only screen and (max-width: 768px) {
+    .section-coffee {
+      padding: 3rem 0; } }
   .section-coffee > div {
-    flex: 0 0 50%;
+    flex: 0 0 40%;
+    width: 40%;
+    max-width: 40%;
     position: relative; }
+    @media only screen and (max-width: 768px) {
+      .section-coffee > div {
+        display: none; } }
     .section-coffee > div svg {
       display: block;
       height: auto;
-      width: 70%;
+      width: 75%;
       position: absolute;
       top: 50%;
       left: 0;
@@ -1343,11 +1351,25 @@ nav {
       margin-bottom: 3rem;
       font-size: 4.2rem;
       font-weight: 300; }
+      @media only screen and (max-width: 768px) {
+        .section-coffee > div h2 {
+          font-size: 3rem; } }
     .section-coffee > div p {
       display: block;
       margin-bottom: 2rem;
       font-size: 1.8rem; }
     .section-coffee > div:last-child {
-      flex: 0 0 50%; }
+      display: block;
+      flex: 0 0 60%;
+      width: 60%;
+      max-width: 60%; }
+      @media only screen and (max-width: 768px) {
+        .section-coffee > div:last-child {
+          padding: 0 2rem;
+          box-sizing: border-box;
+          width: 100%;
+          flex: 0 0 100%;
+          max-width: none;
+          text-align: center; } }
 
 /*# sourceMappingURL=style.css.map */
