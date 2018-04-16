@@ -6,10 +6,9 @@
     flex-wrap: wrap;
     justify-content: space-between;
 
-    @include res-max-tablet{
+    @include res-max-tablet {
         justify-content: center;
     }
-
 }
 
 .lessons-item {
@@ -34,7 +33,7 @@
         max-width: 49%;
         width: 49%;
 
-        &:first-child, &:nth-child(2){
+        &:first-child, &:nth-child(2) {
             margin-bottom: 3rem;
         }
     }
@@ -50,6 +49,11 @@
         flex: 0 0 100%;
         max-width: 100%;
         width: 100%;
+    }
+
+    &.finished > svg {
+        width: 45%;
+        min-width: 12rem;
     }
 
     > svg {

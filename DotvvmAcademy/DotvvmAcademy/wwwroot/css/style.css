@@ -646,6 +646,9 @@ p, span, a {
       flex: 0 0 100%;
       max-width: 100%;
       width: 100%; } }
+  .lessons-item.finished > svg {
+    width: 45%;
+    min-width: 12rem; }
   .lessons-item > svg {
     display: block;
     width: 50%;

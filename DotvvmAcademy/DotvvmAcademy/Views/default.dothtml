@@ -9,7 +9,7 @@
                 <dot:HtmlLiteral Html="{resource: LessonNames.Base_MainDesc}" RenderWrapperTag="true" WrapperTagName="p" /
                 <dot:Button ButtonTagName="button" class="button" Text="{resource: LessonNames.Btn_StartCourse}"></dot:Button>
                 <cc:SvgToHtml Source="images/Illustrations/header-image.svg" RenderSettings.Mode="Server" />
-            </div>  
+            </div>
         </div>
     </section>
 </dot:Content>
@@ -26,8 +26,8 @@
             </dot:Repeater>
 
             <dot:Repeater DataSource="{value: Lessons}" class="lessons-container" RenderSettings.Mode="Server">
-                <div class="lessons-item">
-                    <cc:SvgToHtml Source="{value: ImageUrl}">
+                <div class="{value: IsFinished ? "lessons-item finished" : "lessons-item" }">
+                    <cc:SvgToHtml Source="{value:IsFinished ? "images/Icons/medal.svg" : ImageUrl}">
                     </cc:SvgToHtml>
                     <h2>{{value: Title}}</h2>
                     <dot:HtmlLiteral Html="{value: Description}" RenderWrapperTag="true" WrapperTagName="p" />
