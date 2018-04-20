@@ -26,15 +26,13 @@
         <dot:ContentPlaceHolder ID="MainContent" />
     </main>
     <footer RenderSettings.Mode="Server">
-        <div class="footer-links">
-            <h3><a target="_blank" href="https://www.dotvvm.com/">www.dotvvm.com</a></h3>
+        <div class="main-link">
+            <a target="_blank" href="https://www.dotvvm.com/">www.dotvvm.com</a>
         </div>
         <div class="footer-links">
-            <p style="padding-top: 20px">
-                <a target="_blank" href="https://www.dotvvm.com/docs/latest">{{resource: LessonNames.DocumentationText}}</a> |
-                <a target="_blank" href="https://www.dotvvm.com/docs/tutorials/introduction/latest">{{resource: LessonNames.TutorialsText}}</a> |
-                <a target="_blank" href="https://www.dotvvm.com/docs/samples/latest">{{resource: LessonNames.SamplesText}}</a>
-            </p>
+            <a target="_blank" href="https://www.dotvvm.com/docs/latest">{{resource: LessonNames.DocumentationText}}</a>
+            <a target="_blank" href="https://www.dotvvm.com/docs/tutorials/introduction/latest">{{resource: LessonNames.TutorialsText}}</a>
+            <a target="_blank" href="https://www.dotvvm.com/docs/samples/latest">{{resource: LessonNames.SamplesText}}</a>
         </div>
     </footer>
 

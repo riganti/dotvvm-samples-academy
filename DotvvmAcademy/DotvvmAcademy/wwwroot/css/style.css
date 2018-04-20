@@ -1323,6 +1323,46 @@ nav {
     .main-header > div > div p {
       padding-bottom: 2.5rem; }
 
+.tags-container {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 25%;
+  transform: translate(10%, -50%);
+  height: 30rem; }
+  @media only screen and (max-width: 1440px) {
+    .tags-container {
+      display: none; } }
+  .tags-container > div {
+    text-align: center;
+    margin-bottom: 3rem; }
+    .tags-container > div:first-child {
+      margin-bottom: 7rem; }
+    .tags-container > div:nth-child(2) {
+      margin-bottom: 3rem;
+      text-align: right; }
+      .tags-container > div:nth-child(2) svg {
+        height: 5rem; }
+    .tags-container > div:nth-child(3) {
+      text-align: left;
+      margin-bottom: 1rem; }
+      .tags-container > div:nth-child(3) a {
+        margin-left: 6rem; }
+      .tags-container > div:nth-child(3) svg {
+        height: 6rem; }
+    .tags-container > div:last-child {
+      text-align: right; }
+    .tags-container > div svg {
+      height: 4rem;
+      transform: scale(1, 1);
+      transition: all 0.3s;
+      width: auto; }
+    .tags-container > div a {
+      text-decoration: none; }
+      .tags-container > div a:hover svg {
+        transform: scale(1.1, 1.1);
+        transition: all 0.3s; }
+
 .section-coffee {
   display: flex;
   flex-direction: row;
@@ -1374,5 +1414,38 @@ nav {
           flex: 0 0 100%;
           max-width: none;
           text-align: center; } }
+
+footer {
+  background-color: #3c3d3b;
+  background-color: #090909; }
+  footer .footer-links {
+    padding-bottom: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    max-width: 40rem;
+    margin: 0 auto; }
+    footer .footer-links a {
+      text-decoration: none;
+      color: #fff;
+      font-size: 1.8rem; }
+      @media only screen and (max-width: 768px) {
+        footer .footer-links a {
+          flex: 0 0 100%;
+          display: block;
+          margin-bottom: 1rem;
+          text-align: center; }
+          footer .footer-links a:last-child {
+            margin-bottom: 0; } }
+  footer .main-link {
+    padding-top: 2rem; }
+    footer .main-link a {
+      text-decoration: none;
+      color: #fff;
+      font-size: 2.2rem;
+      padding-bottom: 3rem;
+      display: block;
+      text-align: center; }
 
 /*# sourceMappingURL=style.css.map */

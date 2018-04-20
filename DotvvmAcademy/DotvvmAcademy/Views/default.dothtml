@@ -9,6 +9,28 @@
                 <dot:HtmlLiteral Html="{resource: LessonNames.Base_MainDesc}" RenderWrapperTag="true" WrapperTagName="p" /
                 <dot:Button ButtonTagName="button" class="button" Text="{resource: LessonNames.Btn_StartCourse}"></dot:Button>
                 <cc:SvgToHtml Source="images/Illustrations/header-image.svg" RenderSettings.Mode="Server" />
+                <div class="tags-container">
+                    <div>
+                        <a href="https://www.dotvvm.com/" target="_blank">
+                            <cc:SvgToHtml Source="images/Illustrations/tag-dotvvm.svg" RenderSettings.Mode="Server" />
+                        </a>
+                    </div>
+                    <div>
+                        <a href="https://www.dotvvm.com/docs/samples/latest" target="_blank">
+                            <cc:SvgToHtml Source="images/Illustrations/tag-samples.svg" RenderSettings.Mode="Server" />
+                        </a>
+                    </div>
+                    <div>
+                        <a href="https://www.dotvvm.com/docs/tutorials/introduction/latest" target="_blank">
+                            <cc:SvgToHtml Source="images/Illustrations/tag-tutorials.svg" RenderSettings.Mode="Server" />
+                        </a>
+                    </div>
+                    <div>
+                        <a href="https://www.dotvvm.com/docs/latest" target="_blank">
+                            <cc:SvgToHtml Source="images/Illustrations/tag-doc.svg" RenderSettings.Mode="Server" />
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
