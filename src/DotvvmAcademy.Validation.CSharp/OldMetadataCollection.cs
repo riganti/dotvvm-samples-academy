@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace DotvvmAcademy.Validation.CSharp
 {
-    public sealed class MetadataCollection
+    public sealed class OldMetadataCollection
     {
         private ConcurrentDictionary<MetadataName, ConcurrentDictionary<string, object>> primaryStorage
             = new ConcurrentDictionary<MetadataName, ConcurrentDictionary<string, object>>();

@@ -20,7 +20,7 @@ namespace DotvvmAcademy.Validation.CSharp
         private readonly SymbolLocator locator;
         private readonly ImmutableArray<MetadataName> names;
 
-        public SymbolAccessibilityAnalyzer(MetadataCollection metadata, SymbolLocator locator) : base(metadata)
+        public SymbolAccessibilityAnalyzer(OldMetadataCollection metadata, SymbolLocator locator) : base(metadata)
         {
             names = metadata.GetNamesWithProperty(MetadataKey).ToImmutableArray();
             this.locator = locator;

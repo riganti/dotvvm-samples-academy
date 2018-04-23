@@ -38,7 +38,7 @@ public class ThirdClass : FirstInterface, SecondInterface
             var secondClass = Factory.CreateTypeName("", "SecondClass");
             var thirdClass = Factory.CreateTypeName("", "ThirdClass");
 
-            var metadata = new MetadataCollection();
+            var metadata = new OldMetadataCollection();
             metadata[firstClass, InterfaceImplementationAnalyzer.PositiveMetadataKey] = ImmutableArray.Create(firstInterface);
             metadata[secondClass, InterfaceImplementationAnalyzer.PositiveMetadataKey] = ImmutableArray.Create(secondInterface);
             metadata[secondClass, InterfaceImplementationAnalyzer.NegativeMetadataKey] = ImmutableArray.Create(firstInterface);

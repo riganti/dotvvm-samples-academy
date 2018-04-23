@@ -19,7 +19,7 @@ namespace DotvvmAcademy.Validation.CSharp
 
         private readonly RoslynMetadataNameProvider nameProvider;
 
-        public SymbolAllowedAnalyzer(MetadataCollection metadata, RoslynMetadataNameProvider nameProvider) : base(metadata)
+        public SymbolAllowedAnalyzer(OldMetadataCollection metadata, RoslynMetadataNameProvider nameProvider) : base(metadata)
         {
             this.nameProvider = nameProvider;
         }

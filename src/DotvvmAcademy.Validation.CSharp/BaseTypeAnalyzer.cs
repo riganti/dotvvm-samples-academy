@@ -20,7 +20,7 @@ namespace DotvvmAcademy.Validation.CSharp
         private readonly SymbolLocator locator;
         private readonly ImmutableArray<MetadataName> names;
 
-        public BaseTypeAnalyzer(MetadataCollection metadata, SymbolLocator locator) : base(metadata)
+        public BaseTypeAnalyzer(OldMetadataCollection metadata, SymbolLocator locator) : base(metadata)
         {
             names = metadata.GetNamesWithProperty(MetadataKey).ToImmutableArray();
             this.locator = locator;

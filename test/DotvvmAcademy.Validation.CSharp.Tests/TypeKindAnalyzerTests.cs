@@ -33,7 +33,7 @@ public delegate void SampleDelegate();";
             var sampleEnum = Factory.CreateTypeName("", "SampleEnum");
             var sampleDelegate = Factory.CreateTypeName("", "SampleDelegate");
 
-            var metadata = new MetadataCollection();
+            var metadata = new OldMetadataCollection();
             metadata[sampleClass, TypeKindAnalyzer.MetadataKey] = DesiredTypeKind.Class;
             metadata[sampleStruct, TypeKindAnalyzer.MetadataKey] = DesiredTypeKind.Class | DesiredTypeKind.Struct;
             metadata[sampleEnum, TypeKindAnalyzer.MetadataKey] = DesiredTypeKind.Array | DesiredTypeKind.Pointer;

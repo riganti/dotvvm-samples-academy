@@ -19,7 +19,7 @@ namespace DotvvmAcademy.Validation.CSharp
 
         public static IServiceCollection AddStaticAnalysis(this IServiceCollection services)
         {
-            services.AddScoped<MetadataCollection>();
+            services.AddScoped<OldMetadataCollection>();
             services.AddScoped<ValidationDiagnosticAnalyzer, BaseTypeAnalyzer>();
             services.AddScoped<ValidationDiagnosticAnalyzer, DeclarationExistenceAnalyzer>();
             services.AddScoped<ValidationDiagnosticAnalyzer, InterfaceImplementationAnalyzer>();

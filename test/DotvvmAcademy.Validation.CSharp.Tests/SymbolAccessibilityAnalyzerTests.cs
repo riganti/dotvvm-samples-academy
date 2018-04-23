@@ -28,7 +28,7 @@ public class SampleClass
             var testProperty = Factory.CreatePropertyName(sampleClass, "TestProperty", @string);
             var testMethod = Factory.CreateMethodName(sampleClass, "TestMethod");
 
-            var metadata = new MetadataCollection();
+            var metadata = new OldMetadataCollection();
             metadata[sampleClass, SymbolAccessibilityAnalyzer.MetadataKey] = DesiredAccessibility.Public;
             metadata[testField, SymbolAccessibilityAnalyzer.MetadataKey] = DesiredAccessibility.Private | DesiredAccessibility.Protected;
             metadata[testProperty, SymbolAccessibilityAnalyzer.MetadataKey] = DesiredAccessibility.Protected | DesiredAccessibility.Public;

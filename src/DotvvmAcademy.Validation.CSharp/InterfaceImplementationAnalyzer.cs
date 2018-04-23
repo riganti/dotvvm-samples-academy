@@ -30,7 +30,7 @@ namespace DotvvmAcademy.Validation.CSharp
         private readonly ImmutableArray<MetadataName> negativeNames;
         private readonly ImmutableArray<MetadataName> positiveNames;
 
-        public InterfaceImplementationAnalyzer(MetadataCollection metadata, SymbolLocator locator) : base(metadata)
+        public InterfaceImplementationAnalyzer(OldMetadataCollection metadata, SymbolLocator locator) : base(metadata)
         {
             positiveNames = metadata.GetNamesWithProperty(PositiveMetadataKey).ToImmutableArray();
             negativeNames = metadata.GetNamesWithProperty(NegativeMetadataKey).ToImmutableArray();

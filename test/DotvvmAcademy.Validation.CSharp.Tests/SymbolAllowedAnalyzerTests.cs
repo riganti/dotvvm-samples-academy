@@ -33,7 +33,7 @@ public class TestClass
             var contains = Factory.CreateMethodName(@string, "Contains", @bool, parameters: ImmutableArray.Create(@string));
             var endsWith = Factory.CreateMethodName(@string, "EndsWith", @bool, parameters: ImmutableArray.Create(@string));
 
-            var metadata = new MetadataCollection();
+            var metadata = new OldMetadataCollection();
             metadata[clone, SymbolAllowedAnalyzer.MetadataKey] = true;
             metadata[compareTo, SymbolAllowedAnalyzer.MetadataKey] = true;
             metadata[@string, SymbolAllowedAnalyzer.MetadataKey] = true;

@@ -30,7 +30,7 @@ public class Three : Two
             var two = Factory.CreateTypeName("", "Two");
             var three  = Factory.CreateTypeName("", "Three");
 
-            var metadata = new MetadataCollection();
+            var metadata = new OldMetadataCollection();
             metadata[one, BaseTypeAnalyzer.MetadataKey] = @object;
             metadata[two, BaseTypeAnalyzer.MetadataKey] = one;
             metadata[three, BaseTypeAnalyzer.MetadataKey] = one;

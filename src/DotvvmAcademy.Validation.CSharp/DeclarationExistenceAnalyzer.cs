@@ -27,7 +27,7 @@ namespace DotvvmAcademy.Validation.CSharp
         private readonly SymbolLocator locator;
         private readonly ImmutableArray<MetadataName> names;
 
-        public DeclarationExistenceAnalyzer(MetadataCollection metadata, SymbolLocator locator) : base(metadata)
+        public DeclarationExistenceAnalyzer(OldMetadataCollection metadata, SymbolLocator locator) : base(metadata)
         {
             names = metadata.GetNamesWithProperty(MetadataKey).ToImmutableArray();
             this.locator = locator;
