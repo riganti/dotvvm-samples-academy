@@ -9,10 +9,11 @@ namespace DotvvmAcademy.Validation.Dothtml
     {
         private readonly DothtmlNode node;
 
-        public DothtmlValidationDiagnostic(DothtmlNode node, string message)
+        public DothtmlValidationDiagnostic(DothtmlNode node, string message, ValidationDiagnosticSeverity severity = ValidationDiagnosticSeverity.Error)
         {
             this.node = node;
             Message = message;
+            Severity = severity;
             Location = new DothtmlValidationDiagnosticLocation(node);
         }
 
@@ -24,6 +25,6 @@ namespace DotvvmAcademy.Validation.Dothtml
 
         public override string Name { get; } = "Dothtml Node Error";
 
-        public override ValidationDiagnosticSeverity Severity { get; } = ValidationDiagnosticSeverity.Error;
+        public override ValidationDiagnosticSeverity Severity { get; }
     }
 }

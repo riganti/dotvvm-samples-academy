@@ -8,29 +8,23 @@ namespace DotvvmAcademy.Validation.Dothtml
 {
     public class ErrorAggregatingVisitor : ResolvedControlTreeVisitor
     {
-        public List<ValidationDiagnostic> Errors { get; } = new List<ValidationDiagnostic>();
+        public List<ValidationDiagnostic> Diagnostics { get; } = new List<ValidationDiagnostic>();
 
         public override void VisitControl(ResolvedControl control)
         {
-            if (control.DothtmlNode.HasNodeErrors)
-            {
-                AddErrors(control.DothtmlNode);
-            }
+            AddErrors(control.DothtmlNode);
+            AddWarnings(control.DothtmlNode);
             base.VisitControl(control);
         }
 
         public override void VisitView(ResolvedTreeRoot view)
         {
-            if (view.DothtmlNode.HasNodeErrors)
-            {
-                AddErrors(view.DothtmlNode);
-            }
+            AddErrors(view.DothtmlNode);
+            AddWarnings(view.DothtmlNode);
             foreach (var directive in ((DothtmlRootNode)view.DothtmlNode).Directives)
             {
-                if (directive.HasNodeErrors)
-                {
-                    AddErrors(directive);
-                }
+                AddErrors(directive);
+                AddWarnings(directive);
             }
             base.VisitView(view);
         }
@@ -42,7 +36,7 @@ namespace DotvvmAcademy.Validation.Dothtml
             {
                 foreach(var exception in errors.Exceptions)
                 {
-                    Errors.Add(new DothtmlValidationDiagnostic(propertyBinding.DothtmlNode, exception.Message));
+                    Diagnostics.Add(new DothtmlValidationDiagnostic(propertyBinding.DothtmlNode, exception.Message));
                 }
             }
         }
@@ -51,7 +45,15 @@ namespace DotvvmAcademy.Validation.Dothtml
         {
             foreach (var error in node.NodeErrors)
             {
-                Errors.Add(new DothtmlValidationDiagnostic(node, error));
+                Diagnostics.Add(new DothtmlValidationDiagnostic(node, error));
+            }
+        }
+
+        private void AddWarnings(DothtmlNode node)
+        {
+            foreach (var warning in node.NodeWarnings)
+            {
+                Diagnostics.Add(new DothtmlValidationDiagnostic(node, warning, ValidationDiagnosticSeverity.Warning));
             }
         }
     }
