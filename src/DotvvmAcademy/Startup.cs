@@ -48,10 +48,7 @@ namespace DotvvmAcademy
             services.AddDataProtection();
             services.AddAuthorization();
             services.AddWebEncoders();
-            services.AddDotVVM(options =>
-            {
-                options.AddDefaultTempStorages("temp");
-            });
+            services.AddDotVVM();
         }
     }
 }

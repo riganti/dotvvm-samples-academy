@@ -39,12 +39,12 @@ namespace DotvvmAcademy.Validation.CSharp
             var containingClassName = $"{ContainingClassPrefix}{rewriteId.ToString("N")}";
             var typeAttributes = TypeAttributes.Class | TypeAttributes.Abstract | TypeAttributes.Sealed;
             var containingClass = new TypeDefinition(RewriterNamespace, containingClassName,
-                typeAttributes, module.Import(typeof(object)));
+                typeAttributes, module.ImportReference(typeof(object)));
 
             // Create Safeguard field
             var fieldAttributes = FieldAttributes.Static | FieldAttributes.Assembly;
             var field = new FieldDefinition(SafeguardFieldName, fieldAttributes,
-                module.Import(typeof(IAssemblySafeguard)));
+                module.ImportReference(typeof(IAssemblySafeguard)));
             containingClass.Fields.Add(field);
 
             // Create static constructor
@@ -55,9 +55,9 @@ namespace DotvvmAcademy.Validation.CSharp
                 MethodAttributes.SpecialName |
                 MethodAttributes.RTSpecialName;
             var staticConstructor = new MethodDefinition(".cctor", methodAttributes,
-                module.Import(typeof(void)));
+                module.ImportReference(typeof(void)));
             var il = staticConstructor.Body.GetILProcessor();
-            var safeguardConstructor = module.Import(typeof(DefaultAssemblySafeguard)
+            var safeguardConstructor = module.ImportReference(typeof(DefaultAssemblySafeguard)
                 .GetConstructor(new[] { typeof(int) }));
             il.Emit(OpCodes.Ldc_I4_1);
             il.Emit(OpCodes.Newobj, safeguardConstructor);
@@ -78,7 +78,7 @@ namespace DotvvmAcademy.Validation.CSharp
             }
 
             var il = method.Body.GetILProcessor();
-            var onInstruction = module.Import(typeof(DefaultAssemblySafeguard)
+            var onInstruction = module.ImportReference(typeof(DefaultAssemblySafeguard)
                 .GetMethod(nameof(DefaultAssemblySafeguard.OnInstruction)));
             var instructions = method.Body.Instructions.ToArray();
             for (int i = 0; i < instructions.Length; i++)
