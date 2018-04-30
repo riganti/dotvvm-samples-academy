@@ -5,11 +5,11 @@ using System.Text;
 
 namespace DotvvmAcademy.Validation.Dothtml
 {
-    internal class DothtmlValidationDiagnostic : ValidationDiagnostic
+    internal class DothtmlCompilerDiagnostic : ValidationDiagnostic
     {
         private readonly DothtmlNode node;
 
-        public DothtmlValidationDiagnostic(DothtmlNode node, string message, ValidationDiagnosticSeverity severity = ValidationDiagnosticSeverity.Error)
+        public DothtmlCompilerDiagnostic(DothtmlNode node, string message, ValidationDiagnosticSeverity severity = ValidationDiagnosticSeverity.Error)
         {
             this.node = node;
             Message = message;

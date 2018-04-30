@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DotvvmAcademy.Validation.Dothtml
 {
-    internal class DothtmlValidationDiagnosticLocation : ValidationDiagnosticLocation
+    public class DothtmlValidationDiagnosticLocation : ValidationDiagnosticLocation
     {
         private readonly DothtmlNode node;
 

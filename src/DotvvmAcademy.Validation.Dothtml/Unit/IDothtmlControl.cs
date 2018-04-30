@@ -1,20 +1,14 @@
-﻿using DotvvmAcademy.Validation.CSharp.Unit;
+﻿using DotVVM.Framework.Binding;
 
 namespace DotvvmAcademy.Validation.Dothtml.Unit
 {
     /// <summary>
-    /// A dothtml control e.g. HtmlGenericControl, TextBox, Button, etc.
+    /// A dothtml control
     /// </summary>
     public interface IDothtmlControl
     {
-        IDothtmlControlCollection Children();
+        IDothtmlControl this[int index] { get; }
 
-        void Prefix(string prefix);
-
-        IDothtmlProperty Property(string name);
-
-        void Tag(string tag);
-
-        void Type(CSharpTypeDescriptor controlType);
+        IDothtmlProperty GetProperty(DotvvmProperty property);
     }
 }

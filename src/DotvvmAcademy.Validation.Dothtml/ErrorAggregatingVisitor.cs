@@ -36,7 +36,7 @@ namespace DotvvmAcademy.Validation.Dothtml
             {
                 foreach(var exception in errors.Exceptions)
                 {
-                    Diagnostics.Add(new DothtmlValidationDiagnostic(propertyBinding.DothtmlNode, exception.Message));
+                    Diagnostics.Add(new DothtmlCompilerDiagnostic(propertyBinding.DothtmlNode, exception.Message));
                 }
             }
         }
@@ -45,7 +45,7 @@ namespace DotvvmAcademy.Validation.Dothtml
         {
             foreach (var error in node.NodeErrors)
             {
-                Diagnostics.Add(new DothtmlValidationDiagnostic(node, error));
+                Diagnostics.Add(new DothtmlCompilerDiagnostic(node, error));
             }
         }
 
@@ -53,7 +53,7 @@ namespace DotvvmAcademy.Validation.Dothtml
         {
             foreach (var warning in node.NodeWarnings)
             {
-                Diagnostics.Add(new DothtmlValidationDiagnostic(node, warning, ValidationDiagnosticSeverity.Warning));
+                Diagnostics.Add(new DothtmlCompilerDiagnostic(node, warning, ValidationDiagnosticSeverity.Warning));
             }
         }
     }

@@ -7,8 +7,6 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
     /// </summary>
     public interface IDothtmlView : IValidationUnit
     {
-        IDothtmlDirective Directive(string name);
-
-        IDothtmlControl RootControl();
+        IDothtmlControl GetRoot();
     }
 }

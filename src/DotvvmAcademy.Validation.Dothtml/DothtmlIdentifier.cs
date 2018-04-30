@@ -6,10 +6,10 @@ namespace DotvvmAcademy.Validation.Dothtml
 {
     public sealed class DothtmlIdentifier
     {
-        public string ControlName { get; }
-
-        public DothtmlIdentifier Parent { get; }
+        public string ControlType { get; }
 
         public int Index { get; }
+
+        public DothtmlIdentifier Parent { get; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Immutable;
 
 namespace DotvvmAcademy.Validation.Dothtml.Unit
 {
@@ -7,10 +7,8 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
     /// </summary>
     public interface IDothtmlProperty
     {
-        IDothtmlBinding Binding();
+        void ValidateBinding(DothtmlBindingKind kind, ImmutableArray<string> acceptableValues);
 
-        void HardcodedValue(IEnumerable<object> allowedValues);
-
-        IDothtmlControlCollection Template();
+        void ValidateValue(ImmutableArray<object> acceptedValues);
     }
 }
