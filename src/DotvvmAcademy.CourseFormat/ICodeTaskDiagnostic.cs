@@ -1,4 +1,4 @@
-﻿namespace DotvvmAcademy.CourseFormat.Models
+﻿namespace DotvvmAcademy.CourseFormat
 {
     public interface ICodeTaskDiagnostic
     {

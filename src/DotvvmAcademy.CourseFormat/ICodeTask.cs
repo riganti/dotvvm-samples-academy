@@ -1,9 +1,11 @@
 ﻿using System.Threading.Tasks;
 
-namespace DotvvmAcademy.CourseFormat.Models
+namespace DotvvmAcademy.CourseFormat
 {
     public interface ICodeTask
     {
+        CodeTaskId Id { get; }
+
         string Language { get; }
 
         string SourceText { get; }
