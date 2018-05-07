@@ -2,12 +2,12 @@
 
 namespace DotvvmAcademy.CourseFormat
 {
-    public interface ILesson
+    public interface ICourseVariant
     {
         string Annotation { get; }
 
-        LessonId Id { get; }
+        CourseVariantId Id { get; }
 
-        ImmutableArray<StepId> Steps { get; }
+        ImmutableArray<LessonId> Lessons { get; }
     }
 }

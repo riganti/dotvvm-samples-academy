@@ -2,10 +2,10 @@
 {
     public interface IStep
     {
-        CodeTaskId CodeTask { get; }
+        CodeTaskId CodeTaskId { get; }
 
         StepId Id { get; }
 
-        string SourceText { get; }
+        string Text { get; }
     }
 }

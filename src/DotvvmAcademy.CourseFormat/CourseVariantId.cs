@@ -3,14 +3,13 @@ using System.Diagnostics;
 
 namespace DotvvmAcademy.CourseFormat
 {
-    [DebuggerDisplay("LessonId: {Path}")]
-    public sealed class LessonId
+    [DebuggerDisplay("CourseVariantId: {Path}")]
+    public sealed class CourseVariantId
     {
-        public LessonId(CourseVariantId variantId, string moniker)
+        public CourseVariantId(string moniker)
         {
-            VariantId = variantId;
+            Path = $"./{moniker}";
             Moniker = moniker;
-            Path = $"{variantId.Path}/{moniker}";
             Id = Guid.NewGuid();
         }
 
@@ -19,7 +18,5 @@ namespace DotvvmAcademy.CourseFormat
         public string Moniker { get; }
 
         public string Path { get; }
-
-        public CourseVariantId VariantId { get; }
     }
 }
