@@ -10,8 +10,6 @@ namespace DotvvmAcademy.CourseFormat
     [DebuggerDisplay("CourseWorkspace[{Variants.Length}]: {RootDirectory}")]
     public class CourseWorkspace
     {
-        private readonly ValidationService validationService = new ValidationService();
-
         public CourseWorkspace(string rootDirectory)
         {
             RootDirectory = new DirectoryInfo(rootDirectory).FullName;
@@ -82,9 +80,9 @@ namespace DotvvmAcademy.CourseFormat
 
         public async Task<ICodeTask> LoadCodeTask(CodeTaskId id)
         {
-            var codeTask = new CodeTask(id, validationService);
-            codeTask.Code = await ReadFile(id.CodePath);
-            codeTask.Language = Path.GetExtension(id.CodePath);
+            var codeTask = new CodeTask(id);
+            codeTask.Code = await ReadFile(Path.Combine(RootDirectory, id.CodePath));
+            codeTask.ValidationScript = await ReadFile(Path.Combine(RootDirectory, id.ValidationScriptPath));
             return codeTask;
         }
 

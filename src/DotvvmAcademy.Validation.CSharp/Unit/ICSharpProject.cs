@@ -5,7 +5,7 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
     /// <summary>
     /// A C# project.
     /// </summary>
-    public interface ICSharpDocument : IValidationUnit
+    public interface ICSharpProject : IValidationUnit
     {
         ICSharpNamespace GetGlobalNamespace();
 

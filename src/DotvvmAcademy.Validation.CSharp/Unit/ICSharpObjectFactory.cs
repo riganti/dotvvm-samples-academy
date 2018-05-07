@@ -9,7 +9,7 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 
         ImmutableDictionary<string, ICSharpObject> GetAllObjects();
 
-        ICSharpDocument GetDocument();
+        ICSharpProject GetDocument();
 
         TCSharpObject GetObject<TCSharpObject>(string fullName)
             where TCSharpObject : ICSharpObject;

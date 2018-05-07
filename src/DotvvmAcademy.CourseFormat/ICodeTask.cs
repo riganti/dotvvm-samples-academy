@@ -1,7 +1,4 @@
-﻿using System.Collections.Immutable;
-using System.Threading.Tasks;
-
-namespace DotvvmAcademy.CourseFormat
+﻿namespace DotvvmAcademy.CourseFormat
 {
     public interface ICodeTask
     {
@@ -9,6 +6,6 @@ namespace DotvvmAcademy.CourseFormat
 
         CodeTaskId Id { get; }
 
-        Task<ImmutableArray<ICodeTaskDiagnostic>> Validate(string userCode);
+        string ValidationScript { get; }
     }
 }
