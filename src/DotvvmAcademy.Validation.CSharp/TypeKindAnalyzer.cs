@@ -38,7 +38,7 @@ namespace DotvvmAcademy.Validation.CSharp
         {
             foreach (var name in names)
             {
-                var desired = Metadata.RequireProperty<DesiredTypeKind>(name, MetadataKey);
+                var desired = Metadata.RequireProperty<CSharpTypeKind>(name, MetadataKey);
                 if(locator.TryLocate(name, out var symbol)
                     && symbol is ITypeSymbol typeSymbol
                     && !desired.HasRoslynTypeKind(typeSymbol.TypeKind))

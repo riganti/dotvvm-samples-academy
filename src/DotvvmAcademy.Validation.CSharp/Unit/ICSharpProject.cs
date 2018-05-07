@@ -2,16 +2,16 @@
 
 namespace DotvvmAcademy.Validation.CSharp.Unit
 {
-    /// <summary>
-    /// A C# project.
-    /// </summary>
     public interface ICSharpProject : IValidationUnit
     {
-        ICSharpNamespace GetGlobalNamespace();
+        ICSharpEvent GetEvent(string name);
 
-        ICSharpNamespace GetNamespace(string name);
+        ICSharpField GetField(string name);
 
-        void Remove<TCSharpObject>(TCSharpObject csharpObject)
-            where TCSharpObject : ICSharpObject;
+        ICSharpMethod GetMethod(string name);
+
+        ICSharpProject GetProperty(string name);
+
+        ICSharpType GetType(string name);
     }
 }

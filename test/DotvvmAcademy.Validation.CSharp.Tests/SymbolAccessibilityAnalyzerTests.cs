@@ -29,9 +29,9 @@ public class SampleClass
             var testMethod = Factory.CreateMethodName(sampleClass, "TestMethod");
 
             var metadata = new OldMetadataCollection();
-            metadata[sampleClass, SymbolAccessibilityAnalyzer.MetadataKey] = DesiredAccessibility.Public;
-            metadata[testField, SymbolAccessibilityAnalyzer.MetadataKey] = DesiredAccessibility.Private | DesiredAccessibility.Protected;
-            metadata[testProperty, SymbolAccessibilityAnalyzer.MetadataKey] = DesiredAccessibility.Protected | DesiredAccessibility.Public;
+            metadata[sampleClass, SymbolAccessibilityAnalyzer.MetadataKey] = CSharpAccessibility.Public;
+            metadata[testField, SymbolAccessibilityAnalyzer.MetadataKey] = CSharpAccessibility.Private | CSharpAccessibility.Protected;
+            metadata[testProperty, SymbolAccessibilityAnalyzer.MetadataKey] = CSharpAccessibility.Protected | CSharpAccessibility.Public;
 
             var compilation = GetCompilation(Sample);
             var nameProvider = new RoslynMetadataNameProvider(Factory);

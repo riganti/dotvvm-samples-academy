@@ -3,7 +3,7 @@
 namespace DotvvmAcademy.Validation.CSharp
 {
     [Flags]
-    public enum DesiredTypeKind
+    public enum CSharpTypeKind
     {
         Array = 1 << 0,
         Class = 1 << 1,

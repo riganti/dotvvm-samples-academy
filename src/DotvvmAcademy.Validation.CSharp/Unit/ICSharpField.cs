@@ -1,15 +1,6 @@
-﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-
-namespace DotvvmAcademy.Validation.CSharp.Unit
+﻿namespace DotvvmAcademy.Validation.CSharp.Unit
 {
-    /// <summary>
-    /// A C# field.
-    /// </summary>
-    [SyntaxKind(SyntaxKind.FieldDeclaration)]
-    [SymbolKind(SymbolKind.Field)]
-    public interface ICSharpField : ICSharpAllowsAccessModifier, ICSharpAllowsVolatileModifier, ICSharpAllowsConstModifier, ICSharpAllowsStaticModifier, ICSharpObject
+    public interface ICSharpField : ICSharpAllowsAccessModifier, ICSharpAllowsStaticModifier
     {
-        CSharpTypeDescriptor Type { get; set; }
     }
 }

@@ -38,7 +38,7 @@ namespace DotvvmAcademy.Validation.CSharp
         {
             foreach(var name in names)
             {
-                var desired = Metadata.RequireProperty<DesiredAccessibility>(name, MetadataKey);
+                var desired = Metadata.RequireProperty<CSharpAccessibility>(name, MetadataKey);
                 if(locator.TryLocate(name, out var symbol) && !desired.HasRoslynAccessibility(symbol.DeclaredAccessibility))
                 {
                     foreach(var location in symbol.Locations)

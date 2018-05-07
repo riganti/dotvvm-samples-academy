@@ -2,9 +2,16 @@
 
 namespace DotvvmAcademy.Validation.CSharp.Unit
 {
-    [SymbolKind(SymbolKind.NamedType)]
-    public interface ICSharpType : ICSharpObject
+    public interface ICSharpType : ICSharpAllowsAccessModifier, ICSharpAllowsStaticModifier
     {
-        CSharpTypeDescriptor GetDescriptor();
+        ICSharpEvent GetEvent(string name);
+
+        ICSharpField GetField(string name);
+
+        ICSharpMethod GetMethod(string name);
+
+        ICSharpProject GetProperty(string name);
+
+        ICSharpType GetType(string name);
     }
 }

@@ -4,33 +4,33 @@ namespace DotvvmAcademy.Validation.CSharp
 {
     public static class DesiredTypeKindExtensions
     {
-        public static bool HasRoslynTypeKind(this DesiredTypeKind desired, TypeKind typeKind)
+        public static bool HasRoslynTypeKind(this CSharpTypeKind desired, TypeKind typeKind)
         {
             switch (typeKind)
             {
                 case TypeKind.Array:
-                    return desired.HasFlag(DesiredTypeKind.Array);
+                    return desired.HasFlag(CSharpTypeKind.Array);
 
                 case TypeKind.Class:
-                    return desired.HasFlag(DesiredTypeKind.Class);
+                    return desired.HasFlag(CSharpTypeKind.Class);
 
                 case TypeKind.Delegate:
-                    return desired.HasFlag(DesiredTypeKind.Delegate);
+                    return desired.HasFlag(CSharpTypeKind.Delegate);
 
                 case TypeKind.Enum:
-                    return desired.HasFlag(DesiredTypeKind.Enum);
+                    return desired.HasFlag(CSharpTypeKind.Enum);
 
                 case TypeKind.Interface:
-                    return desired.HasFlag(DesiredTypeKind.Interface);
+                    return desired.HasFlag(CSharpTypeKind.Interface);
 
                 case TypeKind.Pointer:
-                    return desired.HasFlag(DesiredTypeKind.Pointer);
+                    return desired.HasFlag(CSharpTypeKind.Pointer);
 
                 case TypeKind.Struct:
-                    return desired.HasFlag(DesiredTypeKind.Struct);
+                    return desired.HasFlag(CSharpTypeKind.Struct);
 
                 case TypeKind.TypeParameter:
-                    return desired.HasFlag(DesiredTypeKind.TypeParameter);
+                    return desired.HasFlag(CSharpTypeKind.TypeParameter);
 
                 default:
                     return false;

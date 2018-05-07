@@ -1,10 +1,7 @@
 ﻿namespace DotvvmAcademy.Validation.CSharp.Unit
 {
-    /// <summary>
-    /// A C# member or type that can have an access modifier.
-    /// </summary>
-    public interface ICSharpAllowsAccessModifier : ICSharpObject
+    public interface ICSharpAllowsAccessModifier
     {
-        CSharpAccessModifier AccessModifier { get; set; }
+        CSharpAccessibility AccessModifier { get; set; }
     }
 }

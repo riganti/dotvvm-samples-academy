@@ -1,17 +1,6 @@
-﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-using System.Collections.Generic;
-
-namespace DotvvmAcademy.Validation.CSharp.Unit
+﻿namespace DotvvmAcademy.Validation.CSharp.Unit
 {
-
-    /// <summary>
-    /// A C# method.
-    /// </summary>
-    [SyntaxKind(SyntaxKind.MethodDeclaration)]
-    [SymbolKind(SymbolKind.Method)]
-    public interface ICSharpMethod : ICSharpAllowsAccessModifier, ICSharpAllowsAbstractModifier, ICSharpAllowsAsyncModifier, ICSharpAllowsStaticModifier, ICSharpAllowsVirtualModifier, ICSharpObject, ICSharpAllowsOverrideModifier
+    public interface ICSharpMethod : ICSharpAllowsAccessModifier, ICSharpAllowsStaticModifier
     {
-        CSharpTypeDescriptor ReturnType { get; set; }
     }
 }

@@ -34,9 +34,9 @@ public delegate void SampleDelegate();";
             var sampleDelegate = Factory.CreateTypeName("", "SampleDelegate");
 
             var metadata = new OldMetadataCollection();
-            metadata[sampleClass, TypeKindAnalyzer.MetadataKey] = DesiredTypeKind.Class;
-            metadata[sampleStruct, TypeKindAnalyzer.MetadataKey] = DesiredTypeKind.Class | DesiredTypeKind.Struct;
-            metadata[sampleEnum, TypeKindAnalyzer.MetadataKey] = DesiredTypeKind.Array | DesiredTypeKind.Pointer;
+            metadata[sampleClass, TypeKindAnalyzer.MetadataKey] = CSharpTypeKind.Class;
+            metadata[sampleStruct, TypeKindAnalyzer.MetadataKey] = CSharpTypeKind.Class | CSharpTypeKind.Struct;
+            metadata[sampleEnum, TypeKindAnalyzer.MetadataKey] = CSharpTypeKind.Array | CSharpTypeKind.Pointer;
 
             var compilation = GetCompilation(Sample);
             var nameProvider = new RoslynMetadataNameProvider(Factory);
