@@ -22,7 +22,7 @@ namespace DotvvmAcademy.Validation.Dothtml
 
         public void Visit(DothtmlIdentifier identifier, ResolvedControl control)
         {
-            var nodeExistence = Metadata.GetRequiredProperty<DothtmlIdentifier, bool>(identifier, NodeExistenceKey);
+            var nodeExistence = Metadata.GetRequiredProperty<bool>(identifier, NodeExistenceKey);
             if (nodeExistence && control == null)
             {
                 Diagnostics.Add(ValidationDiagnostic.Create(NodeDoesntExistError, null, identifier));

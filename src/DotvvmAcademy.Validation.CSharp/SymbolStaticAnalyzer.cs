@@ -28,9 +28,9 @@ namespace DotvvmAcademy.Validation.CSharp
         private readonly SymbolLocator locator;
         private readonly ImmutableArray<MetadataName> names;
 
-        public SymbolStaticAnalyzer(OldMetadataCollection metadata, SymbolLocator locator) : base(metadata)
+        public SymbolStaticAnalyzer(MetadataCollection<MetadataName> metadata, SymbolLocator locator) : base(metadata)
         {
-            names = metadata.GetNamesWithProperty(MetadataKey).ToImmutableArray();
+            names = GetNamesWithProperty(MetadataKey);
             this.locator = locator;
         }
 
@@ -54,7 +54,7 @@ namespace DotvvmAcademy.Validation.CSharp
 
             foreach (var name in names)
             {
-                var isStatic = Metadata.RequireProperty<bool>(name, MetadataKey);
+                var isStatic = Metadata.GetRequiredProperty<bool>(name, MetadataKey);
                 if (locator.TryLocate(name, out var symbol))
                 {
                     if (isStatic && !symbol.IsStatic)

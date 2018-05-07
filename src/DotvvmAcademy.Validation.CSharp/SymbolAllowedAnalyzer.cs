@@ -19,7 +19,7 @@ namespace DotvvmAcademy.Validation.CSharp
 
         private readonly RoslynMetadataNameProvider nameProvider;
 
-        public SymbolAllowedAnalyzer(OldMetadataCollection metadata, RoslynMetadataNameProvider nameProvider) : base(metadata)
+        public SymbolAllowedAnalyzer(MetadataCollection<MetadataName> metadata, RoslynMetadataNameProvider nameProvider) : base(metadata)
         {
             this.nameProvider = nameProvider;
         }
@@ -41,7 +41,7 @@ namespace DotvvmAcademy.Validation.CSharp
             }
 
             var symbolName = nameProvider.GetName(symbol);
-            if (!true.Equals(Metadata.GetProperty(symbolName, MetadataKey)))
+            if (!true.Equals(Metadata[symbolName, MetadataKey]))
             {
                 context.ReportDiagnostic(Diagnostic.Create(SymbolUsageForbiddenDiagnostic, context.Node.GetLocation(), symbolName));
             }

@@ -27,7 +27,7 @@ namespace DotvvmAcademy.Validation.CSharp
         private readonly SymbolLocator locator;
         private readonly ImmutableArray<MetadataName> names;
 
-        public DeclarationExistenceAnalyzer(OldMetadataCollection metadata, SymbolLocator locator) : base(metadata)
+        public DeclarationExistenceAnalyzer(MetadataCollection<MetadataName> metadata, SymbolLocator locator) : base(metadata)
         {
             names = metadata.GetNamesWithProperty(MetadataKey).ToImmutableArray();
             this.locator = locator;
@@ -45,7 +45,7 @@ namespace DotvvmAcademy.Validation.CSharp
         {
             foreach (var name in names)
             {
-                var doesDeclarationExist = Metadata.RequireProperty<bool>(name, MetadataKey);
+                var doesDeclarationExist = Metadata.GetRequiredProperty<bool>(name, MetadataKey);
                 var symbolExists = locator.TryLocate(name, out var symbol);
                 if (doesDeclarationExist && !symbolExists)
                 {

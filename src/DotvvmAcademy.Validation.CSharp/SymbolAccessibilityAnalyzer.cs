@@ -20,7 +20,7 @@ namespace DotvvmAcademy.Validation.CSharp
         private readonly SymbolLocator locator;
         private readonly ImmutableArray<MetadataName> names;
 
-        public SymbolAccessibilityAnalyzer(OldMetadataCollection metadata, SymbolLocator locator) : base(metadata)
+        public SymbolAccessibilityAnalyzer(MetadataCollection<MetadataName> metadata, SymbolLocator locator) : base(metadata)
         {
             names = metadata.GetNamesWithProperty(MetadataKey).ToImmutableArray();
             this.locator = locator;
@@ -38,7 +38,7 @@ namespace DotvvmAcademy.Validation.CSharp
         {
             foreach(var name in names)
             {
-                var desired = Metadata.RequireProperty<CSharpAccessibility>(name, MetadataKey);
+                var desired = Metadata.GetRequiredProperty<CSharpAccessibility>(name, MetadataKey);
                 if(locator.TryLocate(name, out var symbol) && !desired.HasRoslynAccessibility(symbol.DeclaredAccessibility))
                 {
                     foreach(var location in symbol.Locations)

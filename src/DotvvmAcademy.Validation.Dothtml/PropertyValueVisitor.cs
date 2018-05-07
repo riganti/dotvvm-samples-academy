@@ -25,7 +25,7 @@ namespace DotvvmAcademy.Validation.Dothtml
 
         public void Visit(DothtmlIdentifier identifier, ResolvedControl control)
         {
-            var valueMetadata = Metadata.GetRequiredProperty<DothtmlIdentifier, PropertyValueMetadata>(identifier, PropertyValueKey);
+            var valueMetadata = Metadata.GetRequiredProperty<PropertyValueMetadata>(identifier, PropertyValueKey);
             if (!control.TryGetProperty(valueMetadata.Property, out var setter))
             {
                 diagnostics.Add(ValidationDiagnostic.Create(MissingValueError, new DothtmlValidationDiagnosticLocation(control.DothtmlNode), valueMetadata.Property));

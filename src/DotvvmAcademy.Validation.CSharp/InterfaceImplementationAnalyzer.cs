@@ -30,10 +30,10 @@ namespace DotvvmAcademy.Validation.CSharp
         private readonly ImmutableArray<MetadataName> negativeNames;
         private readonly ImmutableArray<MetadataName> positiveNames;
 
-        public InterfaceImplementationAnalyzer(OldMetadataCollection metadata, SymbolLocator locator) : base(metadata)
+        public InterfaceImplementationAnalyzer(MetadataCollection<MetadataName> metadata, SymbolLocator locator) : base(metadata)
         {
-            positiveNames = metadata.GetNamesWithProperty(PositiveMetadataKey).ToImmutableArray();
-            negativeNames = metadata.GetNamesWithProperty(NegativeMetadataKey).ToImmutableArray();
+            positiveNames = GetNamesWithProperty(PositiveMetadataKey);
+            negativeNames = GetNamesWithProperty(NegativeMetadataKey);
             this.locator = locator;
         }
 
@@ -64,7 +64,7 @@ namespace DotvvmAcademy.Validation.CSharp
                 if (locator.TryLocate(name, out var symbol)
                     && symbol is ITypeSymbol typeSymbol)
                 {
-                    var interfaceNames = Metadata.RequireProperty<ImmutableArray<MetadataName>>(name, metadataKey);
+                    var interfaceNames = Metadata.GetRequiredProperty<ImmutableArray<MetadataName>>(name, metadataKey);
                     foreach (var interfaceName in interfaceNames)
                     {
                         if (locator.TryLocate(interfaceName, out var possibleInterfaceSymbol)

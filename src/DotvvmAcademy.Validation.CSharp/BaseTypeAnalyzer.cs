@@ -20,9 +20,9 @@ namespace DotvvmAcademy.Validation.CSharp
         private readonly SymbolLocator locator;
         private readonly ImmutableArray<MetadataName> names;
 
-        public BaseTypeAnalyzer(OldMetadataCollection metadata, SymbolLocator locator) : base(metadata)
+        public BaseTypeAnalyzer(MetadataCollection<MetadataName> metadata, SymbolLocator locator) : base(metadata)
         {
-            names = metadata.GetNamesWithProperty(MetadataKey).ToImmutableArray();
+            names = GetNamesWithProperty(MetadataKey);
             this.locator = locator;
         }
 
@@ -38,7 +38,7 @@ namespace DotvvmAcademy.Validation.CSharp
         {
             foreach (var name in names)
             {
-                var baseType = Metadata.RequireProperty<MetadataName>(name, MetadataKey);
+                var baseType = Metadata.GetRequiredProperty<MetadataName>(name, MetadataKey);
                 if (locator.TryLocate(name, out var symbol)
                     && symbol is ITypeSymbol typeSymbol
                     && locator.TryLocate(baseType, out var baseTypeSymbol)

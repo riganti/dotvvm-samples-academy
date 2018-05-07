@@ -28,7 +28,7 @@ namespace DotvvmAcademy.Validation.Dothtml
 
         public void Visit(DothtmlIdentifier identifier, ResolvedControl control)
         {
-            var bindingMetadata = Metadata.GetRequiredProperty<DothtmlIdentifier, BindingMetadata>(identifier, BindingKey);
+            var bindingMetadata = Metadata.GetRequiredProperty<BindingMetadata>(identifier, BindingKey);
             if (!control.TryGetProperty(bindingMetadata.Property, out var setter))
             {
                 diagnostics.Add(ValidationDiagnostic.Create(MissingBindingError, new DothtmlValidationDiagnosticLocation(control.DothtmlNode), bindingMetadata.Property, bindingMetadata.AcceptedValues[0]));
