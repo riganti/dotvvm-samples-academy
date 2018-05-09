@@ -1,9 +1,15 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using System.Collections.Generic;
 
 namespace DotvvmAcademy.Validation.CSharp.Unit
 {
-    public interface ICSharpType : ICSharpAllowsAccessModifier, ICSharpAllowsStaticModifier
+    public interface ICSharpType : ICSharpAllowsAccessModifier, ICSharpAllowsStaticModifier, ICSharpAllowsDeclaration, ICSharpAllowable
     {
+        CSharpTypeKind TypeKind { get; set; }
+
+        ICSharpType BaseType { get; set; }
+
+        ISet<ICSharpType> Interfaces { get; }
+
         ICSharpEvent GetEvent(string name);
 
         ICSharpField GetField(string name);

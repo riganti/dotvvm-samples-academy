@@ -38,10 +38,10 @@ namespace DotvvmAcademy.Validation.CSharp
         {
             foreach (var name in names)
             {
-                var desired = Metadata.GetRequiredProperty<CSharpTypeKind>(name, MetadataKey);
+                var desired = Metadata.GetRequiredProperty<TypeKind>(name, MetadataKey);
                 if(locator.TryLocate(name, out var symbol)
                     && symbol is ITypeSymbol typeSymbol
-                    && !desired.HasRoslynTypeKind(typeSymbol.TypeKind))
+                    && (desired ^ typeSymbol.TypeKind) != 0)
                 {
                     foreach(var location in typeSymbol.Locations)
                     {

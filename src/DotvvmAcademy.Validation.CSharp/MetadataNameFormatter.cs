@@ -6,22 +6,20 @@ namespace DotvvmAcademy.Validation.CSharp
 {
     public class MetadataNameFormatter : IMetadataNameFormatter
     {
-        public const string ArityPrefix = "`";
-        public const string ArrayEnd = "]";
-        public const string ArrayRankSeparator = ",";
-        public const string ArrayStart = "[";
-        public const string MemberAccess = "::";
-        public const string NamespaceAccess = ".";
-        public const string NestedTypeAccess = "/";
-        public const string ParameterListEnd = ")";
-        public const string ParameterListSeparator = ",";
-        public const string ParameterListStart = "(";
-        public const string PointerSuffix = "*";
-        public const string ReturnTypeSeparator = " ";
-        public const string TypeArgumentListEnd = ">";
-        public const string TypeArgumentListSeparator = ",";
-        public const string TypeArgumentListStart = "<";
-        public const string TypeParameterAccess = "%";
+        public const char ArityPrefix = '`';
+        public const char ArrayEnd = ']';
+        public const char ArrayStart = '[';
+        public const char ListSeparator = ',';
+        public const char MemberAccess = ':';
+        public const char NamespaceAccess = '.';
+        public const char NestedTypeAccess = '/';
+        public const char ParameterListEnd = ')';
+        public const char ParameterListStart = '(';
+        public const char PointerSuffix = '*';
+        public const char ReturnTypeSeparator = ' ';
+        public const char TypeArgumentListEnd = '>';
+        public const char TypeArgumentListStart = '<';
+        public const char TypeParameterAccess = '%';
 
         public string Format(MetadataName metadataName)
         {
@@ -54,7 +52,7 @@ namespace DotvvmAcademy.Validation.CSharp
             sb.Append(ArrayStart);
             for (int i = 1; i < metadataName.Rank; i++)
             {
-                sb.Append(ArrayRankSeparator);
+                sb.Append(ListSeparator);
             }
             sb.Append(ArrayEnd);
             return sb.ToString();
@@ -83,6 +81,7 @@ namespace DotvvmAcademy.Validation.CSharp
             sb.Append(Format(metadataName.ReturnType));
             sb.Append(ReturnTypeSeparator);
             sb.Append(Format(metadataName.Owner));
+            sb.Append(MemberAccess);
             sb.Append(MemberAccess);
             sb.Append(metadataName.Name);
             return sb.ToString();
@@ -134,7 +133,7 @@ namespace DotvvmAcademy.Validation.CSharp
                 sb.Append(Format(parameters[0]));
                 for (int i = 1; i < parameters.Count; i++)
                 {
-                    sb.Append(ParameterListSeparator);
+                    sb.Append(ListSeparator);
                     sb.Append(Format(parameters[i]));
                 }
             }
@@ -204,7 +203,7 @@ namespace DotvvmAcademy.Validation.CSharp
             sb.Append(Format(typeArguments[0]));
             for (int i = 1; i < typeArguments.Count; i++)
             {
-                sb.Append(TypeArgumentListSeparator);
+                sb.Append(ListSeparator);
                 sb.Append(Format(typeArguments[i]));
             }
             sb.Append(TypeArgumentListEnd);

@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using System;
 using System.Collections.Immutable;
 using System.Linq;
@@ -7,10 +8,10 @@ namespace DotvvmAcademy.Validation.CSharp
 {
     public class SymbolLocator : ILocator<ISymbol>
     {
-        private readonly Compilation compilation;
+        private readonly CSharpCompilation compilation;
         private readonly RoslynMetadataNameProvider nameProvider;
 
-        public SymbolLocator(Compilation compilation, RoslynMetadataNameProvider nameProvider)
+        public SymbolLocator(CSharpCompilation compilation, RoslynMetadataNameProvider nameProvider)
         {
             this.compilation = compilation;
             this.nameProvider = nameProvider;

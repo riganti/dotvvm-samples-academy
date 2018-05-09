@@ -1,8 +1,8 @@
 ﻿using Microsoft.CodeAnalysis;
 
-namespace DotvvmAcademy.Validation.CSharp
+namespace DotvvmAcademy.Validation.CSharp.Unit
 {
-    public static class DesiredAccessibilityExtensions
+    public static class CSharpAccessibilityExtensions
     {
         public static bool HasRoslynAccessibility(this CSharpAccessibility desired, Accessibility accessibility)
         {

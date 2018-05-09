@@ -22,7 +22,7 @@ namespace DotvvmAcademy.Validation.CSharp
 
         public SymbolAccessibilityAnalyzer(MetadataCollection<MetadataName> metadata, SymbolLocator locator) : base(metadata)
         {
-            names = metadata.GetNamesWithProperty(MetadataKey).ToImmutableArray();
+            names = GetNamesWithProperty(MetadataKey);
             this.locator = locator;
         }
 
@@ -38,8 +38,9 @@ namespace DotvvmAcademy.Validation.CSharp
         {
             foreach(var name in names)
             {
-                var desired = Metadata.GetRequiredProperty<CSharpAccessibility>(name, MetadataKey);
-                if(locator.TryLocate(name, out var symbol) && !desired.HasRoslynAccessibility(symbol.DeclaredAccessibility))
+                var desired = Metadata.GetRequiredProperty<Accessibility>(name, MetadataKey);
+                if(locator.TryLocate(name, out var symbol) 
+                    && (desired ^ symbol.DeclaredAccessibility) != 0)
                 {
                     foreach(var location in symbol.Locations)
                     {

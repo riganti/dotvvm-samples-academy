@@ -1,6 +1,6 @@
 ﻿namespace DotvvmAcademy.Validation.CSharp.Unit
 {
-    public interface ICSharpProperty : ICSharpAllowsAccessModifier, ICSharpAllowsStaticModifier
+    public interface ICSharpProperty : ICSharpAllowsAccessModifier, ICSharpAllowsStaticModifier, ICSharpAllowsDeclaration, ICSharpAllowable
     {
     }
 }

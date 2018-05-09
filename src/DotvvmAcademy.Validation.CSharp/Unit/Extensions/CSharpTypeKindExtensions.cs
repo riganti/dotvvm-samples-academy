@@ -1,8 +1,8 @@
 ﻿using Microsoft.CodeAnalysis;
 
-namespace DotvvmAcademy.Validation.CSharp
+namespace DotvvmAcademy.Validation.CSharp.Unit
 {
-    public static class DesiredTypeKindExtensions
+    public static class CSharpTypeKindExtensions
     {
         public static bool HasRoslynTypeKind(this CSharpTypeKind desired, TypeKind typeKind)
         {

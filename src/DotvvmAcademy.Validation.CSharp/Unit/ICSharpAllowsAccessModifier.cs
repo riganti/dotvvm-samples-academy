@@ -2,6 +2,6 @@
 {
     public interface ICSharpAllowsAccessModifier
     {
-        CSharpAccessibility AccessModifier { get; set; }
+        CSharpAccessibility Accessibility { get; set; }
     }
 }

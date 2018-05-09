@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DotvvmAcademy.Validation.CSharp
+namespace DotvvmAcademy.Validation.CSharp.Unit
 {
     [Flags]
     public enum CSharpAccessibility

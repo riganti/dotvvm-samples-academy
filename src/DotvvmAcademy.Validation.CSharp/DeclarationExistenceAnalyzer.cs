@@ -29,7 +29,7 @@ namespace DotvvmAcademy.Validation.CSharp
 
         public DeclarationExistenceAnalyzer(MetadataCollection<MetadataName> metadata, SymbolLocator locator) : base(metadata)
         {
-            names = metadata.GetNamesWithProperty(MetadataKey).ToImmutableArray();
+            names = GetNamesWithProperty(MetadataKey);
             this.locator = locator;
         }
 
