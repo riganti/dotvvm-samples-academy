@@ -5,18 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.2" />
-    <PackageReference Include="DotVVM.Core" Version="2.0.0-preview08-final" />
-    <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.0.3" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.0.0" />
+    <PackageReference Include="Markdig" Version="0.15.0" />
     <PackageReference Include="System.Collections.Immutable" Version="1.4.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DotvvmAcademy.DAL\DotvvmAcademy.DAL.csproj" />
-    <ProjectReference Include="..\DotvvmAcademy.Validation\DotvvmAcademy.Validation.csproj" />
-    <ProjectReference Include="..\DotvvmAcademy.Validation.CSharp\DotvvmAcademy.Validation.CSharp.csproj" />
-    <ProjectReference Include="..\DotvvmAcademy.Validation.Dothtml\DotvvmAcademy.Validation.Dothtml.csproj" />
+    <ProjectReference Include="..\DotvvmAcademy.CourseFormat\DotvvmAcademy.CourseFormat.csproj" />
   </ItemGroup>
 
 </Project>
