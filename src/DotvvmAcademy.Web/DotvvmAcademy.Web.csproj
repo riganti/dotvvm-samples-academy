@@ -3,33 +3,35 @@
         <TargetFramework>netcoreapp2.0</TargetFramework>
         <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
         <TypeScriptToolsVersion>2.8</TypeScriptToolsVersion>
+        <EnableDefaultContentItems>false</EnableDefaultContentItems>
     </PropertyGroup>
     <ItemGroup>
-        <!--Include Views-->
+        <None Remove="dotvvm_serialized_config.json.tmp" />
+        <None Remove="Views/*" />
+    </ItemGroup>
+    <ItemGroup>
         <Content Include="**/*.dothtml" Exclude="obj/**/*.*;bin/**/*.*">
             <CopyToPublishDirectory>Always</CopyToPublishDirectory>
         </Content>
-        <!--Include MasterPage Views-->
         <Content Include="**/*.dotmaster" Exclude="obj/**/*.*;bin/**/*.*">
             <CopyToPublishDirectory>Always</CopyToPublishDirectory>
         </Content>
-        <!--Include Custom Control Views-->
         <Content Include="**/*.dotcontrol" Exclude="obj/**/*.*;bin/**/*.*">
             <CopyToPublishDirectory>Always</CopyToPublishDirectory>
         </Content>
     </ItemGroup>
     <ItemGroup>
-        <None Remove="dotvvm_serialized_config.json.tmp" />
-        <None Remove="Views\MasterPage.dotmaster" />
+        <Folder Include="wwwroot\" />
     </ItemGroup>
     <ItemGroup>
-        <Folder Include="wwwroot\" />
+        <Compile Remove="Content\**\*.cs" />
+        <Content Include="Content\**\*" />
+        <Content Remove="Content\**\*.json" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore" Version="2.0.3" />
         <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.0.3" />
         <PackageReference Include="DotVVM.AspNetCore" Version="2.0.0-preview08-final" />
-        
     </ItemGroup>
     <ItemGroup>
         <DotNetCliToolReference Include="DotVVM.Compiler.Light" Version="1.1.9" />

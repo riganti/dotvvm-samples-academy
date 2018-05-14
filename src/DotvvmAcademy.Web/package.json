@@ -3,18 +3,17 @@
   "name": "dotvvmacademy.app",
   "private": true,
   "devDependencies": {
-    "autoprefixer": "7.1.6",
-    "browser-sync": "2.23.2",
-    "clean-css-cli": "4.1.10",
-    "node-sass": "4.7.2",
-    "postcss-cli": "4.1.1",
+    "autoprefixer": "^8.5.0",
+    "browser-sync": "^2.24.4",
+    "clean-css-cli": "^4.1.11",
+    "node-sass": "^4.9.0",
+    "postcss-cli": "^5.0.0",
     "postcss-media-query-parser": "^0.2.3",
     "postcss-value-parser": "^3.3.0",
-    "typescript": "2.6.1",
-    "uglify-js": "3.1.10",
-    "watch": "1.0.2",
-    "@types/knockout": "^3.4.47",
-    "monaco-editor": "^0.10.1"
+    "typescript": "^2.8.3",
+    "uglify-js": "^3.3.25",
+    "watch": "^1.0.2",
+    "monaco-editor": "^0.13.0"
   },
   "scripts": {
     "bundle": "npm run bundle:css && npm run bundle:js",
