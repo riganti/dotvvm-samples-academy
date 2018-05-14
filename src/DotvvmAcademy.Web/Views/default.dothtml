@@ -1,0 +1,6 @@
+﻿@viewModel DotvvmAcademy.Web.ViewModels.DefaultViewModel, DotvvmAcademy.Web
+@masterPage Views/MasterPage.dotmaster
+<dot:Content ContentPlaceHolderID="MainContent">
+
+	<h1>{{value: Title}}</h1>
+</dot:Content>

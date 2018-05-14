@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Allow: .js
+Allow: .css
+
+Sitemap: https://academy.dotvvm.com/wwwroot/sitemap.xml
