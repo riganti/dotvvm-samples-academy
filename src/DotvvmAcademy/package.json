@@ -1,9 +1,0 @@
-{
-  "version": "1.0.0",
-  "name": "dotvvm-samples-academy",
-  "private": true,
-  "dependencies": {
-    "@types/knockout": "^3.4.47",
-    "monaco-editor": "^0.10.1"
-  }
-}
