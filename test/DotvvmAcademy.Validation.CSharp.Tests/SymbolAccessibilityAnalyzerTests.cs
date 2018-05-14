@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.CodeAnalysis;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 
 namespace DotvvmAcademy.Validation.CSharp.Tests
@@ -28,10 +29,10 @@ public class SampleClass
             var testProperty = Factory.CreatePropertyName(sampleClass, "TestProperty", @string);
             var testMethod = Factory.CreateMethodName(sampleClass, "TestMethod");
 
-            var metadata = new OldMetadataCollection();
-            metadata[sampleClass, SymbolAccessibilityAnalyzer.MetadataKey] = CSharpAccessibility.Public;
-            metadata[testField, SymbolAccessibilityAnalyzer.MetadataKey] = CSharpAccessibility.Private | CSharpAccessibility.Protected;
-            metadata[testProperty, SymbolAccessibilityAnalyzer.MetadataKey] = CSharpAccessibility.Protected | CSharpAccessibility.Public;
+            var metadata = new MetadataCollection<MetadataName>();
+            metadata[sampleClass, SymbolAccessibilityAnalyzer.MetadataKey] = Accessibility.Public;
+            metadata[testField, SymbolAccessibilityAnalyzer.MetadataKey] = Accessibility.Private | Accessibility.Protected;
+            metadata[testProperty, SymbolAccessibilityAnalyzer.MetadataKey] = Accessibility.Protected | Accessibility.Public;
 
             var compilation = GetCompilation(Sample);
             var nameProvider = new RoslynMetadataNameProvider(Factory);

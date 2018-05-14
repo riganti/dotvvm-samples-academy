@@ -28,26 +28,29 @@ namespace DotvvmAcademy.Validation.Dothtml
 
         public void Visit(DothtmlIdentifier identifier, ResolvedControl control)
         {
-            var bindingMetadata = Metadata.GetRequiredProperty<BindingMetadata>(identifier, BindingKey);
-            if (!control.TryGetProperty(bindingMetadata.Property, out var setter))
+            var metadata = Metadata.GetRequiredProperty<ImmutableArray<BindingMetadata>>(identifier, BindingKey);
+            foreach (var bindingMetadata in metadata)
             {
-                diagnostics.Add(ValidationDiagnostic.Create(MissingBindingError, new DothtmlValidationDiagnosticLocation(control.DothtmlNode), bindingMetadata.Property, bindingMetadata.AcceptedValues[0]));
-                return;
-            }
-            if (!(setter is ResolvedPropertyBinding binding))
-            {
-                diagnostics.Add(ValidationDiagnostic.Create(IncorrectSetterError, new DothtmlValidationDiagnosticLocation(control.DothtmlNode), bindingMetadata.Property, bindingMetadata.BindingType));
-                return;
-            }
-            if (binding.Binding.BindingType != bindingMetadata.BindingType)
-            {
-                diagnostics.Add(ValidationDiagnostic.Create(IncorrectBindingTypeError, new DothtmlValidationDiagnosticLocation(binding.DothtmlNode), bindingMetadata.Property, bindingMetadata.BindingType));
-                return;
-            }
-            if (!bindingMetadata.AcceptedValues.Contains(binding.Binding.Value))
-            {
-                diagnostics.Add(ValidationDiagnostic.Create(WrongBindingValue, new DothtmlValidationDiagnosticLocation(binding.DothtmlNode), binding.Binding.Value, bindingMetadata.Property));
-                return;
+                if (!control.TryGetProperty(bindingMetadata.Property, out var setter))
+                {
+                    diagnostics.Add(ValidationDiagnostic.Create(MissingBindingError, new DothtmlValidationDiagnosticLocation(control.DothtmlNode), bindingMetadata.Property, bindingMetadata.AcceptedValues[0]));
+                    return;
+                }
+                if (!(setter is ResolvedPropertyBinding binding))
+                {
+                    diagnostics.Add(ValidationDiagnostic.Create(IncorrectSetterError, new DothtmlValidationDiagnosticLocation(control.DothtmlNode), bindingMetadata.Property, bindingMetadata.BindingType));
+                    return;
+                }
+                if (binding.Binding.BindingType != bindingMetadata.BindingType)
+                {
+                    diagnostics.Add(ValidationDiagnostic.Create(IncorrectBindingTypeError, new DothtmlValidationDiagnosticLocation(binding.DothtmlNode), bindingMetadata.Property, bindingMetadata.BindingType));
+                    return;
+                }
+                if (!bindingMetadata.AcceptedValues.Contains(binding.Binding.Value))
+                {
+                    diagnostics.Add(ValidationDiagnostic.Create(WrongBindingValue, new DothtmlValidationDiagnosticLocation(binding.DothtmlNode), binding.Binding.Value, bindingMetadata.Property));
+                    return;
+                }
             }
         }
     }

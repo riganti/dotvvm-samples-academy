@@ -25,21 +25,24 @@ namespace DotvvmAcademy.Validation.Dothtml
 
         public void Visit(DothtmlIdentifier identifier, ResolvedControl control)
         {
-            var valueMetadata = Metadata.GetRequiredProperty<PropertyValueMetadata>(identifier, PropertyValueKey);
-            if (!control.TryGetProperty(valueMetadata.Property, out var setter))
+            var metadata = Metadata.GetRequiredProperty<ImmutableArray<PropertyValueMetadata>>(identifier, PropertyValueKey);
+            foreach (var valueMetadata in metadata)
             {
-                diagnostics.Add(ValidationDiagnostic.Create(MissingValueError, new DothtmlValidationDiagnosticLocation(control.DothtmlNode), valueMetadata.Property));
-                return;
-            }
-            if (!(setter is ResolvedPropertyValue value))
-            {
-                diagnostics.Add(ValidationDiagnostic.Create(IncorrectSetterError, new DothtmlValidationDiagnosticLocation(control.DothtmlNode), valueMetadata.Property));
-                return;
-            }
-            if (!valueMetadata.AcceptedValues.Contains(value.Value))
-            {
-                diagnostics.Add(ValidationDiagnostic.Create(WrongValue, new DothtmlValidationDiagnosticLocation(value.DothtmlNode), value.Value, valueMetadata.Property));
-                return;
+                if (!control.TryGetProperty(valueMetadata.Property, out var setter))
+                {
+                    diagnostics.Add(ValidationDiagnostic.Create(MissingValueError, new DothtmlValidationDiagnosticLocation(control.DothtmlNode), valueMetadata.Property));
+                    return;
+                }
+                if (!(setter is ResolvedPropertyValue value))
+                {
+                    diagnostics.Add(ValidationDiagnostic.Create(IncorrectSetterError, new DothtmlValidationDiagnosticLocation(control.DothtmlNode), valueMetadata.Property));
+                    return;
+                }
+                if (!valueMetadata.AcceptedValues.Contains(value.Value))
+                {
+                    diagnostics.Add(ValidationDiagnostic.Create(WrongValue, new DothtmlValidationDiagnosticLocation(value.DothtmlNode), value.Value, valueMetadata.Property));
+                    return;
+                }
             }
         }
     }

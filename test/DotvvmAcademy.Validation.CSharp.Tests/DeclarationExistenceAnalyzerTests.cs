@@ -39,7 +39,7 @@ namespace SampleNamespace
         [TestMethod]
         public async Task BasicDeclarationExistenceAnalyzerTest()
         {
-            var metadata = new OldMetadataCollection();
+            var metadata = new MetadataCollection<MetadataName>();
             metadata[sampleClass, DeclarationExistenceAnalyzer.MetadataKey] = true;
             metadata[integerProperty, DeclarationExistenceAnalyzer.MetadataKey] = true;
             metadata[getString, DeclarationExistenceAnalyzer.MetadataKey] = false;

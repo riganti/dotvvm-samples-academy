@@ -1,4 +1,5 @@
 ﻿using DotVVM.Framework.Binding;
+using System.Collections.Generic;
 
 namespace DotvvmAcademy.Validation.Dothtml.Unit
 {
@@ -9,6 +10,10 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
     {
         IDothtmlControl this[int index] { get; }
 
-        IDothtmlProperty GetProperty(DotvvmProperty property);
+        IDothtmlControl GetControl(string path);
+        
+        void ValidateBinding<TBinding>(DotvvmProperty property, IEnumerable<string> acceptedValues);
+
+        void ValidateValue(DotvvmProperty property, IEnumerable<object> acceptedValues);
     }
 }

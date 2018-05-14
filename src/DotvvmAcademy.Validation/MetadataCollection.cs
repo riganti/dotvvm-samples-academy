@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 
-namespace DotvvmAcademy.Validation.CSharp
+namespace DotvvmAcademy.Validation
 {
     public class MetadataCollection<TIdentifier> : IMetadataCollection<TIdentifier>
     {

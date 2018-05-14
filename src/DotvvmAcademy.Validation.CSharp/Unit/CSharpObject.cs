@@ -11,10 +11,10 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
         private readonly MetadataNameParser parser;
         private readonly Dictionary<MetadataName, CSharpObject> spawns = new Dictionary<MetadataName, CSharpObject>();
 
-        public CSharpObject()
+        public CSharpObject(MetadataNameParser parser)
         {
             nameCache = new Dictionary<string, MetadataName>();
-            parser = new MetadataNameParser();
+            this.parser = parser;
         }
 
         private CSharpObject(MetadataName name, Dictionary<string, MetadataName> nameCache, MetadataNameParser parser)
@@ -95,7 +95,7 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
             return metadataName;
         }
 
-        private MetadataCollection<MetadataName> PopulateMetadata(MetadataCollection<MetadataName> metadata)
+        private void PopulateMetadata(MetadataCollection<MetadataName> metadata)
         {
             metadata[name, DeclarationExistenceAnalyzer.MetadataKey] = IsDeclared;
             metadata[name, SymbolAllowedAnalyzer.MetadataKey] = IsAllowed;
@@ -117,7 +117,6 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
             {
                 pair.Value.PopulateMetadata(metadata);
             }
-            return metadata;
         }
 
         private CSharpObject Spawn(MetadataName name)

@@ -21,28 +21,29 @@ namespace DotvvmAcademy.CourseFormat
     {
         public Task<ImmutableArray<ICodeTaskDiagnostic>> Validate(CodeTask task, string userCode)
         {
-            var globalsType = task.Id.Language == "cs" ? typeof(ICSharpProject) : typeof(IDothtmlView);
+            var globalsType = task.Id.Language == "cs" ? typeof(ICSharpProject) : typeof(IDothtmlDocument);
             var script = CSharpScript.Create(task.ValidationScript, globalsType: globalsType);
             var runner = script.CreateDelegate();
             return task.Id.Language == "cs" ? ValidateCSharp(runner, userCode) : ValidateDothtml(runner, userCode);
         }
 
+        private ICodeTaskDiagnostic ConvertDiagnostic(ValidationDiagnostic validation)
+        {
+            return new CodeTaskDiagnostic
+            {
+                Start = validation.Location.Start,
+                End = validation.Location.End,
+                Severity = CodeTaskDiagnosticSeverity.Error
+            };
+        }
 
         private MetadataReference GetMetadataReference(string assemblyName)
         {
             return MetadataReference.CreateFromFile(Assembly.Load(assemblyName).Location);
         }
 
-        private async Task<ImmutableArray<ICodeTaskDiagnostic>> ValidateDothtml(ScriptRunner<object> runner, string userCode)
-        {
-
-        }
-
         private async Task<ImmutableArray<ICodeTaskDiagnostic>> ValidateCSharp(ScriptRunner<object> runner, string userCode)
         {
-            var csharpObject = new CSharpObject();
-            await runner(csharpObject);
-            var metadata = csharpObject.GetMetadata();
             var tree = CSharpSyntaxTree.ParseText(userCode);
             var references = new[]
             {
@@ -52,8 +53,7 @@ namespace DotvvmAcademy.CourseFormat
             };
             var compilation = CSharpCompilation.Create($"UserCode_{Guid.NewGuid()}", new[] { tree }, references, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, true));
             var collection = new ServiceCollection();
-            collection.AddSingleton(metadata);
-            collection.AddSingleton(compilation);
+            collection.AddSingleton<CSharpObject>();
             collection.AddSingleton<RoslynMetadataNameProvider>();
             collection.AddSingleton<IMetadataNameFactory, MetadataNameFactory>();
             collection.AddSingleton<MetadataNameFormatter>();
@@ -68,18 +68,17 @@ namespace DotvvmAcademy.CourseFormat
             collection.AddSingleton<ValidationDiagnosticAnalyzer, SymbolStaticAnalyzer>();
             collection.AddSingleton<ValidationDiagnosticAnalyzer, TypeKindAnalyzer>();
             var provider = collection.BuildServiceProvider();
+            var csharpObject = provider.GetRequiredService<CSharpObject>();
+            var metadata = csharpObject.GetMetadata();
+            await runner(csharpObject);
+            collection.AddSingleton(metadata);
             var with = new CompilationWithAnalyzers(compilation, provider.GetService<IEnumerable<ValidationDiagnosticAnalyzer>>().Cast<DiagnosticAnalyzer>().ToImmutableArray(), new CompilationWithAnalyzersOptions(null, null, false, false));
             return (await with.GetAllDiagnosticsAsync()).Select(d => ConvertDiagnostic(new RoslynValidationDiagnostic(d))).ToImmutableArray();
         }
 
-        private ICodeTaskDiagnostic ConvertDiagnostic(ValidationDiagnostic validation)
+        private Task<ImmutableArray<ICodeTaskDiagnostic>> ValidateDothtml(ScriptRunner<object> runner, string userCode)
         {
-            return new CodeTaskDiagnostic
-            {
-                Start = validation.Location.Start,
-                End = validation.Location.End,
-                Severity = CodeTaskDiagnosticSeverity.Error
-            };
+            throw new NotImplementedException();
         }
     }
 }

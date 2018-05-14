@@ -5,8 +5,8 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
     /// <summary>
     /// A dothtml view.
     /// </summary>
-    public interface IDothtmlView : IValidationUnit
+    public interface IDothtmlDocument : IValidationUnit
     {
-        IDothtmlControl GetRoot();
+        IDothtmlControl GetControl(string path);
     }
 }

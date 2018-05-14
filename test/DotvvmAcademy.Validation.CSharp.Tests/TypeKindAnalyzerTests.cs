@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.CodeAnalysis;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -33,10 +34,10 @@ public delegate void SampleDelegate();";
             var sampleEnum = Factory.CreateTypeName("", "SampleEnum");
             var sampleDelegate = Factory.CreateTypeName("", "SampleDelegate");
 
-            var metadata = new OldMetadataCollection();
-            metadata[sampleClass, TypeKindAnalyzer.MetadataKey] = CSharpTypeKind.Class;
-            metadata[sampleStruct, TypeKindAnalyzer.MetadataKey] = CSharpTypeKind.Class | CSharpTypeKind.Struct;
-            metadata[sampleEnum, TypeKindAnalyzer.MetadataKey] = CSharpTypeKind.Array | CSharpTypeKind.Pointer;
+            var metadata = new MetadataCollection<MetadataName>();
+            metadata[sampleClass, TypeKindAnalyzer.MetadataKey] = TypeKind.Class;
+            metadata[sampleStruct, TypeKindAnalyzer.MetadataKey] = TypeKind.Class | TypeKind.Struct;
+            metadata[sampleEnum, TypeKindAnalyzer.MetadataKey] = TypeKind.Array | TypeKind.Pointer;
 
             var compilation = GetCompilation(Sample);
             var nameProvider = new RoslynMetadataNameProvider(Factory);
