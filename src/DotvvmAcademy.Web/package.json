@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "name": "rigantitemplatename.app",
+  "name": "dotvvmacademy.app",
   "private": true,
   "devDependencies": {
     "autoprefixer": "7.1.6",

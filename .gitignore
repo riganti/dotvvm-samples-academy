@@ -252,3 +252,5 @@ paket-files/
 *.sln.iml
 
 monaco-editor
+**/wwwroot/css
+**/wwwroot/scripts
