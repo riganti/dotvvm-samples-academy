@@ -1,13 +1,14 @@
-﻿@viewModel DotvvmAcademy.ViewModels.DefaultViewModel, DotvvmAcademy
+﻿@viewModel DotvvmAcademy.Web.ViewModels.DefaultViewModel
 @masterPage Views/site.dotmaster
+@import DotvvmAcademy.Web.Resources.Localization
 
 <dot:Content ContentPlaceHolderID="HeaderContent">
     <section class="main-header no-padding" RenderSettings.Mode="Server">
         <div class="container-large">
             <div>
-                <dot:HtmlLiteral Html="{resource: LessonNames.Base_MainTitle}" RenderWrapperTag="true" WrapperTagName="h1" />
-                <dot:HtmlLiteral Html="{resource: LessonNames.Base_MainDesc}" RenderWrapperTag="true" WrapperTagName="p" /
-                <dot:Button ButtonTagName="button" class="button" Text="{resource: LessonNames.Btn_StartCourse}"></dot:Button>
+                <dot:HtmlLiteral Html="{resource: UIResources.Base_MainTitle}" RenderWrapperTag="true" WrapperTagName="h1" />
+                <dot:HtmlLiteral Html="{resource: UIResources.Base_MainDescription}" RenderWrapperTag="true" WrapperTagName="p" /
+                <dot:Button ButtonTagName="button" class="button" Text="{resource: UIResources.Btn_StartCourse}"></dot:Button>
                 <cc:SvgToHtml Source="images/Illustrations/header-image.svg" RenderSettings.Mode="Server" />
                 <div class="tags-container">
                     <div>
@@ -39,7 +40,7 @@
 <dot:Content ContentPlaceHolderID="MainContent">
     <section class="section-lections">
         <div class="container-large">
-            <dot:Literal Text="{resource: LessonNames.Base_ChooseLesson}" class="progress-bar-title" />
+            <dot:Literal Text="{resource: UIResources.Base_ChooseLesson}" class="progress-bar-title" />
 
             <dot:Repeater DataSource="{value: Lessons}" class="lesson-progress-bar" RenderSettings.Mode="Server">
                 <div class="{value: IsFinished ? "progress-item completed" : "progress-item"}">
@@ -70,10 +71,10 @@
             </cc:SvgToHtml>
         </div>
         <div>
-            <dot:HtmlLiteral Html="{resource: LessonNames.Base_CoffeeTitle}" RenderWrapperTag="true" WrapperTagName="h2" />
-            <dot:HtmlLiteral Html="{resource: LessonNames.Base_CoffeeDesc}" RenderWrapperTag="true" WrapperTagName="p" />
+            <dot:HtmlLiteral Html="{resource: UIResources.Base_CoffeeTitle}" RenderWrapperTag="true" WrapperTagName="h2" />
+            <dot:HtmlLiteral Html="{resource: UIResources.Base_CoffeeDescription}" RenderWrapperTag="true" WrapperTagName="p" />
             <a href="https://goo.gl/PDrdpZ" target="_blank" class="button">
-                {{resource:LessonNames.Btn_Coffee}}
+                {{resource:UIResources.Btn_Coffee}}
             </a>
         </div>
     </section>

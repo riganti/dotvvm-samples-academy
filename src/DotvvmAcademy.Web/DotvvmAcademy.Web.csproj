@@ -36,4 +36,23 @@
     <ItemGroup>
         <DotNetCliToolReference Include="DotVVM.Compiler.Light" Version="1.1.9" />
     </ItemGroup>
+    <ItemGroup>
+    <Compile Update="Resources\Localization\UIResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>UIResources.resx</DependentUpon>
+    </Compile>
+    </ItemGroup>
+    <ItemGroup>
+      <EmbeddedResource Update="Resources\Localization\UIResources.cs.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Localization\UIResources.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>UIResources.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Localization\UIResources.ru.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+      </EmbeddedResource>
+    </ItemGroup>
 </Project>

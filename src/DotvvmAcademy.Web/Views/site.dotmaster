@@ -1,4 +1,5 @@
-﻿@viewModel DotvvmAcademy.ViewModels.SiteViewModel, DotvvmAcademy
+﻿@viewModel DotvvmAcademy.Web.ViewModels.SiteViewModel
+@import DotvvmAcademy.Web.Resources.Localization
 
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
@@ -30,9 +31,9 @@
             <a target="_blank" href="https://www.dotvvm.com/">www.dotvvm.com</a>
         </div>
         <div class="footer-links">
-            <a target="_blank" href="https://www.dotvvm.com/docs/latest">{{resource: LessonNames.DocumentationText}}</a>
-            <a target="_blank" href="https://www.dotvvm.com/docs/tutorials/introduction/latest">{{resource: LessonNames.TutorialsText}}</a>
-            <a target="_blank" href="https://www.dotvvm.com/docs/samples/latest">{{resource: LessonNames.SamplesText}}</a>
+            <a target="_blank" href="https://www.dotvvm.com/docs/latest">{{resource: UIResources.Base_Documentation}}</a>
+            <a target="_blank" href="https://www.dotvvm.com/docs/tutorials/introduction/latest">{{resource: UIResources.Base_Tutorials}}</a>
+            <a target="_blank" href="https://www.dotvvm.com/docs/samples/latest">{{resource: UIResources.Base_Samples}}</a>
         </div>
     </footer>
 

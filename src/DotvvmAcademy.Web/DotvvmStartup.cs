@@ -19,16 +19,16 @@ namespace DotvvmAcademy.Web
         {
             config.RouteTable.Add(
                 routeName: "Lesson",
-                url: "{Lang}/lesson{Lesson}/step{Step}", 
+                url: "{Language}/{Lesson}/{Step}",
                 virtualPath: "Views/lesson.dothtml", 
                 defaultValues: new { Lang = "en" },
-                presenterFactory: LocalizablePresenter.BasedOnParameter("Lang"));
+                presenterFactory: LocalizablePresenter.BasedOnParameter("Language"));
             config.RouteTable.Add(
                 routeName:"Default", 
-                url: "{Lang:alpha}", 
+                url: "{Language:alpha}", 
                 virtualPath: "Views/default.dothtml", 
                 defaultValues: new { Lang = "en" }, 
-                presenterFactory: LocalizablePresenter.BasedOnParameter("Lang"));
+                presenterFactory: LocalizablePresenter.BasedOnParameter("Language"));
             config.RouteTable.AutoDiscoverRoutes(new DefaultRouteStrategy(config));
         }
 
