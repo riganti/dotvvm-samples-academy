@@ -1,7 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
     <PropertyGroup>
         <TargetFramework>netcoreapp2.0</TargetFramework>
         <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+        <TypeScriptToolsVersion>2.8</TypeScriptToolsVersion>
     </PropertyGroup>
     <ItemGroup>
         <!--Include Views-->
@@ -19,6 +20,7 @@
     </ItemGroup>
     <ItemGroup>
         <None Remove="dotvvm_serialized_config.json.tmp" />
+        <None Remove="Views\MasterPage.dotmaster" />
     </ItemGroup>
     <ItemGroup>
         <Folder Include="wwwroot\" />
@@ -26,7 +28,7 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore" Version="2.0.3" />
         <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.0.3" />
-        <PackageReference Include="DotVVM.AspNetCore" Version="1.1.9" />
+        <PackageReference Include="DotVVM.AspNetCore" Version="2.0.0-preview08-final" />
         
     </ItemGroup>
     <ItemGroup>
