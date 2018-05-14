@@ -7,7 +7,7 @@
     <p>{{resource: UIResources.LangSwitcher_Title}}</p>
 </div>
 <div class="lang-switcher_list">
-    <dot:RouteLink RouteName="{resource: Context.Route.RouteName}" Param-Lang="en">En</dot:RouteLink>
-    <dot:RouteLink RouteName="{resource: Context.Route.RouteName}" Param-Lang="cs">Cz</dot:RouteLink>
-    <dot:RouteLink RouteName="{resource: Context.Route.RouteName}" Param-Lang="ru">Ru</dot:RouteLink>
+    <dot:RouteLink RouteName="{resource: Context.Route.RouteName}" Param-Language="en">En</dot:RouteLink>
+    <dot:RouteLink RouteName="{resource: Context.Route.RouteName}" Param-Langauge="cs">Cz</dot:RouteLink>
+    <dot:RouteLink RouteName="{resource: Context.Route.RouteName}" Param-Language="ru">Ru</dot:RouteLink>
 </div>

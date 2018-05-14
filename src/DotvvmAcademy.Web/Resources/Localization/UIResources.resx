@@ -159,4 +159,13 @@ Watch &lt;strong&gt;DotVVM Coffee&lt;/strong&gt; videos!</value>
   <data name="Base_CoffeeDescription" xml:space="preserve">
     <value>A series of short videos that show various features and controls of DotVVM.</value>
   </data>
+  <data name="Btn_StartLesson" xml:space="preserve">
+    <value>Start lesson</value>
+  </data>
+  <data name="Btn_NextStep" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="Btn_PreviousStep" xml:space="preserve">
+    <value>Previous</value>
+  </data>
 </root>

@@ -1,4 +1,5 @@
-﻿using DotVVM.Framework.ViewModel;
+﻿using System.Threading.Tasks;
+using DotVVM.Framework.ViewModel;
 
 namespace DotvvmAcademy.Web.ViewModels
 {
@@ -6,5 +7,14 @@ namespace DotvvmAcademy.Web.ViewModels
     {
         [FromRoute("Language")]
         public string Language { get; set; }
+
+        public override Task Init()
+        {
+            if (string.IsNullOrEmpty(Language))
+            {
+                Language = "en";
+            }
+            return base.Init();
+        }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using DotVVM.Framework.Configuration;
+using DotVVM.Framework.Hosting;
 using DotVVM.Framework.ResourceManagement;
 using DotVVM.Framework.Routing;
-using DotVVM.Framework.Hosting;
 using DotvvmAcademy.Web.Controls;
 
 namespace DotvvmAcademy.Web
@@ -13,23 +13,6 @@ namespace DotvvmAcademy.Web
             ConfigureRoutes(config, applicationPath);
             ConfigureControls(config, applicationPath);
             ConfigureResources(config, applicationPath);
-        }
-
-        private void ConfigureRoutes(DotvvmConfiguration config, string applicationPath)
-        {
-            config.RouteTable.Add(
-                routeName: "Lesson",
-                url: "{Language}/{Lesson}/{Step}",
-                virtualPath: "Views/lesson.dothtml", 
-                defaultValues: new { Lang = "en" },
-                presenterFactory: LocalizablePresenter.BasedOnParameter("Language"));
-            config.RouteTable.Add(
-                routeName:"Default", 
-                url: "{Language:alpha}", 
-                virtualPath: "Views/default.dothtml", 
-                defaultValues: new { Lang = "en" }, 
-                presenterFactory: LocalizablePresenter.BasedOnParameter("Language"));
-            config.RouteTable.AutoDiscoverRoutes(new DefaultRouteStrategy(config));
         }
 
         private void ConfigureControls(DotvvmConfiguration config, string applicationPath)
@@ -47,6 +30,23 @@ namespace DotvvmAcademy.Web
             });
 
             config.Resources.Register("StyleCSS", new StylesheetResource(new FileResourceLocation("~/wwwroot/css/style.css")));
+        }
+
+        private void ConfigureRoutes(DotvvmConfiguration config, string applicationPath)
+        {
+            config.RouteTable.Add(
+                routeName: "Step",
+                url: "{Language}/{Lesson}/{Step}",
+                virtualPath: "Views/step.dothtml",
+                defaultValues: new { Language = "en" },
+                presenterFactory: LocalizablePresenter.BasedOnParameter("Language"));
+            config.RouteTable.Add(
+                routeName: "Default",
+                url: "{Language:alpha}",
+                virtualPath: "Views/default.dothtml",
+                defaultValues: new { Language = "en" },
+                presenterFactory: LocalizablePresenter.BasedOnParameter("Language"));
+            config.RouteTable.AutoDiscoverRoutes(new DefaultRouteStrategy(config));
         }
     }
 }

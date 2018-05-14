@@ -147,8 +147,17 @@
   <data name="Btn_Coffee" xml:space="preserve">
     <value>DotVVM Coffee</value>
   </data>
+  <data name="Btn_NextStep" xml:space="preserve">
+    <value>Продолжить</value>
+  </data>
+  <data name="Btn_PreviousStep" xml:space="preserve">
+    <value>Назад</value>
+  </data>
   <data name="Btn_StartCourse" xml:space="preserve">
     <value>Запустить DotVVM Academy</value>
+  </data>
+  <data name="Btn_StartLesson" xml:space="preserve">
+    <value>Начать кур</value>
   </data>
   <data name="LangSwitcher_Class" xml:space="preserve">
     <value>ru</value>

@@ -1,3 +1,3 @@
-# Vitejte ve vzorovem kurzu
+# Vítejte ve vzorovém kurzu
 
-Tento kurz byl vytvoren za ucelem testovani knihovny CourseFormat.
+Tento kurz byl vytvořen za účelem testování knihovny CourseFormat.

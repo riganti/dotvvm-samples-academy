@@ -44,7 +44,7 @@
 
             <dot:Repeater DataSource="{value: Lessons}" class="lesson-progress-bar" RenderSettings.Mode="Server">
                 <div class="{value: IsFinished ? "progress-item completed" : "progress-item"}">
-                    <span>{{value: Number}}</span>
+                    <span>42</span>
                 </div>
             </dot:Repeater>
 
@@ -52,14 +52,13 @@
                 <div class="{value: IsFinished ? "lessons-item finished" : "lessons-item" }">
                     <cc:SvgToHtml Source="{value:IsFinished ? "images/Icons/medal.svg" : ImageUrl}">
                     </cc:SvgToHtml>
-                    <h2>{{value: Title}}</h2>
-                    <dot:HtmlLiteral Html="{value: Description}" RenderWrapperTag="true" WrapperTagName="p" />
-                    <dot:RouteLink RouteName="Lesson"
-                                   Param-Lang="{value: CurrentCulture}"
-                                   Param-Lesson="{value: Number}"
-                                   Param-Step="{value: StepToOpen}"
-                                   Text="{value: ButtonText}"
-                                   Enabled="{value: IsCreated}"
+                    <h2>{{value: Name}}</h2>
+                    <dot:HtmlLiteral Html="{value: Annotation}" />
+                    <dot:RouteLink RouteName="Step"
+                                   Param-Language="{value: _root.Language}"
+                                   Param-Lesson="{value: Moniker}"
+                                   Param-Step="{value: CurrentStep}"
+                                   Text="{value: UIResources.Btn_StartLesson}"
                                    class="button" />
                 </div>
             </dot:Repeater>

@@ -147,8 +147,17 @@ Vše ostatní vám vysvětlíme v několika jednoduchých lekcích.</value>
   <data name="Btn_Coffee" xml:space="preserve">
     <value>DotVVM Coffee</value>
   </data>
+  <data name="Btn_NextStep" xml:space="preserve">
+    <value>Následující</value>
+  </data>
+  <data name="Btn_PreviousStep" xml:space="preserve">
+    <value>Předchozí</value>
+  </data>
   <data name="Btn_StartCourse" xml:space="preserve">
     <value>Spustit kurz DotVVM</value>
+  </data>
+  <data name="Btn_StartLesson" xml:space="preserve">
+    <value>Začít lekci</value>
   </data>
   <data name="LangSwitcher_Class" xml:space="preserve">
     <value>cz</value>

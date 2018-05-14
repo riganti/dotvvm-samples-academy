@@ -37,6 +37,9 @@
         <DotNetCliToolReference Include="DotVVM.Compiler.Light" Version="1.1.9" />
     </ItemGroup>
     <ItemGroup>
+      <ProjectReference Include="..\DotvvmAcademy.BL\DotvvmAcademy.BL.csproj" />
+    </ItemGroup>
+    <ItemGroup>
     <Compile Update="Resources\Localization\UIResources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

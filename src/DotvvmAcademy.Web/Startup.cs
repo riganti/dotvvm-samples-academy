@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using DotvvmAcademy.BL;
+using DotvvmAcademy.CourseFormat;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
@@ -10,7 +12,7 @@ namespace DotvvmAcademy.Web
     {
         public const string AuthenticationScheme = "Cookie";
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, CourseWorkspace workspace)
         {
             loggerFactory.AddConsole();
 
@@ -20,6 +22,7 @@ namespace DotvvmAcademy.Web
             {
                 FileProvider = new PhysicalFileProvider(env.WebRootPath)
             });
+            workspace.GetVariantIds();
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -28,6 +31,8 @@ namespace DotvvmAcademy.Web
             services.AddAuthorization();
             services.AddWebEncoders();
             services.AddDotVVM();
+            services.AddSingleton<LessonFacade>();
+            services.AddSingleton(new CourseWorkspace("../../sample/sample_course"));
         }
     }
 }

@@ -145,11 +145,38 @@ namespace DotvvmAcademy.Web.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Next.
+        /// </summary>
+        public static string Btn_NextStep {
+            get {
+                return ResourceManager.GetString("Btn_NextStep", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Previous.
+        /// </summary>
+        public static string Btn_PreviousStep {
+            get {
+                return ResourceManager.GetString("Btn_PreviousStep", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Run DotVVM Academy.
         /// </summary>
         public static string Btn_StartCourse {
             get {
                 return ResourceManager.GetString("Btn_StartCourse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start lesson.
+        /// </summary>
+        public static string Btn_StartLesson {
+            get {
+                return ResourceManager.GetString("Btn_StartLesson", resourceCulture);
             }
         }
         
