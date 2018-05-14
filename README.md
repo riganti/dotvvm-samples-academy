@@ -1,2 +1,2 @@
-# dotvvm-samples-academy
-DotVVM Academy sample application
+# Dotvvm Academy
+The source code of __academy.dotvvm.com__.
