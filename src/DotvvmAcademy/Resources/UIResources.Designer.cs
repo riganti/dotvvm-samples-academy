@@ -61,6 +61,72 @@ namespace DotvvmAcademy.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Choose a Lesson.
+        /// </summary>
+        public static string Base_ChooseLesson {
+            get {
+                return ResourceManager.GetString("Base_ChooseLesson", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A series of short videos that show various features and controls of DotVVM..
+        /// </summary>
+        public static string Base_CoffeeDesc {
+            get {
+                return ResourceManager.GetString("Base_CoffeeDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Have a few minutes?&lt;br&gt;
+        ///Watch &lt;strong&gt;DotVVM Coffee&lt;/strong&gt; videos!.
+        /// </summary>
+        public static string Base_CoffeeTitle {
+            get {
+                return ResourceManager.GetString("Base_CoffeeTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you wonder how DotVVM works?&lt;br&gt;
+        ///It’s easy – all you need to know is &lt;strong&gt;HTML&lt;/strong&gt;, &lt;strong&gt;C#&lt;/strong&gt; and basics of &lt;strong&gt;CSS&lt;/strong&gt;.&lt;br&gt;
+        ///We will explain everything to you in a few easy lessons..
+        /// </summary>
+        public static string Base_MainDesc {
+            get {
+                return ResourceManager.GetString("Base_MainDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Learn DotVVM&lt;br&gt; in &lt;b&gt;few&lt;/b&gt; minutes.
+        /// </summary>
+        public static string Base_MainTitle {
+            get {
+                return ResourceManager.GetString("Base_MainTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DotVVM Coffee.
+        /// </summary>
+        public static string Btn_Coffee {
+            get {
+                return ResourceManager.GetString("Btn_Coffee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Run DotVVM Academy.
+        /// </summary>
+        public static string Btn_StartCourse {
+            get {
+                return ResourceManager.GetString("Btn_StartCourse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Documentation.
         /// </summary>
         public static string Documentation {
@@ -92,34 +158,115 @@ namespace DotvvmAcademy.Resources {
         /// </summary>
         public static string ErrorOther {
             get {
-                return ResourceManager.GetString("ErrorOther", resourceCulture);
+                return ResourceManager.GetString("IsVisitedLessonBtnText", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lesson.
+        ///   Looks up a localized string similar to You’ll understand the basics of DotVVM and MVVM design pattern..
         /// </summary>
-        public static string Lesson {
+        public static string Lesson1_Desc {
             get {
-                return ResourceManager.GetString("Lesson", resourceCulture);
+                return ResourceManager.GetString("Lesson1_Desc", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Next.
+        ///   Looks up a localized string similar to  Lesson 1: Basic principles.
         /// </summary>
-        public static string Next {
+        public static string Lesson1_Title {
             get {
-                return ResourceManager.GetString("Next", resourceCulture);
+                return ResourceManager.GetString("Lesson1_Title", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Online Course.
+        ///   Looks up a localized string similar to You’ll see the Repeater control and how to work with collections..
         /// </summary>
-        public static string OnlineCourse {
+        public static string Lesson2_Desc {
             get {
-                return ResourceManager.GetString("OnlineCourse", resourceCulture);
+                return ResourceManager.GetString("Lesson2_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lesson 2: Collections.
+        /// </summary>
+        public static string Lesson2_Title {
+            get {
+                return ResourceManager.GetString("Lesson2_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You’ll use DotVVM ComboBox and RadioButton and learn about the DataContext property..
+        /// </summary>
+        public static string Lesson3_Desc {
+            get {
+                return ResourceManager.GetString("Lesson3_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lesson 3: Forms in DotVVM.
+        /// </summary>
+        public static string Lesson3_Title {
+            get {
+                return ResourceManager.GetString("Lesson3_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Learn how validation works..
+        /// </summary>
+        public static string Lesson4_Desc {
+            get {
+                return ResourceManager.GetString("Lesson4_Desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lesson 4: Validation.
+        /// </summary>
+        public static string Lesson4_Title {
+            get {
+                return ResourceManager.GetString("Lesson4_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to en.
+        /// </summary>
+        public static string LocalizeClass {
+            get {
+                return ResourceManager.GetString("LocalizeClass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to images/Icons/Flag_US.svg.
+        /// </summary>
+        public static string LocalizeImg {
+            get {
+                return ResourceManager.GetString("LocalizeImg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change language.
+        /// </summary>
+        public static string LocalizeMainTitle {
+            get {
+                return ResourceManager.GetString("LocalizeMainTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Continue.
+        /// </summary>
+        public static string NextBtnText {
+            get {
+                return ResourceManager.GetString("NextBtnText", resourceCulture);
             }
         }
         

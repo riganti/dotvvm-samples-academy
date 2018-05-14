@@ -1,0 +1,54 @@
+﻿@import "../Base/_global.scss";
+
+.button {
+    display: inline-block;
+    text-decoration: none;
+    background-color: $color-secondary;
+    color: $color-primary;
+    padding: .8rem 1.6rem;
+    border: .1rem solid $color-secondary;
+    cursor: pointer;
+    font-weight: 600;
+    text-decoration: none;
+    min-width: 15rem;
+    transition: $animate-all;
+    text-align: center;
+    font-family: $font-text;
+    font-size: $font-size-m;
+
+    &:hover, &:focus {
+        text-decoration: none;
+        background-color: $color-hover;
+        transition: $animate-all;
+        outline: none;
+    }
+
+    &.with-borders {
+        position: relative;
+        z-index: 9;
+        padding: .8rem 3rem;
+        overflow: hidden;
+        border: .1rem solid $color-primary;
+
+        &:before, &:after {
+            position: absolute;
+            display: block;
+            content: '';
+            z-index: 10;
+            height: 5rem;
+            background-color: $color-primary;
+            top: 50%;
+            width: 5rem;
+        }
+
+        &:before {
+            left: 0;
+            transform: translate(-90%, -50%) rotate(45deg);
+        }
+
+        &:after {
+            right: 0;
+            transform: translate(90%, -50%) rotate(45deg);
+        }
+    }
+}

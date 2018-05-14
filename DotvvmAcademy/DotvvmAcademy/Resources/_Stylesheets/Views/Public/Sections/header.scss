@@ -1,0 +1,159 @@
+﻿@import "../../../Base/global";
+
+.main-header {
+    background: -moz-linear-gradient(left, $color-primary 0%, $color-primary 65%, $color-white 65%, $color-white 100%);
+    background: -webkit-linear-gradient(left, $color-primary 0%,$color-primary 65%,$color-white 65%,$color-white 100%);
+    background: linear-gradient(to right, $color-primary 0%,$color-primary 65%,$color-white 65%,$color-white 100%);
+
+    @include res-max-desktop-HD {
+        background: -moz-linear-gradient(left, $color-primary 0%, $color-primary 80%, $color-white 80%, $color-white 100%);
+        background: -webkit-linear-gradient(left, $color-primary 0%,$color-primary 80%,$color-white 80%,$color-white 100%);
+        background: linear-gradient(to right, $color-primary 0%,$color-primary 80%,$color-white 80%,$color-white 100%);
+    }
+
+    @include res-max-desktop-large {
+        background: $color-primary;
+    }
+
+    @include res-max-desktop-small {
+        background: rgba(78, 78, 77, 0.90);
+    }
+
+    > div > div {
+        padding: 5rem 0;
+        position: relative;
+        color: $color-white;
+
+        @include res-max-desktop-small {
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        > svg {
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 60%;
+            transform: translateX(-50%);
+            transition: $animate-all;
+
+            @include res-max-desktop-HD {
+                left: 75%;
+                transition: $animate-all;
+            }
+
+            @include res-max-desktop-large {
+                left: 85%;
+            }
+
+            @include res-max-desktop-small {
+                left: 45%;
+                z-index: -1;
+            }
+
+
+            @include res-max-mobile {
+                left: 40%;
+            }
+        }
+
+        > h1 {
+            text-transform: uppercase;
+            font-size: $font-size-xxl;
+            line-height: calc($font-size-xxl + .2rem);
+            font-weight: 300;
+            position: relative;
+            padding-bottom: 5rem;
+
+            @include res-max-mobile {
+                font-size: $font-size-xl;
+                line-height: calc($font-size-xl + .2rem);
+            }
+
+            &:before {
+                position: absolute;
+                content: '';
+                top: calc(100% - 2.5rem);
+                left: 0;
+                width: 5rem;
+                height: .2rem;
+                transform: translateY(-50%);
+                background-color: $color-white;
+
+                @include res-max-desktop-small {
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                }
+            }
+        }
+
+        p {
+            padding-bottom: 2.5rem;
+        }
+    } 
+}
+
+
+.tags-container {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 25%;
+    transform: translate(10%, -50%);
+    height: 30rem;
+
+    @include res-max-desktop-HD{
+        display: none;
+    }
+
+    > div {
+        text-align: center;
+        margin-bottom: 3rem;
+
+        &:first-child {
+            margin-bottom: 7rem;
+        }
+
+        &:nth-child(2) {
+            margin-bottom: 3rem;
+            text-align: right;
+
+            svg {
+                height: 5rem;
+            }
+        }
+
+        &:nth-child(3) {
+            text-align: left;
+            margin-bottom: 1rem;
+
+            a {
+                margin-left: 6rem;
+            }
+
+            svg {
+                height: 6rem;
+            }
+        }
+
+        &:last-child {
+            text-align: right;
+        }
+
+        svg {
+            height: 4rem;
+            transform: scale(1,1);
+            transition: $animate-all;
+            width: auto;
+        }
+
+        a {
+            text-decoration: none;
+
+            &:hover svg {
+                transform: scale(1.1,1.1);
+                transition: $animate-all;
+            }
+        }
+    }
+}

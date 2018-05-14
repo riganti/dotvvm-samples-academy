@@ -1,0 +1,68 @@
+﻿@import "../../../Base/global";
+
+.section-coffee {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    background-color: $color-bg;
+    padding: 10rem 0;
+
+    @include res-max-tablet {
+        padding: 3rem 0;
+    }
+
+    > div {
+        flex: 0 0 40%;
+        width: 40%;
+        max-width: 40%;
+        position: relative;
+
+        @include res-max-tablet {
+            display: none;
+        }
+
+        svg {
+            display: block;
+            height: auto;
+            width: 75%;
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+        }
+
+        h2 {
+            display: block;
+            margin-bottom: 3rem;
+            font-size: $font-size-xxl;
+            font-weight: 300;
+
+            @include res-max-tablet {
+                font-size: 3rem;
+            }
+        }
+
+        p {
+            display: block;
+            margin-bottom: 2rem;
+            font-size: $font-size-l;
+        }
+
+        &:last-child {
+            display: block;
+            flex: 0 0 60%;
+            width: 60%;
+            max-width: 60%;
+
+            @include res-max-tablet {
+                padding: 0 2rem;
+                box-sizing: border-box;
+                width: 100%;
+                flex: 0 0 100%;
+                max-width: none;
+                text-align: center;
+            }
+        }
+    }
+}

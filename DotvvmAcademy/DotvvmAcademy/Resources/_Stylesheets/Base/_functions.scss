@@ -1,0 +1,43 @@
+﻿
+// Detect if color is dark or light and return proper color on hover effect
+// Percentage can be used to set
+@function get-hover-color($color, $percentage) {
+    @if (lightness($color) > 20) {
+        @return darken($color, $percentage); // Lighter backgorund, return dark color
+    }
+    @else {
+        @return lighten($color, $percentage); // Darker background, return light color
+    }
+}
+
+// Get only number value from unit eg. 1px will return only 1
+@function remove-unit($number) {
+    @if type-of($number) == 'number' and not unitless($number) {
+        @return $number / ($number * 0 + 1);
+    }
+
+    @return $number;
+}
+
+@function convert-unit($value, $unit) {
+    $units: ( 
+        'px': 0px, 
+        '%': 0%, 
+        'em': 0em, 
+        'rem': 0rem, 
+        'vw': 0vw, 
+        'vh': 0vh, 
+        'vmin': 0vmin, 
+        'vmax': 0vmax, 
+        'deg': 0deg, 
+        'rad': 0rad, 
+        's': 0s, 
+        'ms': 0ms,
+        'dppx': 0dppx, 
+        'dpcm': 0dpcm, 
+        'dpi': 0dpi, );
+
+    @if map-has-key($units, $unit) {
+        @return map-get($units, $unit) + $value;
+    }
+}

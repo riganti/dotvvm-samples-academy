@@ -1,0 +1,80 @@
+﻿@viewModel DotvvmAcademy.ViewModels.DefaultViewModel, DotvvmAcademy
+@masterPage Views/site.dotmaster
+
+<dot:Content ContentPlaceHolderID="HeaderContent">
+    <section class="main-header no-padding" RenderSettings.Mode="Server">
+        <div class="container-large">
+            <div>
+                <dot:HtmlLiteral Html="{resource: LessonNames.Base_MainTitle}" RenderWrapperTag="true" WrapperTagName="h1" />
+                <dot:HtmlLiteral Html="{resource: LessonNames.Base_MainDesc}" RenderWrapperTag="true" WrapperTagName="p" /
+                <dot:Button ButtonTagName="button" class="button" Text="{resource: LessonNames.Btn_StartCourse}"></dot:Button>
+                <cc:SvgToHtml Source="images/Illustrations/header-image.svg" RenderSettings.Mode="Server" />
+                <div class="tags-container">
+                    <div>
+                        <a href="https://www.dotvvm.com/" target="_blank">
+                            <cc:SvgToHtml Source="images/Illustrations/tag-dotvvm.svg" RenderSettings.Mode="Server" />
+                        </a>
+                    </div>
+                    <div>
+                        <a href="https://www.dotvvm.com/docs/samples/latest" target="_blank">
+                            <cc:SvgToHtml Source="images/Illustrations/tag-samples.svg" RenderSettings.Mode="Server" />
+                        </a>
+                    </div>
+                    <div>
+                        <a href="https://www.dotvvm.com/docs/tutorials/introduction/latest" target="_blank">
+                            <cc:SvgToHtml Source="images/Illustrations/tag-tutorials.svg" RenderSettings.Mode="Server" />
+                        </a>
+                    </div>
+                    <div>
+                        <a href="https://www.dotvvm.com/docs/latest" target="_blank">
+                            <cc:SvgToHtml Source="images/Illustrations/tag-doc.svg" RenderSettings.Mode="Server" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</dot:Content>
+
+<dot:Content ContentPlaceHolderID="MainContent">
+    <section class="section-lections">
+        <div class="container-large">
+            <dot:Literal Text="{resource: LessonNames.Base_ChooseLesson}" class="progress-bar-title" />
+
+            <dot:Repeater DataSource="{value: Lessons}" class="lesson-progress-bar" RenderSettings.Mode="Server">
+                <div class="{value: IsFinished ? "progress-item completed" : "progress-item"}">
+                    <span>{{value: Number}}</span>
+                </div>
+            </dot:Repeater>
+
+            <dot:Repeater DataSource="{value: Lessons}" class="lessons-container" RenderSettings.Mode="Server">
+                <div class="{value: IsFinished ? "lessons-item finished" : "lessons-item" }">
+                    <cc:SvgToHtml Source="{value:IsFinished ? "images/Icons/medal.svg" : ImageUrl}">
+                    </cc:SvgToHtml>
+                    <h2>{{value: Title}}</h2>
+                    <dot:HtmlLiteral Html="{value: Description}" RenderWrapperTag="true" WrapperTagName="p" />
+                    <dot:RouteLink RouteName="Lesson"
+                                   Param-Lang="{value: CurrentCulture}"
+                                   Param-Lesson="{value: Number}"
+                                   Param-Step="{value: StepToOpen}"
+                                   Text="{value: ButtonText}"
+                                   Enabled="{value: IsCreated}"
+                                   class="button" />
+                </div>
+            </dot:Repeater>
+        </div>
+    </section>
+    <section class="section-coffee">
+        <div>
+            <cc:SvgToHtml Source="images/Illustrations/coffee-image.svg">
+            </cc:SvgToHtml>
+        </div>
+        <div>
+            <dot:HtmlLiteral Html="{resource: LessonNames.Base_CoffeeTitle}" RenderWrapperTag="true" WrapperTagName="h2" />
+            <dot:HtmlLiteral Html="{resource: LessonNames.Base_CoffeeDesc}" RenderWrapperTag="true" WrapperTagName="p" />
+            <a href="https://goo.gl/PDrdpZ" target="_blank" class="button">
+                {{resource:LessonNames.Btn_Coffee}}
+            </a>
+        </div>
+    </section>
+</dot:Content>
