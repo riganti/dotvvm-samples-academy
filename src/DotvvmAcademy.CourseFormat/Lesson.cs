@@ -1,5 +1,4 @@
 ﻿using System.Collections.Immutable;
-using System.Diagnostics;
 
 namespace DotvvmAcademy.CourseFormat
 {
@@ -14,6 +13,6 @@ namespace DotvvmAcademy.CourseFormat
 
         public LessonId Id { get; }
 
-        public ImmutableArray<StepId> Steps { get; set; }
+        public ImmutableDictionary<string, StepId> Steps { get; set; }
     }
 }

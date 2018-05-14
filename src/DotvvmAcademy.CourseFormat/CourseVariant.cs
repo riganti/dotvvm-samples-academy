@@ -17,6 +17,6 @@ namespace DotvvmAcademy.CourseFormat
 
         public CourseVariantId Id { get; }
 
-        public ImmutableArray<LessonId> Lessons { get; set; }
+        public ImmutableDictionary<string, LessonId> Lessons { get; set; }
     }
 }

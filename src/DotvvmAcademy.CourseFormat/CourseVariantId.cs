@@ -6,9 +6,9 @@ namespace DotvvmAcademy.CourseFormat
     [DebuggerDisplay("CourseVariantId: {Path}")]
     public sealed class CourseVariantId
     {
-        public CourseVariantId(string moniker)
+        internal CourseVariantId(string moniker)
         {
-            Path = $"./{moniker}";
+            Path = $"/{moniker}";
             Moniker = moniker;
             Id = Guid.NewGuid();
         }

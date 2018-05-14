@@ -6,7 +6,7 @@ namespace DotvvmAcademy.CourseFormat
     [DebuggerDisplay("LessonId: {Path}")]
     public sealed class LessonId
     {
-        public LessonId(CourseVariantId variantId, string moniker)
+        internal LessonId(CourseVariantId variantId, string moniker)
         {
             VariantId = variantId;
             Moniker = moniker;

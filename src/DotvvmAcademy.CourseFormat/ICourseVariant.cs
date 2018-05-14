@@ -8,6 +8,6 @@ namespace DotvvmAcademy.CourseFormat
 
         CourseVariantId Id { get; }
 
-        ImmutableArray<LessonId> Lessons { get; }
+        ImmutableDictionary<string, LessonId> Lessons { get; }
     }
 }

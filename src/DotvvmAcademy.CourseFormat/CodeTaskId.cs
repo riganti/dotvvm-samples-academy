@@ -7,7 +7,7 @@ namespace DotvvmAcademy.CourseFormat
     [DebuggerDisplay("CodeTaskId: {CodePath}, {ValidationScriptPath}")]
     public sealed class CodeTaskId
     {
-        public CodeTaskId(StepId stepId, string codeFile, string validationScriptFile)
+        internal CodeTaskId(StepId stepId, string codeFile, string validationScriptFile)
         {
             StepId = stepId;
             CodePath = $"{stepId.Path}/{codeFile}";

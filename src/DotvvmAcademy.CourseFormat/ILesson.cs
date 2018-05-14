@@ -8,6 +8,6 @@ namespace DotvvmAcademy.CourseFormat
 
         LessonId Id { get; }
 
-        ImmutableArray<StepId> Steps { get; }
+        ImmutableDictionary<string, StepId> Steps { get; }
     }
 }
