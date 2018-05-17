@@ -17,6 +17,12 @@ footer {
             text-decoration: none;
             color: $color-white;
             font-size: $font-size-l;
+            transition: $animate-all;
+
+            &:hover {
+                color: $color-border;
+                transition: $animate-all;
+            }
 
             @include res-max-tablet {
                 flex: 0 0 100%;
@@ -41,6 +47,12 @@ footer {
             padding-bottom: 3rem;
             display: block;
             text-align: center;
+            transition: $animate-all;
+
+            &:hover {
+                color: $color-border;
+                transition: $animate-all;
+            }
         }
     }
 }

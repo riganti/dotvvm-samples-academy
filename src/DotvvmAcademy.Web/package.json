@@ -25,13 +25,12 @@
     "watch": "npm run watch:scss | npm run watch:ts",
     "watch:scss": "npm run compile:scss && npm run compile:scss -- -w",
     "watch:ts": "npm run compile:ts -- -w",
-    "browser-sync": "browser-sync start --proxy localhost:2299 --files=\"wwwroot/css/*.css\" \"Resources/JS/*.js\" \"Views/**/*.dothtml\" \"Controls/**/*.dotcontrol\" \"Views/**/*.dotmaster\""
+    "browser-sync": "browser-sync start --proxy localhost:1889 --files=\"wwwroot/css/*.css\" \"Resources/JS/*.js\" \"Views/**/*.dothtml\" \"Controls/**/*.dotcontrol\" \"Views/**/*.dotmaster\""
   },
   "-vs-binding": {
     "ProjectOpened": [
       "watch",
-      "browser-sync",
-      "postcss"
+      "browser-sync"
     ]
   },
   "main": "postcss.config.js",
