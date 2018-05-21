@@ -16,6 +16,7 @@
     "monaco-editor": "^0.13.0"
   },
   "scripts": {
+    "monaco": "cp node_modules/monaco-editor/min/vs wwwroot/libs/monaco",
     "bundle": "npm run bundle:css && npm run bundle:js",
     "postcss": "npm run compile:scss && postcss wwwroot/css/style.css -o wwwroot/css/style.css",
     "bundle:css": "npm run compile:scss && postcss wwwroot/css/style.css | cleancss -o wwwroot/css/style.min.css",
