@@ -23,8 +23,8 @@ namespace DotvvmAcademy.Web
 
         private void ConfigureResources(DotvvmConfiguration config, string applicationPath)
         {
-            config.Resources.Register("jQuery", new ScriptResource(new FileResourceLocation("~/wwwroot/Scripts/jquery-2.2.4.min.js")));
-            config.Resources.Register("AppJS", new ScriptResource(new FileResourceLocation("~/wwwroot/Scripts/app.min.js"))
+            config.Resources.Register("jQuery", new ScriptResource(new FileResourceLocation("~/wwwroot/scripts/jquery-2.2.4.min.js")));
+            config.Resources.Register("AppJS", new ScriptResource(new FileResourceLocation("~/wwwroot/scripts/app.min.js"))
             {
                 Dependencies = new[] { "jQuery" }
             });
