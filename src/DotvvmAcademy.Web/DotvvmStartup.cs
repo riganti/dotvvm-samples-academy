@@ -23,6 +23,8 @@ namespace DotvvmAcademy.Web
 
         private void ConfigureResources(DotvvmConfiguration config, string applicationPath)
         {
+            config.Resources.Register("MonacoLoader", new ScriptResource(new FileResourceLocation("~/wwwroot/libs/monaco/loader.js")));
+            config.Resources.Register("D")
             config.Resources.Register("jQuery", new ScriptResource(new FileResourceLocation("~/wwwroot/scripts/jquery-2.2.4.min.js")));
             config.Resources.Register("AppJS", new ScriptResource(new FileResourceLocation("~/wwwroot/scripts/app.min.js"))
             {
