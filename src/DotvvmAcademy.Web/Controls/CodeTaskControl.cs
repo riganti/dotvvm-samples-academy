@@ -1,9 +1,6 @@
 ﻿using DotVVM.Framework.Binding;
 using DotVVM.Framework.Controls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using DotVVM.Framework.Hosting;
 
 namespace DotvvmAcademy.Web.Controls
 {
@@ -31,6 +28,15 @@ namespace DotvvmAcademy.Web.Controls
         {
         }
 
-
+        protected override void AddAttributesToRender(IHtmlWriter writer, IDotvvmRequestContext context)
+        {
+            base.AddAttributesToRender(writer, context);
+            var group = new KnockoutBindingGroup
+            {
+                { "code", this, CodeProperty },
+                { "language", this, LanguageProperty }
+            };
+            writer.AddKnockoutDataBind("dotvvm-monaco", group);
+        }
     }
 }

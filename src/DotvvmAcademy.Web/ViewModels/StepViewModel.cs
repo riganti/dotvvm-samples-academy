@@ -1,21 +1,45 @@
-﻿using System.Threading.Tasks;
-using DotVVM.Framework.ViewModel;
+﻿using DotVVM.Framework.ViewModel;
 using DotvvmAcademy.BL;
 using DotvvmAcademy.CourseFormat;
 using Markdig;
+using System.Threading.Tasks;
 
 namespace DotvvmAcademy.Web.ViewModels
 {
     public class StepViewModel : SiteViewModel
     {
-        private readonly CourseWorkspace workspace;
         private readonly LessonFacade facade;
+        private readonly CourseWorkspace workspace;
 
         public StepViewModel(LessonFacade facade, CourseWorkspace workspace)
         {
             this.facade = facade;
             this.workspace = workspace;
         }
+
+        public string Code { get; set; }
+
+        [Bind(Direction.None)]
+        public string CodeLanguage { get; set; }
+
+        [Bind(Direction.None)]
+        public bool IsNextVisible { get; set; }
+
+        [Bind(Direction.None)]
+        public bool IsPreviousVisible { get; set; }
+
+        [FromRoute("Lesson")]
+        public string Lesson { get; set; }
+
+        public string NextStep { get; set; }
+
+        public string PreviousStep { get; set; }
+
+        [FromRoute("Step"), Bind(Direction.None)]
+        public string Step { get; set; }
+
+        [Bind(Direction.None)]
+        public string Text { get; set; }
 
         public override async Task Load()
         {
@@ -33,25 +57,12 @@ namespace DotvvmAcademy.Web.ViewModels
             }
             var step = await workspace.LoadStep($"/{Language}/{Lesson}/{Step}");
             Text = Markdown.ToHtml(step.Text);
+            if (step.CodeTaskId != null)
+            {
+                var codeTask = await workspace.LoadCodeTask(step.CodeTaskId);
+                Code = codeTask.Code;
+                CodeLanguage = codeTask.Id.Language;
+            }
         }
-
-        [Bind(Direction.None)]
-        public string Text { get; set; }
-
-        [Bind(Direction.None)]
-        public bool IsNextVisible { get; set; }
-
-        [Bind(Direction.None)]
-        public bool IsPreviousVisible { get; set; }
-
-        [FromRoute("Lesson")]
-        public string Lesson { get; set; }
-
-        public string NextStep { get; set; }
-
-        public string PreviousStep { get; set; }
-
-        [FromRoute("Step"), Bind(Direction.None)]
-        public string Step { get; set; }
     }
 }

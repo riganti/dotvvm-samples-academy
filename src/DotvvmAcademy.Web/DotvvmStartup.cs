@@ -19,16 +19,16 @@ namespace DotvvmAcademy.Web
         {
             config.Markup.AddMarkupControl("cc", "LangSwitcher", "Controls/LangSwitcher.dotcontrol");
             config.Markup.AddCodeControls("cc", typeof(SvgToHtml));
+            config.Markup.AddCodeControls("cc", typeof(CodeTaskControl));
         }
 
         private void ConfigureResources(DotvvmConfiguration config, string applicationPath)
         {
             config.Resources.Register("MonacoLoader", new ScriptResource(new FileResourceLocation("~/wwwroot/libs/monaco/loader.js")));
-            config.Resources.Register("D")
-            config.Resources.Register("jQuery", new ScriptResource(new FileResourceLocation("~/wwwroot/scripts/jquery-2.2.4.min.js")));
-            config.Resources.Register("AppJS", new ScriptResource(new FileResourceLocation("~/wwwroot/scripts/app.min.js"))
+            config.Resources.Register("jQuery", new ScriptResource(new FileResourceLocation("~/wwwroot/libs/jquery/jquery.js")));
+            config.Resources.Register("AppJS", new ScriptResource(new FileResourceLocation("~/wwwroot/scripts/app.js"))
             {
-                Dependencies = new[] { "jQuery" }
+                Dependencies = new[] { "jQuery", "MonacoLoader" }
             });
 
             config.Resources.Register("StyleCSS", new StylesheetResource(new FileResourceLocation("~/wwwroot/css/style.css")));

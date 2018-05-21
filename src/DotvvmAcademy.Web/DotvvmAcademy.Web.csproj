@@ -62,4 +62,7 @@
         <Generator>PublicResXFileCodeGenerator</Generator>
       </EmbeddedResource>
     </ItemGroup>
+  <Target Name="NpmBuild" BeforeTargets="Build">
+    <Exec Command="npm run build" />
+  </Target>
 </Project>

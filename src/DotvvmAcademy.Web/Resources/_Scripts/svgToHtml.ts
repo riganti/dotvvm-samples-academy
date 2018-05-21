@@ -1,4 +1,5 @@
-﻿var ko = (<any>window).ko;
+﻿declare var ko;
+
 ko.bindingHandlers["svg"] = {
     init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
         var url = valueAccessor();

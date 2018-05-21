@@ -1,13 +1,9 @@
-﻿declare var ko;
-declare var require;
-declare var monaco;
-
 ko.bindingHandlers["dotvvm-monaco"] = {
-    init(element: HTMLElement, value: () => any) {
-        let binding = value();
+    init: function (element, value) {
+        var binding = value();
         require.config({ baseUrl: "/", paths: { "vs": "libs/monaco" } });
-        require(["vs/editor/editor.main"], () => {
-            let editor = monaco.editor.create(element, {
+        require(["vs/editor/editor.main"], function () {
+            var editor = monaco.editor.create(element, {
                 value: binding.code(),
                 language: binding.language,
                 codeLens: false,
@@ -19,6 +15,7 @@ ko.bindingHandlers["dotvvm-monaco"] = {
                     enabled: false
                 }
             });
-        })
+        });
     }
-}
+};
+//# sourceMappingURL=Monaco.js.map
