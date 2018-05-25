@@ -21,9 +21,6 @@
         </Content>
     </ItemGroup>
     <ItemGroup>
-        <Folder Include="wwwroot\" />
-    </ItemGroup>
-    <ItemGroup>
         <Compile Remove="Content\**\*.cs" />
         <Content Include="Content\**\*" />
         <Content Remove="Content\**\*.json" />
