@@ -16,8 +16,8 @@
 @import "Components/section.scss";
 @import "Components/typography.scss";
 @import "Components/lessons-container.scss";
-@import "components/lang-switcher";
-@import "components/lesson-progress-bar";
+@import "Components/lang-switcher.scss";
+@import "Components/lesson-progress-bar.scss";
 
 // Modules
 @import "Modules/box-wrapper.scss";
@@ -29,6 +29,6 @@
 @import "Views/Public/ErrorSites/error-code.scss";
 
 //Sections
-@import "views/public/sections/header";
-@import "views/public/sections/section-coffee";
-@import "views/public/sections/footer";
+@import "Views/Public/Sections/header";
+@import "Views/Public/Sections/section-coffee";
+@import "Views/Public/Sections/footer";

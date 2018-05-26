@@ -1,24 +1,12 @@
 [
   {
-    "outputFileName": "wwwroot/Scripts/app.min.js",
+    "outputFileName": "wwwroot/scripts/app.min.js",
     "inputFiles": [
       "wwwroot/Scripts/app.js"
     ]
   },
   {
-    "outputFileName": "wwwroot/Scripts/ace/ace.min.js",
-    "inputFiles": [
-      "wwwroot/Scripts/ace/ace.js"
-    ]
-  },
-  {
-    "outputFileName": "wwwroot/Scripts/dotvvm-ace.min.js",
-    "inputFiles": [
-      "wwwroot/Scripts/dotvvm-ace.js"
-    ]
-  },
-  {
-    "outputFileName": "wwwroot/Scripts/jquery-2.2.4.min.js",
+    "outputFileName": "wwwroot/scripts/jquery-2.2.4.min.js",
     "inputFiles": [
       "wwwroot/Scripts/jquery-2.2.4.js"
     ]

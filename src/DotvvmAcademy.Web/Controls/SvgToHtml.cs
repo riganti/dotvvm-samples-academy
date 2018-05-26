@@ -1,10 +1,9 @@
-﻿using System.IO;
-using System.Linq;
-using System.Web;
-using DotVVM.Framework.Binding;
+﻿using DotVVM.Framework.Binding;
 using DotVVM.Framework.Controls;
 using DotVVM.Framework.Hosting;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using System.IO;
 
 namespace DotvvmAcademy.Web.Controls
 {
@@ -16,36 +15,29 @@ namespace DotvvmAcademy.Web.Controls
             get { return (string)GetValue(SourceProperty); }
             set { SetValue(SourceProperty, value); }
         }
+
         public static readonly DotvvmProperty SourceProperty
             = DotvvmProperty.Register<string, SvgToHtml>(c => c.Source, null);
 
         public SvgToHtml() : base("svg")
         {
-
         }
 
-        protected override void RenderBeginTag(IHtmlWriter writer, IDotvvmRequestContext context)
-        {
-        }
-
-        protected override void RenderContents(IHtmlWriter writer, IDotvvmRequestContext context)
+        public override void Render(IHtmlWriter writer, IDotvvmRequestContext context)
         {
             if (RenderOnServer)
             {
-                var hostingEnvironment = context.Services.GetService(typeof(IHostingEnvironment)) as IHostingEnvironment;
-                //TODO This is not good idea at all, you have to use hostingEnvironment.WebRootPath / hostingEnvironment.ContentRootPath
-                var path = Path.Combine(hostingEnvironment.WebRootPath, VirtualPathToAbsolute(Source));
+                var hostingEnvironment = context.Services.GetRequiredService<IHostingEnvironment>();
+                var path = Path.Combine(hostingEnvironment.WebRootPath, Source);
                 if (path != null)
                 {
-                    //var lines = File.ReadAllLines(path).Skip(1).ToArray();
                     var svgXml = File.ReadAllText(path);
                     writer.WriteUnencodedText(string.Join(string.Empty, svgXml));
                 }
             }
             else
             {
-                var path = Source;
-                writer.AddKnockoutDataBind("svg", $"'{path}'");
+                writer.AddKnockoutDataBind("svg", $"'{Source}'");
                 writer.RenderSelfClosingTag("svg");
             }
         }
@@ -53,10 +45,6 @@ namespace DotvvmAcademy.Web.Controls
         private string VirtualPathToAbsolute(string path)
         {
             return path.Replace('/', '\\');
-        }
-
-        protected override void RenderEndTag(IHtmlWriter writer, IDotvvmRequestContext context)
-        {
         }
     }
 }

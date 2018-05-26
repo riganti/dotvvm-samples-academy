@@ -254,3 +254,4 @@ paket-files/
 monaco-editor
 **/wwwroot/css
 **/wwwroot/scripts
+**/wwwroot/libs
