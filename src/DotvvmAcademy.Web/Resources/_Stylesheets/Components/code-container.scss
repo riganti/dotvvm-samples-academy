@@ -1,0 +1,8 @@
+﻿@import "../Base/_global.scss";
+
+.code-container {
+    width: 80rem;
+    height: 60rem;
+    margin: 0 auto;
+    border: $outline-width solid $color-border;
+}

@@ -33,15 +33,11 @@ body {
     color: $color-font;
     font-size: 1.4rem;
     margin: 0;
-    /*display: flex;
-    flex-flow: column wrap;*/
+    display: flex;
+    flex-flow: column wrap;
     width: 100%;
     min-height: 100%;
     overflow-x: hidden;
-
-    /*mav {
-        flex: 0 0 auto;
-    }
 
     header {
         flex: 0 0 auto;
@@ -55,7 +51,7 @@ body {
 
     footer {
         flex: 0 0 auto;
-    }*/
+    }
 }
 
 ol, ul {

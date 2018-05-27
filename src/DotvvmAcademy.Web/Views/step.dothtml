@@ -3,30 +3,36 @@
 @import DotvvmAcademy.Web.Resources.Localization
 
 <dot:Content ContentPlaceHolderID="MainContent">
-    <div>
-        <div>
-            <dot:HtmlLiteral Html="{resource: Text}" />
+    <section class="section-course-lection">
+        <div class="container-large">
+            <div>
+                <dot:HtmlLiteral Html="{resource: Text}" />
+            </div>
+            <div IncludeInPage="{value: Code != null}">
+                <cc:CodeTaskControl Code="{value: Code}"
+                                    Language="{resource: CodeLanguage}"
+                                    class="code-container"/>
+            </div>
+            <div>
+                <dot:RouteLink RouteName="Step"
+                               ButtonTagName="button"
+                               class="button"
+                               Param-Language="{value: Language}"
+                               Param-Lesson="{value: Lesson}"
+                               Param-Step="{value: PreviousStep}"
+                               Visible="{resource: IsPreviousVisible}">
+                    {{resource: UIResources.Btn_PreviousStep}}
+                </dot:RouteLink>
+                <dot:RouteLink RouteName="Step"
+                               ButtonTagName="button"
+                               class="button"
+                               Param-Language="{value: Language}"
+                               Param-Lesson="{value: Lesson}"
+                               Param-Step="{value: NextStep}"
+                               Visible="{resource: IsNextVisible}">
+                    {{resource: UIResources.Btn_NextStep}}
+                </dot:RouteLink>
+            </div>
         </div>
-        <div IncludeInPage="{value: Code != null}">
-            <cc:CodeTaskControl Code="{value: Code}"
-                                Language="{resource: CodeLanguage}"
-                                style="width: 800px; height: 600px;"/>
-        </div>
-        <div>
-            <dot:RouteLink RouteName="Step"
-                           Param-Language="{value: Language}"
-                           Param-Lesson="{value: Lesson}"
-                           Param-Step="{value: PreviousStep}"
-                           Visible="{resource: IsPreviousVisible}">
-                {{resource: UIResources.Btn_PreviousStep}}
-            </dot:RouteLink>
-            <dot:RouteLink RouteName="Step"
-                           Param-Language="{value: Language}"
-                           Param-Lesson="{value: Lesson}"
-                           Param-Step="{value: NextStep}"
-                           Visible="{resource: IsNextVisible}">
-                {{resource: UIResources.Btn_NextStep}}
-            </dot:RouteLink>
-        </div>
-    </div>
+    </section>
 </dot:Content>

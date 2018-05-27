@@ -26,28 +26,19 @@ body {
   color: #000;
   font-size: 1.4rem;
   margin: 0;
-  /*display: flex;
-    flex-flow: column wrap;*/
+  display: flex;
+  flex-flow: column wrap;
   width: 100%;
   min-height: 100%;
-  overflow-x: hidden;
-  /*mav {
-        flex: 0 0 auto;
-    }
-
-    header {
-        flex: 0 0 auto;
-    }
-
-    main {
-        flex: 1 1 auto;
-        width: 100%;
-        height: 100%;
-    }
-
-    footer {
-        flex: 0 0 auto;
-    }*/ }
+  overflow-x: hidden; }
+  body header {
+    flex: 0 0 auto; }
+  body main {
+    flex: 1 1 auto;
+    width: 100%;
+    height: 100%; }
+  body footer {
+    flex: 0 0 auto; }
 
 ol, ul {
   list-style: none; }
@@ -180,6 +171,12 @@ elements-of-type(html5-block) {
     .button.with-borders:after {
       right: 0;
       transform: translate(90%, -50%) rotate(45deg); }
+
+.code-container {
+  width: 80rem;
+  height: 60rem;
+  margin: 0 auto;
+  border: 0.1rem solid #aeaeae; }
 
 .container {
   width: 70%;

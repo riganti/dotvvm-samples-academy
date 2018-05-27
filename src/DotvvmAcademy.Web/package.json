@@ -23,7 +23,6 @@
     "jquery": "cpx node_modules/jquery/dist/**/* wwwroot/libs/jquery",
     "monaco": "cpx node_modules/monaco-editor/min/vs/**/* wwwroot/libs/monaco",
     "bundle": "npm run bundle:css && npm run bundle:js",
-    "postcss": "npm run compile:scss && postcss Resources/_Stylesheets/Css/style.css -o Resources/_Stylesheets/Css/style.css",
     "bundle:css": "npm run compile:scss && postcss Resources/_Stylesheets/Css/style.css | cleancss -o wwwroot/css/style.min.css",
     "bundle:js": "npm run compile:ts && uglifyjs -o Resources/js/app.js -c -m -- Resources/js/app.js",
     "compile:scss": "node-sass --source-map=true Resources/_Stylesheets/style.scss Resources/_Stylesheets/Css/style.css",
