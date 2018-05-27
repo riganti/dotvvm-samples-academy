@@ -26,12 +26,12 @@ namespace DotvvmAcademy.Web
         {
             config.Resources.Register("MonacoLoader", new ScriptResource(new FileResourceLocation("~/wwwroot/libs/monaco/loader.js")));
             config.Resources.Register("jQuery", new ScriptResource(new FileResourceLocation("~/wwwroot/libs/jquery/jquery.js")));
-            config.Resources.Register("AppJS", new ScriptResource(new FileResourceLocation("~/wwwroot/scripts/app.js"))
+            config.Resources.Register("AppJS", new ScriptResource(new FileResourceLocation("~/wwwroot/scripts/app.min.js"))
             {
                 Dependencies = new[] { "jQuery", "MonacoLoader" }
             });
 
-            config.Resources.Register("StyleCSS", new StylesheetResource(new FileResourceLocation("~/wwwroot/css/style.css")));
+            config.Resources.Register("StyleCSS", new StylesheetResource(new FileResourceLocation("~/wwwroot/css/style.min.css")));
         }
 
         private void ConfigureRoutes(DotvvmConfiguration config, string applicationPath)

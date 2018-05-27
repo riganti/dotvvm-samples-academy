@@ -59,6 +59,10 @@
         <Generator>PublicResXFileCodeGenerator</Generator>
       </EmbeddedResource>
     </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Resources\_Stylesheets\Css\" />
+      <Folder Include="wwwroot\css\" />
+    </ItemGroup>
   <Target Name="NpmBuild" BeforeTargets="Build">
     <Exec Command="npm run build" />
   </Target>
