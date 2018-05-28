@@ -16,10 +16,8 @@
 </dot:Content>
 
 <dot:Content ContentPlaceHolderID="MainContent">
-    <section class="section-lections">
+    <section class="section-lections no-padding-top">
         <div class="container-large">
-            <dot:Literal Text="{resource: UIResources.Base_ChooseLesson}" class="progress-bar-title" />
-
             <dot:Repeater DataSource="{value: Lessons}" class="lessons-container" RenderSettings.Mode="Server">
                 <div class="{value: IsFinished ? "lessons-item finished" : "lessons-item" }">
                     <cc:SvgToHtml Source="{value:IsFinished ? "images/Icons/medal.svg" : ImageUrl}">
