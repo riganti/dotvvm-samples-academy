@@ -20,12 +20,6 @@
         <div class="container-large">
             <dot:Literal Text="{resource: UIResources.Base_ChooseLesson}" class="progress-bar-title" />
 
-            <dot:Repeater DataSource="{value: Lessons}" class="lesson-progress-bar" RenderSettings.Mode="Server">
-                <div class="{value: IsFinished ? "progress-item completed" : "progress-item"}">
-                    <span>{{value: "1"}}</span>
-                </div>
-            </dot:Repeater>
-
             <dot:Repeater DataSource="{value: Lessons}" class="lessons-container" RenderSettings.Mode="Server">
                 <div class="{value: IsFinished ? "lessons-item finished" : "lessons-item" }">
                     <cc:SvgToHtml Source="{value:IsFinished ? "images/Icons/medal.svg" : ImageUrl}">
@@ -55,3 +49,14 @@
         </div>
     </section>
 </dot:Content>
+
+<dot:content ContentPlaceHolderID="FooterContent">
+    <div class="main-link">
+        <a target="_blank" href="https://www.dotvvm.com/">www.dotvvm.com</a>
+    </div>
+    <div class="footer-links">
+        <a target="_blank" href="https://www.dotvvm.com/docs/latest">{{resource: UIResources.Base_Documentation}}</a>
+        <a target="_blank" href="https://www.dotvvm.com/docs/tutorials/introduction/latest">{{resource: UIResources.Base_Tutorials}}</a>
+        <a target="_blank" href="https://www.dotvvm.com/docs/samples/latest">{{resource: UIResources.Base_Samples}}</a>
+    </div>
+</dot:content>

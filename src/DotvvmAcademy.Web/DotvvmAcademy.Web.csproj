@@ -60,7 +60,6 @@
       </EmbeddedResource>
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="Resources\_Stylesheets\Css\" />
       <Folder Include="wwwroot\css\" />
     </ItemGroup>
   <Target Name="NpmBuild" BeforeTargets="Build">
