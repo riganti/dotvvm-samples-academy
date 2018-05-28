@@ -51,4 +51,16 @@
             transform: translate(90%, -50%) rotate(45deg);
         }
     }
+
+    &.success {
+        background-color: $color-btn-success;
+        border-color: $color-btn-success;
+        color: $color-white;
+
+        &:hover, &.active {
+            background-color: darken($color-btn-success, 10%);
+            border-color: darken($color-btn-success, 10%);
+            color: $color-white;
+        }
+    }
 }

@@ -1,9 +1,14 @@
 ﻿@import "../Base/_global.scss";
 
 .code-container {
-    width: 80rem;
-    height: 60rem;
-    margin: 0 auto;
+    width: 100%;
+    height: auto;
+    min-height: 40rem;
+    margin: 2rem auto;
     border: $outline-width solid $color-border;
     background-color: $color-code-container-bg;
+
+    @include res-max-desktop-small {
+        margin: 1rem auto;
+    }
 }

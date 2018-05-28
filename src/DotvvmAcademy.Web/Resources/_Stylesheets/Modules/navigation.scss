@@ -30,4 +30,13 @@ nav {
             color: $color-primary;
         }
     }
+
+    > div {
+        flex: 0 0 calc(100%-20rem);
+        max-width: 0 0 calc(100%-20rem);
+        width: calc(100%-20rem);
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
 }

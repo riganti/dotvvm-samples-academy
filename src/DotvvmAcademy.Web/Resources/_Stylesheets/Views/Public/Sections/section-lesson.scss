@@ -2,9 +2,103 @@
 
 .section-lesson {
     background-color: $color-white;
+
+    .step-info-box {
+        h1 {
+            font-size: $font-size-xxl;
+            margin: 0;
+            color: $color-primary;
+            margin-bottom: 2rem;
+
+            @include res-max-desktop-small{
+                font-size: $font-size-xl;
+                margin-bottom: 1rem;
+            }
+        }
+
+        p {
+            margin: 0;
+            font-size: $font-size-m;
+
+            code, span {
+                color: $color-code;
+                font-size: $font-size-s;
+            }
+        }
+    }
 }
 
-.lesson-footer-container{
+.lesson-footer-container {
+    background-color: $color-transparent;
+    border-top: $outline-width solid $color-primary;
+    padding: 1rem 0;
+    transition: $animate-all;
 
+    &.success {
+        background-color: $color-success;
+        border-color: $color-success;
+        transition: $animate-all;
+    }
+
+    &.failed {
+        background-color: $color-error;
+        border-color: $color-error;
+        transition: $animate-all;
+    }
+
+    > .container-small {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+
+        > div {
+            flex: 0 0 50%;
+            max-width: 50%;
+            width: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+
+            @include res-max-desktop-large {
+                justify-content: center;
+                flex: 0 0 100%;
+                max-width: none;
+                width: 100%;
+            }
+
+            .button {
+                margin-right: 1rem;
+
+                &:first-child {
+                    display: block;
+                }
+            }
+        }
+
+        > div.ico-container {
+            justify-content: flex-start;
+
+            @include res-max-desktop-large {
+                justify-content: center;
+                margin-bottom: 2rem;
+            }
+
+            svg {
+                height: 8rem;
+                margin-right: 2rem;
+
+                @include res-max-desktop-large {
+                    height: 4rem;
+                    margin-right: 1rem;
+                }
+            }
+
+            span {
+                color: $color-white;
+                font-size: $font-size-l;
+            }
+        }
+    }
 }
-

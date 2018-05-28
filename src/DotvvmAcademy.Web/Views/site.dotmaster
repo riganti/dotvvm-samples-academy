@@ -27,8 +27,11 @@
                 </cc:SvgToHtml>
                 &nbsp;<p>ACADEMY</p>
             </dot:RouteLink>
-            <cc:LangSwitcher Class-lang-switcher="true">
-            </cc:LangSwitcher>
+            <div>
+                <dot:Button ButtonTagName="button" Text="Ukončit lekci" class="button" Visible="{value: true}"></dot:Button><%--TODO Visible when routname == step --%>
+                <cc:LangSwitcher Class-lang-switcher="true"><%--TODO Visible when routname == default --%>
+                </cc:LangSwitcher>
+            </div>
         </nav>
         <dot:ContentPlaceHolder ID="HeaderContent" />
     </header>
