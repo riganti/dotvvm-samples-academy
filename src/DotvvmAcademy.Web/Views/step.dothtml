@@ -18,7 +18,7 @@
                                     Language="{resource: CodeLanguage}"
                                     class="code-container" />
             </div>
-            <dot:ValidationSummary class="validation-summary" />
+            <dot:ValidationSummary class="validation-summary">
         </div>
     </section>
 </dot:Content>
@@ -49,7 +49,7 @@
                                Param-Lesson="{value: Lesson}"
                                Param-Step="{value: NextStep}"
                                Visible="{resource: IsNextVisible}"
-                               Class-success="{value: true}"
+                               Class-success="{value: false}"
                                Text="{resource: UIResources.Btn_NextStep}" />
             </div>
         </div>
