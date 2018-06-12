@@ -6,6 +6,11 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
     public enum CSharpAccessibility
     {
         /// <summary>
+        /// An invalid value.
+        /// </summary>
+        None = 0,
+
+        /// <summary>
         /// Stands for 'private'.
         /// </summary>
         Private = 1 << 0,

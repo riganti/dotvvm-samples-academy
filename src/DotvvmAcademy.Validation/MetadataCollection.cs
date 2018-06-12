@@ -29,7 +29,8 @@ namespace DotvvmAcademy.Validation
             {
                 return cast;
             }
-            throw new InvalidOperationException($"The value of the '{key}' property for '{identifier}' is an instance of type {typeof(TProperty)}.");
+            throw new InvalidOperationException($"The '{key}' property for identifier '{identifier}' "
+                + $"is of an unexpected type. Expected: '{typeof(TProperty)}'. Actual: '{value.GetType()}'");
         }
 
         public TProperty GetRequiredProperty<TProperty>(TIdentifier identifier, string key)

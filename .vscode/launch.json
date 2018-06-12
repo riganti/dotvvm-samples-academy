@@ -13,6 +13,7 @@
             "cwd": "${workspaceFolder}/src/DotvvmAcademy.Web",
             "stopAtEntry": false,
             "internalConsoleOptions": "openOnSessionStart",
+            "justMyCode": false,
             "launchBrowser": {
                 "enabled": true,
                 "args": "${auto-detect-url}",

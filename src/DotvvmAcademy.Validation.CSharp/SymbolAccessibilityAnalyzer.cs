@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using DotvvmAcademy.Validation.CSharp.Unit;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 using System.Collections.Immutable;
 
@@ -38,15 +39,36 @@ namespace DotvvmAcademy.Validation.CSharp
         {
             foreach(var name in names)
             {
-                var desired = Metadata.GetRequiredProperty<Accessibility>(name, MetadataKey);
+                var desired = Metadata.GetRequiredProperty<CSharpAccessibility>(name, MetadataKey);
                 if(locator.TryLocate(name, out var symbol) 
-                    && (desired ^ symbol.DeclaredAccessibility) != 0)
+                    && (desired & ConvertAccessibility(symbol.DeclaredAccessibility)) == 0)
                 {
                     foreach(var location in symbol.Locations)
                     {
                         context.ReportDiagnostic(Diagnostic.Create(WrongAccessibilityDiagnostic, location, name, desired.ToString("G")));
                     }
                 }
+            }
+        }
+
+        private CSharpAccessibility ConvertAccessibility(Accessibility accessibility)
+        {
+            switch (accessibility)
+            {
+                case Accessibility.Public:
+                    return CSharpAccessibility.Public;
+                case Accessibility.Private:
+                    return CSharpAccessibility.Private;
+                case Accessibility.ProtectedAndInternal:
+                    return CSharpAccessibility.ProtectedAndInternal;
+                case Accessibility.Protected:
+                    return CSharpAccessibility.Protected;
+                case Accessibility.Internal:
+                    return CSharpAccessibility.Internal;
+                case Accessibility.ProtectedOrInternal:
+                    return CSharpAccessibility.ProtectedOrInternal;
+                default:
+                    return CSharpAccessibility.None;
             }
         }
     }

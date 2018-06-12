@@ -12,7 +12,7 @@ namespace DotvvmAcademy.Validation.CSharp
             '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
         };
 
-        private readonly MetadataNameFactory factory;
+        private readonly IMetadataNameFactory factory;
 
         private readonly char[] specialChars = new[]
                         {
@@ -47,7 +47,7 @@ namespace DotvvmAcademy.Validation.CSharp
         private int rank;
         private MetadataName returnType;
 
-        public MetadataNameParser(MetadataNameFactory factory)
+        public MetadataNameParser(IMetadataNameFactory factory)
         {
             this.factory = factory;
         }
@@ -182,6 +182,11 @@ namespace DotvvmAcademy.Validation.CSharp
             while (!specialChars.Contains(letter))
             {
                 position++;
+                if(position >= input.Length)
+                {
+                    break;
+                }
+                letter = input[position];
             }
             return input.Substring(start, position - start);
         }

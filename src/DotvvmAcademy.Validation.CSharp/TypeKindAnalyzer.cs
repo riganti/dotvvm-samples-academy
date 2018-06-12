@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using DotvvmAcademy.Validation.CSharp.Unit;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 using System.Collections.Immutable;
 
@@ -38,16 +39,35 @@ namespace DotvvmAcademy.Validation.CSharp
         {
             foreach (var name in names)
             {
-                var desired = Metadata.GetRequiredProperty<TypeKind>(name, MetadataKey);
+                var desired = Metadata.GetRequiredProperty<CSharpTypeKind>(name, MetadataKey);
                 if(locator.TryLocate(name, out var symbol)
                     && symbol is ITypeSymbol typeSymbol
-                    && (desired ^ typeSymbol.TypeKind) != 0)
+                    && (desired & ConvertTypeKind(typeSymbol.TypeKind)) == 0)
                 {
                     foreach(var location in typeSymbol.Locations)
                     {
                         context.ReportDiagnostic(Diagnostic.Create(WrongTypeKindDiagnostic, location, name, desired.ToString("G")));
                     }
                 }
+            }
+        }
+
+        private CSharpTypeKind ConvertTypeKind(TypeKind kind)
+        {
+            switch(kind)
+            {
+                case TypeKind.Class:
+                    return CSharpTypeKind.Class;
+                case TypeKind.Delegate:
+                    return CSharpTypeKind.Delegate;
+                case TypeKind.Enum:
+                    return CSharpTypeKind.Enum;
+                case TypeKind.Interface:
+                    return CSharpTypeKind.Interface;
+                case TypeKind.Struct:
+                    return CSharpTypeKind.Struct;
+                default:
+                    return CSharpTypeKind.None;
             }
         }
     }

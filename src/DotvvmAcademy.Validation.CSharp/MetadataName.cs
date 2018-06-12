@@ -92,7 +92,7 @@ namespace DotvvmAcademy.Validation.CSharp
 
         public override string ToString()
         {
-            return UserFriendlyName;
+            return FullName;
         }
     }
 }

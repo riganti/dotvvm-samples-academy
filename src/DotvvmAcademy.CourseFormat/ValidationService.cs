@@ -1,84 +1,28 @@
-﻿using DotvvmAcademy.Validation;
-using DotvvmAcademy.Validation.CSharp;
-using DotvvmAcademy.Validation.CSharp.Unit;
-using DotvvmAcademy.Validation.Dothtml.Unit;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Scripting;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.Scripting;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.Immutable;
-using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 
 namespace DotvvmAcademy.CourseFormat
 {
-    internal class ValidationService
+    public class ValidationService : IValidationService
     {
-        public Task<ImmutableArray<ICodeTaskDiagnostic>> Validate(CodeTask task, string userCode)
-        {
-            var globalsType = task.Id.Language == "cs" ? typeof(ICSharpProject) : typeof(IDothtmlDocument);
-            var script = CSharpScript.Create(task.ValidationScript, globalsType: globalsType);
-            var runner = script.CreateDelegate();
-            return task.Id.Language == "cs" ? ValidateCSharp(runner, userCode) : ValidateDothtml(runner, userCode);
-        }
+        private readonly CSharpValidationService csharp = new CSharpValidationService();
+        private readonly DothtmlValidationService dothtml = new DothtmlValidationService();
 
-        private ICodeTaskDiagnostic ConvertDiagnostic(ValidationDiagnostic validation)
+        public Task<ImmutableArray<ICodeTaskDiagnostic>> Validate(ICodeTask task, string code)
         {
-            return new CodeTaskDiagnostic
+            switch (task.Id.Language)
             {
-                Start = validation.Location.Start,
-                End = validation.Location.End,
-                Severity = CodeTaskDiagnosticSeverity.Error
-            };
-        }
+                case ".cs":
+                    return csharp.Validate(task, code);
 
-        private MetadataReference GetMetadataReference(string assemblyName)
-        {
-            return MetadataReference.CreateFromFile(Assembly.Load(assemblyName).Location);
-        }
+                case ".dothtml":
+                    return dothtml.Validate(task, code);
 
-        private async Task<ImmutableArray<ICodeTaskDiagnostic>> ValidateCSharp(ScriptRunner<object> runner, string userCode)
-        {
-            var tree = CSharpSyntaxTree.ParseText(userCode);
-            var references = new[]
-            {
-                GetMetadataReference("System.Runtime"),
-                GetMetadataReference("System.Colletions.Generic"),
-                GetMetadataReference("System.Private.CoreLib"),
-            };
-            var compilation = CSharpCompilation.Create($"UserCode_{Guid.NewGuid()}", new[] { tree }, references, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, true));
-            var collection = new ServiceCollection();
-            collection.AddSingleton<CSharpObject>();
-            collection.AddSingleton<RoslynMetadataNameProvider>();
-            collection.AddSingleton<IMetadataNameFactory, MetadataNameFactory>();
-            collection.AddSingleton<MetadataNameFormatter>();
-            collection.AddSingleton<ReflectionMetadataNameFormatter>();
-            collection.AddSingleton<UserFriendlyMetadataNameFormatter>();
-            collection.AddSingleton<SymbolLocator>();
-            collection.AddSingleton<ValidationDiagnosticAnalyzer, BaseTypeAnalyzer>();
-            collection.AddSingleton<ValidationDiagnosticAnalyzer, DeclarationExistenceAnalyzer>();
-            collection.AddSingleton<ValidationDiagnosticAnalyzer, InterfaceImplementationAnalyzer>();
-            collection.AddSingleton<ValidationDiagnosticAnalyzer, SymbolAccessibilityAnalyzer>();
-            collection.AddSingleton<ValidationDiagnosticAnalyzer, SymbolAllowedAnalyzer>();
-            collection.AddSingleton<ValidationDiagnosticAnalyzer, SymbolStaticAnalyzer>();
-            collection.AddSingleton<ValidationDiagnosticAnalyzer, TypeKindAnalyzer>();
-            var provider = collection.BuildServiceProvider();
-            var csharpObject = provider.GetRequiredService<CSharpObject>();
-            var metadata = csharpObject.GetMetadata();
-            await runner(csharpObject);
-            collection.AddSingleton(metadata);
-            var with = new CompilationWithAnalyzers(compilation, provider.GetService<IEnumerable<ValidationDiagnosticAnalyzer>>().Cast<DiagnosticAnalyzer>().ToImmutableArray(), new CompilationWithAnalyzersOptions(null, null, false, false));
-            return (await with.GetAllDiagnosticsAsync()).Select(d => ConvertDiagnostic(new RoslynValidationDiagnostic(d))).ToImmutableArray();
-        }
-
-        private Task<ImmutableArray<ICodeTaskDiagnostic>> ValidateDothtml(ScriptRunner<object> runner, string userCode)
-        {
-            throw new NotImplementedException();
+                default:
+                    throw new ArgumentException($"The programming language of {nameof(CodeTask)} '{task.Id.Path}'" +
+                        $"is not supported by {nameof(ValidationService)}.", nameof(task));
+            }
         }
     }
 }

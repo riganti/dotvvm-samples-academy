@@ -4,6 +4,8 @@
     {
         int End { get; }
 
+        string Message { get; }
+
         CodeTaskDiagnosticSeverity Severity { get; }
 
         int Start { get; }
