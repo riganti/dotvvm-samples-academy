@@ -9,8 +9,8 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build-all",
-            "program": "${workspaceFolder}/src/DotvvmAcademy/bin/Debug/netcoreapp2.0/DotvvmAcademy.dll",
-            "cwd": "${workspaceFolder}/src/DotvvmAcademy",
+            "program": "${workspaceFolder}/src/DotvvmAcademy.Web/bin/Debug/netcoreapp2.0/DotvvmAcademy.Web.dll",
+            "cwd": "${workspaceFolder}/src/DotvvmAcademy.Web",
             "stopAtEntry": false,
             "internalConsoleOptions": "openOnSessionStart",
             "launchBrowser": {

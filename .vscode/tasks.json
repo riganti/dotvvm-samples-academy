@@ -12,18 +12,6 @@
                 "/property:GenerateFullPaths=true"
             ],
             "problemMatcher": "$msCompile"
-        },
-        {
-            "label": "build-academy",
-            "group": "build",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "build",
-                "${workspaceFolder}/src/DotvvmAcademy/DotvvmAcademy.csproj",
-                "/property:GenerateFullPaths=true"
-            ],
-            "problemMatcher": "$msCompile"
         }
     ]
 }

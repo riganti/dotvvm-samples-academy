@@ -10,15 +10,15 @@ namespace DotvvmAcademy.CourseFormat
         internal CodeTaskId(StepId stepId, string codeFile, string validationScriptFile)
         {
             StepId = stepId;
+            Path = stepId.Path;
             CodePath = $"{stepId.Path}/{codeFile}";
             ValidationScriptPath = $"{stepId.Path}/{validationScriptFile}";
-            Language = Path.GetExtension(codeFile);
-            Id = Guid.NewGuid();
+            Language = System.IO.Path.GetExtension(codeFile);
         }
 
-        public string CodePath { get; }
+        public string Path { get; }
 
-        public Guid Id { get; }
+        public string CodePath { get; }
 
         public string Language { get; }
 

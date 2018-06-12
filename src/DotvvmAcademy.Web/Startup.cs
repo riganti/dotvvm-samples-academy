@@ -12,7 +12,7 @@ namespace DotvvmAcademy.Web
     {
         public const string AuthenticationScheme = "Cookie";
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, CourseWorkspace workspace)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole();
 
@@ -22,7 +22,6 @@ namespace DotvvmAcademy.Web
             {
                 FileProvider = new PhysicalFileProvider(env.WebRootPath)
             });
-            workspace.GetVariantIds();
         }
 
         public void ConfigureServices(IServiceCollection services)

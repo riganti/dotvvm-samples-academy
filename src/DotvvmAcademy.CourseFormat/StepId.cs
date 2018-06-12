@@ -11,10 +11,7 @@ namespace DotvvmAcademy.CourseFormat
             LessonId = lessonId;
             Moniker = moniker;
             Path = $"{lessonId.Path}/{moniker}";
-            Id = Guid.NewGuid();
         }
-
-        public Guid Id { get; }
 
         public LessonId LessonId { get; }
 
