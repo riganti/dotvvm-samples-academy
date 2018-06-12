@@ -13,14 +13,21 @@ namespace DotvvmAcademy.CourseFormat.Tests
         public async Task BasicValidationTest()
         {
             var workspace = new CourseWorkspace("../../../../../sample/sample_course");
-            var codeTask = await workspace.LoadCodeTask("/en/introduction/20_first_task");
             var service = new ValidationService();
-            var diagnostics = await service.Validate(codeTask, @"namespace SampleCourse
+            var diagnostics = await service.Validate(workspace, workspace.CodeTaskIds["/en/introduction/20_first_task"], @"namespace SampleCourse
 {
     public class Test
     {
     }
 }");
+        }
+
+        [TestMethod]
+        public async Task LessBasicValidationTest()
+        {
+            var workspace = new CourseWorkspace("../../../../../sample/sample_course");
+            var service = new ValidationService();
+            var diagnostics = await service.Validate(workspace, workspace.CodeTaskIds["/en/introduction/30_second_task"], "crap");
         }
     }
 }

@@ -5,6 +5,6 @@ namespace DotvvmAcademy.CourseFormat
 {
     public interface IValidationService
     {
-        Task<ImmutableArray<ICodeTaskDiagnostic>> Validate(ICodeTask task, string code);
+        Task<ImmutableArray<ICodeTaskDiagnostic>> Validate(CourseWorkspace workspace, CodeTaskId id, string code);
     }
 }

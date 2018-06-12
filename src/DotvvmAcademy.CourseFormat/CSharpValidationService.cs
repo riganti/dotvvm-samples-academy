@@ -29,9 +29,9 @@ namespace DotvvmAcademy.CourseFormat
         private Assembly userAssembly;
         private SymbolLocator locator;
 
-        public async Task<ImmutableArray<ICodeTaskDiagnostic>> Validate(ICodeTask task, string code)
+        public async Task<ImmutableArray<ICodeTaskDiagnostic>> Validate(CourseWorkspace workspace, CodeTaskId id, string code)
         {
-            this.task = task;
+            task = await workspace.LoadCodeTask(id);
             this.code = code;
             services = BuildServiceProvider();
             CompileUserCode();

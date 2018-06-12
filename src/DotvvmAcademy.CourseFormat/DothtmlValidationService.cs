@@ -8,7 +8,7 @@ namespace DotvvmAcademy.CourseFormat
 {
     internal class DothtmlValidationService : IValidationService
     {
-        public Task<ImmutableArray<ICodeTaskDiagnostic>> Validate(ICodeTask task, string code)
+        public Task<ImmutableArray<ICodeTaskDiagnostic>> Validate(CourseWorkspace workspace, CodeTaskId id, string code)
         {
             throw new NotImplementedException();
         }
