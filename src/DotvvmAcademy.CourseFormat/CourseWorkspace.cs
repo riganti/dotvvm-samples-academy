@@ -109,12 +109,12 @@ namespace DotvvmAcademy.CourseFormat
             return variant;
         }
 
-        private DirectoryInfo GetDirectory(string virtualPath)
+        public DirectoryInfo GetDirectory(string virtualPath)
         {
             return new DirectoryInfo(Path.Combine(RootDirectory.FullName, $".{virtualPath}"));
         }
 
-        private FileInfo GetFile(string virtualPath)
+        public FileInfo GetFile(string virtualPath)
         {
             return new FileInfo(Path.Combine(RootDirectory.FullName, $".{virtualPath}"));
         }

@@ -67,6 +67,8 @@ namespace DotvvmAcademy.Validation.CSharp
             AssertValidArity(arity);
             AssertValidParameters(parameters);
             return Create(
+                name: name,
+                owner: owner,
                 kind: MetadataNameKind.Member | MetadataNameKind.Method,
                 returnType: returnType,
                 arity: arity,

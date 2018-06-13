@@ -1,4 +1,2 @@
 #load "../20_first_task"
-using DotvvmAcademy.Validation.CSharp.Unit;
-
-var add = GetMethod("int CourseFormat.Test::Add(int, int)");
+var add = GetMethod("System.Int32 CourseFormat.Test::Add(System.Int32,System.Int32)");

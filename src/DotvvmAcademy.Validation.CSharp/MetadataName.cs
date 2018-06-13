@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 
 namespace DotvvmAcademy.Validation.CSharp
@@ -62,32 +63,28 @@ namespace DotvvmAcademy.Validation.CSharp
 
         public static bool operator !=(MetadataName name1, MetadataName name2)
         {
-            return !name1.Equals(name2);
+            return !(name1 == name2);
         }
 
         public static bool operator ==(MetadataName name1, MetadataName name2)
         {
-            return name1.Equals(name2);
+            return EqualityComparer<MetadataName>.Default.Equals(name1, name2);
         }
 
         public override bool Equals(object obj)
         {
-            if (obj is MetadataName other)
-            {
-                return Equals(other);
-            }
-
-            return false;
+            return Equals(obj as MetadataName);
         }
 
         public bool Equals(MetadataName other)
         {
-            return FullName.Equals(other.FullName);
+            return other != null &&
+                   FullName == other.FullName;
         }
 
         public override int GetHashCode()
         {
-            return FullName.GetHashCode();
+            return 733961487 + EqualityComparer<string>.Default.GetHashCode(FullName);
         }
 
         public override string ToString()

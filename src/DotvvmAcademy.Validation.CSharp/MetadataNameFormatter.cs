@@ -23,17 +23,18 @@ namespace DotvvmAcademy.Validation.CSharp
 
         public string Format(MetadataName metadataName)
         {
-            switch (metadataName.Kind)
-            {
-                case MetadataNameKind.Type:
-                    return FormatType(metadataName);
-
-                case MetadataNameKind.Member:
-                    return FormatMember(metadataName);
-
-                default:
-                    throw new InvalidOperationException($"{nameof(MetadataNameFormatter)} can't format {nameof(MetadataName)} with Kind '{metadataName.Kind}'.");
+            if(metadataName == null) {
+                return "";
             }
+            if ((metadataName.Kind & MetadataNameKind.Member) != 0)
+            {
+                return FormatMember(metadataName);
+            }
+            else if((metadataName.Kind & MetadataNameKind.Type) != 0)
+            {
+                return FormatType(metadataName);
+            }
+            throw new InvalidOperationException($"{nameof(MetadataNameFormatter)} can't format {nameof(MetadataName)} with Kind '{metadataName.Kind}'.");
         }
 
         private string FormatArity(int arity)

@@ -28,9 +28,11 @@ namespace DotvvmAcademy.CourseFormat
         private List<ValidationDiagnostic> diagnostics = new List<ValidationDiagnostic>();
         private Assembly userAssembly;
         private SymbolLocator locator;
+        private CourseWorkspace workspace;
 
         public async Task<ImmutableArray<ICodeTaskDiagnostic>> Validate(CourseWorkspace workspace, CodeTaskId id, string code)
         {
+            this.workspace = workspace;
             task = await workspace.LoadCodeTask(id);
             this.code = code;
             services = BuildServiceProvider();
@@ -71,9 +73,15 @@ namespace DotvvmAcademy.CourseFormat
 
         private void RunValidationScript()
         {
+            var sourceResolver = new CourseFormatSourceResolver(workspace);
+            var options = ScriptOptions.Default
+                .AddReferences(GetMetadataReference("DotvvmAcademy.Validation.CSharp"))
+                .AddImports("DotvvmAcademy.Validation.CSharp", "DotvvmAcademy.Validation.CSharp.Unit")
+                .WithFilePath(task.Id.Path)
+                .WithSourceResolver(sourceResolver);
             var runner = CSharpScript.Create(
                 code: task.ValidationScript,
-                options: ScriptOptions.Default.AddReferences(GetMetadataReference("DotvvmAcademy.Validation.CSharp")),
+                options: options,
                 globalsType: typeof(ICSharpProject))
                 .CreateDelegate();
             var csharpObject = services.GetRequiredService<CSharpObject>();
