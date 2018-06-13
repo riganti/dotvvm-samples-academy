@@ -36,10 +36,12 @@ public struct SampleStruct
             var structMethod = Factory.CreateMethodName(sampleStruct, "StructMethod");
             var property = Factory.CreatePropertyName(sampleStruct, "Property", @int);
 
-            var metadata = new MetadataCollection<MetadataName>();
-            metadata[sampleClass, SymbolStaticAnalyzer.MetadataKey] = true;
-            metadata[sampleStruct, SymbolStaticAnalyzer.MetadataKey] = true;
-            metadata[classMethod, SymbolStaticAnalyzer.MetadataKey] = false;
+            var metadata = new MetadataCollection<MetadataName>
+            {
+                [sampleClass, SymbolStaticAnalyzer.MetadataKey] = true,
+                [sampleStruct, SymbolStaticAnalyzer.MetadataKey] = true,
+                [classMethod, SymbolStaticAnalyzer.MetadataKey] = false
+            };
 
             var compilation = GetCompilation(Sample);
             var nameProvider = new RoslynMetadataNameProvider(Factory);

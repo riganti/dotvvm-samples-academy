@@ -38,11 +38,13 @@ public class ThirdClass : FirstInterface, SecondInterface
             var secondClass = Factory.CreateTypeName("", "SecondClass");
             var thirdClass = Factory.CreateTypeName("", "ThirdClass");
 
-            var metadata = new MetadataCollection<MetadataName>();
-            metadata[firstClass, InterfaceImplementationAnalyzer.PositiveMetadataKey] = ImmutableArray.Create(firstInterface);
-            metadata[secondClass, InterfaceImplementationAnalyzer.PositiveMetadataKey] = ImmutableArray.Create(secondInterface);
-            metadata[secondClass, InterfaceImplementationAnalyzer.NegativeMetadataKey] = ImmutableArray.Create(firstInterface);
-            metadata[thirdClass, InterfaceImplementationAnalyzer.PositiveMetadataKey] = ImmutableArray.Create(firstInterface, secondInterface);
+            var metadata = new MetadataCollection<MetadataName>
+            {
+                [firstClass, InterfaceImplementationAnalyzer.PositiveMetadataKey] = ImmutableArray.Create(firstInterface),
+                [secondClass, InterfaceImplementationAnalyzer.PositiveMetadataKey] = ImmutableArray.Create(secondInterface),
+                [secondClass, InterfaceImplementationAnalyzer.NegativeMetadataKey] = ImmutableArray.Create(firstInterface),
+                [thirdClass, InterfaceImplementationAnalyzer.PositiveMetadataKey] = ImmutableArray.Create(firstInterface, secondInterface)
+            };
 
             var compilation = GetCompilation(Sample);
             var nameProvider = new RoslynMetadataNameProvider(Factory);

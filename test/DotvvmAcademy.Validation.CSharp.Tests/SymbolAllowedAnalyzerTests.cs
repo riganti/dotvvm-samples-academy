@@ -33,12 +33,14 @@ public class TestClass
             var contains = Factory.CreateMethodName(@string, "Contains", @bool, parameters: ImmutableArray.Create(@string));
             var endsWith = Factory.CreateMethodName(@string, "EndsWith", @bool, parameters: ImmutableArray.Create(@string));
 
-            var metadata = new MetadataCollection<MetadataName>();
-            metadata[clone, SymbolAllowedAnalyzer.MetadataKey] = true;
-            metadata[compareTo, SymbolAllowedAnalyzer.MetadataKey] = true;
-            metadata[@string, SymbolAllowedAnalyzer.MetadataKey] = true;
-            metadata[@void, SymbolAllowedAnalyzer.MetadataKey] = true;
-            metadata[contains, SymbolAllowedAnalyzer.MetadataKey] = false;
+            var metadata = new MetadataCollection<MetadataName>
+            {
+                [clone, SymbolAllowedAnalyzer.MetadataKey] = true,
+                [compareTo, SymbolAllowedAnalyzer.MetadataKey] = true,
+                [@string, SymbolAllowedAnalyzer.MetadataKey] = true,
+                [@void, SymbolAllowedAnalyzer.MetadataKey] = true,
+                [contains, SymbolAllowedAnalyzer.MetadataKey] = false
+            };
 
             var nameProvider = new RoslynMetadataNameProvider(Factory);
             var analyzer = new SymbolAllowedAnalyzer(metadata, nameProvider);
