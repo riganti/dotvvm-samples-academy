@@ -20,7 +20,7 @@ namespace DotvvmAcademy.Validation.CSharp
             metadataSource = name.Kind.HasFlag(MetadataNameKind.Type)
                 ? GetTypeMember(name)
                 : GetOtherMember(name);
-            return metadataSource == null;
+            return metadataSource != null;
         }
 
         private MemberInfo GetOtherMember(MetadataName name)

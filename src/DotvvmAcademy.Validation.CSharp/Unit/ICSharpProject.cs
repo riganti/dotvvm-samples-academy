@@ -13,5 +13,7 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
         ICSharpProject GetProperty(string name);
 
         ICSharpType GetType(string name);
+
+        void Validate(DynamicValidationAction action);
     }
 }

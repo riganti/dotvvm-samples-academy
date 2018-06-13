@@ -6,7 +6,6 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 {
     public class CSharpObject : ICSharpProject, ICSharpProperty, ICSharpField, ICSharpEvent, ICSharpMethod, ICSharpType, IEquatable<CSharpObject>
     {
-        private readonly MetadataName name;
         private readonly Dictionary<string, MetadataName> nameCache;
         private readonly MetadataNameParser parser;
         private readonly Dictionary<MetadataName, CSharpObject> spawns = new Dictionary<MetadataName, CSharpObject>();
@@ -19,12 +18,14 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 
         private CSharpObject(MetadataName name, Dictionary<string, MetadataName> nameCache, MetadataNameParser parser)
         {
-            this.name = name;
+            Name = name;
             this.nameCache = nameCache;
             this.parser = parser;
         }
 
         public CSharpAccessibility Accessibility { get; set; } = CSharpAccessibility.Public;
+
+        public List<DynamicValidationAction> Actions { get; } = new List<DynamicValidationAction>();
 
         public ICSharpType BaseType { get; set; }
 
@@ -35,6 +36,8 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
         public bool IsDeclared { get; set; } = true;
 
         public bool IsStatic { get; set; } = false;
+
+        public MetadataName Name { get; }
 
         CSharpTypeKind ICSharpType.TypeKind { get { return TypeKind.Value; } set { TypeKind = value; } }
 
@@ -57,7 +60,7 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 
         public bool Equals(CSharpObject other)
         {
-            return other != null && EqualityComparer<MetadataName>.Default.Equals(name, other.name);
+            return other != null && EqualityComparer<MetadataName>.Default.Equals(Name, other.Name);
         }
 
         public ICSharpEvent GetEvent(string name) => Spawn(name);
@@ -66,7 +69,7 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 
         public override int GetHashCode()
         {
-            return 363513814 + EqualityComparer<MetadataName>.Default.GetHashCode(name);
+            return 363513814 + EqualityComparer<MetadataName>.Default.GetHashCode(Name);
         }
 
         public MetadataCollection<MetadataName> GetMetadata()
@@ -85,6 +88,11 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 
         public ICSharpType GetType(string name) => Spawn(name);
 
+        public void Validate(DynamicValidationAction action)
+        {
+            Actions.Add(action);
+        }
+
         private MetadataName GetName(string name)
         {
             if (!nameCache.TryGetValue(name, out var metadataName))
@@ -97,21 +105,21 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 
         private void PopulateMetadata(MetadataCollection<MetadataName> metadata)
         {
-            metadata[name, DeclarationExistenceAnalyzer.MetadataKey] = IsDeclared;
-            metadata[name, SymbolAllowedAnalyzer.MetadataKey] = IsAllowed;
-            metadata[name, SymbolAccessibilityAnalyzer.MetadataKey] = Accessibility;
+            metadata[Name, DeclarationExistenceAnalyzer.MetadataKey] = IsDeclared;
+            metadata[Name, SymbolAllowedAnalyzer.MetadataKey] = IsAllowed;
+            metadata[Name, SymbolAccessibilityAnalyzer.MetadataKey] = Accessibility;
             if (TypeKind != null)
             {
-                metadata[name, TypeKindAnalyzer.MetadataKey] = TypeKind.Value;
+                metadata[Name, TypeKindAnalyzer.MetadataKey] = TypeKind.Value;
             }
             if (BaseType != null)
             {
-                metadata[name, BaseTypeAnalyzer.MetadataKey] = ((CSharpObject)BaseType).name;
+                metadata[Name, BaseTypeAnalyzer.MetadataKey] = ((CSharpObject)BaseType).Name;
             }
-            metadata[name, SymbolStaticAnalyzer.MetadataKey] = IsStatic;
+            metadata[Name, SymbolStaticAnalyzer.MetadataKey] = IsStatic;
             if (Interfaces.Count > 0)
             {
-                metadata[name, InterfaceImplementationAnalyzer.PositiveMetadataKey] = Interfaces.ToImmutableArray();
+                metadata[Name, InterfaceImplementationAnalyzer.PositiveMetadataKey] = Interfaces.ToImmutableArray();
             }
             foreach (var pair in spawns)
             {

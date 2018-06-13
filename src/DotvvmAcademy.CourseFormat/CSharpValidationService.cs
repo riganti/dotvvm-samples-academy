@@ -20,6 +20,9 @@ namespace DotvvmAcademy.CourseFormat
 {
     internal class CSharpValidationService : IValidationService
     {
+        public static ValidationDiagnosticDescriptor DynamicValidationExceptionError
+            = new ValidationDiagnosticDescriptor("DYNEX", "Dynamic Validation Exception Error", "An Exception has been thrown", ValidationDiagnosticSeverity.Error);
+
         private IServiceProvider services;
         private ICodeTask task;
         private string code;
@@ -29,6 +32,7 @@ namespace DotvvmAcademy.CourseFormat
         private Assembly userAssembly;
         private SymbolLocator locator;
         private CourseWorkspace workspace;
+        private List<DynamicValidationAction> actions;
 
         public async Task<ImmutableArray<ICodeTaskDiagnostic>> Validate(CourseWorkspace workspace, CodeTaskId id, string code)
         {
@@ -42,6 +46,7 @@ namespace DotvvmAcademy.CourseFormat
             if (diagnostics.Count == 0)
             {
                 await RewriteAssembly();
+                RunDynamicValidation();
             }
             return diagnostics.Select(d =>
             {
@@ -66,6 +71,7 @@ namespace DotvvmAcademy.CourseFormat
             collection.AddSingleton<IMetadataNameFactory, MetadataNameFactory>();
             collection.AddSingleton<MetadataNameParser>();
             collection.AddSingleton<RoslynMetadataNameProvider>();
+            collection.AddSingleton<ReflectionMetadataNameProvider>();
             collection.AddSingleton<IAssemblyRewriter, DefaultAssemblyRewriter>();
             collection.AddSingleton<CSharpObject>();
             return collection.BuildServiceProvider();
@@ -75,7 +81,12 @@ namespace DotvvmAcademy.CourseFormat
         {
             var sourceResolver = new CourseFormatSourceResolver(workspace);
             var options = ScriptOptions.Default
-                .AddReferences(GetMetadataReference("DotvvmAcademy.Validation.CSharp"))
+                .AddReferences(
+                    GetMetadataReference("DotvvmAcademy.Validation.CSharp"), 
+                    GetMetadataReference("Microsoft.CSharp"), 
+                    GetMetadataReference("System.Runtime"),
+                    GetMetadataReference("System.Private.CoreLib"),
+                    GetMetadataReference("System.Linq.Expressions")) // Roslyn Issue #23573
                 .AddImports("DotvvmAcademy.Validation.CSharp", "DotvvmAcademy.Validation.CSharp.Unit")
                 .WithFilePath(task.Id.Path)
                 .WithSourceResolver(sourceResolver);
@@ -87,6 +98,7 @@ namespace DotvvmAcademy.CourseFormat
             var csharpObject = services.GetRequiredService<CSharpObject>();
             runner(csharpObject);
             staticValidationMetadata = csharpObject.GetMetadata();
+            actions = csharpObject.Actions;
         }
 
         private void CompileUserCode()
@@ -115,12 +127,13 @@ namespace DotvvmAcademy.CourseFormat
                 ActivatorUtilities.CreateInstance<SymbolAllowedAnalyzer>(services, staticValidationMetadata),
                 ActivatorUtilities.CreateInstance<SymbolStaticAnalyzer>(services, staticValidationMetadata, locator),
                 ActivatorUtilities.CreateInstance<TypeKindAnalyzer>(services, staticValidationMetadata, locator));
-            var roslynDiagnostics = await (new CompilationWithAnalyzers(compilation, analyzers, new CompilationWithAnalyzersOptions(
+            var options = new CompilationWithAnalyzersOptions(
                 options: null,
                 onAnalyzerException: null,
                 concurrentAnalysis: false,
-                logAnalyzerExecutionTime: false)))
-                .GetAllDiagnosticsAsync();
+                logAnalyzerExecutionTime: false);
+            var compilationWithAnalyzers = new CompilationWithAnalyzers(compilation, analyzers, options);
+            var roslynDiagnostics = await compilationWithAnalyzers.GetAnalyzerDiagnosticsAsync();
             diagnostics.AddRange(roslynDiagnostics.Select(d => new RoslynValidationDiagnostic(d)));
         }
 
@@ -140,7 +153,20 @@ namespace DotvvmAcademy.CourseFormat
 
         private void RunDynamicValidation()
         {
-            throw new NotImplementedException();
+            var infoLocator = ActivatorUtilities.CreateInstance<MemberInfoLocator>(services, userAssembly);
+            var context = new DynamicValidationContext(infoLocator);
+            foreach (var action in actions)
+            {
+                try
+                {
+                    action(context);
+                }
+                catch(Exception e)
+                {
+                    diagnostics.Add(new ExceptionValidationDiagnostic(DynamicValidationExceptionError, e));
+                }
+            }
+            diagnostics.AddRange(context.Diagnostics);
         }
 
         private MetadataReference GetMetadataReference(string assemblyName)
