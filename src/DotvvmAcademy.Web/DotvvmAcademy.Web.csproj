@@ -7,7 +7,6 @@
     </PropertyGroup>
     <ItemGroup>
         <None Remove="dotvvm_serialized_config.json.tmp" />
-        <None Remove="Resources\_Scripts\Monaco.ts" />
         <None Remove="Views/*" />
     </ItemGroup>
     <ItemGroup>
@@ -38,9 +37,6 @@
       <ProjectReference Include="..\DotvvmAcademy.BL\DotvvmAcademy.BL.csproj" />
     </ItemGroup>
     <ItemGroup>
-      <TypeScriptCompile Include="Resources\_Scripts\Monaco.ts" />
-    </ItemGroup>
-    <ItemGroup>
     <Compile Update="Resources\Localization\UIResources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -62,7 +58,4 @@
     <ItemGroup>
       <Folder Include="wwwroot\css\" />
     </ItemGroup>
-  <Target Name="NpmBuild" BeforeTargets="Build">
-    <Exec Command="npm run build" />
-  </Target>
 </Project>

@@ -64,5 +64,10 @@ namespace DotvvmAcademy.Web.ViewModels
                 CodeLanguage = codeTask.Id.Language;
             }
         }
+
+        public Task Validate()
+        {
+            return Task.CompletedTask;
+        }
     }
 }
