@@ -6,10 +6,10 @@ namespace DotvvmAcademy.Validation.Dothtml
 {
     public class PropertyValueVisitor : IControlVisitor
     {
-        public const string PropertyValueKey = "PropertyValue";
+        public const string MetadataKey = "PropertyValue";
 
         public readonly ValidationDiagnosticDescriptor IncorrectSetterError
-             = new ValidationDiagnosticDescriptor("TEMP", "Incorrect setter", "Property '{0}' must be set using a hardcoded value.", ValidationDiagnosticSeverity.Error);
+                     = new ValidationDiagnosticDescriptor("TEMP", "Incorrect setter", "Property '{0}' must be set using a hardcoded value.", ValidationDiagnosticSeverity.Error);
 
         public readonly ValidationDiagnosticDescriptor MissingValueError
                     = new ValidationDiagnosticDescriptor("TEMP", "Missing value", "Property '{0}' is missing a value.", ValidationDiagnosticSeverity.Error);
@@ -25,7 +25,7 @@ namespace DotvvmAcademy.Validation.Dothtml
 
         public void Visit(DothtmlIdentifier identifier, ResolvedControl control)
         {
-            var metadata = Metadata.GetRequiredProperty<ImmutableArray<PropertyValueMetadata>>(identifier, PropertyValueKey);
+            var metadata = Metadata.GetRequiredProperty<ImmutableArray<PropertyValueMetadata>>(identifier, MetadataKey);
             foreach (var valueMetadata in metadata)
             {
                 if (!control.TryGetProperty(valueMetadata.Property, out var setter))

@@ -4,7 +4,7 @@ namespace DotvvmAcademy.Validation.Dothtml
 {
     public sealed class DothtmlIdentifier
     {
-        public DothtmlIdentifier(string controlType, int? index, DothtmlIdentifier parent)
+        public DothtmlIdentifier(string controlType, int index, DothtmlIdentifier parent)
         {
             ControlType = controlType;
             Index = index;
@@ -13,7 +13,7 @@ namespace DotvvmAcademy.Validation.Dothtml
 
         public string ControlType { get; }
 
-        public int? Index { get; }
+        public int Index { get; }
 
         public DothtmlIdentifier Parent { get; }
 
@@ -49,10 +49,7 @@ namespace DotvvmAcademy.Validation.Dothtml
                 sb.Append(Parent);
             }
             sb.Append('/').Append(ControlType);
-            if (Index.HasValue)
-            {
-                sb.Append('[').Append(Index).Append(']');
-            }
+            sb.Append('[').Append(Index).Append(']');
             return sb.ToString();
         }
     }

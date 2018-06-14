@@ -113,9 +113,9 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
 
         private void PopulateMetadata(MetadataCollection<DothtmlIdentifier> metadata)
         {
-            metadata[identifier, NodeExistenceVisitor.NodeExistenceKey] = true;
-            metadata[identifier, BindingVisitor.BindingKey] = bindings.Values.ToImmutableArray();
-            metadata[identifier, PropertyValueVisitor.PropertyValueKey] = values.Values.ToImmutableArray();
+            metadata[identifier, NodeExistenceVisitor.MetadataKey] = true;
+            metadata[identifier, BindingVisitor.MetadataKey] = bindings.Values.ToImmutableArray();
+            metadata[identifier, PropertyValueVisitor.MetadataKey] = values.Values.ToImmutableArray();
             foreach (var spawn in spawns)
             {
                 spawn.Value.PopulateMetadata(metadata);

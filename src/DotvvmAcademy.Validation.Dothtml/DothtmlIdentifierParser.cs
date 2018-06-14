@@ -1,13 +1,13 @@
 ﻿using System.Linq;
 
-namespace DotvvmAcademy.Validation.Dothtml.Unit
+namespace DotvvmAcademy.Validation.Dothtml
 {
     public class DothtmlIdentifierParser
     {
         private readonly char[] digits = new[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
         private readonly char[] specialChars = new[] { '/', '[', ']' };
         private DothtmlIdentifier current;
-        private int? index;
+        private int index;
         private string input;
         private int position;
 
@@ -15,7 +15,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
         {
             position = 0;
             input = path;
-            index = null;
+            index = 0;
             current = null;
             string segment = null;
             while (position < input.Length)

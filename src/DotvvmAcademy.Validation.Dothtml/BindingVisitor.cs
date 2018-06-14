@@ -6,10 +6,10 @@ namespace DotvvmAcademy.Validation.Dothtml
 {
     public class BindingVisitor : IControlVisitor
     {
-        public const string BindingKey = "Binding";
+        public const string MetadataKey = "Binding";
 
         public readonly ValidationDiagnosticDescriptor IncorrectBindingTypeError
-            = new ValidationDiagnosticDescriptor("TEMP", "Incorrect binding type", "Property '{0}' must be bound using '{1}'.", ValidationDiagnosticSeverity.Error);
+                    = new ValidationDiagnosticDescriptor("TEMP", "Incorrect binding type", "Property '{0}' must be bound using '{1}'.", ValidationDiagnosticSeverity.Error);
 
         public readonly ValidationDiagnosticDescriptor IncorrectSetterError
              = new ValidationDiagnosticDescriptor("TEMP", "Incorrect setter", "Property '{0}' must be set using a '{1}'.", ValidationDiagnosticSeverity.Error);
@@ -28,7 +28,7 @@ namespace DotvvmAcademy.Validation.Dothtml
 
         public void Visit(DothtmlIdentifier identifier, ResolvedControl control)
         {
-            var metadata = Metadata.GetRequiredProperty<ImmutableArray<BindingMetadata>>(identifier, BindingKey);
+            var metadata = Metadata.GetRequiredProperty<ImmutableArray<BindingMetadata>>(identifier, MetadataKey);
             foreach (var bindingMetadata in metadata)
             {
                 if (!control.TryGetProperty(bindingMetadata.Property, out var setter))
