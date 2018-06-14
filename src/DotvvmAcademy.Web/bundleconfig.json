@@ -1,12 +1,12 @@
 [
   {
-    "outputFileName": "wwwroot/scripts/app.min.js",
+    "outputFileName": "wwwroot/Scripts/app.min.js",
     "inputFiles": [
       "wwwroot/Scripts/app.js"
     ]
   },
   {
-    "outputFileName": "wwwroot/scripts/jquery-2.2.4.min.js",
+    "outputFileName": "wwwroot/Scripts/jquery-2.2.4.min.js",
     "inputFiles": [
       "wwwroot/Scripts/jquery-2.2.4.js"
     ]

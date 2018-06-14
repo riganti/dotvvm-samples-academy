@@ -6,8 +6,35 @@
 <head>
     <meta charset="utf-8" />
     <title>DotVVM Academy</title>
+    <meta name="author" content="Riganti s.r.o." />
+    <meta name="description=" content="" />
+    <meta name="keywords" content="Update" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/images/favicons/site.webmanifest">
+    <link rel="mask-icon" href="/images/favicons/safari-pinned-tab.svg" color="#3176bb">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Schema.org markup for Google+ -->
+    <meta itemprop="name" content="DotVVM Academy" />
+    <meta itemprop="description" content="" />
+    <meta itemprop="image" content="" />
+    <!-- Open Graph data -->
+    <meta property="og:title" content="DotVVM Academy" />
+    <meta property="og:url" content="https://academy.dotvvm.com/" />
+    <meta property="og:image" content="" />
+    <meta property="og:description" content="" />
+    <!-- Twitter Card data -->
+    <meta name="twitter:site" content="@dotvvm" />
+    <meta name="twitter:title" content="DotVVM Academy" />
+    <meta name="twitter:description" content="" />
+    <meta name="twitter:image" content="" />
+
     <dot:RequiredResource Name="StyleCSS" />
 </head>
 <body>
@@ -18,25 +45,23 @@
                 </cc:SvgToHtml>
                 &nbsp;<p>ACADEMY</p>
             </dot:RouteLink>
-            <cc:LangSwitcher Class-lang-switcher="true">
-            </cc:LangSwitcher>
+            <div>
+                <dot:Button ButtonTagName="button" Text="Ukončit lekci" class="button" Visible="{value: false}"></dot:Button><%--TODO Visible when routname == step --%>
+                <cc:LangSwitcher Class-lang-switcher="true"><%--TODO Visible when routname == default --%>
+                </cc:LangSwitcher>
+            </div>
         </nav>
         <dot:ContentPlaceHolder ID="HeaderContent" />
     </header>
     <main>
         <dot:ContentPlaceHolder ID="MainContent" />
     </main>
-    <footer RenderSettings.Mode="Server">
-        <div class="main-link">
-            <a target="_blank" href="https://www.dotvvm.com/">www.dotvvm.com</a>
-        </div>
-        <div class="footer-links">
-            <a target="_blank" href="https://www.dotvvm.com/docs/latest">{{resource: UIResources.Base_Documentation}}</a>
-            <a target="_blank" href="https://www.dotvvm.com/docs/tutorials/introduction/latest">{{resource: UIResources.Base_Tutorials}}</a>
-            <a target="_blank" href="https://www.dotvvm.com/docs/samples/latest">{{resource: UIResources.Base_Samples}}</a>
-        </div>
+
+    <footer>
+        <dot:ContentPlaceHolder ID="FooterContent" />
     </footer>
 
+    <dot:RequiredResource Name="jQuery" />
     <dot:RequiredResource Name="AppJS" />
     <script>
         (function (i, s, o, g, r, a, m) {

@@ -22,9 +22,6 @@
         </Content>
     </ItemGroup>
     <ItemGroup>
-        <Folder Include="wwwroot\" />
-    </ItemGroup>
-    <ItemGroup>
         <Compile Remove="Content\**\*.cs" />
         <Content Include="Content\**\*" />
         <Content Remove="Content\**\*.json" />
@@ -61,6 +58,9 @@
       <EmbeddedResource Update="Resources\Localization\UIResources.ru.resx">
         <Generator>PublicResXFileCodeGenerator</Generator>
       </EmbeddedResource>
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="wwwroot\css\" />
     </ItemGroup>
   <Target Name="NpmBuild" BeforeTargets="Build">
     <Exec Command="npm run build" />

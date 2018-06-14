@@ -3,30 +3,55 @@
 @import DotvvmAcademy.Web.Resources.Localization
 
 <dot:Content ContentPlaceHolderID="MainContent">
-    <div>
-        <div>
-            <dot:HtmlLiteral Html="{resource: Text}" />
+    <section class="section-lesson">
+        <div class="container-large">
+            <%--<dot:Repeater DataSource="{value: Steps}" class="lesson-progress-bar" RenderSettings.Mode="Server">
+                <div class="{value: IsStepFinish ? "progress-item completed" : "progress-item"}">
+                    <span>{{value: StepNumber}}</span>
+                </div>
+            </dot:Repeater>--%>
         </div>
-        <div IncludeInPage="{value: Code != null}">
-            <cc:CodeTaskControl Code="{value: Code}"
-                                Language="{resource: CodeLanguage}"
-                                style="width: 800px; height: 600px;"/>
+        <div class="container-small">
+            <dot:HtmlLiteral Html="{resource: Text}" class="step-info-box" />
+            <div IncludeInPage="{value: Code != null}">
+                <cc:CodeTaskControl Code="{value: Code}"
+                                    Language="{resource: CodeLanguage}"
+                                    class="code-container" />
+            </div>
+            <dot:ValidationSummary class="validation-summary">
         </div>
-        <div>
-            <dot:RouteLink RouteName="Step"
-                           Param-Language="{value: Language}"
-                           Param-Lesson="{value: Lesson}"
-                           Param-Step="{value: PreviousStep}"
-                           Visible="{resource: IsPreviousVisible}">
-                {{resource: UIResources.Btn_PreviousStep}}
-            </dot:RouteLink>
-            <dot:RouteLink RouteName="Step"
-                           Param-Language="{value: Language}"
-                           Param-Lesson="{value: Lesson}"
-                           Param-Step="{value: NextStep}"
-                           Visible="{resource: IsNextVisible}">
-                {{resource: UIResources.Btn_NextStep}}
-            </dot:RouteLink>
+    </section>
+</dot:Content>
+
+<dot:content ContentPlaceHolderID="FooterContent">
+    <div class="lesson-footer-container" Class-success="{value: false}" Class-failed="{value: false}">
+        <div class="container-small">
+            <div class="ico-container">
+                <cc:SvgToHtml Source="images/icons/success.svg" RenderSettings.Mode="Server" Visible="{value: true}" />
+                <%--<cc:SvgToHtml Source="images/icons/failed.svg" RenderSettings.Mode="Server" Visible="{value: false}"/>--%>
+                <dot:Literal Text="{value: "Spravne"}" RenderSpanElement="true" />
+            </div>
+            <div>
+                <dot:RouteLink RouteName="Step"
+                               ButtonTagName="button"
+                               class="button"
+                               Param-Language="{value: Language}"
+                               Param-Lesson="{value: Lesson}"
+                               Param-Step="{value: PreviousStep}"
+                               Visible="{resource: IsPreviousVisible}"
+                               Class-success="{value: false}"
+                               Text="{resource: UIResources.Btn_PreviousStep}" />
+
+                <dot:RouteLink RouteName="Step"
+                               class="button"
+                               ButtonTagName="button"
+                               Param-Language="{value: Language}"
+                               Param-Lesson="{value: Lesson}"
+                               Param-Step="{value: NextStep}"
+                               Visible="{resource: IsNextVisible}"
+                               Class-success="{value: false}"
+                               Text="{resource: UIResources.Btn_NextStep}" />
+            </div>
         </div>
     </div>
-</dot:Content>
+</dot:content>
