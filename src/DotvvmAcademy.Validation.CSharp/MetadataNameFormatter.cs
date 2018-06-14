@@ -92,10 +92,10 @@ namespace DotvvmAcademy.Validation.CSharp
         {
             switch (metadataName.Kind)
             {
-                case MetadataNameKind.Method | MetadataNameKind.ConstructedMethod:
+                case MetadataNameKind.Member | MetadataNameKind.Method | MetadataNameKind.ConstructedMethod:
                     return FormatConstructedMethod(metadataName);
 
-                case MetadataNameKind.Method:
+                case MetadataNameKind.Member | MetadataNameKind.Method:
                     return FormatMethod(metadataName);
 
                 default:

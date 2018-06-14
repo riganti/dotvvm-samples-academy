@@ -13,12 +13,21 @@
         </div>
         <div class="container-small">
             <dot:HtmlLiteral Html="{resource: Text}" class="step-info-box" />
+            <%-- TODO: Do not render at all (IncludeInPage is not working properly) --%>
             <div IncludeInPage="{value: Code != null}">
                 <cc:CodeTaskControl Code="{value: Code}"
+                                    Diagnostics="{value: Diagnostics}"
                                     Language="{resource: CodeLanguage}"
                                     class="code-container" />
+                <dot:Button Click="{command: Validate()}" Text="Validate" />
+                <dot:Repeater DataSource="{value: Diagnostics}">
+                    <ItemTemplate>
+                        <div>
+                            {{value: Severity}}: {{value: Message}}
+                        </div>
+                    </ItemTemplate>
+                </dot:Repeater>
             </div>
-            <dot:ValidationSummary class="validation-summary">
         </div>
     </section>
 </dot:Content>

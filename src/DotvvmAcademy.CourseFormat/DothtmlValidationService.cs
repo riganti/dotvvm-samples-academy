@@ -29,9 +29,13 @@ namespace DotvvmAcademy.CourseFormat
         private ResolvedTreeRoot root;
         private List<ValidationDiagnostic> diagnostics = new List<ValidationDiagnostic>();
 
-        public async Task<ImmutableArray<ICodeTaskDiagnostic>> Validate(CourseWorkspace workspace, CodeTaskId id, string code)
+        public DothtmlValidationService(CourseWorkspace workspace)
         {
             this.workspace = workspace;
+        }
+
+        public async Task<ImmutableArray<ICodeTaskDiagnostic>> Validate(CodeTaskId id, string code)
+        {
             task = await workspace.LoadCodeTask(id);
             this.code = code;
             RunValidationScript();

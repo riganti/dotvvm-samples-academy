@@ -1,41 +1,44 @@
 ﻿using DotVVM.Framework.Binding;
-using DotVVM.Framework.Binding.Expressions;
 using DotVVM.Framework.Controls;
 using DotVVM.Framework.Hosting;
+using DotvvmAcademy.CourseFormat;
+using System.Collections.Generic;
 
 namespace DotvvmAcademy.Web.Controls
 {
     public class CodeTaskControl : HtmlGenericControl
     {
-        public string Language
-        {
-            get { return (string)GetValue(LanguageProperty); }
-            set { SetValue(LanguageProperty, value); }
-        }
+        public static readonly DotvvmProperty CodeProperty
+            = DotvvmProperty.Register<string, CodeTaskControl>(c => c.Code, null);
+
+        public static readonly DotvvmProperty DiagnosticsProperty
+            = DotvvmProperty.Register<List<ICodeTaskDiagnostic>, CodeTaskControl>(c => c.Diagnostics, null);
 
         public static readonly DotvvmProperty LanguageProperty
-            = DotvvmProperty.Register<string, CodeTaskControl>(c => c.Language, null);
+                    = DotvvmProperty.Register<string, CodeTaskControl>(c => c.Language, null);
 
+        public CodeTaskControl() : base("div")
+        {
+        }
+
+        [MarkupOptions(Required = true, AllowBinding = true, AllowHardCodedValue = false)]
         public string Code
         {
             get { return (string)GetValue(CodeProperty); }
             set { SetValue(CodeProperty, value); }
         }
 
-        public static readonly DotvvmProperty CodeProperty
-            = DotvvmProperty.Register<string, CodeTaskControl>(c => c.Code, null);
-
-        public Command ValidationCommand
+        [MarkupOptions(Required = true, AllowBinding = true, AllowHardCodedValue = false)]
+        public List<ICodeTaskDiagnostic> Diagnostics
         {
-            get { return (Command)GetValue(ValidationCommandProperty); }
-            set { SetValue(ValidationCommandProperty, value); }
+            get { return (List<ICodeTaskDiagnostic>)GetValue(DiagnosticsProperty); }
+            set { SetValue(DiagnosticsProperty, value); }
         }
-        public static readonly DotvvmProperty ValidationCommandProperty
-            = DotvvmProperty.Register<Command, CodeTaskControl>(c => c.ValidationCommand, null);
 
-
-        public CodeTaskControl() : base("div")
+        public string Language
         {
+            get { return (string)GetValue(LanguageProperty); }
+            set { SetValue(LanguageProperty, value); }
         }
 
         protected override void AddAttributesToRender(IHtmlWriter writer, IDotvvmRequestContext context)
@@ -44,9 +47,9 @@ namespace DotvvmAcademy.Web.Controls
             var group = new KnockoutBindingGroup
             {
                 { "code", this, CodeProperty },
-                { "language", this, LanguageProperty }
+                { "language", this, LanguageProperty },
+                { "diagnostics", this, DiagnosticsProperty }
             };
-            group.Add("validationCommand", KnockoutHelper.GenerateClientPostBackScript("ValidationCommandProperty", GetCommandBinding(ValidationCommandProperty), this));
             writer.AddKnockoutDataBind("dotvvm-monaco", group);
         }
     }

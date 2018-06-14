@@ -1,4 +1,4 @@
-﻿var dotvvm = (<any>window).dotvvm;
+﻿declare let dotvvm;
 
 dotvvm.events.init.subscribe(function () {
     $('.lang-switcher').click(function (e) {

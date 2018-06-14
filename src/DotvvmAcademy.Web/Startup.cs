@@ -32,6 +32,7 @@ namespace DotvvmAcademy.Web
             services.AddDotVVM();
             services.AddSingleton<LessonFacade>();
             services.AddSingleton(new CourseWorkspace("../../sample/sample_course"));
+            services.AddSingleton<ValidationService>();
         }
     }
 }

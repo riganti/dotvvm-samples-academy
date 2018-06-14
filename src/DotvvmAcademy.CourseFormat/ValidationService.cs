@@ -6,18 +6,24 @@ namespace DotvvmAcademy.CourseFormat
 {
     public class ValidationService : IValidationService
     {
-        private readonly CSharpValidationService csharp = new CSharpValidationService();
-        private readonly DothtmlValidationService dothtml = new DothtmlValidationService();
+        private readonly CSharpValidationService csharp;
+        private readonly DothtmlValidationService dothtml;
 
-        public Task<ImmutableArray<ICodeTaskDiagnostic>> Validate(CourseWorkspace workspace, CodeTaskId id, string code)
+        public ValidationService(CourseWorkspace workspace)
+        {
+            csharp = new CSharpValidationService(workspace);
+            dothtml = new DothtmlValidationService(workspace);
+        }
+
+        public Task<ImmutableArray<ICodeTaskDiagnostic>> Validate(CodeTaskId id, string code)
         {
             switch (id.Language)
             {
                 case ".cs":
-                    return csharp.Validate(workspace, id, code);
+                    return csharp.Validate(id, code);
 
                 case ".dothtml":
-                    return dothtml.Validate(workspace, id, code);
+                    return dothtml.Validate(id, code);
 
                 default:
                     throw new ArgumentException($"The programming language of {nameof(CodeTask)} '{id.Path}'" +

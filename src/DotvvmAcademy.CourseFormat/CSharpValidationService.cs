@@ -20,23 +20,31 @@ namespace DotvvmAcademy.CourseFormat
 {
     internal class CSharpValidationService : IValidationService
     {
-        public static ValidationDiagnosticDescriptor DynamicValidationExceptionError
-            = new ValidationDiagnosticDescriptor("DYNEX", "Dynamic Validation Exception Error", "An Exception has been thrown", ValidationDiagnosticSeverity.Error);
+        public static ValidationDiagnosticDescriptor DynamicValidationExceptionError = new ValidationDiagnosticDescriptor(
+                id: "DYNEX",
+                name: "Dynamic Validation Exception Error",
+                message: "An exception has been thrown: '{0}'",
+                severity: ValidationDiagnosticSeverity.Error);
 
-        private IServiceProvider services;
-        private ICodeTask task;
+        private List<DynamicValidationAction> actions;
         private string code;
-        private MetadataCollection<MetadataName> staticValidationMetadata;
         private CSharpCompilation compilation;
         private List<ValidationDiagnostic> diagnostics = new List<ValidationDiagnostic>();
-        private Assembly userAssembly;
         private SymbolLocator locator;
+        private IServiceProvider services;
+        private MetadataCollection<MetadataName> staticValidationMetadata;
+        private ICodeTask task;
+        private Assembly userAssembly;
         private CourseWorkspace workspace;
-        private List<DynamicValidationAction> actions;
 
-        public async Task<ImmutableArray<ICodeTaskDiagnostic>> Validate(CourseWorkspace workspace, CodeTaskId id, string code)
+        public CSharpValidationService(CourseWorkspace workspace)
         {
             this.workspace = workspace;
+        }
+
+        public async Task<ImmutableArray<ICodeTaskDiagnostic>> Validate(CodeTaskId id, string code)
+        {
+            diagnostics.Clear();
             task = await workspace.LoadCodeTask(id);
             this.code = code;
             services = BuildServiceProvider();
@@ -77,30 +85,6 @@ namespace DotvvmAcademy.CourseFormat
             return collection.BuildServiceProvider();
         }
 
-        private void RunValidationScript()
-        {
-            var sourceResolver = new CourseFormatSourceResolver(workspace);
-            var options = ScriptOptions.Default
-                .AddReferences(
-                    GetMetadataReference("DotvvmAcademy.Validation.CSharp"), 
-                    GetMetadataReference("Microsoft.CSharp"), 
-                    GetMetadataReference("System.Runtime"),
-                    GetMetadataReference("System.Private.CoreLib"),
-                    GetMetadataReference("System.Linq.Expressions")) // Roslyn Issue #23573
-                .AddImports("DotvvmAcademy.Validation.CSharp", "DotvvmAcademy.Validation.CSharp.Unit")
-                .WithFilePath(task.Id.Path)
-                .WithSourceResolver(sourceResolver);
-            var runner = CSharpScript.Create(
-                code: task.ValidationScript,
-                options: options,
-                globalsType: typeof(ICSharpProject))
-                .CreateDelegate();
-            var csharpObject = services.GetRequiredService<CSharpObject>();
-            runner(csharpObject);
-            staticValidationMetadata = csharpObject.GetMetadata();
-            actions = csharpObject.Actions;
-        }
-
         private void CompileUserCode()
         {
             compilation = CSharpCompilation.Create(
@@ -117,24 +101,15 @@ namespace DotvvmAcademy.CourseFormat
             locator = ActivatorUtilities.CreateInstance<SymbolLocator>(services, compilation);
         }
 
-        private async Task RunValidationAnalyzers()
+        private TAnalyzer CreateAnalyzer<TAnalyzer>()
+            where TAnalyzer : ValidationDiagnosticAnalyzer
         {
-            var analyzers = ImmutableArray.Create<DiagnosticAnalyzer>(
-                ActivatorUtilities.CreateInstance<BaseTypeAnalyzer>(services, staticValidationMetadata, locator),
-                ActivatorUtilities.CreateInstance<DeclarationExistenceAnalyzer>(services, staticValidationMetadata, locator),
-                ActivatorUtilities.CreateInstance<InterfaceImplementationAnalyzer>(services, staticValidationMetadata, locator),
-                ActivatorUtilities.CreateInstance<SymbolAccessibilityAnalyzer>(services, staticValidationMetadata, locator),
-                ActivatorUtilities.CreateInstance<SymbolAllowedAnalyzer>(services, staticValidationMetadata),
-                ActivatorUtilities.CreateInstance<SymbolStaticAnalyzer>(services, staticValidationMetadata, locator),
-                ActivatorUtilities.CreateInstance<TypeKindAnalyzer>(services, staticValidationMetadata, locator));
-            var options = new CompilationWithAnalyzersOptions(
-                options: null,
-                onAnalyzerException: null,
-                concurrentAnalysis: false,
-                logAnalyzerExecutionTime: false);
-            var compilationWithAnalyzers = new CompilationWithAnalyzers(compilation, analyzers, options);
-            var roslynDiagnostics = await compilationWithAnalyzers.GetAnalyzerDiagnosticsAsync();
-            diagnostics.AddRange(roslynDiagnostics.Select(d => new RoslynValidationDiagnostic(d)));
+            return ActivatorUtilities.CreateInstance<TAnalyzer>(services, staticValidationMetadata, locator);
+        }
+
+        private MetadataReference GetMetadataReference(string assemblyName)
+        {
+            return MetadataReference.CreateFromFile(Assembly.Load(assemblyName).Location);
         }
 
         private async Task RewriteAssembly()
@@ -161,23 +136,56 @@ namespace DotvvmAcademy.CourseFormat
                 {
                     action(context);
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
-                    diagnostics.Add(new ExceptionValidationDiagnostic(DynamicValidationExceptionError, e));
+                    diagnostics.Add(new ExceptionValidationDiagnostic(DynamicValidationExceptionError, e, e.Message));
                 }
             }
             diagnostics.AddRange(context.Diagnostics);
         }
 
-        private MetadataReference GetMetadataReference(string assemblyName)
+        private async Task RunValidationAnalyzers()
         {
-            return MetadataReference.CreateFromFile(Assembly.Load(assemblyName).Location);
+            var analyzers = ImmutableArray.Create<DiagnosticAnalyzer>(
+                ActivatorUtilities.CreateInstance<BaseTypeAnalyzer>(services, staticValidationMetadata, locator),
+                ActivatorUtilities.CreateInstance<DeclarationExistenceAnalyzer>(services, staticValidationMetadata, locator),
+                ActivatorUtilities.CreateInstance<InterfaceImplementationAnalyzer>(services, staticValidationMetadata, locator),
+                ActivatorUtilities.CreateInstance<SymbolAccessibilityAnalyzer>(services, staticValidationMetadata, locator),
+                ActivatorUtilities.CreateInstance<SymbolAllowedAnalyzer>(services, staticValidationMetadata),
+                ActivatorUtilities.CreateInstance<SymbolStaticAnalyzer>(services, staticValidationMetadata, locator),
+                ActivatorUtilities.CreateInstance<TypeKindAnalyzer>(services, staticValidationMetadata, locator));
+            var options = new CompilationWithAnalyzersOptions(
+                options: null,
+                onAnalyzerException: null,
+                concurrentAnalysis: false,
+                logAnalyzerExecutionTime: false);
+            var compilationWithAnalyzers = new CompilationWithAnalyzers(compilation, analyzers, options);
+            var roslynDiagnostics = await compilationWithAnalyzers.GetAllDiagnosticsAsync();
+            diagnostics.AddRange(roslynDiagnostics.Select(d => new RoslynValidationDiagnostic(d)));
         }
 
-        private TAnalyzer CreateAnalyzer<TAnalyzer>() 
-            where TAnalyzer : ValidationDiagnosticAnalyzer
+        private void RunValidationScript()
         {
-            return ActivatorUtilities.CreateInstance<TAnalyzer>(services, staticValidationMetadata, locator);
+            var sourceResolver = new CourseFormatSourceResolver(workspace);
+            var options = ScriptOptions.Default
+                .AddReferences(
+                    GetMetadataReference("DotvvmAcademy.Validation.CSharp"),
+                    GetMetadataReference("Microsoft.CSharp"),
+                    GetMetadataReference("System.Runtime"),
+                    GetMetadataReference("System.Private.CoreLib"),
+                    GetMetadataReference("System.Linq.Expressions")) // Roslyn Issue #23573
+                .AddImports("DotvvmAcademy.Validation.CSharp", "DotvvmAcademy.Validation.CSharp.Unit")
+                .WithFilePath(task.Id.Path)
+                .WithSourceResolver(sourceResolver);
+            var runner = CSharpScript.Create(
+                code: task.ValidationScript,
+                options: options,
+                globalsType: typeof(ICSharpProject))
+                .CreateDelegate();
+            var csharpObject = services.GetRequiredService<CSharpObject>();
+            runner(csharpObject);
+            staticValidationMetadata = csharpObject.GetMetadata();
+            actions = csharpObject.Actions;
         }
     }
 }

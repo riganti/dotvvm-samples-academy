@@ -20,7 +20,7 @@ namespace DotvvmAcademy.Validation.CSharp
         {
             if (stopwatch.Value.ElapsedTicks >= TimeSpan.TicksPerSecond * TimeLimit)
             {
-                throw new AssemblySafeguardException($"The has ran longer than {TimeSpan.TicksPerSecond * TimeLimit} ticks ({TimeLimit} seconds).");
+                throw new AssemblySafeguardException($"Your code has run too long.");
             }
         }
     }

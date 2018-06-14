@@ -10,8 +10,9 @@
     "target": "es5"
   },
   "compileOnSave": false,
-  "exclude": [
-    "node_modules",
-    "wwwroot"
+  "include": [
+    "node_modules/@types/**/*.d.ts",
+    "Resources/_Scripts/**/*",
+    "node_modules/monaco-editor/monaco.d.ts"
   ]
 }

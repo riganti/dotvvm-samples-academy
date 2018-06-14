@@ -2,6 +2,8 @@
 using DotvvmAcademy.BL;
 using DotvvmAcademy.CourseFormat;
 using Markdig;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DotvvmAcademy.Web.ViewModels
@@ -9,18 +11,26 @@ namespace DotvvmAcademy.Web.ViewModels
     public class StepViewModel : SiteViewModel
     {
         private readonly LessonFacade facade;
+        private readonly ValidationService validation;
         private readonly CourseWorkspace workspace;
+        private LessonDTO lesson;
+        private IStep step;
+        private ICodeTask task;
 
-        public StepViewModel(LessonFacade facade, CourseWorkspace workspace)
+        public StepViewModel(LessonFacade facade, CourseWorkspace workspace, ValidationService validation)
         {
             this.facade = facade;
             this.workspace = workspace;
+            this.validation = validation;
         }
 
         public string Code { get; set; }
 
         [Bind(Direction.None)]
         public string CodeLanguage { get; set; }
+
+        [Bind(Direction.ServerToClient)]
+        public List<ICodeTaskDiagnostic> Diagnostics { get; set; }
 
         [Bind(Direction.None)]
         public bool IsNextVisible { get; set; }
@@ -31,8 +41,10 @@ namespace DotvvmAcademy.Web.ViewModels
         [FromRoute("Lesson")]
         public string Lesson { get; set; }
 
+        [Bind(Direction.ServerToClient)]
         public string NextStep { get; set; }
 
+        [Bind(Direction.ServerToClient)]
         public string PreviousStep { get; set; }
 
         [FromRoute("Step"), Bind(Direction.None)]
@@ -43,7 +55,7 @@ namespace DotvvmAcademy.Web.ViewModels
 
         public override async Task Load()
         {
-            var lesson = await facade.GetLesson(Language, Lesson);
+            lesson = await facade.GetLesson(Language, Lesson);
             var index = lesson.Steps.IndexOf(Step);
             IsPreviousVisible = index > 0;
             IsNextVisible = index < lesson.Steps.Count - 1;
@@ -55,19 +67,22 @@ namespace DotvvmAcademy.Web.ViewModels
             {
                 NextStep = lesson.Steps[index + 1];
             }
-            var step = await workspace.LoadStep($"/{Language}/{Lesson}/{Step}");
+            step = await workspace.LoadStep($"/{Language}/{Lesson}/{Step}");
             Text = Markdown.ToHtml(step.Text);
-            if (step.CodeTaskId != null)
+            if (!Context.IsPostBack && step.CodeTaskId != null)
             {
-                var codeTask = await workspace.LoadCodeTask(step.CodeTaskId);
-                Code = codeTask.Code;
-                CodeLanguage = codeTask.Id.Language;
+                task = await workspace.LoadCodeTask(step.CodeTaskId);
+                Code = task.Code;
+                CodeLanguage = task.Id.Language == ".cs" ? "csharp" : "html";
             }
         }
 
-        public Task Validate()
+        public async Task Validate()
         {
-            return Task.CompletedTask;
+            if (workspace.CodeTaskIds.TryGetValue($"/{Language}/{Lesson}/{Step}", out var id))
+            {
+                Diagnostics = (await validation.Validate(id, Code)).ToList();
+            }
         }
     }
 }
