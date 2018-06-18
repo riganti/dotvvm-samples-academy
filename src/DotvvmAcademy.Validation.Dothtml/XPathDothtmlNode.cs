@@ -1,10 +1,11 @@
 ﻿using DotVVM.Framework.Compilation.ControlTree.Resolved;
+using System.Collections.Immutable;
 using System.Text;
 using System.Xml.XPath;
 
 namespace DotvvmAcademy.Validation.Dothtml
 {
-    internal abstract class XPathDothtmlNode
+    internal class XPathDothtmlNode
     {
         public XPathDothtmlNode(ResolvedTreeNode node, XPathNodeType type)
         {
@@ -12,7 +13,15 @@ namespace DotvvmAcademy.Validation.Dothtml
             NodeType = type;
         }
 
+        public ImmutableArray<XPathDothtmlNode> Attributes { get; private set; }
+
+        public XPathDothtmlNode FirstSibling { get; private set; }
+
+        public ImmutableArray<XPathDothtmlNode> Children { get; private set; }
+
         public string LocalName { get; set; }
+
+        public XPathDothtmlNode NextSibling { get; private set; }
 
         public XPathNodeType NodeType { get; }
 
@@ -20,13 +29,48 @@ namespace DotvvmAcademy.Validation.Dothtml
 
         public string Prefix { get; set; }
 
+        public XPathDothtmlNode PreviousSibling { get; private set; }
+
         public XPathDothtmlRoot Root { get; internal set; }
 
         public ResolvedTreeNode UnderlyingObject { get; }
 
+        public object Value { get; set; }
+
+        public void SetAttributes(ImmutableArray<XPathDothtmlNode>.Builder builder) => Attributes = SetupNodeArray(builder);
+
+        public void SetChildren(ImmutableArray<XPathDothtmlNode>.Builder builder) => Children = SetupNodeArray(builder);
+
+        private ImmutableArray<XPathDothtmlNode> SetupNodeArray(ImmutableArray<XPathDothtmlNode>.Builder builder)
+        {
+            if (builder.Count == 0)
+            {
+                return default(ImmutableArray<XPathDothtmlNode>);
+            }
+            var array = builder.ToImmutable();
+            for (int i = 0; i < array.Length; i++)
+            {
+                var node = array[i];
+                node.Root = Root;
+                node.Parent = this;
+                node.FirstSibling = array[0];
+                if (i > 0)
+                {
+                    node.PreviousSibling = array[i - 1];
+                }
+                if (i < array.Length - 1)
+                {
+                    node.NextSibling = array[i + 1];
+                }
+            }
+            return array;
+        }
+
         public override string ToString()
         {
             var sb = new StringBuilder();
+            sb.Append(NodeType.ToString());
+            sb.Append(": ");
             if (Prefix != null)
             {
                 sb.Append(Prefix);

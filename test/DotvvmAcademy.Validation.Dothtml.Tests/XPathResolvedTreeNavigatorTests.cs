@@ -40,11 +40,11 @@ namespace DotvvmAcademy.Validation.Dothtml.Tests
         <div>
             <dot:Button Click=""{command: OnClick()}"" />
         </div>
-        <dot:TextBox Text=""{value: Text1}"" />
+        <dot:TextBox Text=""Test"" />
         <dot:TextBox Text=""{value: Text2}"" />
         <dot:TextBox Text=""{value: Text3}"" />
         <dot:Repeater DataSource=""{value: Items}"">
-            <span>bollocks<span>
+            <span>bollocks</span>
         </dot:Repeater>
     </body>
 </html>";
@@ -89,7 +89,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Tests
             tree.Accept(errorAggregator);
             tree.Accept(visitor);
             var navigator = new XPathDothtmlNavigator(visitor.Root);
-            var query = XPathExpression.Compile("//TextBox[1]");
+            var query = XPathExpression.Compile("/html//Repeater/@ItemTemplate/span");
             var result = navigator.Evaluate(query);
         }
 

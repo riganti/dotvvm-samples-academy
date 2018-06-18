@@ -4,15 +4,11 @@ using System.Xml.XPath;
 
 namespace DotvvmAcademy.Validation.Dothtml
 {
-    internal class XPathDothtmlRoot : XPathDothtmlElement
+    internal class XPathDothtmlRoot : XPathDothtmlNode
     {
         public XPathDothtmlRoot(ResolvedTreeRoot root) : base(root, XPathNodeType.Root)
         {
             Root = this;
-        }
-
-        protected XPathDothtmlRoot(ResolvedTreeNode node, XPathNodeType type) : base(node, type)
-        {
         }
 
         public NameTable NameTable { get; } = new NameTable();
