@@ -1,48 +1,50 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Xml;
 using System.Xml.XPath;
 
 namespace DotvvmAcademy.Validation.Dothtml
 {
+    [DebuggerDisplay("{Current.ToString()}")]
     internal class XPathDothtmlNavigator : XPathNavigator
     {
-        private XPathDothtmlNode current;
-
         public XPathDothtmlNavigator(XPathDothtmlElement current)
         {
-            this.current = current;
+            Current = current;
         }
 
         private XPathDothtmlNavigator(XPathDothtmlNavigator other)
         {
-            current = other.current;
+            Current = other.Current;
         }
 
         public override string BaseURI { get; } = "";
 
         public override bool CanEdit => false;
 
-        public override bool HasAttributes => current is XPathDothtmlElement element && !element.Attributes.IsDefaultOrEmpty;
+        public XPathDothtmlNode Current { get; private set; }
 
-        public override bool HasChildren => current is XPathDothtmlElement element && !element.Children.IsDefaultOrEmpty;
+        public override bool HasAttributes => Current is XPathDothtmlElement element && !element.Attributes.IsDefaultOrEmpty;
+
+        public override bool HasChildren => Current is XPathDothtmlElement element && !element.Children.IsDefaultOrEmpty;
 
         public override bool IsEmptyElement { get; } = false;
 
-        public override string LocalName => current.LocalName;
+        public override string LocalName => Current.LocalName;
 
         public override string Name => throw new NotSupportedException();
 
-        public override string NamespaceURI => throw new NotSupportedException();
+        public override string NamespaceURI { get; } = "";
 
-        public override XmlNameTable NameTable => current.Root.NameTable;
+        public override XmlNameTable NameTable => Current.Root.NameTable;
 
-        public override XPathNodeType NodeType => current.NodeType;
+        public override XPathNodeType NodeType => Current.NodeType;
 
-        public override string Prefix => current.Prefix;
+        public override string Prefix => Current.Prefix;
 
         public override object TypedValue => throw new NotSupportedException();
 
-        public override object UnderlyingObject => current.UnderlyingObject;
+        public override object UnderlyingObject => Current.UnderlyingObject;
 
         public override string Value => throw new NotSupportedException();
 
@@ -57,7 +59,7 @@ namespace DotvvmAcademy.Validation.Dothtml
             {
                 return false;
             }
-            return ReferenceEquals(current, resolvedOther.current);
+            return ReferenceEquals(Current, resolvedOther.Current);
         }
 
         public override bool MoveTo(XPathNavigator other)
@@ -66,37 +68,37 @@ namespace DotvvmAcademy.Validation.Dothtml
             {
                 return false;
             }
-            current = resolvedOther.current;
+            Current = resolvedOther.Current;
             return true;
         }
 
         public override bool MoveToFirst()
         {
-            if (!(current is XPathDothtmlElement element) || element.FirstSibling == null)
+            if (!(Current is XPathDothtmlElement element) || element.FirstSibling == null)
             {
                 return false;
             }
-            current = element.FirstSibling;
+            Current = element.FirstSibling;
             return true;
         }
 
         public override bool MoveToFirstAttribute()
         {
-            if (!(current is XPathDothtmlElement element) || element.Attributes.IsDefaultOrEmpty)
+            if (!(Current is XPathDothtmlElement element) || element.Attributes.IsDefaultOrEmpty)
             {
                 return false;
             }
-            current = element.Attributes[0];
+            Current = element.Attributes[0];
             return true;
         }
 
         public override bool MoveToFirstChild()
         {
-            if (!(current is XPathDothtmlElement element) || element.Children.IsDefaultOrEmpty)
+            if (!(Current is XPathDothtmlElement element) || element.Children.IsDefaultOrEmpty)
             {
                 return false;
             }
-            current = element.Children[0];
+            Current = element.Children[0];
             return true;
         }
 
@@ -106,21 +108,21 @@ namespace DotvvmAcademy.Validation.Dothtml
 
         public override bool MoveToNext()
         {
-            if (!(current is XPathDothtmlElement element) || element.NextSibling == null)
+            if (!(Current is XPathDothtmlElement element) || element.NextSibling == null)
             {
                 return false;
             }
-            current = element.NextSibling;
+            Current = element.NextSibling;
             return true;
         }
 
         public override bool MoveToNextAttribute()
         {
-            if (!(current is XPathDothtmlAttribute attribute) || attribute.NextSibling == null)
+            if (!(Current is XPathDothtmlAttribute attribute) || attribute.NextSibling == null)
             {
                 return false;
             }
-            current = attribute.NextSibling;
+            Current = attribute.NextSibling;
             return true;
         }
 
@@ -128,9 +130,9 @@ namespace DotvvmAcademy.Validation.Dothtml
 
         public override bool MoveToParent()
         {
-            if (current.Parent != null)
+            if (Current.Parent != null)
             {
-                current = current.Parent;
+                Current = Current.Parent;
                 return true;
             }
             return false;
@@ -138,17 +140,17 @@ namespace DotvvmAcademy.Validation.Dothtml
 
         public override bool MoveToPrevious()
         {
-            if (!(current is XPathDothtmlElement element) || element.PreviousSibling == null)
+            if (!(Current is XPathDothtmlElement element) || element.PreviousSibling == null)
             {
                 return false;
             }
-            current = element.PreviousSibling;
+            Current = element.PreviousSibling;
             return true;
         }
 
         public override void MoveToRoot()
         {
-            current = current.Root;
+            Current = Current.Root;
         }
     }
 }

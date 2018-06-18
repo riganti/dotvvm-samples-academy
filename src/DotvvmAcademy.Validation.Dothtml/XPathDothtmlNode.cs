@@ -1,4 +1,5 @@
 ﻿using DotVVM.Framework.Compilation.ControlTree.Resolved;
+using System.Text;
 using System.Xml.XPath;
 
 namespace DotvvmAcademy.Validation.Dothtml
@@ -11,20 +12,28 @@ namespace DotvvmAcademy.Validation.Dothtml
             NodeType = type;
         }
 
-        protected XPathDothtmlNode()
-        {
-        }
-
         public string LocalName { get; set; }
 
-        public XPathNodeType NodeType { get; protected set; }
+        public XPathNodeType NodeType { get; }
 
-        public XPathDothtmlElement Parent { get; protected set; }
+        public XPathDothtmlNode Parent { get; internal set; }
 
         public string Prefix { get; set; }
 
-        public XPathDothtmlRoot Root { get; protected set; }
+        public XPathDothtmlRoot Root { get; internal set; }
 
-        public ResolvedTreeNode UnderlyingObject { get; set; }
+        public ResolvedTreeNode UnderlyingObject { get; }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            if (Prefix != null)
+            {
+                sb.Append(Prefix);
+                sb.Append(':');
+            }
+            sb.Append(LocalName);
+            return sb.ToString();
+        }
     }
 }

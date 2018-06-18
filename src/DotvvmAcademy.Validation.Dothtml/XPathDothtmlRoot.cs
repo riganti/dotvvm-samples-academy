@@ -8,6 +8,7 @@ namespace DotvvmAcademy.Validation.Dothtml
     {
         public XPathDothtmlRoot(ResolvedTreeRoot root) : base(root, XPathNodeType.Root)
         {
+            Root = this;
         }
 
         protected XPathDothtmlRoot(ResolvedTreeNode node, XPathNodeType type) : base(node, type)
@@ -15,5 +16,10 @@ namespace DotvvmAcademy.Validation.Dothtml
         }
 
         public NameTable NameTable { get; } = new NameTable();
+
+        public override string ToString()
+        {
+            return "Root";
+        }
     }
 }

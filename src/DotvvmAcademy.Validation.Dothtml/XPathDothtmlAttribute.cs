@@ -3,13 +3,9 @@ using System.Xml.XPath;
 
 namespace DotvvmAcademy.Validation.Dothtml
 {
-    internal class XPathDothtmlAttribute : XPathDothtmlNode
+    internal abstract class XPathDothtmlAttribute : XPathDothtmlNode
     {
         protected XPathDothtmlAttribute(ResolvedTreeNode node, XPathNodeType type) : base(node, type)
-        {
-        }
-
-        public XPathDothtmlAttribute(ResolvedPropertySetter setter) : base(setter, XPathNodeType.Attribute)
         {
         }
 
@@ -18,5 +14,7 @@ namespace DotvvmAcademy.Validation.Dothtml
         public XPathDothtmlAttribute NextSibling { get; set; }
 
         public XPathDothtmlAttribute PreviousSibling { get; set; }
+
+        public abstract object Value { get; }
     }
 }
