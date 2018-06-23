@@ -1,12 +1,13 @@
+using DotVVM.Framework.Compilation;
 using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Compilation.ControlTree.Resolved;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Tokenizer;
-using DotVVM.Framework.Configuration;
 using DotVVM.Framework.Security;
 using DotVVM.Framework.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
@@ -14,25 +15,9 @@ using System.Xml.XPath;
 
 namespace DotvvmAcademy.Validation.Dothtml.Tests
 {
-    public class BasicViewModel : DotvvmViewModelBase
-    {
-        public List<string> Items { get; set; }
-
-        public string Text1 { get; set; }
-
-        public string Text2 { get; set; }
-
-        public string Text3 { get; set; }
-
-        public void OnClick()
-        {
-        }
-    }
-
     [TestClass]
     public class XPathResolvedTreeNavigatorTests
     {
-
         public const string BasicView = @"
 @viewModel DotvvmAcademy.Validation.Dothtml.Tests.BasicViewModel
 <html>
@@ -48,6 +33,40 @@ namespace DotvvmAcademy.Validation.Dothtml.Tests
         </dot:Repeater>
     </body>
 </html>";
+
+        [TestMethod]
+        public void CustomXPathTest()
+        {
+            var services = GetMinimalServices();
+            var tokenizer = services.GetRequiredService<DothtmlTokenizer>();
+            var parser = services.GetRequiredService<DothtmlParser>();
+            var resolver = services.GetRequiredService<IControlTreeResolver>();
+            var aggregator = services.GetRequiredService<ErrorAggregatingVisitor>();
+            var xpathVisitor = services.GetRequiredService<XPathResolvedTreeVisitor>();
+            tokenizer.Tokenize(BasicView);
+            var rootNode = parser.Parse(tokenizer.Tokens);
+            var tree = (ResolvedTreeRoot)resolver.ResolveTree(rootNode, "BasicView.dothtml");
+            tree.Accept(aggregator);
+            tree.Accept(xpathVisitor);
+            var navigator = new XPathDothtmlNavigator(xpathVisitor.Root);
+            var query = XPathExpression.Compile("/html//Repeater/@ItemTemplate/span");
+            var result = navigator.Evaluate(query);
+        }
+
+        public IServiceProvider GetMinimalServices()
+        {
+            var c = new ServiceCollection();
+            DotvvmServiceCollectionExtensions.RegisterDotVVMServices(c);
+            c.AddSingleton<IControlTreeResolver, ValidationControlTreeResolver>();
+            c.AddSingleton<IControlBuilderFactory, FakeControlBuilderFactory>();
+            c.AddSingleton<IViewModelProtector, FakeViewModelProtector>();
+            c.AddScoped<IAbstractTreeBuilder, ValidationResolvedTreeBuilder>();
+            c.AddScoped<DothtmlTokenizer>();
+            c.AddScoped<DothtmlParser>();
+            c.AddScoped<ErrorAggregatingVisitor>();
+            c.AddScoped<XPathResolvedTreeVisitor>();
+            return c.BuildServiceProvider();
+        }
 
         [TestMethod]
         public void VanillaXPathTest()
@@ -70,28 +89,5 @@ namespace DotvvmAcademy.Validation.Dothtml.Tests
                 var relresult = result.Current.Evaluate(relquery);
             }
         }
-
-        [TestMethod]
-        public void CustomXPathTest()
-        {
-            var tokenizer = new DothtmlTokenizer();
-            var parser = new DothtmlParser();
-            var configuration = DotvvmConfiguration.CreateDefault(c =>
-            {
-                c.AddSingleton<IViewModelProtector, FakeProtector>();
-            });
-            var resolver = configuration.ServiceProvider.GetRequiredService<IControlTreeResolver>();
-            var visitor = new XPathResolvedTreeVisitor();
-            var errorAggregator = new ErrorAggregatingVisitor();
-            tokenizer.Tokenize(BasicView);
-            var rootNode = parser.Parse(tokenizer.Tokens);
-            var tree = (ResolvedTreeRoot)resolver.ResolveTree(rootNode, "BasicView.dothtml");
-            tree.Accept(errorAggregator);
-            tree.Accept(visitor);
-            var navigator = new XPathDothtmlNavigator(visitor.Root);
-            var query = XPathExpression.Compile("/html//Repeater/@ItemTemplate/span");
-            var result = navigator.Evaluate(query);
-        }
-
     }
 }

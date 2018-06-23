@@ -177,11 +177,11 @@ namespace DotvvmAcademy.CourseFormat
                 .AddImports("DotvvmAcademy.Validation.CSharp", "DotvvmAcademy.Validation.CSharp.Unit")
                 .WithFilePath(task.Id.Path)
                 .WithSourceResolver(sourceResolver);
-            var runner = CSharpScript.Create(
+            var script = CSharpScript.Create(
                 code: task.ValidationScript,
                 options: options,
-                globalsType: typeof(ICSharpProject))
-                .CreateDelegate();
+                globalsType: typeof(ICSharpProject));
+            var runner = script.CreateDelegate();
             var csharpObject = services.GetRequiredService<CSharpObject>();
             runner(csharpObject);
             staticValidationMetadata = csharpObject.GetMetadata();
