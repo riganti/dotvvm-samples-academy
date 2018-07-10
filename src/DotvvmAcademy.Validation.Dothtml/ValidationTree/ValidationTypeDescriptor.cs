@@ -39,12 +39,24 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         public ControlMarkupOptionsAttribute GetControlMarkupOptionsAttribute()
         {
-            var attributeType = factory.Compilation.GetTypeByMetadataName(typeof(ControlMarkupOptionsAttribute).FullName);
-            var attribute = TypeSymbol.GetAttributes().SingleOrDefault(a => a.AttributeClass.Equals(attributeType));
-            if (attribute == null)
+            var attributeType = factory.Compilation
+                .GetTypeByMetadataName(typeof(ControlMarkupOptionsAttribute).FullName);
+            var attribute = TypeSymbol
+                .GetAttributes()
+                .SingleOrDefault(a => a.AttributeClass.Equals(attributeType));
+            var allowContent = (attribute?.NamedArguments
+                .SingleOrDefault(p => p.Key == nameof(ControlMarkupOptionsAttribute.AllowContent))
+                .Value.Value as bool?)
+                .GetValueOrDefault();
+            var defaultContentProperty = attribute?.NamedArguments
+                .SingleOrDefault(p => p.Key == nameof(ControlMarkupOptionsAttribute.DefaultContentProperty))
+                .Value.Value as string;
+
+            return new ControlMarkupOptionsAttribute
             {
-                return new ControlMarkupOptionsAttribute\
-            }
+                AllowContent = allowContent,
+                DefaultContentProperty = defaultContentProperty
+            };
         }
 
         public bool IsAssignableFrom(ITypeDescriptor typeDescriptor)
