@@ -10,7 +10,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         public ValidationContentNode(
             DothtmlNode node,
             ImmutableArray<ValidationControl> content,
-            ValidationControlResolverMetadata metadata)
+            ValidationControlMetadata metadata)
             : base(node)
         {
             Content = content;
@@ -23,7 +23,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         public IDataContextStack DataContextTypeStack { get; set; }
 
-        public ValidationControlResolverMetadata Metadata { get; }
+        public ValidationControlMetadata Metadata { get; }
 
         IControlResolverMetadata IAbstractContentNode.Metadata => Metadata;
     }

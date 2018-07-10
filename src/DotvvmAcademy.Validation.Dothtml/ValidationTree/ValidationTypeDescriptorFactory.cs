@@ -1,5 +1,7 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using DotVVM.Framework.Compilation.Parser.Binding.Parser;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using System;
 using System.Collections.Concurrent;
 
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
@@ -22,6 +24,11 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         public ValidationTypeDescriptor Create(ITypeSymbol typeSymbol)
         {
             return cache.GetOrAdd(typeSymbol, s => new ValidationTypeDescriptor(this, s));
+        }
+
+        public ValidationTypeDescriptor Create(BindingParserNode name)
+        {
+            throw new NotImplementedException();
         }
     }
 }

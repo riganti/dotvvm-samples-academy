@@ -13,7 +13,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         public ValidationTreeRoot(
             DothtmlRootNode node,
             ImmutableArray<ValidationControl> content,
-            ValidationControlResolverMetadata metadata,
+            ValidationControlMetadata metadata,
             ImmutableArray<ValidationDirective> directives)
             : base(node, content, metadata)
         {

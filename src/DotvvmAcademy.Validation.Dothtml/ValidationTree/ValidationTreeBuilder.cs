@@ -9,6 +9,13 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
     internal class ValidationTreeBuilder : IAbstractTreeBuilder
     {
+        private readonly ValidationTypeDescriptorFactory typeFactory;
+
+        public ValidationTreeBuilder(ValidationTypeDescriptorFactory typeFactory)
+        {
+            this.typeFactory = typeFactory;
+        }
+
         public void AddChildControl(IAbstractContentNode control, IAbstractControl child)
         {
             throw new NotImplementedException();
@@ -81,7 +88,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         public IAbstractViewModelDirective BuildViewModelDirective(DothtmlDirectiveNode directive, BindingParserNode nameSyntax)
         {
-            throw new NotImplementedException();
+            return new ValidationViewModelDirective(directive, nameSyntax, typeFactory.Create(nameSyntax));
         }
     }
 }

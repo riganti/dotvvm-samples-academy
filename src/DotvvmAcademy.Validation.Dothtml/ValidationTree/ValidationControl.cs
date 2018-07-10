@@ -11,8 +11,8 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         public ValidationControl(
             DothtmlNode node,
             ImmutableArray<ValidationControl> content,
-            ImmutableArray<ValidationPropertySetter> properties,
-            ValidationControlResolverMetadata metadata)
+            ValidationControlMetadata metadata,
+            ImmutableArray<ValidationPropertySetter> properties)
             : base(node, content, metadata)
         {
             Properties = properties;
@@ -24,7 +24,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         object[] IAbstractControl.ConstructorParameters { get; set; }
 
-        bool IAbstractControl.TryGetProperty(IPropertyDescriptor property, out IAbstractPropertySetter value)
+        public bool TryGetProperty(IPropertyDescriptor property, out IAbstractPropertySetter value)
         {
             value = Properties.SingleOrDefault(s => s.Property.Equals(property));
             return value != null;

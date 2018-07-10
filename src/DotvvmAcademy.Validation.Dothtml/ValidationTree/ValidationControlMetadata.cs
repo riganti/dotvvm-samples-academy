@@ -1,14 +1,22 @@
 ﻿using System.Collections.Generic;
 using DotVVM.Framework.Binding;
+using DotVVM.Framework.Compilation;
 using DotVVM.Framework.Compilation.ControlTree;
 
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
-    internal class ValidationControlResolverMetadata : ControlResolverMetadataBase
+    internal class ValidationControlMetadata : ControlResolverMetadataBase
     {
-        public override DataContextChangeAttribute[] DataContextChangeAttributes => throw new System.NotImplementedException();
+        private readonly ValidationControlType controlType;
 
-        public override DataContextStackManipulationAttribute DataContextManipulationAttribute => throw new System.NotImplementedException();
+        public ValidationControlMetadata(ValidationControlType controlType) : base(controlType)
+        {
+            this.controlType = controlType;
+        }
+
+        public override DataContextChangeAttribute[] DataContextChangeAttributes { get; }
+
+        public override DataContextStackManipulationAttribute DataContextManipulationAttribute { get; }
 
         protected override void LoadProperties(Dictionary<string, IPropertyDescriptor> result)
         {
