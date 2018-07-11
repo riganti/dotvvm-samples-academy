@@ -8,6 +8,18 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
     internal class ValidationDataContextStack : IDataContextStack
     {
+        public ValidationDataContextStack(
+            ValidationTypeDescriptor dataContextType,
+            ValidationDataContextStack parent,
+            ImmutableArray<NamespaceImport> namespaceImports,
+            ImmutableArray<BindingExtensionParameter> extensionParameters)
+        {
+            DataContextType = dataContextType;
+            Parent = parent;
+            NamespaceImports = namespaceImports;
+            ExtensionParameters = extensionParameters;
+        }
+
         public ValidationTypeDescriptor DataContextType { get; }
 
         public ValidationDataContextStack Parent { get; }

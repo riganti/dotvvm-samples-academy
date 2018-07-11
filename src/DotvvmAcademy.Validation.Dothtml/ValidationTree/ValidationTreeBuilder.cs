@@ -4,6 +4,8 @@ using DotVVM.Framework.Compilation.Parser.Binding.Parser;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq;
 
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
@@ -17,76 +19,140 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         }
 
         public void AddChildControl(IAbstractContentNode control, IAbstractControl child)
-        {
-            throw new NotImplementedException();
-        }
+            => ((ValidationContentNode)control).AddChildControl((ValidationControl)child);
 
         public bool AddProperty(IAbstractControl control, IAbstractPropertySetter setter, out string error)
         {
-            throw new NotImplementedException();
+            ((ValidationControl)control).AddProperty((ValidationPropertySetter)setter);
+            error = null;
+            return true;
         }
 
-        public IAbstractBaseTypeDirective BuildBaseTypeDirective(DothtmlDirectiveNode directive, BindingParserNode nameSyntax)
+        public IAbstractBaseTypeDirective BuildBaseTypeDirective(
+            DothtmlDirectiveNode directive,
+            BindingParserNode nameSyntax)
+        {
+            return new ValidationBaseTypeDirective(directive, nameSyntax, typeFactory.Create(nameSyntax));
+        }
+
+        public IAbstractBinding BuildBinding(
+            BindingParserOptions bindingOptions,
+            IDataContextStack dataContext,
+            DothtmlBindingNode node,
+            IPropertyDescriptor property)
         {
             throw new NotImplementedException();
         }
 
-        public IAbstractBinding BuildBinding(BindingParserOptions bindingOptions, IDataContextStack dataContext, DothtmlBindingNode node, IPropertyDescriptor property)
+        public IAbstractControl BuildControl(
+            IControlResolverMetadata metadata,
+            DothtmlNode node,
+            IDataContextStack dataContext)
         {
-            throw new NotImplementedException();
-        }
-
-        public IAbstractControl BuildControl(IControlResolverMetadata metadata, DothtmlNode node, IDataContextStack dataContext)
-        {
-            throw new NotImplementedException();
+            return new ValidationControl(node, (ValidationControlMetadata)metadata, dataContext);
         }
 
         public IAbstractDirective BuildDirective(DothtmlDirectiveNode node)
         {
-            throw new NotImplementedException();
+            return new ValidationDirective(node);
         }
 
-        public IAbstractImportDirective BuildImportDirective(DothtmlDirectiveNode node, BindingParserNode aliasSyntax, BindingParserNode nameSyntax)
+        public IAbstractImportDirective BuildImportDirective(
+            DothtmlDirectiveNode node,
+            BindingParserNode aliasSyntax,
+            BindingParserNode nameSyntax)
         {
-            throw new NotImplementedException();
+            return new ValidationImportDirective(node, nameSyntax, aliasSyntax);
         }
 
-        public IAbstractPropertyBinding BuildPropertyBinding(IPropertyDescriptor property, IAbstractBinding binding, DothtmlAttributeNode sourceAttributeNode)
+        public IAbstractPropertyBinding BuildPropertyBinding(
+            IPropertyDescriptor property,
+            IAbstractBinding binding,
+            DothtmlAttributeNode sourceAttributeNode)
         {
-            throw new NotImplementedException();
+            return new ValidationPropertyBinding(
+                node: sourceAttributeNode,
+                property: (ValidationPropertyDescriptor)property,
+                binding: (ValidationBinding) binding);
         }
 
-        public IAbstractPropertyControl BuildPropertyControl(IPropertyDescriptor property, IAbstractControl control, DothtmlElementNode wrapperElementNode)
+        public IAbstractPropertyControl BuildPropertyControl(
+            IPropertyDescriptor property,
+            IAbstractControl control,
+            DothtmlElementNode wrapperElementNode)
         {
-            throw new NotImplementedException();
+            return new ValidationPropertyControl(
+                node: wrapperElementNode,
+                property: (ValidationPropertyDescriptor)property,
+                control: (ValidationControl)control);
         }
 
-        public IAbstractPropertyControlCollection BuildPropertyControlCollection(IPropertyDescriptor property, IEnumerable<IAbstractControl> controls, DothtmlElementNode wrapperElementNode)
+        public IAbstractPropertyControlCollection BuildPropertyControlCollection(
+            IPropertyDescriptor property,
+            IEnumerable<IAbstractControl> controls,
+            DothtmlElementNode wrapperElementNode)
         {
-            throw new NotImplementedException();
+            return new ValidationPropertyControlCollection(
+                node: wrapperElementNode,
+                property: (ValidationPropertyDescriptor)property,
+                controls: controls.Cast<ValidationControl>().ToImmutableArray());
         }
 
-        public IAbstractPropertyTemplate BuildPropertyTemplate(IPropertyDescriptor property, IEnumerable<IAbstractControl> templateControls, DothtmlElementNode wrapperElementNode)
+        public IAbstractPropertyTemplate BuildPropertyTemplate(
+            IPropertyDescriptor property,
+            IEnumerable<IAbstractControl> templateControls,
+            DothtmlElementNode wrapperElementNode)
         {
-            throw new NotImplementedException();
+            return new ValidationPropertyTemplate(
+                node: wrapperElementNode,
+                property: (ValidationPropertyDescriptor)property,
+                content: templateControls.Cast<ValidationControl>().ToImmutableArray());
         }
 
-        public IAbstractPropertyValue BuildPropertyValue(IPropertyDescriptor property, object value, DothtmlNode sourceAttributeNode)
+        public IAbstractPropertyValue BuildPropertyValue(
+            IPropertyDescriptor property,
+            object value,
+            DothtmlNode sourceAttributeNode)
         {
-            throw new NotImplementedException();
+            return new ValidationPropertyValue(
+                node: sourceAttributeNode,
+                property: (ValidationPropertyDescriptor)property,
+                value: value);
         }
 
-        public IAbstractServiceInjectDirective BuildServiceInjectDirective(DothtmlDirectiveNode node, SimpleNameBindingParserNode nameSyntax, BindingParserNode typeSyntax)
+        public IAbstractServiceInjectDirective BuildServiceInjectDirective(
+            DothtmlDirectiveNode node,
+            SimpleNameBindingParserNode nameSyntax,
+            BindingParserNode typeSyntax)
         {
-            throw new NotImplementedException();
+            return new ValidationServiceInjectDirective(
+                node: node,
+                nameSyntax: nameSyntax,
+                typeSyntax: typeSyntax,
+                type: typeFactory.Create(typeSyntax));
         }
 
-        public IAbstractTreeRoot BuildTreeRoot(IControlTreeResolver controlTreeResolver, IControlResolverMetadata metadata, DothtmlRootNode node, IDataContextStack dataContext, IReadOnlyDictionary<string, IReadOnlyList<IAbstractDirective>> directives)
+        public IAbstractTreeRoot BuildTreeRoot(
+            IControlTreeResolver controlTreeResolver,
+            IControlResolverMetadata metadata,
+            DothtmlRootNode node,
+            IDataContextStack dataContext,
+            IReadOnlyDictionary<string, IReadOnlyList<IAbstractDirective>> directives)
         {
-            throw new NotImplementedException();
+            var immutableDirectives = directives
+                .SelectMany(p=>p.Value)
+                .Cast<ValidationDirective>()
+                .ToImmutableArray();
+            return new ValidationTreeRoot(
+                node: node,
+                metadata: (ValidationControlMetadata)metadata,
+                dataContext: dataContext,
+                directives: immutableDirectives);
         }
 
-        public IAbstractViewModelDirective BuildViewModelDirective(DothtmlDirectiveNode directive, BindingParserNode nameSyntax)
+        public IAbstractViewModelDirective BuildViewModelDirective(
+            DothtmlDirectiveNode directive,
+            BindingParserNode nameSyntax)
         {
             return new ValidationViewModelDirective(directive, nameSyntax, typeFactory.Create(nameSyntax));
         }

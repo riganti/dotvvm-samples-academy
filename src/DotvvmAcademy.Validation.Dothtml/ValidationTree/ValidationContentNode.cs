@@ -7,17 +7,19 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
     internal abstract class ValidationContentNode : ValidationTreeNode, IAbstractContentNode
     {
+        private ImmutableArray<ValidationControl>.Builder content = ImmutableArray.CreateBuilder<ValidationControl>();
+
         public ValidationContentNode(
             DothtmlNode node,
-            ImmutableArray<ValidationControl> content,
-            ValidationControlMetadata metadata)
+            ValidationControlMetadata metadata,
+            IDataContextStack dataContext)
             : base(node)
         {
-            Content = content;
             Metadata = metadata;
+            DataContextTypeStack = dataContext;
         }
 
-        public ImmutableArray<ValidationControl> Content { get; }
+        public ImmutableArray<ValidationControl> Content { get; private set;}
 
         IEnumerable<IAbstractControl> IAbstractContentNode.Content => Content;
 
@@ -26,5 +28,11 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         public ValidationControlMetadata Metadata { get; }
 
         IControlResolverMetadata IAbstractContentNode.Metadata => Metadata;
+
+        public void AddChildControl(ValidationControl child)
+        {
+            content.Add(child);
+            Content = content.ToImmutable();
+        }
     }
 }

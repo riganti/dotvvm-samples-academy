@@ -4,14 +4,14 @@ using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
-    internal class ValidationPropertySetter : ValidationTreeNode, IAbstractPropertySetter
+    internal abstract class ValidationPropertySetter : ValidationTreeNode, IAbstractPropertySetter
     {
-        public ValidationPropertySetter(DothtmlNode node, DotvvmProperty property) : base(node)
+        public ValidationPropertySetter(DothtmlNode node, ValidationPropertyDescriptor property) : base(node)
         {
             Property = property;
         }
 
-        public DotvvmProperty Property { get; }
+        public ValidationPropertyDescriptor Property { get; }
 
         IPropertyDescriptor IAbstractPropertySetter.Property => Property;
     }

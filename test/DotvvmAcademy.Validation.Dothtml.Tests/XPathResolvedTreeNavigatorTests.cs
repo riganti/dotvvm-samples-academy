@@ -46,7 +46,7 @@ namespace ValidationTreeSample
 }";
 
         public const string BasicView = @"
-@viewModel DotvvmAcademy.Validation.Dothtml.Tests.BasicViewModel
+@viewModel ValidationTreeSample.BasicViewModel, ValidationTreeSample
 <html>
     <body>
         <div>
@@ -66,14 +66,12 @@ namespace ValidationTreeSample
             var tokenizer = services.GetRequiredService<DothtmlTokenizer>();
             var parser = services.GetRequiredService<DothtmlParser>();
             var resolver = services.GetRequiredService<IControlTreeResolver>();
-            var aggregator = services.GetRequiredService<ErrorAggregatingVisitor>();
-            var xpathVisitor = services.GetRequiredService<XPathResolvedTreeVisitor>();
+            var xpathVisitor = services.GetRequiredService<XPathTreeVisitor>();
             tokenizer.Tokenize(BasicView);
             var rootNode = parser.Parse(tokenizer.Tokens);
-            var tree = (ResolvedTreeRoot)resolver.ResolveTree(rootNode, "BasicView.dothtml");
-            tree.Accept(aggregator);
-            tree.Accept(xpathVisitor);
-            var navigator = new XPathDothtmlNavigator(xpathVisitor.Root);
+            var tree = (ValidationTreeRoot)resolver.ResolveTree(rootNode, "BasicView.dothtml");
+            var xpathRoot = xpathVisitor.Visit(tree);
+            var navigator = new XPathDothtmlNavigator(xpathRoot);
             var query = XPathExpression.Compile("/html//Repeater/@ItemTemplate/span");
             var result = navigator.Evaluate(query);
         }
@@ -91,7 +89,7 @@ namespace ValidationTreeSample
             c.AddScoped<DothtmlTokenizer>();
             c.AddScoped<DothtmlParser>();
             c.AddScoped<ErrorAggregatingVisitor>();
-            c.AddScoped<XPathResolvedTreeVisitor>();
+            c.AddScoped<XPathTreeVisitor>();
             return c.BuildServiceProvider();
         }
 

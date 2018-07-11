@@ -1,4 +1,4 @@
-﻿using DotVVM.Framework.Compilation.ControlTree.Resolved;
+﻿using DotvvmAcademy.Validation.Dothtml.ValidationTree;
 using System.Collections.Immutable;
 using System.Text;
 using System.Xml.XPath;
@@ -7,7 +7,7 @@ namespace DotvvmAcademy.Validation.Dothtml
 {
     internal class XPathDothtmlNode
     {
-        public XPathDothtmlNode(ResolvedTreeNode node, XPathNodeType type)
+        public XPathDothtmlNode(ValidationTreeNode node, XPathNodeType type)
         {
             UnderlyingObject = node;
             NodeType = type;
@@ -33,7 +33,7 @@ namespace DotvvmAcademy.Validation.Dothtml
 
         public XPathDothtmlRoot Root { get; internal set; }
 
-        public ResolvedTreeNode UnderlyingObject { get; }
+        public ValidationTreeNode UnderlyingObject { get; }
 
         public object Value { get; set; }
 

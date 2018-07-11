@@ -12,10 +12,10 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         public ValidationTreeRoot(
             DothtmlRootNode node,
-            ImmutableArray<ValidationControl> content,
             ValidationControlMetadata metadata,
+            IDataContextStack dataContext,
             ImmutableArray<ValidationDirective> directives)
-            : base(node, content, metadata)
+            : base(node, metadata, dataContext)
         {
             Directives = directives;
             directivesDictionary = directives.GroupBy(d => d.Name).ToDictionary(g => g.Key, g => g.Cast<IAbstractDirective>().ToList());

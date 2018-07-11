@@ -7,18 +7,25 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
     internal class ValidationControlResolver : ControlResolverBase
     {
-        public ValidationControlResolver(DotvvmMarkupConfiguration configuration) : base(configuration)
+        private readonly ValidationTypeDescriptorFactory typeFactory;
+
+        public ValidationControlResolver(
+            DotvvmMarkupConfiguration configuration,
+            ValidationTypeDescriptorFactory typeFactory)
+            : base(configuration)
         {
+            this.typeFactory = typeFactory;
         }
 
         public override IControlResolverMetadata BuildControlMetadata(IControlType type)
         {
-            throw new NotImplementedException();
+            return new ValidationControlMetadata((ValidationControlType)type);
         }
 
         public override IControlResolverMetadata ResolveControl(ITypeDescriptor controlType)
         {
-            throw new NotImplementedException();
+            
+            return new ValidationControlMetadata(typeFactory.Convert(controlType));
         }
 
         protected override IControlType FindCompiledControl(string tagName, string namespaceName, string assemblyName)

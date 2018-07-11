@@ -8,21 +8,28 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
     internal class ValidationControl : ValidationContentNode, IAbstractControl
     {
+        private ImmutableArray<ValidationPropertySetter>.Builder properties
+            = ImmutableArray.CreateBuilder<ValidationPropertySetter>();
+
         public ValidationControl(
             DothtmlNode node,
-            ImmutableArray<ValidationControl> content,
             ValidationControlMetadata metadata,
-            ImmutableArray<ValidationPropertySetter> properties)
-            : base(node, content, metadata)
+            IDataContextStack dataContext)
+            : base(node, metadata, dataContext)
         {
-            Properties = properties;
         }
 
-        public ImmutableArray<ValidationPropertySetter> Properties { get; set; }
+        public ImmutableArray<ValidationPropertySetter> Properties { get; private set; }
 
         IEnumerable<IPropertyDescriptor> IAbstractControl.PropertyNames => Properties.Select(s => s.Property);
 
         object[] IAbstractControl.ConstructorParameters { get; set; }
+
+        public void AddProperty(ValidationPropertySetter property)
+        {
+            properties.Add(property);
+            Properties = properties.ToImmutable();
+        }
 
         public bool TryGetProperty(IPropertyDescriptor property, out IAbstractPropertySetter value)
         {

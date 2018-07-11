@@ -106,11 +106,13 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         public ITypeDescriptor TryGetArrayElementOrIEnumerableType()
         {
+
             if (TypeSymbol is IArrayTypeSymbol arrayType)
             {
                 return factory.Create(arrayType.ElementType);
             }
-            if (TypeSymbol is INamedTypeSymbol namedType && namedType.ConstructedFrom.Equals(factory.DescriptorIEnumerable))
+            var iEnumerableSymbol = factory.Compilation.GetTypeByMetadataName("System.Collections.Generic.IEnumerable`1");
+            if (TypeSymbol is INamedTypeSymbol namedType && namedType.ConstructedFrom.Equals(iEnumerableSymbol))
             {
                 return factory.Create(namedType.TypeArguments.First());
             }
