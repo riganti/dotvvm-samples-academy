@@ -11,11 +11,11 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
     internal class ValidationTreeBuilder : IAbstractTreeBuilder
     {
-        private readonly ValidationTypeDescriptorFactory typeFactory;
+        private readonly ValidationTypeDescriptorFactory descriptorFactory;
 
-        public ValidationTreeBuilder(ValidationTypeDescriptorFactory typeFactory)
+        public ValidationTreeBuilder(ValidationTypeDescriptorFactory descriptorFactory)
         {
-            this.typeFactory = typeFactory;
+            this.descriptorFactory = descriptorFactory;
         }
 
         public void AddChildControl(IAbstractContentNode control, IAbstractControl child)
@@ -32,7 +32,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             DothtmlDirectiveNode directive,
             BindingParserNode nameSyntax)
         {
-            return new ValidationBaseTypeDirective(directive, nameSyntax, typeFactory.Create(nameSyntax));
+            return new ValidationBaseTypeDirective(directive, nameSyntax, descriptorFactory.Create(nameSyntax));
         }
 
         public IAbstractBinding BuildBinding(
@@ -129,7 +129,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
                 node: node,
                 nameSyntax: nameSyntax,
                 typeSyntax: typeSyntax,
-                type: typeFactory.Create(typeSyntax));
+                type: descriptorFactory.Create(typeSyntax));
         }
 
         public IAbstractTreeRoot BuildTreeRoot(
@@ -154,7 +154,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             DothtmlDirectiveNode directive,
             BindingParserNode nameSyntax)
         {
-            return new ValidationViewModelDirective(directive, nameSyntax, typeFactory.Create(nameSyntax));
+            return new ValidationViewModelDirective(directive, nameSyntax, descriptorFactory.Create(nameSyntax));
         }
     }
 }

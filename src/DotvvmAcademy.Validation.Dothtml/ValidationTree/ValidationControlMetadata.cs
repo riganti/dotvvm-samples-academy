@@ -1,31 +1,89 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq;
 using DotVVM.Framework.Binding;
 using DotVVM.Framework.Compilation;
 using DotVVM.Framework.Compilation.ControlTree;
+using DotVVM.Framework.Controls;
+using Microsoft.CodeAnalysis.CSharp;
 
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
-    internal class ValidationControlMetadata : ControlResolverMetadataBase
+    internal class ValidationControlMetadata : IControlResolverMetadata
     {
-        private readonly ValidationControlType controlType;
+        private readonly ValidationTypeDescriptorFactory descriptorFactory;
 
-        public ValidationControlMetadata(ValidationControlType controlType) : base(controlType)
+        public ValidationControlMetadata(
+            ValidationTypeDescriptorFactory descriptorFactory,
+            ValidationControlType controlType,
+            ImmutableArray<DataContextChangeAttribute> changeAttributes,
+            DataContextStackManipulationAttribute manipulationAttribute,
+            ControlMarkupOptionsAttribute markupOptionsAttribute)
         {
-            this.controlType = controlType;
+            this.descriptorFactory = descriptorFactory;
+            ControlType = controlType;
+            DataContextChangeAttributes = changeAttributes;
+            DataContextManipulationAttribute = manipulationAttribute;
+            MarkupOptionsAttribute = markupOptionsAttribute;
         }
 
-        public override DataContextChangeAttribute[] DataContextChangeAttributes { get; }
+        public ValidationControlType ControlType { get; }
 
-        public override DataContextStackManipulationAttribute DataContextManipulationAttribute { get; }
+        public ImmutableArray<DataContextChangeAttribute> DataContextChangeAttributes { get; }
 
-        protected override void LoadProperties(Dictionary<string, IPropertyDescriptor> result)
+        public ValidationTypeDescriptor DataContextConstraint => ControlType.DataContextRequirement;
+
+        public DataContextStackManipulationAttribute DataContextManipulationAttribute { get; }
+
+        public ValidationPropertyDescriptor DefaultContentProperty
         {
-            throw new System.NotImplementedException();
+            get
+            {
+                if (string.IsNullOrEmpty(MarkupOptionsAttribute?.DefaultContentProperty))
+                {
+                    return null;
+                }
+
+                return Properties.FirstOrDefault(p => p.Name == MarkupOptionsAttribute.DefaultContentProperty);
+            }
         }
 
-        protected override void LoadPropertyGroups(List<PropertyGroupMatcher> result)
+        public bool HasHtmlAttributesCollection
+            => Type.IsAssignableTo(descriptorFactory.Create(typeof(IControlWithHtmlAttributes)));
+
+        public ControlMarkupOptionsAttribute MarkupOptionsAttribute { get; }
+
+        public ImmutableArray<ValidationPropertyDescriptor> Properties { get; }
+
+        public ImmutableArray<PropertyGroupMatcher> PropertyGroupMatchers { get; }
+
+        public ValidationTypeDescriptor Type => ControlType.Type;
+
+        public bool IsContentAllowed
+            => (MarkupOptionsAttribute?.AllowContent ?? true)
+            && Type.IsAssignableTo(descriptorFactory.Create(typeof(IDotvvmControl)));
+
+        public string VirtualPath => ControlType.VirtualPath;
+
+        IEnumerable<IPropertyDescriptor> IControlResolverMetadata.AllProperties => Properties;
+
+        DataContextChangeAttribute[] IControlResolverMetadata.DataContextChangeAttributes
+            => DataContextChangeAttributes.ToArray();
+
+        ITypeDescriptor IControlResolverMetadata.DataContextConstraint => DataContextConstraint;
+
+        IPropertyDescriptor IControlResolverMetadata.DefaultContentProperty => DefaultContentProperty;
+
+        ITypeDescriptor IControlResolverMetadata.Type => Type;
+
+        IReadOnlyList<PropertyGroupMatcher> IControlResolverMetadata.PropertyGroups => PropertyGroupMatchers;
+
+        IEnumerable<string> IControlResolverMetadata.PropertyNames => Properties.Select(p => p.FullName);
+
+        bool IControlResolverMetadata.TryGetProperty(string name, out IPropertyDescriptor value)
         {
-            throw new System.NotImplementedException();
+            value = Properties.FirstOrDefault(p => p.Name == name);
+            return value != null;
         }
     }
 }

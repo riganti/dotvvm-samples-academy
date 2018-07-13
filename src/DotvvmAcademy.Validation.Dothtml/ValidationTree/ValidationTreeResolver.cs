@@ -10,15 +10,15 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
     internal class ValidationTreeResolver : ControlTreeResolverBase
     {
-        private readonly ValidationTypeDescriptorFactory typeFactory;
+        private readonly ValidationTypeDescriptorFactory descriptorFactory;
 
         public ValidationTreeResolver(
             IControlResolver controlResolver,
             IAbstractTreeBuilder treeBuilder,
-            ValidationTypeDescriptorFactory typeFactory)
+            ValidationTypeDescriptorFactory descriptorFactory)
             : base(controlResolver, treeBuilder)
         {
-            this.typeFactory = typeFactory;
+            this.descriptorFactory = descriptorFactory;
         }
 
         protected override IAbstractBinding CompileBinding(DothtmlBindingNode node, BindingParserOptions bindingOptions, IDataContextStack context, IPropertyDescriptor property)
@@ -33,7 +33,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         protected override IControlType CreateControlType(ITypeDescriptor wrapperType, string virtualPath)
         {
-            return new ValidationControlType(typeFactory.Convert(wrapperType), virtualPath, null);
+            return new ValidationControlType(descriptorFactory.Convert(wrapperType), virtualPath, null);
         }
 
         protected override IDataContextStack CreateDataContextTypeStack(
@@ -47,7 +47,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             var immutableParameters = extensionParameters?.ToImmutableArray() 
                 ?? default(ImmutableArray<BindingExtensionParameter>);
             return new ValidationDataContextStack(
-                dataContextType: typeFactory.Convert(viewModelType),
+                dataContextType: descriptorFactory.Convert(viewModelType),
                 parent: (parentDataContextStack as ValidationDataContextStack),
                 namespaceImports: immutableImports,
                 extensionParameters: immutableParameters);

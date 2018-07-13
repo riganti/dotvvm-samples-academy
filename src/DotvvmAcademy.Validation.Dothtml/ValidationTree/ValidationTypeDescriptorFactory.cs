@@ -25,7 +25,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         public ValidationTypeDescriptor Create(ITypeSymbol typeSymbol)
         {
-            return cache.GetOrAdd(typeSymbol, s => new ValidationTypeDescriptor(this, s));
+            return cache.GetOrAdd(typeSymbol, s => new ValidationTypeDescriptor(this, Compilation, s));
         }
 
         public ValidationTypeDescriptor Create(BindingParserNode name)
@@ -68,6 +68,10 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         public ValidationTypeDescriptor Convert(ITypeDescriptor other)
         {
+            if (other == null)
+            {
+                return null;
+            }
             if (other is ResolvedTypeDescriptor resolved)
             {
                 return Create(resolved.Type);

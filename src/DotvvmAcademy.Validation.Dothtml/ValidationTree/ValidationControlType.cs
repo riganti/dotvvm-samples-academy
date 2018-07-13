@@ -8,8 +8,8 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
     {
         public ValidationControlType(
             ValidationTypeDescriptor type,
-            string virtualPath,
-            ValidationTypeDescriptor dataContextRequirement)
+            string virtualPath = null,
+            ValidationTypeDescriptor dataContextRequirement = null)
         {
             Type = type;
             VirtualPath = virtualPath;

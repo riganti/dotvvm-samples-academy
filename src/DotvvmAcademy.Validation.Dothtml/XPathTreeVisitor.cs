@@ -39,8 +39,8 @@ namespace DotvvmAcademy.Validation.Dothtml
             }
             else
             {
-                node.LocalName = AddString(control.Metadata.Name);
-                node.Prefix = AddString(control.Metadata.Namespace);
+                node.LocalName = AddString(control.Metadata.Type.Name);
+                node.Prefix = AddString(control.Metadata.Type.Namespace);
             }
             var children = ImmutableArray.CreateBuilder<XPathDothtmlNode>();
             var attributes = ImmutableArray.CreateBuilder<XPathDothtmlNode>();
@@ -48,7 +48,7 @@ namespace DotvvmAcademy.Validation.Dothtml
             {
                 children.Add(VisitControl(child));
             }
-            foreach (var property in control.Properties)
+            foreach (var property in control.PropertySetters)
             {
                 children.Add(VisitProperty(property));
             }

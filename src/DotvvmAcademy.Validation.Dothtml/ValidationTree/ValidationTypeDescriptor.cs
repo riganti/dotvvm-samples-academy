@@ -20,10 +20,11 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         public ValidationTypeDescriptor(
             ValidationTypeDescriptorFactory factory,
+            CSharpCompilation compilation,
             ITypeSymbol typeSymbol)
         {
-            this.compilation = factory.Compilation;
             this.factory = factory;
+            this.compilation = compilation;
             TypeSymbol = typeSymbol;
         }
 
@@ -39,17 +40,17 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         public ControlMarkupOptionsAttribute GetControlMarkupOptionsAttribute()
         {
-            var attributeType = factory.Compilation
+            var attributeType = compilation
                 .GetTypeByMetadataName(typeof(ControlMarkupOptionsAttribute).FullName);
             var attribute = TypeSymbol
                 .GetAttributes()
-                .SingleOrDefault(a => a.AttributeClass.Equals(attributeType));
+                .FirstOrDefault(a => a.AttributeClass.Equals(attributeType));
             var allowContent = (attribute?.NamedArguments
-                .SingleOrDefault(p => p.Key == nameof(ControlMarkupOptionsAttribute.AllowContent))
+                .FirstOrDefault(p => p.Key == nameof(ControlMarkupOptionsAttribute.AllowContent))
                 .Value.Value as bool?)
                 .GetValueOrDefault();
             var defaultContentProperty = attribute?.NamedArguments
-                .SingleOrDefault(p => p.Key == nameof(ControlMarkupOptionsAttribute.DefaultContentProperty))
+                .FirstOrDefault(p => p.Key == nameof(ControlMarkupOptionsAttribute.DefaultContentProperty))
                 .Value.Value as string;
 
             return new ControlMarkupOptionsAttribute

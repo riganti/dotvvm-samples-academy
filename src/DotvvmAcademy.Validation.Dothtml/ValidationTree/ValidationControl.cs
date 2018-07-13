@@ -19,21 +19,26 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         {
         }
 
-        public ImmutableArray<ValidationPropertySetter> Properties { get; private set; }
+        public ImmutableArray<ValidationPropertySetter> PropertySetters { get; private set; }
 
-        IEnumerable<IPropertyDescriptor> IAbstractControl.PropertyNames => Properties.Select(s => s.Property);
+        IEnumerable<IPropertyDescriptor> IAbstractControl.PropertyNames => PropertySetters.Select(s => s.Property);
 
         object[] IAbstractControl.ConstructorParameters { get; set; }
 
         public void AddProperty(ValidationPropertySetter property)
         {
             properties.Add(property);
-            Properties = properties.ToImmutable();
+            PropertySetters = properties.ToImmutable();
         }
 
         public bool TryGetProperty(IPropertyDescriptor property, out IAbstractPropertySetter value)
         {
-            value = Properties.SingleOrDefault(s => s.Property.Equals(property));
+            if (PropertySetters.IsDefaultOrEmpty)
+            {
+                value = null;
+                return false;
+            }
+            value = PropertySetters.FirstOrDefault(s => s.Property.Equals(property));
             return value != null;
         }
     }

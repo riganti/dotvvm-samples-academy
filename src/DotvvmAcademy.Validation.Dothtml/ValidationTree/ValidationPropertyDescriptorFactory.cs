@@ -5,14 +5,14 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
     internal class ValidationPropertyDescriptorFactory
     {
-        private readonly ValidationTypeDescriptorFactory typeFactory;
+        private readonly ValidationTypeDescriptorFactory descriptorFactory;
 
         public ValidationPropertyDescriptorFactory(
             CSharpCompilation compilation,
-            ValidationTypeDescriptorFactory typeFactory)
+            ValidationTypeDescriptorFactory descriptorFactory)
         {
             Compilation = compilation;
-            this.typeFactory = typeFactory;
+            this.descriptorFactory = descriptorFactory;
         }
 
         public CSharpCompilation Compilation { get; }
