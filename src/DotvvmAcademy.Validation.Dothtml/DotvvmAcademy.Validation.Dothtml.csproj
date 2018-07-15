@@ -8,5 +8,6 @@
   <ItemGroup>
     <ProjectReference Include="..\DotvvmAcademy.Validation.CSharp\DotvvmAcademy.Validation.CSharp.csproj" />
     <ProjectReference Include="..\DotvvmAcademy.Validation\DotvvmAcademy.Validation.csproj" />
+    <ProjectReference Include="..\DotvvmAcademy.Meta\DotvvmAcademy.Meta.csproj" />
   </ItemGroup>
 </Project>

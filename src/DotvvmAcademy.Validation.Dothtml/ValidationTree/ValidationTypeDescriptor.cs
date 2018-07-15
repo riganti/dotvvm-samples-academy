@@ -70,6 +70,9 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             return false;
         }
 
+        public bool IsAssignableFrom(Type type)
+            => IsAssignableFrom(factory.Create(type));
+
         public bool IsAssignableTo(ITypeDescriptor typeDescriptor)
         {
             if (typeDescriptor is ValidationTypeDescriptor other)
@@ -78,6 +81,9 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             }
             return false;
         }
+
+        public bool IsAssignableTo(Type type)
+            => IsAssignableTo(factory.Create(type));
 
         public bool IsEqualTo(ITypeDescriptor typeDescriptor)
         {

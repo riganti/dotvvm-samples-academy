@@ -11,20 +11,20 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
     internal class ValidationControlMetadata : IControlResolverMetadata
     {
-        private readonly ValidationTypeDescriptorFactory descriptorFactory;
-
         public ValidationControlMetadata(
-            ValidationTypeDescriptorFactory descriptorFactory,
             ValidationControlType controlType,
             ImmutableArray<DataContextChangeAttribute> changeAttributes,
             DataContextStackManipulationAttribute manipulationAttribute,
-            ControlMarkupOptionsAttribute markupOptionsAttribute)
+            ControlMarkupOptionsAttribute markupOptionsAttribute,
+            ImmutableArray<ValidationPropertyDescriptor> properties,
+            ImmutableArray<PropertyGroupMatcher> propertyGroupMatchers)
         {
-            this.descriptorFactory = descriptorFactory;
             ControlType = controlType;
             DataContextChangeAttributes = changeAttributes;
             DataContextManipulationAttribute = manipulationAttribute;
             MarkupOptionsAttribute = markupOptionsAttribute;
+            Properties = properties;
+            PropertyGroupMatchers = propertyGroupMatchers;
         }
 
         public ValidationControlType ControlType { get; }
@@ -49,7 +49,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         }
 
         public bool HasHtmlAttributesCollection
-            => Type.IsAssignableTo(descriptorFactory.Create(typeof(IControlWithHtmlAttributes)));
+            => Type.IsAssignableTo(typeof(IControlWithHtmlAttributes));
 
         public ControlMarkupOptionsAttribute MarkupOptionsAttribute { get; }
 
@@ -61,7 +61,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         public bool IsContentAllowed
             => (MarkupOptionsAttribute?.AllowContent ?? true)
-            && Type.IsAssignableTo(descriptorFactory.Create(typeof(IDotvvmControl)));
+            && Type.IsAssignableTo(typeof(IDotvvmControl));
 
         public string VirtualPath => ControlType.VirtualPath;
 

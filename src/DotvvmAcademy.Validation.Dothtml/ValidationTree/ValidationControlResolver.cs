@@ -8,18 +8,24 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
     internal class ValidationControlResolver : ControlResolverBase
     {
         private readonly ValidationTypeDescriptorFactory descriptorFactory;
+        private readonly ValidationControlTypeFactory typeFactory;
+        private readonly ValidationControlMetadataFactory metadataFactory;
 
         public ValidationControlResolver(
             DotvvmMarkupConfiguration configuration,
-            ValidationTypeDescriptorFactory descriptorFactory)
+            ValidationTypeDescriptorFactory descriptorFactory,
+            ValidationControlTypeFactory typeFactory,
+            ValidationControlMetadataFactory metadataFactory)
             : base(configuration)
         {
             this.descriptorFactory = descriptorFactory;
+            this.typeFactory = typeFactory;
+            this.metadataFactory = metadataFactory;
         }
 
         public override IControlResolverMetadata BuildControlMetadata(IControlType type)
         {
-            return new ValidationControlMetadata((ValidationControlType)type);
+            return metadataFactory.Create(type);
         }
 
         public override IControlResolverMetadata ResolveControl(ITypeDescriptor descriptor)

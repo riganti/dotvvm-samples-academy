@@ -81,6 +81,8 @@ namespace ValidationTreeSample
             var c = new ServiceCollection();
             c.AddScoped<CSharpCompilation>(p => CompileViewModel());
             c.AddScoped<ValidationTypeDescriptorFactory>();
+            c.AddScoped<ValidationControlTypeFactory>();
+            c.AddScoped<ValidationControlMetadataFactory>();
             c.AddScoped<DotvvmMarkupConfiguration>(p => new DotvvmMarkupConfiguration());
             c.AddScoped<IControlResolver, ValidationControlResolver>();
             c.AddScoped<IControlTreeResolver, ValidationTreeResolver>();

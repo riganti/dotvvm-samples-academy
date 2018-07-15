@@ -10,15 +10,12 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
     internal class ValidationTypeDescriptorFactory
     {
-        public readonly ValidationTypeDescriptor DescriptorIEnumerable;
-        
         private ConcurrentDictionary<ITypeSymbol, ValidationTypeDescriptor> cache
             = new ConcurrentDictionary<ITypeSymbol, ValidationTypeDescriptor>();
 
         public ValidationTypeDescriptorFactory(CSharpCompilation compilation)
         {
             Compilation = compilation;
-            DescriptorIEnumerable = Create("System.Collections.Generic.IEnumerable`1");
         }
 
         public CSharpCompilation Compilation { get; }

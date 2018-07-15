@@ -16,5 +16,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         }
 
         public CSharpCompilation Compilation { get; }
+
+        public ValidationPropertyDescriptor 
     }
 }
