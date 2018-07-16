@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
-using DotVVM.Framework.Binding;
-using DotVVM.Framework.Compilation;
+﻿using DotVVM.Framework.Binding;
 using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Controls;
-using Microsoft.CodeAnalysis.CSharp;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq;
 
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
@@ -51,19 +49,15 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         public bool HasHtmlAttributesCollection
             => Type.IsAssignableTo(typeof(IControlWithHtmlAttributes));
 
+        public bool IsContentAllowed
+            => (MarkupOptionsAttribute?.AllowContent ?? true)
+            && Type.IsAssignableTo(typeof(IDotvvmControl));
+
         public ControlMarkupOptionsAttribute MarkupOptionsAttribute { get; }
 
         public ImmutableArray<ValidationPropertyDescriptor> Properties { get; }
 
         public ImmutableArray<PropertyGroupMatcher> PropertyGroupMatchers { get; }
-
-        public ValidationTypeDescriptor Type => ControlType.Type;
-
-        public bool IsContentAllowed
-            => (MarkupOptionsAttribute?.AllowContent ?? true)
-            && Type.IsAssignableTo(typeof(IDotvvmControl));
-
-        public string VirtualPath => ControlType.VirtualPath;
 
         IEnumerable<IPropertyDescriptor> IControlResolverMetadata.AllProperties => Properties;
 
@@ -74,11 +68,15 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         IPropertyDescriptor IControlResolverMetadata.DefaultContentProperty => DefaultContentProperty;
 
-        ITypeDescriptor IControlResolverMetadata.Type => Type;
-
         IReadOnlyList<PropertyGroupMatcher> IControlResolverMetadata.PropertyGroups => PropertyGroupMatchers;
 
         IEnumerable<string> IControlResolverMetadata.PropertyNames => Properties.Select(p => p.FullName);
+
+        public ValidationTypeDescriptor Type => ControlType.Type;
+
+        ITypeDescriptor IControlResolverMetadata.Type => Type;
+
+        public string VirtualPath => ControlType.VirtualPath;
 
         bool IControlResolverMetadata.TryGetProperty(string name, out IPropertyDescriptor value)
         {

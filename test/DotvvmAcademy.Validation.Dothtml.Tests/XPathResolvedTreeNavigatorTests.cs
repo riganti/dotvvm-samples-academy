@@ -1,22 +1,19 @@
-using DotvvmAcademy.Validation.Dothtml.ValidationTree;
 using DotVVM.Framework.Compilation;
 using DotVVM.Framework.Compilation.ControlTree;
-using DotVVM.Framework.Compilation.ControlTree.Resolved;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Tokenizer;
-using DotVVM.Framework.Security;
-using DotVVM.Framework.ViewModel;
+using DotVVM.Framework.Configuration;
+using DotvvmAcademy.Meta;
+using DotvvmAcademy.Validation.Dothtml.ValidationTree;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Xml;
 using System.Xml.XPath;
-using DotVVM.Framework.Configuration;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis;
-using System.Reflection;
 
 namespace DotvvmAcademy.Validation.Dothtml.Tests
 {
@@ -80,9 +77,11 @@ namespace ValidationTreeSample
         {
             var c = new ServiceCollection();
             c.AddScoped<CSharpCompilation>(p => CompileViewModel());
+            c.AddScoped<AttributeExtractor>();
             c.AddScoped<ValidationTypeDescriptorFactory>();
             c.AddScoped<ValidationControlTypeFactory>();
             c.AddScoped<ValidationControlMetadataFactory>();
+            c.AddScoped<ValidationPropertyDescriptorFactory>();
             c.AddScoped<DotvvmMarkupConfiguration>(p => new DotvvmMarkupConfiguration());
             c.AddScoped<IControlResolver, ValidationControlResolver>();
             c.AddScoped<IControlTreeResolver, ValidationTreeResolver>();
@@ -100,8 +99,18 @@ namespace ValidationTreeSample
             var tree = CSharpSyntaxTree.ParseText(BasicViewModel);
             var compilation = CSharpCompilation.Create(
                 assemblyName: "ValidationTreeSample",
-                syntaxTrees: new [] {tree},
-                references: new [] {GetReference("System.Private.CoreLib")},
+                syntaxTrees: new[] { tree },
+                references: new[]
+                {
+                    GetReference("mscorlib"),
+                    GetReference("netstandard"),
+                    GetReference("System.Private.CoreLib"),
+                    GetReference("System.Runtime"),
+                    GetReference("System.Collections"),
+                    GetReference("System.Reflection"),
+                    GetReference("DotVVM.Framework"),
+                    GetReference("DotVVM.Core")
+                },
                 options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
             return compilation;
         }

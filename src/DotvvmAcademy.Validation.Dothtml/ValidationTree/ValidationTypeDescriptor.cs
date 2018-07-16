@@ -28,15 +28,15 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             TypeSymbol = typeSymbol;
         }
 
-        public string Name => TypeSymbol.Name;
-
-        public string Namespace => TypeSymbol.ContainingNamespace?.Name;
-
         public string Assembly => TypeSymbol.ContainingAssembly?.Name;
 
         public string FullName => TypeSymbol.ToDisplayString(TypeDescriptorFormat);
 
+        public string Namespace => TypeSymbol.ContainingNamespace?.Name;
+
         public ITypeSymbol TypeSymbol { get; }
+
+        public string Name => TypeSymbol.Name;
 
         public ControlMarkupOptionsAttribute GetControlMarkupOptionsAttribute()
         {
@@ -113,12 +113,11 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         public ITypeDescriptor TryGetArrayElementOrIEnumerableType()
         {
-
             if (TypeSymbol is IArrayTypeSymbol arrayType)
             {
                 return factory.Create(arrayType.ElementType);
             }
-            var iEnumerableSymbol = factory.Compilation.GetTypeByMetadataName("System.Collections.Generic.IEnumerable`1");
+            var iEnumerableSymbol = compilation.GetTypeByMetadataName("System.Collections.Generic.IEnumerable`1");
             if (TypeSymbol is INamedTypeSymbol namedType && namedType.ConstructedFrom.Equals(iEnumerableSymbol))
             {
                 return factory.Create(namedType.TypeArguments.First());

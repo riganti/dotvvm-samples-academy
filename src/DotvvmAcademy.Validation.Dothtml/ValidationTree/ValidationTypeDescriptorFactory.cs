@@ -10,19 +10,32 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
     internal class ValidationTypeDescriptorFactory
     {
-        private ConcurrentDictionary<ITypeSymbol, ValidationTypeDescriptor> cache
+        private readonly ConcurrentDictionary<ITypeSymbol, ValidationTypeDescriptor> cache
             = new ConcurrentDictionary<ITypeSymbol, ValidationTypeDescriptor>();
+
+        private readonly CSharpCompilation compilation;
 
         public ValidationTypeDescriptorFactory(CSharpCompilation compilation)
         {
-            Compilation = compilation;
+            this.compilation = compilation;
         }
 
-        public CSharpCompilation Compilation { get; }
+        public ValidationTypeDescriptor Convert(ITypeDescriptor other)
+        {
+            if (other == null)
+            {
+                return null;
+            }
+            if (other is ResolvedTypeDescriptor resolved)
+            {
+                return Create(resolved.Type);
+            }
+            return Create(other.FullName);
+        }
 
         public ValidationTypeDescriptor Create(ITypeSymbol typeSymbol)
         {
-            return cache.GetOrAdd(typeSymbol, s => new ValidationTypeDescriptor(this, Compilation, s));
+            return cache.GetOrAdd(typeSymbol, s => new ValidationTypeDescriptor(this, compilation, s));
         }
 
         public ValidationTypeDescriptor Create(BindingParserNode name)
@@ -47,11 +60,11 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         public ValidationTypeDescriptor Create(string metadataName)
         {
-            var symbol = Compilation.GetTypeByMetadataName(metadataName);
+            var symbol = compilation.GetTypeByMetadataName(metadataName);
             if (symbol == null)
             {
-                return Create(Compilation.CreateErrorTypeSymbol(
-                    container: Compilation.GlobalNamespace,
+                return Create(compilation.CreateErrorTypeSymbol(
+                    container: compilation.GlobalNamespace,
                     name: metadataName,
                     arity: 0));
             }
@@ -61,19 +74,6 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         public ValidationTypeDescriptor Create(Type type)
         {
             return Create(type.FullName);
-        }
-
-        public ValidationTypeDescriptor Convert(ITypeDescriptor other)
-        {
-            if (other == null)
-            {
-                return null;
-            }
-            if (other is ResolvedTypeDescriptor resolved)
-            {
-                return Create(resolved.Type);
-            }
-            return Create(other.FullName);
         }
     }
 }
