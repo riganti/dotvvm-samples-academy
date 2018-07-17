@@ -4,6 +4,7 @@
         <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
         <TypeScriptToolsVersion>2.8</TypeScriptToolsVersion>
         <EnableDefaultContentItems>false</EnableDefaultContentItems>
+        <LangVersion>latest</LangVersion>
     </PropertyGroup>
     <ItemGroup>
         <None Remove="dotvvm_serialized_config.json.tmp" />
