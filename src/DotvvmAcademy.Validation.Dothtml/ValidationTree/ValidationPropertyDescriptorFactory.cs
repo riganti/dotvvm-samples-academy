@@ -16,7 +16,11 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         private readonly CSharpCompilation compilation;
         private readonly ValidationTypeDescriptorFactory descriptorFactory;
         private readonly AttributeExtractor extractor;
-        private readonly ConcurrentDictionary<(INamedTypeSymbol, string), ValidationPropertyDescriptor> cache
+
+        private readonly ConcurrentDictionary<(INamedTypeSymbol, string), ValidationPropertyGroupDescriptor> groups
+            = new ConcurrentDictionary<(INamedTypeSymbol, string), ValidationPropertyGroupDescriptor>();
+
+        private readonly ConcurrentDictionary<(INamedTypeSymbol, string), ValidationPropertyDescriptor> properties
             = new ConcurrentDictionary<(INamedTypeSymbol, string), ValidationPropertyDescriptor>();
 
         public ValidationPropertyDescriptorFactory(
@@ -29,51 +33,172 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             this.extractor = extractor;
         }
 
-        public ValidationPropertyDescriptor Create(ITypeSymbol containingType, string name)
+        public ValidationPropertyDescriptor CreateAttached(IFieldSymbol fieldSymbol)
         {
-            var property = (IPropertySymbol)containingType.GetMembers(name)
-                .FirstOrDefault(s => s is IPropertySymbol);
-            if (property == null)
+            var name = ValidationPropertyDescriptor.SanitizeName(fieldSymbol.MetadataName);
+            return properties.GetOrAdd((fieldSymbol.ContainingType, name), _ =>
             {
-                return null;
-            }
-
-            return Create(property);
+                var attachedAttribute = extractor.GetFirstAttributeData<AttachedPropertyAttribute>(fieldSymbol);
+                if (attachedAttribute == null
+                    || attachedAttribute.ConstructorArguments.Length != 1
+                    || attachedAttribute.ConstructorArguments[0].Kind != TypedConstantKind.Type)
+                {
+                    throw new ArgumentException($"'{fieldSymbol}' does not have a valid AttachedPropertyAttribute.");
+                }
+                var markupOptions = extractor.GetAttribute<MarkupOptionsAttribute>(fieldSymbol)
+                    ?? new MarkupOptionsAttribute();
+                var propertyType = (ITypeSymbol)attachedAttribute.ConstructorArguments[0].Value;
+                return new ValidationPropertyDescriptor(
+                    fieldSymbol: fieldSymbol,
+                    declaringType: descriptorFactory.Create(fieldSymbol.ContainingType),
+                    propertyType: descriptorFactory.Create(propertyType),
+                    markupOptions: markupOptions,
+                    changeAttributes: extractor.GetAttributes<DataContextChangeAttribute>(fieldSymbol),
+                    manipulationAttribute: extractor.GetAttribute<DataContextStackManipulationAttribute>(fieldSymbol));
+            });
         }
 
-        public ValidationPropertyDescriptor Create(IPropertySymbol propertySymbol)
+        public ValidationPropertyGroupDescriptor CreateCollection(IPropertySymbol propertySymbol)
         {
-            var field = (IFieldSymbol)propertySymbol.ContainingType
-                .GetMembers($"{propertySymbol.MetadataName}{ValidationPropertyDescriptor.PropertySuffix}")
-                .FirstOrDefault(s => s is IFieldSymbol);
-            if (field == null)
+            return groups.GetOrAdd((propertySymbol.ContainingType, propertySymbol.MetadataName), _ =>
             {
-                return CreateVirtual(propertySymbol);
-            }
-
-            return CreateRegular(propertySymbol, field);
-        }
-
-        public ValidationPropertyDescriptor CreateVirtual(IPropertySymbol propertySymbol)
-        {
-            return cache.GetOrAdd((propertySymbol.ContainingType, propertySymbol.MetadataName), _ =>
-            {
+                var groupAttribute = extractor.GetAttribute<PropertyGroupAttribute>(propertySymbol);
+                if (groupAttribute == null)
+                {
+                    throw new ArgumentException($"'{propertySymbol}' does not have " +
+                        $"the {nameof(PropertyGroupAttribute)}.");
+                }
+                var markupOptions = extractor.GetAttribute<MarkupOptionsAttribute>(propertySymbol)
+                    ?? new MarkupOptionsAttribute();
                 var manipulationAttribute = extractor
                     .GetAttribute<DataContextStackManipulationAttribute>(propertySymbol);
-                return new ValidationPropertyDescriptor(
+                var pairValueType = GetStringPairValueType(propertySymbol.Type);
+                if (pairValueType == null)
+                {
+                    throw new ArgumentException($"'{propertySymbol}' is not a valid collection property group as it " +
+                        $"is not of type IEnumerable<KeyValuePair<string,TValue>>.");
+                }
+                return new ValidationPropertyGroupDescriptor(
+                    propertyFactory: this,
                     propertySymbol: propertySymbol,
-                    fieldSymbol: null,
+                    declaringType: descriptorFactory.Create(propertySymbol.ContainingType),
+                    collectionType: descriptorFactory.Create(propertySymbol.Type),
+                    propertyType: descriptorFactory.Create(pairValueType),
+                    markupOptions: markupOptions,
+                    changeAttributes: extractor.GetAttributes<DataContextChangeAttribute>(propertySymbol),
+                    manipulationAttribute: manipulationAttribute,
+                    prefixes: groupAttribute.Prefixes.ToImmutableArray());
+            });
+        }
+
+        public ValidationPropertyGroupDescriptor CreateGenerator(
+            IPropertySymbol propertySymbol,
+            IFieldSymbol fieldSymbol)
+        {
+            return groups.GetOrAdd((propertySymbol.ContainingType, propertySymbol.MetadataName), _ =>
+            {
+                var markupOptions = extractor.GetAttribute<MarkupOptionsAttribute>(propertySymbol)
+                    ?? new MarkupOptionsAttribute();
+                var manipulationAttribute = extractor
+                    .GetAttribute<DataContextStackManipulationAttribute>(propertySymbol);
+                // TODO: Prefix extraction from the register call
+                return new ValidationPropertyGroupDescriptor(
+                    propertyFactory: this,
+                    propertySymbol: propertySymbol,
+                    fieldSymbol: fieldSymbol,
                     declaringType: descriptorFactory.Create(propertySymbol.ContainingType),
                     propertyType: descriptorFactory.Create(propertySymbol.Type),
-                    markupOptions: extractor.GetAttribute<MarkupOptionsAttribute>(propertySymbol),
+                    markupOptions: markupOptions,
                     changeAttributes: extractor.GetAttributes<DataContextChangeAttribute>(propertySymbol),
-                    manipulationAttribute: manipulationAttribute);
+                    manipulationAttribute: manipulationAttribute,
+                    prefixes: default(ImmutableArray<string>));
             });
+        }
+
+        public ValidationPropertyDescriptor CreateGrouped(
+            ValidationPropertyGroupDescriptor propertyGroup,
+            string groupMemberName)
+        {
+            var name = $"{propertyGroup.Name}{ValidationPropertyDescriptor.GroupSeparator}{groupMemberName}";
+            return properties.GetOrAdd(((INamedTypeSymbol)propertyGroup.DeclaringType.TypeSymbol, name), _ =>
+                new ValidationPropertyDescriptor(propertyGroup, groupMemberName));
+        }
+
+        public ImmutableArray<ValidationPropertyGroupDescriptor> CreateGroups(ITypeSymbol containingType)
+        {
+            var groupSymbol = compilation.GetTypeByMetadataName(WellKnownTypes.DotvvmPropertyGroup);
+            var builder = ImmutableArray.CreateBuilder<ValidationPropertyGroupDescriptor>();
+            var collectionGroups = containingType.GetMembers()
+                .OfType<IPropertySymbol>()
+                .Where(p => extractor.HasAttribute<PropertyGroupAttribute>(p)
+                    && GetStringPairValueType(p.Type) != null);
+            foreach (var group in collectionGroups)
+            {
+                builder.Add(CreateCollection(group));
+            }
+            var generatorGroups = containingType.GetMembers()
+                .OfType<IFieldSymbol>()
+                .Where(f => f.IsStatic
+                    && f.Type.Equals(groupSymbol));
+            foreach (var group in generatorGroups)
+            {
+                var propertySymbol = containingType
+                    .GetMembers(ValidationPropertyGroupDescriptor.SanitizeName(group.MetadataName))
+                    .OfType<IPropertySymbol>()
+                    .SingleOrDefault();
+                if (propertySymbol != null)
+                {
+                    builder.Add(CreateGenerator(propertySymbol, group));
+                }
+            }
+            return builder.ToImmutable();
+        }
+
+        public ImmutableArray<ValidationPropertyDescriptor> CreateProperties(ITypeSymbol containingType)
+        {
+            var dotvvmPropertySymbol = compilation.GetTypeByMetadataName(WellKnownTypes.DotvvmProperty);
+            var builder = ImmutableArray.CreateBuilder<ValidationPropertyDescriptor>();
+            var fields = containingType.GetMembers()
+                .OfType<IFieldSymbol>()
+                .Where(f => f.IsStatic
+                    && f.MetadataName.EndsWith(ValidationPropertyDescriptor.PropertySuffix)
+                    && f.Type.Equals(dotvvmPropertySymbol));
+            foreach (var field in fields)
+            {
+                if (extractor.HasAttribute<AttachedPropertyAttribute>(field))
+                {
+                    builder.Add(CreateAttached(field));
+                }
+                else
+                {
+                    var propertyName = ValidationPropertyDescriptor.SanitizeName(field.MetadataName);
+                    var propertyCounterpart = containingType.GetMembers(propertyName)
+                        .OfType<IPropertySymbol>()
+                        .SingleOrDefault();
+                    if (propertyCounterpart == null)
+                    {
+                        continue;
+                    }
+
+                    builder.Add(CreateRegular(propertyCounterpart, field));
+                }
+            }
+            var virtualProperties = containingType.GetMembers()
+                .OfType<IPropertySymbol>()
+                .Where(p => p.DeclaredAccessibility == Accessibility.Public
+                    && extractor.HasAttribute<MarkupOptionsAttribute>(p)
+                    && !extractor.HasAttribute<PropertyGroupAttribute>(p)
+                    && !properties.ContainsKey((p.ContainingType, p.MetadataName)));
+            foreach (var property in virtualProperties)
+            {
+                builder.Add(CreateVirtual(property));
+            }
+            return builder.ToImmutable();
         }
 
         public ValidationPropertyDescriptor CreateRegular(IPropertySymbol propertySymbol, IFieldSymbol fieldSymbol)
         {
-            return cache.GetOrAdd((propertySymbol.ContainingType, propertySymbol.MetadataName), _ =>
+            return properties.GetOrAdd((propertySymbol.ContainingType, propertySymbol.MetadataName), _ =>
             {
                 var manipulationAttribute = extractor
                     .GetAttribute<DataContextStackManipulationAttribute>(propertySymbol);
@@ -96,12 +221,41 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             });
         }
 
-        public ImmutableArray<ValidationPropertyDescriptor> CreateMany(ITypeSymbol containingType)
+        public ValidationPropertyDescriptor CreateVirtual(IPropertySymbol propertySymbol)
         {
-            return containingType.GetMembers()
-                .OfType<IPropertySymbol>()
-                .Select(Create)
-                .ToImmutableArray();
+            return properties.GetOrAdd((propertySymbol.ContainingType, propertySymbol.MetadataName), _ =>
+            {
+                var markupOptions = extractor.GetAttribute<MarkupOptionsAttribute>(propertySymbol);
+                if (markupOptions == null)
+                {
+                    throw new ArgumentException($"'{propertySymbol}' does not have a MarkupOptionsAttribute.");
+                }
+                var manipulationAttribute = extractor
+                    .GetAttribute<DataContextStackManipulationAttribute>(propertySymbol);
+                return new ValidationPropertyDescriptor(
+                    propertySymbol: propertySymbol,
+                    declaringType: descriptorFactory.Create(propertySymbol.ContainingType),
+                    propertyType: descriptorFactory.Create(propertySymbol.Type),
+                    markupOptions: markupOptions,
+                    changeAttributes: extractor.GetAttributes<DataContextChangeAttribute>(propertySymbol),
+                    manipulationAttribute: manipulationAttribute);
+            });
+        }
+
+        private ITypeSymbol GetStringPairValueType(ITypeSymbol collectionType)
+        {
+            var iEnumerable = compilation.GetTypeByMetadataName(WellKnownTypes.IEnumerable);
+            var keyValuePair = compilation.GetTypeByMetadataName(WellKnownTypes.KeyValuePair);
+            var @string = compilation.GetTypeByMetadataName(WellKnownTypes.String);
+            return collectionType.AllInterfaces
+                .Where(i => compilation.ClassifyConversion(i, iEnumerable).Exists
+                    && i.TypeArguments.Length == 1
+                    && compilation.ClassifyConversion(i.TypeArguments[0], keyValuePair).Exists
+                    && i.TypeArguments[0] is INamedTypeSymbol pairArgument
+                    && pairArgument.TypeArguments.Length == 2
+                    && pairArgument.TypeArguments[0].Equals(@string))
+                .Select(i => (((INamedTypeSymbol)i.TypeArguments[0]).TypeArguments[1]))
+                .FirstOrDefault();
         }
     }
 }

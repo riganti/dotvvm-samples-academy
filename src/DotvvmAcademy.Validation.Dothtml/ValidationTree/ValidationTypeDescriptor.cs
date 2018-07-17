@@ -1,5 +1,6 @@
 ﻿using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Controls;
+using DotvvmAcademy.Meta;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using System;
@@ -9,12 +10,6 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
     internal class ValidationTypeDescriptor : ITypeDescriptor
     {
-        private readonly static SymbolDisplayFormat TypeDescriptorFormat = new SymbolDisplayFormat(
-            globalNamespaceStyle: SymbolDisplayGlobalNamespaceStyle.Omitted,
-            typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces,
-            genericsOptions: SymbolDisplayGenericsOptions.IncludeTypeParameters,
-            miscellaneousOptions: SymbolDisplayMiscellaneousOptions.UseErrorTypeSymbolName);
-
         private readonly CSharpCompilation compilation;
         private readonly ValidationTypeDescriptorFactory factory;
 
@@ -26,17 +21,22 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             this.factory = factory;
             this.compilation = compilation;
             TypeSymbol = typeSymbol;
+
+            FullName = FullNamer.FromRoslyn(TypeSymbol);
+            Assembly = TypeSymbol.ContainingAssembly.Identity.Name;
+            Namespace = TypeSymbol.ContainingNamespace.ToDisplayString();
+            Name = TypeSymbol.MetadataName;
         }
 
-        public string Assembly => TypeSymbol.ContainingAssembly?.Name;
+        public string Assembly { get; }
 
-        public string FullName => TypeSymbol.ToDisplayString(TypeDescriptorFormat);
+        public string FullName { get; }
 
-        public string Namespace => TypeSymbol.ContainingNamespace?.Name;
+        public string Name { get; }
+
+        public string Namespace { get; }
 
         public ITypeSymbol TypeSymbol { get; }
-
-        public string Name => TypeSymbol.Name;
 
         public ControlMarkupOptionsAttribute GetControlMarkupOptionsAttribute()
         {
@@ -98,7 +98,9 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         {
             if (descriptorArguments.Any(d => !(d is ValidationTypeDescriptor)))
             {
-                throw new ArgumentException($"Type arguments are not {nameof(ValidationTypeDescriptor)}s.", nameof(descriptorArguments));
+                throw new ArgumentException(
+                    message: $"Type arguments are not {nameof(ValidationTypeDescriptor)}s.",
+                    paramName: nameof(descriptorArguments));
             }
             if (TypeSymbol is INamedTypeSymbol namedType)
             {
@@ -117,19 +119,22 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             {
                 return factory.Create(arrayType.ElementType);
             }
-            var iEnumerableSymbol = compilation.GetTypeByMetadataName("System.Collections.Generic.IEnumerable`1");
+            var iEnumerableSymbol = compilation.GetTypeByMetadataName(WellKnownTypes.IEnumerable);
             if (TypeSymbol is INamedTypeSymbol namedType && namedType.ConstructedFrom.Equals(iEnumerableSymbol))
             {
                 return factory.Create(namedType.TypeArguments.First());
             }
-            throw new NotSupportedException($"'{TypeSymbol}' is not an IArrayTypeSymbol or a bound IEnumerable symbol.");
+            throw new NotSupportedException($"'{TypeSymbol}' is not an IArrayTypeSymbol " +
+                $"or a bound IEnumerable symbol.");
         }
 
         public ITypeDescriptor TryGetPropertyType(string propertyName)
         {
             if (TypeSymbol is INamedTypeSymbol namedType)
             {
-                var property = (IPropertySymbol)namedType.GetMembers(propertyName).FirstOrDefault(m => m is IPropertySymbol);
+                var property = (IPropertySymbol)namedType
+                    .GetMembers(propertyName)
+                    .FirstOrDefault(m => m is IPropertySymbol);
                 if (property != null)
                 {
                     return factory.Create(property.Type);

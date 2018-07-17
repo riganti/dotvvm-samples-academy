@@ -1,5 +1,4 @@
-﻿using DotVVM.Framework.Compilation.ControlTree.Resolved;
-using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
+﻿using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 using DotvvmAcademy.Validation.Dothtml.ValidationTree;
 using System;
 using System.Collections.Immutable;
@@ -16,17 +15,37 @@ namespace DotvvmAcademy.Validation.Dothtml
             root = new XPathDothtmlRoot(tree);
             var children = ImmutableArray.CreateBuilder<XPathDothtmlNode>();
             var attributes = ImmutableArray.CreateBuilder<XPathDothtmlNode>();
-            foreach (var child in tree.Content)
+            if (!tree.Content.IsDefaultOrEmpty)
             {
-                children.Add(VisitControl(child));
+                foreach (var child in tree.Content)
+                {
+                    children.Add(VisitControl(child));
+                }
             }
-            foreach (var directive in tree.Directives)
+            if (!tree.Directives.IsDefaultOrEmpty)
             {
-                attributes.Add(VisitDirective(directive));
+                foreach (var directive in tree.Directives)
+                {
+                    attributes.Add(VisitDirective(directive));
+                }
             }
             root.SetChildren(children);
             root.SetAttributes(attributes);
             return root;
+        }
+
+        private string AddString(string value)
+        {
+            if (value == null)
+            {
+                return null;
+            }
+            var existingValue = root.NameTable.Get(value);
+            if (existingValue != null)
+            {
+                return existingValue;
+            }
+            return root.NameTable.Add(value);
         }
 
         private XPathDothtmlNode VisitControl(ValidationControl control)
@@ -44,13 +63,19 @@ namespace DotvvmAcademy.Validation.Dothtml
             }
             var children = ImmutableArray.CreateBuilder<XPathDothtmlNode>();
             var attributes = ImmutableArray.CreateBuilder<XPathDothtmlNode>();
-            foreach (var child in control.Content)
+            if (!control.Content.IsDefaultOrEmpty)
             {
-                children.Add(VisitControl(child));
+                foreach (var child in control.Content)
+                {
+                    children.Add(VisitControl(child));
+                }
             }
-            foreach (var property in control.PropertySetters)
+            if (!control.PropertySetters.IsDefaultOrEmpty)
             {
-                children.Add(VisitProperty(property));
+                foreach (var property in control.PropertySetters)
+                {
+                    children.Add(VisitProperty(property));
+                }
             }
             node.SetChildren(children);
             node.SetAttributes(attributes);
@@ -87,7 +112,8 @@ namespace DotvvmAcademy.Validation.Dothtml
                     return VisitPropertyValue(value);
 
                 default:
-                    throw new ArgumentException($"Property setter of type '{property.GetType().Name}' is not supported");
+                    throw new ArgumentException($"Property setter of type '{property.GetType().Name}' " +
+                        $"is not supported");
             }
         }
 
@@ -113,16 +139,19 @@ namespace DotvvmAcademy.Validation.Dothtml
             return node;
         }
 
-        private XPathDothtmlNode VisitPropertyControlCollection(ValidationPropertyControlCollection propertyControlCollection)
+        private XPathDothtmlNode VisitPropertyControlCollection(ValidationPropertyControlCollection propertyCollection)
         {
-            var node = new XPathDothtmlNode(propertyControlCollection, XPathNodeType.Attribute)
+            var node = new XPathDothtmlNode(propertyCollection, XPathNodeType.Attribute)
             {
-                LocalName = AddString(propertyControlCollection.Property.Name),
+                LocalName = AddString(propertyCollection.Property.Name),
             };
             var children = ImmutableArray.CreateBuilder<XPathDothtmlNode>();
-            foreach(var child in propertyControlCollection.Controls)
+            if (!propertyCollection.Controls.IsDefaultOrEmpty)
             {
-                children.Add(VisitControl(child));
+                foreach (var child in propertyCollection.Controls)
+                {
+                    children.Add(VisitControl(child));
+                }
             }
             node.SetChildren(children);
             node.Value = node.Children;
@@ -136,9 +165,12 @@ namespace DotvvmAcademy.Validation.Dothtml
                 LocalName = AddString(propertyTemplate.Property.Name),
             };
             var children = ImmutableArray.CreateBuilder<XPathDothtmlNode>();
-            foreach(var child in propertyTemplate.Content)
+            if (!propertyTemplate.Content.IsDefaultOrEmpty)
             {
-                children.Add(VisitControl(child));
+                foreach (var child in propertyTemplate.Content)
+                {
+                    children.Add(VisitControl(child));
+                }
             }
             node.SetChildren(children);
             node.Value = node.Children;
@@ -153,20 +185,6 @@ namespace DotvvmAcademy.Validation.Dothtml
                 LocalName = AddString(propertyValue.Property.Name),
                 Value = propertyValue.Value
             };
-        }
-
-        private string AddString(string value)
-        {
-            if (value == null)
-            {
-                return null;
-            }
-            var existingValue = root.NameTable.Get(value);
-            if (existingValue != null)
-            {
-                return existingValue;
-            }
-            return root.NameTable.Add(value);
         }
     }
 }

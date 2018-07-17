@@ -8,6 +8,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Immutable;
+using System.Linq;
 
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
@@ -19,8 +20,8 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         private readonly CSharpCompilation compilation;
         private readonly ValidationTypeDescriptorFactory descriptorFactory;
         private readonly AttributeExtractor extractor;
-        private readonly ValidationControlTypeFactory typeFactory;
         private readonly ValidationPropertyDescriptorFactory propertyFactory;
+        private readonly ValidationControlTypeFactory typeFactory;
 
         public ValidationControlMetadataFactory(
             CSharpCompilation compilation,
@@ -49,14 +50,20 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         public ValidationControlMetadata Create(ITypeSymbol symbol)
         {
             var controlType = typeFactory.Create(symbol);
-
-            return cache.GetOrAdd(symbol, s => new ValidationControlMetadata(
-                controlType: controlType,
-                changeAttributes: extractor.GetAttributes<DataContextChangeAttribute>(symbol),
-                manipulationAttribute: extractor.GetAttribute<DataContextStackManipulationAttribute>(symbol),
-                markupOptionsAttribute: extractor.GetAttribute<ControlMarkupOptionsAttribute>(symbol),
-                properties: propertyFactory.CreateMany(symbol),
-                propertyGroupMatchers: default(ImmutableArray<PropertyGroupMatcher>)));
+            return cache.GetOrAdd(symbol, s =>
+            {
+                var matchers = (from g in propertyFactory.CreateGroups(symbol)
+                                from prefix in g.Prefixes
+                                select new PropertyGroupMatcher(prefix, g))
+                                .ToImmutableArray();
+                return new ValidationControlMetadata(
+                 controlType: controlType,
+                 changeAttributes: extractor.GetAttributes<DataContextChangeAttribute>(symbol),
+                 manipulationAttribute: extractor.GetAttribute<DataContextStackManipulationAttribute>(symbol),
+                 markupOptionsAttribute: extractor.GetAttribute<ControlMarkupOptionsAttribute>(symbol),
+                 properties: propertyFactory.CreateProperties(symbol),
+                 propertyGroupMatchers: matchers);
+            });
         }
     }
 }
