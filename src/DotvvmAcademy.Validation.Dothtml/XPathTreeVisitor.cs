@@ -13,24 +13,26 @@ namespace DotvvmAcademy.Validation.Dothtml
         public XPathDothtmlRoot Visit(ValidationTreeRoot tree)
         {
             root = new XPathDothtmlRoot(tree);
-            var children = ImmutableArray.CreateBuilder<XPathDothtmlNode>();
-            var attributes = ImmutableArray.CreateBuilder<XPathDothtmlNode>();
             if (!tree.Content.IsDefaultOrEmpty)
             {
+                var children = ImmutableArray.CreateBuilder<XPathDothtmlNode>();
                 foreach (var child in tree.Content)
                 {
                     children.Add(VisitControl(child));
                 }
+                root.SetChildren(children);
             }
+
             if (!tree.Directives.IsDefaultOrEmpty)
             {
+                var attributes = ImmutableArray.CreateBuilder<XPathDothtmlNode>();
                 foreach (var directive in tree.Directives)
                 {
                     attributes.Add(VisitDirective(directive));
                 }
+                root.SetAttributes(attributes);
             }
-            root.SetChildren(children);
-            root.SetAttributes(attributes);
+
             return root;
         }
 
@@ -61,24 +63,27 @@ namespace DotvvmAcademy.Validation.Dothtml
                 node.LocalName = AddString(control.Metadata.Type.Name);
                 node.Prefix = AddString(control.Metadata.Type.Namespace);
             }
-            var children = ImmutableArray.CreateBuilder<XPathDothtmlNode>();
-            var attributes = ImmutableArray.CreateBuilder<XPathDothtmlNode>();
+
             if (!control.Content.IsDefaultOrEmpty)
             {
+                var children = ImmutableArray.CreateBuilder<XPathDothtmlNode>();
                 foreach (var child in control.Content)
                 {
                     children.Add(VisitControl(child));
                 }
+                node.SetChildren(children);
             }
+
             if (!control.PropertySetters.IsDefaultOrEmpty)
             {
+                var attributes = ImmutableArray.CreateBuilder<XPathDothtmlNode>();
                 foreach (var property in control.PropertySetters)
                 {
-                    children.Add(VisitProperty(property));
+                    attributes.Add(VisitProperty(property));
                 }
+                node.SetAttributes(attributes);
             }
-            node.SetChildren(children);
-            node.SetAttributes(attributes);
+
             return node;
         }
 
@@ -145,16 +150,17 @@ namespace DotvvmAcademy.Validation.Dothtml
             {
                 LocalName = AddString(propertyCollection.Property.Name),
             };
-            var children = ImmutableArray.CreateBuilder<XPathDothtmlNode>();
             if (!propertyCollection.Controls.IsDefaultOrEmpty)
             {
+                var children = ImmutableArray.CreateBuilder<XPathDothtmlNode>();
                 foreach (var child in propertyCollection.Controls)
                 {
                     children.Add(VisitControl(child));
                 }
+                node.SetChildren(children);
+                node.Value = node.Children;
             }
-            node.SetChildren(children);
-            node.Value = node.Children;
+
             return node;
         }
 
@@ -164,16 +170,17 @@ namespace DotvvmAcademy.Validation.Dothtml
             {
                 LocalName = AddString(propertyTemplate.Property.Name),
             };
-            var children = ImmutableArray.CreateBuilder<XPathDothtmlNode>();
             if (!propertyTemplate.Content.IsDefaultOrEmpty)
             {
+                var children = ImmutableArray.CreateBuilder<XPathDothtmlNode>();
                 foreach (var child in propertyTemplate.Content)
                 {
                     children.Add(VisitControl(child));
                 }
+                node.SetChildren(children);
+                node.Value = node.Children;
             }
-            node.SetChildren(children);
-            node.Value = node.Children;
+
             return node;
         }
 

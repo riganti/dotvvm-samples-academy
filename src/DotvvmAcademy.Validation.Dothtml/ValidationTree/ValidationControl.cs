@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Diagnostics;
 using System.Linq;
 using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
+    [DebuggerDisplay("Control: {Metadata.Type.FullName,nq}")]
     internal class ValidationControl : ValidationContentNode, IAbstractControl
     {
         private ImmutableArray<ValidationPropertySetter>.Builder properties

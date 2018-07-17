@@ -1,8 +1,10 @@
 ﻿using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
+using System.Diagnostics;
 
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
+    [DebuggerDisplay("TreeNode")]
     internal abstract class ValidationTreeNode : IAbstractTreeNode
     {
         public ValidationTreeNode(DothtmlNode node)

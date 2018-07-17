@@ -5,10 +5,12 @@ using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Controls;
 using Microsoft.CodeAnalysis;
 using System.Collections.Immutable;
+using System.Diagnostics;
 using System.Linq;
 
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
+    [DebuggerDisplay("PropertyDescriptor: {FullName,nq}")]
     internal class ValidationPropertyDescriptor : IPropertyDescriptor
     {
         public const string GroupSeparator = ":";

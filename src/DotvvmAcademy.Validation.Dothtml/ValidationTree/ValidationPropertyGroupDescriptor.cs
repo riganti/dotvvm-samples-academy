@@ -4,10 +4,12 @@ using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Controls;
 using Microsoft.CodeAnalysis;
 using System.Collections.Immutable;
+using System.Diagnostics;
 using System.Linq;
 
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
+    [DebuggerDisplay("GroupDescriptor: {FullName,nq}")]
     internal class ValidationPropertyGroupDescriptor : IPropertyGroupDescriptor
     {
         public const string PropertyGroupSuffix = "GroupDescriptor";

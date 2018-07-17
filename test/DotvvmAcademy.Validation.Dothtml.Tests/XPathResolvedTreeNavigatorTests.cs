@@ -62,14 +62,14 @@ namespace ValidationTreeSample
             var services = GetMinimalServices();
             var tokenizer = services.GetRequiredService<DothtmlTokenizer>();
             var parser = services.GetRequiredService<DothtmlParser>();
-            var resolver = services.GetRequiredService<IControlTreeResolver>();
+            var resolver = services.GetRequiredService<ValidationTreeResolver>();
             var xpathVisitor = services.GetRequiredService<XPathTreeVisitor>();
             tokenizer.Tokenize(BasicView);
             var rootNode = parser.Parse(tokenizer.Tokens);
             var tree = (ValidationTreeRoot)resolver.ResolveTree(rootNode, "BasicView.dothtml");
             var xpathRoot = xpathVisitor.Visit(tree);
             var navigator = new XPathDothtmlNavigator(xpathRoot);
-            var query = XPathExpression.Compile("/html//Repeater/@ItemTemplate/span");
+            var query = XPathExpression.Compile("//TextBox/@Text");
             var result = navigator.Evaluate(query);
         }
 
@@ -83,10 +83,10 @@ namespace ValidationTreeSample
             c.AddScoped<ValidationControlMetadataFactory>();
             c.AddScoped<ValidationPropertyDescriptorFactory>();
             c.AddScoped<DotvvmMarkupConfiguration>(p => new DotvvmMarkupConfiguration());
-            c.AddScoped<IControlResolver, ValidationControlResolver>();
-            c.AddScoped<IControlTreeResolver, ValidationTreeResolver>();
-            c.AddScoped<IControlBuilderFactory, FakeControlBuilderFactory>();
-            c.AddScoped<IAbstractTreeBuilder, ValidationTreeBuilder>();
+            c.AddScoped<ValidationControlResolver>();
+            c.AddScoped<ValidationTreeResolver>();
+            c.AddScoped<FakeControlBuilderFactory>();
+            c.AddScoped<ValidationTreeBuilder>();
             c.AddScoped<DothtmlTokenizer>();
             c.AddScoped<DothtmlParser>();
             c.AddScoped<ErrorAggregatingVisitor>();

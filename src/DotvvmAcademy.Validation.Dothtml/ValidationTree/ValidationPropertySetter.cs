@@ -1,9 +1,11 @@
 ﻿using DotVVM.Framework.Binding;
 using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
+using System.Diagnostics;
 
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
+    [DebuggerDisplay("PropertySetter: {Property.FullName,nq}")]
     internal abstract class ValidationPropertySetter : ValidationTreeNode, IAbstractPropertySetter
     {
         public ValidationPropertySetter(DothtmlNode node, ValidationPropertyDescriptor property) : base(node)

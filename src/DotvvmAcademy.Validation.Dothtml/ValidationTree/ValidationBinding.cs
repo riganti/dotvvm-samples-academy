@@ -1,26 +1,29 @@
 ﻿using System;
+using System.Diagnostics;
 using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
+    [DebuggerDisplay(@"Binding: \{{BindingType.Name,nq}: {Value,nq}\}")]
     internal class ValidationBinding : ValidationTreeNode, IAbstractBinding
     {
+        private readonly DothtmlBindingNode node;
+
         public ValidationBinding(
-            DothtmlNode node,
-            string code,
+            DothtmlBindingNode node,
             Type bindingType,
             ValidationDataContextStack dataContext)
             : base(node)
         {
             BindingType = bindingType;
-            Value = code;
+            this.node = node;
             DataContext = dataContext;
         }
 
         public Type BindingType { get; }
 
-        public string Value { get; }
+        public string Value => node.Value;
 
         ValidationDataContextStack DataContext { get; }
 

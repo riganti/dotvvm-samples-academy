@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Diagnostics;
 using System.Linq;
 using DotVVM.Framework.Compilation;
 using DotVVM.Framework.Compilation.ControlTree;
 
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
+    [DebuggerDisplay("DataContextStack: {DataContextType.FullName,nq}")]
     internal class ValidationDataContextStack : IDataContextStack
     {
         public ValidationDataContextStack(

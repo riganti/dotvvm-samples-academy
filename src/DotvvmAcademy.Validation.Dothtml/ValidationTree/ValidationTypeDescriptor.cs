@@ -4,10 +4,12 @@ using DotvvmAcademy.Meta;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using System;
+using System.Diagnostics;
 using System.Linq;
 
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
+    [DebuggerDisplay("TypeDescriptor: {FullName,nq}")]
     internal class ValidationTypeDescriptor : ITypeDescriptor
     {
         private readonly CSharpCompilation compilation;
@@ -38,28 +40,6 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         public ITypeSymbol TypeSymbol { get; }
 
-        public ControlMarkupOptionsAttribute GetControlMarkupOptionsAttribute()
-        {
-            var attributeType = compilation
-                .GetTypeByMetadataName(typeof(ControlMarkupOptionsAttribute).FullName);
-            var attribute = TypeSymbol
-                .GetAttributes()
-                .FirstOrDefault(a => a.AttributeClass.Equals(attributeType));
-            var allowContent = (attribute?.NamedArguments
-                .FirstOrDefault(p => p.Key == nameof(ControlMarkupOptionsAttribute.AllowContent))
-                .Value.Value as bool?)
-                .GetValueOrDefault();
-            var defaultContentProperty = attribute?.NamedArguments
-                .FirstOrDefault(p => p.Key == nameof(ControlMarkupOptionsAttribute.DefaultContentProperty))
-                .Value.Value as string;
-
-            return new ControlMarkupOptionsAttribute
-            {
-                AllowContent = allowContent,
-                DefaultContentProperty = defaultContentProperty
-            };
-        }
-
         public bool IsAssignableFrom(ITypeDescriptor typeDescriptor)
         {
             if (typeDescriptor is ValidationTypeDescriptor other)
@@ -77,7 +57,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         {
             if (typeDescriptor is ValidationTypeDescriptor other)
             {
-                other.IsAssignableFrom(this);
+                return other.IsAssignableFrom(this);
             }
             return false;
         }
@@ -113,6 +93,8 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             throw new NotSupportedException($"'{TypeSymbol}' is not an INamedTypeSymbol.");
         }
 
+        public override string ToString() => FullName;
+
         public ITypeDescriptor TryGetArrayElementOrIEnumerableType()
         {
             if (TypeSymbol is IArrayTypeSymbol arrayType)
@@ -144,6 +126,11 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             }
 
             throw new NotSupportedException($"'{TypeSymbol}' is not an INamedTypeSymbol.");
+        }
+
+        ControlMarkupOptionsAttribute ITypeDescriptor.GetControlMarkupOptionsAttribute()
+        {
+            throw new NotImplementedException();
         }
     }
 }

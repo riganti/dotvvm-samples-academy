@@ -1,9 +1,11 @@
 ﻿using DotVVM.Framework.Binding;
 using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
+using System.Diagnostics;
 
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
+    [DebuggerDisplay("PropertyControl: {Property.FullName,nq}, Control = {Control.Metadata.Type.FullName,nq}")]
     internal class ValidationPropertyControl : ValidationPropertySetter, IAbstractPropertyControl
     {
         public ValidationPropertyControl(

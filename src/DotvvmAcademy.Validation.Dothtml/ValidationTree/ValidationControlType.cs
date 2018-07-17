@@ -1,9 +1,11 @@
 using System;
+using System.Diagnostics;
 using DotVVM.Framework.Compilation;
 using DotVVM.Framework.Compilation.ControlTree;
 
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
+    [DebuggerDisplay("ControlType: {Type.FullName,nq}")]
     internal class ValidationControlType : IControlType
     {
         public ValidationControlType(

@@ -2,7 +2,6 @@
 using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Compilation.Parser.Binding.Parser;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
-using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
@@ -12,10 +11,14 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
     internal class ValidationTreeBuilder : IAbstractTreeBuilder
     {
         private readonly ValidationTypeDescriptorFactory descriptorFactory;
+        private readonly ValidationPropertyDescriptorFactory propertyFactory;
 
-        public ValidationTreeBuilder(ValidationTypeDescriptorFactory descriptorFactory)
+        public ValidationTreeBuilder(
+            ValidationTypeDescriptorFactory descriptorFactory,
+            ValidationPropertyDescriptorFactory propertyFactory)
         {
             this.descriptorFactory = descriptorFactory;
+            this.propertyFactory = propertyFactory;
         }
 
         public void AddChildControl(IAbstractContentNode control, IAbstractControl child)
@@ -41,7 +44,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             DothtmlBindingNode node,
             IPropertyDescriptor property)
         {
-            throw new NotImplementedException();
+            return new ValidationBinding(node, bindingOptions.BindingType, (ValidationDataContextStack)dataContext);
         }
 
         public IAbstractControl BuildControl(
@@ -72,8 +75,8 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         {
             return new ValidationPropertyBinding(
                 node: sourceAttributeNode,
-                property: (ValidationPropertyDescriptor)property,
-                binding: (ValidationBinding) binding);
+                property: propertyFactory.Convert(property),
+                binding: (ValidationBinding)binding);
         }
 
         public IAbstractPropertyControl BuildPropertyControl(
@@ -83,7 +86,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         {
             return new ValidationPropertyControl(
                 node: wrapperElementNode,
-                property: (ValidationPropertyDescriptor)property,
+                property: propertyFactory.Convert(property),
                 control: (ValidationControl)control);
         }
 
@@ -94,7 +97,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         {
             return new ValidationPropertyControlCollection(
                 node: wrapperElementNode,
-                property: (ValidationPropertyDescriptor)property,
+                property: propertyFactory.Convert(property),
                 controls: controls.Cast<ValidationControl>().ToImmutableArray());
         }
 
@@ -105,7 +108,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         {
             return new ValidationPropertyTemplate(
                 node: wrapperElementNode,
-                property: (ValidationPropertyDescriptor)property,
+                property: propertyFactory.Convert(property),
                 content: templateControls.Cast<ValidationControl>().ToImmutableArray());
         }
 
@@ -116,7 +119,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         {
             return new ValidationPropertyValue(
                 node: sourceAttributeNode,
-                property: (ValidationPropertyDescriptor)property,
+                property: propertyFactory.Convert(property),
                 value: value);
         }
 
@@ -140,7 +143,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             IReadOnlyDictionary<string, IReadOnlyList<IAbstractDirective>> directives)
         {
             var immutableDirectives = directives
-                .SelectMany(p=>p.Value)
+                .SelectMany(p => p.Value)
                 .Cast<ValidationDirective>()
                 .ToImmutableArray();
             return new ValidationTreeRoot(

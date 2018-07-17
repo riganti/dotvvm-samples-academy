@@ -33,6 +33,85 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             this.extractor = extractor;
         }
 
+        public ValidationPropertyDescriptor Convert(IPropertyDescriptor property)
+        {
+            if (property is ValidationPropertyDescriptor propertyDescriptor)
+            {
+                return propertyDescriptor;
+            }
+
+            if (property is GroupedDotvvmProperty grouped)
+            {
+                return CreateGrouped(Convert(grouped.PropertyGroup), grouped.GroupMemberName);
+            }
+
+            if (!(property is DotvvmProperty dotvvmProperty))
+            {
+                throw new ArgumentException($"Passed IPropertyDescriptor is of unknown type: '{property.GetType()}'.");
+            }
+
+            var containingType = descriptorFactory.Create(dotvvmProperty.DeclaringType).TypeSymbol;
+            var propertySymbol = containingType
+                .GetMembers(property.Name)
+                .OfType<IPropertySymbol>()
+                .SingleOrDefault();
+            var fieldSymbol = containingType
+                .GetMembers($"{property.Name}{ValidationPropertyDescriptor.PropertySuffix}")
+                .OfType<IFieldSymbol>()
+                .SingleOrDefault();
+            if (propertySymbol != null && fieldSymbol != null)
+            {
+                return CreateRegular(propertySymbol, fieldSymbol);
+            }
+            
+            if (propertySymbol != null)
+            {
+                return CreateVirtual(propertySymbol);
+            }
+
+            if (fieldSymbol != null)
+            {
+                return CreateAttached(fieldSymbol);
+            }
+
+            throw new ArgumentException($"DotvvmProperty '{property}' could not be converted.");
+        }
+
+        public ValidationPropertyGroupDescriptor Convert(IPropertyGroupDescriptor group)
+        {
+            if (group is ValidationPropertyGroupDescriptor groupDescriptor)
+            {
+                return groupDescriptor;
+            }
+
+            if (!(group is DotvvmPropertyGroup dotvvmGroup))
+            {
+                throw new ArgumentException($"Passed IPropertyGroupDescriptor is of " +
+                    $"unknown type: '{group.GetType()}'.");
+            }
+
+            var containingType = descriptorFactory.Create(dotvvmGroup.DeclaringType);
+            var generatorCandidate = containingType.TypeSymbol
+                .GetMembers($"{group.Name}{ValidationPropertyGroupDescriptor.PropertyGroupSuffix}")
+                .OfType<IFieldSymbol>()
+                .SingleOrDefault();
+            var collectionCandidate = containingType.TypeSymbol
+                .GetMembers(group.Name)
+                .OfType<IPropertySymbol>()
+                .SingleOrDefault();
+            if (generatorCandidate != null && collectionCandidate != null)
+            {
+                return CreateGenerator(collectionCandidate, generatorCandidate);
+            }
+
+            if (collectionCandidate != null)
+            {
+                return CreateCollection(collectionCandidate);
+            }
+
+            throw new ArgumentException($"DotvvmPropertyGroup '{group}' could not be converted.");
+        }
+
         public ValidationPropertyDescriptor CreateAttached(IFieldSymbol fieldSymbol)
         {
             var name = ValidationPropertyDescriptor.SanitizeName(fieldSymbol.MetadataName);

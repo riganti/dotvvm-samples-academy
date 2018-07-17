@@ -3,10 +3,12 @@ using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Controls;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Diagnostics;
 using System.Linq;
 
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
+    [DebuggerDisplay("ControlMetadata: {Type.FullName,nq}")]
     internal class ValidationControlMetadata : IControlResolverMetadata
     {
         public ValidationControlMetadata(

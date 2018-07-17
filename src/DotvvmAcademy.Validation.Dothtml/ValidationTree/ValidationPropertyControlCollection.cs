@@ -3,9 +3,11 @@ using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Diagnostics;
 
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
+    [DebuggerDisplay("PropertyControlCollection: {Property.FullName,nq}, Count = {Controls.Length,nq}")]
     internal class ValidationPropertyControlCollection : ValidationPropertySetter, IAbstractPropertyControlCollection
     {
         public ValidationPropertyControlCollection(

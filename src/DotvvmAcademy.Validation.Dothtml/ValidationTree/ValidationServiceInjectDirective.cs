@@ -1,9 +1,11 @@
 ﻿using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Compilation.Parser.Binding.Parser;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
+using System.Diagnostics;
 
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
+    [DebuggerDisplay("ServiceInjectDirective: {Type.FullName,nq}")]
     internal class ValidationServiceInjectDirective : ValidationDirective, IAbstractServiceInjectDirective
     {
         public ValidationServiceInjectDirective(

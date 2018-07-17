@@ -2,9 +2,11 @@
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Diagnostics;
 
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
+    [DebuggerDisplay("ContentNode: {Metadata.Type.FullName,nq}")]
     internal abstract class ValidationContentNode : ValidationTreeNode, IAbstractContentNode
     {
         private ImmutableArray<ValidationControl>.Builder content = ImmutableArray.CreateBuilder<ValidationControl>();

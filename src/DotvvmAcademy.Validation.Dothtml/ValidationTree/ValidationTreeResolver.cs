@@ -1,30 +1,32 @@
-﻿using System;
+﻿using DotVVM.Framework.Compilation;
+using DotVVM.Framework.Compilation.ControlTree;
+using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using DotVVM.Framework.Compilation;
-using DotVVM.Framework.Compilation.ControlTree;
-using DotVVM.Framework.Compilation.ControlTree.Resolved;
-using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
     internal class ValidationTreeResolver : ControlTreeResolverBase
     {
         private readonly ValidationTypeDescriptorFactory descriptorFactory;
+        private readonly ValidationTreeBuilder treeBuilder;
 
         public ValidationTreeResolver(
-            IControlResolver controlResolver,
-            IAbstractTreeBuilder treeBuilder,
+            ValidationControlResolver controlResolver,
+            ValidationTreeBuilder treeBuilder,
             ValidationTypeDescriptorFactory descriptorFactory)
             : base(controlResolver, treeBuilder)
         {
+            this.treeBuilder = treeBuilder;
             this.descriptorFactory = descriptorFactory;
         }
 
-        protected override IAbstractBinding CompileBinding(DothtmlBindingNode node, BindingParserOptions bindingOptions, IDataContextStack context, IPropertyDescriptor property)
-        {
-            throw new System.NotImplementedException();
-        }
+        protected override IAbstractBinding CompileBinding(
+            DothtmlBindingNode node,
+            BindingParserOptions bindingOptions,
+            IDataContextStack context,
+            IPropertyDescriptor property)
+            => treeBuilder.BuildBinding(bindingOptions, context, node, property);
 
         protected override object ConvertValue(string value, ITypeDescriptor propertyType)
         {
@@ -42,9 +44,9 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             IReadOnlyList<NamespaceImport> imports = null,
             IReadOnlyList<BindingExtensionParameter> extensionParameters = null)
         {
-            var immutableImports = imports?.ToImmutableArray() 
+            var immutableImports = imports?.ToImmutableArray()
                 ?? default(ImmutableArray<NamespaceImport>);
-            var immutableParameters = extensionParameters?.ToImmutableArray() 
+            var immutableParameters = extensionParameters?.ToImmutableArray()
                 ?? default(ImmutableArray<BindingExtensionParameter>);
             return new ValidationDataContextStack(
                 dataContextType: descriptorFactory.Convert(viewModelType),

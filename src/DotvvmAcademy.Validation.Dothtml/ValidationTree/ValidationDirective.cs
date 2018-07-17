@@ -1,8 +1,10 @@
 ﻿using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
+using System.Diagnostics;
 
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
+    [DebuggerDisplay("Directive: {Name,nq} {Value,nq}")]
     internal class ValidationDirective : ValidationTreeNode, IAbstractDirective
     {
         public ValidationDirective(DothtmlDirectiveNode node) : base(node)

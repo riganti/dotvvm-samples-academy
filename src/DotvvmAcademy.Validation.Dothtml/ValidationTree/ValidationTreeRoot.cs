@@ -2,10 +2,12 @@
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Diagnostics;
 using System.Linq;
 
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
+    [DebuggerDisplay("TreeRoot")]
     internal class ValidationTreeRoot : ValidationContentNode, IAbstractTreeRoot
     {
         private Dictionary<string, List<IAbstractDirective>> directivesDictionary;
