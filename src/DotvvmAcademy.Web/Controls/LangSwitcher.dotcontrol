@@ -8,6 +8,6 @@
 </div>
 <div class="lang-switcher_list">
     <dot:RouteLink RouteName="{resource: Context.Route.RouteName}" Param-Language="en" hreflang="en">En</dot:RouteLink>
-    <dot:RouteLink RouteName="{resource: Context.Route.RouteName}" Param-Langauge="cs" hreflang="cs">Cz</dot:RouteLink>
+    <dot:RouteLink RouteName="{resource: Context.Route.RouteName}" Param-Language="cs" hreflang="cs">Cz</dot:RouteLink>
     <dot:RouteLink RouteName="{resource: Context.Route.RouteName}" Param-Language="ru" hreflang="ru">Ru</dot:RouteLink>
 </div>
