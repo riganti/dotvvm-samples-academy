@@ -1,6 +1,7 @@
 ﻿using DotVVM.Framework.Compilation;
 using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 
@@ -9,16 +10,17 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
     internal class ValidationTreeResolver : ControlTreeResolverBase
     {
         private readonly ValidationTypeDescriptorFactory descriptorFactory;
-        private readonly ValidationTreeBuilder treeBuilder;
+        private readonly ValidationControlTypeFactory typeFactory;
 
         public ValidationTreeResolver(
             ValidationControlResolver controlResolver,
             ValidationTreeBuilder treeBuilder,
-            ValidationTypeDescriptorFactory descriptorFactory)
+            ValidationTypeDescriptorFactory descriptorFactory,
+            ValidationControlTypeFactory typeFactory)
             : base(controlResolver, treeBuilder)
         {
-            this.treeBuilder = treeBuilder;
             this.descriptorFactory = descriptorFactory;
+            this.typeFactory = typeFactory;
         }
 
         protected override IAbstractBinding CompileBinding(
@@ -30,13 +32,11 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         protected override object ConvertValue(string value, ITypeDescriptor propertyType)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         protected override IControlType CreateControlType(ITypeDescriptor wrapperType, string virtualPath)
-        {
-            return new ValidationControlType(descriptorFactory.Convert(wrapperType), virtualPath, null);
-        }
+            => typeFactory.Create(wrapperType, virtualPath);
 
         protected override IDataContextStack CreateDataContextTypeStack(
             ITypeDescriptor viewModelType,
@@ -45,9 +45,9 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             IReadOnlyList<BindingExtensionParameter> extensionParameters = null)
         {
             var immutableImports = imports?.ToImmutableArray()
-                ?? default(ImmutableArray<NamespaceImport>);
+                ?? default;
             var immutableParameters = extensionParameters?.ToImmutableArray()
-                ?? default(ImmutableArray<BindingExtensionParameter>);
+                ?? default;
             return new ValidationDataContextStack(
                 dataContextType: descriptorFactory.Convert(viewModelType),
                 parent: (parentDataContextStack as ValidationDataContextStack),

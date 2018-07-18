@@ -35,6 +35,11 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         public ValidationTypeDescriptor Create(ITypeSymbol typeSymbol)
         {
+            if (typeSymbol == null)
+            {
+                return null;
+            }
+
             return cache.GetOrAdd(typeSymbol, s => new ValidationTypeDescriptor(this, compilation, s));
         }
 
@@ -53,13 +58,15 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             return Create(name.ToDisplayString());
         }
 
-        public ValidationTypeDescriptor Create(MemberAccessBindingParserNode name)
-        {
-            return Create(name.ToDisplayString());
-        }
+        public ValidationTypeDescriptor Create(MemberAccessBindingParserNode name) => Create(name.ToDisplayString());
 
         public ValidationTypeDescriptor Create(string metadataName)
         {
+            if (string.IsNullOrEmpty(metadataName))
+            {
+                return null;
+            }
+
             var symbol = compilation.GetTypeByMetadataName(metadataName);
             if (symbol == null)
             {
@@ -71,9 +78,6 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             return Create(symbol);
         }
 
-        public ValidationTypeDescriptor Create(Type type)
-        {
-            return Create(type.FullName);
-        }
+        public ValidationTypeDescriptor Create(Type type) => Create(type.FullName);
     }
 }

@@ -1,5 +1,3 @@
-using DotVVM.Framework.Compilation;
-using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Tokenizer;
 using DotVVM.Framework.Configuration;
@@ -20,6 +18,20 @@ namespace DotvvmAcademy.Validation.Dothtml.Tests
     [TestClass]
     public class XPathResolvedTreeNavigatorTests
     {
+        public const string BasicView = @"
+@viewModel ValidationTreeSample.BasicViewModel, ValidationTreeSample
+<html>
+    <body>
+        <div>
+            <dot:Button Click=""{command: OnClick()}"" />
+        </div>
+        <dot:TextBox Text=""{value: Text1}"" />
+        <dot:TextBox Text=""{value: Text2}"" />
+        <dot:TextBox Text=""{value: Text3}"" />
+        {{value: Result}}
+    </body>
+</html>";
+
         public const string BasicViewModel = @"
 using System;
 
@@ -42,24 +54,12 @@ namespace ValidationTreeSample
     }
 }";
 
-        public const string BasicView = @"
-@viewModel ValidationTreeSample.BasicViewModel, ValidationTreeSample
-<html>
-    <body>
-        <div>
-            <dot:Button Click=""{command: OnClick()}"" />
-        </div>
-        <dot:TextBox Text=""{value: Text1}"" />
-        <dot:TextBox Text=""{value: Text2}"" />
-        <dot:TextBox Text=""{value: Text3}"" />
-        {{value: Result}}
-    </body>
-</html>";
-
         [TestMethod]
         public void CustomXPathTest()
         {
             var services = GetMinimalServices();
+            var controlResolver = services.GetRequiredService<ValidationControlResolver>();
+            controlResolver.RegisterNamespace("dot", "DotVVM.Framework.Controls", "DotVVM.Framework");
             var tokenizer = services.GetRequiredService<DothtmlTokenizer>();
             var parser = services.GetRequiredService<DothtmlParser>();
             var resolver = services.GetRequiredService<ValidationTreeResolver>();
@@ -71,53 +71,6 @@ namespace ValidationTreeSample
             var navigator = new XPathDothtmlNavigator(xpathRoot);
             var query = XPathExpression.Compile("//TextBox/@Text");
             var result = navigator.Evaluate(query);
-        }
-
-        public IServiceProvider GetMinimalServices()
-        {
-            var c = new ServiceCollection();
-            c.AddScoped<CSharpCompilation>(p => CompileViewModel());
-            c.AddScoped<AttributeExtractor>();
-            c.AddScoped<ValidationTypeDescriptorFactory>();
-            c.AddScoped<ValidationControlTypeFactory>();
-            c.AddScoped<ValidationControlMetadataFactory>();
-            c.AddScoped<ValidationPropertyDescriptorFactory>();
-            c.AddScoped<DotvvmMarkupConfiguration>(p => new DotvvmMarkupConfiguration());
-            c.AddScoped<ValidationControlResolver>();
-            c.AddScoped<ValidationTreeResolver>();
-            c.AddScoped<FakeControlBuilderFactory>();
-            c.AddScoped<ValidationTreeBuilder>();
-            c.AddScoped<DothtmlTokenizer>();
-            c.AddScoped<DothtmlParser>();
-            c.AddScoped<ErrorAggregatingVisitor>();
-            c.AddScoped<XPathTreeVisitor>();
-            return c.BuildServiceProvider();
-        }
-
-        public CSharpCompilation CompileViewModel()
-        {
-            var tree = CSharpSyntaxTree.ParseText(BasicViewModel);
-            var compilation = CSharpCompilation.Create(
-                assemblyName: "ValidationTreeSample",
-                syntaxTrees: new[] { tree },
-                references: new[]
-                {
-                    GetReference("mscorlib"),
-                    GetReference("netstandard"),
-                    GetReference("System.Private.CoreLib"),
-                    GetReference("System.Runtime"),
-                    GetReference("System.Collections"),
-                    GetReference("System.Reflection"),
-                    GetReference("DotVVM.Framework"),
-                    GetReference("DotVVM.Core")
-                },
-                options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
-            return compilation;
-        }
-
-        public MetadataReference GetReference(string name)
-        {
-            return MetadataReference.CreateFromFile(Assembly.Load(name).Location);
         }
 
         [TestMethod]
@@ -140,6 +93,51 @@ namespace ValidationTreeSample
                 relquery.SetContext(manager);
                 var relresult = result.Current.Evaluate(relquery);
             }
+        }
+
+        private CSharpCompilation CompileViewModel()
+        {
+            var tree = CSharpSyntaxTree.ParseText(BasicViewModel);
+            var compilation = CSharpCompilation.Create(
+                assemblyName: "ValidationTreeSample",
+                syntaxTrees: new[] { tree },
+                references: new[]
+                {
+                    GetReference("mscorlib"),
+                    GetReference("netstandard"),
+                    GetReference("System.Private.CoreLib"),
+                    GetReference("System.Runtime"),
+                    GetReference("System.Collections"),
+                    GetReference("System.Reflection"),
+                    GetReference("DotVVM.Framework"),
+                    GetReference("DotVVM.Core")
+                },
+                options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+            return compilation;
+        }
+
+        private IServiceProvider GetMinimalServices()
+        {
+            var c = new ServiceCollection();
+            c.AddScoped<CSharpCompilation>(p => CompileViewModel());
+            c.AddScoped<AttributeExtractor>();
+            c.AddScoped<ValidationTypeDescriptorFactory>();
+            c.AddScoped<ValidationControlTypeFactory>();
+            c.AddScoped<ValidationControlMetadataFactory>();
+            c.AddScoped<ValidationPropertyDescriptorFactory>();
+            c.AddScoped<ValidationControlResolver>();
+            c.AddScoped<ValidationTreeResolver>();
+            c.AddScoped<ValidationTreeBuilder>();
+            c.AddScoped<DothtmlTokenizer>();
+            c.AddScoped<DothtmlParser>();
+            c.AddScoped<ErrorAggregatingVisitor>();
+            c.AddScoped<XPathTreeVisitor>();
+            return c.BuildServiceProvider();
+        }
+
+        private MetadataReference GetReference(string name)
+        {
+            return MetadataReference.CreateFromFile(Assembly.Load(name).Location);
         }
     }
 }

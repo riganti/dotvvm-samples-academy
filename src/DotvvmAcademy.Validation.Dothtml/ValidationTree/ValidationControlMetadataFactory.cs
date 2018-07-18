@@ -37,6 +37,12 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             this.extractor = extractor;
         }
 
+        public ValidationControlMetadata Create(ITypeDescriptor typeDescriptor)
+            => Create(typeFactory.Create(typeDescriptor));
+
+        public ValidationControlMetadata Create(string metadataName)
+            => Create(typeFactory.Create(metadataName));
+
         public ValidationControlMetadata Create(IControlType controlType)
         {
             if (controlType is ValidationControlType validationType)

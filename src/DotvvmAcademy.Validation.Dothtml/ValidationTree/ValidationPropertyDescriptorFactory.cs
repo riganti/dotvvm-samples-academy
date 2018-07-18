@@ -205,7 +205,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         public ImmutableArray<ValidationPropertyGroupDescriptor> CreateGroups(ITypeSymbol containingType)
         {
-            var groupSymbol = compilation.GetTypeByMetadataName(WellKnownTypes.DotvvmPropertyGroup);
+            var groupSymbol = compilation.GetTypeByMetadataName(DotvvmTypes.DotvvmPropertyGroup);
             var builder = ImmutableArray.CreateBuilder<ValidationPropertyGroupDescriptor>();
             var collectionGroups = containingType.GetMembers()
                 .OfType<IPropertySymbol>()
@@ -235,7 +235,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         public ImmutableArray<ValidationPropertyDescriptor> CreateProperties(ITypeSymbol containingType)
         {
-            var dotvvmPropertySymbol = compilation.GetTypeByMetadataName(WellKnownTypes.DotvvmProperty);
+            var dotvvmPropertySymbol = compilation.GetTypeByMetadataName(DotvvmTypes.DotvvmProperty);
             var builder = ImmutableArray.CreateBuilder<ValidationPropertyDescriptor>();
             var fields = containingType.GetMembers()
                 .OfType<IFieldSymbol>()

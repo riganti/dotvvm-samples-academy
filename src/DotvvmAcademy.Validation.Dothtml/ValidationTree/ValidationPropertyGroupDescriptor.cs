@@ -3,6 +3,7 @@ using DotVVM.Framework.Compilation;
 using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Controls;
 using Microsoft.CodeAnalysis;
+using System;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
@@ -89,7 +90,17 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         ITypeDescriptor IPropertyGroupDescriptor.CollectionType => CollectionType;
 
         DataContextChangeAttribute[] IControlAttributeDescriptor.DataContextChangeAttributes
-            => DataContextChangeAttributes.ToArray();
+        {
+            get
+            {
+                if (DataContextChangeAttributes.IsDefaultOrEmpty)
+                {
+                    return Array.Empty<DataContextChangeAttribute>();
+                }
+
+                return DataContextChangeAttributes.ToArray();
+            }
+        }
 
         ITypeDescriptor IControlAttributeDescriptor.DeclaringType => DeclaringType;
 

@@ -25,11 +25,5 @@
 
         public const string Void
             = "System.Void";
-
-        public const string DotvvmProperty
-            = "DotVVM.Framework.Binding.DotvvmProperty";
-
-        public const string DotvvmPropertyGroup
-            = "DotVVM.Framework.Compilation.ControlTree";
     }
 }
