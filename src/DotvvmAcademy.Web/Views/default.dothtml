@@ -1,6 +1,7 @@
 ﻿@viewModel DotvvmAcademy.Web.ViewModels.DefaultViewModel
 @masterPage Views/site.dotmaster
 @import DotvvmAcademy.Web.Resources.Localization
+@import System.Linq
 
 <dot:Content ContentPlaceHolderID="HeaderContent">
     <section class="main-header no-padding" RenderSettings.Mode="Server">
@@ -19,15 +20,17 @@
     <section class="section-lections no-padding-top">
         <div class="container-large">
             <dot:Repeater DataSource="{value: Lessons}" class="lessons-container" RenderSettings.Mode="Server">
-                <div class="{value: IsFinished ? "lessons-item finished" : "lessons-item" }">
-                    <cc:SvgToHtml Source="{value:IsFinished ? "images/Icons/medal.svg" : ImageUrl}">
+                <%--<div class="{value: IsFinished ? "lessons-item finished" : "lessons-item" }">--%>
+                <div class="lessons-item">
+                    <%--<cc:SvgToHtml Source="{value:IsFinished ? "images/Icons/medal.svg" : ImageUrl}">--%>
+                    <cc:SvgToHtml Source="{resource: ImageUrl}">
                     </cc:SvgToHtml>
-                    <h2>{{value: Name}}</h2>
-                    <dot:HtmlLiteral Html="{value: Annotation}" />
+                    <h2>{{resource: Name}}</h2>
+                    <dot:HtmlLiteral Html="{resource: Html}" />
                     <dot:RouteLink RouteName="Step"
                                    Param-Language="{value: _root.Language}"
-                                   Param-Lesson="{value: Moniker}"
-                                   Param-Step="{value: CurrentStep}"
+                                   Param-Lesson="{value: Lesson.Id.Moniker}"
+                                   Param-Step="{value: _root.CurrentSteps[_collection.Index]}"
                                    Text="{value: UIResources.Btn_StartLesson}"
                                    class="button" />
                 </div>

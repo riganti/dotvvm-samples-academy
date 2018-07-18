@@ -4,7 +4,7 @@ using System.Diagnostics;
 namespace DotvvmAcademy.CourseFormat
 {
     [DebuggerDisplay("StepId: {Path}")]
-    public sealed class StepId
+    public sealed class StepId : IResourceId
     {
         internal StepId(LessonId lessonId, string moniker)
         {

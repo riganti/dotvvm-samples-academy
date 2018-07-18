@@ -1,5 +1,4 @@
-﻿using DotvvmAcademy.BL;
-using DotvvmAcademy.CourseFormat;
+﻿using DotvvmAcademy.CourseFormat;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,7 +29,7 @@ namespace DotvvmAcademy.Web
             services.AddAuthorization();
             services.AddWebEncoders();
             services.AddDotVVM();
-            services.AddSingleton<LessonFacade>();
+            services.AddSingleton<MarkdownExtractor>();
             services.AddSingleton(new CourseWorkspace("../../sample/sample_course"));
             services.AddSingleton<ValidationService>();
         }

@@ -5,7 +5,7 @@ using System.IO;
 namespace DotvvmAcademy.CourseFormat
 {
     [DebuggerDisplay("CodeTaskId: {CodePath}, {ValidationScriptPath}")]
-    public sealed class CodeTaskId
+    public sealed class CodeTaskId : IResourceId
     {
         internal CodeTaskId(StepId stepId, string codeFile, string validationScriptFile)
         {

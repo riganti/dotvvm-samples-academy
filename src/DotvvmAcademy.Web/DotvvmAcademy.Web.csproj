@@ -35,9 +35,6 @@
         <DotNetCliToolReference Include="DotVVM.Compiler.Light" Version="1.1.9" />
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\DotvvmAcademy.BL\DotvvmAcademy.BL.csproj" />
-    </ItemGroup>
-    <ItemGroup>
     <Compile Update="Resources\Localization\UIResources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -58,5 +55,8 @@
     </ItemGroup>
     <ItemGroup>
       <Folder Include="wwwroot\css\" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\DotvvmAcademy.CourseFormat\DotvvmAcademy.CourseFormat.csproj" />
     </ItemGroup>
 </Project>

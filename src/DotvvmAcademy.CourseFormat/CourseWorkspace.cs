@@ -1,4 +1,5 @@
-﻿using System.Collections.Immutable;
+﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -9,7 +10,6 @@ namespace DotvvmAcademy.CourseFormat
     [DebuggerDisplay("CourseWorkspace: {RootDirectory}")]
     public class CourseWorkspace
     {
-
         public CourseWorkspace(string rootDirectory)
         {
             RootDirectory = new DirectoryInfo(rootDirectory);
@@ -20,20 +20,20 @@ namespace DotvvmAcademy.CourseFormat
 
         public ImmutableDictionary<string, LessonId> LessonIds { get; private set; }
 
+        public DirectoryInfo RootDirectory { get; }
+
         public ImmutableDictionary<string, StepId> StepIds { get; private set; }
 
         public ImmutableDictionary<string, CourseVariantId> VariantIds { get; private set; }
 
-        public DirectoryInfo RootDirectory { get; }
-
-        public void Refresh()
+        public DirectoryInfo GetDirectory(string virtualPath)
         {
-            var visitor = new CourseWorkspaceVisitor();
-            visitor.VisitRoot(RootDirectory);
-            CodeTaskIds = visitor.CodeTasks.ToImmutableDictionary();
-            LessonIds = visitor.Lessons.ToImmutableDictionary();
-            StepIds = visitor.Steps.ToImmutableDictionary();
-            VariantIds = visitor.Variants.ToImmutableDictionary();
+            return new DirectoryInfo(Path.Combine(RootDirectory.FullName, $".{virtualPath}"));
+        }
+
+        public FileInfo GetFile(string virtualPath)
+        {
+            return new FileInfo(Path.Combine(RootDirectory.FullName, $".{virtualPath}"));
         }
 
         public Task<ICodeTask> LoadCodeTask(string path)
@@ -109,14 +109,14 @@ namespace DotvvmAcademy.CourseFormat
             return variant;
         }
 
-        public DirectoryInfo GetDirectory(string virtualPath)
+        public void Refresh()
         {
-            return new DirectoryInfo(Path.Combine(RootDirectory.FullName, $".{virtualPath}"));
-        }
-
-        public FileInfo GetFile(string virtualPath)
-        {
-            return new FileInfo(Path.Combine(RootDirectory.FullName, $".{virtualPath}"));
+            var visitor = new CourseWorkspaceVisitor();
+            visitor.VisitRoot(RootDirectory);
+            CodeTaskIds = visitor.CodeTasks.ToImmutableDictionary();
+            LessonIds = visitor.Lessons.ToImmutableDictionary();
+            StepIds = visitor.Steps.ToImmutableDictionary();
+            VariantIds = visitor.Variants.ToImmutableDictionary();
         }
 
         private async Task<string> ReadFile(string path)

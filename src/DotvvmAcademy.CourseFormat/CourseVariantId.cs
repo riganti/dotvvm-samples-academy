@@ -4,7 +4,7 @@ using System.Diagnostics;
 namespace DotvvmAcademy.CourseFormat
 {
     [DebuggerDisplay("CourseVariantId: {Path}")]
-    public sealed class CourseVariantId
+    public sealed class CourseVariantId : IResourceId
     {
         internal CourseVariantId(string moniker)
         {

@@ -1,8 +1,8 @@
 ﻿using DotVVM.Framework.ViewModel;
-using DotvvmAcademy.BL;
 using DotvvmAcademy.CourseFormat;
 using Markdig;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,17 +10,16 @@ namespace DotvvmAcademy.Web.ViewModels
 {
     public class StepViewModel : SiteViewModel
     {
-        private readonly LessonFacade facade;
         private readonly ValidationService validation;
         private readonly CourseWorkspace workspace;
-        private LessonDTO lesson;
+        private readonly MarkdownExtractor extractor;
         private IStep step;
         private ICodeTask task;
 
-        public StepViewModel(LessonFacade facade, CourseWorkspace workspace, ValidationService validation)
+        public StepViewModel(CourseWorkspace workspace, MarkdownExtractor extractor, ValidationService validation)
         {
-            this.facade = facade;
             this.workspace = workspace;
+            this.extractor = extractor;
             this.validation = validation;
         }
 
@@ -55,17 +54,18 @@ namespace DotvvmAcademy.Web.ViewModels
 
         public override async Task Load()
         {
-            lesson = await facade.GetLesson(Language, Lesson);
-            var index = lesson.Steps.IndexOf(Step);
+            var lesson = await workspace.LoadLesson($"/{Language}/{Lesson}");
+            var stepNames = lesson.Steps.Values.Select(i => i.Moniker).OrderBy(i => i).ToImmutableList();
+            var index = stepNames.IndexOf(Step);
             IsPreviousVisible = index > 0;
-            IsNextVisible = index < lesson.Steps.Count - 1;
+            IsNextVisible = index < stepNames.Count - 1;
             if (IsPreviousVisible)
             {
-                PreviousStep = lesson.Steps[index - 1];
+                PreviousStep = stepNames[index - 1];
             }
             if (IsNextVisible)
             {
-                NextStep = lesson.Steps[index + 1];
+                NextStep = stepNames[index + 1];
             }
             step = await workspace.LoadStep($"/{Language}/{Lesson}/{Step}");
             Text = Markdown.ToHtml(step.Text);
