@@ -16,12 +16,12 @@ namespace DotvvmAcademy.Web
         {
             loggerFactory.AddConsole();
 
-            var dotvvmConfiguration = app.UseDotVVM<DotvvmStartup>(env.ContentRootPath);
-
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(env.WebRootPath)
             });
+
+            var dotvvmConfiguration = app.UseDotVVM<DotvvmStartup>(env.ContentRootPath);
         }
 
         public void ConfigureServices(IServiceCollection services)
