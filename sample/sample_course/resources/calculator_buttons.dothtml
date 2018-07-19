@@ -1,0 +1,14 @@
+@viewModel CourseFormat.CalculatorViewModel
+
+<!doctype html>
+<html>
+    <body>
+        {{value: Result}}
+        <dot:TextBox Text="{value: LeftOperand}" />
+        <dot:TextBox Text="{value: RightOperand}" />
+        <dot:Button Click="{command: Add()}">+</dot:Button>
+        <dot:Button Click="{command: Subtract()}">-</dot:Button>
+        <dot:Button Click="{command: Multiply()}">*</dot:Button>
+        <dot:Button Click="{command: Divide()}">/<dot:Button>
+    </body>
+</html>
