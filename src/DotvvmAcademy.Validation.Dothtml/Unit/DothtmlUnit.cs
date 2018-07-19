@@ -4,7 +4,7 @@ using System.Collections.Concurrent;
 
 namespace DotvvmAcademy.Validation.Dothtml.Unit
 {
-    public class DothtmlDocument : IValidationUnit
+    public class DothtmlUnit : IValidationUnit
     {
         public string CorrectCode { get; set; }
 
