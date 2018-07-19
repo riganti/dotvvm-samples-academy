@@ -11,7 +11,7 @@ using System.Linq;
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
     [DebuggerDisplay("GroupDescriptor: {FullName,nq}")]
-    internal class ValidationPropertyGroupDescriptor : IPropertyGroupDescriptor
+    public class ValidationPropertyGroupDescriptor : IPropertyGroupDescriptor
     {
         public const string PropertyGroupSuffix = "GroupDescriptor";
 

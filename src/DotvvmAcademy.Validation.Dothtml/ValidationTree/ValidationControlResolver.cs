@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
-    internal class ValidationControlResolver : IControlResolver
+    public class ValidationControlResolver : IControlResolver
     {
         private readonly ImmutableDictionary<string, BindingParserOptions> bindingOptions = GetDefaultBindingOptions();
         private readonly CSharpCompilation compilation;

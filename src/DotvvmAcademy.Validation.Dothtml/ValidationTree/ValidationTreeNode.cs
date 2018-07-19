@@ -5,7 +5,7 @@ using System.Diagnostics;
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
     [DebuggerDisplay("TreeNode")]
-    internal abstract class ValidationTreeNode : IAbstractTreeNode
+    public abstract class ValidationTreeNode : IAbstractTreeNode
     {
         public ValidationTreeNode(DothtmlNode node)
         {

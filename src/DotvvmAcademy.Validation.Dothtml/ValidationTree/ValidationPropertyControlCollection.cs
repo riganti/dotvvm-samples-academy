@@ -8,7 +8,7 @@ using System.Diagnostics;
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
     [DebuggerDisplay("PropertyControlCollection: {Property.FullName,nq}, Count = {Controls.Length,nq}")]
-    internal class ValidationPropertyControlCollection : ValidationPropertySetter, IAbstractPropertyControlCollection
+    public class ValidationPropertyControlCollection : ValidationPropertySetter, IAbstractPropertyControlCollection
     {
         public ValidationPropertyControlCollection(
             DothtmlNode node,

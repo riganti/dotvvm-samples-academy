@@ -6,7 +6,7 @@ using System.Diagnostics;
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
     [DebuggerDisplay("BaseTypeDirective: {Type.FullName,nq}")]
-    internal class ValidationBaseTypeDirective : ValidationTypeDirective, IAbstractBaseTypeDirective
+    public class ValidationBaseTypeDirective : ValidationTypeDirective, IAbstractBaseTypeDirective
     {
         public ValidationBaseTypeDirective(
             DothtmlDirectiveNode node,

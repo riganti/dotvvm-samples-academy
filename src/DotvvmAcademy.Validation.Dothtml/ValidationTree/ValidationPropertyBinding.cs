@@ -6,7 +6,7 @@ using System.Diagnostics;
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
     [DebuggerDisplay("PropertyBinding: {Property.FullName,nq}, BindingType = {Binding.BindingType.Name,nq}")]
-    internal class ValidationPropertyBinding : ValidationPropertySetter, IAbstractPropertyBinding
+    public class ValidationPropertyBinding : ValidationPropertySetter, IAbstractPropertyBinding
     {
         public ValidationPropertyBinding(
             DothtmlNode node,

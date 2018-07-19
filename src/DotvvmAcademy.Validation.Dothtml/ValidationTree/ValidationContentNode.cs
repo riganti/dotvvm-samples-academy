@@ -7,7 +7,7 @@ using System.Diagnostics;
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
     [DebuggerDisplay("ContentNode: {Metadata.Type.FullName,nq}")]
-    internal abstract class ValidationContentNode : ValidationTreeNode, IAbstractContentNode
+    public abstract class ValidationContentNode : ValidationTreeNode, IAbstractContentNode
     {
         private ImmutableArray<ValidationControl>.Builder content = ImmutableArray.CreateBuilder<ValidationControl>();
 

@@ -6,7 +6,7 @@ using System.Diagnostics;
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
     [DebuggerDisplay("ServiceInjectDirective: {Type.FullName,nq}")]
-    internal class ValidationServiceInjectDirective : ValidationDirective, IAbstractServiceInjectDirective
+    public class ValidationServiceInjectDirective : ValidationDirective, IAbstractServiceInjectDirective
     {
         public ValidationServiceInjectDirective(
             DothtmlDirectiveNode node,

@@ -10,7 +10,7 @@ using System.Linq;
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
     [DebuggerDisplay("TypeDescriptor: {FullName,nq}")]
-    internal class ValidationTypeDescriptor : ITypeDescriptor
+    public class ValidationTypeDescriptor : ITypeDescriptor
     {
         private readonly CSharpCompilation compilation;
         private readonly ValidationTypeDescriptorFactory factory;

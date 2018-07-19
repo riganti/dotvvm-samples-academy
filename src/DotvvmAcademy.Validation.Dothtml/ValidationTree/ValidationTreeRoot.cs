@@ -8,7 +8,7 @@ using System.Linq;
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
     [DebuggerDisplay("TreeRoot")]
-    internal class ValidationTreeRoot : ValidationContentNode, IAbstractTreeRoot
+    public class ValidationTreeRoot : ValidationContentNode, IAbstractTreeRoot
     {
         private Dictionary<string, List<IAbstractDirective>> directivesDictionary;
 

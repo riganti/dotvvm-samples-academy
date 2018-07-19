@@ -8,7 +8,7 @@ using DotVVM.Framework.Compilation.ControlTree;
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
     [DebuggerDisplay("DataContextStack: {DataContextType.FullName,nq}")]
-    internal class ValidationDataContextStack : IDataContextStack
+    public class ValidationDataContextStack : IDataContextStack
     {
         public ValidationDataContextStack(
             ValidationTypeDescriptor dataContextType,

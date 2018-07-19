@@ -7,7 +7,7 @@ using System.Collections.Immutable;
 
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
-    internal class ValidationTreeResolver : ControlTreeResolverBase
+    public class ValidationTreeResolver : ControlTreeResolverBase
     {
         private readonly ValidationTypeDescriptorFactory descriptorFactory;
         private readonly ValidationControlTypeFactory typeFactory;

@@ -6,7 +6,7 @@ using DotVVM.Framework.Compilation.ControlTree;
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
     [DebuggerDisplay("ControlType: {Type.FullName,nq}")]
-    internal class ValidationControlType : IControlType
+    public class ValidationControlType : IControlType
     {
         public ValidationControlType(
             ValidationTypeDescriptor type,

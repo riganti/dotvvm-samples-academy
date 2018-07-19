@@ -8,7 +8,7 @@ using System.Diagnostics;
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
     [DebuggerDisplay("PropertyTemplate: {Property.FullName,nq}, Count = {Content.Length,nq}")]
-    internal class ValidationPropertyTemplate : ValidationPropertySetter, IAbstractPropertyTemplate
+    public class ValidationPropertyTemplate : ValidationPropertySetter, IAbstractPropertyTemplate
     {
         public ValidationPropertyTemplate(
             DothtmlNode node,

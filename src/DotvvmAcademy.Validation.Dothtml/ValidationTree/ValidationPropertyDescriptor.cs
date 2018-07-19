@@ -12,7 +12,7 @@ using System.Linq;
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
     [DebuggerDisplay("PropertyDescriptor: {FullName,nq}")]
-    internal class ValidationPropertyDescriptor : IPropertyDescriptor
+    public class ValidationPropertyDescriptor : IPropertyDescriptor
     {
         public const string GroupSeparator = ":";
         public const string PropertySuffix = "Property";

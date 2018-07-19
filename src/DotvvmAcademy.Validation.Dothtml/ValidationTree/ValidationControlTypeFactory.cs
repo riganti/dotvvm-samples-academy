@@ -4,7 +4,7 @@ using System.Collections.Concurrent;
 
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
-    internal class ValidationControlTypeFactory
+    public class ValidationControlTypeFactory
     {
         private readonly ConcurrentDictionary<ITypeSymbol, ValidationControlType> cache
             = new ConcurrentDictionary<ITypeSymbol, ValidationControlType>();

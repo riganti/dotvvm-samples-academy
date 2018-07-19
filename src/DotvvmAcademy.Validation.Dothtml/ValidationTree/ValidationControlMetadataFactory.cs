@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
-    internal class ValidationControlMetadataFactory
+    public class ValidationControlMetadataFactory
     {
         private readonly ConcurrentDictionary<ITypeSymbol, ValidationControlMetadata> cache
             = new ConcurrentDictionary<ITypeSymbol, ValidationControlMetadata>();

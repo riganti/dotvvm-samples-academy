@@ -6,7 +6,7 @@ using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
     [DebuggerDisplay(@"Binding: \{{BindingType.Name,nq}: {Value,nq}\}")]
-    internal class ValidationBinding : ValidationTreeNode, IAbstractBinding
+    public class ValidationBinding : ValidationTreeNode, IAbstractBinding
     {
         private readonly DothtmlBindingNode node;
 

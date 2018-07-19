@@ -8,7 +8,7 @@ using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
     [DebuggerDisplay("Control: {Metadata.Type.FullName,nq}")]
-    internal class ValidationControl : ValidationContentNode, IAbstractControl
+    public class ValidationControl : ValidationContentNode, IAbstractControl
     {
         private ImmutableArray<ValidationPropertySetter>.Builder properties
             = ImmutableArray.CreateBuilder<ValidationPropertySetter>();

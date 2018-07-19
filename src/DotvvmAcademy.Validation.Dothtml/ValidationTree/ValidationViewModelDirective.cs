@@ -6,7 +6,7 @@ using System.Diagnostics;
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
     [DebuggerDisplay("ViewModelDirective: {Type,nq}")]
-    internal class ValidationViewModelDirective : ValidationTypeDirective, IAbstractViewModelDirective
+    public class ValidationViewModelDirective : ValidationTypeDirective, IAbstractViewModelDirective
     {
         public ValidationViewModelDirective(
             DothtmlDirectiveNode node,

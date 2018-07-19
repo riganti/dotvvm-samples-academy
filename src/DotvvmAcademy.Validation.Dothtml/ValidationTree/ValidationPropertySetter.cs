@@ -6,7 +6,7 @@ using System.Diagnostics;
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
     [DebuggerDisplay("PropertySetter: {Property.FullName,nq}")]
-    internal abstract class ValidationPropertySetter : ValidationTreeNode, IAbstractPropertySetter
+    public abstract class ValidationPropertySetter : ValidationTreeNode, IAbstractPropertySetter
     {
         public ValidationPropertySetter(DothtmlNode node, ValidationPropertyDescriptor property) : base(node)
         {

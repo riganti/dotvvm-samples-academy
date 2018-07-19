@@ -10,7 +10,7 @@ using System.Linq;
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
     [DebuggerDisplay("ControlMetadata: {Type.FullName,nq}")]
-    internal class ValidationControlMetadata : IControlResolverMetadata
+    public class ValidationControlMetadata : IControlResolverMetadata
     {
         public ValidationControlMetadata(
             ValidationControlType controlType,

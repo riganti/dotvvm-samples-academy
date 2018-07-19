@@ -6,7 +6,7 @@ using System.Diagnostics;
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
     [DebuggerDisplay("ImportDirective: {AliasSyntax.DebuggerDisplay,nq}={QualifiedNameSyntax.DebuggerDisplay,nq}")]
-    internal class ValidationImportDirective : ValidationDirective, IAbstractImportDirective
+    public class ValidationImportDirective : ValidationDirective, IAbstractImportDirective
     {
         public ValidationImportDirective(
             DothtmlDirectiveNode node,

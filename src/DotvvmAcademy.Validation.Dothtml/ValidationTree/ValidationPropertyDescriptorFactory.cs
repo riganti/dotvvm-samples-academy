@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
-    internal class ValidationPropertyDescriptorFactory
+    public class ValidationPropertyDescriptorFactory
     {
         private readonly CSharpCompilation compilation;
         private readonly ValidationTypeDescriptorFactory descriptorFactory;

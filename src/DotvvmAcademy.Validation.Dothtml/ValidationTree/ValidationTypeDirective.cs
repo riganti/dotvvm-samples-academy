@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
-    internal abstract class ValidationTypeDirective : ValidationDirective, IAbstractTypeSpecificationDirective
+    public abstract class ValidationTypeDirective : ValidationDirective, IAbstractTypeSpecificationDirective
     {
         public ValidationTypeDirective(
             DothtmlDirectiveNode node,

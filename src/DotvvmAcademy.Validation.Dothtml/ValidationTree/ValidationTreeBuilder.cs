@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
-    internal class ValidationTreeBuilder : IAbstractTreeBuilder
+    public class ValidationTreeBuilder : IAbstractTreeBuilder
     {
         private readonly ValidationTypeDescriptorFactory descriptorFactory;
         private readonly ValidationPropertyDescriptorFactory propertyFactory;
