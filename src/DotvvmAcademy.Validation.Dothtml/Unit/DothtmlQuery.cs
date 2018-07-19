@@ -6,7 +6,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
 {
     public class DothtmlQuery
     {
-        private List<Action<ConstraintContext>> registered = new List<Action<ConstraintContext>>();
+        private List<Action<DothtmlConstraintContext>> registered = new List<Action<DothtmlConstraintContext>>();
 
         public DothtmlQuery(string xpath)
         {
@@ -15,7 +15,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
 
         public string XPath { get; }
 
-        public void AddConstraint(Action<ConstraintContext> constraint) => registered.Add(constraint);
+        public void AddConstraint(Action<DothtmlConstraintContext> constraint) => registered.Add(constraint);
     }
 
     public class DothtmlQuery<TResult> : DothtmlQuery
@@ -25,6 +25,6 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
         {
         }
 
-        public void AddConstraint(Action<ConstraintContext<TResult>> constraint) => AddConstraint(constraint);
+        public void AddConstraint(Action<DothtmlConstraintContext<TResult>> constraint) => AddConstraint(constraint);
     }
 }

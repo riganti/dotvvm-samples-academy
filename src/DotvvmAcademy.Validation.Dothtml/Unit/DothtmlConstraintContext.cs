@@ -3,11 +3,11 @@ using System.Collections.Immutable;
 
 namespace DotvvmAcademy.Validation.Dothtml.Unit
 {
-    public abstract class ConstraintContext
+    public abstract class DothtmlConstraintContext
     {
         private readonly ValidationReporter reporter;
 
-        public ConstraintContext(ValidationReporter reporter, string xpath, ImmutableArray<ValidationTreeNode> result)
+        public DothtmlConstraintContext(ValidationReporter reporter, string xpath, ImmutableArray<ValidationTreeNode> result)
         {
             this.reporter = reporter;
             XPath = xpath;
@@ -33,10 +33,10 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
         }
     }
 
-    public abstract class ConstraintContext<TResult> : ConstraintContext
+    public abstract class DothtmlConstraintContext<TResult> : DothtmlConstraintContext
         where TResult : ValidationTreeNode
     {
-        public ConstraintContext(ValidationReporter reporter, string xpath, ImmutableArray<TResult> result)
+        public DothtmlConstraintContext(ValidationReporter reporter, string xpath, ImmutableArray<TResult> result)
             : base(reporter, xpath, result.CastArray<ValidationTreeNode>())
         {
             Result = result;
