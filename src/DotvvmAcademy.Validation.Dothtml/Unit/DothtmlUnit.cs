@@ -4,13 +4,13 @@ using System.Collections.Concurrent;
 
 namespace DotvvmAcademy.Validation.Dothtml.Unit
 {
-    public class DothtmlUnit : IValidationUnit
+    public class DothtmlUnit : IUnit
     {
         public string CorrectCode { get; set; }
 
         public string DefaultCode { get; set; }
 
-        public ConcurrentDictionary<string, DothtmlQuery> Queries { get; }
+        public ConcurrentDictionary<string, IQuery> Queries { get; }
 
         public DothtmlQuery<ValidationControl> GetControls(string xpath)
         {

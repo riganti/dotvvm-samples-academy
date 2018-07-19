@@ -1,6 +1,6 @@
 ﻿namespace DotvvmAcademy.Validation.Unit
 {
-    public interface IValidationUnit
+    public interface IUnit
     {
         string CorrectCode { get; set; }
 

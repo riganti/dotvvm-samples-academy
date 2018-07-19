@@ -1,22 +1,29 @@
 ﻿using DotvvmAcademy.Validation.Dothtml.ValidationTree;
+using DotvvmAcademy.Validation.Unit;
 using System.Collections.Immutable;
 
 namespace DotvvmAcademy.Validation.Dothtml.Unit
 {
-    public abstract class DothtmlConstraintContext
+    public abstract class DothtmlConstraintContext<TResult> : IConstraintContext<TResult>
+        where TResult : ValidationTreeNode
     {
         private readonly ValidationReporter reporter;
 
-        public DothtmlConstraintContext(ValidationReporter reporter, string xpath, ImmutableArray<ValidationTreeNode> result)
+        public DothtmlConstraintContext(
+            ValidationReporter reporter,
+            string xpath,
+            ImmutableArray<TResult> result)
         {
             this.reporter = reporter;
             XPath = xpath;
             Result = result;
         }
 
-        public ImmutableArray<ValidationTreeNode> Result { get; }
+        public ImmutableArray<TResult> Result { get; }
 
         public string XPath { get; }
+
+        ImmutableArray<object> IConstraintContext.Result => Result.CastArray<object>();
 
         public void Report(
             string message,
@@ -31,17 +38,5 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
                 Report(message, severity, node);
             }
         }
-    }
-
-    public abstract class DothtmlConstraintContext<TResult> : DothtmlConstraintContext
-        where TResult : ValidationTreeNode
-    {
-        public DothtmlConstraintContext(ValidationReporter reporter, string xpath, ImmutableArray<TResult> result)
-            : base(reporter, xpath, result.CastArray<ValidationTreeNode>())
-        {
-            Result = result;
-        }
-
-        public new ImmutableArray<TResult> Result { get; }
     }
 }
