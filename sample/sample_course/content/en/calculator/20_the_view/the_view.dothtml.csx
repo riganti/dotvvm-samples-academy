@@ -13,7 +13,7 @@ GetControls("/child::node()[1]")
     .IsOfType<RawLiteral>();
 
 GetControls("/RawLiteral[1]/@EncodedText")
-    .TextEquals("<!doctype html>");
+    .StringEquals("<!doctype html>");
 
 GetControls("/html")
     .CountEquals(1);
