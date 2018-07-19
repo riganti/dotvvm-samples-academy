@@ -1,6 +1,6 @@
 ﻿namespace DotvvmAcademy.Validation
 {
-    public enum ValidationDiagnosticSeverity
+    public enum ValidationSeverity
     {
         Error,
         Warning,
