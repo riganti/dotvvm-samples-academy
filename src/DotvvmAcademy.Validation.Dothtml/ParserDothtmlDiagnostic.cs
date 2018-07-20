@@ -1,13 +1,13 @@
-﻿using DotvvmAcademy.Validation.Dothtml.ValidationTree;
+﻿using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 
 namespace DotvvmAcademy.Validation.Dothtml
 {
-    public class ResolverDothtmlDiagnostic : IValidationDiagnostic
+    public class ParserDothtmlDiagnostic : IValidationDiagnostic
     {
-        public ResolverDothtmlDiagnostic(
+        public ParserDothtmlDiagnostic(
             string message,
             ValidationSeverity severity = ValidationSeverity.Error,
-            ValidationTreeNode node = null)
+            DothtmlNode node = null)
         {
             Message = message;
             Severity = severity;
@@ -16,13 +16,13 @@ namespace DotvvmAcademy.Validation.Dothtml
 
         public string Message { get; }
 
-        public ValidationTreeNode Node { get; }
+        public DothtmlNode Node { get; }
 
         public ValidationSeverity Severity { get; }
 
-        public int End => Node?.DothtmlNode.EndPosition ?? -1;
+        public int Start => Node.StartPosition;
 
-        public int Start => Node?.DothtmlNode.StartPosition ?? -1;
+        public int End => Node.EndPosition;
 
         object IValidationDiagnostic.UnderlyingObject => Node;
     }

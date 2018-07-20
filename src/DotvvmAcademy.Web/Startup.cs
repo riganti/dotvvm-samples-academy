@@ -1,4 +1,9 @@
 ﻿using DotvvmAcademy.CourseFormat;
+using DotvvmAcademy.Validation;
+using DotvvmAcademy.Validation.CSharp;
+using DotvvmAcademy.Validation.CSharp.Unit;
+using DotvvmAcademy.Validation.Dothtml;
+using DotvvmAcademy.Validation.Dothtml.Unit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,6 +37,8 @@ namespace DotvvmAcademy.Web
             services.AddSingleton<MarkdownExtractor>();
             services.AddSingleton(new CourseWorkspace("../../sample/sample_course"));
             services.AddSingleton<CodeTaskValidator>();
+            services.AddSingleton<IValidationService<CSharpUnit>, CSharpValidationService>();
+            services.AddSingleton<IValidationService<DothtmlUnit>, DothtmlValidationService>();
         }
     }
 }

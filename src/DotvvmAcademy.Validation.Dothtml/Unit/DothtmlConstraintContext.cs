@@ -4,7 +4,7 @@ using System.Collections.Immutable;
 
 namespace DotvvmAcademy.Validation.Dothtml.Unit
 {
-    public abstract class DothtmlConstraintContext<TResult> : IConstraintContext<TResult>
+    public class DothtmlConstraintContext<TResult> : IConstraintContext<TResult>
         where TResult : ValidationTreeNode
     {
         private readonly ValidationReporter reporter;

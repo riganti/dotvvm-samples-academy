@@ -10,17 +10,23 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
     public class ValidationTreeResolver : ControlTreeResolverBase
     {
         private readonly ValidationTypeDescriptorFactory descriptorFactory;
+        private readonly DothtmlValidationOptions options;
+        private readonly ValidationReporter reporter;
         private readonly ValidationControlTypeFactory typeFactory;
 
         public ValidationTreeResolver(
             ValidationControlResolver controlResolver,
             ValidationTreeBuilder treeBuilder,
             ValidationTypeDescriptorFactory descriptorFactory,
-            ValidationControlTypeFactory typeFactory)
+            ValidationControlTypeFactory typeFactory,
+            ValidationReporter reporter,
+            DothtmlValidationOptions options)
             : base(controlResolver, treeBuilder)
         {
             this.descriptorFactory = descriptorFactory;
             this.typeFactory = typeFactory;
+            this.reporter = reporter;
+            this.options = options;
         }
 
         protected override IAbstractBinding CompileBinding(
@@ -53,6 +59,18 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
                 parent: (parentDataContextStack as ValidationDataContextStack),
                 namespaceImports: immutableImports,
                 extensionParameters: immutableParameters);
+        }
+
+        protected override bool LogError(Exception exception, DothtmlNode node)
+        {
+            if (options.IncludeCompilerDiagnostics)
+            {
+                reporter.Report(
+                    message: exception.Message,
+                    node: node);
+            }
+
+            return true;
         }
     }
 }

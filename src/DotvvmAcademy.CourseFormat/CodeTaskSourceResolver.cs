@@ -4,11 +4,11 @@ using System.IO;
 
 namespace DotvvmAcademy.CourseFormat
 {
-    public class CourseFormatSourceResolver : SourceReferenceResolver
+    public class CodeTaskSourceResolver : SourceReferenceResolver
     {
         private readonly CourseWorkspace workspace;
 
-        public CourseFormatSourceResolver(CourseWorkspace workspace)
+        public CodeTaskSourceResolver(CourseWorkspace workspace)
         {
             this.workspace = workspace;
         }

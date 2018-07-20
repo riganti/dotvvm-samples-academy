@@ -1,4 +1,5 @@
-﻿using DotvvmAcademy.Validation.Dothtml;
+﻿using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
+using DotvvmAcademy.Validation.Dothtml;
 using DotvvmAcademy.Validation.Dothtml.ValidationTree;
 
 namespace DotvvmAcademy.Validation
@@ -10,6 +11,13 @@ namespace DotvvmAcademy.Validation
             string message,
             ValidationSeverity severity = ValidationSeverity.Error,
             ValidationTreeNode node = null)
-            => reporter.Report(new DothtmlDiagnostic(message, severity, node));
+            => reporter.Report(new ResolverDothtmlDiagnostic(message, severity, node));
+
+        public static void Report(
+            this ValidationReporter reporter,
+            string message,
+            ValidationSeverity severity = ValidationSeverity.Error,
+            DothtmlNode node = null)
+            => reporter.Report(new ParserDothtmlDiagnostic(message, severity, node));
     }
 }

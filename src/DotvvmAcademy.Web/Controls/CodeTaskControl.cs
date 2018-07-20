@@ -12,7 +12,7 @@ namespace DotvvmAcademy.Web.Controls
             = DotvvmProperty.Register<string, CodeTaskControl>(c => c.Code, null);
 
         public static readonly DotvvmProperty DiagnosticsProperty
-            = DotvvmProperty.Register<List<ValidationDiagnostic>, CodeTaskControl>(c => c.Diagnostics, null);
+            = DotvvmProperty.Register<IEnumerable<IValidationDiagnostic>, CodeTaskControl>(c => c.Diagnostics, null);
 
         public static readonly DotvvmProperty LanguageProperty
             = DotvvmProperty.Register<string, CodeTaskControl>(c => c.Language, null);
@@ -29,9 +29,9 @@ namespace DotvvmAcademy.Web.Controls
         }
 
         [MarkupOptions(Required = true, AllowBinding = true, AllowHardCodedValue = false)]
-        public List<ValidationDiagnostic> Diagnostics
+        public IEnumerable<IValidationDiagnostic> Diagnostics
         {
-            get { return (List<ValidationDiagnostic>)GetValue(DiagnosticsProperty); }
+            get { return (IEnumerable<IValidationDiagnostic>)GetValue(DiagnosticsProperty); }
             set { SetValue(DiagnosticsProperty, value); }
         }
 

@@ -1,6 +1,8 @@
 ﻿using DotvvmAcademy.Meta;
 using DotvvmAcademy.Validation;
+using DotvvmAcademy.Validation.CSharp;
 using DotvvmAcademy.Validation.CSharp.Unit;
+using DotvvmAcademy.Validation.Dothtml;
 using DotvvmAcademy.Validation.Dothtml.Unit;
 using DotvvmAcademy.Validation.Unit;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
@@ -14,13 +16,21 @@ namespace DotvvmAcademy.CourseFormat
 {
     public class CodeTaskValidator
     {
-        private readonly ConcurrentDictionary<string, Task<IUnit>> cache 
+        private readonly ConcurrentDictionary<string, Task<IUnit>> cache
             = new ConcurrentDictionary<string, Task<IUnit>>();
+
+        private readonly IValidationService<CSharpUnit, CSharpValidationOptions> csharpService;
+        private readonly IValidationService<DothtmlUnit, DothtmlValidationOptions> dothtmlService;
         private readonly CourseWorkspace workspace;
 
-        public CodeTaskValidator(CourseWorkspace workspace)
+        public CodeTaskValidator(
+            CourseWorkspace workspace,
+            IValidationService<CSharpUnit, CSharpValidationOptions> csharpService,
+            IValidationService<DothtmlUnit, DothtmlValidationOptions> dothtmlService)
         {
             this.workspace = workspace;
+            this.csharpService = csharpService;
+            this.dothtmlService = dothtmlService;
         }
 
         public Task<IUnit> GetUnit(CodeTask codeTask)
@@ -38,9 +48,19 @@ namespace DotvvmAcademy.CourseFormat
             });
         }
 
-        public Task<ImmutableArray<ValidationDiagnostic>> Validate(IUnit unit, string code)
+        public Task<ImmutableArray<IValidationDiagnostic>> Validate(IUnit unit, string code)
         {
-            throw new NotImplementedException();
+            switch (unit)
+            {
+                case CSharpUnit csharpUnit:
+                    return csharpService.Validate(csharpUnit, code);
+
+                case DothtmlUnit dothtmlUnit:
+                    return dothtmlService.Validate(dothtmlUnit, code);
+
+                default:
+                    throw new NotSupportedException($"{nameof(IUnit)} type '{unit.GetType().Name}' is not supported.");
+            }
         }
 
         private Type GetGlobalsType(CodeTask codeTask)
@@ -79,7 +99,7 @@ namespace DotvvmAcademy.CourseFormat
                     "DotvvmAcademy.Validation.CSharp.Unit",
                     "DotvvmAcademy.Validation.Dothtml.Unit")
                 .WithFilePath(codeTask.Path)
-                .WithSourceResolver(new CourseFormatSourceResolver(workspace));
+                .WithSourceResolver(new CodeTaskSourceResolver(workspace));
         }
     }
 }

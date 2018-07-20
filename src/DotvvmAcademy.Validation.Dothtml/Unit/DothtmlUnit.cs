@@ -6,6 +6,8 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
 {
     public class DothtmlUnit : IUnit
     {
+        public string ViewModel { get; set; }
+
         public string CorrectCode { get; set; }
 
         public string DefaultCode { get; set; }

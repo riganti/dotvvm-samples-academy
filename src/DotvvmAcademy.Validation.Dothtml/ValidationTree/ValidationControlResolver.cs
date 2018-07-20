@@ -56,6 +56,9 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             return null;
         }
 
+        public ImmutableDictionary<string, INamespaceSymbol> GetRegisteredNamespaces()
+            => namespaces.ToImmutableDictionary();
+
         public void RegisterNamespace(string prefix, string @namespace, string assembly)
         {
             var assemblySymbol = compilation.References

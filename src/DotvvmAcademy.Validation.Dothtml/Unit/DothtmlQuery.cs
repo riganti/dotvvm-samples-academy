@@ -8,17 +8,18 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
     public class DothtmlQuery<TResult> : IQuery<TResult>
         where TResult : ValidationTreeNode
     {
-        private readonly List<Action<DothtmlConstraintContext<TResult>>> registered
-            = new List<Action<DothtmlConstraintContext<TResult>>>();
-
         public DothtmlQuery(string xpath)
         {
             XPath = xpath;
         }
 
+        public List<Action<DothtmlConstraintContext<TResult>>> Constraints { get; }
+            = new List<Action<DothtmlConstraintContext<TResult>>>();
+
         public string XPath { get; }
 
-        public void AddConstraint(Action<DothtmlConstraintContext<TResult>> constraint) => AddConstraint(constraint);
+        public void AddConstraint(Action<DothtmlConstraintContext<TResult>> constraint) 
+            => Constraints.Add(constraint);
 
         void IQuery<TResult>.AddConstraint(Action<IConstraintContext<TResult>> constraint) => AddConstraint(constraint);
 

@@ -3,6 +3,7 @@ using DotvvmAcademy.CourseFormat;
 using DotvvmAcademy.Validation;
 using Markdig;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -28,7 +29,7 @@ namespace DotvvmAcademy.Web.ViewModels
         public string CodeLanguage { get; set; }
 
         [Bind(Direction.ServerToClient)]
-        public List<ValidationDiagnostic> Diagnostics { get; set; }
+        public ImmutableArray<IValidationDiagnostic> Diagnostics { get; set; }
 
         [Bind(Direction.None)]
         public bool IsNextVisible { get; set; }
@@ -81,7 +82,7 @@ namespace DotvvmAcademy.Web.ViewModels
         {
             var codeTask = await workspace.LoadCodeTask(Language, Lesson, Step, step.CodeTask);
             var unit = await validator.GetUnit(codeTask);
-            Diagnostics = (await validator.Validate(unit, Code)).ToList();
+            Diagnostics = await validator.Validate(unit, Code);
         }
     }
 }
