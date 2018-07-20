@@ -1,8 +1,8 @@
 ﻿using DotVVM.Framework.ViewModel;
 using DotvvmAcademy.CourseFormat;
+using DotvvmAcademy.Validation;
 using Markdig;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,17 +10,16 @@ namespace DotvvmAcademy.Web.ViewModels
 {
     public class StepViewModel : SiteViewModel
     {
-        private readonly ValidationService validation;
-        private readonly CourseWorkspace workspace;
         private readonly MarkdownExtractor extractor;
-        private IStep step;
-        private ICodeTask task;
+        private readonly CodeTaskValidator validator;
+        private readonly CourseWorkspace workspace;
+        private Step step;
 
-        public StepViewModel(CourseWorkspace workspace, MarkdownExtractor extractor, ValidationService validation)
+        public StepViewModel(CourseWorkspace workspace, MarkdownExtractor extractor, CodeTaskValidator validator)
         {
             this.workspace = workspace;
             this.extractor = extractor;
-            this.validation = validation;
+            this.validator = validator;
         }
 
         public string Code { get; set; }
@@ -29,7 +28,7 @@ namespace DotvvmAcademy.Web.ViewModels
         public string CodeLanguage { get; set; }
 
         [Bind(Direction.ServerToClient)]
-        public List<ICodeTaskDiagnostic> Diagnostics { get; set; }
+        public List<ValidationDiagnostic> Diagnostics { get; set; }
 
         [Bind(Direction.None)]
         public bool IsNextVisible { get; set; }
@@ -54,35 +53,35 @@ namespace DotvvmAcademy.Web.ViewModels
 
         public override async Task Load()
         {
-            var lesson = await workspace.LoadLesson($"/{Language}/{Lesson}");
-            var stepNames = lesson.Steps.Values.Select(i => i.Moniker).OrderBy(i => i).ToImmutableList();
-            var index = stepNames.IndexOf(Step);
+            var lesson = await workspace.LoadLesson(Language, Lesson);
+            var index = lesson.Steps.IndexOf(Step);
             IsPreviousVisible = index > 0;
-            IsNextVisible = index < stepNames.Count - 1;
+            IsNextVisible = index < lesson.Steps.Length - 1;
             if (IsPreviousVisible)
             {
-                PreviousStep = stepNames[index - 1];
+                PreviousStep = lesson.Steps[index - 1];
             }
             if (IsNextVisible)
             {
-                NextStep = stepNames[index + 1];
+                NextStep = lesson.Steps[index + 1];
             }
-            step = await workspace.LoadStep($"/{Language}/{Lesson}/{Step}");
+            step = await workspace.LoadStep(Language, Lesson, Step);
             Text = Markdown.ToHtml(step.Text);
-            if (!Context.IsPostBack && step.CodeTaskId != null)
+            if (!Context.IsPostBack && step.CodeTask != null)
             {
-                task = await workspace.LoadCodeTask(step.CodeTaskId);
-                Code = task.Code;
-                CodeLanguage = task.Id.Language == ".cs" ? "csharp" : "html";
+                var codeTask = await workspace.LoadCodeTask(Language, Lesson, Step, step.CodeTask);
+                var unit = await validator.GetUnit(codeTask);
+                var defaultCodeResource = await workspace.Load<Resource>(unit.DefaultCode);
+                Code = defaultCodeResource?.Text ?? null;
+                CodeLanguage = codeTask.CodeLanguage;
             }
         }
 
         public async Task Validate()
         {
-            if (workspace.CodeTaskIds.TryGetValue($"/{Language}/{Lesson}/{Step}", out var id))
-            {
-                Diagnostics = (await validation.Validate(id, Code)).ToList();
-            }
+            var codeTask = await workspace.LoadCodeTask(Language, Lesson, Step, step.CodeTask);
+            var unit = await validator.GetUnit(codeTask);
+            Diagnostics = (await validator.Validate(unit, Code)).ToList();
         }
     }
 }

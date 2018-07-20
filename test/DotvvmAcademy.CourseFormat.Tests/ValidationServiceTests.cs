@@ -10,10 +10,11 @@ namespace DotvvmAcademy.CourseFormat.Tests
         public async Task BasicValidationTest()
         {
             var workspace = new CourseWorkspace("../../../../../sample/sample_course");
-            var service = new ValidationService(workspace);
-            var diagnostics = await service.Validate(workspace.CodeTaskIds["/en/introduction/20_first_task"], @"namespace SampleCourse
+            var codeTask = await workspace.Load<CodeTask>("/en/calculator/10_a_classic/a_classic.csharp.csx");
+            var validator = new CodeTaskValidator();
+            var diagnostics = await validator.Validate(codeTask, @"namespace SampleCourse
 {
-    public class Test
+    public class CalculatorViewModel
     {
     }
 }");
@@ -23,8 +24,9 @@ namespace DotvvmAcademy.CourseFormat.Tests
         public async Task LessBasicValidationTest()
         {
             var workspace = new CourseWorkspace("../../../../../sample/sample_course");
-            var service = new ValidationService(workspace);
-            var diagnostics = await service.Validate(workspace.CodeTaskIds["/en/introduction/30_second_task"], 
+            var validator = new CodeTaskValidator();
+            var codeTask = await workspace.Load<CodeTask>("/en/calculator/50_methods/methods.csharp.csx");
+            var diagnostics = await validator.Validate(codeTask,
                 @"namespace SampleCourse
 {
     public class Test

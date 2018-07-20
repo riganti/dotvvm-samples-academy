@@ -2,7 +2,7 @@
 {
     public class MarkdownLessonInfo
     {
-        internal MarkdownLessonInfo(ILesson lesson, string html, string imageUrl, string name)
+        public MarkdownLessonInfo(Lesson lesson, string html, string imageUrl, string name)
         {
             Lesson = lesson;
             Html = html;
@@ -14,7 +14,7 @@
 
         public string ImageUrl { get; }
 
-        public ILesson Lesson { get; }
+        public Lesson Lesson { get; }
 
         public string Name { get; }
     }

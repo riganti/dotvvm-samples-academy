@@ -4,7 +4,7 @@ using System.IO;
 
 namespace DotvvmAcademy.CourseFormat
 {
-    internal class CourseFormatSourceResolver : SourceReferenceResolver
+    public class CourseFormatSourceResolver : SourceReferenceResolver
     {
         private readonly CourseWorkspace workspace;
 
@@ -21,16 +21,18 @@ namespace DotvvmAcademy.CourseFormat
 
         public override Stream OpenRead(string resolvedPath)
         {
-            if(workspace.CodeTaskIds.TryGetValue(resolvedPath, out var id))
+            var file = workspace.GetFile(resolvedPath);
+            if (file.Exists)
             {
-                return workspace.GetFile(id.ValidationScriptPath).OpenRead();
+                return file.OpenRead();
             }
+
             return null;
         }
 
         public override string ResolveReference(string path, string baseFilePath)
         {
-            return PathUtilities.Normalize(PathUtilities.Combine(baseFilePath, path));
+            return SourcePath.Normalize(SourcePath.Combine(baseFilePath, path));
         }
     }
 }

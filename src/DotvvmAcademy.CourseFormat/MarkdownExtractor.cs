@@ -11,7 +11,7 @@ namespace DotvvmAcademy.CourseFormat
         public const string MissingImageUrl = null;
         public const string MissingName = "{Missing lesson name}";
 
-        public MarkdownLessonInfo Extract(ILesson lesson)
+        public MarkdownLessonInfo Extract(Lesson lesson)
         {
             var document = Markdown.Parse(lesson.Annotation);
             var name = ExtractName(document);

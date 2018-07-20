@@ -119,7 +119,7 @@ namespace ValidationTreeSample
         private IServiceProvider GetMinimalServices()
         {
             var c = new ServiceCollection();
-            c.AddScoped<CSharpCompilation>(p => CompileViewModel());
+            c.AddScoped(p => CompileViewModel());
             c.AddScoped<AttributeExtractor>();
             c.AddScoped<ValidationTypeDescriptorFactory>();
             c.AddScoped<ValidationControlTypeFactory>();
@@ -130,7 +130,6 @@ namespace ValidationTreeSample
             c.AddScoped<ValidationTreeBuilder>();
             c.AddScoped<DothtmlTokenizer>();
             c.AddScoped<DothtmlParser>();
-            c.AddScoped<ErrorAggregatingVisitor>();
             c.AddScoped<XPathTreeVisitor>();
             return c.BuildServiceProvider();
         }

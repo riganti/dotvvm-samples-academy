@@ -1,130 +1,76 @@
-﻿using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Diagnostics;
+﻿using System.Collections.Immutable;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace DotvvmAcademy.CourseFormat
 {
-    [DebuggerDisplay("CourseWorkspace: {RootDirectory}")]
     public class CourseWorkspace
     {
-        public CourseWorkspace(string rootDirectory)
+        private ImmutableDictionary<string, Task<Source>> sources;
+
+        public CourseWorkspace(string root) : this(new DirectoryInfo(root))
         {
-            RootDirectory = new DirectoryInfo(rootDirectory);
+        }
+
+        public CourseWorkspace(DirectoryInfo root)
+        {
+            Root = root;
             Refresh();
         }
 
-        public ImmutableDictionary<string, CodeTaskId> CodeTaskIds { get; private set; }
-
-        public ImmutableDictionary<string, LessonId> LessonIds { get; private set; }
-
-        public DirectoryInfo RootDirectory { get; }
-
-        public ImmutableDictionary<string, StepId> StepIds { get; private set; }
-
-        public ImmutableDictionary<string, CourseVariantId> VariantIds { get; private set; }
+        public DirectoryInfo Root { get; }
 
         public DirectoryInfo GetDirectory(string virtualPath)
         {
-            return new DirectoryInfo(Path.Combine(RootDirectory.FullName, $".{virtualPath}"));
+            return new DirectoryInfo(Path.Combine(Root.FullName, $".{virtualPath}"));
         }
 
-        public FileInfo GetFile(string virtualPath)
+        public FileInfo GetFile(string sourcePath)
         {
-            return new FileInfo(Path.Combine(RootDirectory.FullName, $".{virtualPath}"));
+            return new FileInfo(Path.Combine(Root.FullName, $".{sourcePath}"));
         }
 
-        public Task<ICodeTask> LoadCodeTask(string path)
+        public Task<Source> Load(string path)
         {
-            return CodeTaskIds.TryGetValue(path, out var id) ? LoadCodeTask(id) : Task.FromResult<ICodeTask>(null);
-        }
-
-        public async Task<ICodeTask> LoadCodeTask(CodeTaskId id)
-        {
-            var codeTask = new CodeTask(id);
-            codeTask.Code = await ReadFile(GetFile(id.CodePath).FullName);
-            codeTask.ValidationScript = await ReadFile(GetFile(id.ValidationScriptPath).FullName);
-            return codeTask;
-        }
-
-        public Task<ILesson> LoadLesson(string path)
-        {
-            return LessonIds.TryGetValue(path, out var id) ? LoadLesson(id) : Task.FromResult<ILesson>(null);
-        }
-
-        public async Task<ILesson> LoadLesson(LessonId id)
-        {
-            var dir = GetDirectory(id.Path);
-            var lesson = new Lesson(id);
-            var annotationFile = dir.EnumerateFiles("*.md", SearchOption.TopDirectoryOnly)
-                .FirstOrDefault();
-            if (annotationFile != null)
+            if (sources.TryGetValue(path, out var source))
             {
-                lesson.Annotation = await ReadFile(annotationFile.FullName);
+                return source;
             }
-            lesson.Steps = dir.EnumerateDirectories()
-                .Select(d => StepIds[$"{id.Path}/{d.Name}"])
-                .ToImmutableDictionary(i => i.Path, i => i);
-            return lesson;
+
+            return Task.FromResult<Source>(null);
         }
 
-        public Task<IStep> LoadStep(string path)
+        public async Task<TSource> Load<TSource>(string path)
+            where TSource : Source
         {
-            return StepIds.TryGetValue(path, out var id) ? LoadStep(id) : Task.FromResult<IStep>(null);
-        }
-
-        public async Task<IStep> LoadStep(StepId id)
-        {
-            var dir = GetDirectory(id.Path);
-            var step = new Step(id);
-            var stepFile = dir.EnumerateFiles("*.md", SearchOption.TopDirectoryOnly)
-                .FirstOrDefault();
-            if (stepFile != null)
+            var source = await Load(path);
+            if (source == null)
             {
-                step.Text = await ReadFile(stepFile.FullName);
+                return null;
             }
-            step.CodeTaskId = CodeTaskIds.GetValueOrDefault(id.Path);
-            return step;
-        }
 
-        public Task<ICourseVariant> LoadVariant(string path)
-        {
-            return VariantIds.TryGetValue(path, out var id) ? LoadVariant(id) : Task.FromResult<ICourseVariant>(null);
-        }
-
-        public async Task<ICourseVariant> LoadVariant(CourseVariantId id)
-        {
-            var dir = GetDirectory(id.Path);
-            var variant = new CourseVariant(id);
-            var annotationFile = dir.EnumerateFiles("*.md", SearchOption.TopDirectoryOnly).FirstOrDefault();
-            if (annotationFile != null)
+            if (source is TSource cast)
             {
-                variant.Annotation = await ReadFile(annotationFile.FullName);
+                return cast;
             }
-            variant.Lessons = dir.EnumerateDirectories()
-                .Select(d => LessonIds[$"{id.Path}/{d.Name}"])
-                .ToImmutableDictionary(i => i.Path, i => i);
-            return variant;
-        }
-
-        public void Refresh()
-        {
-            var visitor = new CourseWorkspaceVisitor();
-            visitor.VisitRoot(RootDirectory);
-            CodeTaskIds = visitor.CodeTasks.ToImmutableDictionary();
-            LessonIds = visitor.Lessons.ToImmutableDictionary();
-            StepIds = visitor.Steps.ToImmutableDictionary();
-            VariantIds = visitor.Variants.ToImmutableDictionary();
-        }
-
-        private async Task<string> ReadFile(string path)
-        {
-            using (var reader = new StreamReader(path))
+            else
             {
-                return await reader.ReadToEndAsync();
+                return null;
             }
         }
+
+        public Task<CodeTask> LoadCodeTask(string variant, string lesson, string step, string codeTask)
+            => Load<CodeTask>($"/{SourceVisitor.ContentDirectory}/{variant}/{lesson}/{step}/{codeTask}");
+
+        public Task<Lesson> LoadLesson(string variant, string lesson)
+            => Load<Lesson>($"/{SourceVisitor.ContentDirectory}/{variant}/{lesson}");
+
+        public Task<Step> LoadStep(string variant, string lesson, string step)
+            => Load<Step>($"/{SourceVisitor.ContentDirectory}/{variant}/{lesson}/{step}");
+
+        public Task<CourseVariant> LoadVariant(string variant)
+            => Load<CourseVariant>($"/{SourceVisitor.ContentDirectory}/{variant}");
+
+        public void Refresh() => sources = new SourceVisitor().Visit(Root);
     }
 }

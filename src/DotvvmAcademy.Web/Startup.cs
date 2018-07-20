@@ -31,7 +31,7 @@ namespace DotvvmAcademy.Web
             services.AddDotVVM();
             services.AddSingleton<MarkdownExtractor>();
             services.AddSingleton(new CourseWorkspace("../../sample/sample_course"));
-            services.AddSingleton<ValidationService>();
+            services.AddSingleton<CodeTaskValidator>();
         }
     }
 }

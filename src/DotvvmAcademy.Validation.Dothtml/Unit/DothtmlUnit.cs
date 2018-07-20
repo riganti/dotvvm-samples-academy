@@ -11,23 +11,22 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
         public string DefaultCode { get; set; }
 
         public ConcurrentDictionary<string, IQuery> Queries { get; }
+            = new ConcurrentDictionary<string, IQuery>();
 
         public DothtmlQuery<ValidationControl> GetControls(string xpath)
-        {
-            return (DothtmlQuery<ValidationControl>)Queries.GetOrAdd(xpath, x
-                => new DothtmlQuery<ValidationControl>(xpath));
-        }
+            => AddQuery<ValidationControl>(xpath);
 
         public DothtmlQuery<ValidationDirective> GetDirectives(string xpath)
-        {
-            return (DothtmlQuery<ValidationDirective>)Queries.GetOrAdd(xpath, x
-                => new DothtmlQuery<ValidationDirective>(xpath));
-        }
+            => AddQuery<ValidationDirective>(xpath);
 
         public DothtmlQuery<ValidationPropertySetter> GetProperties(string xpath)
+            => AddQuery<ValidationPropertySetter>(xpath);
+
+        private DothtmlQuery<TNode> AddQuery<TNode>(string xpath)
+            where TNode : ValidationTreeNode
         {
-            return (DothtmlQuery<ValidationPropertySetter>)Queries.GetOrAdd(xpath, x
-                => new DothtmlQuery<ValidationPropertySetter>(xpath));
+            return (DothtmlQuery<TNode>)Queries.GetOrAdd(xpath, n =>
+                new DothtmlQuery<TNode>(xpath));
         }
     }
 }

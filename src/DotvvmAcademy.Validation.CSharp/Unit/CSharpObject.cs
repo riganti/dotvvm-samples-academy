@@ -29,6 +29,10 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 
         public ICSharpType BaseType { get; set; }
 
+        public string CorrectCode { get; set; }
+
+        public string DefaultCode { get; set; }
+
         public ISet<ICSharpType> Interfaces { get; } = new HashSet<ICSharpType>();
 
         public bool IsAllowed { get; set; } = true;
@@ -39,9 +43,9 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 
         public MetadataName Name { get; }
 
-        CSharpTypeKind ICSharpType.TypeKind { get { return TypeKind.Value; } set { TypeKind = value; } }
-
         public CSharpTypeKind? TypeKind { get; set; }
+
+        CSharpTypeKind ICSharpType.TypeKind { get { return TypeKind.Value; } set { TypeKind = value; } }
 
         public static bool operator !=(CSharpObject one, CSharpObject two)
         {

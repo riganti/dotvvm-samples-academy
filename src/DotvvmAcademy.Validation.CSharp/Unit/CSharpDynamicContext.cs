@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace DotvvmAcademy.Validation.CSharp.Unit
 {
-    public delegate void DynamicValidationAction(DynamicValidationContext context);
+    public delegate void DynamicValidationAction(CSharpDynamicContext context);
 
-    public class DynamicValidationContext
+    public class CSharpDynamicContext
     {
         private readonly MemberInfoLocator locator;
 
-        public DynamicValidationContext(MemberInfoLocator locator)
+        public CSharpDynamicContext(MemberInfoLocator locator)
         {
             this.locator = locator;
         }

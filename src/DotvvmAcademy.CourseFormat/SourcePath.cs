@@ -1,8 +1,10 @@
-﻿using System.Text;
+﻿using System.IO;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace DotvvmAcademy.CourseFormat
 {
-    internal static class PathUtilities
+    public static class SourcePath
     {
         public const char DirectorySeparator = '/';
         public const string RootDirectory = "/";
@@ -18,6 +20,32 @@ namespace DotvvmAcademy.CourseFormat
                 return two;
             }
             return $"{one}{DirectorySeparator}{two}";
+        }
+
+        public static string FromSystem(DirectoryInfo root, FileSystemInfo info)
+            => GetPath(root.FullName, info.FullName);
+
+        public static string GetCodeLanguage(string path)
+        {
+            var segment = GetLastSegment(path);
+            var match = Regex.Match(segment, @"\w+\.(\w+)\.csx");
+            if (match.Groups.Count == 1)
+            {
+                return match.Groups[0].Value;
+            }
+
+            return null;
+        }
+
+        public static string GetLastSegment(string path)
+        {
+            var index = path.LastIndexOf('/');
+            return path.Substring(index);
+        }
+
+        public static string GetPath(string root, string systemPath)
+        {
+            return systemPath.Substring(root.Length);
         }
 
         public static string Normalize(string path)

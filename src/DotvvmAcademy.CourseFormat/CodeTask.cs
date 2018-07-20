@@ -1,16 +1,15 @@
 ﻿namespace DotvvmAcademy.CourseFormat
 {
-    internal class CodeTask : ICodeTask
+    public class CodeTask : Source
     {
-        public CodeTask(CodeTaskId id)
+        public CodeTask(string path, string script) : base(path)
         {
-            Id = id;
+            Script = script;
+            CodeLanguage = SourcePath.GetCodeLanguage(path);
         }
 
-        public string Code { get; set; }
+        public string CodeLanguage { get; }
 
-        public CodeTaskId Id { get; }
-
-        public string ValidationScript { get; set; }
+        public string Script { get; }
     }
 }
