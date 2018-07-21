@@ -18,8 +18,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
 
         public string XPath { get; }
 
-        public void AddConstraint(Action<DothtmlConstraintContext<TResult>> constraint) 
-            => Constraints.Add(constraint);
+        public void AddConstraint(Action<DothtmlConstraintContext<TResult>> constraint) => Constraints.Add(constraint);
 
         void IQuery<TResult>.AddConstraint(Action<IConstraintContext<TResult>> constraint) => AddConstraint(constraint);
 

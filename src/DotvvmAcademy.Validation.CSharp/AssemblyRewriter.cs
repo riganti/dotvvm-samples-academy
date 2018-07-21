@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DotvvmAcademy.Validation.CSharp
 {
-    public class DefaultAssemblyRewriter : IAssemblyRewriter
+    public class AssemblyRewriter : IAssemblyRewriter
     {
         public const string RewriterNamespace = "DotvvmAcademy.Validation.CSharp";
         public const string ContainingClassPrefix = "SafeguardContainer";
@@ -57,7 +57,7 @@ namespace DotvvmAcademy.Validation.CSharp
             var staticConstructor = new MethodDefinition(".cctor", methodAttributes,
                 module.ImportReference(typeof(void)));
             var il = staticConstructor.Body.GetILProcessor();
-            var safeguardConstructor = module.ImportReference(typeof(DefaultAssemblySafeguard)
+            var safeguardConstructor = module.ImportReference(typeof(AssemblySafeguard)
                 .GetConstructor(new[] { typeof(int) }));
             il.Emit(OpCodes.Ldc_I4_1);
             il.Emit(OpCodes.Newobj, safeguardConstructor);
@@ -78,8 +78,8 @@ namespace DotvvmAcademy.Validation.CSharp
             }
 
             var il = method.Body.GetILProcessor();
-            var onInstruction = module.ImportReference(typeof(DefaultAssemblySafeguard)
-                .GetMethod(nameof(DefaultAssemblySafeguard.OnInstruction)));
+            var onInstruction = module.ImportReference(typeof(AssemblySafeguard)
+                .GetMethod(nameof(AssemblySafeguard.OnInstruction)));
             var instructions = method.Body.Instructions.ToArray();
             for (int i = 0; i < instructions.Length; i++)
             {

@@ -5,9 +5,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
 {
     public static class DothtmlQueryExtensions
     {
-        public static DothtmlQuery<TResult> CountEquals<TResult>(
-            this DothtmlQuery<TResult> query,
-            int count)
+        public static DothtmlQuery<TResult> CountEquals<TResult>(this DothtmlQuery<TResult> query, int count)
             where TResult : ValidationTreeNode
         {
             query.AddConstraint(context =>
@@ -25,7 +23,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
         public static DothtmlQuery<ValidationPropertySetter> HasBinding(
             this DothtmlQuery<ValidationPropertySetter> query,
             string value,
-            BindingKind kind = BindingKind.Value)
+            BindingKind kind = default)
         {
             query.AddConstraint(context =>
             {
@@ -48,8 +46,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
             return query;
         }
 
-        public static DothtmlQuery<ValidationControl> IsOfType<TControl>(
-                    this DothtmlQuery<ValidationControl> query)
+        public static DothtmlQuery<ValidationControl> IsOfType<TControl>(this DothtmlQuery<ValidationControl> query)
         {
             query.AddConstraint(context =>
             {

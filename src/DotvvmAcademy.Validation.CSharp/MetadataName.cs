@@ -6,13 +6,10 @@ namespace DotvvmAcademy.Validation.CSharp
 {
     public sealed class MetadataName : IEquatable<MetadataName>
     {
+        private readonly Lazy<string> fullName;
         private readonly Lazy<string> reflectionName;
-        private readonly Lazy<string> userFriendlyName;
 
         public MetadataName(
-            MetadataNameFormatter defaultFormatter,
-            ReflectionMetadataNameFormatter reflectionFormatter,
-            UserFriendlyMetadataNameFormatter userFriendlyFormatter,
             MetadataNameKind kind,
             MetadataName returnType = null,
             string @namespace = null,
@@ -20,11 +17,9 @@ namespace DotvvmAcademy.Validation.CSharp
             int arity = 0,
             int rank = 0,
             MetadataName owner = null,
-            ImmutableArray<MetadataName> typeArguments = default(ImmutableArray<MetadataName>),
-            ImmutableArray<MetadataName> parameters = default(ImmutableArray<MetadataName>))
+            ImmutableArray<MetadataName> typeArguments = default,
+            ImmutableArray<MetadataName> parameters = default)
         {
-            reflectionName = new Lazy<string>(() => reflectionFormatter.Format(this));
-            userFriendlyName = new Lazy<string>(() => userFriendlyFormatter.Format(this));
             Kind = kind;
             ReturnType = returnType;
             Namespace = @namespace;
@@ -34,12 +29,13 @@ namespace DotvvmAcademy.Validation.CSharp
             Owner = owner;
             TypeArguments = typeArguments;
             Parameters = parameters;
-            FullName = defaultFormatter.Format(this);
+            fullName = new Lazy<string>(() => new MetadataNameFormatter().Format(this));
+            reflectionName = new Lazy<string>(() => new ReflectionMetadataNameFormatter().Format(this));
         }
 
         public int Arity { get; }
 
-        public string FullName { get; }
+        public string FullName => fullName.Value;
 
         public MetadataNameKind Kind { get; }
 
@@ -59,37 +55,22 @@ namespace DotvvmAcademy.Validation.CSharp
 
         public ImmutableArray<MetadataName> TypeArguments { get; }
 
-        public string UserFriendlyName => userFriendlyName.Value;
-
-        public static bool operator !=(MetadataName name1, MetadataName name2)
-        {
-            return !(name1 == name2);
-        }
+        public static bool operator !=(MetadataName name1, MetadataName name2) => !(name1 == name2);
 
         public static bool operator ==(MetadataName name1, MetadataName name2)
         {
             return EqualityComparer<MetadataName>.Default.Equals(name1, name2);
         }
 
-        public override bool Equals(object obj)
-        {
-            return Equals(obj as MetadataName);
-        }
+        public override bool Equals(object obj) => Equals(obj as MetadataName);
 
-        public bool Equals(MetadataName other)
-        {
-            return other != null &&
-                   FullName == other.FullName;
-        }
+        public bool Equals(MetadataName other) => other != null && FullName == other.FullName;
 
         public override int GetHashCode()
         {
             return 733961487 + EqualityComparer<string>.Default.GetHashCode(FullName);
         }
 
-        public override string ToString()
-        {
-            return FullName;
-        }
+        public override string ToString() => FullName;
     }
 }

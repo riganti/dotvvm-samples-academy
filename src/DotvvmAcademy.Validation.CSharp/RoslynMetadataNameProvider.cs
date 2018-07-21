@@ -34,7 +34,7 @@ namespace DotvvmAcademy.Validation.CSharp
                     return GetTypeName(type);
 
                 default:
-                    throw new ArgumentException($"Symbol kind {symbol.Kind} is not supported by {nameof(RoslynMetadataNameProvider)}.");
+                    throw new NotSupportedException($"Symbol kind {symbol.Kind} is not supported.");
             }
         }
 

@@ -3,11 +3,11 @@ using System.Diagnostics;
 
 namespace DotvvmAcademy.Validation.CSharp
 {
-    public class DefaultAssemblySafeguard : IAssemblySafeguard
+    public class AssemblySafeguard : IAssemblySafeguard
     {
         private Lazy<Stopwatch> stopwatch = new Lazy<Stopwatch>(() => Stopwatch.StartNew());
 
-        public DefaultAssemblySafeguard(int timeLimit = 1)
+        public AssemblySafeguard(int timeLimit = 1)
         {
             TimeLimit = timeLimit;
         }

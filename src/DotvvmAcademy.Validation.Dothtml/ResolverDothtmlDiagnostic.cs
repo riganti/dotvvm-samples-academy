@@ -6,8 +6,8 @@ namespace DotvvmAcademy.Validation.Dothtml
     {
         public ResolverDothtmlDiagnostic(
             string message,
-            ValidationSeverity severity = ValidationSeverity.Error,
-            ValidationTreeNode node = null)
+            ValidationTreeNode node,
+            ValidationSeverity severity = default)
         {
             Message = message;
             Severity = severity;

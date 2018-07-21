@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using DotvvmAcademy.Validation.CSharp;
+using DotvvmAcademy.Validation.Dothtml;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 
 namespace DotvvmAcademy.CourseFormat.Tests
@@ -11,8 +13,11 @@ namespace DotvvmAcademy.CourseFormat.Tests
         {
             var workspace = new CourseWorkspace("../../../../../sample/sample_course");
             var codeTask = await workspace.Load<CodeTask>("/en/calculator/10_a_classic/a_classic.csharp.csx");
-            var validator = new CodeTaskValidator();
-            var diagnostics = await validator.Validate(codeTask, @"namespace SampleCourse
+            var csharpService = new CSharpValidationService();
+            var dothtmlService = new DothtmlValidationService();
+            var validator = new CodeTaskValidator(workspace, csharpService, dothtmlService);
+            var unit = await validator.GetUnit(codeTask);
+            var diagnostics = await validator.Validate(unit, @"namespace SampleCourse
 {
     public class CalculatorViewModel
     {
@@ -24,9 +29,12 @@ namespace DotvvmAcademy.CourseFormat.Tests
         public async Task LessBasicValidationTest()
         {
             var workspace = new CourseWorkspace("../../../../../sample/sample_course");
-            var validator = new CodeTaskValidator();
             var codeTask = await workspace.Load<CodeTask>("/en/calculator/50_methods/methods.csharp.csx");
-            var diagnostics = await validator.Validate(codeTask,
+            var csharpService = new CSharpValidationService();
+            var dothtmlService = new DothtmlValidationService();
+            var validator = new CodeTaskValidator(workspace, csharpService, dothtmlService);
+            var unit = await validator.GetUnit(codeTask);
+            var diagnostics = await validator.Validate(unit,
                 @"namespace SampleCourse
 {
     public class Test

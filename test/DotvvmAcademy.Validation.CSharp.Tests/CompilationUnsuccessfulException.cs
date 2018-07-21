@@ -11,11 +11,15 @@ namespace DotvvmAcademy.Validation.CSharp.Tests
             EmitResult = emitResult;
         }
 
-        public CompilationUnsuccessfulException(string message, EmitResult emitResult, Exception inner) : base(message, inner)
+        public CompilationUnsuccessfulException(
+            string message,
+            EmitResult emitResult,
+            Exception inner)
+            : base(message, inner)
         {
             EmitResult = emitResult;
         }
 
-        public EmitResult EmitResult { get; set; }
+        public EmitResult EmitResult { get; }
     }
 }

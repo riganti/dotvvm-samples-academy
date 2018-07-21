@@ -27,15 +27,15 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
 
         public void Report(
             string message,
-            ValidationSeverity severity = ValidationSeverity.Error,
-            ValidationTreeNode node = null)
-            => reporter.Report(message, severity, node);
+            ValidationTreeNode node = null,
+            ValidationSeverity severity = default)
+            => reporter.Report(message, node, severity);
 
-        public void ReportAll(string message, ValidationSeverity severity = ValidationSeverity.Error)
+        public void ReportAll(string message, ValidationSeverity severity = default)
         {
             foreach (var node in Result)
             {
-                Report(message, severity, node);
+                Report(message, node, severity);
             }
         }
     }

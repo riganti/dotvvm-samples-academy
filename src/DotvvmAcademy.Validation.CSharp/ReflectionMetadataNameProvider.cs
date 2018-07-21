@@ -37,7 +37,7 @@ namespace DotvvmAcademy.Validation.CSharp
                     return GetPropertyName(property);
 
                 default:
-                    throw new ArgumentException($"MemberInfo inheritor {source.GetType().Name} is not supported by {nameof(ReflectionMetadataNameProvider)}.");
+                    throw new NotSupportedException($"Type '{source.GetType().Name}' is not supported.");
             }
         }
 

@@ -4,7 +4,8 @@ DefaultCode = "/resources/CalculatorViewModel_properties.cs";
 CorrectCode = "/resources/CalculatorViewModel_methods.cs";
 
 GetMethod("System.Void SampleCourse.CalculatorViewModel::Add()")
-    .CountEquals(1);
+    .CountEquals(1)
+    .HasAccessibility(CSharpAccessibility.Public);
 
 Run(c =>
 {
@@ -19,7 +20,8 @@ Run(c =>
 });
 
 GetMethod("System.Void SampleCourse.CalculatorViewModel::Subtract()")
-    .CountEquals(1);
+    .CountEquals(1)
+    .HasAccessibility(CSharpAccessibility.Public);
 
 Run(c =>
 {
@@ -34,7 +36,8 @@ Run(c =>
 });
 
 GetMethod("System.Void SampleCourse.CalculatorViewModel::Multiply()")
-    .CountEquals(1);
+    .CountEquals(1)
+    .HasAccessibility(CSharpAccessibility.Public);
 
 Run(c =>
 {
@@ -49,7 +52,8 @@ Run(c =>
 });
 
 GetMethod("System.Void SampleCourse.CalculatorViewModel::Divide()")
-    .CountEquals(1);
+    .CountEquals(1)
+    .HasAccessibility(CSharpAccessibility.Public);
 
 Run(c =>
 {

@@ -1,55 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace DotvvmAcademy.Validation.CSharp.Unit
 {
-    public delegate void DynamicValidationAction(CSharpDynamicContext context);
-
     public class CSharpDynamicContext
     {
         private readonly MemberInfoLocator locator;
+        private readonly MetadataNameParser parser;
+        private readonly ValidationReporter reporter;
 
-        public CSharpDynamicContext(MemberInfoLocator locator)
+        public CSharpDynamicContext(MemberInfoLocator locator, MetadataNameParser parser, ValidationReporter reporter)
         {
             this.locator = locator;
+            this.parser = parser;
+            this.reporter = reporter;
         }
 
-        public List<ValidationDiagnostic> Diagnostics { get; } = new List<ValidationDiagnostic>();
-
-        public dynamic Instantiate(ICSharpType type, params object[] arguments)
+        public dynamic Instantiate(string type, params object[] arguments)
         {
-            if (locator.TryLocate(((CSharpObject)type).Name, out var info) && info is Type typeInfo)
+            var name = parser.Parse(type);
+            if (locator.TryLocate(name, out var info) && info is Type typeInfo)
             {
                 return Activator.CreateInstance(typeInfo, arguments);
             }
             else
             {
-                throw new ArgumentException("Type doesn't exist in user's code.", nameof(type));
+                throw new ArgumentException($"Type '{type}' could not be found.", nameof(type));
             }
         }
 
-        public void Report(string message, ValidationDiagnosticSeverity severity = ValidationDiagnosticSeverity.Error)
-        {
-            Diagnostics.Add(new DynamicValidationDiagnostic(message, severity));
-        }
-
-        private class DynamicValidationDiagnostic : ValidationDiagnostic
-        {
-            public DynamicValidationDiagnostic(string message, ValidationDiagnosticSeverity severity)
-            {
-                Message = message;
-                Severity = severity;
-            }
-
-            public override string Id => "DYNAMIC";
-
-            public override ValidationDiagnosticLocation Location { get; } = ValidationDiagnosticLocation.Global;
-
-            public override string Message { get; }
-
-            public override string Name { get; } = "Dynamic Validation Diagnostic";
-
-            public override ValidationDiagnosticSeverity Severity { get; }
-        }
+        public void Report(string message, ValidationSeverity severity = default)
+            => reporter.Report(message, severity: severity);
     }
 }

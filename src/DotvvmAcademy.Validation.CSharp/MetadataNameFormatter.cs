@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DotvvmAcademy.Validation.CSharp
 {
-    public class MetadataNameFormatter : IMetadataNameFormatter
+    public class MetadataNameFormatter
     {
         public const char ArityPrefix = '`';
         public const char ArrayEnd = ']';
@@ -26,6 +26,7 @@ namespace DotvvmAcademy.Validation.CSharp
             if(metadataName == null) {
                 return "";
             }
+
             if ((metadataName.Kind & MetadataNameKind.Member) != 0)
             {
                 return FormatMember(metadataName);
@@ -34,7 +35,8 @@ namespace DotvvmAcademy.Validation.CSharp
             {
                 return FormatType(metadataName);
             }
-            throw new InvalidOperationException($"{nameof(MetadataNameFormatter)} can't format {nameof(MetadataName)} with Kind '{metadataName.Kind}'.");
+
+            throw new NotSupportedException($"{nameof(MetadataNameKind)} '{metadataName.Kind}' is not supported.");
         }
 
         private string FormatArity(int arity)

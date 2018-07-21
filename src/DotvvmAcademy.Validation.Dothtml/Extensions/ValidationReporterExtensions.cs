@@ -9,15 +9,15 @@ namespace DotvvmAcademy.Validation
         public static void Report(
             this ValidationReporter reporter,
             string message,
-            ValidationSeverity severity = ValidationSeverity.Error,
-            ValidationTreeNode node = null)
-            => reporter.Report(new ResolverDothtmlDiagnostic(message, severity, node));
+            ValidationTreeNode node,
+            ValidationSeverity severity = default)
+            => reporter.Report(new ResolverDothtmlDiagnostic(message, node, severity));
 
         public static void Report(
             this ValidationReporter reporter,
             string message,
-            ValidationSeverity severity = ValidationSeverity.Error,
-            DothtmlNode node = null)
-            => reporter.Report(new ParserDothtmlDiagnostic(message, severity, node));
+            DothtmlNode node,
+            ValidationSeverity severity = default)
+            => reporter.Report(new ParserDothtmlDiagnostic(message, node, severity));
     }
 }

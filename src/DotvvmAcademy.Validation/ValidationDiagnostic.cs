@@ -5,9 +5,9 @@
         public ValidationDiagnostic(
             string message, 
             int start = -1, 
-            int end = -1, 
-            ValidationSeverity severity = ValidationSeverity.Error, 
-            object underlyingObject = null)
+            int end = -1,
+            object underlyingObject = null,
+            ValidationSeverity severity = default)
         {
             Message = message;
             Start = start;

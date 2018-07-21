@@ -38,38 +38,24 @@ namespace DotvvmAcademy.Validation.Dothtml
             this.code = code;
             this.options = options;
             id = Guid.NewGuid();
-            return Task.Run(() =>
+            using (var scope = globalProvider.CreateScope())
             {
-                using (var scope = globalProvider.CreateScope())
-                {
-                    provider = scope.ServiceProvider;
-
-                    var validationTree = GetValidationTree();
-                    var xpathTree = GetXPathTree(validationTree);
-                    var controlQueries = unit.Queries.Values.OfType<DothtmlQuery<ValidationControl>>().ToImmutableArray();
-                    HandleQueries(xpathTree, controlQueries);
-                    var propertyQueries = unit.Queries.Values
-                        .OfType<DothtmlQuery<ValidationPropertySetter>>()
-                        .ToImmutableArray();
-                    HandleQueries(xpathTree, propertyQueries);
-                    var directiveQueries = unit.Queries.Values
-                        .OfType<DothtmlQuery<ValidationDirective>>()
-                        .ToImmutableArray();
-                    HandleQueries(xpathTree, directiveQueries);
-                    var reporter = provider.GetRequiredService<ValidationReporter>();
-                    return reporter.GetDiagnostics();
-                }
-            });
-        }
-
-        private ImmutableArray<ValidationTreeNode> GetXPathResult(string xpath, XPathDothtmlRoot tree)
-        {
-            var namespaceResolver = provider.GetRequiredService<XPathDothtmlNamespaceResolver>();
-            var navigator = new XPathDothtmlNavigator(tree);
-            var expression = XPathExpression.Compile(xpath, namespaceResolver);
-            var result = navigator.Evaluate(expression);
-
-            throw new NotImplementedException();
+                provider = scope.ServiceProvider;
+                var validationTree = GetValidationTree();
+                var xpathTree = GetXPathTree(validationTree);
+                var controlQueries = unit.Queries.Values.OfType<DothtmlQuery<ValidationControl>>().ToImmutableArray();
+                HandleQueries(xpathTree, controlQueries);
+                var propertyQueries = unit.Queries.Values
+                    .OfType<DothtmlQuery<ValidationPropertySetter>>()
+                    .ToImmutableArray();
+                HandleQueries(xpathTree, propertyQueries);
+                var directiveQueries = unit.Queries.Values
+                    .OfType<DothtmlQuery<ValidationDirective>>()
+                    .ToImmutableArray();
+                HandleQueries(xpathTree, directiveQueries);
+                var reporter = provider.GetRequiredService<ValidationReporter>();
+                return Task.FromResult(reporter.GetDiagnostics());
+            }
         }
 
         private IServiceProvider GetServiceProvider()
@@ -111,7 +97,7 @@ namespace DotvvmAcademy.Validation.Dothtml
         private CSharpCompilation GetViewModelCompilation()
         {
             var tree = CSharpSyntaxTree.ParseText(options.ViewModel);
-            var compilation = CSharpCompilation.Create(
+            return CSharpCompilation.Create(
                 assemblyName: $"DotvvmAcademy.Validation.Dothtml.{id}",
                 syntaxTrees: new[] { tree },
                 references: new[]
@@ -126,7 +112,16 @@ namespace DotvvmAcademy.Validation.Dothtml
                     MetadataReferencer.FromName("DotVVM.Core")
                 },
                 options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
-            return compilation;
+        }
+
+        private ImmutableArray<ValidationTreeNode> GetXPathResult(string xpath, XPathDothtmlRoot tree)
+        {
+            var namespaceResolver = provider.GetRequiredService<XPathDothtmlNamespaceResolver>();
+            var navigator = new XPathDothtmlNavigator(tree);
+            var expression = XPathExpression.Compile(xpath, namespaceResolver);
+            var result = navigator.Evaluate(expression);
+
+            throw new NotImplementedException();
         }
 
         private XPathDothtmlRoot GetXPathTree(ValidationTreeRoot validationTree)

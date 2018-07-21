@@ -2,9 +2,9 @@
 using Microsoft.CodeAnalysis.CSharp;
 using System.Collections.Immutable;
 
-namespace DotvvmAcademy.Validation.CSharp
+namespace DotvvmAcademy.Meta
 {
-    public static class RoslynConventions
+    public static class RoslynKinds
     {
         public static readonly ImmutableArray<SymbolKind> AllSymbols = ImmutableArray.Create(
             SymbolKind.Alias,
