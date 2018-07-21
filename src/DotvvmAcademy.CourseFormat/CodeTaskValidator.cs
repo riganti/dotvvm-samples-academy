@@ -88,12 +88,14 @@ namespace DotvvmAcademy.CourseFormat
         {
             return ScriptOptions.Default
                 .AddReferences(
-                    MetadataReferencer.FromName("mscorlib"),
                     MetadataReferencer.FromName("netstandard"),
                     MetadataReferencer.FromName("System.Private.CoreLib"),
                     MetadataReferencer.FromName("System.Runtime"),
                     MetadataReferencer.FromName("System.Collections"),
                     MetadataReferencer.FromName("System.Reflection"),
+                    MetadataReferencer.FromName("System.Linq"),
+                    MetadataReferencer.FromName("System.Linq.Expressions"), // Roslyn #23573
+                    MetadataReferencer.FromName("Microsoft.CSharp"), // Roslyn #23573
                     MetadataReferencer.FromName("DotVVM.Framework"),
                     MetadataReferencer.FromName("DotVVM.Core"),
                     MetadataReferencer.FromName("DotvvmAcademy.CourseFormat"),

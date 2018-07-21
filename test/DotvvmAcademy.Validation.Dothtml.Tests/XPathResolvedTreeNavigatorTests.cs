@@ -103,14 +103,13 @@ namespace ValidationTreeSample
                 syntaxTrees: new[] { tree },
                 references: new[]
                 {
-                    GetReference("mscorlib"),
-                    GetReference("netstandard"),
-                    GetReference("System.Private.CoreLib"),
-                    GetReference("System.Runtime"),
-                    GetReference("System.Collections"),
-                    GetReference("System.Reflection"),
-                    GetReference("DotVVM.Framework"),
-                    GetReference("DotVVM.Core")
+                    MetadataReferencer.FromName("netstandard"),
+                    MetadataReferencer.FromName("System.Private.CoreLib"),
+                    MetadataReferencer.FromName("System.Runtime"),
+                    MetadataReferencer.FromName("System.Collections"),
+                    MetadataReferencer.FromName("System.Reflection"),
+                    MetadataReferencer.FromName("DotVVM.Framework"),
+                    MetadataReferencer.FromName("DotVVM.Core")
                 },
                 options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
             return compilation;
@@ -131,6 +130,7 @@ namespace ValidationTreeSample
             c.AddScoped<DothtmlTokenizer>();
             c.AddScoped<DothtmlParser>();
             c.AddScoped<XPathTreeVisitor>();
+            c.AddScoped<ValidationReporter>();
             return c.BuildServiceProvider();
         }
 

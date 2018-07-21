@@ -1,4 +1,4 @@
-#load "../20_the_view"
+#load "../20_the_view/the_view.dothtml.csx"
 
 Unit.SetViewModelPath("/resources/CalculatorViewModel_properties.cs");
 Unit.SetDefaultCodePath("/resources/calculator_stub.dothtml");

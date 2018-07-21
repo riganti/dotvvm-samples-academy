@@ -1,4 +1,4 @@
-#load "../40_textboxes"
+#load "../40_textboxes/textboxes.dothtml.csx"
 
 Unit.SetViewModelPath("/resources/CalculatorViewModel_methods.cs");
 Unit.SetDefaultCodePath("/resources/calculator_textboxes.dothtml");

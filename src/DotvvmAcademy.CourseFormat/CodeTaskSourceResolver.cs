@@ -27,7 +27,7 @@ namespace DotvvmAcademy.CourseFormat
                 return file.OpenRead();
             }
 
-            return null;
+            return Stream.Null;
         }
 
         public override string ResolveReference(string path, string baseFilePath)

@@ -1,4 +1,4 @@
-#load "../30_properties"
+#load "../30_properties/properties.csharp.csx"
 
 Unit.SetDefaultCodePath("/resources/CalculatorViewModel_properties.cs");
 Unit.SetCorrectCodePath("/resources/CalculatorViewModel_methods.cs");

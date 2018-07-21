@@ -12,6 +12,7 @@ namespace Microsoft.CodeAnalysis
                 case DiagnosticSeverity.Error:
                     return ValidationSeverity.Error;
 
+                case DiagnosticSeverity.Hidden:
                 case DiagnosticSeverity.Info:
                     return ValidationSeverity.Info;
 

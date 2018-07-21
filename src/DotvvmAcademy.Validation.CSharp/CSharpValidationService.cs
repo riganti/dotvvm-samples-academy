@@ -37,17 +37,12 @@ namespace DotvvmAcademy.Validation.CSharp
                 context.Unit = unit;
                 context.Code = code;
                 context.Options = options;
-                await RunAnalyzers(scope.ServiceProvider);
-                if (reporter.Count > 0)
-                {
-                    return reporter.GetDiagnostics();
-                }
-
                 HandleQueries<ITypeSymbol>(scope.ServiceProvider);
                 HandleQueries<IMethodSymbol>(scope.ServiceProvider);
                 HandleQueries<IPropertySymbol>(scope.ServiceProvider);
                 HandleQueries<IFieldSymbol>(scope.ServiceProvider);
                 HandleQueries<IEventSymbol>(scope.ServiceProvider);
+                await RunAnalyzers(scope.ServiceProvider);
                 if (reporter.Count > 0)
                 {
                     return reporter.GetDiagnostics();

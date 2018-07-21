@@ -25,8 +25,8 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             TypeSymbol = typeSymbol;
 
             FullName = FullNamer.FromRoslyn(TypeSymbol);
-            Assembly = TypeSymbol.ContainingAssembly.Identity.Name;
-            Namespace = TypeSymbol.ContainingNamespace.ToDisplayString();
+            Assembly = TypeSymbol.ContainingAssembly?.Identity.Name;
+            Namespace = TypeSymbol.ContainingNamespace?.ToDisplayString();
             Name = TypeSymbol.MetadataName;
         }
 

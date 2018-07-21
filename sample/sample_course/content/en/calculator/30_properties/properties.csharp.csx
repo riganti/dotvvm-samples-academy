@@ -1,4 +1,4 @@
-#load "../10_a_classic"
+#load "../10_a_classic/a_classic.csharp.csx"
 
 Unit.SetDefaultCodePath("/resources/CalculatorViewModel_stub.cs");
 Unit.SetCorrectCodePath("/resources/CalculatorViewModel_properties.cs");

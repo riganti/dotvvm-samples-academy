@@ -24,4 +24,8 @@
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="2.8.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\DotvvmAcademy.Meta\DotvvmAcademy.Meta.csproj" />
+  </ItemGroup>
+
 </Project>
