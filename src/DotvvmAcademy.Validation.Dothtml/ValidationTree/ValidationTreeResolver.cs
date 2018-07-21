@@ -10,7 +10,10 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
     public class ValidationTreeResolver : ControlTreeResolverBase
     {
         private readonly ValidationTypeDescriptorFactory descriptorFactory;
-        private readonly DothtmlValidationOptions options;
+
+        private readonly ImmutableArray<ParserDothtmlDiagnostic>.Builder diagnostics
+            = ImmutableArray.CreateBuilder<ParserDothtmlDiagnostic>();
+
         private readonly ValidationReporter reporter;
         private readonly ValidationControlTypeFactory typeFactory;
 
@@ -19,18 +22,19 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             ValidationTreeBuilder treeBuilder,
             ValidationTypeDescriptorFactory descriptorFactory,
             ValidationControlTypeFactory typeFactory,
-            ValidationReporter reporter,
-            DothtmlValidationOptions options)
+            ValidationReporter reporter)
             : base(controlResolver, treeBuilder)
         {
             this.descriptorFactory = descriptorFactory;
             this.typeFactory = typeFactory;
             this.reporter = reporter;
-            this.options = options;
         }
 
+        public ImmutableArray<ParserDothtmlDiagnostic> GetDiagnostics()
+            => diagnostics.ToImmutable();
+
         protected override IAbstractBinding CompileBinding(
-            DothtmlBindingNode node,
+                    DothtmlBindingNode node,
             BindingParserOptions bindingOptions,
             IDataContextStack context,
             IPropertyDescriptor property)
@@ -63,13 +67,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         protected override bool LogError(Exception exception, DothtmlNode node)
         {
-            if (options.IncludeCompilerDiagnostics)
-            {
-                reporter.Report(
-                    message: exception.Message,
-                    node: node);
-            }
-
+            diagnostics.Add(new ParserDothtmlDiagnostic(exception.Message, node));
             return true;
         }
     }

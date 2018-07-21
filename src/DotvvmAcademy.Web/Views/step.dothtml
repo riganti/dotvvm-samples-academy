@@ -14,7 +14,7 @@
         <div class="container-small">
             <dot:HtmlLiteral Html="{resource: Text}" class="step-info-box" />
             <%-- TODO: Do not render at all (IncludeInPage is not working properly) --%>
-            <div IncludeInPage="{value: Code != null}">
+            <div IncludeInPage="{value: HasCodeTask}">
                 <cc:CodeTaskControl Code="{value: Code}"
                                     Diagnostics="{value: Diagnostics}"
                                     Language="{resource: CodeLanguage}"

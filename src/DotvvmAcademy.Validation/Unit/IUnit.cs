@@ -1,9 +1,9 @@
-﻿namespace DotvvmAcademy.Validation.Unit
+﻿using System;
+
+namespace DotvvmAcademy.Validation.Unit
 {
     public interface IUnit
     {
-        string CorrectCode { get; set; }
-
-        string DefaultCode { get; set; }
+        IServiceProvider Provider { get; }
     }
 }

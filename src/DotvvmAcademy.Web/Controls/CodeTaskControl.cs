@@ -1,7 +1,7 @@
 ﻿using DotVVM.Framework.Binding;
 using DotVVM.Framework.Controls;
 using DotVVM.Framework.Hosting;
-using DotvvmAcademy.Validation;
+using DotvvmAcademy.CourseFormat;
 using System.Collections.Generic;
 
 namespace DotvvmAcademy.Web.Controls
@@ -12,7 +12,7 @@ namespace DotvvmAcademy.Web.Controls
             = DotvvmProperty.Register<string, CodeTaskControl>(c => c.Code, null);
 
         public static readonly DotvvmProperty DiagnosticsProperty
-            = DotvvmProperty.Register<IEnumerable<IValidationDiagnostic>, CodeTaskControl>(c => c.Diagnostics, null);
+            = DotvvmProperty.Register<IEnumerable<CodeTaskDiagnostic>, CodeTaskControl>(c => c.Diagnostics, null);
 
         public static readonly DotvvmProperty LanguageProperty
             = DotvvmProperty.Register<string, CodeTaskControl>(c => c.Language, null);
@@ -29,9 +29,9 @@ namespace DotvvmAcademy.Web.Controls
         }
 
         [MarkupOptions(Required = true, AllowBinding = true, AllowHardCodedValue = false)]
-        public IEnumerable<IValidationDiagnostic> Diagnostics
+        public IEnumerable<CodeTaskDiagnostic> Diagnostics
         {
-            get { return (IEnumerable<IValidationDiagnostic>)GetValue(DiagnosticsProperty); }
+            get { return (IEnumerable<CodeTaskDiagnostic>)GetValue(DiagnosticsProperty); }
             set { SetValue(DiagnosticsProperty, value); }
         }
 

@@ -32,6 +32,11 @@ namespace DotvvmAcademy.CourseFormat
 
         public Task<Source> Load(string path)
         {
+            if(path == null)
+            {
+                return Task.FromResult<Source>(null);
+            }
+
             if (sources.TryGetValue(path, out var source))
             {
                 return source;

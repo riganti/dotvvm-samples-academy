@@ -7,9 +7,11 @@ using DotvvmAcademy.Validation.Dothtml.Unit;
 using DotvvmAcademy.Validation.Unit;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.Scripting;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Immutable;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DotvvmAcademy.CourseFormat
@@ -19,63 +21,67 @@ namespace DotvvmAcademy.CourseFormat
         private readonly ConcurrentDictionary<string, Task<IUnit>> cache
             = new ConcurrentDictionary<string, Task<IUnit>>();
 
-        private readonly IValidationService<CSharpUnit, CSharpValidationOptions> csharpService;
-        private readonly IValidationService<DothtmlUnit, DothtmlValidationOptions> dothtmlService;
+        private readonly CSharpValidationService csharpService;
+        private readonly DothtmlValidationService dothtmlService;
+        private readonly IServiceProvider globalProvider;
         private readonly CourseWorkspace workspace;
 
         public CodeTaskValidator(
             CourseWorkspace workspace,
-            IValidationService<CSharpUnit, CSharpValidationOptions> csharpService,
-            IValidationService<DothtmlUnit, DothtmlValidationOptions> dothtmlService)
+            CSharpValidationService csharpService,
+            DothtmlValidationService dothtmlService)
         {
             this.workspace = workspace;
             this.csharpService = csharpService;
             this.dothtmlService = dothtmlService;
+            globalProvider = GetServiceProvider();
         }
 
-        public Task<IUnit> GetUnit(CodeTask codeTask)
-        {
-            return cache.GetOrAdd(codeTask.Path, async p =>
-            {
-                var globalsType = GetGlobalsType(codeTask);
-                var script = CSharpScript.Create(
-                    code: codeTask.Script,
-                    options: GetScriptOptions(codeTask),
-                    globalsType: GetGlobalsType(codeTask));
-                var unit = (IUnit)Activator.CreateInstance(GetGlobalsType(codeTask));
-                await script.RunAsync(unit);
-                return unit;
-            });
-        }
-
-        public Task<ImmutableArray<IValidationDiagnostic>> Validate(IUnit unit, string code)
-        {
-            switch (unit)
-            {
-                case CSharpUnit csharpUnit:
-                    return csharpService.Validate(csharpUnit, code);
-
-                case DothtmlUnit dothtmlUnit:
-                    return dothtmlService.Validate(dothtmlUnit, code);
-
-                default:
-                    throw new NotSupportedException($"{nameof(IUnit)} type '{unit.GetType().Name}' is not supported.");
-            }
-        }
-
-        private Type GetGlobalsType(CodeTask codeTask)
+        public async Task<IUnit> GetUnit(CodeTask codeTask)
         {
             switch (codeTask.CodeLanguage)
             {
                 case "csharp":
-                    return typeof(CSharpUnit);
+                    return await GetUnit<CSharpUnit>(codeTask);
 
                 case "dothtml":
-                    return typeof(DothtmlUnit);
+                    return await GetUnit<DothtmlUnit>(codeTask);
 
                 default:
                     throw new NotSupportedException($"Code language '{codeTask.CodeLanguage}' is not supported.");
             }
+        }
+
+        public async Task<ImmutableArray<CodeTaskDiagnostic>> Validate(IUnit unit, string code)
+        {
+            ImmutableArray<IValidationDiagnostic> diagnostics;
+            switch (unit)
+            {
+                case CSharpUnit csharpUnit:
+                    diagnostics = await csharpService.Validate(csharpUnit, code);
+                    break;
+
+                case DothtmlUnit dothtmlUnit:
+                    var viewModel = string.Empty;
+                    var viewModelPath = dothtmlUnit.Provider.GetRequiredService<SourcePathStorage>().Get("ViewModel");
+                    if (viewModelPath != null)
+                    {
+                        viewModel = (await workspace.Load<Resource>(viewModelPath)).Text;
+                    }
+                    var options = new DothtmlValidationOptions(viewModel: viewModel);
+                    diagnostics = await dothtmlService.Validate(dothtmlUnit, code, options);
+                    break;
+
+                default:
+                    throw new NotSupportedException($"{nameof(IUnit)} type '{unit.GetType().Name}' is not supported.");
+            }
+
+            return diagnostics.Select(d => new CodeTaskDiagnostic(
+                message: d.Message,
+                start: d.Start,
+                end: d.End,
+                severity: d.Severity.ToCodeTaskDiagnosticSeverity()))
+                .ToImmutableArray();
         }
 
         private ScriptOptions GetScriptOptions(CodeTask codeTask)
@@ -90,6 +96,7 @@ namespace DotvvmAcademy.CourseFormat
                     MetadataReferencer.FromName("System.Reflection"),
                     MetadataReferencer.FromName("DotVVM.Framework"),
                     MetadataReferencer.FromName("DotVVM.Core"),
+                    MetadataReferencer.FromName("DotvvmAcademy.CourseFormat"),
                     MetadataReferencer.FromName("DotvvmAcademy.Validation"),
                     MetadataReferencer.FromName("DotvvmAcademy.Validation.CSharp"),
                     MetadataReferencer.FromName("DotvvmAcademy.Validation.Dothtml"))
@@ -100,6 +107,29 @@ namespace DotvvmAcademy.CourseFormat
                     "DotvvmAcademy.Validation.Dothtml.Unit")
                 .WithFilePath(codeTask.Path)
                 .WithSourceResolver(new CodeTaskSourceResolver(workspace));
+        }
+
+        private IServiceProvider GetServiceProvider()
+        {
+            var c = new ServiceCollection();
+            c.AddScoped<SourcePathStorage>();
+            return c.BuildServiceProvider();
+        }
+
+        private Task<IUnit> GetUnit<TUnit>(CodeTask codeTask)
+            where TUnit : IUnit
+        {
+            return cache.GetOrAdd(codeTask.Path, async p =>
+            {
+                var scope = globalProvider.CreateScope();
+                var script = CSharpScript.Create(
+                    code: codeTask.Script,
+                    options: GetScriptOptions(codeTask),
+                    globalsType: typeof(UnitWrapper<TUnit>));
+                var unit = (TUnit)ActivatorUtilities.CreateInstance(scope.ServiceProvider, typeof(TUnit));
+                await script.RunAsync(new UnitWrapper<TUnit>(unit));
+                return unit;
+            });
         }
     }
 }

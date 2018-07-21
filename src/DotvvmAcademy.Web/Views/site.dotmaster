@@ -46,8 +46,10 @@
                 &nbsp;<p>ACADEMY</p>
             </dot:RouteLink>
             <div>
-                <dot:Button ButtonTagName="button" Text="Ukončit lekci" class="button" Visible="{value: false}"></dot:Button><%--TODO Visible when routname == step --%>
-                <cc:LangSwitcher Class-lang-switcher="true"><%--TODO Visible when routname == default --%>
+                <dot:Button ButtonTagName="button" Text="Ukončit lekci" class="button" Visible="{value: false}"></dot:Button>
+                <%--TODO Visible when routname == step --%>
+                <%--TODO Visible when routname == default --%>
+                <cc:LangSwitcher Class-lang-switcher="true">
                 </cc:LangSwitcher>
             </div>
         </nav>

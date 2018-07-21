@@ -29,9 +29,9 @@ namespace DotvvmAcademy.CourseFormat
         {
             var segment = GetLastSegment(path);
             var match = Regex.Match(segment, @"\w+\.(\w+)\.csx");
-            if (match.Groups.Count == 1)
+            if (match.Groups.Count == 2)
             {
-                return match.Groups[0].Value;
+                return match.Groups[1].Value;
             }
 
             return null;
@@ -40,12 +40,12 @@ namespace DotvvmAcademy.CourseFormat
         public static string GetLastSegment(string path)
         {
             var index = path.LastIndexOf('/');
-            return path.Substring(index);
+            return path.Substring(index + 1);
         }
 
         public static string GetPath(string root, string systemPath)
         {
-            return systemPath.Substring(root.Length);
+            return systemPath.Substring(root.Length).Replace('\\', '/');
         }
 
         public static string Normalize(string path)

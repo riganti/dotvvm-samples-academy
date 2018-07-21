@@ -8,28 +8,31 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 {
     public class CSharpUnit : IUnit
     {
-        public string CorrectCode { get; set; }
-
-        public string DefaultCode { get; set; }
+        public CSharpUnit(IServiceProvider provider)
+        {
+            Provider = provider;
+        }
 
         public List<Action<CSharpDynamicContext>> DynamicActions { get; } = new List<Action<CSharpDynamicContext>>();
 
-        public ConcurrentDictionary<MetadataName, IQuery> Queries { get; }
-            = new ConcurrentDictionary<MetadataName, IQuery>();
+        public ConcurrentDictionary<string, IQuery> Queries { get; }
+            = new ConcurrentDictionary<string, IQuery>();
 
-        public CSharpQuery<IEventSymbol> GetEvents(MetadataName name) => AddQuery<IEventSymbol>(name);
+        public IServiceProvider Provider { get; }
 
-        public CSharpQuery<IFieldSymbol> GetFields(MetadataName name) => AddQuery<IFieldSymbol>(name);
+        public CSharpQuery<IEventSymbol> GetEvents(string name) => AddQuery<IEventSymbol>(name);
 
-        public CSharpQuery<IMethodSymbol> GetMethods(MetadataName name) => AddQuery<IMethodSymbol>(name);
+        public CSharpQuery<IFieldSymbol> GetFields(string name) => AddQuery<IFieldSymbol>(name);
 
-        public CSharpQuery<IPropertySymbol> GetProperties(MetadataName name) => AddQuery<IPropertySymbol>(name);
+        public CSharpQuery<IMethodSymbol> GetMethods(string name) => AddQuery<IMethodSymbol>(name);
 
-        public CSharpQuery<ITypeSymbol> GetTypes(MetadataName name) => AddQuery<ITypeSymbol>(name);
+        public CSharpQuery<IPropertySymbol> GetProperties(string name) => AddQuery<IPropertySymbol>(name);
+
+        public CSharpQuery<ITypeSymbol> GetTypes(string name) => AddQuery<ITypeSymbol>(name);
 
         public void Run(Action<CSharpDynamicContext> action) => DynamicActions.Add(action);
 
-        private CSharpQuery<TSymbol> AddQuery<TSymbol>(MetadataName name)
+        private CSharpQuery<TSymbol> AddQuery<TSymbol>(string name)
             where TSymbol : ISymbol
         {
             return (CSharpQuery<TSymbol>)Queries.GetOrAdd(name, n =>

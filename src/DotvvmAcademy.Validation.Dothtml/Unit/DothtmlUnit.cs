@@ -1,19 +1,21 @@
 ﻿using DotvvmAcademy.Validation.Dothtml.ValidationTree;
 using DotvvmAcademy.Validation.Unit;
+using System;
 using System.Collections.Concurrent;
 
 namespace DotvvmAcademy.Validation.Dothtml.Unit
 {
     public class DothtmlUnit : IUnit
     {
-        public string ViewModel { get; set; }
-
-        public string CorrectCode { get; set; }
-
-        public string DefaultCode { get; set; }
+        public DothtmlUnit(IServiceProvider provider)
+        {
+            Provider = provider;
+        }
 
         public ConcurrentDictionary<string, IQuery> Queries { get; }
             = new ConcurrentDictionary<string, IQuery>();
+
+        public IServiceProvider Provider { get; }
 
         public DothtmlQuery<ValidationControl> GetControls(string xpath)
             => AddQuery<ValidationControl>(xpath);

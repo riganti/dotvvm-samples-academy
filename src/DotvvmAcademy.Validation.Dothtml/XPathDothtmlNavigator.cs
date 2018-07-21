@@ -10,41 +10,41 @@ namespace DotvvmAcademy.Validation.Dothtml
     {
         public XPathDothtmlNavigator(XPathDothtmlNode current)
         {
-            Current = current;
+            Node = current;
         }
 
         private XPathDothtmlNavigator(XPathDothtmlNavigator other)
         {
-            Current = other.Current;
+            Node = other.Node;
         }
 
         public override string BaseURI { get; } = "";
 
         public override bool CanEdit => false;
 
-        public XPathDothtmlNode Current { get; private set; }
+        public XPathDothtmlNode Node { get; private set; }
 
-        public override bool HasAttributes => !Current.Attributes.IsDefaultOrEmpty;
+        public override bool HasAttributes => !Node.Attributes.IsDefaultOrEmpty;
 
-        public override bool HasChildren => !Current.Children.IsDefaultOrEmpty;
+        public override bool HasChildren => !Node.Children.IsDefaultOrEmpty;
 
         public override bool IsEmptyElement { get; } = false;
 
-        public override string LocalName => Current.LocalName;
+        public override string LocalName => Node.LocalName;
 
         public override string Name => throw new NotSupportedException();
 
         public override string NamespaceURI { get; } = "";
 
-        public override XmlNameTable NameTable => Current.Root.NameTable;
+        public override XmlNameTable NameTable => Node.Root.NameTable;
 
-        public override XPathNodeType NodeType => Current.NodeType;
+        public override XPathNodeType NodeType => Node.NodeType;
 
-        public override string Prefix => Current.Prefix;
+        public override string Prefix => Node.Prefix;
 
-        public override object TypedValue => Current.Value;
+        public override object TypedValue => Node.Value;
 
-        public override object UnderlyingObject => Current.UnderlyingObject;
+        public override object UnderlyingObject => Node.UnderlyingObject;
 
         public override string Value => TypedValue.ToString();
 
@@ -59,7 +59,7 @@ namespace DotvvmAcademy.Validation.Dothtml
             {
                 return false;
             }
-            return ReferenceEquals(Current, resolvedOther.Current);
+            return ReferenceEquals(Node, resolvedOther.Node);
         }
 
         public override bool MoveTo(XPathNavigator other)
@@ -68,37 +68,37 @@ namespace DotvvmAcademy.Validation.Dothtml
             {
                 return false;
             }
-            Current = resolvedOther.Current;
+            Node = resolvedOther.Node;
             return true;
         }
 
         public override bool MoveToFirst()
         {
-            if (Current.NodeType != XPathNodeType.Element || Current.FirstSibling == null)
+            if (Node.NodeType != XPathNodeType.Element || Node.FirstSibling == null)
             {
                 return false;
             }
-            Current = Current.FirstSibling;
+            Node = Node.FirstSibling;
             return true;
         }
 
         public override bool MoveToFirstAttribute()
         {
-            if (Current.Attributes.IsDefaultOrEmpty)
+            if (Node.Attributes.IsDefaultOrEmpty)
             {
                 return false;
             }
-            Current = Current.Attributes[0];
+            Node = Node.Attributes[0];
             return true;
         }
 
         public override bool MoveToFirstChild()
         {
-            if (Current.Children.IsDefaultOrEmpty)
+            if (Node.Children.IsDefaultOrEmpty)
             {
                 return false;
             }
-            Current = Current.Children[0];
+            Node = Node.Children[0];
             return true;
         }
 
@@ -108,21 +108,21 @@ namespace DotvvmAcademy.Validation.Dothtml
 
         public override bool MoveToNext()
         {
-            if (Current.NextSibling == null || Current.NodeType == XPathNodeType.Attribute)
+            if (Node.NextSibling == null || Node.NodeType == XPathNodeType.Attribute)
             {
                 return false;
             }
-            Current = Current.NextSibling;
+            Node = Node.NextSibling;
             return true;
         }
 
         public override bool MoveToNextAttribute()
         {
-            if (Current.NextSibling == null || Current.NodeType != XPathNodeType.Attribute)
+            if (Node.NextSibling == null || Node.NodeType != XPathNodeType.Attribute)
             {
                 return false;
             }
-            Current = Current.NextSibling;
+            Node = Node.NextSibling;
             return true;
         }
 
@@ -130,9 +130,9 @@ namespace DotvvmAcademy.Validation.Dothtml
 
         public override bool MoveToParent()
         {
-            if (Current.Parent != null)
+            if (Node.Parent != null)
             {
-                Current = Current.Parent;
+                Node = Node.Parent;
                 return true;
             }
             return false;
@@ -140,22 +140,22 @@ namespace DotvvmAcademy.Validation.Dothtml
 
         public override bool MoveToPrevious()
         {
-            if (Current.PreviousSibling == null || Current.NodeType == XPathNodeType.Attribute)
+            if (Node.PreviousSibling == null || Node.NodeType == XPathNodeType.Attribute)
             {
                 return false;
             }
-            Current = Current.PreviousSibling;
+            Node = Node.PreviousSibling;
             return true;
         }
 
         public override void MoveToRoot()
         {
-            Current = Current.Root;
+            Node = Node.Root;
         }
 
         public override string ToString()
         {
-            return Current.ToString();
+            return Node.ToString();
         }
     }
 }

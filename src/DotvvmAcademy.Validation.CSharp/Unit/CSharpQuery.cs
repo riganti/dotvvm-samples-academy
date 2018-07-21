@@ -8,7 +8,7 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
     public class CSharpQuery<TResult> : IQuery<TResult>
         where TResult : ISymbol
     {
-        public CSharpQuery(MetadataName name)
+        public CSharpQuery(string name)
         {
             Name = name;
         }
@@ -16,7 +16,7 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
         public List<Action<CSharpConstraintContext<TResult>>> Constraints { get; }
             = new List<Action<CSharpConstraintContext<TResult>>>();
 
-        public MetadataName Name { get; }
+        public string Name { get; }
 
         public void AddConstraint(Action<CSharpConstraintContext<TResult>> constraint) => Constraints.Add(constraint);
 

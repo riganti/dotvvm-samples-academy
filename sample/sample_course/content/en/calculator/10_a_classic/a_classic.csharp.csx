@@ -1,6 +1,6 @@
-CorrectCode = "/resources/CalculatorViewModel_stub.cs";
+Unit.SetCorrectCodePath("/resources/CalculatorViewModel_stub.cs");
 
-var viewModel = GetType("CourseFormat.CalculatorViewModel")
+Unit.GetTypes("SampleCourse.CalculatorViewModel")
     .CountEquals(1)
     .IsTypeKind(CSharpTypeKind.Class)
     .HasAccessibility(CSharpAccessibility.Public);

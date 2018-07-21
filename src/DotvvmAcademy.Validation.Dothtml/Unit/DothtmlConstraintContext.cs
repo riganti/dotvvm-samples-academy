@@ -1,5 +1,7 @@
 ﻿using DotvvmAcademy.Validation.Dothtml.ValidationTree;
 using DotvvmAcademy.Validation.Unit;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Immutable;
 
 namespace DotvvmAcademy.Validation.Dothtml.Unit
@@ -10,18 +12,21 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
         private readonly ValidationReporter reporter;
 
         public DothtmlConstraintContext(
-            ValidationReporter reporter,
+            IServiceProvider provider,
             string xpath,
             ImmutableArray<TResult> result)
         {
-            this.reporter = reporter;
+            Provider = provider;
             XPath = xpath;
             Result = result;
+            reporter = Provider.GetRequiredService<ValidationReporter>();
         }
 
         public ImmutableArray<TResult> Result { get; }
 
         public string XPath { get; }
+
+        public IServiceProvider Provider { get; }
 
         ImmutableArray<object> IConstraintContext.Result => Result.CastArray<object>();
 

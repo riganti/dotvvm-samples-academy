@@ -5,12 +5,12 @@
         public static DothtmlValidationOptions Default = new DothtmlValidationOptions();
 
         public DothtmlValidationOptions(
-                    bool includeCompilerDiagnostics = true,
-            string viewModel = null,
-            string fileName = null)
+            bool includeCompilerDiagnostics = true,
+            string viewModel = "",
+            string fileName = "View.dothtml")
         {
             IncludeCompilerDiagnostics = includeCompilerDiagnostics;
-            ViewModel = viewModel;
+            ViewModel = viewModel ;
             FileName = fileName;
         }
 

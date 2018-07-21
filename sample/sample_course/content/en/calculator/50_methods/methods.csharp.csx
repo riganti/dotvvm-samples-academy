@@ -1,15 +1,15 @@
 #load "../30_properties"
 
-DefaultCode = "/resources/CalculatorViewModel_properties.cs";
-CorrectCode = "/resources/CalculatorViewModel_methods.cs";
+Unit.SetDefaultCodePath("/resources/CalculatorViewModel_properties.cs");
+Unit.SetCorrectCodePath("/resources/CalculatorViewModel_methods.cs");
 
-GetMethod("System.Void SampleCourse.CalculatorViewModel::Add()")
+Unit.GetMethods("System.Void SampleCourse.CalculatorViewModel::Add()")
     .CountEquals(1)
     .HasAccessibility(CSharpAccessibility.Public);
 
-Run(c =>
+Unit.Run(c =>
 {
-    var vm = c.Instantiate(viewModel);
+    var vm = c.Instantiate("SampleCourse.CalculatorViewModel");
     vm.LeftOperand = 5;
     vm.RightOperand = 11;
     vm.Add();
@@ -19,13 +19,13 @@ Run(c =>
     }
 });
 
-GetMethod("System.Void SampleCourse.CalculatorViewModel::Subtract()")
+Unit.GetMethods("System.Void SampleCourse.CalculatorViewModel::Subtract()")
     .CountEquals(1)
     .HasAccessibility(CSharpAccessibility.Public);
 
-Run(c =>
+Unit.Run(c =>
 {
-    var vm = c.Instantiate(viewModel);
+    var vm = c.Instantiate("SampleCourse.CalculatorViewModel");
     vm.LeftOperand = 7;
     vm.RightOperand = 4;
     vm.Subtract();
@@ -35,13 +35,13 @@ Run(c =>
     }
 });
 
-GetMethod("System.Void SampleCourse.CalculatorViewModel::Multiply()")
+Unit.GetMethods("System.Void SampleCourse.CalculatorViewModel::Multiply()")
     .CountEquals(1)
     .HasAccessibility(CSharpAccessibility.Public);
 
-Run(c =>
+Unit.Run(c =>
 {
-    var vm = c.Instantiate(viewModel);
+    var vm = c.Instantiate("SampleCourse.CalculatorViewModel");
     vm.LeftOperand = 4;
     vm.RightOperand = 5;
     vm.Multiply();
@@ -51,13 +51,13 @@ Run(c =>
     }
 });
 
-GetMethod("System.Void SampleCourse.CalculatorViewModel::Divide()")
+Unit.GetMethods("System.Void SampleCourse.CalculatorViewModel::Divide()")
     .CountEquals(1)
     .HasAccessibility(CSharpAccessibility.Public);
 
-Run(c =>
+Unit.Run(c =>
 {
-    var vm = c.Instantiate(viewModel);
+    var vm = c.Instantiate("SampleCourse.CalculatorViewModel");
     vm.LeftOperand = 21;
     vm.RightOperand = 7;
     vm.Divide();

@@ -14,8 +14,6 @@ namespace DotvvmAcademy.Web
 {
     public class Startup
     {
-        public const string AuthenticationScheme = "Cookie";
-
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole();
@@ -35,14 +33,10 @@ namespace DotvvmAcademy.Web
             services.AddWebEncoders();
             services.AddDotVVM();
             services.AddSingleton<MarkdownExtractor>();
-            services.AddSingleton(new CourseWorkspace("../../sample/sample_course"));
+            services.AddSingleton(p => new CourseWorkspace("../../sample/sample_course"));
             services.AddSingleton<CodeTaskValidator>();
-            services.AddSingleton<
-                IValidationService<CSharpUnit, CSharpValidationOptions>,
-                CSharpValidationService>();
-            services.AddSingleton<IValidationService<
-                DothtmlUnit, DothtmlValidationOptions>,
-                DothtmlValidationService>();
+            services.AddSingleton<CSharpValidationService>();
+            services.AddSingleton<DothtmlValidationService>();
         }
     }
 }

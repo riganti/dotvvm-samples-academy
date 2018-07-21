@@ -87,7 +87,7 @@ namespace DotvvmAcademy.Validation.CSharp
         private CSharpCompilation GetCompilation(IServiceProvider provider)
         {
             var context = provider.GetRequiredService<Context>();
-            var tree = CSharpSyntaxTree.ParseText(context.Code);
+            var tree = CSharpSyntaxTree.ParseText(context.Code ?? string.Empty);
             var compilation = CSharpCompilation.Create(
                 assemblyName: $"DotvvmAcademy.Validation.CSharp.{context.Id}",
                 syntaxTrees: new[] { tree },
@@ -153,12 +153,17 @@ namespace DotvvmAcademy.Validation.CSharp
         {
             var unit = provider.GetRequiredService<Context>().Unit;
             var queries = unit.Queries.Values.OfType<CSharpQuery<TResult>>();
+            var parser = provider.GetRequiredService<MetadataNameParser>();
             foreach (var query in queries)
             {
-                var result = GetMetadataNameResult(provider, query.Name).Cast<TResult>().ToImmutableArray();
+                var name = parser.Parse(query.Name);
+                var result = GetMetadataNameResult(provider, name);
+                var castResult = result.IsDefaultOrEmpty
+                    ? ImmutableArray<TResult>.Empty
+                    : result.Cast<TResult>().ToImmutableArray();
                 foreach (var constraint in query.Constraints)
                 {
-                    var context = new CSharpConstraintContext<TResult>(provider, query.Name, result);
+                    var context = new CSharpConstraintContext<TResult>(provider, name, castResult);
                     constraint(context);
                 }
             }

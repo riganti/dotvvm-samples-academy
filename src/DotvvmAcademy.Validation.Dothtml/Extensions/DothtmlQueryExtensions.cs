@@ -77,7 +77,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
                             message: "Directive is not a @viewModel directive.",
                             node: directive);
                     }
-                    else if (viewModelDirective.Type.FullName != typeFullName)
+                    else if (viewModelDirective?.Type.FullName != typeFullName)
                     {
                         context.Report(
                             message: $"@viewModel directive is not referencing '{typeFullName}'.",

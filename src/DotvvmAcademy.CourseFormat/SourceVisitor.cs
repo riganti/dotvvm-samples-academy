@@ -54,7 +54,7 @@ namespace DotvvmAcademy.CourseFormat
             var stepFile = directory.GetFiles(StepPattern).SingleOrDefault();
             var stepText = await ReadFile(stepFile);
             var codeTask = directory.GetFiles(CodeTaskPattern).SingleOrDefault();
-            return new Step(path, stepText, codeTask.Name);
+            return new Step(path, stepText, codeTask?.Name);
         }
 
         private async Task<Source> LoadVariant(DirectoryInfo directory)
@@ -118,7 +118,11 @@ namespace DotvvmAcademy.CourseFormat
             var path = SourcePath.FromSystem(root, directory);
             builder.Add(path, LoadStep(directory));
             var codeTask = directory.GetFiles("*.csx").SingleOrDefault();
-            builder.Add(path, LoadCodeTask(codeTask));
+            if (codeTask != null)
+            {
+                var codeTaskPath = SourcePath.FromSystem(root, codeTask);
+                builder.Add(codeTaskPath, LoadCodeTask(codeTask));
+            }
         }
 
         private void VisitVariant(DirectoryInfo directory)

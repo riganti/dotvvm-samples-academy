@@ -1,25 +1,27 @@
 using DotVVM.Framework.Controls;
+using DotVVM.Framework.Controls.Infrastructure;
 
-CorrectCode = "/resources/calculator_stub.dothtml";
+Unit.SetViewModelPath("/resources/CalculatorViewModel_stub.cs");
+Unit.SetCorrectCodePath("/resources/calculator_stub.dothtml");
 
-GetDirectives("/attribute::*")
+Unit.GetDirectives("/attribute::*")
     .CountEquals(1)
-    .IsViewModelDirective("CourseFormat.CalculatorViewModel");
+    .IsViewModelDirective("SampleCourse.CalculatorViewModel");
 
-GetControls("/child::node()")
+Unit.GetControls("/child::node()")
     .CountEquals(2);
 
-GetControls("/child::node()[1]")
+Unit.GetControls("/child::node()[1]")
     .IsOfType<RawLiteral>();
 
-GetControls("/RawLiteral[1]/@EncodedText")
+Unit.GetProperties("/RawLiteral[1]/@EncodedText")
     .StringEquals("<!doctype html>");
 
-GetControls("/html")
+Unit.GetControls("/html")
     .CountEquals(1);
 
-GetControls("/html/child::node()")
+Unit.GetControls("/html/child::node()")
     .CountEquals(1);
 
-GetControls("/html/body")
+Unit.GetControls("/html/body")
     .CountEquals(1);

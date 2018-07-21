@@ -2,6 +2,7 @@
 using DotvvmAcademy.CourseFormat;
 using DotvvmAcademy.Validation;
 using Markdig;
+using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
@@ -29,7 +30,7 @@ namespace DotvvmAcademy.Web.ViewModels
         public string CodeLanguage { get; set; }
 
         [Bind(Direction.ServerToClient)]
-        public ImmutableArray<IValidationDiagnostic> Diagnostics { get; set; }
+        public List<CodeTaskDiagnostic> Diagnostics { get; set; }
 
         [Bind(Direction.None)]
         public bool IsNextVisible { get; set; }
@@ -52,6 +53,9 @@ namespace DotvvmAcademy.Web.ViewModels
         [Bind(Direction.None)]
         public string Text { get; set; }
 
+        [Bind(Direction.ServerToClient)]
+        public bool HasCodeTask { get; set; }
+
         public override async Task Load()
         {
             var lesson = await workspace.LoadLesson(Language, Lesson);
@@ -67,12 +71,16 @@ namespace DotvvmAcademy.Web.ViewModels
                 NextStep = lesson.Steps[index + 1];
             }
             step = await workspace.LoadStep(Language, Lesson, Step);
+            HasCodeTask = step.CodeTask != null;
             Text = Markdown.ToHtml(step.Text);
             if (!Context.IsPostBack && step.CodeTask != null)
             {
                 var codeTask = await workspace.LoadCodeTask(Language, Lesson, Step, step.CodeTask);
                 var unit = await validator.GetUnit(codeTask);
-                var defaultCodeResource = await workspace.Load<Resource>(unit.DefaultCode);
+                var defaultCodePath = unit.Provider
+                    .GetRequiredService<SourcePathStorage>()
+                    .Get("DefaultCode");
+                var defaultCodeResource = await workspace.Load<Resource>(defaultCodePath);
                 Code = defaultCodeResource?.Text ?? null;
                 CodeLanguage = codeTask.CodeLanguage;
             }
@@ -82,7 +90,7 @@ namespace DotvvmAcademy.Web.ViewModels
         {
             var codeTask = await workspace.LoadCodeTask(Language, Lesson, Step, step.CodeTask);
             var unit = await validator.GetUnit(codeTask);
-            Diagnostics = await validator.Validate(unit, Code);
+            Diagnostics = (await validator.Validate(unit, Code)).ToList();
         }
     }
 }
