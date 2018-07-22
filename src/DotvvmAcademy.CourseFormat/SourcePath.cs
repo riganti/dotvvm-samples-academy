@@ -39,13 +39,24 @@ namespace DotvvmAcademy.CourseFormat
 
         public static string GetLastSegment(string path)
         {
-            var index = path.LastIndexOf('/');
+            var index = path.LastIndexOf(DirectorySeparator);
             return path.Substring(index + 1);
+        }
+
+        public static string GetParent(string path)
+        {
+            var index = path.LastIndexOf(DirectorySeparator);
+            if (index + 1 >= path.Length)
+            {
+                return RootDirectory;
+            }
+
+            return path.Substring(0, index);
         }
 
         public static string GetPath(string root, string systemPath)
         {
-            return systemPath.Substring(root.Length).Replace('\\', '/');
+            return systemPath.Substring(root.Length).Replace('\\', DirectorySeparator);
         }
 
         public static string Normalize(string path)

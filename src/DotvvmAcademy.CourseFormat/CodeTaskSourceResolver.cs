@@ -32,7 +32,8 @@ namespace DotvvmAcademy.CourseFormat
 
         public override string ResolveReference(string path, string baseFilePath)
         {
-            return SourcePath.Normalize(SourcePath.Combine(baseFilePath, path));
+            var parent = SourcePath.GetParent(baseFilePath);
+            return SourcePath.Normalize(SourcePath.Combine(parent, path));
         }
     }
 }
