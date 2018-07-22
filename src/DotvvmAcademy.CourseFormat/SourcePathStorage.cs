@@ -8,7 +8,7 @@ namespace DotvvmAcademy.CourseFormat
 
         public void Add(string key, string sourcePath)
         {
-            paths.AddOrUpdate(key, sourcePath, (first, second) => second);
+            paths.AddOrUpdate(key, sourcePath, (k, v) => sourcePath);
         }
 
         public string Get(string key)
