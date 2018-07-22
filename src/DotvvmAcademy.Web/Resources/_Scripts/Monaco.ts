@@ -23,7 +23,8 @@ namespace DotvvmAcademy {
     export interface ICodeTaskDiagnostic {
         Start: KnockoutObservable<number>,
         End: KnockoutObservable<number>,
-        Message: KnockoutObservable<string>
+        Message: KnockoutObservable<string>,
+        Severity: KnockoutObservable<string>
     }
 
     export interface IEditorBinding {
@@ -55,7 +56,8 @@ namespace DotvvmAcademy {
                 theme: "vs-dark",
                 minimap: {
                     enabled: false
-                }
+                },
+                renderWhitespace: "all"
             });
             this.editor.onDidChangeModelContent(this.onTextChange.bind(this));
         }
@@ -72,7 +74,7 @@ namespace DotvvmAcademy {
                 let endPosition = model.getPositionAt(diagnostic.End());
                 markers.push({
                     message: diagnostic.Message(),
-                    severity: monaco.MarkerSeverity.Error,
+                    severity: this.convertSeverity(diagnostic.Severity()),
                     startLineNumber: startPosition.lineNumber,
                     startColumn: startPosition.column,
                     endLineNumber: endPosition.lineNumber,
@@ -80,6 +82,19 @@ namespace DotvvmAcademy {
                 });
             }
             monaco.editor.setModelMarkers(this.editor.getModel(), null, markers);
+        }
+
+        convertSeverity(severity: string): monaco.MarkerSeverity {
+            switch (severity) {
+                case "Error":
+                    return monaco.MarkerSeverity.Error;
+                case "Warning":
+                    return monaco.MarkerSeverity.Warning;
+                case "Info":
+                    return monaco.MarkerSeverity.Info;
+                default:
+                    return monaco.MarkerSeverity.Error;
+            }
         }
 
         onTextChange(e: monaco.editor.IModelContentChangedEvent) {
