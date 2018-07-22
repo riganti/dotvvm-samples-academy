@@ -43,9 +43,10 @@ namespace DotvvmAcademy.Validation.CSharp
                 HandleQueries<IFieldSymbol>(scope.ServiceProvider);
                 HandleQueries<IEventSymbol>(scope.ServiceProvider);
                 await RunAnalyzers(scope.ServiceProvider);
-                if (reporter.Count > 0)
+                var diagnostics = reporter.GetDiagnostics();
+                if (diagnostics.Any(d => d.Severity == ValidationSeverity.Error))
                 {
-                    return reporter.GetDiagnostics();
+                    return diagnostics;
                 }
 
                 context.Assembly = await GetAssembly(scope.ServiceProvider);
