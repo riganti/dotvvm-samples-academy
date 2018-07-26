@@ -13,7 +13,7 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
                 var storage = context.Provider.GetRequiredService<AllowedSymbolStorage>();
                 foreach (var symbol in context.Result)
                 {
-                    storage.Builder.Add(symbol);
+                    storage.Allow(symbol);
                 }
             });
             return query;

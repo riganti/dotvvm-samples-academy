@@ -8,21 +8,20 @@ namespace DotvvmAcademy.Validation.CSharp
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class SymbolAllowedAnalyzer : DiagnosticAnalyzer
     {
-        public static readonly DiagnosticDescriptor SymbolUsageForbidden
-            = new DiagnosticDescriptor(
-                id: nameof(SymbolUsageForbidden),
-                title: "Symbol Usage Forbidden",
-                messageFormat: "Usage of symbol '{0}' is forbidden.",
-                category: nameof(DotvvmAcademy),
-                defaultSeverity: DiagnosticSeverity.Error,
-                isEnabledByDefault: true);
+        public static readonly DiagnosticDescriptor SymbolUsageForbidden = new DiagnosticDescriptor(
+            id: nameof(SymbolUsageForbidden),
+            title: "Symbol Usage Forbidden",
+            messageFormat: "Usage of symbol '{0}' is forbidden.",
+            category: nameof(DotvvmAcademy),
+            defaultSeverity: DiagnosticSeverity.Error,
+            isEnabledByDefault: true);
 
-        public SymbolAllowedAnalyzer(ImmutableHashSet<ISymbol> allowed)
+        private readonly AllowedSymbolStorage storage;
+
+        public SymbolAllowedAnalyzer(AllowedSymbolStorage storage)
         {
-            Allowed = allowed;
+            this.storage = storage;
         }
-
-        public ImmutableHashSet<ISymbol> Allowed { get; }
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; }
             = ImmutableArray.Create(SymbolUsageForbidden);
@@ -35,7 +34,7 @@ namespace DotvvmAcademy.Validation.CSharp
         public void ValidateNode(SyntaxNodeAnalysisContext context)
         {
             var symbol = context.SemanticModel.GetSymbolInfo(context.Node).Symbol;
-            if (IsSupportedSymbol(symbol) && !Allowed.Contains(symbol))
+            if (IsSupportedSymbol(symbol) && !storage.IsAllowed(symbol))
             {
                 context.ReportDiagnostic(Diagnostic.Create(
                     descriptor: SymbolUsageForbidden,

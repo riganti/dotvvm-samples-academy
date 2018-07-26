@@ -13,7 +13,7 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 
         public CSharpConstraintContext(
             IServiceProvider provider,
-            MetadataName name,
+            string name,
             ImmutableArray<TResult> result)
         {
             Provider = provider;
@@ -23,7 +23,7 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
             reporter = provider.GetRequiredService<ValidationReporter>();
         }
 
-        public MetadataName Name { get; }
+        public string Name { get; }
 
         public IServiceProvider Provider { get; }
 
