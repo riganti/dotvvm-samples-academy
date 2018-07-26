@@ -6,14 +6,17 @@ Unit.SetCorrectCodePath("/resources/CalculatorViewModel_properties.cs");
 Unit.GetTypes("System.Int32")
     .Allow();
 
-Unit.GetProperties("System.Int32 SampleCourse.CalculatorViewModel::Result()")
+Unit.GetProperties("SampleCourse.CalculatorViewModel::Result")
     .CountEquals(1)
-    .HasAccessibility(CSharpAccessibility.Public);
+    .HasAccessibility(CSharpAccessibility.Public)
+    .Allow();
 
-Unit.GetProperties("System.Int32 SampleCourse.CalculatorViewModel::LeftOperand()")
+Unit.GetProperties("SampleCourse.CalculatorViewModel::LeftOperand")
     .CountEquals(1)
-    .HasAccessibility(CSharpAccessibility.Public);
+    .HasAccessibility(CSharpAccessibility.Public)
+    .Allow();
 
-Unit.GetProperties("System.Int32 SampleCourse.CalculatorViewModel::RightOperand()")
+Unit.GetProperties("SampleCourse.CalculatorViewModel::RightOperand")
     .CountEquals(1)
-    .HasAccessibility(CSharpAccessibility.Public);
+    .HasAccessibility(CSharpAccessibility.Public)
+    .Allow();

@@ -16,13 +16,20 @@ namespace DotvvmAcademy.Meta.Syntax
             ColonColonToken = colonColonToken;
         }
 
-        public IdentifierNameNode Member { get; }
         public NameToken ColonColonToken { get; }
+
+        public IdentifierNameNode Member { get; }
+
         public NameNode Type { get; }
 
         public override NameNode SetDiagnostics(ImmutableArray<NameDiagnostic> diagnostics)
         {
             return new MemberNameNode(Type, Member, ColonColonToken, diagnostics);
+        }
+
+        public override string ToString()
+        {
+            return $"{Type}::{Member}";
         }
     }
 }

@@ -26,5 +26,10 @@ namespace DotvvmAcademy.Meta.Syntax
         {
             return new QualifiedNameNode(Left, Right, DotToken, diagnostics);
         }
+
+        public override string ToString()
+        {
+            return $"{Left}.{Right}";
+        }
     }
 }

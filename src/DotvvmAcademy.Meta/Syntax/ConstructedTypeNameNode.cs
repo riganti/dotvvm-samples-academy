@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
 
 namespace DotvvmAcademy.Meta.Syntax
 {
@@ -22,6 +21,11 @@ namespace DotvvmAcademy.Meta.Syntax
         public override NameNode SetDiagnostics(ImmutableArray<NameDiagnostic> diagnostics)
         {
             return new ConstructedTypeNameNode(UnboundTypeName, TypeArgumentList, diagnostics);
+        }
+
+        public override string ToString()
+        {
+            return $"{UnboundTypeName}{TypeArgumentList}";
         }
     }
 }

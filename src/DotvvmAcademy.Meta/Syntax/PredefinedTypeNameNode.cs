@@ -19,5 +19,10 @@ namespace DotvvmAcademy.Meta.Syntax
         {
             return new PredefinedTypeNameNode(Kind, IdentifierToken, diagnostics);
         }
+
+        public override string ToString()
+        {
+            return IdentifierToken.ToString();
+        }
     }
 }

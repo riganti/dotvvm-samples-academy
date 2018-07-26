@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace DotvvmAcademy.Meta
 {
-    public class SymbolLocator
+    public class SymbolLocator : ILocator<ISymbol>
     {
         private readonly ImmutableArray<IAssemblySymbol> assemblies;
         private readonly CSharpCompilation compilation;
@@ -16,9 +16,12 @@ namespace DotvvmAcademy.Meta
         public SymbolLocator(CSharpCompilation compilation)
         {
             this.compilation = compilation;
-            assemblies = compilation.References
-                .Select(r => (IAssemblySymbol)compilation.GetAssemblyOrModuleSymbol(r))
-                .ToImmutableArray();
+            var builder = ImmutableArray.CreateBuilder<IAssemblySymbol>();
+            builder.Add(compilation.Assembly);
+            var references = compilation.References
+                .Select(r => (IAssemblySymbol)compilation.GetAssemblyOrModuleSymbol(r));
+            builder.AddRange(references);
+            assemblies = builder.ToImmutableArray();
         }
 
         public ImmutableArray<ISymbol> Locate(string name)

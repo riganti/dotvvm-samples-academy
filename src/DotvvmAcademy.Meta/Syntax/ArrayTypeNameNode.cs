@@ -1,4 +1,5 @@
 ﻿using System.Collections.Immutable;
+using System.Text;
 
 namespace DotvvmAcademy.Meta.Syntax
 {
@@ -29,6 +30,19 @@ namespace DotvvmAcademy.Meta.Syntax
         public override NameNode SetDiagnostics(ImmutableArray<NameDiagnostic> diagnostics)
         {
             return new ArrayTypeNameNode(ElementType, OpenBracketToken, CloseBracketToken, CommaTokens, diagnostics);
+        }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.Append(ElementType);
+            sb.Append('[');
+            foreach (var comma in CommaTokens)
+            {
+                sb.Append(',');
+            }
+            sb.Append(']');
+            return sb.ToString();
         }
     }
 }

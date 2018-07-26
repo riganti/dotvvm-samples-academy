@@ -26,5 +26,10 @@ namespace DotvvmAcademy.Meta.Syntax
         {
             return new NestedTypeNameNode(Left, Right, PlusToken, diagnostics);
         }
+
+        public override string ToString()
+        {
+            return $"{Left}+{Right}";
+        }
     }
 }

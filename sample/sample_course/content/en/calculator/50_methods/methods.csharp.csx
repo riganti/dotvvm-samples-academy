@@ -3,7 +3,10 @@
 Unit.SetDefaultCodePath("/resources/CalculatorViewModel_properties.cs");
 Unit.SetCorrectCodePath("/resources/CalculatorViewModel_methods.cs");
 
-Unit.GetMethods("System.Void SampleCourse.CalculatorViewModel::Add()")
+Unit.GetTypes("System.Void")
+    .Allow();
+
+Unit.GetMethods("SampleCourse.CalculatorViewModel::Add")
     .CountEquals(1)
     .HasAccessibility(CSharpAccessibility.Public);
 
@@ -19,7 +22,7 @@ Unit.Run(c =>
     }
 });
 
-Unit.GetMethods("System.Void SampleCourse.CalculatorViewModel::Subtract()")
+Unit.GetMethods("SampleCourse.CalculatorViewModel::Subtract")
     .CountEquals(1)
     .HasAccessibility(CSharpAccessibility.Public);
 
@@ -35,7 +38,7 @@ Unit.Run(c =>
     }
 });
 
-Unit.GetMethods("System.Void SampleCourse.CalculatorViewModel::Multiply()")
+Unit.GetMethods("SampleCourse.CalculatorViewModel::Multiply")
     .CountEquals(1)
     .HasAccessibility(CSharpAccessibility.Public);
 
@@ -51,7 +54,7 @@ Unit.Run(c =>
     }
 });
 
-Unit.GetMethods("System.Void SampleCourse.CalculatorViewModel::Divide()")
+Unit.GetMethods("SampleCourse.CalculatorViewModel::Divide")
     .CountEquals(1)
     .HasAccessibility(CSharpAccessibility.Public);
 

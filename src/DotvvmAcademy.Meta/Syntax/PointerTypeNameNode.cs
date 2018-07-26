@@ -22,5 +22,10 @@ namespace DotvvmAcademy.Meta.Syntax
         {
             return new PointerTypeNameNode(ElementType, AsteriskToken, diagnostics);
         }
+
+        public override string ToString()
+        {
+            return $"{ElementType}*";
+        }
     }
 }

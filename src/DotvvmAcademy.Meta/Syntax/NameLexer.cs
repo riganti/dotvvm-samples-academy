@@ -16,7 +16,7 @@ namespace DotvvmAcademy.Meta.Syntax
 
         public string Source { get; }
 
-        public static bool IsLetter(char character)
+        public static bool IsIdentifierChar(char character)
         {
             var category = CharUnicodeInfo.GetUnicodeCategory(character);
             switch (category)
@@ -27,6 +27,7 @@ namespace DotvvmAcademy.Meta.Syntax
                 case UnicodeCategory.ModifierLetter:
                 case UnicodeCategory.OtherLetter:
                 case UnicodeCategory.LetterNumber:
+                case UnicodeCategory.DecimalDigitNumber:
                     return true;
             }
 
@@ -88,7 +89,7 @@ namespace DotvvmAcademy.Meta.Syntax
                     Advance();
                     return ScanNumericLiteral();
             }
-            if (IsLetter(character))
+            if (IsIdentifierChar(character))
             {
                 Advance();
                 return ScanIdentifier();
@@ -120,7 +121,7 @@ namespace DotvvmAcademy.Meta.Syntax
 
         private NameToken ScanIdentifier()
         {
-            while (IsLetter(Peek()))
+            while (IsIdentifierChar(Peek()))
             {
                 Advance();
             }

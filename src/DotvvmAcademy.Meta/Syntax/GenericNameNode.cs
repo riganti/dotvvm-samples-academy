@@ -26,5 +26,10 @@ namespace DotvvmAcademy.Meta.Syntax
         {
             return new GenericNameNode(IdentifierToken, BacktickToken, ArityToken, diagnostics);
         }
+
+        public override string ToString()
+        {
+            return $"{IdentifierToken}`{ArityToken}";
+        }
     }
 }

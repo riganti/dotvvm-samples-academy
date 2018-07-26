@@ -16,5 +16,10 @@ namespace DotvvmAcademy.Meta.Syntax
         {
             return new IdentifierNameNode(IdentifierToken, diagnostics);
         }
+
+        public override string ToString()
+        {
+            return IdentifierToken.ToString();
+        }
     }
 }

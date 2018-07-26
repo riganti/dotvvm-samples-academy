@@ -15,5 +15,7 @@ namespace DotvvmAcademy.Meta.Syntax
         public NameNodeKind Kind { get; }
 
         public abstract NameNode SetDiagnostics(ImmutableArray<NameDiagnostic> diagnostics);
+
+        public abstract override string ToString();
     }
 }
