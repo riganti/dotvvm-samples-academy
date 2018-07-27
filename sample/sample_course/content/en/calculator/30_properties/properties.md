@@ -1,6 +1,6 @@
 # Properties
 
-Now let's add some integer properties:
+Now let's add some `int` properties:
 
 - `Result`,
 - `LeftOperand`, and

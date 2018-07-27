@@ -10,4 +10,4 @@ Add these four `void`-returning methods:
 - `Divide()`
 
 None of them is to have any parameters as they should operate on `LeftOperand` and `RightOperand` and save the result,
-unsuprisingly, to the `Result` property.
+unsurprisingly, to the `Result` property.
