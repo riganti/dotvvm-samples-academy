@@ -12,10 +12,8 @@ Unit.GetControls("/child::node()")
     .CountEquals(2);
 
 Unit.GetControls("/child::node()[1]")
-    .IsOfType<RawLiteral>();
-
-Unit.GetProperties("/RawLiteral[1]/@EncodedText")
-    .StringEquals("<!doctype html>");
+    .IsOfType<RawLiteral>()
+    .HasRawContent("<!doctype html>");
 
 Unit.GetControls("/html")
     .CountEquals(1);

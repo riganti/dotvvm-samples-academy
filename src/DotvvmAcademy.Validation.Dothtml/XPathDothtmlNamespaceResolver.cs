@@ -9,18 +9,24 @@ namespace DotvvmAcademy.Validation.Dothtml
     internal class XPathDothtmlNamespaceResolver : IXmlNamespaceResolver
     {
         private readonly ValidationControlResolver controlResolver;
+        private readonly NameTable nameTable;
         private readonly ImmutableDictionary<string, string> namespaces;
 
-        public XPathDothtmlNamespaceResolver(ValidationControlResolver controlResolver)
+        public XPathDothtmlNamespaceResolver(ValidationControlResolver controlResolver, NameTable nameTable)
         {
             this.controlResolver = controlResolver;
+            this.nameTable = nameTable;
             namespaces = controlResolver
                 .GetRegisteredNamespaces()
-                .ToImmutableDictionary(p => p.Key, p => p.Value.ToDisplayString());
+                .ToImmutableDictionary(
+                    keySelector: p => nameTable.GetOrAdd(p.Key),
+                    elementSelector: p => nameTable.GetOrAdd(p.Value.ToDisplayString()));
         }
 
         public IDictionary<string, string> GetNamespacesInScope(XmlNamespaceScope scope)
-            => namespaces;
+        {
+            return namespaces;
+        }
 
         public string LookupNamespace(string prefix)
         {
@@ -33,6 +39,8 @@ namespace DotvvmAcademy.Validation.Dothtml
         }
 
         public string LookupPrefix(string namespaceName)
-            => namespaces.FirstOrDefault(p => p.Value == namespaceName).Key;
+        {
+            return namespaces.FirstOrDefault(p => p.Value == namespaceName).Key;
+        }
     }
 }

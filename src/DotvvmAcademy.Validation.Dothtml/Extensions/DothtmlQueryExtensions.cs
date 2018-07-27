@@ -1,5 +1,6 @@
 ﻿using DotvvmAcademy.Meta;
 using DotvvmAcademy.Validation.Dothtml.ValidationTree;
+using System.Linq;
 
 namespace DotvvmAcademy.Validation.Dothtml.Unit
 {
@@ -46,6 +47,49 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
             return query;
         }
 
+        public static DothtmlQuery<ValidationControl> HasRawContent(
+            this DothtmlQuery<ValidationControl> query,
+            string expectedContent)
+        {
+            query.AddConstraint(context =>
+            {
+                foreach (var control in context.Result)
+                {
+                    var actualContent = string.Concat(control.DothtmlNode.Tokens.Select(t => t.Text)).Trim();
+                    if (actualContent != expectedContent)
+                    {
+                        context.Report($"Control is supposed to contain '{expectedContent}'.", control);
+                    }
+                }
+            });
+            return query;
+        }
+
+        public static DothtmlQuery<ValidationPropertySetter> HasValue(
+            this DothtmlQuery<ValidationPropertySetter> query,
+            object value)
+        {
+            query.AddConstraint(context =>
+            {
+                foreach (var setter in context.Result)
+                {
+                    if (!(setter is ValidationPropertyValue propertyValue))
+                    {
+                        context.Report(
+                            message: "Property is not using a hard-coded value.",
+                            node: setter);
+                    }
+                    else if (!propertyValue.Value.Equals(value))
+                    {
+                        context.Report(
+                            message: $"Property value is supposed to be '{value}'.",
+                            node: propertyValue);
+                    }
+                }
+            });
+            return query;
+        }
+
         public static DothtmlQuery<ValidationControl> IsOfType<TControl>(this DothtmlQuery<ValidationControl> query)
         {
             query.AddConstraint(context =>
@@ -77,36 +121,11 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
                             message: "Directive is not a @viewModel directive.",
                             node: directive);
                     }
-                    else if (viewModelDirective?.Type.FullName != typeFullName)
+                    else if (viewModelDirective.Type?.FullName != typeFullName)
                     {
                         context.Report(
                             message: $"@viewModel directive is not referencing '{typeFullName}'.",
                             node: viewModelDirective);
-                    }
-                }
-            });
-            return query;
-        }
-
-        public static DothtmlQuery<ValidationPropertySetter> StringEquals(
-            this DothtmlQuery<ValidationPropertySetter> query,
-            string value)
-        {
-            query.AddConstraint(context =>
-            {
-                foreach (var setter in context.Result)
-                {
-                    if (!(setter is ValidationPropertyValue propertyValue))
-                    {
-                        context.Report(
-                            message: "Property is not using a hard-coded value.",
-                            node: setter);
-                    }
-                    else if (!propertyValue.Value.Equals(value))
-                    {
-                        context.Report(
-                            message: $"Property value is supposed to be '{value}'.",
-                            node: propertyValue);
                     }
                 }
             });

@@ -25,7 +25,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         IEnumerable<IPropertyDescriptor> IAbstractControl.PropertyNames => PropertySetters.Select(s => s.Property);
 
-        object[] IAbstractControl.ConstructorParameters { get; set; }
+        public object[] ConstructorParameters { get; set; }
 
         public void AddProperty(ValidationPropertySetter property)
         {

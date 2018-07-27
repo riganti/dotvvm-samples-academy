@@ -1,5 +1,4 @@
 ﻿using DotvvmAcademy.Validation.Dothtml.ValidationTree;
-using System.Xml;
 using System.Xml.XPath;
 
 namespace DotvvmAcademy.Validation.Dothtml
@@ -10,8 +9,6 @@ namespace DotvvmAcademy.Validation.Dothtml
         {
             Root = this;
         }
-
-        public NameTable NameTable { get; } = new NameTable();
 
         public override string ToString()
         {

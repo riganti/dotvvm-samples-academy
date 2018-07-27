@@ -10,6 +10,7 @@ using System;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.XPath;
 
 namespace DotvvmAcademy.Validation.Dothtml
@@ -48,6 +49,7 @@ namespace DotvvmAcademy.Validation.Dothtml
         private IServiceProvider GetServiceProvider()
         {
             var c = new ServiceCollection();
+            c.AddSingleton<ErrorAggregatingVisitor>();
             c.AddScoped(GetViewModelCompilation);
             c.AddScoped(GetValidationTree);
             c.AddScoped(GetXPathTree);
@@ -70,6 +72,7 @@ namespace DotvvmAcademy.Validation.Dothtml
             c.AddScoped<ValidationReporter>();
             c.AddScoped<XPathDothtmlNamespaceResolver>();
             c.AddScoped<Context>();
+            c.AddScoped<NameTable>();
             return c.BuildServiceProvider();
         }
 
@@ -81,7 +84,22 @@ namespace DotvvmAcademy.Validation.Dothtml
             var parser = provider.GetRequiredService<DothtmlParser>();
             var dothtmlRoot = parser.Parse(tokenizer.Tokens);
             var resolver = provider.GetRequiredService<ValidationTreeResolver>();
-            return (ValidationTreeRoot)resolver.ResolveTree(dothtmlRoot, context.Options.FileName);
+            var root = (ValidationTreeRoot)resolver.ResolveTree(dothtmlRoot, context.Options.FileName);
+            var reporter = provider.GetRequiredService<ValidationReporter>();
+            if (context.Options.IncludeCompilerDiagnostics)
+            {
+                foreach (var diagnostic in resolver.GetDiagnostics())
+                {
+                    reporter.Report(diagnostic);
+                }
+                var visitor = provider.GetRequiredService<ErrorAggregatingVisitor>();
+                foreach (var diagnostic in visitor.Visit(root))
+                {
+                    reporter.Report(diagnostic);
+                }
+            }
+
+            return root;
         }
 
         private CSharpCompilation GetViewModelCompilation(IServiceProvider provider)
@@ -109,11 +127,12 @@ namespace DotvvmAcademy.Validation.Dothtml
         {
             var tree = provider.GetRequiredService<XPathDothtmlRoot>();
             var namespaceResolver = provider.GetRequiredService<XPathDothtmlNamespaceResolver>();
-            var navigator = new XPathDothtmlNavigator(tree);
+            var nameTable = provider.GetRequiredService<NameTable>();
+            var navigator = new XPathDothtmlNavigator(nameTable, tree);
             var expression = XPathExpression.Compile(xpath, namespaceResolver);
             var result = (XPathNodeIterator)navigator.Evaluate(expression);
             var builder = ImmutableArray.CreateBuilder<ValidationTreeNode>();
-            while(result.MoveNext())
+            while (result.MoveNext())
             {
                 var current = (XPathDothtmlNavigator)result.Current;
                 builder.Add(current.Node.UnderlyingObject);

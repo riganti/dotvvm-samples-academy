@@ -18,7 +18,7 @@
                 <cc:CodeTaskControl Code="{value: Code}"
                                     Diagnostics="{value: Diagnostics}"
                                     Language="{resource: CodeLanguage}"
-                                    class="code-container" />
+                                    class="code-container"/>
                 <dot:Button Click="{command: Validate()}" Text="Validate" />
                 <dot:Repeater DataSource="{value: Diagnostics}">
                     <ItemTemplate>

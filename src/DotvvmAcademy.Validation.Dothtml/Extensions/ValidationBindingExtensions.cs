@@ -8,32 +8,32 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
     {
         public static BindingKind GetBindingKind(this ValidationBinding binding)
         {
-            if (binding.BindingType == typeof(ValueBindingExpression))
+            if (typeof(ValueBindingExpression).IsAssignableFrom(binding.BindingType))
             {
                 return BindingKind.Value;
             }
-            else if (binding.BindingType == typeof(CommandBindingExpression))
+            else if (typeof(CommandBindingExpression).IsAssignableFrom(binding.BindingType))
             {
                 return BindingKind.Command;
             }
-            else if (binding.BindingType == typeof(StaticCommandBindingExpression))
+            else if (typeof(StaticCommandBindingExpression).IsAssignableFrom(binding.BindingType))
             {
                 return BindingKind.StaticCommand;
             }
-            else if (binding.BindingType == typeof(ResourceBindingExpression))
+            else if (typeof(ResourceBindingExpression).IsAssignableFrom(binding.BindingType))
             {
                 return BindingKind.Resource;
             }
-            else if (binding.BindingType == typeof(ControlPropertyBindingExpression))
+            else if (typeof(ControlPropertyBindingExpression).IsAssignableFrom(binding.BindingType))
             {
                 return BindingKind.ControlProperty;
             }
-            else if (binding.BindingType == typeof(ControlCommandBindingExpression))
+            else if (typeof(ControlCommandBindingExpression).IsAssignableFrom(binding.BindingType))
             {
                 return BindingKind.ControlCommand;
             }
 
-            throw new NotSupportedException($"Binding type '{binding.GetType()}' is not supported.");
+            throw new NotSupportedException($"Binding type '{binding.BindingType}' is not supported.");
         }
     }
 }

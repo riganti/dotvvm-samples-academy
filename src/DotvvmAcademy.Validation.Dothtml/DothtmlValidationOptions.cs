@@ -10,7 +10,7 @@
             string fileName = "View.dothtml")
         {
             IncludeCompilerDiagnostics = includeCompilerDiagnostics;
-            ViewModel = viewModel ;
+            ViewModel = viewModel;
             FileName = fileName;
         }
 

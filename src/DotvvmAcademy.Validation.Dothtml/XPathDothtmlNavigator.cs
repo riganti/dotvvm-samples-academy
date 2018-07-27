@@ -8,8 +8,9 @@ namespace DotvvmAcademy.Validation.Dothtml
     [DebuggerDisplay("{ToString()}")]
     internal class XPathDothtmlNavigator : XPathNavigator
     {
-        public XPathDothtmlNavigator(XPathDothtmlNode current)
+        public XPathDothtmlNavigator(NameTable nameTable, XPathDothtmlNode current)
         {
+            NameTable = nameTable;
             Node = current;
         }
 
@@ -18,9 +19,9 @@ namespace DotvvmAcademy.Validation.Dothtml
             Node = other.Node;
         }
 
-        public override string BaseURI { get; } = "";
+        public override string BaseURI { get; } = string.Empty;
 
-        public override bool CanEdit => false;
+        public override bool CanEdit { get; } = false;
 
         public XPathDothtmlNode Node { get; private set; }
 
@@ -30,23 +31,23 @@ namespace DotvvmAcademy.Validation.Dothtml
 
         public override bool IsEmptyElement { get; } = false;
 
-        public override string LocalName => Node.LocalName;
+        public override string LocalName => Node.LocalName ?? string.Empty;
 
-        public override string Name => throw new NotSupportedException();
+        public override string Name => string.Empty;
 
-        public override string NamespaceURI { get; } = "";
+        public override string NamespaceURI => Node.Namespace ?? string.Empty;
 
-        public override XmlNameTable NameTable => Node.Root.NameTable;
+        public override XmlNameTable NameTable { get; }
 
         public override XPathNodeType NodeType => Node.NodeType;
 
-        public override string Prefix => Node.Prefix;
+        public override string Prefix => Node.Prefix ?? string.Empty;
 
         public override object TypedValue => Node.Value;
 
         public override object UnderlyingObject => Node.UnderlyingObject;
 
-        public override string Value => TypedValue.ToString();
+        public override string Value => Node.Value.ToString();
 
         public override XPathNavigator Clone()
         {

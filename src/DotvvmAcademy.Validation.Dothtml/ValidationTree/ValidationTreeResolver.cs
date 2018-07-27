@@ -14,20 +14,17 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         private readonly ImmutableArray<ParserDothtmlDiagnostic>.Builder diagnostics
             = ImmutableArray.CreateBuilder<ParserDothtmlDiagnostic>();
 
-        private readonly ValidationReporter reporter;
         private readonly ValidationControlTypeFactory typeFactory;
 
         public ValidationTreeResolver(
             ValidationControlResolver controlResolver,
             ValidationTreeBuilder treeBuilder,
             ValidationTypeDescriptorFactory descriptorFactory,
-            ValidationControlTypeFactory typeFactory,
-            ValidationReporter reporter)
+            ValidationControlTypeFactory typeFactory)
             : base(controlResolver, treeBuilder)
         {
             this.descriptorFactory = descriptorFactory;
             this.typeFactory = typeFactory;
-            this.reporter = reporter;
         }
 
         public ImmutableArray<ParserDothtmlDiagnostic> GetDiagnostics()

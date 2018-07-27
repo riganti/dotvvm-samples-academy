@@ -17,6 +17,8 @@ namespace DotvvmAcademy.Validation.Dothtml
 
         public XPathDothtmlNode FirstSibling { get; private set; }
 
+        public string Namespace { get; set; }
+
         public ImmutableArray<XPathDothtmlNode> Children { get; private set; }
 
         public string LocalName { get; set; }
