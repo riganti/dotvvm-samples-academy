@@ -18,6 +18,9 @@ namespace DotvvmAcademy.Validation
                 case ValidationSeverity.Info:
                     return CodeTaskDiagnosticSeverity.Info;
 
+                case ValidationSeverity.Hint:
+                    return CodeTaskDiagnosticSeverity.Hint;
+
                 default:
                     throw new NotSupportedException($"{nameof(ValidationSeverity)} '{severity}' is not supported.");
             }

@@ -92,6 +92,8 @@ namespace DotvvmAcademy {
                     return monaco.MarkerSeverity.Warning;
                 case "Info":
                     return monaco.MarkerSeverity.Info;
+                case "Hint":
+                    return monaco.MarkerSeverity.Hint;
                 default:
                     return monaco.MarkerSeverity.Error;
             }
@@ -102,4 +104,3 @@ namespace DotvvmAcademy {
         }
     }
 }
-
