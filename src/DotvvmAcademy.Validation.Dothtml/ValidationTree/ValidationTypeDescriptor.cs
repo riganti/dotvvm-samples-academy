@@ -51,7 +51,9 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         }
 
         public bool IsAssignableFrom(Type type)
-            => IsAssignableFrom(factory.Create(type));
+        {
+            return IsAssignableFrom(factory.Create(type));
+        }
 
         public bool IsAssignableTo(ITypeDescriptor typeDescriptor)
         {
@@ -63,7 +65,9 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         }
 
         public bool IsAssignableTo(Type type)
-            => IsAssignableTo(factory.Create(type));
+        {
+            return IsAssignableTo(factory.Create(type));
+        }
 
         public bool IsEqualTo(ITypeDescriptor typeDescriptor)
         {
@@ -72,6 +76,11 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
                 return TypeSymbol.Equals(other.TypeSymbol);
             }
             return false;
+        }
+
+        public bool IsEqualTo(Type type)
+        {
+            return IsEqualTo(factory.Create(type));
         }
 
         public ITypeDescriptor MakeGenericType(params ITypeDescriptor[] descriptorArguments)
@@ -93,7 +102,10 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             throw new NotSupportedException($"'{TypeSymbol}' is not an INamedTypeSymbol.");
         }
 
-        public override string ToString() => FullName;
+        public override string ToString()
+        {
+            return FullName;
+        }
 
         public ITypeDescriptor TryGetArrayElementOrIEnumerableType()
         {

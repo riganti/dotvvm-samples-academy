@@ -13,6 +13,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
     public class ValidationPropertyDescriptorFactory
     {
+        private readonly ITypeSymbol objectType;
         private readonly CSharpCompilation compilation;
         private readonly ValidationTypeDescriptorFactory descriptorFactory;
         private readonly AttributeExtractor extractor;
@@ -29,6 +30,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             AttributeExtractor extractor)
         {
             this.compilation = compilation;
+            objectType = compilation.GetTypeByMetadataName(WellKnownTypes.Object);
             this.descriptorFactory = descriptorFactory;
             this.extractor = extractor;
         }
@@ -205,8 +207,13 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         public ImmutableArray<ValidationPropertyGroupDescriptor> CreateGroups(ITypeSymbol containingType)
         {
+            if (containingType == objectType)
+            {
+                return Enumerable.Empty<ValidationPropertyGroupDescriptor>().ToImmutableArray();
+            }
             var groupSymbol = compilation.GetTypeByMetadataName(DotvvmTypes.DotvvmPropertyGroup);
             var builder = ImmutableArray.CreateBuilder<ValidationPropertyGroupDescriptor>();
+            builder.AddRange(CreateGroups(containingType.BaseType));
             var collectionGroups = containingType.GetMembers()
                 .OfType<IPropertySymbol>()
                 .Where(p => extractor.HasAttribute<PropertyGroupAttribute>(p)
@@ -235,8 +242,13 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         public ImmutableArray<ValidationPropertyDescriptor> CreateProperties(ITypeSymbol containingType)
         {
+            if (containingType == objectType)
+            {
+                return Enumerable.Empty<ValidationPropertyDescriptor>().ToImmutableArray();
+            }
             var dotvvmPropertySymbol = compilation.GetTypeByMetadataName(DotvvmTypes.DotvvmProperty);
             var builder = ImmutableArray.CreateBuilder<ValidationPropertyDescriptor>();
+            builder.AddRange(CreateProperties(containingType.BaseType));
             var fields = containingType.GetMembers()
                 .OfType<IFieldSymbol>()
                 .Where(f => f.IsStatic
@@ -292,8 +304,8 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
                 return new ValidationPropertyDescriptor(
                     propertySymbol: propertySymbol,
                     fieldSymbol: fieldSymbol,
-                    declaringType: descriptorFactory.Create(fieldSymbol.ContainingType),
-                    propertyType: descriptorFactory.Create(fieldSymbol.Type),
+                    declaringType: descriptorFactory.Create(propertySymbol.ContainingType),
+                    propertyType: descriptorFactory.Create(propertySymbol.Type),
                     markupOptions: markupOptions,
                     changeAttributes: extractor.GetAttributes<DataContextChangeAttribute>(propertySymbol),
                     manipulationAttribute: manipulationAttribute);

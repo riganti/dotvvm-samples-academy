@@ -6,9 +6,13 @@
         {{value: Result}}
         <dot:TextBox Text="{value: LeftOperand}" />
         <dot:TextBox Text="{value: RightOperand}" />
-        <dot:Button Click="{command: Add()}">+</dot:Button>
-        <dot:Button Click="{command: Subtract()}">-</dot:Button>
-        <dot:Button Click="{command: Multiply()}">*</dot:Button>
-        <dot:Button Click="{command: Divide()}">/<dot:Button>
+        <dot:Button Click="{command: Add()}" 
+                    Text="+" />
+        <dot:Button Click="{command: Subtract()}"
+                    Text="-" />
+        <dot:Button Click="{command: Multiply()}"
+                    Text="*" />
+        <dot:Button Click="{command: Divide()}"
+                    Text="/" />
     </body>
 </html>

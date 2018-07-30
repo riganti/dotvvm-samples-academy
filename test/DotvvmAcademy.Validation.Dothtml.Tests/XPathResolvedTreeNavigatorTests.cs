@@ -68,7 +68,8 @@ namespace ValidationTreeSample
             var rootNode = parser.Parse(tokenizer.Tokens);
             var tree = (ValidationTreeRoot)resolver.ResolveTree(rootNode, "BasicView.dothtml");
             var xpathRoot = xpathVisitor.Visit(tree);
-            var navigator = new XPathDothtmlNavigator(xpathRoot);
+            var nameTable = services.GetRequiredService<NameTable>();
+            var navigator = new XPathDothtmlNavigator(nameTable, xpathRoot);
             var query = XPathExpression.Compile("//TextBox/@Text");
             var result = navigator.Evaluate(query);
         }
@@ -131,6 +132,8 @@ namespace ValidationTreeSample
             c.AddScoped<DothtmlParser>();
             c.AddScoped<XPathTreeVisitor>();
             c.AddScoped<ValidationReporter>();
+            c.AddScoped<NameTable>();
+            c.AddScoped<XPathDothtmlNamespaceResolver>();
             return c.BuildServiceProvider();
         }
 

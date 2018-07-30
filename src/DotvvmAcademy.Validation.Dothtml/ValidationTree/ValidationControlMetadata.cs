@@ -49,8 +49,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             }
         }
 
-        public bool HasHtmlAttributesCollection
-            => Type.IsAssignableTo(typeof(IControlWithHtmlAttributes));
+        public bool HasHtmlAttributesCollection => Type.IsAssignableTo(typeof(IControlWithHtmlAttributes));
 
         public bool IsContentAllowed
             => (MarkupOptionsAttribute?.AllowContent ?? true)

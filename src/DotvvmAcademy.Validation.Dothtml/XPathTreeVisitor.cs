@@ -1,4 +1,5 @@
 ﻿using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
+using DotVVM.Framework.Controls;
 using DotVVM.Framework.Controls.Infrastructure;
 using DotvvmAcademy.Validation.Dothtml.ValidationTree;
 using System;
@@ -10,12 +11,14 @@ namespace DotvvmAcademy.Validation.Dothtml
 {
     internal class XPathTreeVisitor
     {
+        private readonly XPathDothtmlNamespaceResolver namespaceResolver;
         private readonly NameTable nameTable;
         private XPathDothtmlRoot root;
 
-        public XPathTreeVisitor(NameTable nameTable)
+        public XPathTreeVisitor(NameTable nameTable, XPathDothtmlNamespaceResolver namespaceResolver)
         {
             this.nameTable = nameTable;
+            this.namespaceResolver = namespaceResolver;
         }
 
         public XPathDothtmlRoot Visit(ValidationTreeRoot tree)
@@ -48,26 +51,38 @@ namespace DotvvmAcademy.Validation.Dothtml
             return root;
         }
 
+        private XPathDothtmlNode VisitHtmlGenericControl(ValidationControl control)
+        {
+            var elementNode = (DothtmlElementNode)control.DothtmlNode;
+            return new XPathDothtmlNode(control, XPathNodeType.Element)
+            {
+                LocalName = nameTable.GetOrAdd(elementNode.TagName)
+            };
+        }
+
         private XPathDothtmlNode VisitControl(ValidationControl control)
         {
-            if (control.Metadata.Type.IsAssignableFrom(typeof(RawLiteral)))
+            XPathDothtmlNode node;
+            if (control.Metadata.Type.IsEqualTo(typeof(RawLiteral)))
             {
                 return VisitRawLiteral(control);
             }
-
-            var node = new XPathDothtmlNode(control, XPathNodeType.Element);
-            if (control.DothtmlNode is DothtmlElementNode elementNode)
+            else if (control.Metadata.Type.IsEqualTo(typeof(Literal)))
             {
-                node.LocalName = nameTable.GetOrAdd(elementNode.TagName);
-                node.Prefix = nameTable.GetOrAdd(elementNode.TagPrefix);
-                if (!string.IsNullOrEmpty(node.Prefix))
-                {
-                    node.Namespace = nameTable.GetOrAdd(control.Metadata.Type.Namespace);
-                }
+                node = VisitLiteral(control);
+            }
+            else if (control.Metadata.Type.IsEqualTo(typeof(HtmlGenericControl)))
+            {
+                node = VisitHtmlGenericControl(control);
             }
             else
             {
-                node.LocalName = nameTable.GetOrAdd(control.Metadata.Type.Name);
+                node = new XPathDothtmlNode(control, XPathNodeType.Element)
+                {
+                    LocalName = nameTable.GetOrAdd(control.Metadata.Type.Name),
+                    Namespace = nameTable.GetOrAdd(control.Metadata.Type.Namespace),
+                    Prefix = nameTable.GetOrAdd(namespaceResolver.LookupPrefix(control.Metadata.Type.Namespace))
+                };
             }
 
             if (!control.Content.IsDefaultOrEmpty)
@@ -104,6 +119,19 @@ namespace DotvvmAcademy.Validation.Dothtml
             {
                 LocalName = nameTable.GetOrAdd(syntax.Name),
                 Value = directive.Value
+            };
+        }
+
+        private XPathDothtmlNode VisitLiteral(ValidationControl control)
+        {
+            var localName = nameTable.GetOrAdd(control.Metadata.Type.Name);
+            var @namespace = nameTable.GetOrAdd(control.Metadata.Type.Namespace);
+            var prefix = nameTable.GetOrAdd(namespaceResolver.LookupPrefix(@namespace));
+            return new XPathDothtmlNode(control, XPathNodeType.Element)
+            {
+                LocalName = localName,
+                Namespace = @namespace,
+                Prefix = prefix
             };
         }
 

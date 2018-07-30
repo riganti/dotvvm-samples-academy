@@ -39,7 +39,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         protected override object ConvertValue(string value, ITypeDescriptor propertyType)
         {
-            throw new NotImplementedException();
+            return value;
         }
 
         protected override IControlType CreateControlType(ITypeDescriptor wrapperType, string virtualPath)

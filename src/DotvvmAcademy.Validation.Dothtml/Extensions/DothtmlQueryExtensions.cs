@@ -42,6 +42,12 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
                             message: $"Property has to be set using '{kind}' binding.",
                             node: propertyBinding);
                     }
+                    else if(!propertyBinding.Binding.Value.Equals(value))
+                    {
+                        context.Report(
+                            message: $"Property is to be bound to '{value}'.",
+                            node: propertyBinding.Binding);
+                    }
                 }
             });
             return query;
@@ -96,7 +102,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
             {
                 foreach (var control in context.Result)
                 {
-                    if (!control.Metadata.Type.IsAssignableFrom(typeof(TControl)))
+                    if (!control.Metadata.Type.IsEqualTo(typeof(TControl)))
                     {
                         context.Report(
                             message: $"Control is not of type '{FullNamer.FromReflection(typeof(TControl))}'.",
