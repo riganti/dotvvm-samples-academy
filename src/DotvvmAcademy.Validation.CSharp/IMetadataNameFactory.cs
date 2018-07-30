@@ -12,8 +12,12 @@ namespace DotvvmAcademy.Validation.CSharp
 
         MetadataName CreateFieldName(MetadataName owner, string name, MetadataName returnType);
 
-        MetadataName CreateMethodName(MetadataName owner, string name, MetadataName returnType = null, int arity = 0,
-            ImmutableArray<MetadataName> parameters = default(ImmutableArray<MetadataName>));
+        MetadataName CreateMethodName(
+            MetadataName owner,
+            string name,
+            MetadataName returnType = null,
+            int arity = 0,
+            ImmutableArray<MetadataName> parameters = default);
 
         MetadataName CreateNestedTypeName(MetadataName owner, string name, int arity = 0);
 

@@ -1,49 +1,45 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using DotvvmAcademy.Meta;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 using System.Collections.Immutable;
 
 namespace DotvvmAcademy.Validation.CSharp
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SymbolAllowedAnalyzer : ValidationDiagnosticAnalyzer
+    public class SymbolAllowedAnalyzer : DiagnosticAnalyzer
     {
-        public const string MetadataKey = "IsAllowed";
-
-        public static readonly DiagnosticDescriptor SymbolUsageForbiddenDiagnostic = new DiagnosticDescriptor(
-            id: "TEMP03",
+        public static readonly DiagnosticDescriptor SymbolUsageForbidden = new DiagnosticDescriptor(
+            id: nameof(SymbolUsageForbidden),
             title: "Symbol Usage Forbidden",
-            messageFormat: "Usage of symbol {0} is forbidden.",
-            category: "Temporary",
+            messageFormat: "Usage of symbol '{0}' is forbidden.",
+            category: nameof(DotvvmAcademy),
             defaultSeverity: DiagnosticSeverity.Error,
             isEnabledByDefault: true);
 
-        private readonly RoslynMetadataNameProvider nameProvider;
+        private readonly AllowedSymbolStorage storage;
 
-        public SymbolAllowedAnalyzer(MetadataCollection<MetadataName> metadata, RoslynMetadataNameProvider nameProvider) : base(metadata)
+        public SymbolAllowedAnalyzer(AllowedSymbolStorage storage)
         {
-            this.nameProvider = nameProvider;
+            this.storage = storage;
         }
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; }
-            = ImmutableArray.Create(SymbolUsageForbiddenDiagnostic);
+            = ImmutableArray.Create(SymbolUsageForbidden);
 
         public override void Initialize(AnalysisContext context)
         {
-            context.RegisterSyntaxNodeAction(ValidateNode, RoslynConventions.Identifiers);
+            context.RegisterSyntaxNodeAction(ValidateNode, RoslynKinds.Identifiers);
         }
 
         public void ValidateNode(SyntaxNodeAnalysisContext context)
         {
             var symbol = context.SemanticModel.GetSymbolInfo(context.Node).Symbol;
-            if (!IsSupportedSymbol(symbol))
+            if (IsSupportedSymbol(symbol) && !storage.IsAllowed(symbol))
             {
-                return;
-            }
-
-            var symbolName = nameProvider.GetName(symbol);
-            if (!true.Equals(Metadata[symbolName, MetadataKey]))
-            {
-                context.ReportDiagnostic(Diagnostic.Create(SymbolUsageForbiddenDiagnostic, context.Node.GetLocation(), symbolName));
+                context.ReportDiagnostic(Diagnostic.Create(
+                    descriptor: SymbolUsageForbidden,
+                    location: context.Node.GetLocation(),
+                    messageArgs: symbol.ToDisplayString()));
             }
         }
 

@@ -5,18 +5,6 @@ namespace DotvvmAcademy.Validation.CSharp
 {
     public class MetadataNameFactory : IMetadataNameFactory
     {
-        private readonly MetadataNameFormatter defaultFormatter;
-        private readonly ReflectionMetadataNameFormatter reflectionFormatter;
-        private readonly UserFriendlyMetadataNameFormatter userFriendlyFormatter;
-
-        public MetadataNameFactory(MetadataNameFormatter defaultFormatter, ReflectionMetadataNameFormatter reflectionFormatter,
-            UserFriendlyMetadataNameFormatter userFriendlyFormatter)
-        {
-            this.defaultFormatter = defaultFormatter;
-            this.reflectionFormatter = reflectionFormatter;
-            this.userFriendlyFormatter = userFriendlyFormatter;
-        }
-
         public MetadataName CreateArrayTypeName(MetadataName owner, int rank = 1)
         {
             AssertIsType(owner, "The owner of an array type must be a type.");
@@ -67,6 +55,8 @@ namespace DotvvmAcademy.Validation.CSharp
             AssertValidArity(arity);
             AssertValidParameters(parameters);
             return Create(
+                name: name,
+                owner: owner,
                 kind: MetadataNameKind.Member | MetadataNameKind.Method,
                 returnType: returnType,
                 arity: arity,
@@ -195,13 +185,27 @@ namespace DotvvmAcademy.Validation.CSharp
             }
         }
 
-        private MetadataName Create(MetadataNameKind kind, MetadataName returnType = default(MetadataName), string @namespace = null,
-            string name = null, int arity = 0, int rank = 0, MetadataName owner = default(MetadataName),
-            ImmutableArray<MetadataName> typeArguments = default(ImmutableArray<MetadataName>),
-            ImmutableArray<MetadataName> parameters = default(ImmutableArray<MetadataName>))
+        private MetadataName Create(
+            MetadataNameKind kind,
+            MetadataName returnType = default,
+            string @namespace = null,
+            string name = null,
+            int arity = 0,
+            int rank = 0,
+            MetadataName owner = default,
+            ImmutableArray<MetadataName> typeArguments = default,
+            ImmutableArray<MetadataName> parameters = default)
         {
-            return new MetadataName(defaultFormatter, reflectionFormatter, userFriendlyFormatter, kind, returnType,
-                @namespace, name, arity, rank, owner, typeArguments, parameters);
+            return new MetadataName(
+                kind: kind,
+                returnType: returnType,
+                @namespace: @namespace,
+                name: name,
+                arity: arity,
+                rank: rank,
+                owner: owner,
+                typeArguments: typeArguments,
+                parameters: parameters);
         }
     }
 }

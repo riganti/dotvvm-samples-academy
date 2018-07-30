@@ -1,0 +1,10 @@
+@viewModel SampleCourse.CalculatorViewModel
+
+<!doctype html>
+<html>
+    <body>
+        {{value: Result}}
+        <dot:TextBox Text="{value: LeftOperand}" />
+        <dot:TextBox Text="{value: RightOperand}" />
+    </body>
+</html>

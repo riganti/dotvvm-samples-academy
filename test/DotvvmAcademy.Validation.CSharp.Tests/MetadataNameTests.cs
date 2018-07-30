@@ -20,10 +20,7 @@ namespace DotvvmAcademy.Validation.CSharp.Tests
 
         public MetadataNameTests()
         {
-            var defaultFormatter = new MetadataNameFormatter();
-            var reflectionFormatter = new ReflectionMetadataNameFormatter();
-            var userFriendlyFormatter = new UserFriendlyMetadataNameFormatter();
-            var factory = new MetadataNameFactory(defaultFormatter, reflectionFormatter, userFriendlyFormatter);
+            var factory = new MetadataNameFactory();
 
             var customer = factory.CreateTypeName("DataAccessLayer", "Customer");
             var product = factory.CreateTypeName("DataAccessLayer", "Product");

@@ -13,12 +13,15 @@
     "typescript": "^2.8.3",
     "uglify-js": "^3.3.25",
     "watch": "^1.0.2",
-    "monaco-editor": "^0.13.0",
     "cpx": "^1.5.0",
-    "jquery": "^3.3.1"
+    "monaco-editor": "^0.13.0",
+    "jquery": "^3.3.1",
+    "@types/jquery": "^3.3.2",
+    "@types/knockout": "^3.4.54"
   },
   "scripts": {
-    "build": "npm run libs && npm run compile:scss && npm run compile:ts && npm run bundle",
+    "build-release": "npm run libs && npm run compile:scss && npm run compile:ts && npm run bundle",
+    "build-debug": "npm run libs && npm run compile:scss && npm run compile:ts",
     "libs": "npm run monaco && npm run jquery",
     "jquery": "cpx node_modules/jquery/dist/**/* wwwroot/libs/jquery",
     "monaco": "cpx node_modules/monaco-editor/min/vs/**/* wwwroot/libs/monaco",
@@ -31,13 +34,12 @@
     "watch": "npm run watch:scss | npm run watch:ts",
     "watch:scss": "npm run compile:scss && npm run compile:scss -- -w",
     "watch:ts": "npm run compile:ts -- -w",
-    "browser-sync": "browser-sync start --proxy localhost:2299 --files=\"wwwroot/css/*.css\" \"Resources/JS/*.js\" \"Views/**/*.dothtml\" \"Controls/**/*.dotcontrol\" \"Views/**/*.dotmaster\""
+    "browser-sync": "browser-sync start --proxy localhost:1889 --files=\"wwwroot/css/*.css\" \"Resources/JS/*.js\" \"Views/**/*.dothtml\" \"Controls/**/*.dotcontrol\" \"Views/**/*.dotmaster\""
   },
   "-vs-binding": {
     "ProjectOpened": [
       "watch",
-      "browser-sync",
-      "postcss"
+      "browser-sync"
     ]
   },
   "main": "postcss.config.js",

@@ -4,6 +4,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+namespace Nest
+{
+    public class One
+    {
+        public class Two
+        {
+            public class Three
+            {
+
+            }
+        }
+    }
+}
+
 public interface IEntity
 {
     int ID { get; set; }

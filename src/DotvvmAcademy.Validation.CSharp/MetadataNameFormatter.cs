@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Text;
 
 namespace DotvvmAcademy.Validation.CSharp
 {
-    public class MetadataNameFormatter : IMetadataNameFormatter
+    public class MetadataNameFormatter
     {
         public const char ArityPrefix = '`';
         public const char ArrayEnd = ']';
@@ -23,17 +24,20 @@ namespace DotvvmAcademy.Validation.CSharp
 
         public string Format(MetadataName metadataName)
         {
-            switch (metadataName.Kind)
-            {
-                case MetadataNameKind.Type:
-                    return FormatType(metadataName);
-
-                case MetadataNameKind.Member:
-                    return FormatMember(metadataName);
-
-                default:
-                    throw new InvalidOperationException($"{nameof(MetadataNameFormatter)} can't format {nameof(MetadataName)} with Kind '{metadataName.Kind}'.");
+            if(metadataName == null) {
+                return "";
             }
+
+            if ((metadataName.Kind & MetadataNameKind.Member) != 0)
+            {
+                return FormatMember(metadataName);
+            }
+            else if((metadataName.Kind & MetadataNameKind.Type) != 0)
+            {
+                return FormatType(metadataName);
+            }
+
+            throw new NotSupportedException($"{nameof(MetadataNameKind)} '{metadataName.Kind}' is not supported.");
         }
 
         private string FormatArity(int arity)
@@ -91,10 +95,10 @@ namespace DotvvmAcademy.Validation.CSharp
         {
             switch (metadataName.Kind)
             {
-                case MetadataNameKind.Method | MetadataNameKind.ConstructedMethod:
+                case MetadataNameKind.Member | MetadataNameKind.Method | MetadataNameKind.ConstructedMethod:
                     return FormatConstructedMethod(metadataName);
 
-                case MetadataNameKind.Method:
+                case MetadataNameKind.Member | MetadataNameKind.Method:
                     return FormatMethod(metadataName);
 
                 default:
@@ -124,14 +128,14 @@ namespace DotvvmAcademy.Validation.CSharp
             return sb.ToString();
         }
 
-        private string FormatParameters(IList<MetadataName> parameters)
+        private string FormatParameters(ImmutableArray<MetadataName> parameters)
         {
             var sb = new StringBuilder();
             sb.Append(ParameterListStart);
-            if (parameters.Count > 0)
+            if (!parameters.IsDefaultOrEmpty && parameters.Length > 0)
             {
                 sb.Append(Format(parameters[0]));
-                for (int i = 1; i < parameters.Count; i++)
+                for (int i = 1; i < parameters.Length; i++)
                 {
                     sb.Append(ListSeparator);
                     sb.Append(Format(parameters[i]));
@@ -191,9 +195,9 @@ namespace DotvvmAcademy.Validation.CSharp
             }
         }
 
-        private string FormatTypeArguments(IList<MetadataName> typeArguments)
+        private string FormatTypeArguments(ImmutableArray<MetadataName> typeArguments)
         {
-            if (typeArguments.Count == 0)
+            if (typeArguments.IsDefaultOrEmpty)
             {
                 return "";
             }
@@ -201,7 +205,7 @@ namespace DotvvmAcademy.Validation.CSharp
             var sb = new StringBuilder();
             sb.Append(TypeArgumentListStart);
             sb.Append(Format(typeArguments[0]));
-            for (int i = 1; i < typeArguments.Count; i++)
+            for (int i = 1; i < typeArguments.Length; i++)
             {
                 sb.Append(ListSeparator);
                 sb.Append(Format(typeArguments[i]));

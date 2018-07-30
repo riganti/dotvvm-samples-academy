@@ -44,7 +44,7 @@ namespace DotvvmAcademy.Web
                 presenterFactory: LocalizablePresenter.BasedOnParameter("Language"));
             config.RouteTable.Add(
                 routeName: "Default",
-                url: "{Language:alpha}",
+                url: "{Language}",
                 virtualPath: "Views/default.dothtml",
                 defaultValues: new { Language = "en" },
                 presenterFactory: LocalizablePresenter.BasedOnParameter("Language"));

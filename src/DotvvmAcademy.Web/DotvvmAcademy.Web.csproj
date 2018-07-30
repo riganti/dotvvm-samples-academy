@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
     <PropertyGroup>
-        <TargetFramework>netcoreapp2.0</TargetFramework>
+        <TargetFramework>netcoreapp2.1</TargetFramework>
         <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
         <TypeScriptToolsVersion>2.8</TypeScriptToolsVersion>
         <EnableDefaultContentItems>false</EnableDefaultContentItems>
+        <LangVersion>latest</LangVersion>
     </PropertyGroup>
     <ItemGroup>
         <None Remove="dotvvm_serialized_config.json.tmp" />
-        <None Remove="Resources\_Scripts\Monaco.ts" />
         <None Remove="Views/*" />
     </ItemGroup>
     <ItemGroup>
@@ -22,26 +22,17 @@
         </Content>
     </ItemGroup>
     <ItemGroup>
-        <Folder Include="wwwroot\" />
-    </ItemGroup>
-    <ItemGroup>
         <Compile Remove="Content\**\*.cs" />
         <Content Include="Content\**\*" />
         <Content Remove="Content\**\*.json" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore" Version="2.0.3" />
-        <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.0.3" />
-        <PackageReference Include="DotVVM.AspNetCore" Version="2.0.0-preview08-final" />
+        <PackageReference Include="Microsoft.AspNetCore" Version="2.1.2" />
+        <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.1.1" />
+        <PackageReference Include="DotVVM.AspNetCore" Version="2.0.0" />
     </ItemGroup>
     <ItemGroup>
         <DotNetCliToolReference Include="DotVVM.Compiler.Light" Version="1.1.9" />
-    </ItemGroup>
-    <ItemGroup>
-      <ProjectReference Include="..\DotvvmAcademy.BL\DotvvmAcademy.BL.csproj" />
-    </ItemGroup>
-    <ItemGroup>
-      <TypeScriptCompile Include="Resources\_Scripts\Monaco.ts" />
     </ItemGroup>
     <ItemGroup>
     <Compile Update="Resources\Localization\UIResources.Designer.cs">
@@ -62,7 +53,10 @@
         <Generator>PublicResXFileCodeGenerator</Generator>
       </EmbeddedResource>
     </ItemGroup>
-  <Target Name="NpmBuild" BeforeTargets="Build">
-    <Exec Command="npm run build" />
-  </Target>
+    <ItemGroup>
+      <Folder Include="wwwroot\css\" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\DotvvmAcademy.CourseFormat\DotvvmAcademy.CourseFormat.csproj" />
+    </ItemGroup>
 </Project>

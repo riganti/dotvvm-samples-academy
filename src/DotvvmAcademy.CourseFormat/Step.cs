@@ -1,18 +1,18 @@
-﻿using System.Diagnostics;
-
-namespace DotvvmAcademy.CourseFormat
+﻿namespace DotvvmAcademy.CourseFormat
 {
-    internal class Step : IStep
+    public class Step : Source
     {
-        public Step(StepId id)
+        public Step(string path, string text, string codeTask) : base(path)
         {
-            Id = id;
+            Text = text;
+            CodeTask = codeTask;
+            Moniker = SourcePath.GetLastSegment(Path);
         }
 
-        public CodeTaskId CodeTaskId { get; set; }
+        public string CodeTask { get; }
 
-        public StepId Id { get; }
+        public string Moniker { get; }
 
-        public string Text { get; set; }
+        public string Text { get; }
     }
 }

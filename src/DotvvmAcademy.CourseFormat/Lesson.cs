@@ -2,17 +2,19 @@
 
 namespace DotvvmAcademy.CourseFormat
 {
-    internal class Lesson : ILesson
+    public class Lesson : Source
     {
-        public Lesson(LessonId id)
+        public Lesson(string path, string annotation, ImmutableArray<string> steps) : base(path)
         {
-            Id = id;
+            Annotation = annotation;
+            Steps = steps;
+            Moniker = SourcePath.GetLastSegment(Path);
         }
 
-        public string Annotation { get; set; }
+        public string Annotation { get; }
 
-        public LessonId Id { get; }
+        public string Moniker { get; }
 
-        public ImmutableDictionary<string, StepId> Steps { get; set; }
+        public ImmutableArray<string> Steps { get; }
     }
 }

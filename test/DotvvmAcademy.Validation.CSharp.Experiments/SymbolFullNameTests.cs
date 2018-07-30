@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -9,9 +10,18 @@ namespace DotvvmAcademy.Validation.CSharp.Experiments
     [TestClass]
     public class SymbolFullNameTests : ExperimentTestBase
     {
-        public const string SampleResourceName = "DotvvmAcademy.Validation.Tests.ShopSample.cs";
+        public const string SampleResourceName = "DotvvmAcademy.Validation.CSharp.Experiments.ShopSample.cs";
 
         public string Sample { get; set; }
+
+        [TestMethod]
+        public void IDK()
+        {
+            var compilation = GetCompilation(Sample, "Shop", new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+            var test1 = compilation.GetTypeByMetadataName("System.Collections.Generic.IEnumerable`1");
+            var test2 = compilation.GetTypeByMetadataName("BusinessLayer.DTO+Key");
+            var test3 = compilation.GetTypeByMetadataName("Nest.One+Two+Three");
+        }
 
         [TestMethod]
         public void BasicSymbolFullNameTest()

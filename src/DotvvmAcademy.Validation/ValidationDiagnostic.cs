@@ -1,46 +1,28 @@
-﻿using System.Collections.Generic;
-using System.Collections.Immutable;
-
-namespace DotvvmAcademy.Validation
+﻿namespace DotvvmAcademy.Validation
 {
-    public abstract partial class ValidationDiagnostic
+    public class ValidationDiagnostic : IValidationDiagnostic
     {
-        public abstract string Id { get; }
-
-        public abstract ValidationDiagnosticLocation Location { get; }
-
-        public abstract string Message { get; }
-
-        public abstract string Name { get; }
-
-        public abstract ValidationDiagnosticSeverity Severity { get; }
-
-        public static ValidationDiagnostic Create(
-            ValidationDiagnosticDescriptor descriptor,
-            ValidationDiagnosticLocation location = null,
-            ImmutableArray<object> messageArgs = default(ImmutableArray<object>))
+        public ValidationDiagnostic(
+            string message, 
+            int start = -1, 
+            int end = -1,
+            object underlyingObject = null,
+            ValidationSeverity severity = default)
         {
-            location = location ?? ValidationDiagnosticLocation.Global;
-            return new DescribedDiagnostic(descriptor, location, messageArgs);
+            Message = message;
+            Start = start;
+            End = end;
+            Severity = severity;
         }
 
-        public static ValidationDiagnostic Create(
-            ValidationDiagnosticDescriptor descriptor,
-            ValidationDiagnosticLocation location = null,
-            IEnumerable<object> messageArgs = null)
-        {
-            var array = messageArgs == null
-                ? default(ImmutableArray<object>)
-                : messageArgs.ToImmutableArray();
-            return Create(descriptor, location, array);
-        }
+        public int End { get; }
 
-        public static ValidationDiagnostic Create(
-            ValidationDiagnosticDescriptor descriptor,
-            ValidationDiagnosticLocation location = null,
-            params object[] messageArgs)
-        {
-            return Create(descriptor, location, messageArgs.ToImmutableArray());
-        }
+        public string Message { get; }
+
+        public ValidationSeverity Severity { get; }
+
+        public int Start { get; }
+
+        public object UnderlyingObject { get; }
     }
 }

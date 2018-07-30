@@ -34,7 +34,7 @@ namespace DotvvmAcademy.Validation.CSharp
                     return GetTypeName(type);
 
                 default:
-                    throw new ArgumentException($"Symbol kind {symbol.Kind} is not supported by {nameof(RoslynMetadataNameProvider)}.");
+                    throw new NotSupportedException($"Symbol kind {symbol.Kind} is not supported.");
             }
         }
 
@@ -60,16 +60,17 @@ namespace DotvvmAcademy.Validation.CSharp
 
         private MetadataName GetMethodName(IMethodSymbol method)
         {
-            if (method.ConstructedFrom != null)
-            {
-                var owner = GetMethodName(method.ConstructedFrom);
-                var typeArguments = method.TypeArguments
-                    .Select(tp => GetTypeName(tp))
-                    .ToImmutableArray();
-                return factory.CreateConstructedMethodName(
-                    owner: owner,
-                    typeArguments: typeArguments);
-            }
+            // TODO: Handle constructed generic methods properly
+            //if (method.ConstructedFrom != null)
+            //{
+            //    var owner = GetMethodName(method.ConstructedFrom);
+            //    var typeArguments = method.TypeArguments
+            //        .Select(tp => GetTypeName(tp))
+            //        .ToImmutableArray();
+            //    return factory.CreateConstructedMethodName(
+            //        owner: owner,
+            //        typeArguments: typeArguments);
+            //}
 
             var returnType = GetTypeName(method.ReturnType);
             var containingType = GetTypeName(method.ContainingType);

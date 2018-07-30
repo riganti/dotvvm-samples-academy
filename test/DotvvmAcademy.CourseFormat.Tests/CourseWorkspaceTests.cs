@@ -10,11 +10,10 @@ namespace DotvvmAcademy.CourseFormat.Tests
         public async Task BasicLoadingTest()
         {
             var workspace = new CourseWorkspace("../../../../../sample/sample_course");
-            var variants = workspace.GetVariantIds();
-            var variant = await workspace.LoadVariant("/en");
-            var lesson = await workspace.LoadLesson("/en/introduction");
-            var step = await workspace.LoadStep("/en/introduction/20_first_task");
-            var codeTask = await workspace.LoadCodeTask("/en/introduction/20_first_task");
+            var variant = await workspace.Load<CourseVariant>("/en");
+            var lesson = await workspace.Load<Lesson>("/en/calculator");
+            var step = await workspace.Load<Step>("/en/calculator/10_a_classic");
+            var codeTask = await workspace.Load<CodeTask>("/en/calculator/10_a_classic/a_classic.csharp.csx");
         }
     }
 }

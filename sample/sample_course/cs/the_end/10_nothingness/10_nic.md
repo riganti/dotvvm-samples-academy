@@ -1,3 +1,0 @@
-# Nic
-
-Tady nic není.

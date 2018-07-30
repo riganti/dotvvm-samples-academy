@@ -1,15 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DotvvmAcademy.CourseFormat
+﻿namespace DotvvmAcademy.CourseFormat
 {
-    internal class CodeTaskDiagnostic : ICodeTaskDiagnostic
+    public class CodeTaskDiagnostic
     {
-        public int End { get; set; }
+        public CodeTaskDiagnostic(string message, int start, int end, CodeTaskDiagnosticSeverity severity)
+        {
+            Message = message;
+            Start = start;
+            End = end;
+            Severity = severity;
+        }
 
-        public CodeTaskDiagnosticSeverity Severity { get; set; }
+        public int End { get; }
 
-        public int Start { get; set; }
+        public string Message { get; }
+
+        public CodeTaskDiagnosticSeverity Severity { get; }
+
+        public int Start { get; }
     }
 }

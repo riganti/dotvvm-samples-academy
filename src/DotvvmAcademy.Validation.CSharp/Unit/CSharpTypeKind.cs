@@ -5,13 +5,11 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
     [Flags]
     public enum CSharpTypeKind
     {
-        Array = 1 << 0,
-        Class = 1 << 1,
-        Delegate = 1 << 2,
-        Enum = 1 << 3,
-        Interface = 1 << 4,
-        Pointer = 1 << 5,
-        Struct = 1 << 6,
-        TypeParameter = 1 << 7
+        None = 0,
+        Class = 1 << 0,
+        Delegate = 1 << 1,
+        Enum = 1 << 2,
+        Interface = 1 << 3,
+        Struct = 1 << 4
     }
 }

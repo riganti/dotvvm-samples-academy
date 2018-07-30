@@ -14,6 +14,9 @@ namespace DotvvmAcademy.Validation.Dothtml.Experiments
 
         public const string Sample = @"
 @viewModel System.Object
+@service System.IServiceProvider
+@import L=System.Linq
+
 <!doctype html>
 <html>
     <body>

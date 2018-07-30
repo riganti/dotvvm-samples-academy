@@ -1,22 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Diagnostics;
-using System.Text;
+﻿using System.Collections.Immutable;
 
 namespace DotvvmAcademy.CourseFormat
 {
-    internal class CourseVariant : ICourseVariant
+    public class CourseVariant : Source
     {
-        public CourseVariant(CourseVariantId id)
+        public CourseVariant(string path, string annotation, ImmutableArray<string> lessons) : base(path)
         {
-            Id = id;
+            Annotation = annotation;
+            Lessons = lessons;
+            Moniker = SourcePath.GetLastSegment(Path);
         }
 
-        public string Annotation { get; set; }
+        public string Annotation { get; }
 
-        public CourseVariantId Id { get; }
+        public ImmutableArray<string> Lessons { get; }
 
-        public ImmutableDictionary<string, LessonId> Lessons { get; set; }
+        public string Moniker { get; }
     }
 }

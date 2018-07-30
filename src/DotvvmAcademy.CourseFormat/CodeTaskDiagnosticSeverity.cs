@@ -2,8 +2,8 @@
 {
     public enum CodeTaskDiagnosticSeverity
     {
-        Information,
+        Error,
         Warning,
-        Error
+        Info
     }
 }

@@ -1,6 +1,7 @@
 ﻿@viewModel DotvvmAcademy.Web.ViewModels.DefaultViewModel
 @masterPage Views/site.dotmaster
 @import DotvvmAcademy.Web.Resources.Localization
+@import System.Linq
 
 <dot:Content ContentPlaceHolderID="HeaderContent">
     <section class="main-header no-padding" RenderSettings.Mode="Server">
@@ -10,54 +11,26 @@
                 <dot:HtmlLiteral Html="{resource: UIResources.Base_MainDescription}" RenderWrapperTag="true" WrapperTagName="p" /
                 <dot:Button ButtonTagName="button" class="button" Text="{resource: UIResources.Btn_StartCourse}"></dot:Button>
                 <cc:SvgToHtml Source="images/Illustrations/header-image.svg" RenderSettings.Mode="Server" />
-                <div class="tags-container">
-                    <div>
-                        <a href="https://www.dotvvm.com/" target="_blank">
-                            <cc:SvgToHtml Source="images/Illustrations/tag-dotvvm.svg" RenderSettings.Mode="Server" />
-                        </a>
-                    </div>
-                    <div>
-                        <a href="https://www.dotvvm.com/docs/samples/latest" target="_blank">
-                            <cc:SvgToHtml Source="images/Illustrations/tag-samples.svg" RenderSettings.Mode="Server" />
-                        </a>
-                    </div>
-                    <div>
-                        <a href="https://www.dotvvm.com/docs/tutorials/introduction/latest" target="_blank">
-                            <cc:SvgToHtml Source="images/Illustrations/tag-tutorials.svg" RenderSettings.Mode="Server" />
-                        </a>
-                    </div>
-                    <div>
-                        <a href="https://www.dotvvm.com/docs/latest" target="_blank">
-                            <cc:SvgToHtml Source="images/Illustrations/tag-doc.svg" RenderSettings.Mode="Server" />
-                        </a>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
 </dot:Content>
 
 <dot:Content ContentPlaceHolderID="MainContent">
-    <section class="section-lections">
+    <section class="section-lections no-padding-top">
         <div class="container-large">
-            <dot:Literal Text="{resource: UIResources.Base_ChooseLesson}" class="progress-bar-title" />
-
-            <dot:Repeater DataSource="{value: Lessons}" class="lesson-progress-bar" RenderSettings.Mode="Server">
-                <div class="{value: IsFinished ? "progress-item completed" : "progress-item"}">
-                    <span>42</span>
-                </div>
-            </dot:Repeater>
-
             <dot:Repeater DataSource="{value: Lessons}" class="lessons-container" RenderSettings.Mode="Server">
-                <div class="{value: IsFinished ? "lessons-item finished" : "lessons-item" }">
-                    <cc:SvgToHtml Source="{value:IsFinished ? "images/Icons/medal.svg" : ImageUrl}">
+                <%--<div class="{value: IsFinished ? "lessons-item finished" : "lessons-item" }">--%>
+                <div class="lessons-item">
+                    <%--<cc:SvgToHtml Source="{value:IsFinished ? "images/Icons/medal.svg" : ImageUrl}">--%>
+                    <cc:SvgToHtml Source="{resource: ImageUrl}">
                     </cc:SvgToHtml>
-                    <h2>{{value: Name}}</h2>
-                    <dot:HtmlLiteral Html="{value: Annotation}" />
+                    <h2>{{resource: Name}}</h2>
+                    <dot:HtmlLiteral Html="{resource: Html}" />
                     <dot:RouteLink RouteName="Step"
                                    Param-Language="{value: _root.Language}"
-                                   Param-Lesson="{value: Moniker}"
-                                   Param-Step="{value: CurrentStep}"
+                                   Param-Lesson="{value: Lesson.Moniker}"
+                                   Param-Step="{value: Lesson.Steps[0]}"
                                    Text="{value: UIResources.Btn_StartLesson}"
                                    class="button" />
                 </div>
@@ -66,8 +39,7 @@
     </section>
     <section class="section-coffee">
         <div>
-            <cc:SvgToHtml Source="images/Illustrations/coffee-image.svg">
-            </cc:SvgToHtml>
+            <cc:SvgToHtml Source="images/Illustrations/coffee-image.svg" RenderSettings.Mode="Server" />
         </div>
         <div>
             <dot:HtmlLiteral Html="{resource: UIResources.Base_CoffeeTitle}" RenderWrapperTag="true" WrapperTagName="h2" />
@@ -78,3 +50,14 @@
         </div>
     </section>
 </dot:Content>
+
+<dot:content ContentPlaceHolderID="FooterContent">
+    <div class="main-link">
+        <a target="_blank" href="https://www.dotvvm.com/">www.dotvvm.com</a>
+    </div>
+    <div class="footer-links">
+        <a target="_blank" href="https://www.dotvvm.com/docs/latest">{{resource: UIResources.Base_Documentation}}</a>
+        <a target="_blank" href="https://www.dotvvm.com/docs/tutorials/introduction/latest">{{resource: UIResources.Base_Tutorials}}</a>
+        <a target="_blank" href="https://www.dotvvm.com/docs/samples/latest">{{resource: UIResources.Base_Samples}}</a>
+    </div>
+</dot:content>

@@ -1,26 +1,36 @@
 ﻿using DotVVM.Framework.ViewModel;
-using DotvvmAcademy.BL;
 using DotvvmAcademy.CourseFormat;
+using DotvvmAcademy.Validation;
 using Markdig;
+using Microsoft.Extensions.DependencyInjection;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DotvvmAcademy.Web.ViewModels
 {
     public class StepViewModel : SiteViewModel
     {
-        private readonly LessonFacade facade;
+        private readonly MarkdownExtractor extractor;
+        private readonly CodeTaskValidator validator;
         private readonly CourseWorkspace workspace;
+        private Step step;
 
-        public StepViewModel(LessonFacade facade, CourseWorkspace workspace)
+        public StepViewModel(CourseWorkspace workspace, MarkdownExtractor extractor, CodeTaskValidator validator)
         {
-            this.facade = facade;
             this.workspace = workspace;
+            this.extractor = extractor;
+            this.validator = validator;
         }
 
         public string Code { get; set; }
 
         [Bind(Direction.None)]
         public string CodeLanguage { get; set; }
+
+        [Bind(Direction.ServerToClient)]
+        public List<CodeTaskDiagnostic> Diagnostics { get; set; }
 
         [Bind(Direction.None)]
         public bool IsNextVisible { get; set; }
@@ -31,8 +41,10 @@ namespace DotvvmAcademy.Web.ViewModels
         [FromRoute("Lesson")]
         public string Lesson { get; set; }
 
+        [Bind(Direction.ServerToClient)]
         public string NextStep { get; set; }
 
+        [Bind(Direction.ServerToClient)]
         public string PreviousStep { get; set; }
 
         [FromRoute("Step"), Bind(Direction.None)]
@@ -41,12 +53,15 @@ namespace DotvvmAcademy.Web.ViewModels
         [Bind(Direction.None)]
         public string Text { get; set; }
 
+        [Bind(Direction.ServerToClient)]
+        public bool HasCodeTask { get; set; }
+
         public override async Task Load()
         {
-            var lesson = await facade.GetLesson(Language, Lesson);
+            var lesson = await workspace.LoadLesson(Language, Lesson);
             var index = lesson.Steps.IndexOf(Step);
             IsPreviousVisible = index > 0;
-            IsNextVisible = index < lesson.Steps.Count - 1;
+            IsNextVisible = index < lesson.Steps.Length - 1;
             if (IsPreviousVisible)
             {
                 PreviousStep = lesson.Steps[index - 1];
@@ -55,14 +70,27 @@ namespace DotvvmAcademy.Web.ViewModels
             {
                 NextStep = lesson.Steps[index + 1];
             }
-            var step = await workspace.LoadStep($"/{Language}/{Lesson}/{Step}");
+            step = await workspace.LoadStep(Language, Lesson, Step);
+            HasCodeTask = step.CodeTask != null;
             Text = Markdown.ToHtml(step.Text);
-            if (step.CodeTaskId != null)
+            if (!Context.IsPostBack && step.CodeTask != null)
             {
-                var codeTask = await workspace.LoadCodeTask(step.CodeTaskId);
-                Code = codeTask.Code;
-                CodeLanguage = codeTask.Id.Language;
+                var codeTask = await workspace.LoadCodeTask(Language, Lesson, Step, step.CodeTask);
+                var unit = await validator.GetUnit(codeTask);
+                var defaultCodePath = unit.Provider
+                    .GetRequiredService<SourcePathStorage>()
+                    .Get("DefaultCode");
+                var defaultCodeResource = await workspace.Load<Resource>(defaultCodePath);
+                Code = defaultCodeResource?.Text ?? null;
+                CodeLanguage = codeTask.CodeLanguage;
             }
+        }
+
+        public async Task Validate()
+        {
+            var codeTask = await workspace.LoadCodeTask(Language, Lesson, Step, step.CodeTask);
+            var unit = await validator.GetUnit(codeTask);
+            Diagnostics = (await validator.Validate(unit, Code)).ToList();
         }
     }
 }

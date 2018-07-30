@@ -12,7 +12,7 @@ namespace DotvvmAcademy.Validation.CSharp
             '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
         };
 
-        private readonly MetadataNameFactory factory;
+        private readonly IMetadataNameFactory factory;
 
         private readonly char[] specialChars = new[]
                         {
@@ -43,11 +43,12 @@ namespace DotvvmAcademy.Validation.CSharp
         private bool isNested;
         private List<MetadataName> list = new List<MetadataName>();
         private string name;
+        private string memberName;
         private int position;
         private int rank;
         private MetadataName returnType;
 
-        public MetadataNameParser(MetadataNameFactory factory)
+        public MetadataNameParser(IMetadataNameFactory factory)
         {
             this.factory = factory;
         }
@@ -84,8 +85,12 @@ namespace DotvvmAcademy.Validation.CSharp
                         break;
 
                     case MemberAccess:
-                        current = CreateType();
-                        isMember = true;
+                        if(input[position + 1] == MemberAccess)
+                        {
+                            position++;
+                            current = CreateType();
+                            isMember = true;
+                        }
                         break;
 
                     case NamespaceAccess:
@@ -105,6 +110,7 @@ namespace DotvvmAcademy.Validation.CSharp
                         break;
 
                     case ParameterListStart:
+                        memberName = name;
                         isMethod = true;
                         break;
 
@@ -115,7 +121,9 @@ namespace DotvvmAcademy.Validation.CSharp
                         returnType = CreateType();
                         break;
 
+                    case ParameterListEnd:
                     case TypeArgumentListEnd:
+                        list.Add(CreateType());
                         break;
 
                     case TypeArgumentListStart:
@@ -131,7 +139,7 @@ namespace DotvvmAcademy.Validation.CSharp
             }
             if (isMember && isMethod)
             {
-                return factory.CreateMethodName(current, name, returnType, arity, list.ToImmutableArray());
+                return factory.CreateMethodName(current, memberName, returnType, arity, list.ToImmutableArray());
             }
             if (isMember)
             {
@@ -182,6 +190,11 @@ namespace DotvvmAcademy.Validation.CSharp
             while (!specialChars.Contains(letter))
             {
                 position++;
+                if(position >= input.Length)
+                {
+                    break;
+                }
+                letter = input[position];
             }
             return input.Substring(start, position - start);
         }
@@ -208,6 +221,7 @@ namespace DotvvmAcademy.Validation.CSharp
             input = fullName;
             @namespace = "";
             name = "";
+            memberName = "";
             arity = 0;
             rank = 1;
             current = null;
