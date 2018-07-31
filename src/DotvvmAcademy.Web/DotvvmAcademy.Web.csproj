@@ -55,9 +55,6 @@
       </EmbeddedResource>
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="wwwroot\css\" />
-    </ItemGroup>
-    <ItemGroup>
       <ProjectReference Include="..\DotvvmAcademy.CourseFormat\DotvvmAcademy.CourseFormat.csproj" />
     </ItemGroup>
 </Project>

@@ -5,8 +5,8 @@
 // Reset all elements to default settings (It will reset default brwser settings)
 
 html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
+h1, h2, h3, h4, h5, h6, p, blockquote,
+a, abbr, acronym, address, big, cite,
 del, dfn, em, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var,
 b, u, i, center,
@@ -26,6 +26,10 @@ time, mark, audio, video {
 html {
     font-size: 62.5%;
     height: 100%;
+
+    .code-container{
+        font-size: 100% !important;
+    }
 }
 
 body {
