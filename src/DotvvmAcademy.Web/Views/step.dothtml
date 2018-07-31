@@ -18,13 +18,18 @@
                 <cc:CodeTaskControl Code="{value: Code}"
                                     Diagnostics="{value: Diagnostics}"
                                     Language="{resource: CodeLanguage}"
-                                    class="code-container"/>
+                                    class="code-container" />
                 <dot:Button Click="{command: Validate()}" Text="Validate" />
-                <dot:Repeater DataSource="{value: Diagnostics}">
+                
+                <dot:Repeater DataSource="{value: Diagnostics}" 
+                              RenderWrapperTag="true" 
+                              WrapperTagName="ul" 
+                              class="validation-summary"
+                              visible="{value: Diagnostics.Count > 0}">
                     <ItemTemplate>
-                        <div>
+                        <li>
                             {{value: Severity}}: {{value: Message}}
-                        </div>
+                        </li>
                     </ItemTemplate>
                 </dot:Repeater>
             </div>
@@ -47,7 +52,7 @@
                                Param-Language="{value: Language}"
                                Param-Lesson="{value: Lesson}"
                                Param-Step="{value: PreviousStep}"
-                               IncludeInPage="{resource: IsPreviousVisible}"
+                               Visible="{resource: IsPreviousVisible}"
                                Class-success="{value: false}"
                                Text="{resource: UIResources.Btn_PreviousStep}" />
 
@@ -57,7 +62,7 @@
                                Param-Language="{value: Language}"
                                Param-Lesson="{value: Lesson}"
                                Param-Step="{value: NextStep}"
-                               IncludeInPage="{resource: IsNextVisible}"
+                               Visible="{resource: IsNextVisible}"
                                Class-success="{value: false}"
                                Text="{resource: UIResources.Btn_NextStep}" />
 
@@ -66,7 +71,8 @@
                                ButtonTagName="button"
                                Param-Language="{value: Language}"
                                Param-Lesson="{value: Lesson}"
-                               IncludeInPage="{resource: IsPreviousVisible}"
+                               Param-Step="{value: NextStep}"
+                               Visible="{resource: IsPreviousVisible && !IsNextVisible}"
                                Class-success="{value: false}"
                                Text="{resource: UIResources.Btn_Finish}" />
             </div>
