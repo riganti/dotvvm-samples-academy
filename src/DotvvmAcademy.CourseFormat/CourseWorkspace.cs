@@ -32,7 +32,7 @@ namespace DotvvmAcademy.CourseFormat
 
         public Task<Source> Load(string path)
         {
-            if(path == null)
+            if (path == null)
             {
                 return Task.FromResult<Source>(null);
             }
@@ -65,16 +65,29 @@ namespace DotvvmAcademy.CourseFormat
         }
 
         public Task<CodeTask> LoadCodeTask(string variant, string lesson, string step, string codeTask)
-            => Load<CodeTask>($"/{SourceVisitor.ContentDirectory}/{variant}/{lesson}/{step}/{codeTask}");
+        {
+            return Load<CodeTask>($"/{SourceVisitor.ContentDirectory}/{variant}/{lesson}/{step}/{codeTask}");
+        }
 
         public Task<Lesson> LoadLesson(string variant, string lesson)
-            => Load<Lesson>($"/{SourceVisitor.ContentDirectory}/{variant}/{lesson}");
+        {
+            return Load<Lesson>($"/{SourceVisitor.ContentDirectory}/{variant}/{lesson}");
+        }
+
+        public Task<WorkspaceRoot> LoadRoot()
+        {
+            return Load<WorkspaceRoot>("/");
+        }
 
         public Task<Step> LoadStep(string variant, string lesson, string step)
-            => Load<Step>($"/{SourceVisitor.ContentDirectory}/{variant}/{lesson}/{step}");
+        {
+            return Load<Step>($"/{SourceVisitor.ContentDirectory}/{variant}/{lesson}/{step}");
+        }
 
         public Task<CourseVariant> LoadVariant(string variant)
-            => Load<CourseVariant>($"/{SourceVisitor.ContentDirectory}/{variant}");
+        {
+            return Load<CourseVariant>($"/{SourceVisitor.ContentDirectory}/{variant}");
+        }
 
         public void Refresh() => sources = new SourceVisitor().Visit(Root);
     }

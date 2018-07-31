@@ -1,12 +1,16 @@
-﻿using System.Threading.Tasks;
-using DotVVM.Framework.ViewModel;
+﻿using DotVVM.Framework.ViewModel;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace DotvvmAcademy.Web.ViewModels
 {
-    public class SiteViewModel : DotvvmViewModelBase
+    public abstract class SiteViewModel : DotvvmViewModelBase
     {
         [FromRoute("Language")]
         public string Language { get; set; }
+
+        public List<string> Languages { get; set; }
 
         public override Task Init()
         {
@@ -16,5 +20,13 @@ namespace DotvvmAcademy.Web.ViewModels
             }
             return base.Init();
         }
+
+        public override async Task Load()
+        {
+            Languages = (await GetAvailableLanguages()).ToList();
+            await base.Load();
+        }
+
+        protected abstract Task<IEnumerable<string>> GetAvailableLanguages();
     }
 }

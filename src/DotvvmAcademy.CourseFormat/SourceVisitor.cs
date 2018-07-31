@@ -48,6 +48,17 @@ namespace DotvvmAcademy.CourseFormat
             return new Resource(path, text);
         }
 
+        private Task<Source> LoadRoot(DirectoryInfo directory)
+        {
+            var content = new DirectoryInfo($"{directory.FullName}/{ContentDirectory}");
+            var variants = content.GetDirectories().Select(d => d.Name).ToImmutableArray();
+            var resources = new DirectoryInfo($"{directory.FullName}/{ResourcesDirectory}");
+            return Task.FromResult<Source>(new WorkspaceRoot(
+                variants: variants,
+                hasContent: content.Exists,
+                hasResources: resources.Exists));
+        }
+
         private async Task<Source> LoadStep(DirectoryInfo directory)
         {
             var path = SourcePath.FromSystem(root, directory);
@@ -68,6 +79,11 @@ namespace DotvvmAcademy.CourseFormat
 
         private async Task<string> ReadFile(FileInfo file)
         {
+            if (file == null)
+            {
+                return null;
+            }
+
             using (var reader = new StreamReader(file.FullName))
             {
                 return await reader.ReadToEndAsync();
@@ -106,6 +122,7 @@ namespace DotvvmAcademy.CourseFormat
 
         private void VisitRoot(DirectoryInfo directory)
         {
+            builder.Add("/", LoadRoot(directory));
             var resources = new DirectoryInfo($"{directory.FullName}/{ResourcesDirectory}");
             VisitResources(resources);
 
