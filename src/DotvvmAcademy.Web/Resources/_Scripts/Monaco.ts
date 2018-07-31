@@ -48,7 +48,7 @@ namespace DotvvmAcademy {
         initializeEditor() {
             this.editor = monaco.editor.create(this.element, {
                 value: this.binding.code(),
-                language: this.binding.language,
+                language: this.getLanguage(this.binding.language),
                 codeLens: false,
                 scrollBeyondLastLine: false,
                 contextmenu: false,
@@ -74,7 +74,7 @@ namespace DotvvmAcademy {
                 let endPosition = model.getPositionAt(diagnostic.End());
                 markers.push({
                     message: diagnostic.Message(),
-                    severity: this.convertSeverity(diagnostic.Severity()),
+                    severity: this.getSeverity(diagnostic.Severity()),
                     startLineNumber: startPosition.lineNumber,
                     startColumn: startPosition.column,
                     endLineNumber: endPosition.lineNumber,
@@ -84,7 +84,19 @@ namespace DotvvmAcademy {
             monaco.editor.setModelMarkers(this.editor.getModel(), null, markers);
         }
 
-        convertSeverity(severity: string): monaco.MarkerSeverity {
+        getLanguage(language: string): string {
+            switch (language) {
+                case "csharp":
+                    return "csharp";
+                case "dothtml":
+                    // TODO: Dothtml syntax highlighting
+                    return "html";
+                default:
+                    return "plain";
+            }
+        }
+
+        getSeverity(severity: string): monaco.MarkerSeverity {
             switch (severity) {
                 case "Error":
                     return monaco.MarkerSeverity.Error;
@@ -92,6 +104,8 @@ namespace DotvvmAcademy {
                     return monaco.MarkerSeverity.Warning;
                 case "Info":
                     return monaco.MarkerSeverity.Info;
+                case "Hint":
+                    return monaco.MarkerSeverity.Hint;
                 default:
                     return monaco.MarkerSeverity.Error;
             }
@@ -102,4 +116,3 @@ namespace DotvvmAcademy {
         }
     }
 }
-

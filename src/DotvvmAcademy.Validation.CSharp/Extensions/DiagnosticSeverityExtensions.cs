@@ -12,12 +12,14 @@ namespace Microsoft.CodeAnalysis
                 case DiagnosticSeverity.Error:
                     return ValidationSeverity.Error;
 
-                case DiagnosticSeverity.Hidden:
                 case DiagnosticSeverity.Info:
                     return ValidationSeverity.Info;
 
                 case DiagnosticSeverity.Warning:
                     return ValidationSeverity.Warning;
+
+                case DiagnosticSeverity.Hidden:
+                    return ValidationSeverity.Hint;
 
                 default:
                     throw new NotSupportedException($"DiagnosticSeverity '{severity}' is not supported.");
