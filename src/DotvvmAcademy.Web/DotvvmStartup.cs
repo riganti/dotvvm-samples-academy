@@ -17,21 +17,28 @@ namespace DotvvmAcademy.Web
 
         private void ConfigureControls(DotvvmConfiguration config, string applicationPath)
         {
-            config.Markup.AddMarkupControl("cc", "LangSwitcher", "Controls/LangSwitcher.dotcontrol");
+            config.Markup.AddMarkupControl("cc", "LanguageSwitch", "Controls/LanguageSwitch.dotcontrol");
             config.Markup.AddCodeControls("cc", typeof(SvgToHtml));
             config.Markup.AddCodeControls("cc", typeof(CodeTaskControl));
         }
 
         private void ConfigureResources(DotvvmConfiguration config, string applicationPath)
         {
-            config.Resources.Register("MonacoLoader", new ScriptResource(new FileResourceLocation("~/wwwroot/libs/monaco/loader.js")));
-            config.Resources.Register("jQuery", new ScriptResource(new FileResourceLocation("~/wwwroot/libs/jquery/jquery.js")));
-            config.Resources.Register("AppJS", new ScriptResource(new FileResourceLocation("~/wwwroot/scripts/app.js"))
-            {
-                Dependencies = new[] { "jQuery", "MonacoLoader" }
-            });
-
-            config.Resources.Register("StyleCSS", new StylesheetResource(new FileResourceLocation("~/wwwroot/css/style.css")));
+            config.Resources.Register(
+                name: "MonacoLoader",
+                resource: new ScriptResource(new FileResourceLocation("~/wwwroot/libs/monaco/loader.js")));
+            config.Resources.Register(
+                name: "jQuery",
+                resource: new ScriptResource(new FileResourceLocation("~/wwwroot/libs/jquery/jquery.js")));
+            config.Resources.Register(
+                name: "AppJS",
+                resource: new ScriptResource(new FileResourceLocation("~/wwwroot/scripts/app.js"))
+                {
+                    Dependencies = new[] { "jQuery", "MonacoLoader" }
+                });
+            config.Resources.Register(
+                name: "StyleCSS",
+                resource: new StylesheetResource(new FileResourceLocation("~/wwwroot/css/style.css")));
         }
 
         private void ConfigureRoutes(DotvvmConfiguration config, string applicationPath)

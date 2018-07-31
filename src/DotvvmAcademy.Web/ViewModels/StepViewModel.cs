@@ -1,6 +1,5 @@
 ﻿using DotVVM.Framework.ViewModel;
 using DotvvmAcademy.CourseFormat;
-using DotvvmAcademy.Validation;
 using Markdig;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
@@ -32,6 +31,9 @@ namespace DotvvmAcademy.Web.ViewModels
         [Bind(Direction.ServerToClient)]
         public List<CodeTaskDiagnostic> Diagnostics { get; set; }
 
+        [Bind(Direction.ServerToClient)]
+        public bool HasCodeTask { get; set; }
+
         [Bind(Direction.None)]
         public bool IsNextVisible { get; set; }
 
@@ -52,9 +54,6 @@ namespace DotvvmAcademy.Web.ViewModels
 
         [Bind(Direction.None)]
         public string Text { get; set; }
-
-        [Bind(Direction.ServerToClient)]
-        public bool HasCodeTask { get; set; }
 
         public override async Task Load()
         {
@@ -84,6 +83,7 @@ namespace DotvvmAcademy.Web.ViewModels
                 Code = defaultCodeResource?.Text ?? null;
                 CodeLanguage = codeTask.CodeLanguage;
             }
+            await base.Load();
         }
 
         public async Task Validate()
@@ -91,6 +91,21 @@ namespace DotvvmAcademy.Web.ViewModels
             var codeTask = await workspace.LoadCodeTask(Language, Lesson, Step, step.CodeTask);
             var unit = await validator.GetUnit(codeTask);
             Diagnostics = (await validator.Validate(unit, Code)).ToList();
+        }
+
+        protected override async Task<IEnumerable<string>> GetAvailableLanguages()
+        {
+            var root = await workspace.LoadRoot();
+            var builder = ImmutableArray.CreateBuilder<string>();
+            foreach(var variant in root.Variants)
+            {
+                var step = await workspace.LoadStep(variant, Lesson, Step);
+                if (step != null)
+                {
+                    builder.Add(variant);
+                }
+            }
+            return builder.ToImmutable();
         }
     }
 }

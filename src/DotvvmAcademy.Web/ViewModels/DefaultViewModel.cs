@@ -1,7 +1,6 @@
 using DotVVM.Framework.ViewModel;
 using DotvvmAcademy.CourseFormat;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -27,6 +26,13 @@ namespace DotvvmAcademy.Web.ViewModels
             var lessonTasks = variant.Lessons.Select(l => workspace.LoadLesson(Language, l));
             var lessons = await Task.WhenAll(lessonTasks);
             Lessons = lessons.Select(l => extractor.Extract(l)).ToList();
+            await base.Load();
+        }
+
+        protected override async Task<IEnumerable<string>> GetAvailableLanguages()
+        {
+            var root = await workspace.LoadRoot();
+            return root.Variants;
         }
     }
 }

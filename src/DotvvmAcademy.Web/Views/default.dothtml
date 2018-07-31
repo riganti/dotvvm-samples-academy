@@ -7,10 +7,17 @@
     <section class="main-header no-padding" RenderSettings.Mode="Server">
         <div class="container-large">
             <div>
-                <dot:HtmlLiteral Html="{resource: UIResources.Base_MainTitle}" RenderWrapperTag="true" WrapperTagName="h1" />
-                <dot:HtmlLiteral Html="{resource: UIResources.Base_MainDescription}" RenderWrapperTag="true" WrapperTagName="p" /
-                <dot:Button ButtonTagName="button" class="button" Text="{resource: UIResources.Btn_StartCourse}"></dot:Button>
-                <cc:SvgToHtml Source="images/Illustrations/header-image.svg" RenderSettings.Mode="Server" />
+                <dot:HtmlLiteral Html="{resource: UIResources.Base_MainTitle}" 
+                                 RenderWrapperTag="true" 
+                                 WrapperTagName="h1" />
+                <dot:HtmlLiteral Html="{resource: UIResources.Base_MainDescription}" 
+                                 RenderWrapperTag="true" 
+                                 WrapperTagName="p" />
+                <dot:Button ButtonTagName="button" 
+                            class="button" 
+                            Text="{resource: UIResources.Btn_StartCourse}" />
+                <cc:SvgToHtml Source="images/Illustrations/header-image.svg" 
+                              RenderSettings.Mode="Server" />
             </div>
         </div>
     </section>
