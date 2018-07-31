@@ -145,6 +145,15 @@ namespace DotvvmAcademy.Web.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Finish.
+        /// </summary>
+        public static string Btn_Finish {
+            get {
+                return ResourceManager.GetString("Btn_Finish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Next.
         /// </summary>
         public static string Btn_NextStep {

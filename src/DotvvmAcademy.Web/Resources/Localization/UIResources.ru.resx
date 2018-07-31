@@ -168,4 +168,7 @@
   <data name="LangSwitcher_Title" xml:space="preserve">
     <value>Изменить язык</value>
   </data>
+  <data name="Btn_Finish" xml:space="preserve">
+    <value>Конец</value>
+  </data>
 </root>

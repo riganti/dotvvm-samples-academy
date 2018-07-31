@@ -168,4 +168,7 @@ Watch &lt;strong&gt;DotVVM Coffee&lt;/strong&gt; videos!</value>
   <data name="Btn_PreviousStep" xml:space="preserve">
     <value>Previous</value>
   </data>
+  <data name="Btn_Finish" xml:space="preserve">
+    <value>Finish</value>
+  </data>
 </root>

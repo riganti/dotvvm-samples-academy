@@ -47,7 +47,7 @@
                                Param-Language="{value: Language}"
                                Param-Lesson="{value: Lesson}"
                                Param-Step="{value: PreviousStep}"
-                               Visible="{resource: IsPreviousVisible}"
+                               IncludeInPage="{resource: IsPreviousVisible}"
                                Class-success="{value: false}"
                                Text="{resource: UIResources.Btn_PreviousStep}" />
 
@@ -57,9 +57,18 @@
                                Param-Language="{value: Language}"
                                Param-Lesson="{value: Lesson}"
                                Param-Step="{value: NextStep}"
-                               Visible="{resource: IsNextVisible}"
+                               IncludeInPage="{resource: IsNextVisible}"
                                Class-success="{value: false}"
                                Text="{resource: UIResources.Btn_NextStep}" />
+
+                <dot:RouteLink RouteName="Step"
+                               class="button"
+                               ButtonTagName="button"
+                               Param-Language="{value: Language}"
+                               Param-Lesson="{value: Lesson}"
+                               IncludeInPage="{resource: IsPreviousVisible}"
+                               Class-success="{value: false}"
+                               Text="{resource: UIResources.Btn_Finish}" />
             </div>
         </div>
     </div>
