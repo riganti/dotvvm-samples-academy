@@ -8,12 +8,9 @@ namespace DotvvmAcademy.CourseFormat
 {
     public class MarkdownExtractor
     {
-        public const string MissingImageUrl = null;
-        public const string MissingName = "{Missing lesson name}";
-
         public MarkdownLessonInfo Extract(Lesson lesson)
         {
-            var document = Markdown.Parse(lesson.Annotation);
+            var document = Markdown.Parse(lesson.Annotation ?? string.Empty);
             var name = ExtractName(document);
             var imageUrl = ExtractImageUrl(document);
             var html = ExtractHtml(document);
@@ -42,7 +39,7 @@ namespace DotvvmAcademy.CourseFormat
                 return link.Url;
             }
 
-            return MissingImageUrl;
+            return null;
         }
 
         private string ExtractName(MarkdownDocument document)
@@ -57,7 +54,7 @@ namespace DotvvmAcademy.CourseFormat
                 return literal.ToString();
             }
 
-            return MissingName;
+            return null;
         }
     }
 }

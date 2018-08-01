@@ -33,7 +33,7 @@ namespace DotvvmAcademy.Web
             services.AddWebEncoders();
             services.AddDotVVM();
             services.AddSingleton<MarkdownExtractor>();
-            services.AddSingleton(p => new CourseWorkspace("../../sample/sample_course"));
+            services.AddSingleton(p => new CourseWorkspace("./course"));
             services.AddSingleton<CodeTaskValidator>();
             services.AddSingleton<CSharpValidationService>();
             services.AddSingleton<DothtmlValidationService>();
