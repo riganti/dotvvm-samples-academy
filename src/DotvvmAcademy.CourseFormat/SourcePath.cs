@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -35,6 +37,11 @@ namespace DotvvmAcademy.CourseFormat
             }
 
             return null;
+        }
+
+        public static string[] GetSegments(string path)
+        {
+            return path.Split(DirectorySeparator);
         }
 
         public static string GetLastSegment(string path)

@@ -16,5 +16,10 @@ namespace DotvvmAcademy.CourseFormat
         public ImmutableArray<string> Lessons { get; }
 
         public string Moniker { get; }
+
+        public override long GetSize()
+        {
+            return Annotation.Length;
+        }
     }
 }

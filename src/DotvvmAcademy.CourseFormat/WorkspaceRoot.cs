@@ -18,5 +18,10 @@ namespace DotvvmAcademy.CourseFormat
         public bool HasResources { get; }
 
         public ImmutableArray<string> Variants { get; }
+
+        public override long GetSize()
+        {
+            return 1;
+        }
     }
 }

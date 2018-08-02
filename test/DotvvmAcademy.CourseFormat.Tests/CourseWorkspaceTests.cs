@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace DotvvmAcademy.CourseFormat.Tests
@@ -9,11 +10,12 @@ namespace DotvvmAcademy.CourseFormat.Tests
         [TestMethod]
         public async Task BasicLoadingTest()
         {
-            var workspace = new CourseWorkspace("../../../../../sample/sample_course");
-            var variant = await workspace.Load<CourseVariant>("/en");
-            var lesson = await workspace.Load<Lesson>("/en/calculator");
-            var step = await workspace.Load<Step>("/en/calculator/10_a_classic");
-            var codeTask = await workspace.Load<CodeTask>("/en/calculator/10_a_classic/a_classic.csharp.csx");
+            var environment = new CourseEnvironment(new DirectoryInfo("../../../../../sample/sample_course"));
+            var loader = new SourceLoader(environment);
+            var workspace = new CourseWorkspace(environment, loader);
+            var variant = await workspace.Load<CourseVariant>("/content/en");
+            var lesson = await workspace.Load<Lesson>("/content/en/calculator");
+            var step = await workspace.Load<Step>("/content/en/calculator/10_a_classic");
         }
     }
 }

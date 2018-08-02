@@ -8,5 +8,7 @@
         }
 
         public string Path { get; }
+
+        public abstract long GetSize();
     }
 }

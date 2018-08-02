@@ -16,5 +16,10 @@ namespace DotvvmAcademy.CourseFormat
         public string Moniker { get; }
 
         public ImmutableArray<string> Steps { get; }
+
+        public override long GetSize()
+        {
+            return Annotation.Length;
+        }
     }
 }

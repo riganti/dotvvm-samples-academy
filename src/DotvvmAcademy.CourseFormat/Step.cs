@@ -9,10 +9,13 @@
             Moniker = SourcePath.GetLastSegment(Path);
         }
 
-        public string CodeTask { get; }
-
         public string Moniker { get; }
 
         public string Text { get; }
+
+        public override long GetSize()
+        {
+            return Text.Length;
+        }
     }
 }

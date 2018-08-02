@@ -25,30 +25,34 @@ namespace DotvvmAcademy.CourseFormat
         private readonly DothtmlValidationService dothtmlService;
         private readonly IServiceProvider globalProvider;
         private readonly CourseWorkspace workspace;
+        private readonly CourseEnvironment environment;
 
         public CodeTaskValidator(
             CourseWorkspace workspace,
+            CourseEnvironment environment,
             CSharpValidationService csharpService,
             DothtmlValidationService dothtmlService)
         {
             this.workspace = workspace;
+            this.environment = environment;
             this.csharpService = csharpService;
             this.dothtmlService = dothtmlService;
             globalProvider = GetServiceProvider();
         }
 
-        public async Task<IUnit> GetUnit(CodeTask codeTask)
+        public async Task<IUnit> GetUnit(Resource script)
         {
-            switch (codeTask.CodeLanguage)
+            var language = SourcePath.GetCodeLanguage(script.Path);
+            switch (language)
             {
                 case "csharp":
-                    return await GetUnit<CSharpUnit>(codeTask);
+                    return await RunScript<CSharpUnit>(script);
 
                 case "dothtml":
-                    return await GetUnit<DothtmlUnit>(codeTask);
+                    return await RunScript<DothtmlUnit>(script);
 
                 default:
-                    throw new NotSupportedException($"Code language '{codeTask.CodeLanguage}' is not supported.");
+                    throw new NotSupportedException($"Code language '{language}' is not supported.");
             }
         }
 
@@ -84,7 +88,7 @@ namespace DotvvmAcademy.CourseFormat
                 .ToImmutableArray();
         }
 
-        private ScriptOptions GetScriptOptions(CodeTask codeTask)
+        private ScriptOptions GetScriptOptions(Resource script)
         {
             return ScriptOptions.Default
                 .AddReferences(
@@ -107,8 +111,8 @@ namespace DotvvmAcademy.CourseFormat
                     "DotvvmAcademy.Validation.Unit",
                     "DotvvmAcademy.Validation.CSharp.Unit",
                     "DotvvmAcademy.Validation.Dothtml.Unit")
-                .WithFilePath(codeTask.Path)
-                .WithSourceResolver(new CodeTaskSourceResolver(workspace));
+                .WithFilePath(script.Path)
+                .WithSourceResolver(new CodeTaskSourceResolver(environment));
         }
 
         private IServiceProvider GetServiceProvider()
@@ -118,18 +122,18 @@ namespace DotvvmAcademy.CourseFormat
             return c.BuildServiceProvider();
         }
 
-        private Task<IUnit> GetUnit<TUnit>(CodeTask codeTask)
+        private Task<IUnit> RunScript<TUnit>(Resource script)
             where TUnit : IUnit
         {
-            return cache.GetOrAdd(codeTask.Path, async p =>
+            return cache.GetOrAdd(script.Path, async p =>
             {
                 var scope = globalProvider.CreateScope();
-                var script = CSharpScript.Create(
-                    code: codeTask.Script,
-                    options: GetScriptOptions(codeTask),
+                var csharpScript = CSharpScript.Create(
+                    code: script.Text,
+                    options: GetScriptOptions(script),
                     globalsType: typeof(UnitWrapper<TUnit>));
                 var unit = (TUnit)ActivatorUtilities.CreateInstance(scope.ServiceProvider, typeof(TUnit));
-                await script.RunAsync(new UnitWrapper<TUnit>(unit));
+                await csharpScript.RunAsync(new UnitWrapper<TUnit>(unit));
                 return unit;
             });
         }
