@@ -25,3 +25,5 @@ instance of a ViewModel class you denote as the argument, `DotvvmAcademy.Course.
 
 [dothtml]: https://www.dotvvm.com/docs/tutorials/basics-first-page
 [extension]: https://www.dotvvm.com/landing/dotvvm-for-visual-studio-extension
+
+[CodeTask]("/resources/principles/view_stub.dothtml.csx")

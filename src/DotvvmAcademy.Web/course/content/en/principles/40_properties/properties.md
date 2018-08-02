@@ -12,3 +12,5 @@ Add public properties of type `int` called:
 - Result
 - LeftOperand
 - RightOperand
+
+[CodeTask]("/resources/principles/viewmodel_properties.csharp.csx")
