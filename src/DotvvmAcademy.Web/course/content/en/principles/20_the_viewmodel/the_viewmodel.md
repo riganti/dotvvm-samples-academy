@@ -29,4 +29,4 @@ Please declare an empty class named `CalculatorViewModel` in the `DotvvmAcademy.
 [mvvm]: https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel
 [dothtml]: https://www.dotvvm.com/docs/tutorials/basics-first-page
 
-[CodeTask]("/resources/principles/viewmodel_stub.csharp.csx")
+[CodeTask](/resources/principles/viewmodel_stub.csharp.csx)

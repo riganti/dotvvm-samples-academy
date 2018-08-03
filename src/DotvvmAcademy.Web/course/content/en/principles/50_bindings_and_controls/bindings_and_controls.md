@@ -35,4 +35,4 @@ Add these elements as children to the `<body>` element:
 [property]: https://www.dotvvm.com/docs/tutorials/basics-control-properties-and-attributes
 [textbox]: https://www.dotvvm.com/docs/controls/builtin/TextBox
 
-[CodeTask]("/resources/principles/view_controls.dothtml.csx")
+[CodeTask](/resources/principles/view_controls.dothtml.csx)

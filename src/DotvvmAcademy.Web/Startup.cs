@@ -26,7 +26,7 @@ namespace DotvvmAcademy.Web
             services.AddAuthorization();
             services.AddWebEncoders();
             services.AddDotVVM();
-            services.AddCourseFormat("../../sample/sample_course");
+            services.AddCourseFormat("./course");
         }
     }
 }

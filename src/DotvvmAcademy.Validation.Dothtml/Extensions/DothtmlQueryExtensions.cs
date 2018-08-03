@@ -1,5 +1,6 @@
 ﻿using DotvvmAcademy.Meta;
 using DotvvmAcademy.Validation.Dothtml.ValidationTree;
+using System;
 using System.Linq;
 
 namespace DotvvmAcademy.Validation.Dothtml.Unit
@@ -55,14 +56,18 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
 
         public static DothtmlQuery<ValidationControl> HasRawContent(
             this DothtmlQuery<ValidationControl> query,
-            string expectedContent)
+            string expectedContent,
+            bool isCaseSensitive = true)
         {
             query.AddConstraint(context =>
             {
                 foreach (var control in context.Result)
                 {
                     var actualContent = string.Concat(control.DothtmlNode.Tokens.Select(t => t.Text)).Trim();
-                    if (actualContent != expectedContent)
+                    var comparison = isCaseSensitive 
+                        ? StringComparison.InvariantCulture 
+                        : StringComparison.InvariantCultureIgnoreCase;
+                    if (!expectedContent.Equals(actualContent, comparison))
                     {
                         context.Report($"Control is supposed to contain '{expectedContent}'.", control);
                     }

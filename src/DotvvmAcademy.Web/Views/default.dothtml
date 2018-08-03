@@ -35,8 +35,8 @@
                     <dot:HtmlLiteral Html="{resource: Html}" />
                     <dot:RouteLink RouteName="Step"
                                    Param-Language="{value: _root.Language}"
-                                   Param-Lesson="{value: Lesson.Moniker}"
-                                   Param-Step="{value: Lesson.Steps.Length > 0 ? Lesson.Steps[0] : ""}"
+                                   Param-Lesson="{value: Source.Moniker}"
+                                   Param-Step="{value: Source.Steps.Length > 0 ? Source.Steps[0] : ""}"
                                    Text="{value: UIResources.Btn_StartLesson}"
                                    class="button" />
                 </div>
