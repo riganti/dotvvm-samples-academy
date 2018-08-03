@@ -6,11 +6,11 @@ namespace DotvvmAcademy.CourseFormat
 {
     public class CodeTaskSourceResolver : SourceReferenceResolver
     {
-        private readonly CourseWorkspace workspace;
+        private readonly CourseEnvironment environment;
 
-        public CodeTaskSourceResolver(CourseWorkspace workspace)
+        public CodeTaskSourceResolver(CourseEnvironment environment)
         {
-            this.workspace = workspace;
+            this.environment = environment;
         }
 
         public override bool Equals(object other) => throw new NotImplementedException();
@@ -21,7 +21,7 @@ namespace DotvvmAcademy.CourseFormat
 
         public override Stream OpenRead(string resolvedPath)
         {
-            var file = workspace.GetFile(resolvedPath);
+            var file = environment.GetFile(resolvedPath);
             if (file.Exists)
             {
                 return file.OpenRead();

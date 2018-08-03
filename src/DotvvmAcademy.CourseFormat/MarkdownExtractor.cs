@@ -8,16 +8,27 @@ namespace DotvvmAcademy.CourseFormat
 {
     public class MarkdownExtractor
     {
-        public MarkdownLessonInfo Extract(Lesson lesson)
+        public const string CodeTaskLiteral = "CodeTask";
+
+        public string ExtractCodeTaskPath(MarkdownDocument document)
         {
-            var document = Markdown.Parse(lesson.Annotation ?? string.Empty);
-            var name = ExtractName(document);
-            var imageUrl = ExtractImageUrl(document);
-            var html = ExtractHtml(document);
-            return new MarkdownLessonInfo(lesson, html, imageUrl, name);
+            if(document.Count > 0
+                && document.LastChild is ParagraphBlock paragraph
+                && paragraph.Inline != null
+                && paragraph.Inline.FirstChild != null
+                && paragraph.Inline.FirstChild == paragraph.Inline.LastChild
+                && paragraph.Inline.FirstChild is LinkInline link
+                && link.FirstChild == link.LastChild
+                && link.FirstChild.ToString() == CodeTaskLiteral)
+            {
+                document.Remove(document.LastChild);
+                return link.Url;
+            }
+
+            return null;
         }
 
-        private string ExtractHtml(MarkdownDocument document)
+        public string ExtractHtml(MarkdownDocument document)
         {
             using (var writer = new StringWriter())
             {
@@ -27,7 +38,7 @@ namespace DotvvmAcademy.CourseFormat
             }
         }
 
-        private string ExtractImageUrl(MarkdownDocument document)
+        public string ExtractImageUrl(MarkdownDocument document)
         {
             if (document.Count > 0
                 && document[0] is ParagraphBlock paragraph
@@ -42,7 +53,7 @@ namespace DotvvmAcademy.CourseFormat
             return null;
         }
 
-        private string ExtractName(MarkdownDocument document)
+        public string ExtractName(MarkdownDocument document)
         {
             if (document.Count > 0
                 && document[0] is HeadingBlock heading

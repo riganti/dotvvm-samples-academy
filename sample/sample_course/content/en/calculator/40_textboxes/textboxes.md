@@ -8,3 +8,5 @@ respectively).
 
 To display the `Result`, use either a `<dot:Literal>` with a binding on its `Text` property, or just write 
 `{{value: Result}}`, which generates the `<dot:Literal>` for you.
+
+[CodeTask](/resources/calculator/view_textboxes.dothtml.csx)

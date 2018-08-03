@@ -1,8 +1,8 @@
-#load "../40_textboxes/textboxes.dothtml.csx"
+#load "./view_textboxes.dothtml.csx"
 
-Unit.SetViewModelPath("/resources/CalculatorViewModel_methods.cs");
-Unit.SetDefaultCodePath("/resources/calculator_textboxes.dothtml");
-Unit.SetCorrectCodePath("/resources/calculator_buttons.dothtml");
+Unit.SetViewModelPath("./CalculatorViewModel_methods.cs");
+Unit.SetDefaultCodePath("./calculator_textboxes.dothtml");
+Unit.SetCorrectCodePath("./calculator_buttons.dothtml");
 
 Unit.GetControls("/html/body/dot:Button")
     .CountEquals(4);
