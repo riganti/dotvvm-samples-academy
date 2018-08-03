@@ -11,3 +11,5 @@ Add these four `void`-returning methods:
 
 None of them is to have any parameters as they should operate on `LeftOperand` and `RightOperand` and save the result,
 unsurprisingly, to the `Result` property.
+
+[CodeTask](/resources/calculator/viewmodel_methods.csharp.csx)

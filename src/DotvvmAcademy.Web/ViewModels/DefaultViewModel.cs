@@ -8,24 +8,24 @@ namespace DotvvmAcademy.Web.ViewModels
 {
     public class DefaultViewModel : SiteViewModel
     {
-        private readonly MarkdownExtractor extractor;
         private readonly CourseWorkspace workspace;
+        private readonly LessonRenderer lessonRenderer;
 
-        public DefaultViewModel(CourseWorkspace workspace, MarkdownExtractor extractor)
+        public DefaultViewModel(CourseWorkspace workspace, LessonRenderer lessonRenderer)
         {
             this.workspace = workspace;
-            this.extractor = extractor;
+            this.lessonRenderer = lessonRenderer;
         }
 
         [Bind(Direction.ServerToClientFirstRequest)]
-        public List<MarkdownLessonInfo> Lessons { get; set; }
+        public List<RenderedLesson> Lessons { get; set; }
 
         public override async Task Load()
         {
             var variant = await workspace.LoadVariant(Language);
             var lessonTasks = variant.Lessons.Select(l => workspace.LoadLesson(Language, l));
             var lessons = await Task.WhenAll(lessonTasks);
-            Lessons = lessons.Select(l => extractor.Extract(l)).ToList();
+            Lessons = lessons.Select(l => lessonRenderer.Render(l)).ToList();
             await base.Load();
         }
 
