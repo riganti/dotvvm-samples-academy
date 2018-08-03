@@ -11,9 +11,11 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             var root = new DirectoryInfo(courseRoot);
             services.AddSingleton(p => new CourseEnvironment(root));
+            services.AddSingleton<CourseCacheWrapper>();
             services.AddSingleton<CourseWorkspace>();
             services.AddSingleton<CodeTaskValidator>();
-            services.AddSingleton<MarkdownExtractor>();
+            services.AddSingleton<LessonRenderer>();
+            services.AddSingleton<StepRenderer>();
             services.AddSingleton<CSharpValidationService>();
             services.AddSingleton<DothtmlValidationService>();
             return services;

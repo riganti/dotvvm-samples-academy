@@ -20,7 +20,12 @@ namespace DotvvmAcademy.CourseFormat
             return new MarkdownLessonInfo(lesson, html, imageUrl, name);
         }
 
-        private string ExtractHtml(MarkdownDocument document)
+        public string ExtractCodeTaskPath(MarkdownDocument document)
+        {
+            return string.Empty;
+        }
+
+        public string ExtractHtml(MarkdownDocument document)
         {
             using (var writer = new StringWriter())
             {
@@ -30,7 +35,7 @@ namespace DotvvmAcademy.CourseFormat
             }
         }
 
-        private string ExtractImageUrl(MarkdownDocument document)
+        public string ExtractImageUrl(MarkdownDocument document)
         {
             if (document.Count > 0
                 && document[0] is ParagraphBlock paragraph
@@ -45,7 +50,7 @@ namespace DotvvmAcademy.CourseFormat
             return MissingImageUrl;
         }
 
-        private string ExtractName(MarkdownDocument document)
+        public string ExtractName(MarkdownDocument document)
         {
             if (document.Count > 0
                 && document[0] is HeadingBlock heading

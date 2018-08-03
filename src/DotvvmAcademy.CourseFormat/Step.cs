@@ -2,10 +2,9 @@
 {
     public class Step : Source
     {
-        public Step(string path, string text, string codeTask) : base(path)
+        public Step(string path, string text) : base(path)
         {
             Text = text;
-            CodeTask = codeTask;
             Moniker = SourcePath.GetLastSegment(Path);
         }
 

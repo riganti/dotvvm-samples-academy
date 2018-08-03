@@ -97,8 +97,7 @@ namespace DotvvmAcademy.CourseFormat
             var path = SourcePath.FromSystem(environment.Root, directory);
             var stepFile = directory.GetFiles(StepPattern).FirstOrDefault();
             var stepText = await ReadFile(stepFile);
-            var codeTask = directory.GetFiles(CodeTaskPattern).FirstOrDefault();
-            return new Step(path, stepText, codeTask?.Name);
+            return new Step(path, stepText);
         }
 
         private async Task<Source> LoadVariant(DirectoryInfo directory)

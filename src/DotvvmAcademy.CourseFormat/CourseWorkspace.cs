@@ -1,31 +1,27 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
 using System;
-using System.IO;
 using System.Threading.Tasks;
 
 namespace DotvvmAcademy.CourseFormat
 {
-    public class CourseWorkspace : IDisposable
+    public class CourseWorkspace
     {
-        public const string CachePrefix = "CourseFormat://";
+        public const string SourcePrefix = "Source:";
 #if DEBUG
         private static readonly TimeSpan SourceLifetime = TimeSpan.FromSeconds(3);
 #else
         private static readonly TimeSpan SourceLifetime = TimeSpan.FromDays(1);
 #endif
-
-        // approximately 32 MiB
-        private readonly MemoryCache cache = new MemoryCache(new MemoryCacheOptions { SizeLimit = 2 << 25 });
-        private readonly SourceLoader loader;
         private readonly CourseEnvironment environment;
+        private readonly SourceLoader loader;
+        private readonly CourseCacheWrapper wrapper;
 
-        public CourseWorkspace(CourseEnvironment environment, SourceLoader loader)
+        public CourseWorkspace(CourseEnvironment environment, SourceLoader loader, CourseCacheWrapper wrapper)
         {
             this.environment = environment;
             this.loader = loader;
+            this.wrapper = wrapper;
         }
-
-        public DirectoryInfo Root { get; }
 
         public Task<Source> Load(string sourcePath)
         {
@@ -34,12 +30,13 @@ namespace DotvvmAcademy.CourseFormat
                 throw new ArgumentException("Passed path is invalid.", nameof(sourcePath));
             }
 
-            return cache.GetOrCreateAsync(sourcePath, async entry =>
+            return wrapper.Cache.GetOrCreateAsync($"{SourcePrefix}{sourcePath}", async entry =>
             {
                 var source = await loader.Load(sourcePath);
                 entry.Value = source;
                 entry.SetAbsoluteExpiration(SourceLifetime);
                 entry.SetSize(source?.GetSize() ?? 1);
+                entry.RegisterPostEvictionCallback((k, v, r, s) => source.OnEviction());
                 return source;
             });
         }
@@ -65,7 +62,7 @@ namespace DotvvmAcademy.CourseFormat
 
         public Task<Lesson> LoadLesson(string variant, string lesson)
         {
-            return Load<Lesson>($"/{SourceVisitor.ContentDirectory}/{variant}/{lesson}");
+            return Load<Lesson>($"/{CourseEnvironment.ContentDirectory}/{variant}/{lesson}");
         }
 
         public Task<WorkspaceRoot> LoadRoot()
@@ -75,17 +72,12 @@ namespace DotvvmAcademy.CourseFormat
 
         public Task<Step> LoadStep(string variant, string lesson, string step)
         {
-            return Load<Step>($"/{SourceVisitor.ContentDirectory}/{variant}/{lesson}/{step}");
+            return Load<Step>($"/{CourseEnvironment.ContentDirectory}/{variant}/{lesson}/{step}");
         }
 
         public Task<CourseVariant> LoadVariant(string variant)
         {
-            return Load<CourseVariant>($"/{SourceVisitor.ContentDirectory}/{variant}");
-        }
-
-        public void Dispose()
-        {
-            cache.Dispose();
+            return Load<CourseVariant>($"/{CourseEnvironment.ContentDirectory}/{variant}");
         }
     }
 }

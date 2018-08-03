@@ -40,8 +40,9 @@ namespace DotvvmAcademy.CourseFormat
             globalProvider = GetServiceProvider();
         }
 
-        public async Task<IUnit> GetUnit(Resource script)
+        public async Task<IUnit> GetUnit(string codeTaskPath)
         {
+            var script = await workspace.Load<Resource>(codeTaskPath);
             var language = SourcePath.GetCodeLanguage(script.Path);
             switch (language)
             {

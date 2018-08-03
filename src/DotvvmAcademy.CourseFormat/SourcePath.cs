@@ -29,6 +29,11 @@ namespace DotvvmAcademy.CourseFormat
 
         public static string GetCodeLanguage(string path)
         {
+            if (string.IsNullOrWhiteSpace(path))
+            {
+                return null;
+            }
+
             var segment = GetLastSegment(path);
             var match = Regex.Match(segment, @"\w+\.(\w+)\.csx");
             if (match.Groups.Count == 2)
