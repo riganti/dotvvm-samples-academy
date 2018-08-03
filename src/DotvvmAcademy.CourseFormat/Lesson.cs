@@ -8,7 +8,7 @@ namespace DotvvmAcademy.CourseFormat
         {
             Annotation = annotation;
             Steps = steps;
-            Moniker = SourcePath.GetLastSegment(Path);
+            Moniker = SourcePath.GetLastSegment(Path).ToString();
         }
 
         public string Annotation { get; }

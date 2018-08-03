@@ -8,21 +8,27 @@ namespace DotvvmAcademy.CourseFormat
 {
     public class MarkdownExtractor
     {
+        public const string MissingCodeTaskPath = null;
         public const string MissingImageUrl = null;
         public const string MissingName = "{Missing lesson name}";
-
-        public MarkdownLessonInfo Extract(Lesson lesson)
-        {
-            var document = Markdown.Parse(lesson.Annotation);
-            var name = ExtractName(document);
-            var imageUrl = ExtractImageUrl(document);
-            var html = ExtractHtml(document);
-            return new MarkdownLessonInfo(lesson, html, imageUrl, name);
-        }
+        public const string CodeTaskLiteral = "CodeTask";
 
         public string ExtractCodeTaskPath(MarkdownDocument document)
         {
-            return string.Empty;
+            if(document.Count > 0
+                && document.LastChild is ParagraphBlock paragraph
+                && paragraph.Inline != null
+                && paragraph.Inline.FirstChild != null
+                && paragraph.Inline.FirstChild == paragraph.Inline.LastChild
+                && paragraph.Inline.FirstChild is LinkInline link
+                && link.FirstChild == link.LastChild
+                && link.FirstChild.ToString() == CodeTaskLiteral)
+            {
+                document.Remove(document.LastChild);
+                return link.Url;
+            }
+
+            return MissingCodeTaskPath;
         }
 
         public string ExtractHtml(MarkdownDocument document)

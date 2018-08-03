@@ -5,7 +5,7 @@
         public Step(string path, string text) : base(path)
         {
             Text = text;
-            Moniker = SourcePath.GetLastSegment(Path);
+            Moniker = SourcePath.GetLastSegment(Path).ToString();
         }
 
         public string Moniker { get; }

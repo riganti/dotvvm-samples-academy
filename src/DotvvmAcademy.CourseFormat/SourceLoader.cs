@@ -26,27 +26,26 @@ namespace DotvvmAcademy.CourseFormat
                 return Task.FromResult<Source>(null);
             }
 
-            var segments = SourcePath.GetSegments(sourcePath);
-            if (segments.Length <= 1)
+            var segments = SourcePath.GetSegments(sourcePath).ToImmutableArray();
+            if (segments.Length == 0)
             {
                 return LoadRoot(environment.Root);
             }
 
-            switch (segments[1])
+            switch (segments[0].ToString())
             {
                 case CourseEnvironment.ResourcesDirectory:
                     return LoadResource(environment.GetFile(sourcePath));
-
                 case CourseEnvironment.ContentDirectory:
                     switch (segments.Length)
                     {
-                        case 3: // /content/variant
+                        case 2: // /content/variant
                             return LoadVariant(environment.GetDirectory(sourcePath));
 
-                        case 4: // /content/variant/lesson
+                        case 3: // /content/variant/lesson
                             return LoadLesson(environment.GetDirectory(sourcePath));
 
-                        case 5: // /content/variant/lesson/step
+                        case 4: // /content/variant/lesson/step
                             return LoadStep(environment.GetDirectory(sourcePath));
                     }
                     break;
@@ -79,7 +78,7 @@ namespace DotvvmAcademy.CourseFormat
             }
 
             var content = new DirectoryInfo($"{directory.FullName}/{CourseEnvironment.ContentDirectory}");
-            var variants = content.GetDirectories().Select(d => d.Name).ToImmutableArray();
+            var variants = content?.GetDirectories()?.Select(d => d.Name)?.ToImmutableArray() ?? default;
             var resources = new DirectoryInfo($"{directory.FullName}/{CourseEnvironment.ResourcesDirectory}");
             return Task.FromResult<Source>(new WorkspaceRoot(
                 variants: variants,

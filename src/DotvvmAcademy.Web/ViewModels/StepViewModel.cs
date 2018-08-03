@@ -62,6 +62,7 @@ namespace DotvvmAcademy.Web.ViewModels
             step = await workspace.LoadStep(Language, Lesson, Step);
             renderedStep = stepRenderer.Render(step);
             SetButtonProperties();
+            await SetEditorProperties();
             Text = renderedStep.Html;
             await base.Load();
         }
@@ -108,8 +109,8 @@ namespace DotvvmAcademy.Web.ViewModels
             if (!Context.IsPostBack && HasCodeTask)
             {
                 var unit = await validator.GetUnit(renderedStep.CodeTaskPath);
-                var defaultCodeResource = await workspace.Load<Resource>(unit.GetDefaultCodePath());
-                Code = defaultCodeResource?.Text;
+                var defaultCodePath = unit.GetDefaultCodePath();
+                Code = defaultCodePath == null ? string.Empty : (await workspace.Load<Resource>(defaultCodePath)).Text;
                 CodeLanguage = renderedStep.CodeTaskLanguage;
             }
         }

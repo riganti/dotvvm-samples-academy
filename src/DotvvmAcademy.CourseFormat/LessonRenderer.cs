@@ -33,6 +33,7 @@ namespace DotvvmAcademy.CourseFormat
                 var renderedLesson = new RenderedLesson(lesson, html, imageUrl, name);
                 entry.Value = renderedLesson;
                 entry.AddExpirationToken(lesson.EvictionToken);
+                entry.SetSize(renderedLesson?.GetSize() ?? 1);
                 return renderedLesson;
             });
         }

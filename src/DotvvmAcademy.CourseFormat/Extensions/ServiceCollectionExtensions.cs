@@ -14,8 +14,10 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton<CourseCacheWrapper>();
             services.AddSingleton<CourseWorkspace>();
             services.AddSingleton<CodeTaskValidator>();
+            services.AddSingleton<SourceLoader>();
             services.AddSingleton<LessonRenderer>();
             services.AddSingleton<StepRenderer>();
+            services.AddSingleton<MarkdownExtractor>();
             services.AddSingleton<CSharpValidationService>();
             services.AddSingleton<DothtmlValidationService>();
             return services;

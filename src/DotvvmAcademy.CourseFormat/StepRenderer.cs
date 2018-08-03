@@ -33,6 +33,7 @@ namespace DotvvmAcademy.CourseFormat
                 var renderedStep = new RenderedStep(step, html, codeTaskPath, name);
                 entry.Value = renderedStep;
                 entry.AddExpirationToken(step.EvictionToken);
+                entry.SetSize(step?.GetSize() ?? 1);
                 return renderedStep;
             });
         }

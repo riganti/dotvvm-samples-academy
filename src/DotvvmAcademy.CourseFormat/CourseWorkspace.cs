@@ -36,7 +36,7 @@ namespace DotvvmAcademy.CourseFormat
                 entry.Value = source;
                 entry.SetAbsoluteExpiration(SourceLifetime);
                 entry.SetSize(source?.GetSize() ?? 1);
-                entry.RegisterPostEvictionCallback((k, v, r, s) => source.OnEviction());
+                entry.RegisterPostEvictionCallback((k, v, r, s) => source?.OnEviction());
                 return source;
             });
         }
