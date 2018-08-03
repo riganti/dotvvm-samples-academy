@@ -11,18 +11,27 @@ namespace DotvvmAcademy.Web.ViewModels
     public class StepViewModel : SiteViewModel
     {
         private readonly StepRenderer stepRenderer;
+        private readonly ValidationScriptRunner runner;
         private readonly CodeTaskValidator validator;
         private readonly CourseWorkspace workspace;
         private Lesson lesson;
         private RenderedStep renderedStep;
         private Step step;
 
-        public StepViewModel(CourseWorkspace workspace, CodeTaskValidator validator, StepRenderer stepRenderer)
+        public StepViewModel(
+            CourseWorkspace workspace, 
+            CodeTaskValidator validator, 
+            StepRenderer stepRenderer,
+            ValidationScriptRunner runner)
         {
             this.workspace = workspace;
             this.validator = validator;
             this.stepRenderer = stepRenderer;
+            this.runner = runner;
         }
+
+        [Bind(Direction.ServerToClient)]
+        public string Name { get; set; }
 
         public string Code { get; set; }
 
@@ -63,13 +72,14 @@ namespace DotvvmAcademy.Web.ViewModels
             renderedStep = stepRenderer.Render(step);
             SetButtonProperties();
             await SetEditorProperties();
+            Name = renderedStep.Name;
             Text = renderedStep.Html;
             await base.Load();
         }
 
         public async Task Validate()
         {
-            var unit = await validator.GetUnit(renderedStep.CodeTaskPath);
+            var unit = await runner.Run(renderedStep.CodeTaskPath);
             Diagnostics = (await validator.Validate(unit, Code)).ToList();
         }
 
@@ -108,10 +118,10 @@ namespace DotvvmAcademy.Web.ViewModels
             HasCodeTask = renderedStep.CodeTaskPath != null;
             if (!Context.IsPostBack && HasCodeTask)
             {
-                var unit = await validator.GetUnit(renderedStep.CodeTaskPath);
+                var unit = await runner.Run(renderedStep.CodeTaskPath);
                 var defaultCodePath = unit.GetDefaultCodePath();
                 Code = defaultCodePath == null ? string.Empty : (await workspace.Load<Resource>(defaultCodePath)).Text;
-                CodeLanguage = renderedStep.CodeTaskLanguage;
+                CodeLanguage = unit.GetValidatedLanguage();
             }
         }
     }

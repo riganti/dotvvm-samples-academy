@@ -12,6 +12,7 @@
             </dot:Repeater>--%>
         </div>
         <div class="container-small">
+            <h1>{{resource: Name}}</h1>
             <dot:HtmlLiteral Html="{resource: Text}" class="step-info-box" />
             <%-- TODO: Do not render at all (IncludeInPage is not working properly) --%>
             <div IncludeInPage="{value: HasCodeTask}">

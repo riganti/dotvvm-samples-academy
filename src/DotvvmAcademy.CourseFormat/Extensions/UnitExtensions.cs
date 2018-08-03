@@ -1,5 +1,8 @@
 ﻿using DotvvmAcademy.CourseFormat;
+using DotvvmAcademy.Validation.CSharp.Unit;
+using DotvvmAcademy.Validation.Dothtml.Unit;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace DotvvmAcademy.Validation.Unit
 {
@@ -22,6 +25,21 @@ namespace DotvvmAcademy.Validation.Unit
         {
             var storage = unit.Provider.GetRequiredService<SourcePathStorage>();
             return storage.Get(key);
+        }
+
+        public static string GetValidatedLanguage(this IUnit unit)
+        {
+            switch (unit)
+            {
+                case CSharpUnit csharp:
+                    return ValidatedLanguages.CSharp;
+
+                case DothtmlUnit dothtml:
+                    return ValidatedLanguages.Dothtml;
+
+                default:
+                    throw new NotSupportedException($"{nameof(IUnit)} type '{unit.GetType()}' is not supported.");
+            }
         }
 
         public static void SetCorrectCodePath(this IUnit unit, string sourcePath)

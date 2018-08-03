@@ -7,8 +7,6 @@
             Html = html;
             CodeTaskPath = codeTaskPath;
             Name = name;
-
-            CodeTaskLanguage = SourcePath.GetCodeLanguage(CodeTaskPath);
         }
 
         public string CodeTaskPath { get; }
@@ -16,8 +14,6 @@
         public string Html { get; }
 
         public string Name { get; }
-
-        public string CodeTaskLanguage { get; }
 
         public override long GetSize()
         {

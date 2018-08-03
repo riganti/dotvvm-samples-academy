@@ -29,7 +29,7 @@ namespace DotvvmAcademy.CourseFormat
             return GetPath(root.FullName, info.FullName);
         }
 
-        public static string GetCodeLanguage(string path)
+        public static string GetValidatedLanguage(string path)
         {
             if (string.IsNullOrWhiteSpace(path))
             {

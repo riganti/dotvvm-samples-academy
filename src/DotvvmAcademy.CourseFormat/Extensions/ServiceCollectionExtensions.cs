@@ -13,6 +13,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton(p => new CourseEnvironment(root));
             services.AddSingleton<CourseCacheWrapper>();
             services.AddSingleton<CourseWorkspace>();
+            services.AddSingleton<ValidationScriptRunner>();
             services.AddSingleton<CodeTaskValidator>();
             services.AddSingleton<SourceLoader>();
             services.AddSingleton<LessonRenderer>();
