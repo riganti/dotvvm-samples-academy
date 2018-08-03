@@ -1,8 +1,8 @@
 using DotVVM.Framework.Controls;
 using DotVVM.Framework.Controls.Infrastructure;
 
-Unit.SetViewModelPath("/resources/CalculatorViewModel_stub.cs");
-Unit.SetCorrectCodePath("/resources/calculator_stub.dothtml");
+Unit.SetViewModelPath("./CalculatorViewModel_stub.cs");
+Unit.SetCorrectCodePath("./calculator_stub.dothtml");
 
 Unit.GetDirectives("/attribute::*")
     .CountEquals(1)

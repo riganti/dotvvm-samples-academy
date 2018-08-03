@@ -1,8 +1,8 @@
-#load "../20_the_view/the_view.dothtml.csx"
+#load "./view_stub.dothtml.csx"
 
-Unit.SetViewModelPath("/resources/CalculatorViewModel_properties.cs");
-Unit.SetDefaultCodePath("/resources/calculator_stub.dothtml");
-Unit.SetCorrectCodePath("/resources/calculator_textboxes.dothtml");
+Unit.SetViewModelPath("./CalculatorViewModel_properties.cs");
+Unit.SetDefaultCodePath("./calculator_stub.dothtml");
+Unit.SetCorrectCodePath("./calculator_textboxes.dothtml");
 
 Unit.GetProperties("/html/body/dot:Literal/@Text")
     .CountEquals(1)

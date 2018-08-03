@@ -1,7 +1,7 @@
-#load "../30_properties/properties.csharp.csx"
+#load "./viewmodel_properties.csharp.csx"
 
-Unit.SetDefaultCodePath("/resources/CalculatorViewModel_properties.cs");
-Unit.SetCorrectCodePath("/resources/CalculatorViewModel_methods.cs");
+Unit.SetDefaultCodePath("./CalculatorViewModel_properties.cs");
+Unit.SetCorrectCodePath("./CalculatorViewModel_methods.cs");
 
 Unit.GetTypes("System.Void")
     .Allow();

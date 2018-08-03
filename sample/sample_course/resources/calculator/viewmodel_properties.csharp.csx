@@ -1,7 +1,7 @@
-#load "../10_a_classic/a_classic.csharp.csx"
+#load "./viewmodel_stub.csharp.csx"
 
-Unit.SetDefaultCodePath("/resources/CalculatorViewModel_stub.cs");
-Unit.SetCorrectCodePath("/resources/CalculatorViewModel_properties.cs");
+Unit.SetDefaultCodePath("./CalculatorViewModel_stub.cs");
+Unit.SetCorrectCodePath("./CalculatorViewModel_properties.cs");
 
 Unit.GetTypes("System.Int32")
     .Allow();

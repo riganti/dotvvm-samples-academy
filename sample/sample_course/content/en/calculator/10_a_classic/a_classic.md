@@ -5,3 +5,5 @@ besides "Hello, World". It should be able to add, subtract, multiply, and divide
 
 Let's start by creating a ViewModel stub. Go ahead and create a declaration for a new class called `CalculatorViewModel`
 in the `SampleCourse` namespace.
+
+[CodeTask](/resources/calculator/viewmodel_stub.csharp.csx)

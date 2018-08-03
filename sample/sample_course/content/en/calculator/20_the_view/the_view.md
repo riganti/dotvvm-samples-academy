@@ -8,3 +8,5 @@ Also add the usual `html` stuff:
 - `<!doctype html>`,
 - the `<html>` element, and
 - the  `<body>` element.
+
+[CodeTask](/resources/calculator/view_stub.dothtml.csx)
