@@ -16,6 +16,12 @@
     <Content Include="content/**/;course/**/*" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="course\content\en\collections\10_prerequisites\prerequisites.md" />
+    <None Remove="course\content\en\collections\20_todo_a_todo\todo_a_todo.md" />
+    <None Remove="course\content\en\collections\30_an_eternal_cycle\an_eternal_cycle.md" />
+    <None Remove="course\content\en\collections\40_todoviewmodel\todoviewmodel.md" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore" Version="2.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.1.1" />
     <PackageReference Include="DotVVM.AspNetCore" Version="2.0.0" />
