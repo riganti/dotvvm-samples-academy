@@ -1,11 +1,13 @@
 # Methods
 
-Our calculator needs to actually, you know, calculate something.
+Our calculator needs to actually calculate something.
 
 ---
 
-Add four methods for the four arithmetic operations called `Add`, `Subtract`, `Multiply`, and `Divide` that combine the
-operand properties and save the result into `Result`. Which, by the way, means that these methods have no parameters and
-return `void`.
+Add four methods for the four basic arithmetic operations that:
+
+- Take no parameters and return `void`
+- Are called `Add`, `Subtract`, `Multiply`, and `Divide`
+- Combine `LeftOperand` and `RightOperand` and save the result into `Result`
 
 [CodeTask](/resources/principles/viewmodel_methods.csharp.csx)

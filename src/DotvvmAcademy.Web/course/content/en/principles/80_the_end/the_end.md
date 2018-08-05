@@ -1,3 +1,3 @@
 # The End
 
-That's the end of this lesson, if you can believe that.
+It's definitely not the best looking calculator arount, but it works.
