@@ -11,8 +11,8 @@ ViewModels gain access to the business layer using [Dependency Injection][di]. I
 
 ## Collections in ViewModel
 
-DotVVM needs to be able to deserialize the ViewModel from a piece of [JSON]. Your collection properties must therefore have
-concrete types like `List<string>` or `string[]`. `IEnumerable<string>` cannot be deserialized and will
+DotVVM needs to be able to deserialize the ViewModel from a piece of [JSON]. Your collection properties must therefore
+have concrete types like `List<string>` or `string[]`. `IEnumerable<string>` cannot be deserialized and will
 generate errors.
 
 ---
@@ -25,3 +25,5 @@ Create a new class in the `DotvvmAcademy.Course` namespace named `ToDoViewModel`
 
 [di]: https://www.dotvvm.com/docs/tutorials/advanced-ioc-di-container
 [json]: https://json.org/
+
+[CodeTask](/resources/collectins/viewmodel_stub.csharp.csx)

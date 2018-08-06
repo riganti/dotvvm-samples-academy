@@ -6,12 +6,15 @@ Unit.SetCorrectCodePath(ViewWithControlsPath);
 
 Unit.GetProperties("/html/body/dot:Literal/@Text")
     .CountEquals(1)
-    .HasBinding("Result");
+    .HasBinding("Result")
+    .IsOfType<int>();
 
 Unit.GetProperties("/html/body/dot:TextBox[1]/@Text")
     .CountEquals(1)
-    .HasBinding("LeftOperand");
+    .HasBinding("LeftOperand")
+    .IsOfType<int>();
 
 Unit.GetProperties("/html/body/dot:TextBox[2]/@Text")
     .CountEquals(1)
-    .HasBinding("RightOperand");
+    .HasBinding("RightOperand")
+    .IsOfType<int>();

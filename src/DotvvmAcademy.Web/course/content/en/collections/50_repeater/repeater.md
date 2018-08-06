@@ -24,3 +24,5 @@ Create a dothtml stub and to the `<body>` element add a `<dot:Repeater>` with `D
 
 [repeater]: https://www.dotvvm.com/docs/controls/builtin/Repeater
 [datacontext]: https://www.dotvvm.com/docs/tutorials/basics-binding-context
+
+[CodeTask](/resources/collections/view_stub.dothtml.csx)

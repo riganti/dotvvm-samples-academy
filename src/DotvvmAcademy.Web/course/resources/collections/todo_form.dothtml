@@ -1,0 +1,13 @@
+﻿@viewModel DotvvmAcademy.Course.ToDoViewModel
+
+<!doctype html>
+<html>
+<body>
+    <dot:Repeater DataSource="{value: Items}">
+        <div>{{value: Text}}</div>
+        <dot:Button Click="{command: _root.RemoveItem(Id)}" Text="Delete" />
+    </dot:Repeater>
+    <dot:TextBox Text="{value: NewItemText}" />
+    <dot:Button Click="{command: AddItem()}" Text="Add" />
+</body>
+</html>

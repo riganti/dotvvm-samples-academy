@@ -18,3 +18,5 @@ asynchronously.
 
 Note: We override `PreRender` because our item-adding and item-removing commands will change the contents of `Items`.
 If we were to override `Init` or `Load`, changes we made would not get displayed until the __next__ request.
+
+[CodeTask](/resources/collections/viewmodel_lifecycle.csharp.csx)

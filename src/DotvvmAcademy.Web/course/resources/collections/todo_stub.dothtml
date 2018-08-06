@@ -1,0 +1,10 @@
+﻿@viewModel DotvvmAcademy.Course.ToDoViewModel
+
+<!doctype html>
+<html>
+<body>
+    <dot:Repeater DataSource="{value: Items}">
+        <div>{{value: Text}}</div>
+    </dot:Repeater>
+</body>
+</html>
