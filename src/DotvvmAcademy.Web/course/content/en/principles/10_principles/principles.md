@@ -1,4 +1,4 @@
-# Prerequisites
+# Principles of DotVVM
 
 To illustrate the Principles of DotVVM, we're gonna build a Calculator.
 
