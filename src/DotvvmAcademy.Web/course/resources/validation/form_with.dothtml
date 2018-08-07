@@ -1,0 +1,36 @@
+﻿@viewModel DotvvmAcademy.Course.FormViewModel
+
+<!doctype html>
+<html>
+<body>
+    <div Validation.Target="{value: Login}">
+        <h1>Log In</h1>
+        <div>
+            <dot:Validator Value="{value: Login.Email}"
+                           ShowErrorMessageText="true"/>
+            Email: <dot:TextBox Text="{value: Login.Email}" />
+        </div>
+        <div>
+            <dot:Validator Value="{value: Login.Password}"
+                           ShowErrorMessageText="true"/>
+            Password: <dot:TextBox Text="{value: Login.Password}" />
+        </div>
+        <dot:Button Click="{command: LogIn()}"
+                    Text="Log In" />
+    </div>
+    <div Validation.Target="{value: Registration}">
+        <h1>Register</h1>
+        <div>
+            Email: <dot:TextBox Text="{value: Registration.Email}" />
+            Password: <dot:TextBox Text="{value: Registration.Password}" />
+            Age: <dot:TextBox Text="{value: Registration.Age}"
+                              Type="Number" />
+            Address: <dot:TextBox Text="{value: Registration.Address}" />
+            Phone: <dot:TextBox Text="{value: Registration.Phone}" />
+        </div>
+        <dot:Button Click="{command: Register()}"
+                    Text="Register"/>
+        <dot:ValidationSummary />
+    </div>
+</body>
+</html>

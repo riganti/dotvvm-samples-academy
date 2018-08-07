@@ -2,18 +2,45 @@
 
 We'll validate a Log In form and a Registration form that are next to each other in a single View.
 
-Our ViewModel currently has this shape (without the BL calls) :
+Our ViewModel currently looks like this
 
 ```csharp
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using DotVVM.Framework.ViewModel;
+
 namespace DotvvmAcademy.Course
 {
-    public class FormViewModel
+    public class FormViewModel : DotvvmViewModelBase
     {
+        private readonly LoginFacade loginFacade;
+        private readonly RegistrationFacade registrationFacade;
+
+        public FormViewModel(LoginFacade loginFacade, RegistrationFacade registrationFacade)
+        {
+            this.loginFacade = loginFacade;
+            this.registrationFacade = registrationFacade;
+        }
+
         public LoginDTO Login { get; set; }
-        
+
         public RegistrationDTO Registration { get; set; }
+
+        public Task LogIn()
+        {
+            return loginFacade.LogIn(Login);
+        }
+
+        public Task Register()
+        {
+            return registrationFacade.Register(Registration);
+        }
     }
 }
+
 ```
 
 DotVVM recognizes attributes from the `System.ComponentModel.DataAnnotations` namespace. For instance the:
@@ -37,4 +64,4 @@ Let's start by adding some attributes to our DTOs:
 [EmailAddressAttribute]: https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.emailaddressattribute
 [RegularExpressionAttribute]: https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.regularexpressionattribute
 
-[CodeTask](/resources/validation/dto_attributes.csharp.csx)
+[CodeTask](/resources/validation/dto.csharp.csx)

@@ -23,7 +23,7 @@ example. I want to show an error message with a CSS class next to a TextBox:
 <dot:TextBox Text="{value: Text}" />
 ```
 
-Since all Validator properties are attached properties, you can set them directly on the TextBox:
+Since all Validator properties are attached properties as well, you can set them directly on the TextBox:
 
 ```dothtml
 <dot:TextBox Text="{value: Text}"
@@ -32,14 +32,14 @@ Since all Validator properties are attached properties, you can set them directl
              Validator.SetToolTipText="true"/>
 ```
 
-Validator properties are also inherited by the control's descendants.
+Validator properties are also applied to the control's subtree.
 
 ## ValidationSummary
 
-Displays ValidationErrors from a `Validation.Target`.
+Displays validation errors from a `Validation.Target` (the root ViewModel by default).
 
-Let's say I have a property called `DTO` that I validate and I want to display errors from its properties,
-its properties' properties and itself:
+Let's say I have a property called `DTO` I validate and I want to display errors from its properties,
+its properties' properties, and itself:
 
 ```
 <dot:ValidationSummary Validation.Target="{value: DTO}"
@@ -49,8 +49,10 @@ its properties' properties and itself:
 
 ---
 
-- Set `Validation.Target` on the Log In form to the `Login` property
-- Set `Validation.Target` on the Register form to the `Registration` property
+- Set `Validation.Target` on the Login form to the `Login` property
+- Set `Validation.Target` on the Registration form to the `Registration` property
 - Add `<dot:Validator>` controls before the TextBoxes in the Log In form, bind them to their respective values
 and let them show error messages
 - Add `<dot:ValidationSummary>` at the end of the Register form that shows errors from the `Registration` property
+
+[CodeTask](/resources/validation/view.dothtml.csx)
