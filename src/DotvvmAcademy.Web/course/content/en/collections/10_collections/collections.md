@@ -6,7 +6,7 @@ You should definitely know a few things before we start:
 
 - [HTML] - write static documents
 - [C#] - write classes, properties and methods
-- DotVVM - [basics](/en/principles)
+- DotVVM - on the level of the [Principles of DotVVM][principles] lesson
 
 ---
 
@@ -21,6 +21,7 @@ At the end of this lesson we'll have a ViewModel that:
 - Uses the [`<dot:Repeater>`][repeater] control to display the items
 - Lets the user add and remove items
 
-[html]: https://en.wikipedia.org/wiki/HTML
-[C#]: https://en.wikipedia.org/wiki/C_Sharp_(programming_language)
+[principles]: ../../principles/10_principles/principles.md
+[html]: https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/HTML_basics
+[C#]: https://docs.microsoft.com/en-us/dotnet/csharp/quick-starts/
 [repeater]: https://www.dotvvm.com/docs/controls/builtin/Repeater
