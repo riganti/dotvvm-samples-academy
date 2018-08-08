@@ -1,14 +1,11 @@
-﻿namespace DotvvmAcademy.Validation.CSharp
+﻿using Microsoft.Extensions.Options;
+
+namespace DotvvmAcademy.Validation.CSharp
 {
-    public class CSharpValidationOptions : IValidationOptions
+    public class CSharpValidationOptions : IOptions<CSharpValidationOptions>
     {
-        public static CSharpValidationOptions Default = new CSharpValidationOptions();
+        public bool IncludeCompilerDiagnostics { get; set; } = true;
 
-        public CSharpValidationOptions(bool includeCompilerDiagnostics = true)
-        {
-            IncludeCompilerDiagnostics = includeCompilerDiagnostics;
-        }
-
-        public bool IncludeCompilerDiagnostics { get; }
+        CSharpValidationOptions IOptions<CSharpValidationOptions>.Value => this;
     }
 }

@@ -100,6 +100,7 @@ namespace DotvvmAcademy.CourseFormat
             var c = new ServiceCollection();
             c.AddScoped<SourcePathStorage>();
             c.AddScoped<Context>();
+            c.AddScoped<IQueryFactory, QueryFactory>();
             return c.BuildServiceProvider();
         }
 

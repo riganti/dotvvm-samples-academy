@@ -1,9 +1,11 @@
 ﻿using DotvvmAcademy.Meta;
 using DotvvmAcademy.Validation.CSharp.Unit;
+using DotvvmAcademy.Validation.Unit;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -27,16 +29,16 @@ namespace DotvvmAcademy.Validation.CSharp
         public async Task<ImmutableArray<IValidationDiagnostic>> Validate(
             CSharpUnit unit,
             string code,
-            CSharpValidationOptions options = null)
+            IOptions<CSharpValidationOptions> options = null)
         {
-            options = options ?? CSharpValidationOptions.Default;
+            options = options ?? new CSharpValidationOptions();
             using (var scope = globalProvider.CreateScope())
             {
                 var context = scope.ServiceProvider.GetRequiredService<Context>();
                 var reporter = scope.ServiceProvider.GetRequiredService<ValidationReporter>();
                 context.Unit = unit;
                 context.Code = code;
-                context.Options = options;
+                context.Options = options.Value;
                 HandleQueries<ITypeSymbol>(scope.ServiceProvider);
                 HandleQueries<IMethodSymbol>(scope.ServiceProvider);
                 HandleQueries<IPropertySymbol>(scope.ServiceProvider);
@@ -73,7 +75,7 @@ namespace DotvvmAcademy.Validation.CSharp
                 }
 
                 originalStream.Position = 0;
-                var rewriter = provider.GetRequiredService<IAssemblyRewriter>();
+                var rewriter = provider.GetRequiredService<AssemblyRewriter>();
                 await rewriter.Rewrite(originalStream, rewrittenStream);
                 rewrittenStream.Position = 0;
                 return AssemblyLoadContext.Default.LoadFromStream(rewrittenStream);
@@ -117,7 +119,7 @@ namespace DotvvmAcademy.Validation.CSharp
         private IServiceProvider GetServiceProvider()
         {
             var c = new ServiceCollection();
-            c.AddSingleton<IAssemblyRewriter, AssemblyRewriter>();
+            c.AddSingleton<AssemblyRewriter>();
             c.AddScoped<AllowedSymbolStorage>();
             c.AddScoped<DiagnosticAnalyzer, SymbolAllowedAnalyzer>();
             c.AddScoped(GetCompilation);
@@ -142,13 +144,12 @@ namespace DotvvmAcademy.Validation.CSharp
             where TResult : ISymbol
         {
             var unit = provider.GetRequiredService<Context>().Unit;
-            var queries = unit.Queries.Values.OfType<CSharpQuery<TResult>>();
-            foreach (var query in queries)
+            foreach (var query in unit.GetQueries<TResult>())
             {
-                var result = GetMetadataNameResult(provider, query.Name).OfType<TResult>().ToImmutableArray();
-                foreach (var constraint in query.Constraints)
+                var result = GetMetadataNameResult(provider, query.Source).OfType<TResult>().ToImmutableArray();
+                foreach (var constraint in query.GetConstraints())
                 {
-                    var context = new CSharpConstraintContext<TResult>(provider, query.Name, result);
+                    var context = new ConstraintContext<TResult>(provider, query, result);
                     constraint(context);
                 }
             }
@@ -190,7 +191,7 @@ namespace DotvvmAcademy.Validation.CSharp
             var unit = provider.GetRequiredService<Context>().Unit;
             var context = provider.GetRequiredService<CSharpDynamicContext>();
             var reporter = provider.GetRequiredService<ValidationReporter>();
-            foreach (var action in unit.DynamicActions)
+            foreach (var action in unit.GetDynamicActions())
             {
                 try
                 {
@@ -198,12 +199,12 @@ namespace DotvvmAcademy.Validation.CSharp
                 }
                 catch (Exception e)
                 {
-                    reporter.Report(e.Message);
+                    reporter.Report(e);
                 }
             }
         }
 
-        private class Context
+        public class Context
         {
             public Assembly Assembly { get; set; }
 

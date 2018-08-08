@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Mono.Cecil;
+using System;
 using System.IO;
 using System.Reflection;
 using System.Runtime.Loader;
@@ -66,7 +67,7 @@ namespace DotvvmAcademy.Validation.CSharp.Tests
                 return;
             }
             stream.Close();
-            throw new CompilationUnsuccessfulException("The passed source code could not be compiled.", result);
+            throw new ArgumentException("The compilation could not be compiled.", nameof(compilation));
         }
     }
 }

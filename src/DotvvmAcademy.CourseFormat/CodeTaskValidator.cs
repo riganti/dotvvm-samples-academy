@@ -44,7 +44,10 @@ namespace DotvvmAcademy.CourseFormat
                         viewModel = (await workspace.Load<Resource>(viewModelPath)).Text;
                     }
 
-                    var options = new DothtmlValidationOptions(viewModel: viewModel);
+                    var options = new DothtmlValidationOptions()
+                    {
+                        CSharpSources = ImmutableArray.Create(viewModel)
+                    };
                     diagnostics = await dothtmlService.Validate(dothtmlUnit, code, options);
                     break;
 

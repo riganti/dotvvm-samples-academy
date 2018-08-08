@@ -1,42 +1,33 @@
 ﻿using DotvvmAcademy.Validation.Unit;
 using Microsoft.CodeAnalysis;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 namespace DotvvmAcademy.Validation.CSharp.Unit
 {
-    public class CSharpUnit : IUnit
+    public class CSharpUnit : Validation.Unit.Unit
     {
-        public CSharpUnit(IServiceProvider provider)
+        private List<Action<CSharpDynamicContext>> dynamicActions = new List<Action<CSharpDynamicContext>>();
+
+        public CSharpUnit(IServiceProvider provider) : base(provider)
         {
-            Provider = provider;
         }
 
-        public List<Action<CSharpDynamicContext>> DynamicActions { get; } = new List<Action<CSharpDynamicContext>>();
-
-        public ConcurrentDictionary<string, IQuery> Queries { get; }
-            = new ConcurrentDictionary<string, IQuery>();
-
-        public IServiceProvider Provider { get; }
-
-        public CSharpQuery<IEventSymbol> GetEvents(string name) => AddQuery<IEventSymbol>(name);
-
-        public CSharpQuery<IFieldSymbol> GetFields(string name) => AddQuery<IFieldSymbol>(name);
-
-        public CSharpQuery<IMethodSymbol> GetMethods(string name) => AddQuery<IMethodSymbol>(name);
-
-        public CSharpQuery<IPropertySymbol> GetProperties(string name) => AddQuery<IPropertySymbol>(name);
-
-        public CSharpQuery<ITypeSymbol> GetTypes(string name) => AddQuery<ITypeSymbol>(name);
-
-        public void Run(Action<CSharpDynamicContext> action) => DynamicActions.Add(action);
-
-        private CSharpQuery<TSymbol> AddQuery<TSymbol>(string name)
-            where TSymbol : ISymbol
+        public IEnumerable<Action<CSharpDynamicContext>> GetDynamicActions()
         {
-            return (CSharpQuery<TSymbol>)Queries.GetOrAdd(name, n =>
-                new CSharpQuery<TSymbol>(name));
+            return dynamicActions;
         }
+
+        public IQuery<IEventSymbol> GetEvents(string name) => GetQuery<IEventSymbol>(name);
+
+        public IQuery<IFieldSymbol> GetFields(string name) => GetQuery<IFieldSymbol>(name);
+
+        public IQuery<IMethodSymbol> GetMethods(string name) => GetQuery<IMethodSymbol>(name);
+
+        public IQuery<IPropertySymbol> GetProperties(string name) => GetQuery<IPropertySymbol>(name);
+
+        public IQuery<ITypeSymbol> GetTypes(string name) => GetQuery<ITypeSymbol>(name);
+
+        public void Run(Action<CSharpDynamicContext> action) => dynamicActions.Add(action);
     }
 }

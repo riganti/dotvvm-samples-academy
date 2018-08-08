@@ -1,12 +1,13 @@
-﻿using DotvvmAcademy.Validation.CSharp;
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.CodeAnalysis;
 
-namespace DotvvmAcademy.Validation
+namespace DotvvmAcademy.Validation.CSharp
 {
     public static class ValidationReporterExtensions
     {
         public static void Report(this ValidationReporter reporter, Diagnostic diagnostic)
-            => reporter.Report(new CompilationCSharpDiagnostic(diagnostic));
+        {
+            reporter.Report(new CompilationCSharpDiagnostic(diagnostic));
+        }
 
         public static void Report(
             this ValidationReporter reporter,

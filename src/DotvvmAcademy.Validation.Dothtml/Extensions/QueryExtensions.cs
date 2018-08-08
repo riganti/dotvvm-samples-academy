@@ -1,33 +1,19 @@
 ﻿using DotvvmAcademy.Meta;
 using DotvvmAcademy.Validation.Dothtml.ValidationTree;
+using DotvvmAcademy.Validation.Unit;
 using System;
 using System.Linq;
 
 namespace DotvvmAcademy.Validation.Dothtml.Unit
 {
-    public static class DothtmlQueryExtensions
+    public static class QueryExtensions
     {
-        public static DothtmlQuery<TResult> CountEquals<TResult>(this DothtmlQuery<TResult> query, int count)
-            where TResult : ValidationTreeNode
-        {
-            query.AddConstraint(context =>
-            {
-                if (context.Result.Length != count)
-                {
-                    context.Report(
-                        message: $"Found '{context.Result.Length}' of '{context.XPath}' " +
-                            $"but expected to find '{count}'.");
-                }
-            });
-            return query;
-        }
-
-        public static DothtmlQuery<ValidationPropertySetter> HasBinding(
-            this DothtmlQuery<ValidationPropertySetter> query,
+        public static IQuery<ValidationPropertySetter> HasBinding(
+            this IQuery<ValidationPropertySetter> query,
             string value,
             BindingKind kind = default)
         {
-            query.AddConstraint(context =>
+            query.SetConstraint(nameof(HasBinding), context =>
             {
                 foreach (var setter in context.Result)
                 {
@@ -43,7 +29,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
                             message: $"Property has to be set using '{kind}' binding.",
                             node: propertyBinding);
                     }
-                    else if(!propertyBinding.Binding.Value.Equals(value))
+                    else if (!propertyBinding.Binding.Value.Equals(value))
                     {
                         context.Report(
                             message: $"Property is to be bound to '{value}'.",
@@ -54,18 +40,18 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
             return query;
         }
 
-        public static DothtmlQuery<ValidationControl> HasRawContent(
-            this DothtmlQuery<ValidationControl> query,
+        public static IQuery<ValidationControl> HasRawContent(
+            this IQuery<ValidationControl> query,
             string expectedContent,
             bool isCaseSensitive = true)
         {
-            query.AddConstraint(context =>
+            query.SetConstraint(nameof(HasRawContent), context =>
             {
                 foreach (var control in context.Result)
                 {
                     var actualContent = string.Concat(control.DothtmlNode.Tokens.Select(t => t.Text)).Trim();
-                    var comparison = isCaseSensitive 
-                        ? StringComparison.InvariantCulture 
+                    var comparison = isCaseSensitive
+                        ? StringComparison.InvariantCulture
                         : StringComparison.InvariantCultureIgnoreCase;
                     if (!expectedContent.Equals(actualContent, comparison))
                     {
@@ -76,11 +62,11 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
             return query;
         }
 
-        public static DothtmlQuery<ValidationPropertySetter> HasValue(
-            this DothtmlQuery<ValidationPropertySetter> query,
+        public static IQuery<ValidationPropertySetter> HasValue(
+            this IQuery<ValidationPropertySetter> query,
             object value)
         {
-            query.AddConstraint(context =>
+            query.SetConstraint(nameof(HasValue), context =>
             {
                 foreach (var setter in context.Result)
                 {
@@ -101,9 +87,9 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
             return query;
         }
 
-        public static DothtmlQuery<ValidationControl> IsOfType<TControl>(this DothtmlQuery<ValidationControl> query)
+        public static IQuery<ValidationControl> IsOfType<TControl>(this IQuery<ValidationControl> query)
         {
-            query.AddConstraint(context =>
+            query.SetConstraint(nameof(IsOfType), context =>
             {
                 foreach (var control in context.Result)
                 {
@@ -118,11 +104,11 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
             return query;
         }
 
-        public static DothtmlQuery<ValidationDirective> IsViewModelDirective(
-            this DothtmlQuery<ValidationDirective> query,
+        public static IQuery<ValidationDirective> IsViewModelDirective(
+            this IQuery<ValidationDirective> query,
             string typeFullName)
         {
-            query.AddConstraint(context =>
+            query.SetConstraint(nameof(IsViewModelDirective), context =>
             {
                 foreach (var directive in context.Result)
                 {

@@ -3,15 +3,12 @@ using System.Collections.Immutable;
 
 namespace DotvvmAcademy.Validation.Unit
 {
-    public interface IConstraintContext
+    public interface IConstraintContext<TResult>
     {
+        IQuery<TResult> Query { get; }
+
         IServiceProvider Provider { get; }
 
-        ImmutableArray<object> Result { get; }
-    }
-
-    public interface IConstraintContext<TResult> : IConstraintContext
-    {
-        new ImmutableArray<TResult> Result { get; }
+        ImmutableArray<TResult> Result { get; }
     }
 }

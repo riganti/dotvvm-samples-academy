@@ -1,23 +1,16 @@
-﻿namespace DotvvmAcademy.Validation.Dothtml
+﻿using Microsoft.Extensions.Options;
+using System.Collections.Immutable;
+
+namespace DotvvmAcademy.Validation.Dothtml
 {
-    public class DothtmlValidationOptions : IValidationOptions
+    public class DothtmlValidationOptions : IOptions<DothtmlValidationOptions>
     {
-        public static DothtmlValidationOptions Default = new DothtmlValidationOptions();
+        public ImmutableArray<string> CSharpSources { get; set; }
 
-        public DothtmlValidationOptions(
-            bool includeCompilerDiagnostics = true,
-            string viewModel = "",
-            string fileName = "View.dothtml")
-        {
-            IncludeCompilerDiagnostics = includeCompilerDiagnostics;
-            ViewModel = viewModel;
-            FileName = fileName;
-        }
+        public string FileName { get; set; } = "View.dothtml";
 
-        public string FileName { get; }
+        public bool IncludeCompilerDiagnostics { get; set; } = true;
 
-        public bool IncludeCompilerDiagnostics { get; }
-
-        public string ViewModel { get; }
+        DothtmlValidationOptions IOptions<DothtmlValidationOptions>.Value => this;
     }
 }

@@ -3,10 +3,13 @@ using DotVVM.Framework.Compilation.Parser.Dothtml.Tokenizer;
 using DotvvmAcademy.Meta;
 using DotvvmAcademy.Validation.Dothtml.Unit;
 using DotvvmAcademy.Validation.Dothtml.ValidationTree;
+using DotvvmAcademy.Validation.Unit;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,17 +30,17 @@ namespace DotvvmAcademy.Validation.Dothtml
         public Task<ImmutableArray<IValidationDiagnostic>> Validate(
             DothtmlUnit unit,
             string code,
-            DothtmlValidationOptions options = null)
+            IOptions<DothtmlValidationOptions> options = null)
         {
-            options = options ?? DothtmlValidationOptions.Default;
             return Task.Run(() =>
             {
+                options = options ?? new DothtmlValidationOptions();
                 using (var scope = globalProvider.CreateScope())
                 {
                     var context = scope.ServiceProvider.GetRequiredService<Context>();
                     context.Unit = unit;
                     context.Code = code;
-                    context.Options = options;
+                    context.Options = options.Value;
                     HandleQueries<ValidationControl>(scope.ServiceProvider);
                     HandleQueries<ValidationPropertySetter>(scope.ServiceProvider);
                     HandleQueries<ValidationDirective>(scope.ServiceProvider);
@@ -46,11 +49,34 @@ namespace DotvvmAcademy.Validation.Dothtml
             });
         }
 
+        private CSharpCompilation GetCompilation(IServiceProvider provider)
+        {
+            var context = provider.GetRequiredService<Context>();
+            IEnumerable<SyntaxTree> trees = context.Options.CSharpSources.IsDefaultOrEmpty
+                ? Enumerable.Empty<SyntaxTree>()
+                : context.Options.CSharpSources.Select(s => CSharpSyntaxTree.ParseText(s));
+            return CSharpCompilation.Create(
+                assemblyName: $"DotvvmAcademy.Validation.Dothtml.{context.Id}",
+                syntaxTrees: trees,
+                references: new[]
+                {
+                    MetadataReferencer.FromName("mscorlib"),
+                    MetadataReferencer.FromName("netstandard"),
+                    MetadataReferencer.FromName("System.Private.CoreLib"),
+                    MetadataReferencer.FromName("System.Runtime"),
+                    MetadataReferencer.FromName("System.Collections"),
+                    MetadataReferencer.FromName("System.Reflection"),
+                    MetadataReferencer.FromName("DotVVM.Framework"),
+                    MetadataReferencer.FromName("DotVVM.Core")
+                },
+                options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+        }
+
         private IServiceProvider GetServiceProvider()
         {
             var c = new ServiceCollection();
             c.AddSingleton<ErrorAggregatingVisitor>();
-            c.AddScoped(GetViewModelCompilation);
+            c.AddScoped(GetCompilation);
             c.AddScoped(GetValidationTree);
             c.AddScoped(GetXPathTree);
             c.AddScoped<AttributeExtractor>();
@@ -102,27 +128,6 @@ namespace DotvvmAcademy.Validation.Dothtml
             return root;
         }
 
-        private CSharpCompilation GetViewModelCompilation(IServiceProvider provider)
-        {
-            var context = provider.GetRequiredService<Context>();
-            var tree = CSharpSyntaxTree.ParseText(context.Options.ViewModel);
-            return CSharpCompilation.Create(
-                assemblyName: $"DotvvmAcademy.Validation.Dothtml.{context.Id}",
-                syntaxTrees: new[] { tree },
-                references: new[]
-                {
-                    MetadataReferencer.FromName("mscorlib"),
-                    MetadataReferencer.FromName("netstandard"),
-                    MetadataReferencer.FromName("System.Private.CoreLib"),
-                    MetadataReferencer.FromName("System.Runtime"),
-                    MetadataReferencer.FromName("System.Collections"),
-                    MetadataReferencer.FromName("System.Reflection"),
-                    MetadataReferencer.FromName("DotVVM.Framework"),
-                    MetadataReferencer.FromName("DotVVM.Core")
-                },
-                options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
-        }
-
         private ImmutableArray<ValidationTreeNode> GetXPathResult(IServiceProvider provider, string xpath)
         {
             var tree = provider.GetRequiredService<XPathDothtmlRoot>();
@@ -151,23 +156,19 @@ namespace DotvvmAcademy.Validation.Dothtml
             where TResult : ValidationTreeNode
         {
             var unit = provider.GetRequiredService<Context>().Unit;
-            var queries = unit.Queries.Values.OfType<DothtmlQuery<TResult>>();
-            foreach (var query in queries)
+            foreach (var query in unit.GetQueries<TResult>())
             {
-                var result = GetXPathResult(provider, query.XPath);
-                var castResult = result.IsDefaultOrEmpty
-                    ? ImmutableArray<TResult>.Empty
-                    : result.Cast<TResult>().ToImmutableArray();
+                var result = GetXPathResult(provider, query.Source).OfType<TResult>().ToImmutableArray();
                 var reporter = provider.GetRequiredService<ValidationReporter>();
-                foreach (var constraint in query.Constraints)
+                foreach (var constraint in query.GetConstraints())
                 {
-                    var context = new DothtmlConstraintContext<TResult>(provider, query.XPath, castResult);
+                    var context = new ConstraintContext<TResult>(provider, query, result);
                     constraint(context);
                 }
             }
         }
 
-        private class Context
+        public class Context
         {
             public string Code { get; set; }
 
