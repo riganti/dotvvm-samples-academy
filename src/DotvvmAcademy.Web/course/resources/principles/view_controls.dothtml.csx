@@ -1,20 +1,9 @@
 #load "./view_stub.dothtml.csx"
 
-Unit.SetViewModelPath(ViewModelWithPropertiesPath);
-Unit.SetDefaultCodePath(ViewStubPath);
-Unit.SetCorrectCodePath(ViewWithControlsPath);
+Unit.SetViewModelPath("./CalculatorViewModel_properties.cs");
+Unit.SetDefaultCodePath("./calculator_stub.dothtml");
+Unit.SetCorrectCodePath("./calculator_controls.dothtml");
 
-Unit.GetProperties("/html/body/dot:Literal/@Text")
-    .CountEquals(1)
-    .HasBinding("Result")
-    .IsOfType<int>();
-
-Unit.GetProperties("/html/body/dot:TextBox[1]/@Text")
-    .CountEquals(1)
-    .HasBinding("LeftOperand")
-    .IsOfType<int>();
-
-Unit.GetProperties("/html/body/dot:TextBox[2]/@Text")
-    .CountEquals(1)
-    .HasBinding("RightOperand")
-    .IsOfType<int>();
+Unit.GetProperty("/html/body/dot:Literal/@Text").HasBinding("Result");
+Unit.GetProperty("/html/body/dot:TextBox[1]/@Text").HasBinding("LeftOperand");
+Unit.GetProperty("/html/body/dot:TextBox[2]/@Text").HasBinding("RightOperand");

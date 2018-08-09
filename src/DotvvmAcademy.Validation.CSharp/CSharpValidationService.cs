@@ -5,7 +5,6 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -17,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace DotvvmAcademy.Validation.CSharp
 {
-    public class CSharpValidationService : IValidationService<CSharpUnit, CSharpValidationOptions>
+    public class CSharpValidationService : IValidationService<CSharpUnit>
     {
         private readonly IServiceProvider globalProvider;
 
@@ -28,17 +27,14 @@ namespace DotvvmAcademy.Validation.CSharp
 
         public async Task<ImmutableArray<IValidationDiagnostic>> Validate(
             CSharpUnit unit,
-            string code,
-            IOptions<CSharpValidationOptions> options = null)
+            ImmutableArray<ISourceCode> sources)
         {
-            options = options ?? new CSharpValidationOptions();
             using (var scope = globalProvider.CreateScope())
             {
                 var context = scope.ServiceProvider.GetRequiredService<Context>();
                 var reporter = scope.ServiceProvider.GetRequiredService<ValidationReporter>();
                 context.Unit = unit;
-                context.Code = code;
-                context.Options = options.Value;
+                context.Sources = sources;
                 HandleQueries<ITypeSymbol>(scope.ServiceProvider);
                 HandleQueries<IMethodSymbol>(scope.ServiceProvider);
                 HandleQueries<IPropertySymbol>(scope.ServiceProvider);
@@ -85,10 +81,10 @@ namespace DotvvmAcademy.Validation.CSharp
         private CSharpCompilation GetCompilation(IServiceProvider provider)
         {
             var context = provider.GetRequiredService<Context>();
-            var tree = CSharpSyntaxTree.ParseText(context.Code ?? string.Empty);
+            var trees = context.Sources.OfType<CSharpSourceCode>().Select(s => s.SyntaxTree);
             var compilation = CSharpCompilation.Create(
                 assemblyName: $"DotvvmAcademy.Validation.CSharp.{context.Id}",
-                syntaxTrees: new[] { tree },
+                syntaxTrees: trees,
                 references: new[]
                 {
                     MetadataReferencer.FromName("mscorlib"),
@@ -99,14 +95,11 @@ namespace DotvvmAcademy.Validation.CSharp
                     MetadataReferencer.FromName("System.Reflection")
                 },
                 options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
-            if (context.Options.IncludeCompilerDiagnostics)
+            var reporter = provider.GetRequiredService<ValidationReporter>();
+            var diagnostics = compilation.GetDiagnostics();
+            foreach (var diagnostic in diagnostics)
             {
-                var reporter = provider.GetRequiredService<ValidationReporter>();
-                var diagnostics = compilation.GetDiagnostics();
-                foreach (var diagnostic in diagnostics)
-                {
-                    reporter.Report(diagnostic);
-                }
+                reporter.Report(diagnostic);
             }
             return compilation;
         }
@@ -129,7 +122,7 @@ namespace DotvvmAcademy.Validation.CSharp
             c.AddScoped(p => p.GetRequiredService<Context>().Assembly);
             c.AddScoped(p =>
             {
-                var userAssembly = p.GetRequiredService<Assembly>();
+                var userAssembly = p.GetRequiredService<Context>().Assembly;
                 var assemblies = Assembly.GetEntryAssembly().GetReferencedAssemblies().Select(Assembly.Load);
                 var builder = ImmutableArray.CreateBuilder<Assembly>();
                 builder.Add(userAssembly);
@@ -199,7 +192,7 @@ namespace DotvvmAcademy.Validation.CSharp
                 }
                 catch (Exception e)
                 {
-                    reporter.Report(e);
+                    reporter.ReportGlobal(e);
                 }
             }
         }
@@ -208,11 +201,9 @@ namespace DotvvmAcademy.Validation.CSharp
         {
             public Assembly Assembly { get; set; }
 
-            public string Code { get; set; }
-
             public Guid Id { get; } = Guid.NewGuid();
 
-            public CSharpValidationOptions Options { get; set; }
+            public ImmutableArray<ISourceCode> Sources { get; set; }
 
             public CSharpUnit Unit { get; set; }
         }

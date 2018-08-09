@@ -6,10 +6,10 @@ namespace DotvvmAcademy.Validation.CSharp
     {
         public SymbolCSharpDiagnostic(
             string message,
-            int start = -1,
-            int end = -1,
-            ISymbol symbol = null,
-            ValidationSeverity severity = default)
+            int start,
+            int end,
+            ISymbol symbol,
+            ValidationSeverity severity)
         {
             Message = message;
             Start = start;

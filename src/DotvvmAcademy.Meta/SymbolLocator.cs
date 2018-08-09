@@ -24,13 +24,6 @@ namespace DotvvmAcademy.Meta
             assemblies = builder.ToImmutableArray();
         }
 
-        public ImmutableArray<ISymbol> Locate(string name)
-        {
-            var lexer = new NameLexer(name);
-            var parser = new NameParser(lexer);
-            return Locate(parser.Parse());
-        }
-
         public ImmutableArray<ISymbol> Locate(NameNode node)
         {
             return Visit(node).ToImmutableArray();

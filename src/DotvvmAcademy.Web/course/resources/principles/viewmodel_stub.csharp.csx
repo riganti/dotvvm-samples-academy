@@ -1,8 +1,7 @@
 #load "./constants.csx"
 
-Unit.SetCorrectCodePath(ViewModelStubPath);
+Unit.SetCorrectCodePath("./CalculatorViewModel_stub.cs");
 
-Unit.GetTypes(ViewModelFullName)
-    .CountEquals(1)
-    .IsTypeKind(CSharpTypeKind.Class)
-    .HasAccessibility(CSharpAccessibility.Public);
+var calculatorViewModel = Unit.GetType(CalculatorViewModel)
+    .IsTypeKind(TypeKind.Class)
+    .HasAccessibility(Accessibility.Public);

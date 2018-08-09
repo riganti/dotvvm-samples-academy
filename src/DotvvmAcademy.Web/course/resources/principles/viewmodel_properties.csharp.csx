@@ -1,22 +1,25 @@
 #load "./viewmodel_stub.csharp.csx"
 
-Unit.SetDefaultCodePath(ViewModelStubPath);
-Unit.SetCorrectCodePath(ViewModelWithPropertiesPath);
+Unit.SetDefaultCodePath("./CalculatorViewModel_stub.cs");
+Unit.SetCorrectCodePath("./CalculatorViewModel_properties.cs");
 
-Unit.GetTypes("System.Int32")
+Unit.GetType<int>()
     .Allow();
 
-Unit.GetProperties($"{ViewModelFullName}::Result")
-    .CountEquals(1)
-    .HasAccessibility(CSharpAccessibility.Public)
+calculatorViewModel.GetProperty("Result")
+    .HasAccessibility(Accessibility.Public)
+    .HasGetter()
+    .HasSetter()
     .Allow();
 
-Unit.GetProperties($"{ViewModelFullName}::LeftOperand")
-    .CountEquals(1)
-    .HasAccessibility(CSharpAccessibility.Public)
+calculatorViewModel.GetProperty("LeftOperand")
+    .HasAccessibility(Accessibility.Public)
+    .HasGetter()
+    .HasSetter()
     .Allow();
 
-Unit.GetProperties($"{ViewModelFullName}::RightOperand")
-    .CountEquals(1)
-    .HasAccessibility(CSharpAccessibility.Public)
+calculatorViewModel.GetProperty("RightOperand")
+    .HasAccessibility(Accessibility.Public)
+    .HasGetter()
+    .HasSetter()
     .Allow();

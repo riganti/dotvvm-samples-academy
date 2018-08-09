@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DotvvmAcademy.Validation.Unit
+﻿namespace DotvvmAcademy.Validation.Unit
 {
     public static class QueryExtensions
     {
@@ -12,8 +8,7 @@ namespace DotvvmAcademy.Validation.Unit
             {
                 if (context.Result.Length != count)
                 {
-                    context.Report(
-                        message: $"Found '{context.Result.Length}' of '{context.Query.Source}' " +
+                    context.GetReporter().ReportGlobal($"Found '{context.Result.Length}' of '{context.Query.Source}' " +
                             $"but expected to find '{count}'.");
                 }
             });

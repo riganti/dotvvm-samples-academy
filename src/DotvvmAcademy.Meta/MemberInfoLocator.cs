@@ -16,13 +16,6 @@ namespace DotvvmAcademy.Meta
             this.assemblies = assemblies;
         }
 
-        public ImmutableArray<MemberInfo> Locate(string name)
-        {
-            var lexer = new NameLexer(name);
-            var parser = new NameParser(lexer);
-            return Locate(parser.Parse());
-        }
-
         public ImmutableArray<MemberInfo> Locate(NameNode node)
         {
             return Visit(node).ToImmutableArray();

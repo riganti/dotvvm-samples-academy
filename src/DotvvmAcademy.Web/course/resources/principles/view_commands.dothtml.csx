@@ -1,40 +1,29 @@
 #load "./view_controls.dothtml.csx"
 
-Unit.SetViewModelPath(ViewModelWithMethodsPath);
-Unit.SetDefaultCodePath(ViewWithControlsPath);
-Unit.SetCorrectCodePath(ViewWithCommandsPath);
+Unit.SetViewModelPath("./CalculatorViewModel_methods.cs");
+Unit.SetDefaultCodePath("./calculator_controls.dothtml");
+Unit.SetCorrectCodePath("./calculator_commands.dothtml");
 
 Unit.GetControls("/html/body/dot:Button")
     .CountEquals(4);
 
-Unit.GetProperties("/html/body/dot:Button[1]/@Click")
-    .CountEquals(1)
-    .HasBinding("Add()", BindingKind.Command);
-
-Unit.GetProperties("/html/body/dot:Button[1]/@Text")
-    .CountEquals(1)
-    .HasValue("+");
-
-Unit.GetProperties("/html/body/dot:Button[2]/@Click")
-    .CountEquals(1)
-    .HasBinding("Subtract()", BindingKind.Command);
-
-Unit.GetProperties("/html/body/dot:Button[2]/@Text")
-    .CountEquals(1)
-    .HasValue("-");
-
-Unit.GetProperties("/html/body/dot:Button[3]/@Click")
-    .CountEquals(1)
-    .HasBinding("Multiply()", BindingKind.Command);
-
-Unit.GetProperties("/html/body/dot:Button[3]/@Text")
-    .CountEquals(1)
-    .HasValue("*");
-    
-Unit.GetProperties("/html/body/dot:Button[4]/@Click")
-    .CountEquals(1)
-    .HasBinding("Divide()", BindingKind.Command);
-
-Unit.GetProperties("/html/body/dot:Button[4]/@Text")
-    .CountEquals(1)
-    .HasValue("/");
+{
+    var addButton = Unit.GetControl("/html/body/dot:Button[1]");
+    addButton.GetProperty("./@Click").HasBinding("Add()", BindingKind.Command);
+    addButton.GetProperty("./@Text").HasValue("+");
+}
+{
+    var subtractButton = Unit.GetControl("/html/body/dot:Button[2]");
+    subtractButton.GetProperty("./@Click").HasBinding("Subtract()", BindingKind.Command);
+    subtractButton.GetProperty("./@Text").HasValue("-");
+}
+{
+    var multiplyButton = Unit.GetControl("/html/body/dot:Button[3]");
+    multiplyButton.GetProperty("./@Click").HasBinding("Multiply()", BindingKind.Command);
+    multiplyButton.GetProperty("./@Text").HasValue("*");
+}
+{
+    var divideButton = Unit.GetControl("/html/body/dot:Button[4]");
+    divideButton.GetProperty("./@Click").HasBinding("Divide()", BindingKind.Command);
+    divideButton.GetProperty("./@Text").HasValue("/");
+}

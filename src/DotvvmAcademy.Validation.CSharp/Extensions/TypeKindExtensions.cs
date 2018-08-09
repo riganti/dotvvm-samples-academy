@@ -1,30 +1,30 @@
-﻿using DotvvmAcademy.Validation.CSharp.Unit;
+﻿using UnitTypeKind = DotvvmAcademy.Validation.CSharp.Unit.TypeKind;
 
 namespace Microsoft.CodeAnalysis
 {
     public static class TypeKindExtensions
     {
-        public static CSharpTypeKind ToCSharpTypeKind(this TypeKind typeKind)
+        public static UnitTypeKind ToUnitTypeKind(this TypeKind typeKind)
         {
             switch (typeKind)
             {
                 case TypeKind.Class:
-                    return CSharpTypeKind.Class;
+                    return UnitTypeKind.Class;
 
                 case TypeKind.Delegate:
-                    return CSharpTypeKind.Delegate;
+                    return UnitTypeKind.Delegate;
 
                 case TypeKind.Enum:
-                    return CSharpTypeKind.Enum;
+                    return UnitTypeKind.Enum;
 
                 case TypeKind.Interface:
-                    return CSharpTypeKind.Interface;
+                    return UnitTypeKind.Interface;
 
                 case TypeKind.Struct:
-                    return CSharpTypeKind.Struct;
+                    return UnitTypeKind.Struct;
 
                 default:
-                    return CSharpTypeKind.None;
+                    return UnitTypeKind.None;
             }
         }
     }

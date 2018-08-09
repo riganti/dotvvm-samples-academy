@@ -1,18 +1,30 @@
 #load "./viewmodel_properties.csharp.csx"
 
-Unit.SetDefaultCodePath(ViewModelWithPropertiesPath);
-Unit.SetCorrectCodePath(ViewModelWithMethodsPath);
+Unit.SetDefaultCodePath("./CalculatorViewModel_properties.cs");
+Unit.SetCorrectCodePath("./CalculatorViewModel_methods.cs");
 
-Unit.GetTypes("System.Void")
+Unit.GetType(WellKnownTypes.Void)
     .Allow();
 
-Unit.GetMethods($"{ViewModelFullName}::Add")
-    .CountEquals(1)
-    .HasAccessibility(CSharpAccessibility.Public);
+calculatorViewModel.GetMethod("Add")
+    .HasAccessibility(Accessibility.Public)
+    .HasParameters();
+
+calculatorViewModel.GetMethod("Subtract")
+    .HasAccessibility(Accessibility.Public)
+    .HasParameters();
+
+calculatorViewModel.GetMethod("Multiply")
+    .HasAccessibility(Accessibility.Public)
+    .HasParameters();
+
+calculatorViewModel.GetMethod("Divide")
+    .HasAccessibility(Accessibility.Public)
+    .HasParameters();
 
 Unit.Run(c =>
 {
-    var vm = c.Instantiate(ViewModelFullName);
+    var vm = c.Instantiate(CalculatorViewModel);
     vm.LeftOperand = 5;
     vm.RightOperand = 11;
     vm.Add();
@@ -22,13 +34,9 @@ Unit.Run(c =>
     }
 });
 
-Unit.GetMethods($"{ViewModelFullName}::Subtract")
-    .CountEquals(1)
-    .HasAccessibility(CSharpAccessibility.Public);
-
 Unit.Run(c =>
 {
-    var vm = c.Instantiate(ViewModelFullName);
+    var vm = c.Instantiate(CalculatorViewModel);
     vm.LeftOperand = 7;
     vm.RightOperand = 4;
     vm.Subtract();
@@ -38,13 +46,9 @@ Unit.Run(c =>
     }
 });
 
-Unit.GetMethods($"{ViewModelFullName}::Multiply")
-    .CountEquals(1)
-    .HasAccessibility(CSharpAccessibility.Public);
-
 Unit.Run(c =>
 {
-    var vm = c.Instantiate(ViewModelFullName);
+    var vm = c.Instantiate(CalculatorViewModel);
     vm.LeftOperand = 4;
     vm.RightOperand = 5;
     vm.Multiply();
@@ -54,13 +58,9 @@ Unit.Run(c =>
     }
 });
 
-Unit.GetMethods($"{ViewModelFullName}::Divide")
-    .CountEquals(1)
-    .HasAccessibility(CSharpAccessibility.Public);
-
 Unit.Run(c =>
 {
-    var vm = c.Instantiate(ViewModelFullName);
+    var vm = c.Instantiate(CalculatorViewModel);
     vm.LeftOperand = 21;
     vm.RightOperand = 7;
     vm.Divide();

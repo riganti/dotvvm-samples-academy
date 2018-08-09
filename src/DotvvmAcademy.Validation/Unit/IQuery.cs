@@ -5,7 +5,7 @@ namespace DotvvmAcademy.Validation.Unit
 {
     public interface IQuery<TResult>
     {
-        IServiceProvider Provider { get; }
+        IUnit Unit { get; }
 
         string Source { get; }
 

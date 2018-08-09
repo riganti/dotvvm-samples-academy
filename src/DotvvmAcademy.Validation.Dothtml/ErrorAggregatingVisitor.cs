@@ -32,7 +32,7 @@ namespace DotvvmAcademy.Validation.Dothtml
         {
             foreach (var error in node.DothtmlNode.NodeErrors)
             {
-                builder.Add(new ParserDothtmlDiagnostic(error, node.DothtmlNode));
+                builder.Add(new ParserDothtmlDiagnostic(error, node.DothtmlNode, ValidationSeverity.Error));
             }
             foreach (var warning in node.DothtmlNode.NodeWarnings)
             {

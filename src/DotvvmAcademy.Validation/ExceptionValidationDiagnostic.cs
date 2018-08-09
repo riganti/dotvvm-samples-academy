@@ -6,9 +6,9 @@ namespace DotvvmAcademy.Validation
     {
         public ExceptionValidationDiagnostic(
             Exception exception,
-            int start = -1,
-            int end = -1,
-            ValidationSeverity severity = default)
+            int start,
+            int end,
+            ValidationSeverity severity)
         {
             Exception = exception;
             Start = start;

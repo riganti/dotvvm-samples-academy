@@ -3,11 +3,11 @@
     public class ValidationDiagnostic : IValidationDiagnostic
     {
         public ValidationDiagnostic(
-            string message, 
-            int start = -1, 
-            int end = -1,
-            object underlyingObject = null,
-            ValidationSeverity severity = default)
+            string message,
+            int start,
+            int end,
+            object underlyingObject,
+            ValidationSeverity severity)
         {
             Message = message;
             Start = start;

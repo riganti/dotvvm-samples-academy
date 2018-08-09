@@ -3,9 +3,12 @@ using System.Collections.Immutable;
 
 namespace DotvvmAcademy.Validation.Unit
 {
-    public class ConstraintContext<TResult> : IConstraintContext<TResult>
+    public class ConstraintContext<TResult>
     {
-        public ConstraintContext(IServiceProvider provider, IQuery<TResult> query, ImmutableArray<TResult> result)
+        public ConstraintContext(
+            IServiceProvider provider,
+            IQuery<TResult> query,
+            ImmutableArray<TResult> result)
         {
             Provider = provider;
             Query = query;

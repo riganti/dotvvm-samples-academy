@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace DotvvmAcademy.Validation.Unit
@@ -8,8 +7,8 @@ namespace DotvvmAcademy.Validation.Unit
     {
         IServiceProvider Provider { get; }
 
-        IQuery<TResult> GetQuery<TResult>(string queryString);
-
         IEnumerable<IQuery<TResult>> GetQueries<TResult>();
+
+        void AddQuery<TResult>(IQuery<TResult> query);
     }
 }

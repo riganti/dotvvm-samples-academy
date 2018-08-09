@@ -12,12 +12,38 @@ namespace DotvvmAcademy.Validation.CSharp
         public static void Report(
             this ValidationReporter reporter,
             string message,
-            int start = -1,
-            int end = -1,
-            ISymbol symbol = null,
+            int start,
+            int end,
+            ISymbol symbol,
             ValidationSeverity severity = default)
         {
             reporter.Report(new SymbolCSharpDiagnostic(message, start, end, symbol, severity));
+        }
+
+        public static void ReportAllLocations(
+            this ValidationReporter reporter,
+            string message,
+            ISymbol symbol,
+            ValidationSeverity severity = default)
+        {
+            foreach (var declaration in symbol.DeclaringSyntaxReferences)
+            {
+                reporter.Report(new SymbolCSharpDiagnostic(
+                    message: message,
+                    start: declaration.Span.Start,
+                    end: declaration.Span.End,
+                    symbol: symbol,
+                    severity: severity));
+            }
+        }
+
+        public static void ReportGlobal(
+            this ValidationReporter reporter,
+            string message,
+            ISymbol symbol,
+            ValidationSeverity severity = default)
+        {
+            reporter.Report(new SymbolCSharpDiagnostic(message, -1, -1, symbol, severity));
         }
     }
 }

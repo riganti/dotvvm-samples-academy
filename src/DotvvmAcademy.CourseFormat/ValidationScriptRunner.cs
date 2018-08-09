@@ -62,7 +62,7 @@ namespace DotvvmAcademy.CourseFormat
                     code: script.Text,
                     options: GetScriptOptions(script),
                     globalsType: typeof(UnitWrapper<TUnit>));
-                var unit = (TUnit)ActivatorUtilities.CreateInstance(scope.ServiceProvider, typeof(TUnit));
+                var unit = scope.ServiceProvider.GetRequiredService<TUnit>();
                 await csharpScript.RunAsync(new UnitWrapper<TUnit>(unit));
                 return unit;
             });
@@ -85,12 +85,16 @@ namespace DotvvmAcademy.CourseFormat
                     MetadataReferencer.FromName("DotvvmAcademy.CourseFormat"),
                     MetadataReferencer.FromName("DotvvmAcademy.Validation"),
                     MetadataReferencer.FromName("DotvvmAcademy.Validation.CSharp"),
-                    MetadataReferencer.FromName("DotvvmAcademy.Validation.Dothtml"))
+                    MetadataReferencer.FromName("DotvvmAcademy.Validation.Dothtml"),
+                    MetadataReferencer.FromName("DotvvmAcademy.Meta"))
                 .AddImports(
                     "System",
                     "DotvvmAcademy.Validation.Unit",
                     "DotvvmAcademy.Validation.CSharp.Unit",
-                    "DotvvmAcademy.Validation.Dothtml.Unit")
+                    "DotvvmAcademy.Validation.Dothtml.Unit",
+                    "DotvvmAcademy.Meta",
+                    "DotVVM.Framework.Controls",
+                    "DotVVM.Framework.Controls.Infrastructure")
                 .WithFilePath(script.Path)
                 .WithSourceResolver(new CodeTaskSourceResolver(environment));
         }
@@ -100,7 +104,8 @@ namespace DotvvmAcademy.CourseFormat
             var c = new ServiceCollection();
             c.AddScoped<SourcePathStorage>();
             c.AddScoped<Context>();
-            c.AddScoped<IQueryFactory, QueryFactory>();
+            c.AddScoped<DothtmlUnit>();
+            c.AddScoped<CSharpUnit>();
             return c.BuildServiceProvider();
         }
 

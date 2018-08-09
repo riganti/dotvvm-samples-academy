@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Concurrent;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,27 +6,23 @@ namespace DotvvmAcademy.Validation.Unit
 {
     public abstract class Unit : IUnit
     {
-        private readonly ConcurrentDictionary<object, object> queries = new ConcurrentDictionary<object, object>();
-        private readonly IQueryFactory queryFactory;
+        private readonly HashSet<object> queries = new HashSet<object>();
 
         public Unit(IServiceProvider provider)
         {
             Provider = provider;
-            queryFactory = provider.GetRequiredService<IQueryFactory>();
         }
 
         public IServiceProvider Provider { get; }
 
-        public IEnumerable<IQuery<TResult>> GetQueries<TResult>()
+        public void AddQuery<TResult>(IQuery<TResult> query)
         {
-            return queries.Values.OfType<IQuery<TResult>>();
+            queries.Add(query);
         }
 
-        public IQuery<TResult> GetQuery<TResult>(string queryString)
+        public IEnumerable<IQuery<TResult>> GetQueries<TResult>()
         {
-            var query = queryFactory.Create<TResult>(queryString);
-            queries.AddOrUpdate(query.Source, query, (k, v) => query);
-            return query;
+            return queries.OfType<IQuery<TResult>>();
         }
     }
 }

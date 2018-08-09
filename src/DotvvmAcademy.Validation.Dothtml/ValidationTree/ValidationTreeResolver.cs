@@ -64,7 +64,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         protected override bool LogError(Exception exception, DothtmlNode node)
         {
-            diagnostics.Add(new ParserDothtmlDiagnostic(exception.Message, node));
+            diagnostics.Add(new ParserDothtmlDiagnostic(exception.Message, node, ValidationSeverity.Error));
             return true;
         }
     }

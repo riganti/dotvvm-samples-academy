@@ -3,7 +3,7 @@
 namespace DotvvmAcademy.Validation.CSharp.Unit
 {
     [Flags]
-    public enum CSharpAccessibility
+    public enum Accessibility
     {
         /// <summary>
         /// An invalid value.

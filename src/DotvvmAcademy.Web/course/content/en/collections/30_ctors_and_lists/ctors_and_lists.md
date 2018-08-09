@@ -26,4 +26,4 @@ Create a new class in the `DotvvmAcademy.Course` namespace named `ToDoViewModel`
 [di]: https://www.dotvvm.com/docs/tutorials/advanced-ioc-di-container
 [json]: https://json.org/
 
-[CodeTask](/resources/collectins/viewmodel_stub.csharp.csx)
+[CodeTask](/resources/collections/viewmodel_stub.csharp.csx)

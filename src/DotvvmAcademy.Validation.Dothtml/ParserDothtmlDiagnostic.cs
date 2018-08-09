@@ -7,7 +7,7 @@ namespace DotvvmAcademy.Validation.Dothtml
         public ParserDothtmlDiagnostic(
             string message,
             DothtmlNode node,
-            ValidationSeverity severity = default)
+            ValidationSeverity severity)
         {
             Message = message;
             Severity = severity;

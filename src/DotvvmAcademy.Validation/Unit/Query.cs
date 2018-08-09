@@ -1,23 +1,22 @@
-﻿using System;
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 namespace DotvvmAcademy.Validation.Unit
 {
-    public class Query<TResult> : IQuery<TResult>
+    public abstract class Query<TResult> : IQuery<TResult>
     {
         private readonly ConcurrentDictionary<object, Constraint<TResult>> constraints
             = new ConcurrentDictionary<object, Constraint<TResult>>();
 
-        public Query(IServiceProvider provider, string source)
+        public Query(IUnit unit, string source)
         {
-            Provider = provider;
+            Unit = unit;
             Source = source;
         }
 
-        public IServiceProvider Provider { get; }
-
         public string Source { get; }
+
+        public IUnit Unit { get; }
 
         public IEnumerable<Constraint<TResult>> GetConstraints()
         {

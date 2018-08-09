@@ -1,6 +1,6 @@
-﻿using DotvvmAcademy.Validation.Dothtml.ValidationTree;
-using DotvvmAcademy.Validation.Unit;
+﻿using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Xml.XPath;
 
 namespace DotvvmAcademy.Validation.Dothtml.Unit
 {
@@ -10,13 +10,12 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
         {
         }
 
-        public IQuery<ValidationControl> GetControls(string xpath)
-            => GetQuery<ValidationControl>(xpath);
-
-        public IQuery<ValidationDirective> GetDirectives(string xpath)
-            => GetQuery<ValidationDirective>(xpath);
-
-        public IQuery<ValidationPropertySetter> GetProperties(string xpath)
-            => GetQuery<ValidationPropertySetter>(xpath);
+        public DothtmlQuery<TResult> GetQuery<TResult>(string xpath)
+        {
+            var expression = XPathExpression.Compile(xpath);
+            var query = ActivatorUtilities.CreateInstance<DothtmlQuery<TResult>>(Provider, expression);
+            AddQuery(query);
+            return query;
+        }
     }
 }

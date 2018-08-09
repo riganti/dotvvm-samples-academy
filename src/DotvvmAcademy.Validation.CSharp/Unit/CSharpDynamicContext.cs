@@ -22,6 +22,6 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
         }
 
         public void Report(string message, ValidationSeverity severity = default)
-            => reporter.Report(message, severity: severity);
+            => reporter.ReportGlobal(message, severity: severity);
     }
 }

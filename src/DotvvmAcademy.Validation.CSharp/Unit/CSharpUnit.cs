@@ -1,5 +1,6 @@
-﻿using DotvvmAcademy.Validation.Unit;
+﻿using DotvvmAcademy.Meta.Syntax;
 using Microsoft.CodeAnalysis;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 
@@ -7,7 +8,7 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 {
     public class CSharpUnit : Validation.Unit.Unit
     {
-        private List<Action<CSharpDynamicContext>> dynamicActions = new List<Action<CSharpDynamicContext>>();
+        private readonly List<Action<CSharpDynamicContext>> dynamicActions = new List<Action<CSharpDynamicContext>>();
 
         public CSharpUnit(IServiceProvider provider) : base(provider)
         {
@@ -18,16 +19,19 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
             return dynamicActions;
         }
 
-        public IQuery<IEventSymbol> GetEvents(string name) => GetQuery<IEventSymbol>(name);
+        public CSharpQuery<TSymbol> GetQuery<TSymbol>(string name)
+            where TSymbol : ISymbol
+        {
+            var lexer = new NameLexer(name);
+            var nameNode = new NameParser(lexer).Parse();
+            var query = ActivatorUtilities.CreateInstance<CSharpQuery<TSymbol>>(Provider, nameNode);
+            AddQuery(query);
+            return query;
+        }
 
-        public IQuery<IFieldSymbol> GetFields(string name) => GetQuery<IFieldSymbol>(name);
-
-        public IQuery<IMethodSymbol> GetMethods(string name) => GetQuery<IMethodSymbol>(name);
-
-        public IQuery<IPropertySymbol> GetProperties(string name) => GetQuery<IPropertySymbol>(name);
-
-        public IQuery<ITypeSymbol> GetTypes(string name) => GetQuery<ITypeSymbol>(name);
-
-        public void Run(Action<CSharpDynamicContext> action) => dynamicActions.Add(action);
+        public void Run(Action<CSharpDynamicContext> action)
+        {
+            dynamicActions.Add(action);
+        }
     }
 }

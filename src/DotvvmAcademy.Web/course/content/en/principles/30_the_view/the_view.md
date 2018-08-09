@@ -23,7 +23,7 @@ Create a dothtml stub that fulfils the following requirements:
 - Starts with a `@viewModel` directive where our ViewModel, `DotvvmAcademy.Course.CalculatorViewModel`,
 is the argument.
 - Has the `<!DOCTYPE html>` declaration
-- Contains the `<html>` element and the `<body>` element as its child
+- Contains the `<body>` element inside the root `<html>` element
 
 [masterpage]: https://www.dotvvm.com/docs/tutorials/basics-master-pages
 [dothtml]: https://www.dotvvm.com/docs/tutorials/basics-first-page
