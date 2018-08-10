@@ -95,7 +95,11 @@ namespace DotvvmAcademy.Validation.CSharp
                     MetadataReferencer.FromName("System.Private.CoreLib"),
                     MetadataReferencer.FromName("System.Runtime"),
                     MetadataReferencer.FromName("System.Collections"),
-                    MetadataReferencer.FromName("System.Reflection")
+                    MetadataReferencer.FromName("System.Reflection"),
+                    MetadataReferencer.FromName("System.ComponentModel.Annotations"),
+                    MetadataReferencer.FromName("System.ComponentModel.DataAnnotations"),
+                    MetadataReferencer.FromName("DotVVM.Framework"),
+                    MetadataReferencer.FromName("DotVVM.Core")
                 },
                 options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
             var reporter = provider.GetRequiredService<CSharpValidationReporter>();
@@ -116,6 +120,8 @@ namespace DotvvmAcademy.Validation.CSharp
         {
             var c = new ServiceCollection();
             c.AddSingleton<AssemblyRewriter>();
+            c.AddSingleton<PropertyEqualityComparer>();
+            c.AddScoped<AttributeExtractor>();
             c.AddScoped<AllowedSymbolStorage>();
             c.AddScoped<DiagnosticAnalyzer, SymbolAllowedAnalyzer>();
             c.AddScoped(GetCompilation);

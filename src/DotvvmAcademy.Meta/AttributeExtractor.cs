@@ -8,6 +8,7 @@ namespace DotvvmAcademy.Meta
 {
     public class AttributeExtractor
     {
+        // TODO: Use SymbolLocator instead
         public AttributeExtractor(CSharpCompilation compilation)
         {
             Compilation = compilation;

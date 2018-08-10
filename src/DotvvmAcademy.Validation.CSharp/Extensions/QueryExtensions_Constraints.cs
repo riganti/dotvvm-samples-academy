@@ -47,6 +47,7 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
             query.SetConstraint($"{nameof(HasAttribute)}_{attributeType}", context =>
             {
                 var extractor = context.Provider.GetRequiredService<AttributeExtractor>();
+                // TODO: Use something else for object comparison. This generates too broad errors.
                 var propertyComparer = context.Provider.GetRequiredService<PropertyEqualityComparer>();
                 foreach (var symbol in context.Result)
                 {
