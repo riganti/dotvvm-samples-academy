@@ -6,7 +6,7 @@ using System;
 
 namespace DotvvmAcademy.Validation.CSharp.Unit
 {
-    public static class QueryDescendantExtensions
+    public static class QueryExtensions_Descendants
     {
         public static IQuery<IEventSymbol> GetEvent(this IQuery<ITypeSymbol> query, string name)
         {
@@ -72,7 +72,7 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
         private static IQuery<TSymbol> GetMemberQuery<TSymbol>(this IQuery<ITypeSymbol> query, string name)
         {
             var csharpQuery = (CSharpQuery<ITypeSymbol>)query;
-            var memberToken = new NameToken(NameTokenKind.Identifier, name, 0, name.Length - 1);
+            var memberToken = new NameToken(NameTokenKind.Identifier, name, 0, name.Length);
             var colonColonToken = new NameToken(NameTokenKind.ColonColon, null, -1, -1, true);
             var member = new IdentifierNameNode(memberToken);
             var nameNode = new MemberNameNode(csharpQuery.Name, member, colonColonToken);

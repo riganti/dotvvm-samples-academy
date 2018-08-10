@@ -32,7 +32,7 @@ namespace DotvvmAcademy.Validation.CSharp
             using (var scope = globalProvider.CreateScope())
             {
                 var context = scope.ServiceProvider.GetRequiredService<Context>();
-                var reporter = scope.ServiceProvider.GetRequiredService<ValidationReporter>();
+                var reporter = scope.ServiceProvider.GetRequiredService<CSharpValidationReporter>();
                 context.Unit = unit;
                 context.Sources = sources;
                 HandleQueries<ITypeSymbol>(scope.ServiceProvider);
@@ -41,15 +41,14 @@ namespace DotvvmAcademy.Validation.CSharp
                 HandleQueries<IFieldSymbol>(scope.ServiceProvider);
                 HandleQueries<IEventSymbol>(scope.ServiceProvider);
                 await RunAnalyzers(scope.ServiceProvider);
-                var diagnostics = reporter.GetDiagnostics();
-                if (diagnostics.Any(d => d.Severity == ValidationSeverity.Error))
+                if (reporter.WorstSeverity == ValidationSeverity.Error)
                 {
-                    return diagnostics;
+                    return reporter.GetReportedDiagnostics().ToImmutableArray();
                 }
 
                 context.Assembly = await GetAssembly(scope.ServiceProvider);
                 RunDynamicActions(scope.ServiceProvider);
-                return reporter.GetDiagnostics();
+                return reporter.GetReportedDiagnostics().ToImmutableArray();
             }
         }
 
@@ -62,7 +61,7 @@ namespace DotvvmAcademy.Validation.CSharp
                 var result = compilation.Emit(originalStream);
                 if (!result.Success)
                 {
-                    var reporter = provider.GetRequiredService<ValidationReporter>();
+                    var reporter = provider.GetRequiredService<CSharpValidationReporter>();
                     foreach (var diagnostic in result.Diagnostics)
                     {
                         reporter.Report(diagnostic);
@@ -81,7 +80,11 @@ namespace DotvvmAcademy.Validation.CSharp
         private CSharpCompilation GetCompilation(IServiceProvider provider)
         {
             var context = provider.GetRequiredService<Context>();
-            var trees = context.Sources.OfType<CSharpSourceCode>().Select(s => s.SyntaxTree);
+            var trees = context.Sources
+                .OfType<CSharpSourceCode>()
+                .Select(s => CSharpSyntaxTree.ParseText(
+                    text: s.GetContent(),
+                    path: s.Id.ToString()));
             var compilation = CSharpCompilation.Create(
                 assemblyName: $"DotvvmAcademy.Validation.CSharp.{context.Id}",
                 syntaxTrees: trees,
@@ -95,7 +98,7 @@ namespace DotvvmAcademy.Validation.CSharp
                     MetadataReferencer.FromName("System.Reflection")
                 },
                 options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
-            var reporter = provider.GetRequiredService<ValidationReporter>();
+            var reporter = provider.GetRequiredService<CSharpValidationReporter>();
             var diagnostics = compilation.GetDiagnostics();
             foreach (var diagnostic in diagnostics)
             {
@@ -116,7 +119,13 @@ namespace DotvvmAcademy.Validation.CSharp
             c.AddScoped<AllowedSymbolStorage>();
             c.AddScoped<DiagnosticAnalyzer, SymbolAllowedAnalyzer>();
             c.AddScoped(GetCompilation);
-            c.AddScoped<ValidationReporter>();
+            c.AddScoped<IValidationReporter>(p => p.GetRequiredService<CSharpValidationReporter>());
+            c.AddScoped<CSharpValidationReporter>();
+            c.AddScoped(p => 
+            {
+                var context = p.GetRequiredService<Context>();
+                return new CSharpSourceCodeProvider(context.Sources.OfType<CSharpSourceCode>());
+            });
             c.AddScoped<Context>();
             c.AddScoped<SymbolLocator>();
             c.AddScoped(p => p.GetRequiredService<Context>().Assembly);
@@ -154,7 +163,7 @@ namespace DotvvmAcademy.Validation.CSharp
             DiagnosticAnalyzer analyzer,
             Diagnostic diagnostic)
         {
-            var reporter = provider.GetRequiredService<ValidationReporter>();
+            var reporter = provider.GetRequiredService<CSharpValidationReporter>();
             reporter.Report(diagnostic);
         }
 
@@ -172,7 +181,7 @@ namespace DotvvmAcademy.Validation.CSharp
             var compilation = provider.GetRequiredService<CSharpCompilation>()
                 .WithAnalyzers(analyzers, analysisOptions);
             var diagnostics = await compilation.GetAnalyzerDiagnosticsAsync();
-            var reporter = provider.GetRequiredService<ValidationReporter>();
+            var reporter = provider.GetRequiredService<CSharpValidationReporter>();
             foreach (var diagnostic in diagnostics)
             {
                 reporter.Report(diagnostic);
@@ -183,21 +192,22 @@ namespace DotvvmAcademy.Validation.CSharp
         {
             var unit = provider.GetRequiredService<Context>().Unit;
             var context = provider.GetRequiredService<CSharpDynamicContext>();
-            var reporter = provider.GetRequiredService<ValidationReporter>();
+            var reporter = provider.GetRequiredService<CSharpValidationReporter>();
             foreach (var action in unit.GetDynamicActions())
             {
                 try
                 {
                     action(context);
                 }
-                catch (Exception e)
+                catch (Exception exception)
                 {
-                    reporter.ReportGlobal(e);
+                    reporter.Report($"An '{exception.GetType().Name}' with message: '{exception.Message}', " +
+                        $"occured during execution of your code");
                 }
             }
         }
 
-        public class Context
+        private class Context
         {
             public Assembly Assembly { get; set; }
 

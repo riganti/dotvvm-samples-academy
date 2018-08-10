@@ -1,5 +1,4 @@
-﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
+﻿using System;
 
 namespace DotvvmAcademy.Validation.CSharp
 {
@@ -12,9 +11,9 @@ namespace DotvvmAcademy.Validation.CSharp
             this.source = source;
         }
 
-        public bool IsValidated { get; } = true;
+        public Guid Id { get; }
 
-        public override string ToString()
+        public string GetContent()
         {
             return source;
         }

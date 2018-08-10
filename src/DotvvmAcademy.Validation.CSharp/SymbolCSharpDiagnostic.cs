@@ -8,12 +8,14 @@ namespace DotvvmAcademy.Validation.CSharp
             string message,
             int start,
             int end,
+            CSharpSourceCode source,
             ISymbol symbol,
             ValidationSeverity severity)
         {
             Message = message;
             Start = start;
             End = end;
+            Source = source;
             Symbol = symbol;
             Severity = severity;
         }
@@ -27,6 +29,10 @@ namespace DotvvmAcademy.Validation.CSharp
         public int Start { get; }
 
         public ISymbol Symbol { get; }
+
+        public CSharpSourceCode Source { get; }
+
+        ISourceCode IValidationDiagnostic.Source => Source;
 
         object IValidationDiagnostic.UnderlyingObject => Symbol;
     }
