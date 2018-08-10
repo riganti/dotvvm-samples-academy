@@ -1,6 +1,6 @@
 ﻿#load "./constants.csx"
 
-Unit.SetViewModelPath("./FormViewModel_without.cs");
+Unit.AddSourcePath("./FormViewModel_without.cs");
 Unit.SetDefaultCodePath("./form_without.dothtml");
 Unit.SetCorrectCodePath("./form_with.dothtml");
 
@@ -47,7 +47,7 @@ Unit.GetControl("/child::node()[1]")
         button.GetProperty("Validation.Enabled").HasValue(true);
     }
     {
-        var validationSummary = registrationFrom.GetControl("child::node()[last()]")
+        var validationSummary = registrationForm.GetControl("child::node()[last()]")
             .IsOfType<ValidationSummary>();
         validationSummary.GetProperty("Validation.Target").HasBinding("Registration");
     }

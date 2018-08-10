@@ -1,6 +1,6 @@
 #load "./constants.csx"
 
-Unit.SetViewModelPath("./CalculatorViewModel_stub.cs");
+Unit.AddSourcePath("./CalculatorViewModel_stub.cs");
 Unit.SetCorrectCodePath("./calculator_stub.dothtml");
 
 Unit.GetDirective("/attribute::*")

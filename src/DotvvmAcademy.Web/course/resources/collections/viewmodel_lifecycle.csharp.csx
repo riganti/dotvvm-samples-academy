@@ -2,10 +2,10 @@
 
 using DotVVM.Framework.ViewModel;
 
-Unit.GetTypes(ToDoViewModel)
+Unit.GetType(ToDoViewModel)
     .HasBaseType<DotvvmViewModelBase>();
 
-Unit.GetMethods($"{ToDoViewModel}::PreRender")
+Unit.GetMethod($"{ToDoViewModel}::PreRender")
     .Returns("System.Threading.Tasks.Task");
 
 Unit.Run(context => 

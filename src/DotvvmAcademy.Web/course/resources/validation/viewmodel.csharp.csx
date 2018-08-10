@@ -1,10 +1,11 @@
 ﻿#load "./constants.csx"
 
+using DotVVM.Framework.Hosting;
 using System.ComponentModel.DataAnnotations;
 
-Unit.AddSource("./DTOs_with.cs");
-Unit.AddSource("./LoginFacade.cs");
-Unit.AddSource("./RegistrationFacade.cs");
+Unit.AddSourcePath("./DTOs_with.cs");
+Unit.AddSourcePath("./LoginFacade.cs");
+Unit.AddSourcePath("./RegistrationFacade.cs");
 Unit.SetDefaultCodePath("./FormViewModel_without.cs");
 Unit.SetCorrectCodePath("./FormViewModel_with.cs");
 
@@ -16,7 +17,7 @@ formViewModel.GetMethod("Register").Returns<Task>().HasParameters();
 formViewModel.Implements<IValidatableObject>();
 formViewModel.GetMethod("Validate")
     .Returns<IEnumerable<ValidationResult>>()
-    .HasParameters(typeof(ValidationContext));
+    .HasParameters<ValidationContext>();
 
 Unit.Run(context =>
 {

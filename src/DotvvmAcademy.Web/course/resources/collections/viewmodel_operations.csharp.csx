@@ -1,16 +1,13 @@
 ﻿#load "./viewmodel_stub.csharp.csx"
 
-Unit.GetProperties($"{ToDoViewModel}::NewItemText")
-    .CountEquals(1)
+Unit.GetProperty($"{ToDoViewModel}::NewItemText")
     .IsOfType<string>();
 
-Unit.GetMethods($"{ToDoViewModel}::AddItem")
-    .CountEquals(1)
+Unit.GetMethod($"{ToDoViewModel}::AddItem")
     .Returns<Task>()
     .HasParameters();
 
-Unit.GetMethods($"{ToDoViewModel}::RemoveItem")
-    .CountEquals(1)
+Unit.GetMethod($"{ToDoViewModel}::RemoveItem")
     .Returns<Task>()
     .HasParameters("System.Int32");
 
