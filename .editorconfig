@@ -1,0 +1,11 @@
+root = true
+charset = utf-8
+
+[*.cs]
+indent_size = 4
+indent_style = space
+dotnet_style_require_accessibility_modifiers = true:error
+
+[*.csproj]
+indent_size = 2
+indent_style = space
