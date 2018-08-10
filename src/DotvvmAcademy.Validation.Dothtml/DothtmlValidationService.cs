@@ -1,13 +1,13 @@
 ﻿using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Tokenizer;
 using DotvvmAcademy.Meta;
+using DotvvmAcademy.Validation.CSharp;
 using DotvvmAcademy.Validation.Dothtml.Unit;
 using DotvvmAcademy.Validation.Dothtml.ValidationTree;
 using DotvvmAcademy.Validation.Unit;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -18,7 +18,7 @@ using System.Xml.XPath;
 
 namespace DotvvmAcademy.Validation.Dothtml
 {
-    public class DothtmlValidationService : IValidationService<DothtmlUnit, DothtmlValidationOptions>
+    public class DothtmlValidationService : IValidationService<DothtmlUnit>
     {
         private readonly IServiceProvider globalProvider;
 
@@ -29,22 +29,21 @@ namespace DotvvmAcademy.Validation.Dothtml
 
         public Task<ImmutableArray<IValidationDiagnostic>> Validate(
             DothtmlUnit unit,
-            string code,
-            IOptions<DothtmlValidationOptions> options = null)
+            ImmutableArray<ISourceCode> sources)
         {
             return Task.Run(() =>
             {
-                options = options ?? new DothtmlValidationOptions();
                 using (var scope = globalProvider.CreateScope())
                 {
                     var context = scope.ServiceProvider.GetRequiredService<Context>();
                     context.Unit = unit;
-                    context.Code = code;
-                    context.Options = options.Value;
+                    context.Sources = sources;
                     HandleQueries<ValidationControl>(scope.ServiceProvider);
                     HandleQueries<ValidationPropertySetter>(scope.ServiceProvider);
                     HandleQueries<ValidationDirective>(scope.ServiceProvider);
-                    return scope.ServiceProvider.GetRequiredService<ValidationReporter>().GetDiagnostics();
+                    return scope.ServiceProvider.GetRequiredService<DothtmlValidationReporter>()
+                        .GetReportedDiagnostics()
+                        .ToImmutableArray();
                 }
             });
         }
@@ -52,9 +51,8 @@ namespace DotvvmAcademy.Validation.Dothtml
         private CSharpCompilation GetCompilation(IServiceProvider provider)
         {
             var context = provider.GetRequiredService<Context>();
-            IEnumerable<SyntaxTree> trees = context.Options.CSharpSources.IsDefaultOrEmpty
-                ? Enumerable.Empty<SyntaxTree>()
-                : context.Options.CSharpSources.Select(s => CSharpSyntaxTree.ParseText(s));
+            var trees = context.Sources.OfType<CSharpSourceCode>()
+                .Select(s => CSharpSyntaxTree.ParseText(s.GetContent()));
             return CSharpCompilation.Create(
                 assemblyName: $"DotvvmAcademy.Validation.Dothtml.{context.Id}",
                 syntaxTrees: trees,
@@ -95,7 +93,9 @@ namespace DotvvmAcademy.Validation.Dothtml
             c.AddScoped<DothtmlTokenizer>();
             c.AddScoped<DothtmlParser>();
             c.AddScoped<XPathTreeVisitor>();
-            c.AddScoped<ValidationReporter>();
+            c.AddScoped<IValidationReporter>(p => p.GetRequiredService<DothtmlValidationReporter>());
+            c.AddScoped<DothtmlValidationReporter>();
+            c.AddScoped<DothtmlSourceCodeProvider>();
             c.AddScoped<XPathDothtmlNamespaceResolver>();
             c.AddScoped<Context>();
             c.AddScoped<NameTable>();
@@ -106,25 +106,20 @@ namespace DotvvmAcademy.Validation.Dothtml
         {
             var context = provider.GetRequiredService<Context>();
             var tokenizer = provider.GetRequiredService<DothtmlTokenizer>();
-            tokenizer.Tokenize(context.Code ?? string.Empty);
+            // TODO: What about master pages?
+            var sourceCode = context.Sources.OfType<DothtmlSourceCode>().Single();
+            tokenizer.Tokenize(sourceCode.GetContent() ?? string.Empty);
             var parser = provider.GetRequiredService<DothtmlParser>();
             var dothtmlRoot = parser.Parse(tokenizer.Tokens);
             var resolver = provider.GetRequiredService<ValidationTreeResolver>();
-            var root = (ValidationTreeRoot)resolver.ResolveTree(dothtmlRoot, context.Options.FileName);
-            var reporter = provider.GetRequiredService<ValidationReporter>();
-            if (context.Options.IncludeCompilerDiagnostics)
+            var root = (ValidationTreeRoot)resolver.ResolveTree(dothtmlRoot, ".dothtml");
+            root.SourceCode = sourceCode;
+            var reporter = provider.GetRequiredService<DothtmlValidationReporter>();
+            var visitor = provider.GetRequiredService<ErrorAggregatingVisitor>();
+            foreach (var diagnostic in visitor.Visit(root))
             {
-                foreach (var diagnostic in resolver.GetDiagnostics())
-                {
-                    reporter.Report(diagnostic);
-                }
-                var visitor = provider.GetRequiredService<ErrorAggregatingVisitor>();
-                foreach (var diagnostic in visitor.Visit(root))
-                {
-                    reporter.Report(diagnostic);
-                }
+                reporter.Report(diagnostic);
             }
-
             return root;
         }
 
@@ -159,7 +154,6 @@ namespace DotvvmAcademy.Validation.Dothtml
             foreach (var query in unit.GetQueries<TResult>())
             {
                 var result = GetXPathResult(provider, query.Source).OfType<TResult>().ToImmutableArray();
-                var reporter = provider.GetRequiredService<ValidationReporter>();
                 foreach (var constraint in query.GetConstraints())
                 {
                     var context = new ConstraintContext<TResult>(provider, query, result);
@@ -168,15 +162,13 @@ namespace DotvvmAcademy.Validation.Dothtml
             }
         }
 
-        public class Context
+        private class Context
         {
-            public string Code { get; set; }
-
             public Guid Id { get; } = Guid.NewGuid();
 
-            public DothtmlValidationOptions Options { get; set; }
-
             public DothtmlUnit Unit { get; set; }
+
+            public ImmutableArray<ISourceCode> Sources { get; set; }
         }
     }
 }

@@ -1,12 +1,13 @@
 ﻿using DotvvmAcademy.Meta;
 using DotvvmAcademy.Validation.Dothtml.ValidationTree;
 using DotvvmAcademy.Validation.Unit;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
 
 namespace DotvvmAcademy.Validation.Dothtml.Unit
 {
-    public static class QueryConstraintExtensions
+    public static class QueryExtensions_Constraints
     {
         public static IQuery<ValidationPropertySetter> HasBinding(
             this IQuery<ValidationPropertySetter> query,
@@ -19,19 +20,22 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
                 {
                     if (!(setter is ValidationPropertyBinding propertyBinding))
                     {
-                        context.GetReporter().Report(
+                        Report(
+                            context: context,
                             message: "Property is not set using a binding.",
                             node: setter);
                     }
                     else if (propertyBinding.Binding.GetBindingKind() != kind)
                     {
-                        context.GetReporter().Report(
+                        Report(
+                            context: context,
                             message: $"Property has to be set using '{kind}' binding.",
                             node: propertyBinding);
                     }
                     else if (!propertyBinding.Binding.Value.Equals(value))
                     {
-                        context.GetReporter().Report(
+                        Report(
+                            context: context,
                             message: $"Property is to be bound to '{value}'.",
                             node: propertyBinding.Binding);
                     }
@@ -55,7 +59,10 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
                         : StringComparison.InvariantCultureIgnoreCase;
                     if (!expectedContent.Equals(actualContent, comparison))
                     {
-                        context.GetReporter().Report($"Control is supposed to contain '{expectedContent}'.", control);
+                        Report(
+                            context: context,
+                            message: $"Control is supposed to contain '{expectedContent}'.",
+                            node: control);
                     }
                 }
             });
@@ -72,13 +79,15 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
                 {
                     if (!(setter is ValidationPropertyValue propertyValue))
                     {
-                        context.GetReporter().Report(
+                        Report(
+                            context: context,
                             message: "Property is not using a hard-coded value.",
                             node: setter);
                     }
                     else if (!propertyValue.Value.Equals(value))
                     {
-                        context.GetReporter().Report(
+                        Report(
+                            context: context,
                             message: $"Property value is supposed to be '{value}'.",
                             node: propertyValue);
                     }
@@ -95,7 +104,8 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
                 {
                     if (!control.Metadata.Type.IsEqualTo(typeof(TControl)))
                     {
-                        context.GetReporter().Report(
+                        Report(
+                            context: context,
                             message: $"Control is not of type '{FullNamer.FromReflection(typeof(TControl))}'.",
                             node: control);
                     }
@@ -114,19 +124,30 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
                 {
                     if (!(directive is ValidationViewModelDirective viewModelDirective))
                     {
-                        context.GetReporter().Report(
+                        Report(
+                            context: context,
                             message: "Directive is not a @viewModel directive.",
                             node: directive);
                     }
                     else if (viewModelDirective.Type?.FullName != typeFullName)
                     {
-                        context.GetReporter().Report(
+                        Report(
+                            context: context,
                             message: $"@viewModel directive is not referencing '{typeFullName}'.",
                             node: viewModelDirective);
                     }
                 }
             });
             return query;
+        }
+
+        private static void Report<TResult>(
+            ConstraintContext<TResult> context,
+            string message,
+            ValidationTreeNode node,
+            ValidationSeverity severity = default)
+        {
+            context.Provider.GetRequiredService<DothtmlValidationReporter>().Report(message, node, severity);
         }
     }
 }

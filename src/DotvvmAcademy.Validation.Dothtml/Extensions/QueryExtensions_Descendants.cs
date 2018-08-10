@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DotvvmAcademy.Validation.Dothtml.Unit
 {
-    public static class QueryDescendantExtensions
+    public static class QueryExtensions_Descendants
     {
         public static IQuery<ValidationControl> GetControl(this IQuery<ValidationControl> query, string xpath)
         {
