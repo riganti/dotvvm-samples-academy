@@ -1,4 +1,6 @@
-﻿namespace DotvvmAcademy.Validation.Unit
+﻿using Microsoft.Extensions.DependencyInjection;
+
+namespace DotvvmAcademy.Validation.Unit
 {
     public static class QueryExtensions
     {
@@ -8,7 +10,9 @@
             {
                 if (context.Result.Length != count)
                 {
-                    context.GetReporter().ReportGlobal($"Found '{context.Result.Length}' of '{context.Query.Source}' " +
+                    context.Provider
+                    .GetRequiredService<IValidationReporter>()
+                    .Report($"Found '{context.Result.Length}' of '{context.Query.Source}' " +
                             $"but expected to find '{count}'.");
                 }
             });

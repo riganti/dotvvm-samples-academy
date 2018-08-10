@@ -2,6 +2,6 @@
 {
     public interface ISourceCode
     {
-        bool IsValidated { get; }
+        string GetContent();
     }
 }

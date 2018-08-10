@@ -1,20 +1,29 @@
-﻿using System.Collections.Immutable;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace DotvvmAcademy.Validation
 {
-    public class ValidationReporter
+    public class ValidationReporter : IValidationReporter
     {
-        private ImmutableArray<IValidationDiagnostic>.Builder builder
-            = ImmutableArray.CreateBuilder<IValidationDiagnostic>();
+        private readonly List<IValidationDiagnostic> diagnostics = new List<IValidationDiagnostic>();
 
-        public ImmutableArray<IValidationDiagnostic> GetDiagnostics()
+        public ValidationSeverity WorstSeverity { get; private set; } = (ValidationSeverity)int.MaxValue;
+
+        public IEnumerable<IValidationDiagnostic> GetReportedDiagnostics()
         {
-            return builder.ToImmutable();
+            return diagnostics;
         }
 
         public void Report(IValidationDiagnostic diagnostic)
         {
-            builder.Add(diagnostic);
+            if (diagnostic.Severity < WorstSeverity)
+            {
+                WorstSeverity = diagnostic.Severity;
+            }
+
+            diagnostics.Add(diagnostic);
         }
     }
 }
