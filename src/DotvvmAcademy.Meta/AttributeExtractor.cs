@@ -55,47 +55,33 @@ namespace DotvvmAcademy.Meta
             return (Attribute)instance;
         }
 
-        public TAttribute GetAttribute<TAttribute>(ISymbol symbol)
-            where TAttribute : Attribute
+        public ImmutableArray<AttributeData> GetAttributeData(Type attributeType, ISymbol symbol)
         {
-            return GetAttributes<TAttribute>(symbol).FirstOrDefault();
-        }
-
-        public ImmutableArray<AttributeData> GetAttributeData<TAttribute>(ISymbol symbol)
-            where TAttribute : Attribute
-        {
-            var attributeSymbol = Compilation.GetTypeByMetadataName(FullNamer.FromReflection(typeof(TAttribute)));
+            var attributeSymbol = Compilation.GetTypeByMetadataName(FullNamer.FromReflection(attributeType));
             return symbol.GetAttributes()
                 .Where(a => Compilation.ClassifyConversion(a.AttributeClass, attributeSymbol).Exists)
                 .ToImmutableArray();
         }
 
-        public ImmutableArray<TAttribute> GetAttributes<TAttribute>(ISymbol symbol)
-            where TAttribute : Attribute
+        public ImmutableArray<Attribute> GetAttributes(Type attributeType, ISymbol symbol)
         {
-            var attributeSymbol = Compilation.GetTypeByMetadataName(FullNamer.FromReflection(typeof(TAttribute)));
+            var attributeTypeName = FullNamer.FromReflection(attributeType);
+            var attributeSymbol = Compilation.GetTypeByMetadataName(attributeTypeName);
             if (attributeSymbol == null)
             {
-                throw new ArgumentException($"INamedTypeSymbol of '{FullNamer.FromReflection(typeof(TAttribute))}'" +
-                    $" could not be obtained.", nameof(TAttribute));
+                throw new ArgumentException($"INamedTypeSymbol of '{attributeTypeName}'" +
+                    $" could not be obtained.", nameof(attributeType));
             }
+
             return symbol.GetAttributes()
                 .Where(a => Compilation.ClassifyConversion(a.AttributeClass, attributeSymbol).Exists)
                 .Select(CreateAttribute)
-                .Cast<TAttribute>()
                 .ToImmutableArray();
         }
 
-        public AttributeData GetFirstAttributeData<TAttribute>(ISymbol symbol)
-            where TAttribute : Attribute
+        public bool HasAttribute(Type attributeType, ISymbol symbol)
         {
-            return GetAttributeData<TAttribute>(symbol).FirstOrDefault();
-        }
-
-        public bool HasAttribute<TAttribute>(ISymbol symbol)
-            where TAttribute : Attribute
-        {
-            var attributeSymbol = Compilation.GetTypeByMetadataName(FullNamer.FromReflection(typeof(TAttribute)));
+            var attributeSymbol = Compilation.GetTypeByMetadataName(FullNamer.FromReflection(attributeType));
             return symbol.GetAttributes()
                 .Any(a => Compilation.ClassifyConversion(a.AttributeClass, attributeSymbol).Exists);
         }
