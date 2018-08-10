@@ -13,13 +13,14 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
     public class ValidationPropertyDescriptorFactory
     {
-        private readonly ITypeSymbol objectType;
         private readonly CSharpCompilation compilation;
         private readonly ValidationTypeDescriptorFactory descriptorFactory;
         private readonly AttributeExtractor extractor;
 
         private readonly ConcurrentDictionary<(INamedTypeSymbol, string), ValidationPropertyGroupDescriptor> groups
             = new ConcurrentDictionary<(INamedTypeSymbol, string), ValidationPropertyGroupDescriptor>();
+
+        private readonly ITypeSymbol objectType;
 
         private readonly ConcurrentDictionary<(INamedTypeSymbol, string), ValidationPropertyDescriptor> properties
             = new ConcurrentDictionary<(INamedTypeSymbol, string), ValidationPropertyDescriptor>();
@@ -65,7 +66,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             {
                 return CreateRegular(propertySymbol, fieldSymbol);
             }
-            
+
             if (propertySymbol != null)
             {
                 return CreateVirtual(propertySymbol);
@@ -119,7 +120,9 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             var name = ValidationPropertyDescriptor.SanitizeName(fieldSymbol.MetadataName);
             return properties.GetOrAdd((fieldSymbol.ContainingType, name), _ =>
             {
-                var attachedAttribute = extractor.GetFirstAttributeData<AttachedPropertyAttribute>(fieldSymbol);
+                var attachedAttribute = extractor
+                    .GetAttributeData<AttachedPropertyAttribute>(fieldSymbol)
+                    .FirstOrDefault();
                 if (attachedAttribute == null
                     || attachedAttribute.ConstructorArguments.Length != 1
                     || attachedAttribute.ConstructorArguments[0].Kind != TypedConstantKind.Type)
@@ -172,9 +175,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             });
         }
 
-        public ValidationPropertyGroupDescriptor CreateGenerator(
-            IPropertySymbol propertySymbol,
-            IFieldSymbol fieldSymbol)
+        public ValidationPropertyGroupDescriptor CreateGenerator(IPropertySymbol propertySymbol, IFieldSymbol fieldSymbol)
         {
             return groups.GetOrAdd((propertySymbol.ContainingType, propertySymbol.MetadataName), _ =>
             {
@@ -196,9 +197,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             });
         }
 
-        public ValidationPropertyDescriptor CreateGrouped(
-            ValidationPropertyGroupDescriptor propertyGroup,
-            string groupMemberName)
+        public ValidationPropertyDescriptor CreateGrouped(ValidationPropertyGroupDescriptor propertyGroup, string groupMemberName)
         {
             var name = $"{propertyGroup.Name}{ValidationPropertyDescriptor.GroupSeparator}{groupMemberName}";
             return properties.GetOrAdd(((INamedTypeSymbol)propertyGroup.DeclaringType.TypeSymbol, name), _ =>

@@ -10,10 +10,6 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
     public class ValidationTreeResolver : ControlTreeResolverBase
     {
         private readonly ValidationTypeDescriptorFactory descriptorFactory;
-
-        private readonly ImmutableArray<ParserDothtmlDiagnostic>.Builder diagnostics
-            = ImmutableArray.CreateBuilder<ParserDothtmlDiagnostic>();
-
         private readonly ValidationControlTypeFactory typeFactory;
 
         public ValidationTreeResolver(
@@ -27,15 +23,14 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             this.typeFactory = typeFactory;
         }
 
-        public ImmutableArray<ParserDothtmlDiagnostic> GetDiagnostics()
-            => diagnostics.ToImmutable();
-
         protected override IAbstractBinding CompileBinding(
-                    DothtmlBindingNode node,
+            DothtmlBindingNode node,
             BindingParserOptions bindingOptions,
             IDataContextStack context,
             IPropertyDescriptor property)
-            => treeBuilder.BuildBinding(bindingOptions, context, node, property);
+        {
+            return treeBuilder.BuildBinding(bindingOptions, context, node, property);
+        }
 
         protected override object ConvertValue(string value, ITypeDescriptor propertyType)
         {
@@ -43,7 +38,9 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         }
 
         protected override IControlType CreateControlType(ITypeDescriptor wrapperType, string virtualPath)
-            => typeFactory.Create(wrapperType, virtualPath);
+        {
+            return typeFactory.Create(wrapperType, virtualPath);
+        }
 
         protected override IDataContextStack CreateDataContextTypeStack(
             ITypeDescriptor viewModelType,
@@ -51,21 +48,11 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             IReadOnlyList<NamespaceImport> imports = null,
             IReadOnlyList<BindingExtensionParameter> extensionParameters = null)
         {
-            var immutableImports = imports?.ToImmutableArray()
-                ?? default;
-            var immutableParameters = extensionParameters?.ToImmutableArray()
-                ?? default;
             return new ValidationDataContextStack(
                 dataContextType: descriptorFactory.Convert(viewModelType),
                 parent: (parentDataContextStack as ValidationDataContextStack),
-                namespaceImports: immutableImports,
-                extensionParameters: immutableParameters);
-        }
-
-        protected override bool LogError(Exception exception, DothtmlNode node)
-        {
-            diagnostics.Add(new ParserDothtmlDiagnostic(exception.Message, node, ValidationSeverity.Error));
-            return true;
+                namespaceImports: imports?.ToImmutableArray() ?? default,
+                extensionParameters: extensionParameters?.ToImmutableArray() ?? default);
         }
     }
 }

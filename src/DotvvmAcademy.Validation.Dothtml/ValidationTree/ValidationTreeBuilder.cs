@@ -13,16 +13,16 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         private readonly ValidationTypeDescriptorFactory descriptorFactory;
         private readonly ValidationPropertyDescriptorFactory propertyFactory;
 
-        public ValidationTreeBuilder(
-            ValidationTypeDescriptorFactory descriptorFactory,
-            ValidationPropertyDescriptorFactory propertyFactory)
+        public ValidationTreeBuilder(ValidationTypeDescriptorFactory descriptorFactory, ValidationPropertyDescriptorFactory propertyFactory)
         {
             this.descriptorFactory = descriptorFactory;
             this.propertyFactory = propertyFactory;
         }
 
         public void AddChildControl(IAbstractContentNode control, IAbstractControl child)
-            => ((ValidationContentNode)control).AddChildControl((ValidationControl)child);
+        {
+            ((ValidationContentNode)control).AddChildControl((ValidationControl)child);
+        }
 
         public bool AddProperty(IAbstractControl control, IAbstractPropertySetter setter, out string error)
         {
@@ -31,9 +31,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             return true;
         }
 
-        public IAbstractBaseTypeDirective BuildBaseTypeDirective(
-            DothtmlDirectiveNode directive,
-            BindingParserNode nameSyntax)
+        public IAbstractBaseTypeDirective BuildBaseTypeDirective(DothtmlDirectiveNode directive, BindingParserNode nameSyntax)
         {
             return new ValidationBaseTypeDirective(directive, nameSyntax, descriptorFactory.Create(nameSyntax));
         }
@@ -47,10 +45,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             return new ValidationBinding(node, bindingOptions.BindingType, (ValidationDataContextStack)dataContext);
         }
 
-        public IAbstractControl BuildControl(
-            IControlResolverMetadata metadata,
-            DothtmlNode node,
-            IDataContextStack dataContext)
+        public IAbstractControl BuildControl(IControlResolverMetadata metadata, DothtmlNode node, IDataContextStack dataContext)
         {
             return new ValidationControl(node, (ValidationControlMetadata)metadata, dataContext);
         }
@@ -112,10 +107,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
                 content: templateControls.Cast<ValidationControl>().ToImmutableArray());
         }
 
-        public IAbstractPropertyValue BuildPropertyValue(
-            IPropertyDescriptor property,
-            object value,
-            DothtmlNode sourceAttributeNode)
+        public IAbstractPropertyValue BuildPropertyValue(IPropertyDescriptor property, object value, DothtmlNode sourceAttributeNode)
         {
             return new ValidationPropertyValue(
                 node: sourceAttributeNode,
@@ -146,11 +138,13 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
                 .SelectMany(p => p.Value)
                 .Cast<ValidationDirective>()
                 .ToImmutableArray();
-            return new ValidationTreeRoot(
+            var root = new ValidationTreeRoot(
                 node: node,
                 metadata: (ValidationControlMetadata)metadata,
                 dataContext: dataContext,
                 directives: immutableDirectives);
+            root.TreeRoot = root;
+            return root;
         }
 
         public IAbstractViewModelDirective BuildViewModelDirective(

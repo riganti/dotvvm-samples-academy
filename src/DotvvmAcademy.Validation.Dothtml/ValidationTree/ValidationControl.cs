@@ -1,18 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using DotVVM.Framework.Compilation.ControlTree;
+using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
-using DotVVM.Framework.Compilation.ControlTree;
-using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
     [DebuggerDisplay("Control: {Metadata.Type.FullName,nq}")]
     public class ValidationControl : ValidationContentNode, IAbstractControl
     {
-        private ImmutableArray<ValidationPropertySetter>.Builder properties
-            = ImmutableArray.CreateBuilder<ValidationPropertySetter>();
-
         public ValidationControl(
             DothtmlNode node,
             ValidationControlMetadata metadata,
@@ -21,16 +18,17 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         {
         }
 
+        public object[] ConstructorParameters { get; set; }
+
         public ImmutableArray<ValidationPropertySetter> PropertySetters { get; private set; }
 
         IEnumerable<IPropertyDescriptor> IAbstractControl.PropertyNames => PropertySetters.Select(s => s.Property);
 
-        public object[] ConstructorParameters { get; set; }
-
         public void AddProperty(ValidationPropertySetter property)
         {
-            properties.Add(property);
-            PropertySetters = properties.ToImmutable();
+            property.Parent = this;
+            property.TreeRoot = TreeRoot;
+            PropertySetters = PropertySetters.IsDefault ? ImmutableArray.Create(property) : PropertySetters.Add(property);
         }
 
         public bool TryGetProperty(IPropertyDescriptor property, out IAbstractPropertySetter value)
@@ -40,6 +38,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
                 value = null;
                 return false;
             }
+
             value = PropertySetters.FirstOrDefault(s => s.Property.Equals(property));
             return value != null;
         }
