@@ -35,5 +35,17 @@ namespace DotvvmAcademy.Validation.Dothtml.Experiments
             var rootNode = parser.Parse(tokenizer.Tokens);
             var root = resolver.ResolveTree(rootNode, "Test.dothtml");
         }
+
+        [TestMethod]
+        public void HtmlAttributesExperiment()
+        {
+            var tokenizer = new DothtmlTokenizer();
+            var parser = new DothtmlParser();
+            var config = DotvvmConfiguration.CreateDefault(c => c.AddSingleton<IViewModelProtector, FakeProtector>());
+            var resolver = config.ServiceProvider.GetRequiredService<IControlTreeResolver>();
+            tokenizer.Tokenize("<meta charset=\"utf-8\" \\>");
+            var rootNode = parser.Parse(tokenizer.Tokens);
+            var root = resolver.ResolveTree(rootNode, "Test.dothtml");
+        }
     }
 }
