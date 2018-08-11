@@ -3,7 +3,7 @@ using System.Collections.Immutable;
 
 namespace DotvvmAcademy.Meta
 {
-    public interface ILocator<TMeta>
+    public interface IMetaLocator<TMeta>
     {
         ImmutableArray<TMeta> Locate(NameNode node);
     }

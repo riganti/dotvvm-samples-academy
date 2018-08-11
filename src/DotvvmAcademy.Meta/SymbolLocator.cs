@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace DotvvmAcademy.Meta
 {
-    public class SymbolLocator : ILocator<ISymbol>
+    public class SymbolLocator : IMetaLocator<ISymbol>
     {
         private readonly ImmutableArray<IAssemblySymbol> assemblies;
         private readonly CSharpCompilation compilation;

@@ -6,14 +6,14 @@ namespace DotvvmAcademy.Meta
 {
     public static class LocatorExtensions
     {
-        public static ImmutableArray<TMeta> Locate<TMeta>(this ILocator<TMeta> locator, string name)
+        public static ImmutableArray<TMeta> Locate<TMeta>(this IMetaLocator<TMeta> locator, string name)
         {
             var lexer = new NameLexer(name);
             var parser = new NameParser(lexer);
             return locator.Locate(parser.Parse());
         }
 
-        public static TMeta LocateSingle<TMeta>(this ILocator<TMeta> locator, NameNode name)
+        public static TMeta LocateSingle<TMeta>(this IMetaLocator<TMeta> locator, NameNode name)
         {
             var result = locator.Locate(name);
             if (result.Length != 1)
@@ -24,7 +24,7 @@ namespace DotvvmAcademy.Meta
             return result[0];
         }
 
-        public static TMeta LocateSingle<TMeta>(this ILocator<TMeta> locator, string name)
+        public static TMeta LocateSingle<TMeta>(this IMetaLocator<TMeta> locator, string name)
         {
             var lexer = new NameLexer(name);
             var parser = new NameParser(lexer);

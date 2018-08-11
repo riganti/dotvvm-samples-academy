@@ -9,33 +9,46 @@ namespace DotvvmAcademy.Meta
 {
     public static class AttributeExtractorExtensions
     {
-        public static Attribute GetAttribute(this AttributeExtractor extractor, Type attributeType, ISymbol symbol)
-        {
-            return extractor.GetAttributes(attributeType, symbol).SingleOrDefault();
-        }
-
-        public static TAttribute GetAttribute<TAttribute>(this AttributeExtractor extractor, ISymbol symbol)
+        public static ImmutableArray<TAttribute> Extract<TAttribute>(
+            this IAttributeExtractor extractor,
+            INamedTypeSymbol attributeClass,
+            ISymbol symbol)
             where TAttribute : Attribute
         {
-            return (TAttribute)extractor.GetAttribute(typeof(TAttribute), symbol);
+            return symbol.GetAttributes()
+                .Where(a => a.AttributeClass.Equals(attributeClass))
+                .Select(extractor.Extract)
+                .OfType<TAttribute>()
+                .ToImmutableArray();
         }
 
-        public static ImmutableArray<AttributeData> GetAttributeData<TAttribute>(this AttributeExtractor extractor, ISymbol symbol)
-            where TAttribute : Attribute
-        {
-            return extractor.GetAttributeData(typeof(TAttribute), symbol);
-        }
+        //public static Attribute GetAttribute(this AttributeExtractor extractor, Type attributeType, ISymbol symbol)
+        //{
+        //    return extractor.GetAttributes(attributeType, symbol).SingleOrDefault();
+        //}
 
-        public static ImmutableArray<TAttribute> GetAttributes<TAttribute>(this AttributeExtractor extractor, ISymbol symbol)
-            where TAttribute : Attribute
-        {
-            return extractor.GetAttributes(typeof(TAttribute), symbol).Cast<TAttribute>().ToImmutableArray();
-        }
+        //public static TAttribute GetAttribute<TAttribute>(this AttributeExtractor extractor, ISymbol symbol)
+        //    where TAttribute : Attribute
+        //{
+        //    return (TAttribute)extractor.GetAttribute(typeof(TAttribute), symbol);
+        //}
 
-        public static bool HasAttribute<TAttribute>(this AttributeExtractor extractor, ISymbol symbol)
-            where TAttribute : Attribute
-        {
-            return extractor.HasAttribute(typeof(TAttribute), symbol);
-        }
+        //public static ImmutableArray<AttributeData> GetAttributeData<TAttribute>(this AttributeExtractor extractor, ISymbol symbol)
+        //    where TAttribute : Attribute
+        //{
+        //    return extractor.GetAttributeData(typeof(TAttribute), symbol);
+        //}
+
+        //public static ImmutableArray<TAttribute> GetAttributes<TAttribute>(this AttributeExtractor extractor, ISymbol symbol)
+        //    where TAttribute : Attribute
+        //{
+        //    return extractor.GetAttributes(typeof(TAttribute), symbol).Cast<TAttribute>().ToImmutableArray();
+        //}
+
+        //public static bool HasAttribute<TAttribute>(this AttributeExtractor extractor, ISymbol symbol)
+        //    where TAttribute : Attribute
+        //{
+        //    return extractor.HasAttribute(typeof(TAttribute), symbol);
+        //}
     }
 }

@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace DotvvmAcademy.Meta
 {
-    public class MemberInfoLocator : ILocator<MemberInfo>
+    public class MemberInfoLocator : IMetaLocator<MemberInfo>
     {
         private readonly ImmutableArray<Assembly> assemblies;
 

@@ -1,90 +1,69 @@
 ﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
 using System;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Reflection;
 
 namespace DotvvmAcademy.Meta
 {
-    public class AttributeExtractor
+    public class AttributeExtractor : IAttributeExtractor
     {
-        // TODO: Use SymbolLocator instead
-        public AttributeExtractor(CSharpCompilation compilation)
+        private readonly ITypedConstantExtractor constantExtractor;
+        private readonly IMetaLocator<MemberInfo> locator;
+
+        public AttributeExtractor(ITypedConstantExtractor constantExtractor, IMetaLocator<MemberInfo> locator)
         {
-            Compilation = compilation;
+            this.constantExtractor = constantExtractor;
+            this.locator = locator;
         }
 
-        public CSharpCompilation Compilation { get; }
-
-        public object CreateArgument(TypedConstant constant)
+        public Attribute Extract(AttributeData attributeData)
         {
-            if (constant.IsNull)
-            {
-                return null;
-            }
-
-            switch (constant.Kind)
-            {
-                case TypedConstantKind.Enum:
-                case TypedConstantKind.Primitive:
-                    return constant.Value;
-
-                case TypedConstantKind.Type:
-                    return Type.GetType(FullNamer.FromRoslyn((ITypeSymbol)constant.Value, Qualification.Assembly));
-
-                case TypedConstantKind.Array:
-                    return constant.Values.Select(CreateArgument).ToArray();
-
-                default:
-                    throw new ArgumentException("Could not create passed TypedConstant.", nameof(constant));
-            }
-        }
-
-        public Attribute CreateAttribute(AttributeData data)
-        {
-            var arguments = data.ConstructorArguments.Select(CreateArgument).ToArray();
+            var arguments = attributeData.ConstructorArguments
+                .Select(constantExtractor.Extract)
+                .ToArray();
             var type = Type.GetType(FullNamer.FromRoslyn(
-                type: data.AttributeClass,
+                type: attributeData.AttributeClass,
                 qualification: Qualification.Assembly));
             var instance = Activator.CreateInstance(type, arguments);
-            foreach (var namedArgument in data.NamedArguments)
+            foreach (var namedArgument in attributeData.NamedArguments)
             {
                 var property = type.GetProperty(namedArgument.Key);
-                var argument = CreateArgument(namedArgument.Value);
+                var argument = constantExtractor.Extract(namedArgument.Value);
                 property.SetValue(instance, argument);
             }
             return (Attribute)instance;
         }
 
-        public ImmutableArray<AttributeData> GetAttributeData(Type attributeType, ISymbol symbol)
-        {
-            var attributeSymbol = Compilation.GetTypeByMetadataName(FullNamer.FromReflection(attributeType));
-            return symbol.GetAttributes()
-                .Where(a => Compilation.ClassifyConversion(a.AttributeClass, attributeSymbol).Exists)
-                .ToImmutableArray();
-        }
+        //public ImmutableArray<AttributeData> GetAttributeData(Type attributeType, ISymbol symbol)
+        //{
+        //    var attributeSymbol = Compilation.GetTypeByMetadataName(FullNamer.FromReflection(attributeType));
+        //    return symbol.GetAttributes()
+        //        .Where(a => Compilation.ClassifyConversion(a.AttributeClass, attributeSymbol).Exists)
+        //        .ToImmutableArray();
+        //}
 
-        public ImmutableArray<Attribute> GetAttributes(Type attributeType, ISymbol symbol)
-        {
-            var attributeTypeName = FullNamer.FromReflection(attributeType);
-            var attributeSymbol = Compilation.GetTypeByMetadataName(attributeTypeName);
-            if (attributeSymbol == null)
-            {
-                throw new ArgumentException($"INamedTypeSymbol of '{attributeTypeName}'" +
-                    $" could not be obtained.", nameof(attributeType));
-            }
+        //public ImmutableArray<Attribute> GetAttributes(Type attributeType, ISymbol symbol)
+        //{
+        //    var attributeTypeName = FullNamer.FromReflection(attributeType);
+        //    var attributeSymbol = Compilation.GetTypeByMetadataName(attributeTypeName);
+        //    if (attributeSymbol == null)
+        //    {
+        //        throw new ArgumentException($"INamedTypeSymbol of '{attributeTypeName}'" +
+        //            $" could not be obtained.", nameof(attributeType));
+        //    }
 
-            return symbol.GetAttributes()
-                .Where(a => Compilation.ClassifyConversion(a.AttributeClass, attributeSymbol).Exists)
-                .Select(CreateAttribute)
-                .ToImmutableArray();
-        }
+        //    return symbol.GetAttributes()
+        //        .Where(a => Compilation.ClassifyConversion(a.AttributeClass, attributeSymbol).Exists)
+        //        .Select(CreateAttribute)
+        //        .ToImmutableArray();
+        //}
 
-        public bool HasAttribute(Type attributeType, ISymbol symbol)
-        {
-            var attributeSymbol = Compilation.GetTypeByMetadataName(FullNamer.FromReflection(attributeType));
-            return symbol.GetAttributes()
-                .Any(a => Compilation.ClassifyConversion(a.AttributeClass, attributeSymbol).Exists);
-        }
+        //public bool HasAttribute(Type attributeType, ISymbol symbol)
+        //{
+        //    var attributeSymbol = Compilation.GetTypeByMetadataName(FullNamer.FromReflection(attributeType));
+        //    return symbol.GetAttributes()
+        //        .Any(a => Compilation.ClassifyConversion(a.AttributeClass, attributeSymbol).Exists);
+        //}
     }
 }
