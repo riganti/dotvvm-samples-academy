@@ -15,7 +15,7 @@ namespace DotvvmAcademy.Validation.CSharp.Experiments
             {
                 case EventDefinition eventDefinition:
                     VisitEvent(eventDefinition);
-                    break;
+                    break;s
 
                 case FieldDefinition fieldDefinition:
                     VisitField(fieldDefinition);
@@ -43,6 +43,10 @@ namespace DotvvmAcademy.Validation.CSharp.Experiments
             VisitAssembly(definition);
         }
 
+        public virtual void VisitAssembly(AssemblyDefinition definition)
+        {
+        }
+
         public virtual void VisitEvent(EventDefinition definition)
         {
             DefaultVisit(definition);
@@ -56,10 +60,6 @@ namespace DotvvmAcademy.Validation.CSharp.Experiments
         public virtual void VisitMethod(MethodDefinition definition)
         {
             DefaultVisit(definition);
-        }
-
-        public virtual void VisitAssembly(AssemblyDefinition definition)
-        {
         }
 
         public virtual void VisitProperty(PropertyDefinition definition)

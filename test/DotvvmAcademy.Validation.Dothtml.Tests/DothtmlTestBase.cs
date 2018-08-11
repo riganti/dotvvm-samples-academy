@@ -3,9 +3,6 @@ using DotVVM.Framework.Compilation.Parser.Dothtml.Tokenizer;
 using DotvvmAcademy.Validation.Dothtml.ValidationTree;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace DotvvmAcademy.Validation.Dothtml.Tests
 {
@@ -30,11 +27,17 @@ namespace DotvvmAcademy.Validation.Dothtml.Tests
             var tokenizer = new DothtmlTokenizer();
             tokenizer.Tokenize(dothtml);
             var parser = new DothtmlParser();
-            parser.Parse(tokenizer.Tokens);
+            var root = parser.Parse(tokenizer.Tokens);
+            using (var scope = Provider.CreateScope())
+            {
+                var resolver = Provider.GetRequiredService<ValidationTreeResolver>();
+                return (ValidationTreeRoot)resolver.ResolveTree(root, "test.dothtml");
+            }
         }
 
         protected virtual void RegisterServices(IServiceCollection container)
         {
+            container.AddMetaScopeFriendly();
             container.AddScoped<ValidationControlResolver>();
             container.AddScoped<ValidationTreeBuilder>();
             container.AddScoped<ValidationTypeDescriptorFactory>();

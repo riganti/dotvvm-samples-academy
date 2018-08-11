@@ -1,8 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Xml;
 using System.Xml.XPath;
 
@@ -18,7 +15,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Experiments
 </book>";
 
         [TestMethod]
-        public void BasicTest()
+        public void BasicUsageExperiment()
         {
             var settings = new XmlReaderSettings { NameTable = new NameTable() };
             var manager = new XmlNamespaceManager(settings.NameTable);

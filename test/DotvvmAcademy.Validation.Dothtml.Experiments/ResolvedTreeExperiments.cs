@@ -11,7 +11,6 @@ namespace DotvvmAcademy.Validation.Dothtml.Experiments
     [TestClass]
     public class ResolvedTreeExperiments
     {
-
         public const string Sample = @"
 @viewModel System.Object
 @service System.IServiceProvider

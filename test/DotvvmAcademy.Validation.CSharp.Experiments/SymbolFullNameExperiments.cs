@@ -1,30 +1,31 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
 using System.IO;
 
 namespace DotvvmAcademy.Validation.CSharp.Experiments
 {
     [TestClass]
-    public class SymbolFullNameTests : ExperimentTestBase
+    public class SymbolFullNameExperiments : CSharpExperimentBase
     {
         public const string SampleResourceName = "DotvvmAcademy.Validation.CSharp.Experiments.ShopSample.cs";
 
         public string Sample { get; set; }
 
-        [TestMethod]
-        public void IDK()
+        [TestInitialize]
+        public void LoadSample()
         {
-            var compilation = GetCompilation(Sample, "Shop", new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
-            var test1 = compilation.GetTypeByMetadataName("System.Collections.Generic.IEnumerable`1");
-            var test2 = compilation.GetTypeByMetadataName("BusinessLayer.DTO+Key");
-            var test3 = compilation.GetTypeByMetadataName("Nest.One+Two+Three");
+            var assembly = typeof(SymbolFullNameExperiments).Assembly;
+            var stream = assembly.GetManifestResourceStream(SampleResourceName);
+            using (var sr = new StreamReader(stream))
+            {
+                Sample = sr.ReadToEnd();
+            }
         }
 
         [TestMethod]
-        public void BasicSymbolFullNameTest()
+        public void SymbolFullNameExperiment()
         {
             var compilation = GetCompilation(Sample, "Shop", new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
             compilation = compilation.AddReferences(GetMetadataReference("System.Linq"));
@@ -40,17 +41,6 @@ namespace DotvvmAcademy.Validation.CSharp.Experiments
             SerializeFullNames(roslyn.FullNames, "roslyn.txt");
             SerializeFullNames(cecil.FullNames, "cecil.txt");
             SerializeFullNames(reflection.FullNames, "reflection.txt");
-        }
-
-        [TestInitialize]
-        public void LoadSample()
-        {
-            var assembly = typeof(SymbolFullNameTests).Assembly;
-            var stream = assembly.GetManifestResourceStream(SampleResourceName);
-            using (var sr = new StreamReader(stream))
-            {
-                Sample = sr.ReadToEnd();
-            }
         }
 
         private void SerializeFullNames(List<string> fullNames, string fileName)

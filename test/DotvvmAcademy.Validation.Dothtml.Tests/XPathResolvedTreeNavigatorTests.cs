@@ -1,6 +1,5 @@
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Tokenizer;
-using DotVVM.Framework.Configuration;
 using DotvvmAcademy.Meta;
 using DotvvmAcademy.Validation.Dothtml.ValidationTree;
 using Microsoft.CodeAnalysis;
@@ -104,13 +103,13 @@ namespace ValidationTreeSample
                 syntaxTrees: new[] { tree },
                 references: new[]
                 {
-                    MetadataReferencer.FromName("netstandard"),
-                    MetadataReferencer.FromName("System.Private.CoreLib"),
-                    MetadataReferencer.FromName("System.Runtime"),
-                    MetadataReferencer.FromName("System.Collections"),
-                    MetadataReferencer.FromName("System.Reflection"),
-                    MetadataReferencer.FromName("DotVVM.Framework"),
-                    MetadataReferencer.FromName("DotVVM.Core")
+                    RoslynReference.FromName("netstandard"),
+                    RoslynReference.FromName("System.Private.CoreLib"),
+                    RoslynReference.FromName("System.Runtime"),
+                    RoslynReference.FromName("System.Collections"),
+                    RoslynReference.FromName("System.Reflection"),
+                    RoslynReference.FromName("DotVVM.Framework"),
+                    RoslynReference.FromName("DotVVM.Core")
                 },
                 options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
             return compilation;

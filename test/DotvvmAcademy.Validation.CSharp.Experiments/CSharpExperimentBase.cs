@@ -1,4 +1,4 @@
-﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Mono.Cecil;
 using System;
@@ -6,11 +6,11 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.Loader;
 
-namespace DotvvmAcademy.Validation.CSharp.Tests
+namespace DotvvmAcademy.Validation.CSharp.Experiments
 {
-    public class CSharpTestBase
+    public abstract class CSharpExperimentBase
     {
-        public CSharpTestBase()
+        public CSharpExperimentBase()
         {
             DefaultReferences = new[] {
                 GetMetadataReference("System.Private.CoreLib"),
@@ -67,7 +67,7 @@ namespace DotvvmAcademy.Validation.CSharp.Tests
                 return;
             }
             stream.Close();
-            throw new ArgumentException("The compilation could not be compiled.", nameof(compilation));
+            throw new InvalidOperationException("The passed source code could not be compiled.");
         }
     }
 }

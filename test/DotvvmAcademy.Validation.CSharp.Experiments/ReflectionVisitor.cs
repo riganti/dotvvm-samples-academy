@@ -45,7 +45,6 @@ namespace DotvvmAcademy.Validation.CSharp.Experiments
 
         public virtual void VisitAssembly(Assembly assembly)
         {
-
         }
 
         public virtual void VisitEvent(EventInfo member)

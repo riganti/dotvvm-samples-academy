@@ -2,30 +2,27 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace DotvvmAcademy.Validation.CSharp.Experiments
 {
     [TestClass]
-    public class CoreLibTests
+    public class CoreLibExperiments
     {
         [TestMethod]
-        public void NecessaryDependenciesTest()
+        public void NecessaryDependenciesExperiment()
         {
             var options = new CSharpCompilationOptions(
                 outputKind: OutputKind.DynamicallyLinkedLibrary);
             var compilation = CSharpCompilation.Create(
-                assemblyName: nameof(NecessaryDependenciesTest),
+                assemblyName: nameof(NecessaryDependenciesExperiment),
                 syntaxTrees: Enumerable.Empty<CSharpSyntaxTree>(),
                 references: new[]
                 {
-                    MetadataReferencer.FromName("netstandard"),
-                    MetadataReferencer.FromName("System.Private.CoreLib"),
-                    MetadataReferencer.FromName("System.Runtime"),
-                    MetadataReferencer.FromName("DotVVM.Framework")
+                    RoslynReference.FromName("netstandard"),
+                    RoslynReference.FromName("System.Private.CoreLib"),
+                    RoslynReference.FromName("System.Runtime"),
+                    RoslynReference.FromName("DotVVM.Framework")
                 },
                 options: options);
             var @enum = compilation.GetTypeByMetadataName("System.Enum");
