@@ -1,10 +1,12 @@
 root = true
-charset = utf-8
 
 [*.cs]
 indent_size = 4
 indent_style = space
-dotnet_style_require_accessibility_modifiers = true:error
+csharp_style_expression_bodied_methods = false:warning
+csharp_style_expression_bodied_constructors = false:warning
+csharp_style_expression_bodied_operators = false:warning
+csharp_prefer_braces = true:warning
 
 [*.csproj]
 indent_size = 2
