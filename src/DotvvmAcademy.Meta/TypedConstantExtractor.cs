@@ -6,6 +6,13 @@ namespace DotvvmAcademy.Meta
 {
     public class TypedConstantExtractor : ITypedConstantExtractor
     {
+        private readonly ISymbolConverter symbolConverter;
+
+        public TypedConstantExtractor(ISymbolConverter symbolConverter)
+        {
+            this.symbolConverter = symbolConverter;
+        }
+
         public object Extract(TypedConstant constant)
         {
             if (constant.IsNull)
@@ -20,7 +27,7 @@ namespace DotvvmAcademy.Meta
                     return constant.Value;
 
                 case TypedConstantKind.Type:
-                    return Type.GetType(FullNamer.FromRoslyn((ITypeSymbol)constant.Value, Qualification.Assembly));
+                    return (Type)symbolConverter.Convert((ITypeSymbol)constant.Value);
 
                 case TypedConstantKind.Array:
                     return constant.Values.Select(Extract).ToArray();

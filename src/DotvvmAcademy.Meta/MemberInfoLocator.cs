@@ -7,13 +7,13 @@ using System.Reflection;
 
 namespace DotvvmAcademy.Meta
 {
-    public class MemberInfoLocator : IMetaLocator<MemberInfo>
+    public class MemberInfoLocator : IMemberInfoLocator
     {
-        private readonly ImmutableArray<Assembly> assemblies;
+        private readonly IAssemblyAccessor assemblyAccessor;
 
-        public MemberInfoLocator(ImmutableArray<Assembly> assemblies)
+        public MemberInfoLocator(IAssemblyAccessor assemblyAccessor)
         {
-            this.assemblies = assemblies;
+            this.assemblyAccessor = assemblyAccessor;
         }
 
         public ImmutableArray<MemberInfo> Locate(NameNode node)
@@ -23,7 +23,7 @@ namespace DotvvmAcademy.Meta
 
         private IEnumerable<Type> GetType(string fullName)
         {
-            foreach (var assembly in assemblies)
+            foreach (var assembly in assemblyAccessor.Assemblies)
             {
                 yield return assembly.GetType(fullName);
             }

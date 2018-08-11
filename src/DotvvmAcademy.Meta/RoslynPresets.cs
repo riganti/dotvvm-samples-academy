@@ -4,7 +4,7 @@ using System.Collections.Immutable;
 
 namespace DotvvmAcademy.Meta
 {
-    public static class RoslynKinds
+    public static class RoslynPresets
     {
         public static readonly ImmutableArray<SymbolKind> AllSymbols = ImmutableArray.Create(
             SymbolKind.Alias,

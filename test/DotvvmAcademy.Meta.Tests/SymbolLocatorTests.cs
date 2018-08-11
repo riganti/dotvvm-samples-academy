@@ -29,9 +29,9 @@ namespace DotvvmAcademy.Meta.Tests
                 syntaxTrees: Enumerable.Empty<CSharpSyntaxTree>(),
                 references: new[]
                 {
-                    MetadataReferencer.FromName("netstandard"),
-                    MetadataReferencer.FromName("System.Private.CoreLib"),
-                    MetadataReferencer.FromName("System.Runtime")
+                    RoslynReference.FromName("netstandard"),
+                    RoslynReference.FromName("System.Private.CoreLib"),
+                    RoslynReference.FromName("System.Runtime")
                 },
                 options: options);
         }
