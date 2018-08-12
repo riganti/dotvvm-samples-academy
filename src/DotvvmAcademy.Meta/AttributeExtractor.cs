@@ -17,10 +17,15 @@ namespace DotvvmAcademy.Meta
 
         public Attribute Extract(AttributeData attributeData)
         {
+            var attributeType = (Type)symbolConverter.Convert(attributeData.AttributeClass);
+            return Instantiate(attributeType, attributeData);
+        }
+
+        protected Attribute Instantiate(Type attributeType, AttributeData attributeData)
+        {
             var arguments = attributeData.ConstructorArguments
                 .Select(constantExtractor.Extract)
                 .ToArray();
-            var attributeType = (Type)symbolConverter.Convert(attributeData.AttributeClass);
             var instance = Activator.CreateInstance(attributeType, arguments);
             foreach (var namedArgument in attributeData.NamedArguments)
             {
