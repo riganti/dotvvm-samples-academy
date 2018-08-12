@@ -6,7 +6,7 @@ namespace DotvvmAcademy.Meta.Syntax
     {
         public static NameToken IdentifierToken(string identifier)
         {
-            return new NameToken(NameTokenKind.Identifier, identifier, 0, identifier.Length - 1);
+            return new NameToken(NameTokenKind.Identifier, identifier, 0, identifier.Length);
         }
 
         public static NameToken MissingToken(NameTokenKind kind)
@@ -27,7 +27,7 @@ namespace DotvvmAcademy.Meta.Syntax
         public static NameToken NumericLiteralToken(int number)
         {
             var @string = number.ToString();
-            return new NameToken(NameTokenKind.NumericLiteral, @string, 0, @string.Length - 1);
+            return new NameToken(NameTokenKind.NumericLiteral, @string, 0, @string.Length);
         }
     }
 }
