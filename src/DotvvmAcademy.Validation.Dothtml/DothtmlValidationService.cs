@@ -38,6 +38,8 @@ namespace DotvvmAcademy.Validation.Dothtml
                     var context = scope.ServiceProvider.GetRequiredService<Context>();
                     context.Unit = unit;
                     context.Sources = sources;
+                    var compilationAccessor = scope.ServiceProvider.GetRequiredService<ICSharpCompilationAccessor>();
+                    compilationAccessor.Compilation = GetCompilation(scope.ServiceProvider);
                     HandleQueries<ValidationControl>(scope.ServiceProvider);
                     HandleQueries<ValidationPropertySetter>(scope.ServiceProvider);
                     HandleQueries<ValidationDirective>(scope.ServiceProvider);
@@ -58,14 +60,14 @@ namespace DotvvmAcademy.Validation.Dothtml
                 syntaxTrees: trees,
                 references: new[]
                 {
-                    MetadataReferencer.FromName("mscorlib"),
-                    MetadataReferencer.FromName("netstandard"),
-                    MetadataReferencer.FromName("System.Private.CoreLib"),
-                    MetadataReferencer.FromName("System.Runtime"),
-                    MetadataReferencer.FromName("System.Collections"),
-                    MetadataReferencer.FromName("System.Reflection"),
-                    MetadataReferencer.FromName("DotVVM.Framework"),
-                    MetadataReferencer.FromName("DotVVM.Core")
+                    RoslynReference.FromName("mscorlib"),
+                    RoslynReference.FromName("netstandard"),
+                    RoslynReference.FromName("System.Private.CoreLib"),
+                    RoslynReference.FromName("System.Runtime"),
+                    RoslynReference.FromName("System.Collections"),
+                    RoslynReference.FromName("System.Reflection"),
+                    RoslynReference.FromName("DotVVM.Framework"),
+                    RoslynReference.FromName("DotVVM.Core")
                 },
                 options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
         }
@@ -73,11 +75,10 @@ namespace DotvvmAcademy.Validation.Dothtml
         private IServiceProvider GetServiceProvider()
         {
             var c = new ServiceCollection();
+            c.AddMetaSingletonFriendly();
             c.AddSingleton<ErrorAggregatingVisitor>();
-            c.AddScoped(GetCompilation);
             c.AddScoped(GetValidationTree);
             c.AddScoped(GetXPathTree);
-            c.AddScoped<AttributeExtractor>();
             c.AddScoped<ValidationTypeDescriptorFactory>();
             c.AddScoped<ValidationControlTypeFactory>();
             c.AddScoped<ValidationControlMetadataFactory>();

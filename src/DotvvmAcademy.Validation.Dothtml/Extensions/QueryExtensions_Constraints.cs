@@ -106,7 +106,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
                     {
                         Report(
                             context: context,
-                            message: $"Control is not of type '{FullNamer.FromReflection(typeof(TControl))}'.",
+                            message: $"Control is not of type '{typeof(TControl)}'.",
                             node: control);
                     }
                 }

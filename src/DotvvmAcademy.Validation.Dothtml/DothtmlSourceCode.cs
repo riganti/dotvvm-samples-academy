@@ -7,10 +7,16 @@ namespace DotvvmAcademy.Validation.Dothtml
     {
         private readonly string source;
 
-        public DothtmlSourceCode(string source)
+        public DothtmlSourceCode(string source, string fileName, bool isValidated)
         {
             this.source = source;
+            FileName = fileName;
+            IsValidated = isValidated;
         }
+
+        public string FileName { get; }
+
+        public bool IsValidated { get; }
 
         public string GetContent()
         {
