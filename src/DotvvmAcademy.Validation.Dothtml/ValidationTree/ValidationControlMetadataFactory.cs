@@ -19,12 +19,12 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             = new ConcurrentDictionary<ITypeSymbol, ValidationControlMetadata>();
 
         private readonly IMemberInfoConverter memberInfoConverter;
-        private readonly ValidationPropertyDescriptorFactory propertyFactory;
+        private readonly ValidationPropertyFactory propertyFactory;
         private readonly ValidationControlTypeFactory typeFactory;
 
         public ValidationControlMetadataFactory(
             ValidationControlTypeFactory typeFactory,
-            ValidationPropertyDescriptorFactory propertyFactory,
+            ValidationPropertyFactory propertyFactory,
             ITypedAttributeExtractor extractor,
             IMemberInfoConverter memberInfoConverter)
         {
@@ -59,7 +59,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             var controlType = typeFactory.Create(symbol);
             return cache.GetOrAdd(symbol, s =>
             {
-                var matchers = (from g in propertyFactory.CreateGroups(symbol)
+                var matchers = (from g in propertyFactory.GetGroups(symbol)
                                 from prefix in g.Prefixes
                                 select new PropertyGroupMatcher(prefix, g))
                                 .ToImmutableArray();
@@ -68,7 +68,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
                  changeAttributes: extractor.Extract<DataContextChangeAttribute>(symbol),
                  manipulationAttribute: extractor.Extract<DataContextStackManipulationAttribute>(symbol).SingleOrDefault(),
                  markupOptionsAttribute: extractor.Extract<ControlMarkupOptionsAttribute>(symbol).SingleOrDefault(),
-                 properties: propertyFactory.CreateProperties(symbol),
+                 properties: propertyFactory.GetProperties(symbol),
                  propertyGroupMatchers: matchers);
             });
         }

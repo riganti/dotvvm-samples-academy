@@ -18,7 +18,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         private readonly ICSharpCompilationAccessor compilationAccessor;
         private readonly ValidationTypeDescriptorFactory descriptorFactory;
         private readonly ValidationControlMetadataFactory metadataFactory;
-
+        private readonly ValidationPropertyFactory propertyFactory;
         private readonly ConcurrentDictionary<string, INamespaceSymbol> namespaces
             = new ConcurrentDictionary<string, INamespaceSymbol>();
 
@@ -28,12 +28,14 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             ICSharpCompilationAccessor compilationAccessor,
             ValidationTypeDescriptorFactory descriptorFactory,
             ValidationControlTypeFactory typeFactory,
-            ValidationControlMetadataFactory metadataFactory)
+            ValidationControlMetadataFactory metadataFactory,
+            ValidationPropertyFactory propertyFactory)
         {
             this.compilationAccessor = compilationAccessor;
             this.descriptorFactory = descriptorFactory;
             this.typeFactory = typeFactory;
             this.metadataFactory = metadataFactory;
+            this.propertyFactory = propertyFactory;
         }
 
         public IControlResolverMetadata BuildControlMetadata(IControlType type)
@@ -54,7 +56,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
                 .FirstOrDefault(g => name.StartsWith(g.Prefix, StringComparison.OrdinalIgnoreCase));
             if (!group.Equals(default(PropertyGroupMatcher)))
             {
-                return group.PropertyGroup.GetDotvvmProperty(name.Substring(group.Prefix.Length));
+                return propertyFactory.CreateGrouped(group.PropertyGroup, name.Substring(group.Prefix.Length));
             }
 
             return null;

@@ -1,6 +1,6 @@
 # Commands
 
-[Commands] are a kind of binding that doesn't just keep a value updated, it produces a [Postback],
+[Commands] are a kind of binding that doesn't keep a value updated, it produces a [Postback],
 request for the server to do something.
 
 ```dothtml

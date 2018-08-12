@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.XPath;
@@ -40,6 +41,11 @@ namespace DotvvmAcademy.Validation.Dothtml
                     context.Sources = sources;
                     var compilationAccessor = scope.ServiceProvider.GetRequiredService<ICSharpCompilationAccessor>();
                     compilationAccessor.Compilation = GetCompilation(scope.ServiceProvider);
+                    var assemblyAccessor = scope.ServiceProvider.GetRequiredService<IAssemblyAccessor>();
+                    assemblyAccessor.Assemblies = Assembly.GetEntryAssembly()
+                        .GetReferencedAssemblies()
+                        .Select(Assembly.Load)
+                        .ToImmutableArray();
                     HandleQueries<ValidationControl>(scope.ServiceProvider);
                     HandleQueries<ValidationPropertySetter>(scope.ServiceProvider);
                     HandleQueries<ValidationDirective>(scope.ServiceProvider);
@@ -82,7 +88,7 @@ namespace DotvvmAcademy.Validation.Dothtml
             c.AddScoped<ValidationTypeDescriptorFactory>();
             c.AddScoped<ValidationControlTypeFactory>();
             c.AddScoped<ValidationControlMetadataFactory>();
-            c.AddScoped<ValidationPropertyDescriptorFactory>();
+            c.AddScoped<ValidationPropertyFactory>();
             c.AddScoped(p =>
             {
                 var controlResolver = ActivatorUtilities.CreateInstance<ValidationControlResolver>(p);

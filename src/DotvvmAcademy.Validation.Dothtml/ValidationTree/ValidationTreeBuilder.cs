@@ -11,9 +11,9 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
     public class ValidationTreeBuilder : IAbstractTreeBuilder
     {
         private readonly ValidationTypeDescriptorFactory descriptorFactory;
-        private readonly ValidationPropertyDescriptorFactory propertyFactory;
+        private readonly ValidationPropertyFactory propertyFactory;
 
-        public ValidationTreeBuilder(ValidationTypeDescriptorFactory descriptorFactory, ValidationPropertyDescriptorFactory propertyFactory)
+        public ValidationTreeBuilder(ValidationTypeDescriptorFactory descriptorFactory, ValidationPropertyFactory propertyFactory)
         {
             this.descriptorFactory = descriptorFactory;
             this.propertyFactory = propertyFactory;

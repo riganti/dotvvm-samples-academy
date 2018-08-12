@@ -7,10 +7,10 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 {
     public class CSharpDynamicContext
     {
-        private readonly MemberInfoLocator locator;
+        private readonly IMemberInfoLocator locator;
         private readonly CSharpValidationReporter reporter;
 
-        public CSharpDynamicContext(MemberInfoLocator locator, CSharpValidationReporter reporter)
+        public CSharpDynamicContext(IMemberInfoLocator locator, CSharpValidationReporter reporter)
         {
             this.locator = locator;
             this.reporter = reporter;

@@ -8,12 +8,12 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
     [DebuggerDisplay("PropertySetter: {Property.FullName,nq}")]
     public abstract class ValidationPropertySetter : ValidationTreeNode, IAbstractPropertySetter
     {
-        public ValidationPropertySetter(DothtmlNode node, ValidationPropertyDescriptor property) : base(node)
+        public ValidationPropertySetter(DothtmlNode node, IPropertyDescriptor property) : base(node)
         {
             Property = property;
         }
 
-        public ValidationPropertyDescriptor Property { get; }
+        public IPropertyDescriptor Property { get; }
 
         IPropertyDescriptor IAbstractPropertySetter.Property => Property;
     }

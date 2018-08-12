@@ -14,6 +14,6 @@ void ValidateButton(int index, string command, string text)
 body.GetControls("dot:Button")
     .CountEquals(4);
 ValidateButton(1, "Add()", "+");
-ValidateButton(2, "Subtract()", "+");
-ValidateButton(3, "Multiply()", "+");
-ValidateButton(4, "Divide()", "+");
+ValidateButton(2, "Subtract()", "-");
+ValidateButton(3, "Multiply()", "*");
+ValidateButton(4, "Divide()", "/");

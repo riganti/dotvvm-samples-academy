@@ -32,11 +32,11 @@ namespace DotvvmAcademy.Validation.CSharp
             using (var scope = globalProvider.CreateScope())
             {
                 var context = scope.ServiceProvider.GetRequiredService<Context>();
+                context.Unit = unit;
+                context.Sources = sources;
                 var compilationAccessor = scope.ServiceProvider.GetRequiredService<ICSharpCompilationAccessor>();
                 compilationAccessor.Compilation = GetCompilation(scope.ServiceProvider);
                 var reporter = scope.ServiceProvider.GetRequiredService<CSharpValidationReporter>();
-                context.Unit = unit;
-                context.Sources = sources;
                 HandleQueries<ITypeSymbol>(scope.ServiceProvider);
                 HandleQueries<IMethodSymbol>(scope.ServiceProvider);
                 HandleQueries<IPropertySymbol>(scope.ServiceProvider);

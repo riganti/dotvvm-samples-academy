@@ -1,13 +1,13 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 
 namespace DotvvmAcademy.Validation.Dothtml.Tests
 {
-    [TestClass]
-    public class ValidationTreeTests
+    public class ValidationTreeTests : DothtmlTestBase
     {
-        [TestMethod]
-        public void PropertyGroupsTest()
+        [Fact]
+        public void PropertyGroups_ElementHasHtmlAttribute_AttributesGroupFound()
         {
+            var tree = GetValidationTree("<meta charset='utf-8'>");
         }
     }
 }

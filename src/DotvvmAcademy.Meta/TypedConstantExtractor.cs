@@ -30,7 +30,14 @@ namespace DotvvmAcademy.Meta
                     return (Type)symbolConverter.Convert((ITypeSymbol)constant.Value);
 
                 case TypedConstantKind.Array:
-                    return constant.Values.Select(Extract).ToArray();
+                    var elementType = (Type)symbolConverter.Convert(((IArrayTypeSymbol)constant.Type).ElementType);
+                    var objects = constant.Values.Select(Extract).ToArray();
+                    var values = Array.CreateInstance(elementType, objects.Length);
+                    for (int i = 0; i < values.Length; i++)
+                    {
+                        values.SetValue(objects[i], i);
+                    }
+                    return values;
 
                 default:
                     throw new ArgumentException($"Constant '{constant}' could not be extracted.", nameof(constant));

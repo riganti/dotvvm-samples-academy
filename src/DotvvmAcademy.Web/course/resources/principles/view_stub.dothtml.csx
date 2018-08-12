@@ -15,7 +15,7 @@ var html = Unit.GetControl("/html");
     var head = html.GetControl("head");
     {
         head.GetControl("meta")
-            .GetProperty("@Attribute-charset")
+            .GetProperty("@Attributes-charset")
             .HasValue("utf-8");
     }
 }
