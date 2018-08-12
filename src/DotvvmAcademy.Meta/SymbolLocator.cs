@@ -18,7 +18,9 @@ namespace DotvvmAcademy.Meta
 
         public ImmutableArray<ISymbol> Locate(NameNode node)
         {
-            return Visit(node).ToImmutableArray();
+            return Visit(node)
+                .Distinct() // TODO: Fix problem with duplicate global namespace
+                .ToImmutableArray();
         }
 
         private IEnumerable<INamespaceSymbol> GetGlobalNamespaces()
@@ -106,7 +108,8 @@ namespace DotvvmAcademy.Meta
 
         private IEnumerable<ISymbol> VisitGeneric(GenericNameNode generic)
         {
-            return GetGlobalNamespaces().SelectMany(n => VisitGeneric(n, generic));
+            return GetGlobalNamespaces()
+                .SelectMany(n => VisitGeneric(n, generic));
         }
 
         private IEnumerable<ISymbol> VisitGeneric(INamespaceSymbol namespaceSymbol, GenericNameNode generic)
@@ -117,7 +120,8 @@ namespace DotvvmAcademy.Meta
 
         private IEnumerable<ISymbol> VisitIdentifier(IdentifierNameNode identifier)
         {
-            return GetGlobalNamespaces().SelectMany(n => VisitIdentifier(n, identifier));
+            return GetGlobalNamespaces()
+                .SelectMany(n => VisitIdentifier(n, identifier));
         }
 
         private IEnumerable<ISymbol> VisitIdentifier(INamespaceSymbol namespaceSymbol, IdentifierNameNode identifier)
