@@ -15,7 +15,8 @@ namespace Microsoft.Extensions.DependencyInjection
             container.AddScoped<IMemberInfoLocator, MemberInfoLocator>();
             container.AddScoped<IMemberInfoConverter, MemberInfoConverter>();
             container.AddScoped<ITypedConstantExtractor, TypedConstantExtractor>();
-            container.AddScoped<IAttributeExtractor, AttributeExtractor>();
+            container.AddScoped<ITypedAttributeExtractor, TypedAttributeExtractor>();
+            container.AddScoped<IAttributeExtractor>(p => p.GetRequiredService<ITypedAttributeExtractor>());
             container.AddScoped<ICSharpCompilationAccessor, CSharpCompilationAccessor>();
             container.AddScoped<IAssemblyAccessor, AssemblyAccessor>();
 
@@ -31,7 +32,8 @@ namespace Microsoft.Extensions.DependencyInjection
             container.AddSingleton<IMemberInfoNameBuilder, MemberInfoNameBuilder>();
             container.AddSingleton<IMemberInfoConverter, MemberInfoConverter>();
             container.AddSingleton<ITypedConstantExtractor, TypedConstantExtractor>();
-            container.AddSingleton<IAttributeExtractor, AttributeExtractor>();
+            container.AddScoped<ITypedAttributeExtractor, TypedAttributeExtractor>();
+            container.AddScoped<IAttributeExtractor>(p => p.GetRequiredService<ITypedAttributeExtractor>());
             container.AddSingleton<ICSharpCompilationAccessor, CSharpCompilationAccessor>();
             container.AddSingleton<IAssemblyAccessor, AssemblyAccessor>();
             container.AddSingleton<PropertyEqualityComparer>();
