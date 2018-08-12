@@ -1,6 +1,7 @@
 ﻿using DotvvmAcademy.Meta.Syntax;
 using Microsoft.CodeAnalysis;
 using System.Collections.Immutable;
+using System.Diagnostics;
 using System.Linq;
 
 namespace DotvvmAcademy.Meta
@@ -41,7 +42,7 @@ namespace DotvvmAcademy.Meta
                 case IPointerTypeSymbol pointerTypeSymbol:
                     return VisitPointerType(pointerTypeSymbol);
 
-                case INamedTypeSymbol constructedTypeSymbol when constructedTypeSymbol.ConstructedFrom != null:
+                case INamedTypeSymbol constructedTypeSymbol when IsConstructedGenericType(constructedTypeSymbol):
                     return VisitConstructedType(constructedTypeSymbol);
 
                 case INamedTypeSymbol nestedTypeSymbol when nestedTypeSymbol.ContainingType != null:
@@ -57,6 +58,11 @@ namespace DotvvmAcademy.Meta
             }
         }
 
+        private bool IsConstructedGenericType(INamedTypeSymbol typeSymbol)
+        {
+            return typeSymbol.IsGenericType && !typeSymbol.TypeArguments.Any(a => a.TypeKind == TypeKind.TypeParameter);
+        }
+
         private ArrayTypeNameNode VisitArrayType(IArrayTypeSymbol arrayType)
         {
             return new ArrayTypeNameNode(
@@ -68,6 +74,7 @@ namespace DotvvmAcademy.Meta
 
         private ConstructedTypeNameNode VisitConstructedType(INamedTypeSymbol constructedTypeSymbol)
         {
+            Debug.Assert(IsConstructedGenericType(constructedTypeSymbol));
             var typeArguments = constructedTypeSymbol.TypeArguments.Select(Visit).ToImmutableArray();
             var typeArgumentList = new TypeArgumentListNode(
                 arguments: typeArguments,
