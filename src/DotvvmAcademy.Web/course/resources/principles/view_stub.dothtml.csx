@@ -1,13 +1,22 @@
 #load "./constants.csx"
 
-Unit.AddSourcePath("./CalculatorViewModel_stub.cs");
+Unit.SetFileName("calculator.dothtml");
 Unit.SetCorrectCodePath("./calculator_stub.dothtml");
+Unit.SetSourcePath("CalculatorViewModel.cs", "./CalculatorViewModel_stub.cs");
 
 Unit.GetDirective("/attribute::*")
     .IsViewModelDirective(CalculatorViewModel);
 
-Unit.GetControl("/child::node()[1]")
-    .IsOfType<RawLiteral>()
+Unit.GetControl("/*[1]")
     .HasRawContent("<!doctype html>", false);
 
-Unit.GetControl("/html/body");
+var html = Unit.GetControl("/html");
+{
+    var head = html.GetControl("head");
+    {
+        head.GetControl("meta")
+            .GetProperty("@Attribute-charset")
+            .HasValue("utf-8");
+    }
+}
+var body = html.GetControl("body");

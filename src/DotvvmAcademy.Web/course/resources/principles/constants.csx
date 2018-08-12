@@ -1,1 +1,1 @@
-public const string CalculatorViewModel = "DotvvmAcademy.Course.CalculatorViewModel";
+public const string CalculatorViewModel = "DotvvmAcademy.Course.Calculator.CalculatorViewModel";

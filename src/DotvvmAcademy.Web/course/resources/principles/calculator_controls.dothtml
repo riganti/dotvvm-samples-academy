@@ -1,10 +1,13 @@
-@viewModel DotvvmAcademy.Course.CalculatorViewModel
+﻿@viewModel DotvvmAcademy.Course.Calculator.CalculatorViewModel
 
-<!doctype html>
+<!DOCTYPE html>
 <html>
-    <body>
-        {{value: Result}}
-        <dot:TextBox Text="{value: LeftOperand}" />
-        <dot:TextBox Text="{value: RightOperand}" />
-    </body>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <div>{{value: Result}}</div>
+    <dot:TextBox Text="{value: LeftOperand}" />
+    <dot:TextBox Text="{value: RightOperand}" />
+</body>
 </html>

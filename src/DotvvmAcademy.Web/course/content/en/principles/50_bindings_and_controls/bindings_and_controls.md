@@ -1,14 +1,13 @@
 # Bindings and Controls
 
-We continue our tour of dothtml's features.
+We continue our tour of [Dothtml]'s features.
 
 ## Bindings
 
-[Bindings] are perhaps the most powerful feature of dothtml. They create a bond between the View and the ViewModel 
-and they keep it up-to-date.
+[Bindings] are perhaps the most powerful feature of dothtml. They create a bond between the View and the ViewModel and they keep it up-to-date when the ViewModel changes.
 
 
-The most frequently used binding kind is the [Value Binding]:
+The most frequently used kind of bindings is the [Value Binding].
 
 ```dothtml
 <p>{{value: Text}}</p>
@@ -26,12 +25,15 @@ This inserts the value of the `Text` property into the `<p>` element and keeps i
 ```
 ---
 
-Add these elements as children to the `<body>` element:
+## Your Task
 
-- `<div>` with its content bound to the `Result` property we created earlier
-- two [`<dot:TextBox>`][textbox] controls with their `Text` property value-bound to `LeftOperand`
+Add children to the `<body>` element:
+
+- a `<div>` element; bind its content to the `Result` property
+- two [`<dot:TextBox>`][textbox] controls; bind their `Text` property to `LeftOperand`
 and `RightOperand` respectively
 
+[dothtml]: https://www.dotvvm.com/docs/tutorials/basics-first-page
 [bindings]: https://www.dotvvm.com/docs/tutorials/basics-binding-syntax
 [value binding]: https://www.dotvvm.com/docs/tutorials/basics-value-binding
 [controls]: https://www.dotvvm.com/docs/tutorials/basics-built-in-controls

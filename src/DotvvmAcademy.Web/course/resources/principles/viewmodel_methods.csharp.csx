@@ -1,71 +1,40 @@
 #load "./viewmodel_properties.csharp.csx"
 
+using System;
+
 Unit.SetDefaultCodePath("./CalculatorViewModel_properties.cs");
 Unit.SetCorrectCodePath("./CalculatorViewModel_methods.cs");
 
 Unit.GetType(WellKnownTypes.Void)
     .Allow();
 
-calculatorViewModel.GetMethod("Add")
-    .HasAccessibility(Accessibility.Public)
-    .HasParameters();
+var random = new Random();
 
-calculatorViewModel.GetMethod("Subtract")
-    .HasAccessibility(Accessibility.Public)
-    .HasParameters();
-
-calculatorViewModel.GetMethod("Multiply")
-    .HasAccessibility(Accessibility.Public)
-    .HasParameters();
-
-calculatorViewModel.GetMethod("Divide")
-    .HasAccessibility(Accessibility.Public)
-    .HasParameters();
-
-Unit.Run(c =>
+void ValidateMethod(string name, Func<int, int, int> operation)
 {
-    var vm = c.Instantiate(CalculatorViewModel);
-    vm.LeftOperand = 5;
-    vm.RightOperand = 11;
-    vm.Add();
-    if (vm.Result != 16)
-    {
-        c.Report("Your Add method doesn't add correctly.");
-    }
-});
+    calculatorViewModel.GetMethod(name)
+        .HasAccessibility(Accessibility.Public)
+        .HasParameters();
 
-Unit.Run(c =>
-{
-    var vm = c.Instantiate(CalculatorViewModel);
-    vm.LeftOperand = 7;
-    vm.RightOperand = 4;
-    vm.Subtract();
-    if (vm.Result != 3)
+    Unit.Run(c =>
     {
-        c.Report("Your Subtract method doesn't subtract correctly.");
-    }
-});
+        var vm = c.Instantiate(CalculatorViewModel);
+        for (int i = 0; i < 3; i++)
+        {
+            vm.LeftOperand = random.Next(1, 1024);
+            vm.RightOperand = random.Next(1, 1024);
+            var result = operation(vm.LeftOperand, vm.RightOperand);
+            c.Invoke(vm, name);
+            if (vm.Result != result)
+            {
+                c.Report($"Your '{name}' method doesn't work with operands '{vm.LeftOperand}' and '{vm.RightOperand}'.");
+            }
+        }
 
-Unit.Run(c =>
-{
-    var vm = c.Instantiate(CalculatorViewModel);
-    vm.LeftOperand = 4;
-    vm.RightOperand = 5;
-    vm.Multiply();
-    if (vm.Result != 20)
-    {
-        c.Report("Your Multiply method doesn't multiply correctly.");
-    }
-});
+    });
+}
 
-Unit.Run(c =>
-{
-    var vm = c.Instantiate(CalculatorViewModel);
-    vm.LeftOperand = 21;
-    vm.RightOperand = 7;
-    vm.Divide();
-    if (vm.Result != 3)
-    {
-        c.Report("Your Divide method doesn't divide correctly.");
-    }
-});
+ValidateMethod("Add", (l, r) => l + r);
+ValidateMethod("Subtract", (l, r) => l - r);
+ValidateMethod("Multiply", (l, r) => l * r);
+ValidateMethod("Divide", (l, r) => l / r);

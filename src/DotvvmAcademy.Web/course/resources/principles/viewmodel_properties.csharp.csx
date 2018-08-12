@@ -6,20 +6,12 @@ Unit.SetCorrectCodePath("./CalculatorViewModel_properties.cs");
 Unit.GetType<int>()
     .Allow();
 
-calculatorViewModel.GetProperty("Result")
-    .HasAccessibility(Accessibility.Public)
-    .HasGetter()
-    .HasSetter()
-    .Allow();
-
-calculatorViewModel.GetProperty("LeftOperand")
-    .HasAccessibility(Accessibility.Public)
-    .HasGetter()
-    .HasSetter()
-    .Allow();
-
-calculatorViewModel.GetProperty("RightOperand")
-    .HasAccessibility(Accessibility.Public)
-    .HasGetter()
-    .HasSetter()
-    .Allow();
+var names = new[] { "Result", "LeftOperand", "RightOperand" };
+foreach (var name in names)
+{
+    calculatorViewModel.GetProperty(name)
+        .HasAccessibility(Accessibility.Public)
+        .HasGetter()
+        .HasSetter()
+        .Allow();
+}

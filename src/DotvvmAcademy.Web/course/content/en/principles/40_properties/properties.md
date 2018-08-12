@@ -1,11 +1,10 @@
 # Properties
 
-ViewModels get sent around a lot. That's why they need to be JSON-serializable. In practice that usually means 
-all data in the ViewModel needs to be in public properties with a public [getter] and a public [setter].
-
-Our calculator is going to need three of them. One for the result and two for the operands.
+ViewModels get send around a lot. That's why they need to be [JSON]-serializable. Properties in the ViewModel need to be public and have a public [getter] and [setter] in order to be serialized and deserialized without errors.
 
 ---
+
+## Your Task
 
 Add public properties of type `int` to our ViewModel called:
 
@@ -13,6 +12,7 @@ Add public properties of type `int` to our ViewModel called:
 - `LeftOperand`
 - `RightOperand`
 
+[json]: https://json.org/
 [getter]: https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/get
 [setter]: https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/set
 

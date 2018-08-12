@@ -1,8 +1,11 @@
-@viewModel DotvvmAcademy.Course.CalculatorViewModel
+﻿@viewModel DotvvmAcademy.Course.Calculator.CalculatorViewModel
 
-<!doctype html>
+<!DOCTYPE html>
 <html>
-    <body>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body>
 
-    </body>
+</body>
 </html>
