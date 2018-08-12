@@ -3,7 +3,6 @@ using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Controls;
 using DotvvmAcademy.Meta;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Immutable;
@@ -13,27 +12,29 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
     public class ValidationPropertyDescriptorFactory
     {
-        private readonly CSharpCompilation compilation;
-        private readonly ValidationTypeDescriptorFactory descriptorFactory;
-        private readonly AttributeExtractor extractor;
+        private readonly ICSharpCompilationAccessor compilationAccessor;
+        private readonly ITypedAttributeExtractor extractor;
 
         private readonly ConcurrentDictionary<(INamedTypeSymbol, string), ValidationPropertyGroupDescriptor> groups
             = new ConcurrentDictionary<(INamedTypeSymbol, string), ValidationPropertyGroupDescriptor>();
 
-        private readonly ITypeSymbol objectType;
+        private readonly IMemberInfoConverter memberInfoConverter;
 
         private readonly ConcurrentDictionary<(INamedTypeSymbol, string), ValidationPropertyDescriptor> properties
             = new ConcurrentDictionary<(INamedTypeSymbol, string), ValidationPropertyDescriptor>();
 
+        private readonly ValidationTypeDescriptorFactory typeDescriptorFactory;
+
         public ValidationPropertyDescriptorFactory(
-            CSharpCompilation compilation,
-            ValidationTypeDescriptorFactory descriptorFactory,
-            AttributeExtractor extractor)
+            ValidationTypeDescriptorFactory typeDescriptorFactory,
+            ICSharpCompilationAccessor compilationAccessor,
+            ITypedAttributeExtractor extractor,
+            IMemberInfoConverter memberInfoConverter)
         {
-            this.compilation = compilation;
-            objectType = compilation.GetTypeByMetadataName(WellKnownTypes.Object);
-            this.descriptorFactory = descriptorFactory;
+            this.typeDescriptorFactory = typeDescriptorFactory;
+            this.compilationAccessor = compilationAccessor;
             this.extractor = extractor;
+            this.memberInfoConverter = memberInfoConverter;
         }
 
         public ValidationPropertyDescriptor Convert(IPropertyDescriptor property)
@@ -53,7 +54,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
                 throw new ArgumentException($"Passed IPropertyDescriptor is of unknown type: '{property.GetType()}'.");
             }
 
-            var containingType = descriptorFactory.Create(dotvvmProperty.DeclaringType).TypeSymbol;
+            var containingType = typeDescriptorFactory.Create(dotvvmProperty.DeclaringType).TypeSymbol;
             var propertySymbol = containingType
                 .GetMembers(property.Name)
                 .OfType<IPropertySymbol>()
@@ -93,7 +94,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
                     $"unknown type: '{group.GetType()}'.");
             }
 
-            var containingType = descriptorFactory.Create(dotvvmGroup.DeclaringType);
+            var containingType = typeDescriptorFactory.Create(dotvvmGroup.DeclaringType);
             var generatorCandidate = containingType.TypeSymbol
                 .GetMembers($"{group.Name}{ValidationPropertyGroupDescriptor.PropertyGroupSuffix}")
                 .OfType<IFieldSymbol>()
@@ -120,25 +121,22 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             var name = ValidationPropertyDescriptor.SanitizeName(fieldSymbol.MetadataName);
             return properties.GetOrAdd((fieldSymbol.ContainingType, name), _ =>
             {
-                var attachedAttribute = extractor
-                    .GetAttributeData<AttachedPropertyAttribute>(fieldSymbol)
-                    .FirstOrDefault();
+                var attachedAttribute = extractor.ExtractRoslyn<AttachedPropertyAttribute>(fieldSymbol)
+                    .SingleOrDefault();
                 if (attachedAttribute == null
                     || attachedAttribute.ConstructorArguments.Length != 1
                     || attachedAttribute.ConstructorArguments[0].Kind != TypedConstantKind.Type)
                 {
                     throw new ArgumentException($"'{fieldSymbol}' does not have a valid AttachedPropertyAttribute.");
                 }
-                var markupOptions = extractor.GetAttribute<MarkupOptionsAttribute>(fieldSymbol)
-                    ?? new MarkupOptionsAttribute();
                 var propertyType = (ITypeSymbol)attachedAttribute.ConstructorArguments[0].Value;
                 return new ValidationPropertyDescriptor(
                     fieldSymbol: fieldSymbol,
-                    declaringType: descriptorFactory.Create(fieldSymbol.ContainingType),
-                    propertyType: descriptorFactory.Create(propertyType),
-                    markupOptions: markupOptions,
-                    changeAttributes: extractor.GetAttributes<DataContextChangeAttribute>(fieldSymbol),
-                    manipulationAttribute: extractor.GetAttribute<DataContextStackManipulationAttribute>(fieldSymbol));
+                    declaringType: typeDescriptorFactory.Create(fieldSymbol.ContainingType),
+                    propertyType: typeDescriptorFactory.Create(propertyType),
+                    markupOptions: extractor.ExtractMarkupOptions(fieldSymbol),
+                    changeAttributes: extractor.Extract<DataContextChangeAttribute>(fieldSymbol),
+                    manipulationAttribute: extractor.Extract<DataContextStackManipulationAttribute>(fieldSymbol).SingleOrDefault());
             });
         }
 
@@ -146,16 +144,14 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         {
             return groups.GetOrAdd((propertySymbol.ContainingType, propertySymbol.MetadataName), _ =>
             {
-                var groupAttribute = extractor.GetAttribute<PropertyGroupAttribute>(propertySymbol);
+                var groupAttribute = extractor.Extract<PropertyGroupAttribute>(propertySymbol).SingleOrDefault();
                 if (groupAttribute == null)
                 {
                     throw new ArgumentException($"'{propertySymbol}' does not have " +
                         $"the {nameof(PropertyGroupAttribute)}.");
                 }
-                var markupOptions = extractor.GetAttribute<MarkupOptionsAttribute>(propertySymbol)
-                    ?? new MarkupOptionsAttribute();
-                var manipulationAttribute = extractor
-                    .GetAttribute<DataContextStackManipulationAttribute>(propertySymbol);
+                var manipulationAttribute = extractor.Extract<DataContextStackManipulationAttribute>(propertySymbol)
+                    .SingleOrDefault();
                 var pairValueType = GetStringPairValueType(propertySymbol.Type);
                 if (pairValueType == null)
                 {
@@ -165,11 +161,11 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
                 return new ValidationPropertyGroupDescriptor(
                     propertyFactory: this,
                     propertySymbol: propertySymbol,
-                    declaringType: descriptorFactory.Create(propertySymbol.ContainingType),
-                    collectionType: descriptorFactory.Create(propertySymbol.Type),
-                    propertyType: descriptorFactory.Create(pairValueType),
-                    markupOptions: markupOptions,
-                    changeAttributes: extractor.GetAttributes<DataContextChangeAttribute>(propertySymbol),
+                    declaringType: typeDescriptorFactory.Create(propertySymbol.ContainingType),
+                    collectionType: typeDescriptorFactory.Create(propertySymbol.Type),
+                    propertyType: typeDescriptorFactory.Create(pairValueType),
+                    markupOptions: extractor.ExtractMarkupOptions(propertySymbol),
+                    changeAttributes: extractor.Extract<DataContextChangeAttribute>(propertySymbol),
                     manipulationAttribute: manipulationAttribute,
                     prefixes: groupAttribute.Prefixes.ToImmutableArray());
             });
@@ -179,21 +175,19 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         {
             return groups.GetOrAdd((propertySymbol.ContainingType, propertySymbol.MetadataName), _ =>
             {
-                var markupOptions = extractor.GetAttribute<MarkupOptionsAttribute>(propertySymbol)
-                    ?? new MarkupOptionsAttribute();
-                var manipulationAttribute = extractor
-                    .GetAttribute<DataContextStackManipulationAttribute>(propertySymbol);
+                var manipulationAttribute = extractor.Extract<DataContextStackManipulationAttribute>(propertySymbol)
+                    .SingleOrDefault();
                 // TODO: Prefix extraction from the register call
                 return new ValidationPropertyGroupDescriptor(
                     propertyFactory: this,
                     propertySymbol: propertySymbol,
                     fieldSymbol: fieldSymbol,
-                    declaringType: descriptorFactory.Create(propertySymbol.ContainingType),
-                    propertyType: descriptorFactory.Create(propertySymbol.Type),
-                    markupOptions: markupOptions,
-                    changeAttributes: extractor.GetAttributes<DataContextChangeAttribute>(propertySymbol),
+                    declaringType: typeDescriptorFactory.Create(propertySymbol.ContainingType),
+                    propertyType: typeDescriptorFactory.Create(propertySymbol.Type),
+                    markupOptions: extractor.ExtractMarkupOptions(propertySymbol),
+                    changeAttributes: extractor.Extract<DataContextChangeAttribute>(propertySymbol),
                     manipulationAttribute: manipulationAttribute,
-                    prefixes: default(ImmutableArray<string>));
+                    prefixes: default);
             });
         }
 
@@ -206,11 +200,11 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         public ImmutableArray<ValidationPropertyGroupDescriptor> CreateGroups(ITypeSymbol containingType)
         {
-            if (containingType == objectType)
+            if (containingType.BaseType == null)
             {
                 return Enumerable.Empty<ValidationPropertyGroupDescriptor>().ToImmutableArray();
             }
-            var groupSymbol = compilation.GetTypeByMetadataName(DotvvmTypes.DotvvmPropertyGroup);
+            var groupSymbol = compilationAccessor.Compilation.GetTypeByMetadataName(DotvvmTypes.DotvvmPropertyGroup);
             var builder = ImmutableArray.CreateBuilder<ValidationPropertyGroupDescriptor>();
             builder.AddRange(CreateGroups(containingType.BaseType));
             var collectionGroups = containingType.GetMembers()
@@ -241,11 +235,11 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         public ImmutableArray<ValidationPropertyDescriptor> CreateProperties(ITypeSymbol containingType)
         {
-            if (containingType == objectType)
+            if (containingType.BaseType == null)
             {
                 return Enumerable.Empty<ValidationPropertyDescriptor>().ToImmutableArray();
             }
-            var dotvvmPropertySymbol = compilation.GetTypeByMetadataName(DotvvmTypes.DotvvmProperty);
+            var dotvvmPropertySymbol = compilationAccessor.Compilation.GetTypeByMetadataName(DotvvmTypes.DotvvmProperty);
             var builder = ImmutableArray.CreateBuilder<ValidationPropertyDescriptor>();
             builder.AddRange(CreateProperties(containingType.BaseType));
             var fields = containingType.GetMembers()
@@ -290,9 +284,8 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         {
             return properties.GetOrAdd((propertySymbol.ContainingType, propertySymbol.MetadataName), _ =>
             {
-                var manipulationAttribute = extractor
-                    .GetAttribute<DataContextStackManipulationAttribute>(propertySymbol);
-                var markupOptions = extractor.GetAttribute<MarkupOptionsAttribute>(propertySymbol)
+                var manipulationAttribute = extractor.Extract<DataContextStackManipulationAttribute>(propertySymbol).SingleOrDefault();
+                var markupOptions = extractor.Extract<MarkupOptionsAttribute>(propertySymbol).SingleOrDefault()
                     ?? new MarkupOptionsAttribute
                     {
                         AllowBinding = true,
@@ -303,10 +296,10 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
                 return new ValidationPropertyDescriptor(
                     propertySymbol: propertySymbol,
                     fieldSymbol: fieldSymbol,
-                    declaringType: descriptorFactory.Create(propertySymbol.ContainingType),
-                    propertyType: descriptorFactory.Create(propertySymbol.Type),
+                    declaringType: typeDescriptorFactory.Create(propertySymbol.ContainingType),
+                    propertyType: typeDescriptorFactory.Create(propertySymbol.Type),
                     markupOptions: markupOptions,
-                    changeAttributes: extractor.GetAttributes<DataContextChangeAttribute>(propertySymbol),
+                    changeAttributes: extractor.Extract<DataContextChangeAttribute>(propertySymbol),
                     manipulationAttribute: manipulationAttribute);
             });
         }
@@ -315,32 +308,31 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         {
             return properties.GetOrAdd((propertySymbol.ContainingType, propertySymbol.MetadataName), _ =>
             {
-                var markupOptions = extractor.GetAttribute<MarkupOptionsAttribute>(propertySymbol);
+                var markupOptions = extractor.Extract<MarkupOptionsAttribute>(propertySymbol).SingleOrDefault();
                 if (markupOptions == null)
                 {
                     throw new ArgumentException($"'{propertySymbol}' does not have a MarkupOptionsAttribute.");
                 }
-                var manipulationAttribute = extractor
-                    .GetAttribute<DataContextStackManipulationAttribute>(propertySymbol);
+                var manipulationAttribute = extractor.Extract<DataContextStackManipulationAttribute>(propertySymbol).SingleOrDefault();
                 return new ValidationPropertyDescriptor(
                     propertySymbol: propertySymbol,
-                    declaringType: descriptorFactory.Create(propertySymbol.ContainingType),
-                    propertyType: descriptorFactory.Create(propertySymbol.Type),
+                    declaringType: typeDescriptorFactory.Create(propertySymbol.ContainingType),
+                    propertyType: typeDescriptorFactory.Create(propertySymbol.Type),
                     markupOptions: markupOptions,
-                    changeAttributes: extractor.GetAttributes<DataContextChangeAttribute>(propertySymbol),
+                    changeAttributes: extractor.Extract<DataContextChangeAttribute>(propertySymbol),
                     manipulationAttribute: manipulationAttribute);
             });
         }
 
         private ITypeSymbol GetStringPairValueType(ITypeSymbol collectionType)
         {
-            var iEnumerable = compilation.GetTypeByMetadataName(WellKnownTypes.IEnumerable);
-            var keyValuePair = compilation.GetTypeByMetadataName(WellKnownTypes.KeyValuePair);
-            var @string = compilation.GetTypeByMetadataName(WellKnownTypes.String);
+            var iEnumerable = compilationAccessor.Compilation.GetTypeByMetadataName(WellKnownTypes.IEnumerable);
+            var keyValuePair = compilationAccessor.Compilation.GetTypeByMetadataName(WellKnownTypes.KeyValuePair);
+            var @string = compilationAccessor.Compilation.GetTypeByMetadataName(WellKnownTypes.String);
             return collectionType.AllInterfaces
-                .Where(i => compilation.ClassifyConversion(i, iEnumerable).Exists
+                .Where(i => compilationAccessor.Compilation.ClassifyConversion(i, iEnumerable).Exists
                     && i.TypeArguments.Length == 1
-                    && compilation.ClassifyConversion(i.TypeArguments[0], keyValuePair).Exists
+                    && compilationAccessor.Compilation.ClassifyConversion(i.TypeArguments[0], keyValuePair).Exists
                     && i.TypeArguments[0] is INamedTypeSymbol pairArgument
                     && pairArgument.TypeArguments.Length == 2
                     && pairArgument.TypeArguments[0].Equals(@string))

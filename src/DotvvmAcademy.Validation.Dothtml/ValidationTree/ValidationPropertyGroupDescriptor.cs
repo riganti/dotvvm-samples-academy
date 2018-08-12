@@ -124,6 +124,8 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         }
 
         IPropertyDescriptor IPropertyGroupDescriptor.GetDotvvmProperty(string name)
-            => GetDotvvmProperty(name);
+        {
+            return GetDotvvmProperty(name);
+        }
     }
 }
