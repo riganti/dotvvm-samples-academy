@@ -72,23 +72,23 @@ namespace DotvvmAcademy.CourseFormat
         {
             return ScriptOptions.Default
                 .AddReferences(
-                    MetadataReferencer.FromName("netstandard"),
-                    MetadataReferencer.FromName("System.Private.CoreLib"),
-                    MetadataReferencer.FromName("System.Runtime"),
-                    MetadataReferencer.FromName("System.Collections"),
-                    MetadataReferencer.FromName("System.Reflection"),
-                    MetadataReferencer.FromName("System.ComponentModel.Annotations"),
-                    MetadataReferencer.FromName("System.ComponentModel.DataAnnotations"),
-                    MetadataReferencer.FromName("System.Linq"),
-                    MetadataReferencer.FromName("System.Linq.Expressions"), // Roslyn #23573
-                    MetadataReferencer.FromName("Microsoft.CSharp"), // Roslyn #23573
-                    MetadataReferencer.FromName("DotVVM.Framework"),
-                    MetadataReferencer.FromName("DotVVM.Core"),
-                    MetadataReferencer.FromName("DotvvmAcademy.CourseFormat"),
-                    MetadataReferencer.FromName("DotvvmAcademy.Validation"),
-                    MetadataReferencer.FromName("DotvvmAcademy.Validation.CSharp"),
-                    MetadataReferencer.FromName("DotvvmAcademy.Validation.Dothtml"),
-                    MetadataReferencer.FromName("DotvvmAcademy.Meta"))
+                    RoslynReference.FromName("netstandard"),
+                    RoslynReference.FromName("System.Private.CoreLib"),
+                    RoslynReference.FromName("System.Runtime"),
+                    RoslynReference.FromName("System.Collections"),
+                    RoslynReference.FromName("System.Reflection"),
+                    RoslynReference.FromName("System.ComponentModel.Annotations"),
+                    RoslynReference.FromName("System.ComponentModel.DataAnnotations"),
+                    RoslynReference.FromName("System.Linq"),
+                    RoslynReference.FromName("System.Linq.Expressions"), // Roslyn #23573
+                    RoslynReference.FromName("Microsoft.CSharp"), // Roslyn #23573
+                    RoslynReference.FromName("DotVVM.Framework"),
+                    RoslynReference.FromName("DotVVM.Core"),
+                    RoslynReference.FromName("DotvvmAcademy.CourseFormat"),
+                    RoslynReference.FromName("DotvvmAcademy.Validation"),
+                    RoslynReference.FromName("DotvvmAcademy.Validation.CSharp"),
+                    RoslynReference.FromName("DotvvmAcademy.Validation.Dothtml"),
+                    RoslynReference.FromName("DotvvmAcademy.Meta"))
                 .AddImports(
                     "DotvvmAcademy.Validation.Unit",
                     "DotvvmAcademy.Validation.CSharp.Unit",

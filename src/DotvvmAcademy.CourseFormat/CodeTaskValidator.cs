@@ -32,18 +32,19 @@ namespace DotvvmAcademy.CourseFormat
         public async Task<ImmutableArray<CodeTaskDiagnostic>> Validate(IUnit unit, string code)
         {
             ImmutableArray<IValidationDiagnostic> diagnostics;
-            var sourceCodes = ImmutableArray.CreateBuilder<ISourceCode>();
-            sourceCodes.AddRange(await LoadSourceCodes(unit));
+            var configuration = unit.Provider.GetRequiredService<CodeTaskConfiguration>();
+            var sourceCodeTasks = configuration.SourcePaths.Select(p => GetSourceCode(p.Key, p.Value));
+            var sourceCodes = (await Task.WhenAll(sourceCodeTasks)).ToImmutableArray();
             switch (unit)
             {
                 case CSharpUnit csharpUnit:
-                    sourceCodes.Add(new CSharpSourceCode(code));
-                    diagnostics = await csharpService.Validate(csharpUnit, sourceCodes.ToImmutable());
+                    sourceCodes = sourceCodes.Add(new CSharpSourceCode(code, configuration.FileName, true));
+                    diagnostics = await csharpService.Validate(csharpUnit, sourceCodes);
                     break;
 
                 case DothtmlUnit dothtmlUnit:
-                    sourceCodes.Add(new DothtmlSourceCode(code));
-                    diagnostics = await dothtmlService.Validate(dothtmlUnit, sourceCodes.ToImmutable());
+                    sourceCodes = sourceCodes.Add(new DothtmlSourceCode(code, configuration.FileName, true));
+                    diagnostics = await dothtmlService.Validate(dothtmlUnit, sourceCodes);
                     break;
 
                 default:
@@ -58,27 +59,21 @@ namespace DotvvmAcademy.CourseFormat
                     .ToImmutableArray();
         }
 
-        private async Task<IEnumerable<ISourceCode>> LoadSourceCodes(IUnit unit)
+        private async Task<ISourceCode> GetSourceCode(string fileName, string sourcePath)
         {
-            var sourcePaths = unit.Provider.GetRequiredService<SourcePathStorage>().GetSourcePaths();
-            var resources = await Task.WhenAll(sourcePaths.Select(p => workspace.Load<Resource>(p)));
-            return resources.Select(GetSourceCode);
-        }
-
-        private ISourceCode GetSourceCode(Resource resource)
-        {
+            var resource = await workspace.Require<Resource>(sourcePath);
             // TODO: Judging file type merely by extension is not exactly great
             var extension = SourcePath.GetExtension(resource.Path).ToString();
             switch (extension)
             {
                 case ".cs":
-                    return new CSharpSourceCode(resource.Text);
+                    return new CSharpSourceCode(resource.Text, fileName, false);
 
                 case ".dothtml":
-                    return new DothtmlSourceCode(resource.Text);
+                    return new DothtmlSourceCode(resource.Text, fileName, false);
 
                 default:
-                    throw new NotSupportedException($"Extension '{extension}' is not supported.");
+                    throw new NotSupportedException($"File extension '{extension}' is not supported.");
             }
         }
     }

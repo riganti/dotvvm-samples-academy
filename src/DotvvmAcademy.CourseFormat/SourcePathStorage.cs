@@ -1,24 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
+using System.Collections.Generic;
 
 namespace DotvvmAcademy.CourseFormat
 {
     public class SourcePathStorage
     {
+        private readonly ConcurrentDictionary<string, string> paths = new ConcurrentDictionary<string, string>();
         private readonly string scriptDirectory;
-        private readonly HashSet<string> paths = new HashSet<string>();
 
         public SourcePathStorage(string scriptDirectory)
         {
             this.scriptDirectory = scriptDirectory;
         }
 
-        public void Add(string sourcePath)
+        public void Add(string fileName, string sourcePath)
         {
-            var absolutePath = SourcePath.Normalize(SourcePath.Combine(scriptDirectory, sourcePath));
-            paths.Add(absolutePath);
+
         }
 
-        public IEnumerable<string> GetSourcePaths()
+        public IReadOnlyDictionary<string, string> GetSourcePaths()
         {
             return paths;
         }

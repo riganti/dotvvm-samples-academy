@@ -8,9 +8,20 @@ namespace DotvvmAcademy.Validation.Unit
 {
     public static class UnitExtensions
     {
-        public static void AddSourcePath(this IUnit unit, string sourcePath)
+        public static string GetValidatedLanguage(this IUnit unit)
         {
-            unit.Provider.GetRequiredService<SourcePathStorage>().Add(sourcePath);
+            // TODO: Make language validation pluggable into CourseFormat
+            switch (unit)
+            {
+                case CSharpUnit csharp:
+                    return ValidatedLanguages.CSharp;
+
+                case DothtmlUnit dothtml:
+                    return ValidatedLanguages.Dothtml;
+
+                default:
+                    throw new NotSupportedException($"{nameof(IUnit)} type '{unit.GetType()}' is not supported.");
+            }
         }
 
         public static void SetCorrectCodePath(this IUnit unit, string sourcePath)
@@ -31,20 +42,17 @@ namespace DotvvmAcademy.Validation.Unit
             configuration.DefaultCodePath = absolutePath;
         }
 
-        public static string GetValidatedLanguage(this IUnit unit)
+        public static void SetFileName(this IUnit unit, string fileName)
         {
-            // TODO: Make language validation pluggable into CourseFormat
-            switch (unit)
-            {
-                case CSharpUnit csharp:
-                    return ValidatedLanguages.CSharp;
+            var configuration = unit.Provider.GetRequiredService<CodeTaskConfiguration>();
+            configuration.FileName = fileName;
+        }
 
-                case DothtmlUnit dothtml:
-                    return ValidatedLanguages.Dothtml;
-
-                default:
-                    throw new NotSupportedException($"{nameof(IUnit)} type '{unit.GetType()}' is not supported.");
-            }
+        public static void SetSourcePath(this IUnit unit, string fileName, string sourcePath)
+        {
+            var configuration = unit.Provider.GetRequiredService<CodeTaskConfiguration>();
+            var absolutePath = SourcePath.Normalize(SourcePath.Combine(SourcePath.GetParent(configuration.ScriptPath), sourcePath));
+            configuration.SourcePaths.AddOrUpdate(fileName, absolutePath, (k, v) => absolutePath);
         }
     }
 }
