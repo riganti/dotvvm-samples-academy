@@ -10,6 +10,12 @@ namespace DotvvmAcademy.Meta.Tests
         public void BasicLexerTest()
         {
             var lexer = new NameLexer("System.Collections.Generic.List`1[System.String]");
+            NameToken current;
+            do
+            {
+                current = lexer.Lex();
+            }
+            while (current.Kind != NameTokenKind.End);
         }
     }
 }

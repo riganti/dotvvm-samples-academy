@@ -15,7 +15,7 @@ namespace DotvvmAcademy.Validation.CSharp.Experiments
             {
                 case EventDefinition eventDefinition:
                     VisitEvent(eventDefinition);
-                    break;s
+                    break;
 
                 case FieldDefinition fieldDefinition:
                     VisitField(fieldDefinition);
