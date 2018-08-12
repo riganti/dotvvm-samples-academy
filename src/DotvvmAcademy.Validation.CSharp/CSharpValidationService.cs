@@ -32,6 +32,8 @@ namespace DotvvmAcademy.Validation.CSharp
             using (var scope = globalProvider.CreateScope())
             {
                 var context = scope.ServiceProvider.GetRequiredService<Context>();
+                var compilationAccessor = scope.ServiceProvider.GetRequiredService<ICSharpCompilationAccessor>();
+                compilationAccessor.Compilation = GetCompilation(scope.ServiceProvider);
                 var reporter = scope.ServiceProvider.GetRequiredService<CSharpValidationReporter>();
                 context.Unit = unit;
                 context.Sources = sources;
@@ -46,7 +48,13 @@ namespace DotvvmAcademy.Validation.CSharp
                     return reporter.GetReportedDiagnostics().ToImmutableArray();
                 }
 
-                context.Assembly = await GetAssembly(scope.ServiceProvider);
+                var assemblyAccessor = scope.ServiceProvider.GetRequiredService<IAssemblyAccessor>();
+                var userAssembly = await GetAssembly(scope.ServiceProvider);
+                var assemblies = Assembly.GetEntryAssembly().GetReferencedAssemblies().Select(Assembly.Load);
+                var builder = ImmutableArray.CreateBuilder<Assembly>();
+                builder.Add(userAssembly);
+                builder.AddRange(assemblies);
+                assemblyAccessor.Assemblies = builder.ToImmutable();
                 RunDynamicActions(scope.ServiceProvider);
                 return reporter.GetReportedDiagnostics().ToImmutableArray();
             }
@@ -54,7 +62,7 @@ namespace DotvvmAcademy.Validation.CSharp
 
         private async Task<Assembly> GetAssembly(IServiceProvider provider)
         {
-            var compilation = provider.GetRequiredService<CSharpCompilation>();
+            var compilation = provider.GetRequiredService<ICSharpCompilationAccessor>().Compilation;
             using (var originalStream = new MemoryStream())
             using (var rewrittenStream = new MemoryStream())
             {
@@ -84,22 +92,22 @@ namespace DotvvmAcademy.Validation.CSharp
                 .OfType<CSharpSourceCode>()
                 .Select(s => CSharpSyntaxTree.ParseText(
                     text: s.GetContent(),
-                    path: s.Id.ToString()));
+                    path: s.FileName));
             var compilation = CSharpCompilation.Create(
                 assemblyName: $"DotvvmAcademy.Validation.CSharp.{context.Id}",
                 syntaxTrees: trees,
                 references: new[]
                 {
-                    MetadataReferencer.FromName("mscorlib"),
-                    MetadataReferencer.FromName("netstandard"),
-                    MetadataReferencer.FromName("System.Private.CoreLib"),
-                    MetadataReferencer.FromName("System.Runtime"),
-                    MetadataReferencer.FromName("System.Collections"),
-                    MetadataReferencer.FromName("System.Reflection"),
-                    MetadataReferencer.FromName("System.ComponentModel.Annotations"),
-                    MetadataReferencer.FromName("System.ComponentModel.DataAnnotations"),
-                    MetadataReferencer.FromName("DotVVM.Framework"),
-                    MetadataReferencer.FromName("DotVVM.Core")
+                    RoslynReference.FromName("mscorlib"),
+                    RoslynReference.FromName("netstandard"),
+                    RoslynReference.FromName("System.Private.CoreLib"),
+                    RoslynReference.FromName("System.Runtime"),
+                    RoslynReference.FromName("System.Collections"),
+                    RoslynReference.FromName("System.Reflection"),
+                    RoslynReference.FromName("System.ComponentModel.Annotations"),
+                    RoslynReference.FromName("System.ComponentModel.DataAnnotations"),
+                    RoslynReference.FromName("DotVVM.Framework"),
+                    RoslynReference.FromName("DotVVM.Core")
                 },
                 options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
             var reporter = provider.GetRequiredService<CSharpValidationReporter>();
@@ -113,36 +121,23 @@ namespace DotvvmAcademy.Validation.CSharp
 
         private ImmutableArray<ISymbol> GetMetadataNameResult(IServiceProvider provider, string name)
         {
-            return provider.GetRequiredService<SymbolLocator>().Locate(name);
+            return provider.GetRequiredService<ISymbolLocator>().Locate(name);
         }
 
         private IServiceProvider GetServiceProvider()
         {
             var c = new ServiceCollection();
+            c.AddMetaSingletonFriendly();
+            c.AddScoped<Context>();
             c.AddSingleton<AssemblyRewriter>();
-            c.AddSingleton<PropertyEqualityComparer>();
-            c.AddScoped<AttributeExtractor>();
             c.AddScoped<AllowedSymbolStorage>();
             c.AddScoped<DiagnosticAnalyzer, SymbolAllowedAnalyzer>();
-            c.AddScoped(GetCompilation);
             c.AddScoped<IValidationReporter>(p => p.GetRequiredService<CSharpValidationReporter>());
             c.AddScoped<CSharpValidationReporter>();
             c.AddScoped(p => 
             {
                 var context = p.GetRequiredService<Context>();
                 return new CSharpSourceCodeProvider(context.Sources.OfType<CSharpSourceCode>());
-            });
-            c.AddScoped<Context>();
-            c.AddScoped<SymbolLocator>();
-            c.AddScoped(p => p.GetRequiredService<Context>().Assembly);
-            c.AddScoped(p =>
-            {
-                var userAssembly = p.GetRequiredService<Context>().Assembly;
-                var assemblies = Assembly.GetEntryAssembly().GetReferencedAssemblies().Select(Assembly.Load);
-                var builder = ImmutableArray.CreateBuilder<Assembly>();
-                builder.Add(userAssembly);
-                builder.AddRange(assemblies);
-                return new MemberInfoLocator(builder.ToImmutable());
             });
             c.AddScoped<CSharpDynamicContext>();
             return c.BuildServiceProvider();
@@ -184,7 +179,7 @@ namespace DotvvmAcademy.Validation.CSharp
                 concurrentAnalysis: false,
                 logAnalyzerExecutionTime: false,
                 reportSuppressedDiagnostics: true);
-            var compilation = provider.GetRequiredService<CSharpCompilation>()
+            var compilation = provider.GetRequiredService<ICSharpCompilationAccessor>().Compilation
                 .WithAnalyzers(analyzers, analysisOptions);
             var diagnostics = await compilation.GetAnalyzerDiagnosticsAsync();
             var reporter = provider.GetRequiredService<CSharpValidationReporter>();
@@ -215,8 +210,6 @@ namespace DotvvmAcademy.Validation.CSharp
 
         private class Context
         {
-            public Assembly Assembly { get; set; }
-
             public Guid Id { get; } = Guid.NewGuid();
 
             public ImmutableArray<ISourceCode> Sources { get; set; }

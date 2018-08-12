@@ -2,10 +2,7 @@
 using DotvvmAcademy.Validation.CSharp;
 using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.Linq;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace DotvvmAcademy.Validation.Unit
 {
@@ -14,7 +11,7 @@ namespace DotvvmAcademy.Validation.Unit
         internal static TSymbol LocateSymbol<TResult, TSymbol>(this ConstraintContext<TResult> context, string name)
             where TSymbol : ISymbol
         {
-            return (TSymbol)context.Provider.GetRequiredService<SymbolLocator>().LocateSingle(name);
+            return (TSymbol)context.Provider.GetRequiredService<SymbolLocator>().Locate(name).Single();
         }
 
         internal static void Report<TResult>(

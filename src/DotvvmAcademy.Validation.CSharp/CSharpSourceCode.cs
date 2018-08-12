@@ -6,12 +6,16 @@ namespace DotvvmAcademy.Validation.CSharp
     {
         private readonly string source;
 
-        public CSharpSourceCode(string source)
+        public CSharpSourceCode(string source, string fileName, bool isValidated)
         {
             this.source = source;
+            FileName = fileName;
+            IsValidated = isValidated;
         }
 
-        public Guid Id { get; }
+        public string FileName { get; }
+
+        public bool IsValidated { get; }
 
         public string GetContent()
         {

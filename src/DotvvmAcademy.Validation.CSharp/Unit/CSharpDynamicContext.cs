@@ -16,12 +16,6 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
             this.reporter = reporter;
         }
 
-        public dynamic Instantiate(string typeName, params object[] arguments)
-        {
-            var type = locator.Locate(typeName).OfType<Type>().Single();
-            return Activator.CreateInstance(type, arguments);
-        }
-
         public dynamic GetFieldValue(object instance, string fieldName)
         {
             var flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
@@ -32,6 +26,22 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
         {
             var flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
             return instance.GetType().GetProperty(propertyName, flags).GetValue(instance);
+        }
+
+        public dynamic Instantiate(string typeName, params object[] arguments)
+        {
+            var type = locator.Locate(typeName).OfType<Type>().Single();
+            return Activator.CreateInstance(type, arguments);
+        }
+
+        public dynamic Invoke(object instance, string name, params object[] arguments)
+        {
+            var flags = BindingFlags.InvokeMethod 
+                | BindingFlags.Instance 
+                | BindingFlags.Static 
+                | BindingFlags.Public 
+                | BindingFlags.NonPublic;
+            return instance.GetType().InvokeMember(name, flags, Type.DefaultBinder, instance, arguments);
         }
 
         public void Report(string message, ValidationSeverity severity = default)

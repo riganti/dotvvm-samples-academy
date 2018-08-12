@@ -1,8 +1,5 @@
-﻿using DotvvmAcademy.Meta;
-using DotvvmAcademy.Validation.Unit;
+﻿using DotvvmAcademy.Validation.Unit;
 using Microsoft.CodeAnalysis;
-using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.Collections.Immutable;
 
 namespace DotvvmAcademy.Validation.CSharp.Unit
@@ -88,13 +85,10 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
             return HasParameters(query, parameters.ToImmutableArray());
         }
 
-        private static IQuery<IMethodSymbol> HasParameters(
-            IQuery<IMethodSymbol> query,
-            ImmutableArray<string> parameters)
+        private static IQuery<IMethodSymbol> HasParameters(IQuery<IMethodSymbol> query, ImmutableArray<string> parameters)
         {
             query.SetConstraint(nameof(HasParameters), context =>
             {
-                var locator = context.Provider.GetRequiredService<SymbolLocator>();
                 foreach (var method in context.Result)
                 {
                     if (parameters.Length != method.Parameters.Length)
@@ -105,9 +99,9 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
                         continue;
                     }
 
-                    for (int i = 0; i < method.Parameters.Length; i++)
+                    for (var i = 0; i < method.Parameters.Length; i++)
                     {
-                        var expectedParameter = locator.LocateSingle(parameters[i]);
+                        var expectedParameter = context.LocateSymbol<IMethodSymbol, ITypeSymbol>(parameters[i]);
                         if (!method.Parameters[i].Equals(expectedParameter))
                         {
                             context.Report(

@@ -28,7 +28,7 @@ namespace DotvvmAcademy.Validation.CSharp
 
         public override void Initialize(AnalysisContext context)
         {
-            context.RegisterSyntaxNodeAction(ValidateNode, RoslynKinds.Identifiers);
+            context.RegisterSyntaxNodeAction(ValidateNode, RoslynPresets.Identifiers);
         }
 
         public void ValidateNode(SyntaxNodeAnalysisContext context)

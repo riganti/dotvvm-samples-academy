@@ -46,12 +46,14 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
         {
             query.SetConstraint($"{nameof(HasAttribute)}_{attributeType}", context =>
             {
-                var extractor = context.Provider.GetRequiredService<AttributeExtractor>();
-                // TODO: Use something else for object comparison. This generates too broad errors.
+                var converter = context.Provider.GetRequiredService<IMemberInfoConverter>();
+                var attributeClass = (INamedTypeSymbol)converter.Convert(attributeType);
+                var extractor = context.Provider.GetRequiredService<IAttributeExtractor>();
+                // TODO: Use something else for object comparison. This generates errors that are too broad.
                 var propertyComparer = context.Provider.GetRequiredService<PropertyEqualityComparer>();
                 foreach (var symbol in context.Result)
                 {
-                    var attribute = extractor.GetAttribute(attributeType, symbol);
+                    var attribute = extractor.Extract(attributeClass, symbol).SingleOrDefault();
                     if (attribute == null)
                     {
                         context.Report(
@@ -79,7 +81,7 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
         {
             query.SetConstraint(nameof(HasBaseType), context =>
             {
-                var baseType = (ITypeSymbol)context.Provider.GetRequiredService<SymbolLocator>().LocateSingle(typeName);
+                var baseType = context.LocateSymbol<ITypeSymbol, ITypeSymbol>(typeName);
                 foreach (var typeSymbol in context.Result)
                 {
                     if (!typeSymbol.BaseType.Equals(baseType))
@@ -123,10 +125,12 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
         {
             query.SetConstraint($"{nameof(HasNoAttribute)}_{attributeType}", context =>
             {
+                var converter = context.Provider.GetRequiredService<IMemberInfoConverter>();
+                var attributeClass = (INamedTypeSymbol)converter.Convert(attributeType);
                 var extractor = context.Provider.GetRequiredService<AttributeExtractor>();
                 foreach (var symbol in context.Result)
                 {
-                    if (!extractor.HasAttribute(attributeType, symbol))
+                    if (symbol.GetAttributes().Any(a => a.AttributeClass.Equals(attributeClass)))
                     {
                         context.Report(
                             message: $"Symbol '{symbol}' must have no '{attributeType}' attributes.",
@@ -171,9 +175,7 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
         {
             query.SetConstraint($"{nameof(Implements)}_{typeName}", context =>
             {
-                var interfaceSymbol = (INamedTypeSymbol)context.Provider
-                    .GetRequiredService<SymbolLocator>()
-                    .LocateSingle(typeName);
+                var interfaceSymbol = context.LocateSymbol<ITypeSymbol, ITypeSymbol>(typeName);
                 foreach (var typeSymbol in context.Result)
                 {
                     if (!typeSymbol.AllInterfaces.Contains(interfaceSymbol))
@@ -196,7 +198,7 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
         {
             query.SetConstraint(nameof(IsOfType), context =>
             {
-                var type = (ITypeSymbol)context.Provider.GetRequiredService<SymbolLocator>().LocateSingle(typeName);
+                var type = context.LocateSymbol<IFieldSymbol, ITypeSymbol>(typeName);
                 foreach (var field in context.Result)
                 {
                     if (!field.Type.Equals(type))
@@ -219,7 +221,7 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
         {
             query.SetConstraint(nameof(IsOfType), context =>
             {
-                var type = (ITypeSymbol)context.Provider.GetRequiredService<SymbolLocator>().LocateSingle(typeName);
+                var type = context.LocateSymbol<IPropertySymbol, ITypeSymbol>(typeName);
                 foreach (var property in context.Result)
                 {
                     if (!property.Type.Equals(type))
@@ -276,7 +278,7 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
         {
             query.SetConstraint(nameof(Returns), context =>
             {
-                var type = (ITypeSymbol)context.Provider.GetRequiredService<SymbolLocator>().LocateSingle(typeName);
+                var type = context.LocateSymbol<IMethodSymbol, ITypeSymbol>(typeName);
                 foreach (var method in context.Result)
                 {
                     if (!method.ReturnType.Equals(type))
