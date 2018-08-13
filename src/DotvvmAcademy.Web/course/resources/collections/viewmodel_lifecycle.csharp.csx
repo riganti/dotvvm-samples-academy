@@ -2,11 +2,17 @@
 
 using DotVVM.Framework.ViewModel;
 
-Unit.GetType(ToDoViewModel)
-    .HasBaseType<DotvvmViewModelBase>();
+Unit.GetType<DotvvmViewModelBase>().Allow();
+Unit.GetType<Task>().Allow();
+Unit.GetType($"System.Collections.Generic.IReadOnlyList`1[{ToDoItem}]").Allow();
+facade.GetMethod("GetToDoItems").Allow();
+Unit.GetMethods("System.Linq.Enumerable::ToList").Allow();
 
-Unit.GetMethod($"{ToDoViewModel}::PreRender")
-    .Returns("System.Threading.Tasks.Task");
+viewModel.HasBaseType<DotvvmViewModelBase>();
+{
+    viewModel.GetMethod($"PreRender")
+        .Returns<Task>();
+}
 
 Unit.Run(context => 
 {

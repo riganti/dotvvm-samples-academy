@@ -1,7 +1,6 @@
 ﻿# Facades and DTOs
 
-The business layer typically consists of a number of [Facades][facade] and [Data Transfer Objects][dto].
-Our To-do list already has a business layer, which will serve as the model for our DotVVM application.
+Our application already has a few classes, you'll get to know now:
 
 ## ToDoFacade
 
@@ -22,9 +21,7 @@ namespace DotvvmAcademy.Course
 }
 ```
 
-`ToDoFacade` is an interface between our DotVVM application and whatever handles 
-the storage of the to-do items. That could be a database, but it might as well be a trained monkey.
-The caller of the facade's methods doesn't need to know.
+`ToDoFacade` is a [Facade], an interface between our DotVVM application and whatever handles the storage of the to-do items. That could be a database, but it might as well be a be a trained monkey. The caller of the facade's methods doesn't need to know.
 
 ## ToDoItemDTO
 
@@ -42,8 +39,7 @@ namespace DotvvmAcademy.Course
 }
 ```
 
-What you see in the snippet above is a [Data Transfer Object][dto]. Essentially, it represents a piece of data
-from _somewhere_ and is virtually always safe to use in ViewModels as it's [JSON]-serializable.
+What you see in the snippet above is a [Data Transfer Object][dto]. Essentially, it represents a piece of data transfered from _somewhere_ and is virtually always [JSON]-serializable and therefore safe to use in ViewModels.
 
 
 [facade]: https://en.wikipedia.org/wiki/Facade_pattern

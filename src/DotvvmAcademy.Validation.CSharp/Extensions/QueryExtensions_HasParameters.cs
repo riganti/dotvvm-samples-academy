@@ -102,10 +102,10 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
                     for (var i = 0; i < method.Parameters.Length; i++)
                     {
                         var expectedParameter = context.LocateSymbol<IMethodSymbol, ITypeSymbol>(parameters[i]);
-                        if (!method.Parameters[i].Equals(expectedParameter))
+                        if (!method.Parameters[i].Type.Equals(expectedParameter))
                         {
                             context.Report(
-                                message: $"Parameters must be of type '{expectedParameter}'.",
+                                message: $"Parameter must be of type '{expectedParameter}'.",
                                 symbol: method.Parameters[i]);
                         }
                     }

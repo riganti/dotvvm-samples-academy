@@ -11,7 +11,7 @@ namespace DotvvmAcademy.Validation.Unit
         internal static TSymbol LocateSymbol<TResult, TSymbol>(this ConstraintContext<TResult> context, string name)
             where TSymbol : ISymbol
         {
-            return (TSymbol)context.Provider.GetRequiredService<SymbolLocator>().Locate(name).Single();
+            return (TSymbol)context.Provider.GetRequiredService<ISymbolLocator>().Locate(name).Single();
         }
 
         internal static void Report<TResult>(

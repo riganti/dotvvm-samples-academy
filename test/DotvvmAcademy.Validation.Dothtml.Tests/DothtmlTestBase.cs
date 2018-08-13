@@ -57,14 +57,14 @@ namespace DotvvmAcademy.Validation.Dothtml.Tests
             var root = parser.Parse(tokenizer.Tokens);
             using (var scope = Provider.CreateScope())
             {
-                var resolver = Provider.GetRequiredService<ValidationTreeResolver>();
                 var compilationAccessor = Provider.GetRequiredService<ICSharpCompilationAccessor>();
+                compilationAccessor.Compilation = GetCompilation(viewModel);
                 var assemblyAccessor = Provider.GetRequiredService<IAssemblyAccessor>();
                 assemblyAccessor.Assemblies = Assembly.GetEntryAssembly()
                     .GetReferencedAssemblies()
                     .Select(Assembly.Load)
                     .ToImmutableArray();
-                compilationAccessor.Compilation = GetCompilation(viewModel);
+                var resolver = Provider.GetRequiredService<ValidationTreeResolver>();
                 return (ValidationTreeRoot)resolver.ResolveTree(root, "test.dothtml");
             }
         }
@@ -72,7 +72,12 @@ namespace DotvvmAcademy.Validation.Dothtml.Tests
         protected virtual void RegisterServices(IServiceCollection container)
         {
             container.AddMetaScopeFriendly();
-            container.AddScoped<ValidationControlResolver>();
+            container.AddScoped(p => 
+            {
+                var controlResolver = ActivatorUtilities.CreateInstance<ValidationControlResolver>(p);
+                controlResolver.RegisterNamespace("dot", "DotVVM.Framework.Controls", "DotVVM.Framework");
+                return controlResolver;
+            });
             container.AddScoped<ValidationTreeBuilder>();
             container.AddScoped<ValidationPropertyFactory>();
             container.AddScoped<ValidationControlMetadataFactory>();

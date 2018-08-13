@@ -1,13 +1,12 @@
 using DotvvmAcademy.Meta.Syntax;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace DotvvmAcademy.Meta.Tests
 {
-    [TestClass]
     public class NameLexerTests
     {
-        [TestMethod]
-        public void BasicLexerTest()
+        [Fact]
+        public void NameLexer_ConstructedName_GenerateTokens()
         {
             var lexer = new NameLexer("System.Collections.Generic.List`1[System.String]");
             NameToken current;

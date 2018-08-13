@@ -9,7 +9,6 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Reflection;
@@ -49,9 +48,7 @@ namespace DotvvmAcademy.Validation.Dothtml
                     HandleQueries<ValidationControl>(scope.ServiceProvider);
                     HandleQueries<ValidationPropertySetter>(scope.ServiceProvider);
                     HandleQueries<ValidationDirective>(scope.ServiceProvider);
-                    return scope.ServiceProvider.GetRequiredService<DothtmlValidationReporter>()
-                        .GetReportedDiagnostics()
-                        .ToImmutableArray();
+                    return GetValidationDiagnostics(scope.ServiceProvider);
                 }
             });
         }
@@ -107,6 +104,14 @@ namespace DotvvmAcademy.Validation.Dothtml
             c.AddScoped<Context>();
             c.AddScoped<NameTable>();
             return c.BuildServiceProvider();
+        }
+
+        private ImmutableArray<IValidationDiagnostic> GetValidationDiagnostics(IServiceProvider provider)
+        {
+            return provider.GetRequiredService<DothtmlValidationReporter>()
+                .GetReportedDiagnostics()
+                .Where(d => d.Source == null || d.Source.IsValidated)
+                .ToImmutableArray();
         }
 
         private ValidationTreeRoot GetValidationTree(IServiceProvider provider)
@@ -173,9 +178,9 @@ namespace DotvvmAcademy.Validation.Dothtml
         {
             public Guid Id { get; } = Guid.NewGuid();
 
-            public DothtmlUnit Unit { get; set; }
-
             public ImmutableArray<ISourceCode> Sources { get; set; }
+
+            public DothtmlUnit Unit { get; set; }
         }
     }
 }

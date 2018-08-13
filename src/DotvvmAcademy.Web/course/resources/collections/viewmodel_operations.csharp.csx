@@ -1,16 +1,23 @@
-﻿#load "./viewmodel_stub.csharp.csx"
+﻿#load "./viewmodel_lifecycle.csharp.csx"
 
-Unit.GetProperty($"{ToDoViewModel}::NewItemText")
-    .IsOfType<string>();
+Unit.GetType<string>().Allow();
+Unit.GetType<int>().Allow();
+facade.GetMethod("AddItem").Allow();
+facade.GetMethod("RemoveItem").Allow();
 
-Unit.GetMethod($"{ToDoViewModel}::AddItem")
-    .Returns<Task>()
-    .HasParameters();
+{
+    viewModel.GetProperty($"NewItemText")
+        .IsOfType<string>()
+        .Allow();
 
-Unit.GetMethod($"{ToDoViewModel}::RemoveItem")
-    .Returns<Task>()
-    .HasParameters("System.Int32");
+    viewModel.GetMethod($"AddItem")
+        .Returns<Task>()
+        .HasParameters();
 
+    viewModel.GetMethod($"RemoveItem")
+        .Returns<Task>()
+        .HasParameters<int>();
+}
 
 Unit.Run(context =>
 {

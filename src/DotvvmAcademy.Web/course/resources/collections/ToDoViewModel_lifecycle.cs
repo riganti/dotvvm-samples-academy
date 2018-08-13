@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DotVVM.Framework.ViewModel;
 
-namespace DotvvmAcademy.Course
+namespace DotvvmAcademy.Course.ToDo
 {
     public class ToDoViewModel : DotvvmViewModelBase
     {

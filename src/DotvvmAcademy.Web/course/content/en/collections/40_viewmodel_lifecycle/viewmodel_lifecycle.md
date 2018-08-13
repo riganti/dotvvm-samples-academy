@@ -1,7 +1,6 @@
 ﻿# ViewModel Lifecycle
 
-We want to use the facade to fill the `Items` collection, preferably asynchrounously.
-That's where `DotvvmViewModelBase` comes in.
+We want to use the facade to fill the `Items` collection, preferably asynchrounously. That's where `DotvvmViewModelBase` comes in.
 
 `DotvvmViewModelBase` allows you to override three methods, that are often refered to as the ViewModel lifecycle:
 
@@ -13,10 +12,12 @@ wasn't any).
 
 ---
 
+## Your Task
+
 Make `ToDoViewModel` inherit from `DotvvmViewModelBase` and override `PreRender` in order to load the `Items` collection
 asynchronously.
 
 Note: We override `PreRender` because our item-adding and item-removing commands will change the contents of `Items`.
-If we were to override `Init` or `Load`, changes we made would not get displayed until the __next__ request.
+If we were to override `Init` or `Load`, changes we would make would not get displayed until the __next__ request.
 
 [CodeTask](/resources/collections/viewmodel_lifecycle.csharp.csx)

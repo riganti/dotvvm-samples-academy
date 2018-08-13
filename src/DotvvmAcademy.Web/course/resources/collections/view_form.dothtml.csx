@@ -1,10 +1,19 @@
 ﻿#load "./view_stub.dothtml.csx"
 
-Unit.GetProperty("/html/body/dot:Repeater/@ItemTemplate/dot:Button/@Click")
-    .HasBinding("_root.RemoveItem(Id)", BindingKind.Command);
+Unit.SetSourcePath("ToDoViewModel.cs", "./ToDoViewModel_operations.cs");
 
-Unit.GetProperty("/html/body/dot:TextBox/@Text")
-    .HasBinding("NewItemText");
-
-Unit.GetProperty("/html/body/dot:Button/@Click")
-    .HasBinding("AddItem()", BindingKind.Command);
+{
+    var removeButton = template.GetControl("dot:Button");
+    removeButton.GetProperty("@Click")
+        .HasBinding("_root.RemoveItem(Id)", BindingKind.Command);
+}
+{
+    var textBox = body.GetControl("dot:TextBox");
+    textBox.GetProperty("@Text")
+        .HasBinding("NewItemText");
+}
+{
+    var addButton = body.GetControl("dot:Button");
+    addButton.GetProperty("@Click")
+        .HasBinding("AddItem()", BindingKind.Command);
+}

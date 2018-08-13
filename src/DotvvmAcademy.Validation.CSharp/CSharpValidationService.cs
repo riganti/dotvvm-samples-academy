@@ -45,7 +45,7 @@ namespace DotvvmAcademy.Validation.CSharp
                 await RunAnalyzers(scope.ServiceProvider);
                 if (reporter.WorstSeverity == ValidationSeverity.Error)
                 {
-                    return reporter.GetReportedDiagnostics().ToImmutableArray();
+                    return GetValidationDiagnostics(scope.ServiceProvider);
                 }
 
                 var assemblyAccessor = scope.ServiceProvider.GetRequiredService<IAssemblyAccessor>();
@@ -56,7 +56,7 @@ namespace DotvvmAcademy.Validation.CSharp
                 builder.AddRange(assemblies);
                 assemblyAccessor.Assemblies = builder.ToImmutable();
                 RunDynamicActions(scope.ServiceProvider);
-                return reporter.GetReportedDiagnostics().ToImmutableArray();
+                return GetValidationDiagnostics(scope.ServiceProvider);
             }
         }
 
@@ -104,6 +104,7 @@ namespace DotvvmAcademy.Validation.CSharp
                     RoslynReference.FromName("System.Runtime"),
                     RoslynReference.FromName("System.Collections"),
                     RoslynReference.FromName("System.Reflection"),
+                    RoslynReference.FromName("System.Linq"),
                     RoslynReference.FromName("System.ComponentModel.Annotations"),
                     RoslynReference.FromName("System.ComponentModel.DataAnnotations"),
                     RoslynReference.FromName("DotVVM.Framework"),
@@ -134,13 +135,21 @@ namespace DotvvmAcademy.Validation.CSharp
             c.AddScoped<DiagnosticAnalyzer, SymbolAllowedAnalyzer>();
             c.AddScoped<IValidationReporter>(p => p.GetRequiredService<CSharpValidationReporter>());
             c.AddScoped<CSharpValidationReporter>();
-            c.AddScoped(p => 
+            c.AddScoped(p =>
             {
                 var context = p.GetRequiredService<Context>();
                 return new CSharpSourceCodeProvider(context.Sources.OfType<CSharpSourceCode>());
             });
             c.AddScoped<CSharpDynamicContext>();
             return c.BuildServiceProvider();
+        }
+
+        private ImmutableArray<IValidationDiagnostic> GetValidationDiagnostics(IServiceProvider provider)
+        {
+            return provider.GetRequiredService<CSharpValidationReporter>()
+                .GetReportedDiagnostics()
+                .Where(d => d.Source == null || d.Source.IsValidated)
+                .ToImmutableArray();
         }
 
         private void HandleQueries<TResult>(IServiceProvider provider)

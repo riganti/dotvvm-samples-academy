@@ -1,31 +1,34 @@
 ﻿#load "./constants.csx"
 
+Unit.SetFileName("ToDoViewModel.cs");
 Unit.SetCorrectCodePath("./ToDoViewModel_stub.cs");
-Unit.AddSourcePath("./ToDoFacade.cs");
-Unit.AddSourcePath("./ToDoItem.cs");
+Unit.SetSourcePath("ToDoFacade.cs", "./ToDoFacade.cs");
+Unit.SetSourcePath("ToDoItem.cs", "./ToDoItem.cs");
 
-Unit.GetTypes(ToDoViewModel)
-    .CountEquals(1)
+var facade = Unit.GetType(ToDoFacade).Allow();
+var item = Unit.GetType(ToDoItem).Allow();
+
+var viewModel = Unit.GetType(ToDoViewModel)
     .IsTypeKind(TypeKind.Class)
     .HasAccessibility(Accessibility.Public);
+{
+    viewModel.GetField("facade")
+        .HasAccessibility(Accessibility.Private)
+        .IsReadonly()
+        .IsOfType(ToDoFacade)
+        .Allow();
 
-Unit.GetField(FacadeField)
-    .CountEquals(1)
-    .HasAccessibility(Accessibility.Private)
-    .IsReadonly()
-    .IsOfType(ToDoFacade);
+    viewModel.GetMethod(".ctor")
+        .HasAccessibility(Accessibility.Public)
+        .HasParameters(ToDoFacade);
 
-Unit.GetMethod(ViewModelConstructor)
-    .CountEquals(1)
-    .HasAccessibility(Accessibility.Public)
-    .HasParameters(ToDoFacade);
-
-Unit.GetProperties(ItemsProperty)
-    .CountEquals(1)
-    .HasAccessibility(Accessibility.Public)
-    .HasGetter()
-    .HasSetter()
-    .IsOfType($"System.Collections.Generic.List`1[{ToDoItem}]");
+    viewModel.GetProperty("Items")
+        .HasAccessibility(Accessibility.Public)
+        .HasGetter()
+        .HasSetter()
+        .IsOfType($"System.Collections.Generic.List`1[{ToDoItem}]")
+        .Allow();
+}
 
 Unit.Run(context =>
 {
@@ -34,6 +37,6 @@ Unit.Run(context =>
     var field = context.GetFieldValue(viewModel, "facade");
     if (field == null)
     {
-        context.Report("Field 'facade' is not being set in constructor.");
+        context.Report("Field 'facade' is not being set in the constructor.");
     }
 });

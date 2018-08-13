@@ -1,4 +1,5 @@
 ﻿using DotVVM.Framework.Compilation.ControlTree;
+using DotVVM.Framework.Compilation.ControlTree.Resolved;
 using DotVVM.Framework.Controls;
 using DotvvmAcademy.Meta;
 using DotvvmAcademy.Meta.Syntax;
@@ -45,12 +46,9 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         public bool IsAssignableFrom(ITypeDescriptor typeDescriptor)
         {
-            if (typeDescriptor is ValidationTypeDescriptor other)
-            {
-                var conversion = compilationAccessor.Compilation.ClassifyConversion(other.TypeSymbol, TypeSymbol);
-                return conversion.Exists;
-            }
-            return false;
+            var other = factory.Convert(typeDescriptor);
+            var conversion = compilationAccessor.Compilation.ClassifyConversion(other.TypeSymbol, TypeSymbol);
+            return conversion.Exists;
         }
 
         public bool IsAssignableFrom(Type type)
@@ -60,11 +58,8 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         public bool IsAssignableTo(ITypeDescriptor typeDescriptor)
         {
-            if (typeDescriptor is ValidationTypeDescriptor other)
-            {
-                return other.IsAssignableFrom(this);
-            }
-            return false;
+            var other = factory.Convert(typeDescriptor);
+            return other.IsAssignableFrom(this);
         }
 
         public bool IsAssignableTo(Type type)
@@ -74,11 +69,8 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         public bool IsEqualTo(ITypeDescriptor typeDescriptor)
         {
-            if (typeDescriptor is ValidationTypeDescriptor other)
-            {
-                return TypeSymbol.Equals(other.TypeSymbol);
-            }
-            return false;
+            var other = factory.Convert(typeDescriptor);
+            return TypeSymbol.Equals(other.TypeSymbol);
         }
 
         public bool IsEqualTo(Type type)
