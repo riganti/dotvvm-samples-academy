@@ -8,5 +8,10 @@
         }
 
         public string Text { get; }
+
+        public override long GetSize()
+        {
+            return Text.Length;
+        }
     }
 }

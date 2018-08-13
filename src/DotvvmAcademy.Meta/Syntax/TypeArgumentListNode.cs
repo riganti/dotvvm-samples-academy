@@ -3,6 +3,7 @@ using System.Text;
 
 namespace DotvvmAcademy.Meta.Syntax
 {
+    // TODO: Merge with ConstructedTypeNameNode
     public class TypeArgumentListNode : NameNode
     {
         public TypeArgumentListNode(

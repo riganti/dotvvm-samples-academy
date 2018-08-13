@@ -1,33 +1,33 @@
-﻿using DotvvmAcademy.Validation.CSharp.Unit;
+﻿using UnitAccessibility = DotvvmAcademy.Validation.CSharp.Unit.Accessibility;
 
 namespace Microsoft.CodeAnalysis
 {
     public static class AccessibilityExtensions
     {
-        public static CSharpAccessibility ToCSharpAccessibility(this Accessibility accessibility)
+        public static UnitAccessibility ToUnitAccessibility(this Accessibility accessibility)
         {
             switch (accessibility)
             {
                 case Accessibility.Private:
-                    return CSharpAccessibility.Private;
+                    return UnitAccessibility.Private;
 
                 case Accessibility.ProtectedAndInternal:
-                    return CSharpAccessibility.ProtectedAndInternal;
-                    
+                    return UnitAccessibility.ProtectedAndInternal;
+
                 case Accessibility.Protected:
-                    return CSharpAccessibility.Protected;
+                    return UnitAccessibility.Protected;
 
                 case Accessibility.Internal:
-                    return CSharpAccessibility.Internal;
+                    return UnitAccessibility.Internal;
 
                 case Accessibility.ProtectedOrInternal:
-                    return CSharpAccessibility.ProtectedOrInternal;
+                    return UnitAccessibility.ProtectedOrInternal;
 
                 case Accessibility.Public:
-                    return CSharpAccessibility.Public;
+                    return UnitAccessibility.Public;
 
                 default:
-                    return CSharpAccessibility.None;
+                    return UnitAccessibility.None;
             }
         }
     }

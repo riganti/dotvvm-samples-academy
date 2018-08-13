@@ -1,94 +1,44 @@
-﻿using System.Collections.Immutable;
-using System.IO;
+﻿using Microsoft.Extensions.Caching.Memory;
+using System;
 using System.Threading.Tasks;
 
 namespace DotvvmAcademy.CourseFormat
 {
     public class CourseWorkspace
     {
-        private ImmutableDictionary<string, Task<Source>> sources;
+        public const string SourcePrefix = "Source:";
+#if DEBUG
+        private static readonly TimeSpan SourceLifetime = TimeSpan.FromSeconds(3);
+#else
+        private static readonly TimeSpan SourceLifetime = TimeSpan.FromDays(1);
+#endif
+        private readonly CourseEnvironment environment;
+        private readonly SourceLoader loader;
+        private readonly CourseCacheWrapper wrapper;
 
-        public CourseWorkspace(string root) : this(new DirectoryInfo(root))
+        public CourseWorkspace(CourseEnvironment environment, SourceLoader loader, CourseCacheWrapper wrapper)
         {
+            this.environment = environment;
+            this.loader = loader;
+            this.wrapper = wrapper;
         }
 
-        public CourseWorkspace(DirectoryInfo root)
+        public Task<Source> Load(string sourcePath)
         {
-            Root = root;
-            Refresh();
-        }
-
-        public DirectoryInfo Root { get; }
-
-        public DirectoryInfo GetDirectory(string virtualPath)
-        {
-            return new DirectoryInfo(Path.Combine(Root.FullName, $".{virtualPath}"));
-        }
-
-        public FileInfo GetFile(string sourcePath)
-        {
-            return new FileInfo(Path.Combine(Root.FullName, $".{sourcePath}"));
-        }
-
-        public Task<Source> Load(string path)
-        {
-            if (path == null)
+            if (string.IsNullOrWhiteSpace(sourcePath))
             {
-                return Task.FromResult<Source>(null);
+                throw new ArgumentException("Source path must not be null or whitespace.", nameof(sourcePath));
             }
 
-            if (sources.TryGetValue(path, out var source))
+            return wrapper.Cache.GetOrCreateAsync($"{SourcePrefix}{sourcePath}", async entry =>
             {
+                var source = await loader.Load(sourcePath);
+                entry.Value = source;
+                entry.SetAbsoluteExpiration(SourceLifetime);
+                entry.SetSize(source?.GetSize() ?? 1);
+                entry.RegisterPostEvictionCallback((k, v, r, s) => source?.OnEviction());
                 return source;
-            }
-
-            return Task.FromResult<Source>(null);
+            });
         }
-
-        public async Task<TSource> Load<TSource>(string path)
-            where TSource : Source
-        {
-            var source = await Load(path);
-            if (source == null)
-            {
-                return null;
-            }
-
-            if (source is TSource cast)
-            {
-                return cast;
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        public Task<CodeTask> LoadCodeTask(string variant, string lesson, string step, string codeTask)
-        {
-            return Load<CodeTask>($"/{SourceVisitor.ContentDirectory}/{variant}/{lesson}/{step}/{codeTask}");
-        }
-
-        public Task<Lesson> LoadLesson(string variant, string lesson)
-        {
-            return Load<Lesson>($"/{SourceVisitor.ContentDirectory}/{variant}/{lesson}");
-        }
-
-        public Task<WorkspaceRoot> LoadRoot()
-        {
-            return Load<WorkspaceRoot>("/");
-        }
-
-        public Task<Step> LoadStep(string variant, string lesson, string step)
-        {
-            return Load<Step>($"/{SourceVisitor.ContentDirectory}/{variant}/{lesson}/{step}");
-        }
-
-        public Task<CourseVariant> LoadVariant(string variant)
-        {
-            return Load<CourseVariant>($"/{SourceVisitor.ContentDirectory}/{variant}");
-        }
-
-        public void Refresh() => sources = new SourceVisitor().Visit(Root);
     }
 }

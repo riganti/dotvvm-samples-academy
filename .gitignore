@@ -254,3 +254,4 @@ monaco-editor
 **/wwwroot/css
 **/wwwroot/scripts
 **/wwwroot/libs
+npm-debug.log.*

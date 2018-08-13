@@ -36,10 +36,15 @@ namespace DotvvmAcademy.Meta.Syntax
                 .Append(Kind.ToString())
                 .Append(" [")
                 .Append(Start)
-                .Append(" - ")
+                .Append(", ")
                 .Append(End)
-                .Append(']');
-            if (Start != End)
+                .Append(')');
+            if (IsMissing)
+            {
+                stringBuilder
+                    .Append(" [Missing]");
+            }
+            else
             {
                 stringBuilder
                     .Append(' ')

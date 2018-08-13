@@ -17,7 +17,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             ImmutableArray<DataContextChangeAttribute> changeAttributes,
             DataContextStackManipulationAttribute manipulationAttribute,
             ControlMarkupOptionsAttribute markupOptionsAttribute,
-            ImmutableArray<ValidationPropertyDescriptor> properties,
+            ImmutableArray<IPropertyDescriptor> properties,
             ImmutableArray<PropertyGroupMatcher> propertyGroupMatchers)
         {
             ControlType = controlType;
@@ -36,7 +36,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         public DataContextStackManipulationAttribute DataContextManipulationAttribute { get; }
 
-        public ValidationPropertyDescriptor DefaultContentProperty
+        public IPropertyDescriptor DefaultContentProperty
         {
             get
             {
@@ -57,7 +57,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         public ControlMarkupOptionsAttribute MarkupOptionsAttribute { get; }
 
-        public ImmutableArray<ValidationPropertyDescriptor> Properties { get; }
+        public ImmutableArray<IPropertyDescriptor> Properties { get; }
 
         public ImmutableArray<PropertyGroupMatcher> PropertyGroupMatchers { get; }
 
@@ -77,8 +77,6 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         }
 
         ITypeDescriptor IControlResolverMetadata.DataContextConstraint => DataContextConstraint;
-
-        IPropertyDescriptor IControlResolverMetadata.DefaultContentProperty => DefaultContentProperty;
 
         IReadOnlyList<PropertyGroupMatcher> IControlResolverMetadata.PropertyGroups => PropertyGroupMatchers;
 

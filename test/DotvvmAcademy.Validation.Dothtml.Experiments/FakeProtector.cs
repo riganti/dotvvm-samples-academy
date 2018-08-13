@@ -1,8 +1,5 @@
 ﻿using DotVVM.Framework.Hosting;
 using DotVVM.Framework.Security;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DotvvmAcademy.Validation.Dothtml.Experiments
 {

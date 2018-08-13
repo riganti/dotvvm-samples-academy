@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -23,12 +25,19 @@ namespace DotvvmAcademy.CourseFormat
         }
 
         public static string FromSystem(DirectoryInfo root, FileSystemInfo info)
-            => GetPath(root.FullName, info.FullName);
-
-        public static string GetCodeLanguage(string path)
         {
+            return GetPath(root.FullName, info.FullName);
+        }
+
+        public static string GetValidatedLanguage(string path)
+        {
+            if (string.IsNullOrWhiteSpace(path))
+            {
+                return null;
+            }
+
             var segment = GetLastSegment(path);
-            var match = Regex.Match(segment, @"\w+\.(\w+)\.csx");
+            var match = Regex.Match(segment.ToString(), @"\w+\.(\w+)\.csx");
             if (match.Groups.Count == 2)
             {
                 return match.Groups[1].Value;
@@ -37,10 +46,10 @@ namespace DotvvmAcademy.CourseFormat
             return null;
         }
 
-        public static string GetLastSegment(string path)
+        public static ReadOnlyMemory<char> GetLastSegment(string path)
         {
             var index = path.LastIndexOf(DirectorySeparator);
-            return path.Substring(index + 1);
+            return path.AsMemory(index + 1);
         }
 
         public static string GetParent(string path)
@@ -57,6 +66,31 @@ namespace DotvvmAcademy.CourseFormat
         public static string GetPath(string root, string systemPath)
         {
             return systemPath.Substring(root.Length).Replace('\\', DirectorySeparator);
+        }
+
+        public static IEnumerable<ReadOnlyMemory<char>> GetSegments(string path)
+        {
+            path = Normalize(path);
+            if (string.IsNullOrEmpty(path) || path[0] != DirectorySeparator)
+            {
+                throw new ArgumentException("Path is not absolute.", nameof(path));
+            }
+
+            int start = 1;
+            var memory = path.AsMemory();
+            for (int i = 1; i < path.Length; i++)
+            {
+                if (path[i] == DirectorySeparator)
+                {
+                    yield return memory.Slice(start, i - start);
+                    start = i + 1;
+                }
+            }
+            var length = path.Length - start;
+            if (length != 0)
+            {
+                yield return memory.Slice(start, length);
+            }
         }
 
         public static string Normalize(string path)
@@ -134,6 +168,21 @@ namespace DotvvmAcademy.CourseFormat
                 }
             }
             return sb.ToString();
+        }
+
+        public static ReadOnlyMemory<char> GetExtension(string path)
+        {
+            var segment = GetLastSegment(path);
+            var span = segment.Span;
+            for (int i = segment.Length - 1; i > 0; i--)
+            {
+                if (span[i] == '.')
+                {
+                    return segment.Slice(i);
+                }
+            }
+
+            return default;
         }
     }
 }

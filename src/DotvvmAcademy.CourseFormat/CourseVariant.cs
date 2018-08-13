@@ -8,7 +8,7 @@ namespace DotvvmAcademy.CourseFormat
         {
             Annotation = annotation;
             Lessons = lessons;
-            Moniker = SourcePath.GetLastSegment(Path);
+            Moniker = SourcePath.GetLastSegment(Path).ToString();
         }
 
         public string Annotation { get; }
@@ -16,5 +16,10 @@ namespace DotvvmAcademy.CourseFormat
         public ImmutableArray<string> Lessons { get; }
 
         public string Moniker { get; }
+
+        public override long GetSize()
+        {
+            return Annotation.Length;
+        }
     }
 }

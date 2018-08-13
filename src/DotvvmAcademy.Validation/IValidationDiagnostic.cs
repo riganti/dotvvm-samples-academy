@@ -8,6 +8,8 @@
 
         ValidationSeverity Severity { get; }
 
+        ISourceCode Source { get; }
+
         int Start { get; }
 
         object UnderlyingObject { get; }

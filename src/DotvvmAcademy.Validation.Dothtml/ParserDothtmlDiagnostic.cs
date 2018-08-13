@@ -7,11 +7,13 @@ namespace DotvvmAcademy.Validation.Dothtml
         public ParserDothtmlDiagnostic(
             string message,
             DothtmlNode node,
-            ValidationSeverity severity = default)
+            DothtmlSourceCode source,
+            ValidationSeverity severity)
         {
             Message = message;
             Severity = severity;
             Node = node;
+            Source = source;
         }
 
         public string Message { get; }
@@ -23,6 +25,10 @@ namespace DotvvmAcademy.Validation.Dothtml
         public int Start => Node.StartPosition;
 
         public int End => Node.EndPosition;
+
+        public DothtmlSourceCode Source { get; }
+
+        ISourceCode IValidationDiagnostic.Source => Source;
 
         object IValidationDiagnostic.UnderlyingObject => Node;
     }

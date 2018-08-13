@@ -1,0 +1,13 @@
+root = true
+
+[*.cs]
+indent_size = 4
+indent_style = space
+csharp_style_expression_bodied_methods = false:warning
+csharp_style_expression_bodied_constructors = false:warning
+csharp_style_expression_bodied_operators = false:warning
+csharp_prefer_braces = true:warning
+
+[*.csproj]
+indent_size = 2
+indent_style = space

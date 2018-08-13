@@ -28,12 +28,17 @@ namespace DotvvmAcademy.Validation.CSharp
 
         public override void Initialize(AnalysisContext context)
         {
-            context.RegisterSyntaxNodeAction(ValidateNode, RoslynKinds.Identifiers);
+            context.RegisterSyntaxNodeAction(ValidateNode, RoslynPresets.Identifiers);
         }
 
         public void ValidateNode(SyntaxNodeAnalysisContext context)
         {
             var symbol = context.SemanticModel.GetSymbolInfo(context.Node).Symbol;
+            if(symbol is IMethodSymbol method && method.IsExtensionMethod)
+            {
+                symbol = method.ReducedFrom;
+            }
+
             if (IsSupportedSymbol(symbol) && !storage.IsAllowed(symbol))
             {
                 context.ReportDiagnostic(Diagnostic.Create(

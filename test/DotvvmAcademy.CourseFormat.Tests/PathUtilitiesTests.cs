@@ -6,7 +6,7 @@ namespace DotvvmAcademy.CourseFormat.Tests
     public class PathUtilitiesTests
     {
         [TestMethod]
-        public void BasicNormalizeTests()
+        public void BasicNormalizeTest()
         {
             // absolute paths
             Assert.AreEqual("/", SourcePath.Normalize("/"));

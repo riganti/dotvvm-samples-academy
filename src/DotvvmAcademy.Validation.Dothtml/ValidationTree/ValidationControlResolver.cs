@@ -2,6 +2,7 @@ using DotVVM.Framework.Binding.Expressions;
 using DotVVM.Framework.Compilation;
 using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Compilation.Parser;
+using DotvvmAcademy.Meta;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using System;
@@ -14,28 +15,33 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
     public class ValidationControlResolver : IControlResolver
     {
         private readonly ImmutableDictionary<string, BindingParserOptions> bindingOptions = GetDefaultBindingOptions();
-        private readonly CSharpCompilation compilation;
+        private readonly ICSharpCompilationAccessor compilationAccessor;
         private readonly ValidationTypeDescriptorFactory descriptorFactory;
         private readonly ValidationControlMetadataFactory metadataFactory;
-
+        private readonly ValidationPropertyFactory propertyFactory;
         private readonly ConcurrentDictionary<string, INamespaceSymbol> namespaces
             = new ConcurrentDictionary<string, INamespaceSymbol>();
 
         private readonly ValidationControlTypeFactory typeFactory;
 
         public ValidationControlResolver(
-            CSharpCompilation compilation,
+            ICSharpCompilationAccessor compilationAccessor,
             ValidationTypeDescriptorFactory descriptorFactory,
             ValidationControlTypeFactory typeFactory,
-            ValidationControlMetadataFactory metadataFactory)
+            ValidationControlMetadataFactory metadataFactory,
+            ValidationPropertyFactory propertyFactory)
         {
-            this.compilation = compilation;
+            this.compilationAccessor = compilationAccessor;
             this.descriptorFactory = descriptorFactory;
             this.typeFactory = typeFactory;
             this.metadataFactory = metadataFactory;
+            this.propertyFactory = propertyFactory;
         }
 
-        public IControlResolverMetadata BuildControlMetadata(IControlType type) => metadataFactory.Create(type);
+        public IControlResolverMetadata BuildControlMetadata(IControlType type)
+        {
+            return metadataFactory.Create(type);
+        }
 
         public IPropertyDescriptor FindProperty(IControlResolverMetadata metadata, string name)
         {
@@ -44,25 +50,42 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
                 return property;
             }
 
-            // TODO: Handle attached properties
+            if (name.Contains('.'))
+            {
+                return GetAttachedProperty(name);
+            }
 
             var group = metadata.PropertyGroups
                 .FirstOrDefault(g => name.StartsWith(g.Prefix, StringComparison.OrdinalIgnoreCase));
             if (!group.Equals(default(PropertyGroupMatcher)))
             {
-                return group.PropertyGroup.GetDotvvmProperty(name.Substring(group.Prefix.Length));
+                return propertyFactory.CreateGrouped(group.PropertyGroup, name.Substring(group.Prefix.Length));
             }
 
             return null;
         }
 
+        private IPropertyDescriptor GetAttachedProperty(string name)
+        {
+            var segments = name.Split('.');
+            var control = namespaces.Values.SelectMany(n => n.GetTypeMembers(segments[0])).SingleOrDefault();
+            if (control == null)
+            {
+                return null;
+            }
+            var metadata = metadataFactory.Create(control);
+            return metadata.Properties.SingleOrDefault(p => p.Name == segments[1]);
+        }
+
         public ImmutableDictionary<string, INamespaceSymbol> GetRegisteredNamespaces()
-            => namespaces.ToImmutableDictionary();
+        {
+            return namespaces.ToImmutableDictionary();
+        }
 
         public void RegisterNamespace(string prefix, string @namespace, string assembly)
         {
-            var assemblySymbol = compilation.References
-                .Select(compilation.GetAssemblyOrModuleSymbol)
+            var assemblySymbol = compilationAccessor.Compilation.References
+                .Select(compilationAccessor.Compilation.GetAssemblyOrModuleSymbol)
                 .OfType<IAssemblySymbol>()
                 .Single(a => a.MetadataName == assembly);
 
@@ -82,7 +105,9 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         }
 
         public void RegisterNamespace(string prefix, INamespaceSymbol namespaceSymbol)
-            => namespaces.GetOrAdd(prefix, namespaceSymbol);
+        {
+            namespaces.GetOrAdd(prefix, namespaceSymbol);
+        }
 
         public BindingParserOptions ResolveBinding(string bindingType)
         {
@@ -116,7 +141,10 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             return metadataFactory.Create(typeSymbol);
         }
 
-        public IControlResolverMetadata ResolveControl(IControlType type) => metadataFactory.Create(type);
+        public IControlResolverMetadata ResolveControl(IControlType type)
+        {
+            return metadataFactory.Create(type);
+        }
 
         public IControlResolverMetadata ResolveControl(ITypeDescriptor descriptor)
         {

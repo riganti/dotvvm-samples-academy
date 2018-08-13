@@ -4,7 +4,6 @@ using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Controls;
 using DotvvmAcademy.Meta;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Immutable;
@@ -14,34 +13,36 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
     public class ValidationControlMetadataFactory
     {
+        private readonly ITypedAttributeExtractor extractor;
+
         private readonly ConcurrentDictionary<ITypeSymbol, ValidationControlMetadata> cache
             = new ConcurrentDictionary<ITypeSymbol, ValidationControlMetadata>();
 
-        private readonly CSharpCompilation compilation;
-        private readonly ValidationTypeDescriptorFactory descriptorFactory;
-        private readonly AttributeExtractor extractor;
-        private readonly ValidationPropertyDescriptorFactory propertyFactory;
+        private readonly IMemberInfoConverter memberInfoConverter;
+        private readonly ValidationPropertyFactory propertyFactory;
         private readonly ValidationControlTypeFactory typeFactory;
 
         public ValidationControlMetadataFactory(
-            CSharpCompilation compilation,
-            ValidationTypeDescriptorFactory descriptorFactory,
             ValidationControlTypeFactory typeFactory,
-            ValidationPropertyDescriptorFactory propertyFactory,
-            AttributeExtractor extractor)
+            ValidationPropertyFactory propertyFactory,
+            ITypedAttributeExtractor extractor,
+            IMemberInfoConverter memberInfoConverter)
         {
-            this.compilation = compilation;
-            this.descriptorFactory = descriptorFactory;
             this.typeFactory = typeFactory;
             this.propertyFactory = propertyFactory;
             this.extractor = extractor;
+            this.memberInfoConverter = memberInfoConverter;
         }
 
         public ValidationControlMetadata Create(ITypeDescriptor typeDescriptor)
-            => Create(typeFactory.Create(typeDescriptor));
+        {
+            return Create(typeFactory.Create(typeDescriptor));
+        }
 
         public ValidationControlMetadata Create(string metadataName)
-            => Create(typeFactory.Create(metadataName));
+        {
+            return Create(typeFactory.Create(metadataName));
+        }
 
         public ValidationControlMetadata Create(IControlType controlType)
         {
@@ -58,16 +59,16 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             var controlType = typeFactory.Create(symbol);
             return cache.GetOrAdd(symbol, s =>
             {
-                var matchers = (from g in propertyFactory.CreateGroups(symbol)
+                var matchers = (from g in propertyFactory.GetGroups(symbol)
                                 from prefix in g.Prefixes
                                 select new PropertyGroupMatcher(prefix, g))
                                 .ToImmutableArray();
                 return new ValidationControlMetadata(
                  controlType: controlType,
-                 changeAttributes: extractor.GetAttributes<DataContextChangeAttribute>(symbol),
-                 manipulationAttribute: extractor.GetAttribute<DataContextStackManipulationAttribute>(symbol),
-                 markupOptionsAttribute: extractor.GetAttribute<ControlMarkupOptionsAttribute>(symbol),
-                 properties: propertyFactory.CreateProperties(symbol),
+                 changeAttributes: extractor.Extract<DataContextChangeAttribute>(symbol),
+                 manipulationAttribute: extractor.Extract<DataContextStackManipulationAttribute>(symbol).SingleOrDefault(),
+                 markupOptionsAttribute: extractor.Extract<ControlMarkupOptionsAttribute>(symbol).SingleOrDefault(),
+                 properties: propertyFactory.GetProperties(symbol),
                  propertyGroupMatchers: matchers);
             });
         }

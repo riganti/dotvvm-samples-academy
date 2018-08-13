@@ -47,7 +47,7 @@ namespace DotvvmAcademy.Validation.Dothtml
         {
             if (builder.Count == 0)
             {
-                return default(ImmutableArray<XPathDothtmlNode>);
+                return default;
             }
             var array = builder.ToImmutable();
             for (int i = 0; i < array.Length; i++)

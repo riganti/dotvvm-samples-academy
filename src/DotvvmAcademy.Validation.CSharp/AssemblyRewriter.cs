@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DotvvmAcademy.Validation.CSharp
 {
-    public class AssemblyRewriter : IAssemblyRewriter
+    public class AssemblyRewriter
     {
         public const string RewriterNamespace = "DotvvmAcademy.Validation.CSharp";
         public const string ContainingClassPrefix = "SafeguardContainer";
@@ -44,7 +44,7 @@ namespace DotvvmAcademy.Validation.CSharp
             // Create Safeguard field
             var fieldAttributes = FieldAttributes.Static | FieldAttributes.Assembly;
             var field = new FieldDefinition(SafeguardFieldName, fieldAttributes,
-                module.ImportReference(typeof(IAssemblySafeguard)));
+                module.ImportReference(typeof(AssemblySafeguard)));
             containingClass.Fields.Add(field);
 
             // Create static constructor

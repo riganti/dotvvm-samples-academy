@@ -6,7 +6,7 @@
             = "DotVVM.Framework.Binding.DotvvmProperty";
 
         public const string DotvvmPropertyGroup
-            = "DotVVM.Framework.Compilation.ControlTree";
+            = "DotVVM.Framework.Compilation.ControlTree.DotvvmPropertyGroup";
 
         public const string HtmlGenericControl
             = "DotVVM.Framework.Controls.HtmlGenericControl";

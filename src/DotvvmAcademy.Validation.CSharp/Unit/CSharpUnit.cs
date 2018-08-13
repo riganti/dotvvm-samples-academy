@@ -1,42 +1,37 @@
-﻿using DotvvmAcademy.Validation.Unit;
+﻿using DotvvmAcademy.Meta.Syntax;
 using Microsoft.CodeAnalysis;
+using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 namespace DotvvmAcademy.Validation.CSharp.Unit
 {
-    public class CSharpUnit : IUnit
+    public class CSharpUnit : Validation.Unit.Unit
     {
-        public CSharpUnit(IServiceProvider provider)
+        private readonly List<Action<CSharpDynamicContext>> dynamicActions = new List<Action<CSharpDynamicContext>>();
+
+        public CSharpUnit(IServiceProvider provider) : base(provider)
         {
-            Provider = provider;
         }
 
-        public List<Action<CSharpDynamicContext>> DynamicActions { get; } = new List<Action<CSharpDynamicContext>>();
+        public IEnumerable<Action<CSharpDynamicContext>> GetDynamicActions()
+        {
+            return dynamicActions;
+        }
 
-        public ConcurrentDictionary<string, IQuery> Queries { get; }
-            = new ConcurrentDictionary<string, IQuery>();
-
-        public IServiceProvider Provider { get; }
-
-        public CSharpQuery<IEventSymbol> GetEvents(string name) => AddQuery<IEventSymbol>(name);
-
-        public CSharpQuery<IFieldSymbol> GetFields(string name) => AddQuery<IFieldSymbol>(name);
-
-        public CSharpQuery<IMethodSymbol> GetMethods(string name) => AddQuery<IMethodSymbol>(name);
-
-        public CSharpQuery<IPropertySymbol> GetProperties(string name) => AddQuery<IPropertySymbol>(name);
-
-        public CSharpQuery<ITypeSymbol> GetTypes(string name) => AddQuery<ITypeSymbol>(name);
-
-        public void Run(Action<CSharpDynamicContext> action) => DynamicActions.Add(action);
-
-        private CSharpQuery<TSymbol> AddQuery<TSymbol>(string name)
+        public CSharpQuery<TSymbol> GetQuery<TSymbol>(string name)
             where TSymbol : ISymbol
         {
-            return (CSharpQuery<TSymbol>)Queries.GetOrAdd(name, n =>
-                new CSharpQuery<TSymbol>(name));
+            var lexer = new NameLexer(name);
+            var nameNode = new NameParser(lexer).Parse();
+            var query = ActivatorUtilities.CreateInstance<CSharpQuery<TSymbol>>(Provider, nameNode);
+            AddQuery(query);
+            return query;
+        }
+
+        public void Run(Action<CSharpDynamicContext> action)
+        {
+            dynamicActions.Add(action);
         }
     }
 }
