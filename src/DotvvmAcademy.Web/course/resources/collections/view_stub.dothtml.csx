@@ -8,7 +8,7 @@ Unit.GetDirective("/attribute::*")
 
 Unit.GetControl("/child::*[1]")
     .IsOfType<RawLiteral>()
-    .HasRawContent("<!DOCTYPE html>", false);
+    .HasRawText("<!DOCTYPE html>", false);
 
 var body = Unit.GetControl("/html/body");
 

@@ -19,6 +19,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             = new ConcurrentDictionary<(INamedTypeSymbol, string), IPropertyGroupDescriptor>();
 
         private readonly IMemberInfoConverter memberInfoConverter;
+
         private readonly ConcurrentDictionary<(INamedTypeSymbol, string), IPropertyDescriptor> properties
             = new ConcurrentDictionary<(INamedTypeSymbol, string), IPropertyDescriptor>();
 
@@ -41,6 +42,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             switch (property)
             {
                 case ValidationProperty validationProperty:
+                case ValidationAttachedProperty attachedProperty:
                 case ValidationVirtualProperty virtualProperty:
                 case ValidationGroupedProperty groupedProperty:
                     return property;
@@ -117,6 +119,16 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             }
         }
 
+        public IPropertyDescriptor CreateGrouped(IPropertyGroupDescriptor propertyGroup, string groupMemberName)
+        {
+            var name = $"{propertyGroup.Name}:{groupMemberName}";
+            var containingSymbol = (INamedTypeSymbol)((ValidationTypeDescriptor)propertyGroup.DeclaringType).TypeSymbol;
+            return properties.GetOrAdd((containingSymbol, name), _ =>
+            {
+                return new ValidationGroupedProperty(propertyGroup, groupMemberName);
+            });
+        }
+
         public ImmutableArray<IPropertyGroupDescriptor> GetGroups(ITypeSymbol containingType)
         {
             if (containingType.BaseType == null)
@@ -155,7 +167,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
                 .OfType<IFieldSymbol>()
                 .Where(f => f.IsStatic
                     && f.MetadataName.EndsWith("Property")
-                    && f.Type.Equals(dotvvmPropertySymbol));
+                    && compilationAccessor.Compilation.ClassifyConversion(f.Type, dotvvmPropertySymbol).Exists);
             foreach (var field in fields)
             {
                 if (extractor.HasAttribute<AttachedPropertyAttribute>(field))
@@ -193,20 +205,12 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         {
             return properties.GetOrAdd((propertySymbol.ContainingType, propertySymbol.MetadataName), _ =>
             {
-                var markupOptions = GetMarkupOptionsAttribute(propertySymbol)
-                    ?? new MarkupOptionsAttribute
-                    {
-                        AllowBinding = true,
-                        AllowHardCodedValue = true,
-                        MappingMode = MappingMode.Attribute,
-                        Name = propertySymbol.MetadataName
-                    };
                 return new ValidationProperty(
                     propertySymbol: propertySymbol,
                     fieldSymbol: fieldSymbol,
                     declaringType: typeDescriptorFactory.Create(propertySymbol.ContainingType),
                     propertyType: typeDescriptorFactory.Create(propertySymbol.Type),
-                    markupOptions: markupOptions,
+                    markupOptions: GetMarkupOptionsAttribute(propertySymbol, propertySymbol.Name),
                     dataContextChangeAttributes: GetDataContextChangeAttributes(propertySymbol),
                     dataContextManipulationAttribute: GetDataContextManipulationAttribute(propertySymbol));
             });
@@ -229,7 +233,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
                     fieldSymbol: fieldSymbol,
                     declaringType: typeDescriptorFactory.Create(fieldSymbol.ContainingType),
                     propertyType: typeDescriptorFactory.Create(propertyType),
-                    markupOptions: GetMarkupOptionsAttribute(fieldSymbol),
+                    markupOptions: GetMarkupOptionsAttribute(fieldSymbol, name),
                     dataContextChangeAttributes: GetDataContextChangeAttributes(fieldSymbol),
                     dataContextManipulationAttribute: GetDataContextManipulationAttribute(fieldSymbol));
             });
@@ -268,16 +272,6 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             //});
         }
 
-        public IPropertyDescriptor CreateGrouped(IPropertyGroupDescriptor propertyGroup, string groupMemberName)
-        {
-            var name = $"{propertyGroup.Name}:{groupMemberName}";
-            var containingSymbol = (INamedTypeSymbol)((ValidationTypeDescriptor)propertyGroup.DeclaringType).TypeSymbol;
-            return properties.GetOrAdd((containingSymbol, name), _ =>
-            {
-                return new ValidationGroupedProperty(propertyGroup, groupMemberName);
-            });
-        }
-
         private IPropertyDescriptor CreateVirtual(IPropertySymbol propertySymbol)
         {
             return properties.GetOrAdd((propertySymbol.ContainingType, propertySymbol.MetadataName), _ =>
@@ -302,9 +296,21 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             return extractor.Extract<DataContextStackManipulationAttribute>(symbol).SingleOrDefault();
         }
 
-        private MarkupOptionsAttribute GetMarkupOptionsAttribute(ISymbol symbol)
+        private MarkupOptionsAttribute GetMarkupOptionsAttribute(ISymbol symbol, string defaultName = null)
         {
-            return extractor.Extract<MarkupOptionsAttribute>(symbol).SingleOrDefault();
+            var attribute = extractor.Extract<MarkupOptionsAttribute>(symbol).SingleOrDefault();
+            if (attribute == null && defaultName != null)
+            {
+                attribute = new MarkupOptionsAttribute
+                {
+                    AllowBinding = true,
+                    AllowHardCodedValue = true,
+                    MappingMode = MappingMode.Attribute,
+                    Name = defaultName
+                };
+            }
+
+            return attribute;
         }
 
         private PropertyGroupAttribute GetPropertyGroupAttribute(ISymbol symbol)
@@ -318,12 +324,26 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             var keyValuePair = compilationAccessor.Compilation.GetTypeByMetadataName(WellKnownTypes.KeyValuePair);
             var @string = compilationAccessor.Compilation.GetTypeByMetadataName(WellKnownTypes.String);
             return collectionType.AllInterfaces
-                .Where(i => compilationAccessor.Compilation.ClassifyConversion(i, iEnumerable).Exists
-                    && i.TypeArguments.Length == 1
-                    && compilationAccessor.Compilation.ClassifyConversion(i.TypeArguments[0], keyValuePair).Exists
-                    && i.TypeArguments[0] is INamedTypeSymbol pairArgument
-                    && pairArgument.TypeArguments.Length == 2
-                    && pairArgument.TypeArguments[0].Equals(@string))
+                .Where(i =>
+                {
+                    // I know there are a lot of variables here, but please understand, this place is hell to debug.
+                    var isIEnumerable = compilationAccessor.Compilation.ClassifyConversion(i, iEnumerable).Exists;
+                    var hasOneArgument = i.TypeArguments.Length == 1;
+                    if (isIEnumerable && hasOneArgument && i.TypeArguments[0] is INamedTypeSymbol pairArgument)
+                    {
+                        var isKeyValuePair = pairArgument.ConstructedFrom.Equals(keyValuePair);
+                        if (isKeyValuePair)
+                        {
+                            var hasTwoArguments = pairArgument.TypeArguments.Length == 2;
+                            if (hasTwoArguments)
+                            {
+                                var firstIsString = pairArgument.TypeArguments[0].Equals(@string);
+                                return firstIsString;
+                            }
+                        }
+                    }
+                    return false;
+                })
                 .Select(i => (((INamedTypeSymbol)i.TypeArguments[0]).TypeArguments[1]))
                 .FirstOrDefault();
         }

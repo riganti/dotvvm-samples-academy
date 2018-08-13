@@ -19,7 +19,6 @@ namespace DotvvmAcademy.Meta
         public ImmutableArray<ISymbol> Locate(NameNode node)
         {
             return Visit(node)
-                .Distinct() // TODO: Fix problem with duplicate global namespace
                 .ToImmutableArray();
         }
 
@@ -53,38 +52,50 @@ namespace DotvvmAcademy.Meta
 
         private IEnumerable<ISymbol> Visit(NameNode node)
         {
+            IEnumerable<ISymbol> result;
             switch (node)
             {
                 case IdentifierNameNode identifier:
-                    return VisitIdentifier(identifier);
+                    result = VisitIdentifier(identifier);
+                    break;
 
                 case GenericNameNode generic:
-                    return VisitGeneric(generic);
+                    result = VisitGeneric(generic);
+                    break;
 
                 case PredefinedTypeNameNode predefinedType:
-                    return VisitPredefinedType(predefinedType);
+                    result = VisitPredefinedType(predefinedType);
+                    break;
 
                 case QualifiedNameNode qualified:
-                    return VisitQualified(qualified);
+                    result = VisitQualified(qualified);
+                    break;
 
                 case NestedTypeNameNode nestedType:
-                    return VisitNestedType(nestedType);
+                    result =  VisitNestedType(nestedType);
+                    break;
 
                 case ConstructedTypeNameNode constructedType:
-                    return VisitConstructedType(constructedType);
+                    result = VisitConstructedType(constructedType);
+                    break;
 
                 case PointerTypeNameNode pointerType:
-                    return VisitPointerType(pointerType);
+                    result = VisitPointerType(pointerType);
+                    break;
 
                 case ArrayTypeNameNode arrayType:
-                    return VisitArrayType(arrayType);
+                    result = VisitArrayType(arrayType);
+                    break;
 
                 case MemberNameNode member:
-                    return VisitMember(member);
+                    result = VisitMember(member);
+                    break;
 
                 default:
                     throw new NotImplementedException($"{nameof(NameNode)} type '{node.GetType()}' is not supported.");
             }
+            // TODO: Fix problem with duplicate global namespace
+            return result.Distinct();
         }
 
         private IEnumerable<ISymbol> VisitArrayType(ArrayTypeNameNode arrayType)

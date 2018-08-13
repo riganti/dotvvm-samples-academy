@@ -1,5 +1,4 @@
-﻿using DotvvmAcademy.Meta;
-using DotvvmAcademy.Validation.Dothtml.ValidationTree;
+﻿using DotvvmAcademy.Validation.Dothtml.ValidationTree;
 using DotvvmAcademy.Validation.Unit;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -47,9 +46,36 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
         public static IQuery<ValidationControl> HasRawContent(
             this IQuery<ValidationControl> query,
             string expectedContent,
-            bool isCaseSensitive = true)
+            bool isCaseSensitive = false)
         {
-            query.SetConstraint(nameof(HasRawContent), context =>
+            query.SetConstraint(nameof(HasRawText), context =>
+            {
+                foreach (var control in context.Result)
+                {
+                    var innerTokens = control.Content.SelectMany(c => c.DothtmlNode.Tokens);
+                    var actualContent = string.Concat(innerTokens.Select(t => t.Text))
+                        .Trim();
+                    var comparison = isCaseSensitive
+                        ? StringComparison.InvariantCulture
+                        : StringComparison.InvariantCultureIgnoreCase;
+                    if (!expectedContent.Equals(actualContent, comparison))
+                    {
+                        Report(
+                            context: context,
+                            message: $"Control's raw content is supposed to be '{expectedContent}'.",
+                            node: control);
+                    }
+                }
+            });
+            return query;
+        }
+
+        public static IQuery<ValidationControl> HasRawText(
+            this IQuery<ValidationControl> query,
+            string expectedContent,
+            bool isCaseSensitive = false)
+        {
+            query.SetConstraint(nameof(HasRawText), context =>
             {
                 foreach (var control in context.Result)
                 {
@@ -61,7 +87,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
                     {
                         Report(
                             context: context,
-                            message: $"Control is supposed to contain '{expectedContent}'.",
+                            message: $"Control's raw text is supposed to be'{expectedContent}'.",
                             node: control);
                     }
                 }

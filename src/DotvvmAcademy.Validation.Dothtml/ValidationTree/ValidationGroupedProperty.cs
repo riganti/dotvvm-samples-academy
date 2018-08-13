@@ -31,6 +31,8 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         public DataContextStackManipulationAttribute DataContextManipulationAttribute { get; }
 
+        public ValidationTypeDescriptor DeclaringType => (ValidationTypeDescriptor)PropertyGroup.DeclaringType;
+
         public string FullName { get; }
 
         public string GroupMemberName { get; }
@@ -45,15 +47,13 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         public IPropertyGroupDescriptor PropertyGroup { get; }
 
+        public ValidationTypeDescriptor PropertyType => (ValidationTypeDescriptor)PropertyGroup.PropertyType;
+
         DataContextChangeAttribute[] IControlAttributeDescriptor.DataContextChangeAttributes { get; }
             = Array.Empty<DataContextChangeAttribute>();
 
-        public ValidationTypeDescriptor DeclaringType => (ValidationTypeDescriptor)PropertyGroup.DeclaringType;
+        ITypeDescriptor IControlAttributeDescriptor.DeclaringType => DeclaringType;
 
-        ITypeDescriptor IControlAttributeDescriptor.DeclaringType { get; }
-
-        public ValidationTypeDescriptor PropertyType => (ValidationTypeDescriptor)PropertyGroup.PropertyType;
-
-        ITypeDescriptor IControlAttributeDescriptor.PropertyType { get; }
+        ITypeDescriptor IControlAttributeDescriptor.PropertyType => PropertyType;
     }
 }

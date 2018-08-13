@@ -53,6 +53,8 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         ITypeDescriptor IPropertyGroupDescriptor.CollectionType => CollectionType;
 
+        public string[] Prefixes => PropertyGroupAttribute.Prefixes;
+
         DataContextChangeAttribute[] IControlAttributeDescriptor.DataContextChangeAttributes
         {
             get
@@ -68,9 +70,8 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         ITypeDescriptor IControlAttributeDescriptor.DeclaringType => DeclaringType;
 
-        public string[] Prefixes => PropertyGroupAttribute.Prefixes;
 
-        ITypeDescriptor IControlAttributeDescriptor.PropertyType { get; }
+        ITypeDescriptor IControlAttributeDescriptor.PropertyType => PropertyType;
 
         IPropertyDescriptor IPropertyGroupDescriptor.GetDotvvmProperty(string name)
         {

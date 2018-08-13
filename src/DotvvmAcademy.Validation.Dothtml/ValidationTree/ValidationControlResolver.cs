@@ -50,7 +50,10 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
                 return property;
             }
 
-            // TODO: Handle attached properties
+            if (name.Contains('.'))
+            {
+                return GetAttachedProperty(name);
+            }
 
             var group = metadata.PropertyGroups
                 .FirstOrDefault(g => name.StartsWith(g.Prefix, StringComparison.OrdinalIgnoreCase));
@@ -60,6 +63,18 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             }
 
             return null;
+        }
+
+        private IPropertyDescriptor GetAttachedProperty(string name)
+        {
+            var segments = name.Split('.');
+            var control = namespaces.Values.SelectMany(n => n.GetTypeMembers(segments[0])).SingleOrDefault();
+            if (control == null)
+            {
+                return null;
+            }
+            var metadata = metadataFactory.Create(control);
+            return metadata.Properties.SingleOrDefault(p => p.Name == segments[1]);
         }
 
         public ImmutableDictionary<string, INamespaceSymbol> GetRegisteredNamespaces()

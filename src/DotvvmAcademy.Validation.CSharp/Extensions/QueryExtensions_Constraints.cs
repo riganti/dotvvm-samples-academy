@@ -41,36 +41,6 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
             return query;
         }
 
-        public static IQuery<TResult> HasAttribute<TResult>(this IQuery<TResult> query, Type attributeType, object expectedData = null)
-            where TResult : ISymbol
-        {
-            query.SetConstraint($"{nameof(HasAttribute)}_{attributeType}", context =>
-            {
-                var converter = context.Provider.GetRequiredService<IMemberInfoConverter>();
-                var attributeClass = (INamedTypeSymbol)converter.Convert(attributeType);
-                var extractor = context.Provider.GetRequiredService<IAttributeExtractor>();
-                // TODO: Use something else for object comparison. This generates errors that are too broad.
-                var propertyComparer = context.Provider.GetRequiredService<PropertyEqualityComparer>();
-                foreach (var symbol in context.Result)
-                {
-                    var attribute = extractor.Extract(attributeClass, symbol).SingleOrDefault();
-                    if (attribute == null)
-                    {
-                        context.Report(
-                            message: $"Symbol '{symbol}' must have a '{attributeType}' attribute.",
-                            symbol: symbol);
-                    }
-                    else if (expectedData != null && !propertyComparer.Equals(expectedData, attribute))
-                    {
-                        context.Report(
-                            message: $"The '{attributeType}' is not set correctly on '{symbol}'.",
-                            symbol: symbol);
-                    }
-                }
-            });
-            return query;
-        }
-
         public static IQuery<ITypeSymbol> HasBaseType<TBase>(this IQuery<ITypeSymbol> query)
             where TBase : class
         {
@@ -114,27 +84,6 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
                         context.Report(
                             message: $"Getter must have '{accessibility}' accessibility.",
                             symbol: property.GetMethod);
-                    }
-                }
-            });
-            return query;
-        }
-
-        public static IQuery<TResult> HasNoAttribute<TResult>(this IQuery<TResult> query, Type attributeType)
-            where TResult : ISymbol
-        {
-            query.SetConstraint($"{nameof(HasNoAttribute)}_{attributeType}", context =>
-            {
-                var converter = context.Provider.GetRequiredService<IMemberInfoConverter>();
-                var attributeClass = (INamedTypeSymbol)converter.Convert(attributeType);
-                var extractor = context.Provider.GetRequiredService<AttributeExtractor>();
-                foreach (var symbol in context.Result)
-                {
-                    if (symbol.GetAttributes().Any(a => a.AttributeClass.Equals(attributeClass)))
-                    {
-                        context.Report(
-                            message: $"Symbol '{symbol}' must have no '{attributeType}' attributes.",
-                            symbol: symbol);
                     }
                 }
             });
@@ -284,7 +233,7 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
                     if (!method.ReturnType.Equals(type))
                     {
                         context.Report(
-                            message: $"Method '{method}' must be of type '{type}'.",
+                            message: $"Method '{method}' must return a '{type}'.",
                             symbol: method);
                     }
                 }

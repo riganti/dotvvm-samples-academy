@@ -17,7 +17,13 @@ namespace DotvvmAcademy.Meta
                 var twosProperty = twoType.GetProperty(onesProperty.Name, BindingFlags.Instance | BindingFlags.Public);
                 var onesValue = onesProperty.GetValue(one);
                 var twosValue = twosProperty.GetValue(two);
-                if (!onesValue.Equals(twosValue))
+                if (onesValue == null && twosValue == null)
+                {
+                    continue;
+                }
+
+                if ((onesValue != null && !onesValue.Equals(twosValue))
+                    || (twosValue != null && !twosValue.Equals(onesValue)))
                 {
                     return false;
                 }

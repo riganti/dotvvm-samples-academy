@@ -8,7 +8,7 @@ Unit.GetDirective("/attribute::*")
     .IsViewModelDirective(CalculatorViewModel);
 
 Unit.GetControl("/*[1]")
-    .HasRawContent("<!doctype html>", false);
+    .HasRawText("<!doctype html>", false);
 
 var html = Unit.GetControl("/html");
 {

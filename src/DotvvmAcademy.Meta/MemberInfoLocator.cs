@@ -21,11 +21,15 @@ namespace DotvvmAcademy.Meta
             return Visit(node).ToImmutableArray();
         }
 
-        private IEnumerable<Type> GetType(string fullName)
+        private IEnumerable<Type> GetTypeFromAssemblies(string fullName)
         {
             foreach (var assembly in assemblyAccessor.Assemblies)
             {
-                yield return assembly.GetType(fullName);
+                var type = assembly.GetType(fullName);
+                if (type != null)
+                {
+                    yield return type;
+                }
             }
         }
 
@@ -39,7 +43,7 @@ namespace DotvvmAcademy.Meta
                 case NameNodeKind.NestedType:
                 case NameNodeKind.PointerType:
                 case NameNodeKind.ArrayType:
-                    return GetType(node.ToString());
+                    return GetTypeFromAssemblies(node.ToString());
 
                 case NameNodeKind.BoolType:
                 case NameNodeKind.ByteType:

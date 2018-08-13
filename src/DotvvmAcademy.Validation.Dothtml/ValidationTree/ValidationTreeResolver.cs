@@ -1,6 +1,7 @@
 ﻿using DotVVM.Framework.Compilation;
 using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
+using DotvvmAcademy.Meta;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -10,17 +11,20 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
     public class ValidationTreeResolver : ControlTreeResolverBase
     {
         private readonly ValidationTypeDescriptorFactory descriptorFactory;
+        private readonly ISymbolConverter symbolConverter;
         private readonly ValidationControlTypeFactory typeFactory;
 
         public ValidationTreeResolver(
             ValidationControlResolver controlResolver,
             ValidationTreeBuilder treeBuilder,
             ValidationTypeDescriptorFactory descriptorFactory,
-            ValidationControlTypeFactory typeFactory)
+            ValidationControlTypeFactory typeFactory,
+            ISymbolConverter symbolConverter)
             : base(controlResolver, treeBuilder)
         {
             this.descriptorFactory = descriptorFactory;
             this.typeFactory = typeFactory;
+            this.symbolConverter = symbolConverter;
         }
 
         protected override IAbstractBinding CompileBinding(
@@ -34,7 +38,18 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         protected override object ConvertValue(string value, ITypeDescriptor propertyType)
         {
-            return value;
+            if (propertyType is ValidationTypeDescriptor validationType)
+            {
+                var type = (Type)symbolConverter.Convert(validationType.TypeSymbol);
+                if (type.IsEnum)
+                {
+                    return Enum.Parse(type, value);
+                }
+
+                return Convert.ChangeType(value, type);
+            }
+
+            throw new NotSupportedException($"ITypeDescriptor type '{propertyType.GetType()}' is not supported.");
         }
 
         protected override IControlType CreateControlType(ITypeDescriptor wrapperType, string virtualPath)

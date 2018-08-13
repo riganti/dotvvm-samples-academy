@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using DotVVM.Framework.ViewModel;
+using DotVVM.Framework.ViewModel.Validation;
 
 namespace DotvvmAcademy.Course
 {
@@ -35,21 +36,19 @@ namespace DotvvmAcademy.Course
 
         public IEnumerable<ValidationResult> Validate(ValidationContext context)
         {
-            if (Context.ModelState.ValidationTarget != Registration)
+            if (Context.ModelState.ValidationTarget == Registration)
             {
-                return;
-            }
+                if (Registration == null || string.IsNullOrEmpty(Registration.Password) || Registration.Password.Length < 16)
+                {
+                    yield return this.CreateValidationResult("Your password is too short.", v => v.Registration.Password);
+                }
 
-            if (Registration == null 
-                || string.IsNullOrEmpty(Registration.Password) 
-                || Registration.Password.Length < 16)
-            {
-                yield return CreateValidationError(v => v.Registration.Password, "Your password is too short.");
-            }
-            if(!Registration.Password.Contains('$')
-                || !Registration.Password.Contains('_'))
-            {
-                yield return CreateValidationError(v => v.Registration.Password, "Your password doesn't contain required characters.");
+                if(!Registration.Password.Contains('$')
+                    || !Registration.Password.Contains('_')
+                    || !Registration.Password.Contains("pumpkin"))
+                {
+                    yield return this.CreateValidationResult("Your password doesn't contain required characters.", v => v.Registration.Password);
+                }
             }
         }
     }

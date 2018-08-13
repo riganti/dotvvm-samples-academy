@@ -8,7 +8,7 @@ Our application already has a few classes, you'll get to know now:
 using System;
 using System.Threading.Tasks;
 
-namespace DotvvmAcademy.Course
+namespace DotvvmAcademy.Course.ToDo
 {
     public class ToDoFacade
     {
@@ -28,7 +28,7 @@ namespace DotvvmAcademy.Course
 ```csharp
 using System;
 
-namespace DotvvmAcademy.Course
+namespace DotvvmAcademy.Course.ToDo
 {
    public class ToDoItemDTO
    {

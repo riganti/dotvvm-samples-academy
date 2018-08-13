@@ -31,11 +31,19 @@ namespace DotvvmAcademy.Validation.CSharp
         {
             using (var scope = globalProvider.CreateScope())
             {
+                // prepare services
                 var context = scope.ServiceProvider.GetRequiredService<Context>();
                 context.Unit = unit;
                 context.Sources = sources;
                 var compilationAccessor = scope.ServiceProvider.GetRequiredService<ICSharpCompilationAccessor>();
                 compilationAccessor.Compilation = GetCompilation(scope.ServiceProvider);
+                var assemblyAccessor = scope.ServiceProvider.GetRequiredService<IAssemblyAccessor>();
+                assemblyAccessor.Assemblies = Assembly.GetEntryAssembly()
+                    .GetReferencedAssemblies()
+                    .Select(Assembly.Load)
+                    .ToImmutableArray();
+
+                // run static analysis
                 var reporter = scope.ServiceProvider.GetRequiredService<CSharpValidationReporter>();
                 HandleQueries<ITypeSymbol>(scope.ServiceProvider);
                 HandleQueries<IMethodSymbol>(scope.ServiceProvider);
@@ -48,13 +56,9 @@ namespace DotvvmAcademy.Validation.CSharp
                     return GetValidationDiagnostics(scope.ServiceProvider);
                 }
 
-                var assemblyAccessor = scope.ServiceProvider.GetRequiredService<IAssemblyAccessor>();
+                // run dynamic analysis
                 var userAssembly = await GetAssembly(scope.ServiceProvider);
-                var assemblies = Assembly.GetEntryAssembly().GetReferencedAssemblies().Select(Assembly.Load);
-                var builder = ImmutableArray.CreateBuilder<Assembly>();
-                builder.Add(userAssembly);
-                builder.AddRange(assemblies);
-                assemblyAccessor.Assemblies = builder.ToImmutable();
+                assemblyAccessor.Assemblies = assemblyAccessor.Assemblies.Add(userAssembly);
                 RunDynamicActions(scope.ServiceProvider);
                 return GetValidationDiagnostics(scope.ServiceProvider);
             }
@@ -105,6 +109,7 @@ namespace DotvvmAcademy.Validation.CSharp
                     RoslynReference.FromName("System.Collections"),
                     RoslynReference.FromName("System.Reflection"),
                     RoslynReference.FromName("System.Linq"),
+                    RoslynReference.FromName("System.Linq.Expressions"),
                     RoslynReference.FromName("System.ComponentModel.Annotations"),
                     RoslynReference.FromName("System.ComponentModel.DataAnnotations"),
                     RoslynReference.FromName("DotVVM.Framework"),
