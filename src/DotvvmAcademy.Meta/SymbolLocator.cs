@@ -1,6 +1,5 @@
 ﻿using DotvvmAcademy.Meta.Syntax;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -8,68 +7,95 @@ using System.Linq;
 
 namespace DotvvmAcademy.Meta
 {
-    public class SymbolLocator : ILocator<ISymbol>
+    public class SymbolLocator : ISymbolLocator
     {
-        private readonly ImmutableArray<IAssemblySymbol> assemblies;
-        private readonly CSharpCompilation compilation;
+        private readonly ICSharpCompilationAccessor compilationAccessor;
 
-        public SymbolLocator(CSharpCompilation compilation)
+        public SymbolLocator(ICSharpCompilationAccessor compilationAccessor)
         {
-            this.compilation = compilation;
-            var builder = ImmutableArray.CreateBuilder<IAssemblySymbol>();
-            builder.Add(compilation.Assembly);
-            var references = compilation.References
-                .Select(r => (IAssemblySymbol)compilation.GetAssemblyOrModuleSymbol(r));
-            builder.AddRange(references);
-            assemblies = builder.ToImmutableArray();
-        }
-
-        public ImmutableArray<ISymbol> Locate(string name)
-        {
-            var lexer = new NameLexer(name);
-            var parser = new NameParser(lexer);
-            return Locate(parser.Parse());
+            this.compilationAccessor = compilationAccessor;
         }
 
         public ImmutableArray<ISymbol> Locate(NameNode node)
         {
-            return Visit(node).ToImmutableArray();
+            return Visit(node)
+                .ToImmutableArray();
+        }
+
+        private IEnumerable<INamespaceSymbol> GetGlobalNamespaces()
+        {
+            yield return compilationAccessor.Compilation.GlobalNamespace;
+
+            foreach (var reference in compilationAccessor.Compilation.References)
+            {
+                var symbol = compilationAccessor.Compilation.GetAssemblyOrModuleSymbol(reference);
+                switch (symbol)
+                {
+                    case IAssemblySymbol assembly:
+                        yield return assembly.GlobalNamespace;
+                        break;
+
+                    case IModuleSymbol module:
+                        yield return module.GlobalNamespace;
+                        break;
+
+                    default:
+                        throw new NotSupportedException($"Compilation.GetAssemblyOrModuleSymbol returned '{symbol.GetType()}'.");
+                }
+            }
+        }
+
+        private INamedTypeSymbol GetTypeByMetadataName(string metadataName)
+        {
+            return compilationAccessor.Compilation.GetTypeByMetadataName(metadataName);
         }
 
         private IEnumerable<ISymbol> Visit(NameNode node)
         {
+            IEnumerable<ISymbol> result;
             switch (node)
             {
                 case IdentifierNameNode identifier:
-                    return VisitIdentifier(identifier);
+                    result = VisitIdentifier(identifier);
+                    break;
 
                 case GenericNameNode generic:
-                    return VisitGeneric(generic);
+                    result = VisitGeneric(generic);
+                    break;
 
                 case PredefinedTypeNameNode predefinedType:
-                    return VisitPredefinedType(predefinedType);
+                    result = VisitPredefinedType(predefinedType);
+                    break;
 
                 case QualifiedNameNode qualified:
-                    return VisitQualified(qualified);
+                    result = VisitQualified(qualified);
+                    break;
 
                 case NestedTypeNameNode nestedType:
-                    return VisitNestedType(nestedType);
+                    result =  VisitNestedType(nestedType);
+                    break;
 
                 case ConstructedTypeNameNode constructedType:
-                    return VisitConstructedType(constructedType);
+                    result = VisitConstructedType(constructedType);
+                    break;
 
                 case PointerTypeNameNode pointerType:
-                    return VisitPointerType(pointerType);
+                    result = VisitPointerType(pointerType);
+                    break;
 
                 case ArrayTypeNameNode arrayType:
-                    return VisitArrayType(arrayType);
+                    result = VisitArrayType(arrayType);
+                    break;
 
                 case MemberNameNode member:
-                    return VisitMember(member);
+                    result = VisitMember(member);
+                    break;
 
                 default:
                     throw new NotImplementedException($"{nameof(NameNode)} type '{node.GetType()}' is not supported.");
             }
+            // TODO: Fix problem with duplicate global namespace
+            return result.Distinct();
         }
 
         private IEnumerable<ISymbol> VisitArrayType(ArrayTypeNameNode arrayType)
@@ -77,7 +103,7 @@ namespace DotvvmAcademy.Meta
             var rank = arrayType.CommaTokens.Length + 1;
             return Visit(arrayType.ElementType)
                 .OfType<ITypeSymbol>()
-                .Select(t => compilation.CreateArrayTypeSymbol(t, rank));
+                .Select(t => compilationAccessor.Compilation.CreateArrayTypeSymbol(t, rank));
         }
 
         private IEnumerable<ISymbol> VisitConstructedType(ConstructedTypeNameNode constructedType)
@@ -93,7 +119,8 @@ namespace DotvvmAcademy.Meta
 
         private IEnumerable<ISymbol> VisitGeneric(GenericNameNode generic)
         {
-            return assemblies.SelectMany(a => VisitGeneric(a.GlobalNamespace, generic));
+            return GetGlobalNamespaces()
+                .SelectMany(n => VisitGeneric(n, generic));
         }
 
         private IEnumerable<ISymbol> VisitGeneric(INamespaceSymbol namespaceSymbol, GenericNameNode generic)
@@ -104,8 +131,8 @@ namespace DotvvmAcademy.Meta
 
         private IEnumerable<ISymbol> VisitIdentifier(IdentifierNameNode identifier)
         {
-            return assemblies
-                .SelectMany(a => VisitIdentifier(a.GlobalNamespace, identifier));
+            return GetGlobalNamespaces()
+                .SelectMany(n => VisitIdentifier(n, identifier));
         }
 
         private IEnumerable<ISymbol> VisitIdentifier(INamespaceSymbol namespaceSymbol, IdentifierNameNode identifier)
@@ -132,7 +159,7 @@ namespace DotvvmAcademy.Meta
         {
             return Visit(pointerType.ElementType)
                 .Cast<ITypeSymbol>()
-                .Select(t => compilation.CreatePointerTypeSymbol(t));
+                .Select(t => compilationAccessor.Compilation.CreatePointerTypeSymbol(t));
         }
 
         private IEnumerable<ISymbol> VisitPredefinedType(PredefinedTypeNameNode predefinedType)
@@ -141,67 +168,67 @@ namespace DotvvmAcademy.Meta
             switch (predefinedType.Kind)
             {
                 case NameNodeKind.BoolType:
-                    type = compilation.GetTypeByMetadataName(WellKnownTypes.Bool);
+                    type = GetTypeByMetadataName(WellKnownTypes.Bool);
                     break;
 
                 case NameNodeKind.ByteType:
-                    type = compilation.GetTypeByMetadataName(WellKnownTypes.Byte);
+                    type = GetTypeByMetadataName(WellKnownTypes.Byte);
                     break;
 
                 case NameNodeKind.SByteType:
-                    type = compilation.GetTypeByMetadataName(WellKnownTypes.SByte);
+                    type = GetTypeByMetadataName(WellKnownTypes.SByte);
                     break;
 
                 case NameNodeKind.IntType:
-                    type = compilation.GetTypeByMetadataName(WellKnownTypes.Int);
+                    type = GetTypeByMetadataName(WellKnownTypes.Int);
                     break;
 
                 case NameNodeKind.UIntType:
-                    type = compilation.GetTypeByMetadataName(WellKnownTypes.UInt);
+                    type = GetTypeByMetadataName(WellKnownTypes.UInt);
                     break;
 
                 case NameNodeKind.ShortType:
-                    type = compilation.GetTypeByMetadataName(WellKnownTypes.Short);
+                    type = GetTypeByMetadataName(WellKnownTypes.Short);
                     break;
 
                 case NameNodeKind.UShortType:
-                    type = compilation.GetTypeByMetadataName(WellKnownTypes.UShort);
+                    type = GetTypeByMetadataName(WellKnownTypes.UShort);
                     break;
 
                 case NameNodeKind.LongType:
-                    type = compilation.GetTypeByMetadataName(WellKnownTypes.Long);
+                    type = GetTypeByMetadataName(WellKnownTypes.Long);
                     break;
 
                 case NameNodeKind.ULongType:
-                    type = compilation.GetTypeByMetadataName(WellKnownTypes.ULong);
+                    type = GetTypeByMetadataName(WellKnownTypes.ULong);
                     break;
 
                 case NameNodeKind.FloatType:
-                    type = compilation.GetTypeByMetadataName(WellKnownTypes.Float);
+                    type = GetTypeByMetadataName(WellKnownTypes.Float);
                     break;
 
                 case NameNodeKind.DoubleType:
-                    type = compilation.GetTypeByMetadataName(WellKnownTypes.Double);
+                    type = GetTypeByMetadataName(WellKnownTypes.Double);
                     break;
 
                 case NameNodeKind.DecimalType:
-                    type = compilation.GetTypeByMetadataName(WellKnownTypes.Decimal);
+                    type = GetTypeByMetadataName(WellKnownTypes.Decimal);
                     break;
 
                 case NameNodeKind.StringType:
-                    type = compilation.GetTypeByMetadataName(WellKnownTypes.String);
+                    type = GetTypeByMetadataName(WellKnownTypes.String);
                     break;
 
                 case NameNodeKind.CharType:
-                    type = compilation.GetTypeByMetadataName(WellKnownTypes.Char);
+                    type = GetTypeByMetadataName(WellKnownTypes.Char);
                     break;
 
                 case NameNodeKind.ObjectType:
-                    type = compilation.GetTypeByMetadataName(WellKnownTypes.Object);
+                    type = GetTypeByMetadataName(WellKnownTypes.Object);
                     break;
 
                 case NameNodeKind.VoidType:
-                    type = compilation.GetTypeByMetadataName(WellKnownTypes.Void);
+                    type = GetTypeByMetadataName(WellKnownTypes.Void);
                     break;
 
                 default:

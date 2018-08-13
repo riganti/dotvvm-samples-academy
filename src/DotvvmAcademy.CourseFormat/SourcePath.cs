@@ -169,5 +169,20 @@ namespace DotvvmAcademy.CourseFormat
             }
             return sb.ToString();
         }
+
+        public static ReadOnlyMemory<char> GetExtension(string path)
+        {
+            var segment = GetLastSegment(path);
+            var span = segment.Span;
+            for (int i = segment.Length - 1; i > 0; i--)
+            {
+                if (span[i] == '.')
+                {
+                    return segment.Slice(i);
+                }
+            }
+
+            return default;
+        }
     }
 }

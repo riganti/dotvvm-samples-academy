@@ -1,27 +1,18 @@
-﻿using DotvvmAcademy.Validation.Dothtml.ValidationTree;
-using DotvvmAcademy.Validation.Unit;
-using System;
-using System.Collections.Generic;
+﻿using DotvvmAcademy.Validation.Unit;
+using System.Xml.XPath;
 
 namespace DotvvmAcademy.Validation.Dothtml.Unit
 {
-    public class DothtmlQuery<TResult> : IQuery<TResult>
-        where TResult : ValidationTreeNode
+    public class DothtmlQuery<TResult> : Query<TResult>
     {
-        public DothtmlQuery(string xpath)
+        public DothtmlQuery(DothtmlUnit unit, XPathExpression expression) : base(unit, expression.Expression)
         {
-            XPath = xpath;
+            Unit = unit;
+            Expression = expression;
         }
 
-        public List<Action<DothtmlConstraintContext<TResult>>> Constraints { get; }
-            = new List<Action<DothtmlConstraintContext<TResult>>>();
+        public XPathExpression Expression { get; }
 
-        public string XPath { get; }
-
-        public void AddConstraint(Action<DothtmlConstraintContext<TResult>> constraint) => Constraints.Add(constraint);
-
-        void IQuery<TResult>.AddConstraint(Action<IConstraintContext<TResult>> constraint) => AddConstraint(constraint);
-
-        void IQuery.AddConstraint(Action<IConstraintContext> constraint) => AddConstraint(constraint);
+        public new DothtmlUnit Unit { get; }
     }
 }

@@ -1,8 +1,9 @@
 ﻿using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Compilation.ControlTree.Resolved;
 using DotVVM.Framework.Compilation.Parser.Binding.Parser;
+using DotvvmAcademy.Meta;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Concurrent;
 
@@ -13,11 +14,13 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         private readonly ConcurrentDictionary<ITypeSymbol, ValidationTypeDescriptor> cache
             = new ConcurrentDictionary<ITypeSymbol, ValidationTypeDescriptor>();
 
-        private readonly CSharpCompilation compilation;
+        private readonly ICSharpCompilationAccessor compilationAccessor;
+        private readonly ISymbolNameBuilder symbolNameBuilder;
 
-        public ValidationTypeDescriptorFactory(CSharpCompilation compilation)
+        public ValidationTypeDescriptorFactory(ICSharpCompilationAccessor compilationAccessor, ISymbolNameBuilder symbolNameBuilder)
         {
-            this.compilation = compilation;
+            this.compilationAccessor = compilationAccessor;
+            this.symbolNameBuilder = symbolNameBuilder;
         }
 
         public ValidationTypeDescriptor Convert(ITypeDescriptor other)
@@ -40,7 +43,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
                 return null;
             }
 
-            return cache.GetOrAdd(typeSymbol, s => new ValidationTypeDescriptor(this, compilation, s));
+            return cache.GetOrAdd(typeSymbol, s => new ValidationTypeDescriptor(this, compilationAccessor, symbolNameBuilder, s));
         }
 
         public ValidationTypeDescriptor Create(BindingParserNode name)
@@ -58,7 +61,10 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             return Create(name.ToDisplayString());
         }
 
-        public ValidationTypeDescriptor Create(MemberAccessBindingParserNode name) => Create(name.ToDisplayString());
+        public ValidationTypeDescriptor Create(MemberAccessBindingParserNode name)
+        {
+            return Create(name.ToDisplayString());
+        }
 
         public ValidationTypeDescriptor Create(string metadataName)
         {
@@ -67,17 +73,20 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
                 return null;
             }
 
-            var symbol = compilation.GetTypeByMetadataName(metadataName);
+            var symbol = compilationAccessor.Compilation.GetTypeByMetadataName(metadataName);
             if (symbol == null)
             {
-                return Create(compilation.CreateErrorTypeSymbol(
-                    container: compilation.GlobalNamespace,
+                return Create(compilationAccessor.Compilation.CreateErrorTypeSymbol(
+                    container: compilationAccessor.Compilation.GlobalNamespace,
                     name: metadataName,
                     arity: 0));
             }
             return Create(symbol);
         }
 
-        public ValidationTypeDescriptor Create(Type type) => Create(type.FullName);
+        public ValidationTypeDescriptor Create(Type type)
+        {
+            return Create(type.FullName);
+        }
     }
 }

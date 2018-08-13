@@ -7,20 +7,13 @@ using System.Reflection;
 
 namespace DotvvmAcademy.Meta
 {
-    public class MemberInfoLocator : ILocator<MemberInfo>
+    public class MemberInfoLocator : IMemberInfoLocator
     {
-        private readonly ImmutableArray<Assembly> assemblies;
+        private readonly IAssemblyAccessor assemblyAccessor;
 
-        public MemberInfoLocator(ImmutableArray<Assembly> assemblies)
+        public MemberInfoLocator(IAssemblyAccessor assemblyAccessor)
         {
-            this.assemblies = assemblies;
-        }
-
-        public ImmutableArray<MemberInfo> Locate(string name)
-        {
-            var lexer = new NameLexer(name);
-            var parser = new NameParser(lexer);
-            return Locate(parser.Parse());
+            this.assemblyAccessor = assemblyAccessor;
         }
 
         public ImmutableArray<MemberInfo> Locate(NameNode node)
@@ -28,11 +21,15 @@ namespace DotvvmAcademy.Meta
             return Visit(node).ToImmutableArray();
         }
 
-        private IEnumerable<Type> GetType(string fullName)
+        private IEnumerable<Type> GetTypeFromAssemblies(string fullName)
         {
-            foreach (var assembly in assemblies)
+            foreach (var assembly in assemblyAccessor.Assemblies)
             {
-                yield return assembly.GetType(fullName);
+                var type = assembly.GetType(fullName);
+                if (type != null)
+                {
+                    yield return type;
+                }
             }
         }
 
@@ -46,7 +43,7 @@ namespace DotvvmAcademy.Meta
                 case NameNodeKind.NestedType:
                 case NameNodeKind.PointerType:
                 case NameNodeKind.ArrayType:
-                    return GetType(node.ToString());
+                    return GetTypeFromAssemblies(node.ToString());
 
                 case NameNodeKind.BoolType:
                 case NameNodeKind.ByteType:

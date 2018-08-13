@@ -5,7 +5,7 @@ namespace DotvvmAcademy.CourseFormat
 {
     public abstract class Source
     {
-        CancellationTokenSource tokenSource = new CancellationTokenSource();
+        private readonly CancellationTokenSource tokenSource = new CancellationTokenSource();
 
         public Source(string path)
         {
@@ -13,9 +13,9 @@ namespace DotvvmAcademy.CourseFormat
             EvictionToken = new CancellationChangeToken(tokenSource.Token);
         }
 
-        internal IChangeToken EvictionToken { get; }
-
         public string Path { get; }
+
+        internal IChangeToken EvictionToken { get; }
 
         public abstract long GetSize();
 

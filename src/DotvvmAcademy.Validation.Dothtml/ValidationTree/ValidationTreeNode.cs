@@ -14,12 +14,13 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         public DothtmlNode DothtmlNode { get; }
 
-        public ValidationTreeNode Parent { get; protected set; }
+        public ValidationTreeNode Parent { get; set; }
 
         IAbstractTreeNode IAbstractTreeNode.Parent => Parent;
 
-        public ValidationTreeRoot TreeRoot { get; protected set; }
+        public ValidationTreeRoot TreeRoot { get; set; }
 
         IAbstractTreeRoot IAbstractTreeNode.TreeRoot => TreeRoot;
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace DotvvmAcademy.CourseFormat
 {
@@ -9,6 +10,16 @@ namespace DotvvmAcademy.CourseFormat
 
         public CourseEnvironment(DirectoryInfo root)
         {
+            if (root == null)
+            {
+                throw new ArgumentNullException(nameof(root));
+            }
+
+            if (!root.Exists)
+            {
+                throw new ArgumentException("Directory does not exist.", nameof(root));
+            }
+
             Root = root;
         }
 

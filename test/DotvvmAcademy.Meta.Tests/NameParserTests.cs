@@ -1,17 +1,25 @@
 ﻿using DotvvmAcademy.Meta.Syntax;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace DotvvmAcademy.Meta.Tests
 {
-    [TestClass]
     public class NameParserTests
     {
-        [TestMethod]
-        public void BasicParserTest()
+        [Fact]
+        public void NameParser_MemberName_CreateNode()
         {
             var lexer = new NameLexer("System.Collections.Generic.List`1[string]::ToString");
             var parser = new NameParser(lexer);
             var name = parser.Parse();
         }
+
+        [Fact]
+        public void NameParser_MemberNameWithDot_CreateNode()
+        {
+            var lexer = new NameLexer("System.Int32::.ctor");
+            var parser = new NameParser(lexer);
+            var name = parser.Parse();
+        }
+
     }
 }

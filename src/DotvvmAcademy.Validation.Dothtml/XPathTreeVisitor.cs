@@ -1,4 +1,5 @@
-﻿using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
+﻿using DotVVM.Framework.Compilation.ControlTree;
+using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 using DotVVM.Framework.Controls;
 using DotVVM.Framework.Controls.Infrastructure;
 using DotvvmAcademy.Validation.Dothtml.ValidationTree;
@@ -51,13 +52,20 @@ namespace DotvvmAcademy.Validation.Dothtml
             return root;
         }
 
-        private XPathDothtmlNode VisitHtmlGenericControl(ValidationControl control)
+        private string GetPropertyName(IPropertyDescriptor property)
         {
-            var elementNode = (DothtmlElementNode)control.DothtmlNode;
-            return new XPathDothtmlNode(control, XPathNodeType.Element)
+            string name;
+            switch (property)
             {
-                LocalName = nameTable.GetOrAdd(elementNode.TagName)
-            };
+                case ValidationAttachedProperty attachedProperty:
+                    name = $"{attachedProperty.DeclaringType.Name}.{property.Name}";
+                    break;
+
+                default:
+                    name = property.Name;
+                    break;
+            }
+            return nameTable.GetOrAdd(name);
         }
 
         private XPathDothtmlNode VisitControl(ValidationControl control)
@@ -122,6 +130,15 @@ namespace DotvvmAcademy.Validation.Dothtml
             };
         }
 
+        private XPathDothtmlNode VisitHtmlGenericControl(ValidationControl control)
+        {
+            var elementNode = (DothtmlElementNode)control.DothtmlNode;
+            return new XPathDothtmlNode(control, XPathNodeType.Element)
+            {
+                LocalName = nameTable.GetOrAdd(elementNode.TagName)
+            };
+        }
+
         private XPathDothtmlNode VisitLiteral(ValidationControl control)
         {
             var localName = nameTable.GetOrAdd(control.Metadata.Type.Name);
@@ -164,7 +181,7 @@ namespace DotvvmAcademy.Validation.Dothtml
         {
             return new XPathDothtmlNode(propertyBinding, XPathNodeType.Attribute)
             {
-                LocalName = nameTable.GetOrAdd(propertyBinding.Property.Name),
+                LocalName = GetPropertyName(propertyBinding.Property),
                 Value = propertyBinding.Binding
             };
         }
@@ -173,7 +190,7 @@ namespace DotvvmAcademy.Validation.Dothtml
         {
             var node = new XPathDothtmlNode(propertyControl, XPathNodeType.Attribute)
             {
-                LocalName = nameTable.GetOrAdd(propertyControl.Property.Name),
+                LocalName = GetPropertyName(propertyControl.Property),
             };
             var children = ImmutableArray.CreateBuilder<XPathDothtmlNode>();
             var controlNode = VisitControl(propertyControl.Control);
@@ -190,7 +207,7 @@ namespace DotvvmAcademy.Validation.Dothtml
         {
             var node = new XPathDothtmlNode(propertyCollection, XPathNodeType.Attribute)
             {
-                LocalName = nameTable.GetOrAdd(propertyCollection.Property.Name),
+                LocalName = GetPropertyName(propertyCollection.Property),
             };
             if (!propertyCollection.Controls.IsDefaultOrEmpty)
             {
@@ -214,7 +231,7 @@ namespace DotvvmAcademy.Validation.Dothtml
         {
             var node = new XPathDothtmlNode(propertyTemplate, XPathNodeType.Attribute)
             {
-                LocalName = nameTable.GetOrAdd(propertyTemplate.Property.Name),
+                LocalName = GetPropertyName(propertyTemplate.Property),
             };
             if (!propertyTemplate.Content.IsDefaultOrEmpty)
             {
@@ -239,7 +256,7 @@ namespace DotvvmAcademy.Validation.Dothtml
             var syntax = (DothtmlAttributeNode)propertyValue.DothtmlNode;
             return new XPathDothtmlNode(propertyValue, XPathNodeType.Attribute)
             {
-                LocalName = nameTable.GetOrAdd(propertyValue.Property.Name),
+                LocalName = GetPropertyName(propertyValue.Property),
                 Value = propertyValue.Value
             };
         }

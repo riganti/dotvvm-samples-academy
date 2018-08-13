@@ -1,5 +1,6 @@
 ﻿using DotvvmAcademy.Meta;
 using DotvvmAcademy.Validation.CSharp.Unit;
+using DotvvmAcademy.Validation.Unit;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
@@ -15,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace DotvvmAcademy.Validation.CSharp
 {
-    public class CSharpValidationService : IValidationService<CSharpUnit, CSharpValidationOptions>
+    public class CSharpValidationService : IValidationService<CSharpUnit>
     {
         private readonly IServiceProvider globalProvider;
 
@@ -26,45 +27,53 @@ namespace DotvvmAcademy.Validation.CSharp
 
         public async Task<ImmutableArray<IValidationDiagnostic>> Validate(
             CSharpUnit unit,
-            string code,
-            CSharpValidationOptions options = null)
+            ImmutableArray<ISourceCode> sources)
         {
-            options = options ?? CSharpValidationOptions.Default;
             using (var scope = globalProvider.CreateScope())
             {
+                // prepare services
                 var context = scope.ServiceProvider.GetRequiredService<Context>();
-                var reporter = scope.ServiceProvider.GetRequiredService<ValidationReporter>();
                 context.Unit = unit;
-                context.Code = code;
-                context.Options = options;
+                context.Sources = sources;
+                var compilationAccessor = scope.ServiceProvider.GetRequiredService<ICSharpCompilationAccessor>();
+                compilationAccessor.Compilation = GetCompilation(scope.ServiceProvider);
+                var assemblyAccessor = scope.ServiceProvider.GetRequiredService<IAssemblyAccessor>();
+                assemblyAccessor.Assemblies = Assembly.GetEntryAssembly()
+                    .GetReferencedAssemblies()
+                    .Select(Assembly.Load)
+                    .ToImmutableArray();
+
+                // run static analysis
+                var reporter = scope.ServiceProvider.GetRequiredService<CSharpValidationReporter>();
                 HandleQueries<ITypeSymbol>(scope.ServiceProvider);
                 HandleQueries<IMethodSymbol>(scope.ServiceProvider);
                 HandleQueries<IPropertySymbol>(scope.ServiceProvider);
                 HandleQueries<IFieldSymbol>(scope.ServiceProvider);
                 HandleQueries<IEventSymbol>(scope.ServiceProvider);
                 await RunAnalyzers(scope.ServiceProvider);
-                var diagnostics = reporter.GetDiagnostics();
-                if (diagnostics.Any(d => d.Severity == ValidationSeverity.Error))
+                if (reporter.WorstSeverity == ValidationSeverity.Error)
                 {
-                    return diagnostics;
+                    return GetValidationDiagnostics(scope.ServiceProvider);
                 }
 
-                context.Assembly = await GetAssembly(scope.ServiceProvider);
+                // run dynamic analysis
+                var userAssembly = await GetAssembly(scope.ServiceProvider);
+                assemblyAccessor.Assemblies = assemblyAccessor.Assemblies.Add(userAssembly);
                 RunDynamicActions(scope.ServiceProvider);
-                return reporter.GetDiagnostics();
+                return GetValidationDiagnostics(scope.ServiceProvider);
             }
         }
 
         private async Task<Assembly> GetAssembly(IServiceProvider provider)
         {
-            var compilation = provider.GetRequiredService<CSharpCompilation>();
+            var compilation = provider.GetRequiredService<ICSharpCompilationAccessor>().Compilation;
             using (var originalStream = new MemoryStream())
             using (var rewrittenStream = new MemoryStream())
             {
                 var result = compilation.Emit(originalStream);
                 if (!result.Success)
                 {
-                    var reporter = provider.GetRequiredService<ValidationReporter>();
+                    var reporter = provider.GetRequiredService<CSharpValidationReporter>();
                     foreach (var diagnostic in result.Diagnostics)
                     {
                         reporter.Report(diagnostic);
@@ -73,7 +82,7 @@ namespace DotvvmAcademy.Validation.CSharp
                 }
 
                 originalStream.Position = 0;
-                var rewriter = provider.GetRequiredService<IAssemblyRewriter>();
+                var rewriter = provider.GetRequiredService<AssemblyRewriter>();
                 await rewriter.Rewrite(originalStream, rewrittenStream);
                 rewrittenStream.Position = 0;
                 return AssemblyLoadContext.Default.LoadFromStream(rewrittenStream);
@@ -83,72 +92,81 @@ namespace DotvvmAcademy.Validation.CSharp
         private CSharpCompilation GetCompilation(IServiceProvider provider)
         {
             var context = provider.GetRequiredService<Context>();
-            var tree = CSharpSyntaxTree.ParseText(context.Code ?? string.Empty);
+            var trees = context.Sources
+                .OfType<CSharpSourceCode>()
+                .Select(s => CSharpSyntaxTree.ParseText(
+                    text: s.GetContent(),
+                    path: s.FileName));
             var compilation = CSharpCompilation.Create(
                 assemblyName: $"DotvvmAcademy.Validation.CSharp.{context.Id}",
-                syntaxTrees: new[] { tree },
+                syntaxTrees: trees,
                 references: new[]
                 {
-                    MetadataReferencer.FromName("mscorlib"),
-                    MetadataReferencer.FromName("netstandard"),
-                    MetadataReferencer.FromName("System.Private.CoreLib"),
-                    MetadataReferencer.FromName("System.Runtime"),
-                    MetadataReferencer.FromName("System.Collections"),
-                    MetadataReferencer.FromName("System.Reflection")
+                    RoslynReference.FromName("mscorlib"),
+                    RoslynReference.FromName("netstandard"),
+                    RoslynReference.FromName("System.Private.CoreLib"),
+                    RoslynReference.FromName("System.Runtime"),
+                    RoslynReference.FromName("System.Collections"),
+                    RoslynReference.FromName("System.Reflection"),
+                    RoslynReference.FromName("System.Linq"),
+                    RoslynReference.FromName("System.Linq.Expressions"),
+                    RoslynReference.FromName("System.ComponentModel.Annotations"),
+                    RoslynReference.FromName("System.ComponentModel.DataAnnotations"),
+                    RoslynReference.FromName("DotVVM.Framework"),
+                    RoslynReference.FromName("DotVVM.Core")
                 },
                 options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
-            if (context.Options.IncludeCompilerDiagnostics)
+            var reporter = provider.GetRequiredService<CSharpValidationReporter>();
+            var diagnostics = compilation.GetDiagnostics();
+            foreach (var diagnostic in diagnostics)
             {
-                var reporter = provider.GetRequiredService<ValidationReporter>();
-                var diagnostics = compilation.GetDiagnostics();
-                foreach (var diagnostic in diagnostics)
-                {
-                    reporter.Report(diagnostic);
-                }
+                reporter.Report(diagnostic);
             }
             return compilation;
         }
 
         private ImmutableArray<ISymbol> GetMetadataNameResult(IServiceProvider provider, string name)
         {
-            return provider.GetRequiredService<SymbolLocator>().Locate(name);
+            return provider.GetRequiredService<ISymbolLocator>().Locate(name);
         }
 
         private IServiceProvider GetServiceProvider()
         {
             var c = new ServiceCollection();
-            c.AddSingleton<IAssemblyRewriter, AssemblyRewriter>();
+            c.AddMetaSingletonFriendly();
+            c.AddScoped<Context>();
+            c.AddSingleton<AssemblyRewriter>();
             c.AddScoped<AllowedSymbolStorage>();
             c.AddScoped<DiagnosticAnalyzer, SymbolAllowedAnalyzer>();
-            c.AddScoped(GetCompilation);
-            c.AddScoped<ValidationReporter>();
-            c.AddScoped<Context>();
-            c.AddScoped<SymbolLocator>();
-            c.AddScoped(p => p.GetRequiredService<Context>().Assembly);
+            c.AddScoped<IValidationReporter>(p => p.GetRequiredService<CSharpValidationReporter>());
+            c.AddScoped<CSharpValidationReporter>();
             c.AddScoped(p =>
             {
-                var userAssembly = p.GetRequiredService<Assembly>();
-                var assemblies = Assembly.GetEntryAssembly().GetReferencedAssemblies().Select(Assembly.Load);
-                var builder = ImmutableArray.CreateBuilder<Assembly>();
-                builder.Add(userAssembly);
-                builder.AddRange(assemblies);
-                return new MemberInfoLocator(builder.ToImmutable());
+                var context = p.GetRequiredService<Context>();
+                return new CSharpSourceCodeProvider(context.Sources.OfType<CSharpSourceCode>());
             });
             c.AddScoped<CSharpDynamicContext>();
             return c.BuildServiceProvider();
+        }
+
+        private ImmutableArray<IValidationDiagnostic> GetValidationDiagnostics(IServiceProvider provider)
+        {
+            return provider.GetRequiredService<CSharpValidationReporter>()
+                .GetReportedDiagnostics()
+                .Where(d => d.Source == null || d.Source.IsValidated)
+                .ToImmutableArray();
         }
 
         private void HandleQueries<TResult>(IServiceProvider provider)
             where TResult : ISymbol
         {
             var unit = provider.GetRequiredService<Context>().Unit;
-            var queries = unit.Queries.Values.OfType<CSharpQuery<TResult>>();
-            foreach (var query in queries)
+            foreach (var query in unit.GetQueries<TResult>())
             {
-                var result = GetMetadataNameResult(provider, query.Name).OfType<TResult>().ToImmutableArray();
-                foreach (var constraint in query.Constraints)
+                var result = GetMetadataNameResult(provider, query.Source).OfType<TResult>().ToImmutableArray();
+                foreach (var constraint in query.GetConstraints())
                 {
-                    var context = new CSharpConstraintContext<TResult>(provider, query.Name, result);
+                    var context = new ConstraintContext<TResult>(provider, query, result);
                     constraint(context);
                 }
             }
@@ -160,7 +178,7 @@ namespace DotvvmAcademy.Validation.CSharp
             DiagnosticAnalyzer analyzer,
             Diagnostic diagnostic)
         {
-            var reporter = provider.GetRequiredService<ValidationReporter>();
+            var reporter = provider.GetRequiredService<CSharpValidationReporter>();
             reporter.Report(diagnostic);
         }
 
@@ -175,10 +193,10 @@ namespace DotvvmAcademy.Validation.CSharp
                 concurrentAnalysis: false,
                 logAnalyzerExecutionTime: false,
                 reportSuppressedDiagnostics: true);
-            var compilation = provider.GetRequiredService<CSharpCompilation>()
+            var compilation = provider.GetRequiredService<ICSharpCompilationAccessor>().Compilation
                 .WithAnalyzers(analyzers, analysisOptions);
             var diagnostics = await compilation.GetAnalyzerDiagnosticsAsync();
-            var reporter = provider.GetRequiredService<ValidationReporter>();
+            var reporter = provider.GetRequiredService<CSharpValidationReporter>();
             foreach (var diagnostic in diagnostics)
             {
                 reporter.Report(diagnostic);
@@ -189,29 +207,26 @@ namespace DotvvmAcademy.Validation.CSharp
         {
             var unit = provider.GetRequiredService<Context>().Unit;
             var context = provider.GetRequiredService<CSharpDynamicContext>();
-            var reporter = provider.GetRequiredService<ValidationReporter>();
-            foreach (var action in unit.DynamicActions)
+            var reporter = provider.GetRequiredService<CSharpValidationReporter>();
+            foreach (var action in unit.GetDynamicActions())
             {
                 try
                 {
                     action(context);
                 }
-                catch (Exception e)
+                catch (Exception exception)
                 {
-                    reporter.Report(e.Message);
+                    reporter.Report($"An '{exception.GetType().Name}' with message: '{exception.Message}', " +
+                        $"occured during execution of your code");
                 }
             }
         }
 
         private class Context
         {
-            public Assembly Assembly { get; set; }
-
-            public string Code { get; set; }
-
             public Guid Id { get; } = Guid.NewGuid();
 
-            public CSharpValidationOptions Options { get; set; }
+            public ImmutableArray<ISourceCode> Sources { get; set; }
 
             public CSharpUnit Unit { get; set; }
         }

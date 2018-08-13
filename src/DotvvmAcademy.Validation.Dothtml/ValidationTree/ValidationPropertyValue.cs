@@ -10,7 +10,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
     {
         public ValidationPropertyValue(
             DothtmlNode node,
-            ValidationPropertyDescriptor property,
+            IPropertyDescriptor property,
             object value)
             : base(node, property)
         {

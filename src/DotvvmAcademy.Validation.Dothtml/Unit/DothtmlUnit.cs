@@ -1,36 +1,21 @@
-﻿using DotvvmAcademy.Validation.Dothtml.ValidationTree;
-using DotvvmAcademy.Validation.Unit;
+﻿using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Concurrent;
+using System.Xml.XPath;
 
 namespace DotvvmAcademy.Validation.Dothtml.Unit
 {
-    public class DothtmlUnit : IUnit
+    public class DothtmlUnit : Validation.Unit.Unit
     {
-        public DothtmlUnit(IServiceProvider provider)
+        public DothtmlUnit(IServiceProvider provider) : base(provider)
         {
-            Provider = provider;
         }
 
-        public ConcurrentDictionary<string, IQuery> Queries { get; }
-            = new ConcurrentDictionary<string, IQuery>();
-
-        public IServiceProvider Provider { get; }
-
-        public DothtmlQuery<ValidationControl> GetControls(string xpath)
-            => AddQuery<ValidationControl>(xpath);
-
-        public DothtmlQuery<ValidationDirective> GetDirectives(string xpath)
-            => AddQuery<ValidationDirective>(xpath);
-
-        public DothtmlQuery<ValidationPropertySetter> GetProperties(string xpath)
-            => AddQuery<ValidationPropertySetter>(xpath);
-
-        private DothtmlQuery<TNode> AddQuery<TNode>(string xpath)
-            where TNode : ValidationTreeNode
+        public DothtmlQuery<TResult> GetQuery<TResult>(string xpath)
         {
-            return (DothtmlQuery<TNode>)Queries.GetOrAdd(xpath, n =>
-                new DothtmlQuery<TNode>(xpath));
+            var expression = XPathExpression.Compile(xpath);
+            var query = ActivatorUtilities.CreateInstance<DothtmlQuery<TResult>>(Provider, expression);
+            AddQuery(query);
+            return query;
         }
     }
 }

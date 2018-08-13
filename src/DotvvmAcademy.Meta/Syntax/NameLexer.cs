@@ -38,6 +38,12 @@ namespace DotvvmAcademy.Meta.Syntax
         {
             start = position;
             var character = Peek();
+            if (Peek(-2) == ':' && Peek(-1) == ':')
+            {
+                // TODO: This is awful. Find better way to recognize member identifiers
+                Advance();
+                return ScanMemberIdentifier();
+            }
             switch (character)
             {
                 case InvalidCharacter:
@@ -111,12 +117,23 @@ namespace DotvvmAcademy.Meta.Syntax
 
         protected char Peek(int delta = 0)
         {
-            if (position + delta >= Source.Length)
+            if (position + delta >= Source.Length || position + delta < 0)
             {
                 return InvalidCharacter;
             }
 
             return Source[position + delta];
+        }
+
+        private NameToken ScanMemberIdentifier()
+        {
+            // TODO: Don't consume the rest of the string
+            while(Peek() != InvalidCharacter)
+            {
+                Advance();
+            }
+
+            return CreateToken(NameTokenKind.Identifier);
         }
 
         private NameToken ScanIdentifier()

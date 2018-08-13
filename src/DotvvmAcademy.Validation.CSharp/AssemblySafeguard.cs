@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace DotvvmAcademy.Validation.CSharp
 {
-    public class AssemblySafeguard : IAssemblySafeguard
+    public class AssemblySafeguard
     {
         private Lazy<Stopwatch> stopwatch = new Lazy<Stopwatch>(() => Stopwatch.StartNew());
 

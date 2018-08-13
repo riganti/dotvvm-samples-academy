@@ -8,9 +8,6 @@ namespace DotvvmAcademy.CourseFormat
 {
     public class MarkdownExtractor
     {
-        public const string MissingCodeTaskPath = null;
-        public const string MissingImageUrl = null;
-        public const string MissingName = "{Missing lesson name}";
         public const string CodeTaskLiteral = "CodeTask";
 
         public string ExtractCodeTaskPath(MarkdownDocument document)
@@ -28,7 +25,7 @@ namespace DotvvmAcademy.CourseFormat
                 return link.Url;
             }
 
-            return MissingCodeTaskPath;
+            return null;
         }
 
         public string ExtractHtml(MarkdownDocument document)
@@ -53,7 +50,7 @@ namespace DotvvmAcademy.CourseFormat
                 return link.Url;
             }
 
-            return MissingImageUrl;
+            return null;
         }
 
         public string ExtractName(MarkdownDocument document)
@@ -68,7 +65,7 @@ namespace DotvvmAcademy.CourseFormat
                 return literal.ToString();
             }
 
-            return MissingName;
+            return null;
         }
     }
 }

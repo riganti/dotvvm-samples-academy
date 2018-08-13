@@ -4,7 +4,9 @@ using DotvvmAcademy.Validation.CSharp.Unit;
 using DotvvmAcademy.Validation.Dothtml;
 using DotvvmAcademy.Validation.Dothtml.Unit;
 using DotvvmAcademy.Validation.Unit;
+using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,22 +32,19 @@ namespace DotvvmAcademy.CourseFormat
         public async Task<ImmutableArray<CodeTaskDiagnostic>> Validate(IUnit unit, string code)
         {
             ImmutableArray<IValidationDiagnostic> diagnostics;
+            var configuration = unit.Provider.GetRequiredService<CodeTaskConfiguration>();
+            var sourceCodeTasks = configuration.SourcePaths.Select(p => GetSourceCode(p.Key, p.Value));
+            var sourceCodes = (await Task.WhenAll(sourceCodeTasks)).ToImmutableArray();
             switch (unit)
             {
                 case CSharpUnit csharpUnit:
-                    diagnostics = await csharpService.Validate(csharpUnit, code);
+                    sourceCodes = sourceCodes.Add(new CSharpSourceCode(code, configuration.FileName, true));
+                    diagnostics = await csharpService.Validate(csharpUnit, sourceCodes);
                     break;
 
                 case DothtmlUnit dothtmlUnit:
-                    var viewModel = string.Empty;
-                    var viewModelPath = dothtmlUnit.GetViewModelPath();
-                    if (viewModelPath != null)
-                    {
-                        viewModel = (await workspace.Load<Resource>(viewModelPath)).Text;
-                    }
-
-                    var options = new DothtmlValidationOptions(viewModel: viewModel);
-                    diagnostics = await dothtmlService.Validate(dothtmlUnit, code, options);
+                    sourceCodes = sourceCodes.Add(new DothtmlSourceCode(code, configuration.FileName, true));
+                    diagnostics = await dothtmlService.Validate(dothtmlUnit, sourceCodes);
                     break;
 
                 default:
@@ -57,7 +56,25 @@ namespace DotvvmAcademy.CourseFormat
                 start: d.Start,
                 end: d.End,
                 severity: d.Severity.ToCodeTaskDiagnosticSeverity()))
-                .ToImmutableArray();
+                    .ToImmutableArray();
+        }
+
+        private async Task<ISourceCode> GetSourceCode(string fileName, string sourcePath)
+        {
+            var resource = await workspace.Require<Resource>(sourcePath);
+            // TODO: Judging file type merely by extension is not exactly great
+            var extension = SourcePath.GetExtension(resource.Path).ToString();
+            switch (extension)
+            {
+                case ".cs":
+                    return new CSharpSourceCode(resource.Text, fileName, false);
+
+                case ".dothtml":
+                    return new DothtmlSourceCode(resource.Text, fileName, false);
+
+                default:
+                    throw new NotSupportedException($"File extension '{extension}' is not supported.");
+            }
         }
     }
 }

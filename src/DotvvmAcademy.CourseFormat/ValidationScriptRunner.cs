@@ -57,12 +57,12 @@ namespace DotvvmAcademy.CourseFormat
             {
                 var scope = globalProvider.CreateScope();
                 var context = scope.ServiceProvider.GetRequiredService<Context>();
-                context.ScriptPath = script.Path;
+                context.Script = script;
                 var csharpScript = CSharpScript.Create(
                     code: script.Text,
                     options: GetScriptOptions(script),
                     globalsType: typeof(UnitWrapper<TUnit>));
-                var unit = (TUnit)ActivatorUtilities.CreateInstance(scope.ServiceProvider, typeof(TUnit));
+                var unit = scope.ServiceProvider.GetRequiredService<TUnit>();
                 await csharpScript.RunAsync(new UnitWrapper<TUnit>(unit));
                 return unit;
             });
@@ -72,25 +72,35 @@ namespace DotvvmAcademy.CourseFormat
         {
             return ScriptOptions.Default
                 .AddReferences(
-                    MetadataReferencer.FromName("netstandard"),
-                    MetadataReferencer.FromName("System.Private.CoreLib"),
-                    MetadataReferencer.FromName("System.Runtime"),
-                    MetadataReferencer.FromName("System.Collections"),
-                    MetadataReferencer.FromName("System.Reflection"),
-                    MetadataReferencer.FromName("System.Linq"),
-                    MetadataReferencer.FromName("System.Linq.Expressions"), // Roslyn #23573
-                    MetadataReferencer.FromName("Microsoft.CSharp"), // Roslyn #23573
-                    MetadataReferencer.FromName("DotVVM.Framework"),
-                    MetadataReferencer.FromName("DotVVM.Core"),
-                    MetadataReferencer.FromName("DotvvmAcademy.CourseFormat"),
-                    MetadataReferencer.FromName("DotvvmAcademy.Validation"),
-                    MetadataReferencer.FromName("DotvvmAcademy.Validation.CSharp"),
-                    MetadataReferencer.FromName("DotvvmAcademy.Validation.Dothtml"))
+                    RoslynReference.FromName("netstandard"),
+                    RoslynReference.FromName("System.Private.CoreLib"),
+                    RoslynReference.FromName("System.Runtime"),
+                    RoslynReference.FromName("System.Collections"),
+                    RoslynReference.FromName("System.Reflection"),
+                    RoslynReference.FromName("System.ComponentModel.Annotations"),
+                    RoslynReference.FromName("System.ComponentModel.DataAnnotations"),
+                    RoslynReference.FromName("System.Linq"),
+                    RoslynReference.FromName("System.Linq.Expressions"), // Roslyn #23573
+                    RoslynReference.FromName("Microsoft.CSharp"), // Roslyn #23573
+                    RoslynReference.FromName("DotVVM.Framework"),
+                    RoslynReference.FromName("DotVVM.Core"),
+                    RoslynReference.FromName("DotvvmAcademy.CourseFormat"),
+                    RoslynReference.FromName("DotvvmAcademy.Validation"),
+                    RoslynReference.FromName("DotvvmAcademy.Validation.CSharp"),
+                    RoslynReference.FromName("DotvvmAcademy.Validation.Dothtml"),
+                    RoslynReference.FromName("DotvvmAcademy.Meta"))
                 .AddImports(
-                    "System",
                     "DotvvmAcademy.Validation.Unit",
                     "DotvvmAcademy.Validation.CSharp.Unit",
-                    "DotvvmAcademy.Validation.Dothtml.Unit")
+                    "DotvvmAcademy.Validation.Dothtml.Unit",
+                    "DotvvmAcademy.Meta",
+                    "DotVVM.Framework.Controls",
+                    "DotVVM.Framework.Controls.Infrastructure",
+                    "System",
+                    "System.Collections.Generic",
+                    "System.Linq",
+                    "System.Text",
+                    "System.Threading.Tasks")
                 .WithFilePath(script.Path)
                 .WithSourceResolver(new CodeTaskSourceResolver(environment));
         }
@@ -98,14 +108,27 @@ namespace DotvvmAcademy.CourseFormat
         private IServiceProvider GetServiceProvider()
         {
             var c = new ServiceCollection();
-            c.AddScoped<SourcePathStorage>();
+            c.AddMetaScopeFriendly();
+            c.AddScoped(p =>
+            {
+                var context = p.GetRequiredService<Context>();
+                var scriptDirectory = SourcePath.GetParent(context.Script.Path);
+                return new SourcePathStorage(scriptDirectory);
+            });
+            c.AddScoped(p =>
+            {
+                var context = p.GetRequiredService<Context>();
+                return new CodeTaskConfiguration(context.Script.Path);
+            });
             c.AddScoped<Context>();
+            c.AddScoped<DothtmlUnit>();
+            c.AddScoped<CSharpUnit>();
             return c.BuildServiceProvider();
         }
 
-        public class Context
+        private class Context
         {
-            public string ScriptPath { get; set; }
+            public Resource Script { get; set; }
         }
     }
 }

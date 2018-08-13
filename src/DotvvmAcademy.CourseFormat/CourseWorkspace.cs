@@ -27,7 +27,7 @@ namespace DotvvmAcademy.CourseFormat
         {
             if (string.IsNullOrWhiteSpace(sourcePath))
             {
-                throw new ArgumentException("Passed path is invalid.", nameof(sourcePath));
+                throw new ArgumentException("Source path must not be null or whitespace.", nameof(sourcePath));
             }
 
             return wrapper.Cache.GetOrCreateAsync($"{SourcePrefix}{sourcePath}", async entry =>
@@ -39,45 +39,6 @@ namespace DotvvmAcademy.CourseFormat
                 entry.RegisterPostEvictionCallback((k, v, r, s) => source?.OnEviction());
                 return source;
             });
-        }
-
-        public async Task<TSource> Load<TSource>(string sourcePath)
-            where TSource : Source
-        {
-            var source = await Load(sourcePath);
-            if (source == null)
-            {
-                return null;
-            }
-
-            if (source is TSource cast)
-            {
-                return cast;
-            }
-            else
-            {
-                throw new ArgumentException($"Path doesn't point to a '{typeof(TSource)}'.", nameof(sourcePath));
-            }
-        }
-
-        public Task<Lesson> LoadLesson(string variant, string lesson)
-        {
-            return Load<Lesson>($"/{CourseEnvironment.ContentDirectory}/{variant}/{lesson}");
-        }
-
-        public Task<WorkspaceRoot> LoadRoot()
-        {
-            return Load<WorkspaceRoot>("/");
-        }
-
-        public Task<Step> LoadStep(string variant, string lesson, string step)
-        {
-            return Load<Step>($"/{CourseEnvironment.ContentDirectory}/{variant}/{lesson}/{step}");
-        }
-
-        public Task<CourseVariant> LoadVariant(string variant)
-        {
-            return Load<CourseVariant>($"/{CourseEnvironment.ContentDirectory}/{variant}");
         }
     }
 }

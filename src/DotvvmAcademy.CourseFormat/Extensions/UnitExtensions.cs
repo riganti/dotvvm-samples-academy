@@ -8,27 +8,9 @@ namespace DotvvmAcademy.Validation.Unit
 {
     public static class UnitExtensions
     {
-        public const string CorrectCodeKey = "CorrectCode";
-        public const string DefaultCodeKey = "DefaultCode";
-
-        public static string GetCorrectCodePath(this IUnit unit)
-        {
-            return unit.GetSourcePath(CorrectCodeKey);
-        }
-
-        public static string GetDefaultCodePath(this IUnit unit)
-        {
-            return unit.GetSourcePath(DefaultCodeKey);
-        }
-
-        public static string GetSourcePath(this IUnit unit, string key)
-        {
-            var storage = unit.Provider.GetRequiredService<SourcePathStorage>();
-            return storage.Get(key);
-        }
-
         public static string GetValidatedLanguage(this IUnit unit)
         {
+            // TODO: Make language validation pluggable into CourseFormat
             switch (unit)
             {
                 case CSharpUnit csharp:
@@ -44,18 +26,33 @@ namespace DotvvmAcademy.Validation.Unit
 
         public static void SetCorrectCodePath(this IUnit unit, string sourcePath)
         {
-            unit.SetSourcePath(CorrectCodeKey, sourcePath);
+            var configuration = unit.Provider.GetRequiredService<CodeTaskConfiguration>();
+            // TODO: Minimize string operations
+            var scriptDirectory = SourcePath.GetParent(configuration.ScriptPath);
+            var absolutePath = SourcePath.Normalize(SourcePath.Combine(scriptDirectory, sourcePath));
+            configuration.CorrectCodePath = absolutePath;
         }
 
         public static void SetDefaultCodePath(this IUnit unit, string sourcePath)
         {
-            unit.SetSourcePath(DefaultCodeKey, sourcePath);
+            var configuration = unit.Provider.GetRequiredService<CodeTaskConfiguration>();
+            // TODO: Minimize string operations
+            var scriptDirectory = SourcePath.GetParent(configuration.ScriptPath);
+            var absolutePath = SourcePath.Normalize(SourcePath.Combine(scriptDirectory, sourcePath));
+            configuration.DefaultCodePath = absolutePath;
         }
 
-        public static void SetSourcePath(this IUnit unit, string key, string sourcepath)
+        public static void SetFileName(this IUnit unit, string fileName)
         {
-            var storage = unit.Provider.GetRequiredService<SourcePathStorage>();
-            storage.Add(key, sourcepath);
+            var configuration = unit.Provider.GetRequiredService<CodeTaskConfiguration>();
+            configuration.FileName = fileName;
+        }
+
+        public static void SetSourcePath(this IUnit unit, string fileName, string sourcePath)
+        {
+            var configuration = unit.Provider.GetRequiredService<CodeTaskConfiguration>();
+            var absolutePath = SourcePath.Normalize(SourcePath.Combine(SourcePath.GetParent(configuration.ScriptPath), sourcePath));
+            configuration.SourcePaths.AddOrUpdate(fileName, absolutePath, (k, v) => absolutePath);
         }
     }
 }

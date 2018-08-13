@@ -9,8 +9,6 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
     [DebuggerDisplay("ContentNode: {Metadata.Type.FullName,nq}")]
     public abstract class ValidationContentNode : ValidationTreeNode, IAbstractContentNode
     {
-        private ImmutableArray<ValidationControl>.Builder content = ImmutableArray.CreateBuilder<ValidationControl>();
-
         public ValidationContentNode(
             DothtmlNode node,
             ValidationControlMetadata metadata,
@@ -33,8 +31,9 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         public void AddChildControl(ValidationControl child)
         {
-            content.Add(child);
-            Content = content.ToImmutable();
+            child.Parent = this;
+            child.TreeRoot = TreeRoot;
+            Content = Content.IsDefault ? ImmutableArray.Create(child) : Content.Add(child);
         }
     }
 }

@@ -58,9 +58,9 @@ namespace DotvvmAcademy.Validation.CSharp.Experiments
         public override void VisitType(Type member)
         {
             FullNames.Add(member.FullName);
-            foreach (var descendant in member.GetMembers(BindingFlags.DeclaredOnly 
-                | BindingFlags.Public 
-                | BindingFlags.NonPublic 
+            foreach (var descendant in member.GetMembers(BindingFlags.DeclaredOnly
+                | BindingFlags.Public
+                | BindingFlags.NonPublic
                 | BindingFlags.Instance
                 | BindingFlags.Static))
             {

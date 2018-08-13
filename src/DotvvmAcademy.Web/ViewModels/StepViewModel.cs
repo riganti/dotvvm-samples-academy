@@ -1,6 +1,7 @@
 ﻿using DotVVM.Framework.ViewModel;
 using DotvvmAcademy.CourseFormat;
 using DotvvmAcademy.Validation.Unit;
+using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
@@ -119,7 +120,7 @@ namespace DotvvmAcademy.Web.ViewModels
             if (!Context.IsPostBack && HasCodeTask)
             {
                 var unit = await runner.Run(renderedStep.CodeTaskPath);
-                var defaultCodePath = unit.GetDefaultCodePath();
+                var defaultCodePath = unit.Provider.GetRequiredService<CodeTaskConfiguration>().DefaultCodePath;
                 Code = defaultCodePath == null ? string.Empty : (await workspace.Load<Resource>(defaultCodePath)).Text;
                 CodeLanguage = unit.GetValidatedLanguage();
             }

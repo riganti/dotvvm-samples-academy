@@ -1,14 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace DotvvmAcademy.Validation.Unit
 {
-    public interface IQuery
+    public interface IQuery<TResult>
     {
-        void AddConstraint(Action<IConstraintContext> constraint);
-    }
+        IUnit Unit { get; }
 
-    public interface IQuery<TResult> : IQuery
-    {
-        void AddConstraint(Action<IConstraintContext<TResult>> constraint);
+        string Source { get; }
+
+        IEnumerable<Constraint<TResult>> GetConstraints();
+
+        void SetConstraint(object key, Constraint<TResult> constraint);
     }
 }
