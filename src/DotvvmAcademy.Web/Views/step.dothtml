@@ -15,7 +15,9 @@
             <h1>{{resource: Name}}</h1>
             <dot:HtmlLiteral Html="{resource: Text}" class="step-info-box" />
             <%-- TODO: Do not render at all (IncludeInPage is not working properly) --%>
-            <div IncludeInPage="{value: HasCodeTask}">
+            <div IncludeInPage="{value: HasCodeTask}" 
+                 Visible="{resource: HasCodeTask}" 
+                 RenderSettings.Mode="Server">
                 <cc:CodeTaskControl Code="{value: Code}"
                                     Diagnostics="{value: Diagnostics}"
                                     Language="{resource: CodeLanguage}"
