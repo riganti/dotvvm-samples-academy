@@ -69,12 +69,10 @@
                                Class-success="{value: false}"
                                Text="{resource: UIResources.Btn_NextStep}" />
 
-                <dot:RouteLink RouteName="Step"
+                <dot:RouteLink RouteName="Default"
                                class="button"
                                ButtonTagName="button"
                                Param-Language="{value: Language}"
-                               Param-Lesson="{value: Lesson}"
-                               Param-Step="{value: NextStep}"
                                Visible="{resource: IsPreviousVisible && !IsNextVisible}"
                                Class-success="{value: false}"
                                Text="{resource: UIResources.Btn_Finish}" />
