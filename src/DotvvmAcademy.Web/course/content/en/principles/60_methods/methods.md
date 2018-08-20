@@ -6,7 +6,7 @@ Before we use the next [Dothtml] feature, our `CalculatorViewModel` needs to be 
 
 ## Your Task
 
-Add four methods one for each of the four basic arithmetic operations that:
+Add four methods, one for each of the four basic arithmetic operations, that:
 
 - Take no parameters and return `void`
 - Are called `Add`, `Subtract`, `Multiply`, and `Divide`

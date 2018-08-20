@@ -4,11 +4,11 @@ DotVVM uses a special html-like syntax, [Dothtml], to define Views. It's html wi
 
 ## Directives
 
-Directives contain data about the View such as:
+Directives are one of these features. They contain data about the View such as:
 
-- what ViewModel to use
-- what [MasterPage] to consider a template
-- what namespaces to import
+- What ViewModel to use
+- What [MasterPage] to consider a template
+- What namespaces to import
 - etc.
 
 They are always at the beginning of the file and they look like this:
@@ -24,13 +24,7 @@ The `@viewModel` directive is mandatory; it tells DotVVM what ViewModel to insta
 
 ## Your Task
 
-Create a dothtml stub that fulfils the following requirements:
-
-- Starts with a `@viewModel` directive where our ViewModel, `DotvvmAcademy.Course.Calculator.CalculatorViewModel`, is the argument
-- Has the [`<!DOCTYPE html>`][doctype] declaration
-- Contains the [`<html>`][html] element
-- Contains the [`<head>`][head] element with [`<meta charset="utf-8">`][meta]
-- Contains the [`<body>`][body] element 
+Add a `@viewModel` directive to our View with our ViewModel, `DotvvmAcademy.Course.Calculator.CalculatorViewModel`, as the argument.
 
 [dothtml]: https://www.dotvvm.com/docs/tutorials/basics-first-page
 [masterpage]: https://www.dotvvm.com/docs/tutorials/basics-master-pages
