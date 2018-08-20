@@ -12,8 +12,8 @@
                   RenderSettings.Mode="Server"
                   RenderWrapperTag="false">
         <dot:RouteLink RouteName="{resource: _control.RouteName}"
-                       Param-Language="{value: _this}"
-                       Text="{resource: _this}"
-                       hreflang="{resource: _this}" />
+                       Param-Language="{value: _this.Moniker}"
+                       Text="{resource: _this.Name}"
+                       hreflang="{resource: _this.Moniker}" />
     </dot:Repeater>
 </div>

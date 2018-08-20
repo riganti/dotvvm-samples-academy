@@ -1,5 +1,6 @@
 using DotVVM.Framework.Binding;
 using DotVVM.Framework.Controls;
+using DotvvmAcademy.Web.ViewModels;
 using System.Collections.Generic;
 
 namespace DotvvmAcademy.Web.Controls
@@ -8,24 +9,26 @@ namespace DotvvmAcademy.Web.Controls
     {
         public const string CurrentImageFormat = "images/Icons/Flag_{0}.svg";
 
-        public static readonly DotvvmProperty CurrentLanguageProperty
-            = DotvvmProperty.Register<string, LanguageSwitch>(c => c.CurrentLanguage, null);
-
         public static readonly DotvvmProperty AvailableLanguagesProperty
-            = DotvvmProperty.Register<IEnumerable<string>, LanguageSwitch>(c => c.AvailableLanguages, null);
+            = DotvvmProperty.Register<IEnumerable<LanguageOption>, LanguageSwitch>(c => c.AvailableLanguages, null);
+
+        public static readonly DotvvmProperty CurrentLanguageProperty
+            = DotvvmProperty.Register<LanguageOption, LanguageSwitch>(c => c.CurrentLanguage, null);
 
         public static readonly DotvvmProperty RouteNameProperty
             = DotvvmProperty.Register<string, LanguageSwitch>(c => c.RouteName, null);
 
-        public IEnumerable<string> AvailableLanguages
+        public IEnumerable<LanguageOption> AvailableLanguages
         {
-            get { return (IEnumerable<string>)GetValue(AvailableLanguagesProperty); }
+            get { return (IEnumerable<LanguageOption>)GetValue(AvailableLanguagesProperty); }
             set { SetValue(AvailableLanguagesProperty, value); }
         }
 
-        public string CurrentLanguage
+        public string CurrentImage => string.Format(CurrentImageFormat, CurrentLanguage.Moniker);
+
+        public LanguageOption CurrentLanguage
         {
-            get { return (string)GetValue(CurrentLanguageProperty); }
+            get { return (LanguageOption)GetValue(CurrentLanguageProperty); }
             set { SetValue(CurrentLanguageProperty, value); }
         }
 
@@ -34,7 +37,5 @@ namespace DotvvmAcademy.Web.Controls
             get { return (string)GetValue(RouteNameProperty); }
             set { SetValue(RouteNameProperty, value); }
         }
-
-        public string CurrentImage => string.Format(CurrentImageFormat, CurrentLanguage);
     }
 }

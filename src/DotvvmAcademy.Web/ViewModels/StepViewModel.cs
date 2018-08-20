@@ -68,8 +68,8 @@ namespace DotvvmAcademy.Web.ViewModels
 
         public override async Task Load()
         {
-            lesson = await workspace.LoadLesson(Language, Lesson);
-            step = await workspace.LoadStep(Language, Lesson, Step);
+            lesson = await workspace.LoadLesson(LanguageMoniker, Lesson);
+            step = await workspace.LoadStep(LanguageMoniker, Lesson, Step);
             renderedStep = stepRenderer.Render(step);
             SetButtonProperties();
             await SetEditorProperties();
@@ -84,7 +84,7 @@ namespace DotvvmAcademy.Web.ViewModels
             Diagnostics = (await validator.Validate(unit, Code)).ToList();
         }
 
-        protected override async Task<IEnumerable<string>> GetAvailableLanguages()
+        protected override async Task<IEnumerable<string>> GetAvailableLanguageMonikers()
         {
             var root = await workspace.LoadRoot();
             var builder = ImmutableArray.CreateBuilder<string>();

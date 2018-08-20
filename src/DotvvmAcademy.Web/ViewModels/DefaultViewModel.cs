@@ -8,8 +8,8 @@ namespace DotvvmAcademy.Web.ViewModels
 {
     public class DefaultViewModel : SiteViewModel
     {
-        private readonly CourseWorkspace workspace;
         private readonly LessonRenderer lessonRenderer;
+        private readonly CourseWorkspace workspace;
 
         public DefaultViewModel(CourseWorkspace workspace, LessonRenderer lessonRenderer)
         {
@@ -18,18 +18,31 @@ namespace DotvvmAcademy.Web.ViewModels
         }
 
         [Bind(Direction.ServerToClientFirstRequest)]
-        public List<RenderedLesson> Lessons { get; set; }
+        public List<LessonMetadata> Lessons { get; set; }
 
         public override async Task Load()
         {
-            var variant = await workspace.LoadVariant(Language);
-            var lessonTasks = variant.Lessons.Select(l => workspace.LoadLesson(Language, l));
+            var variant = await workspace.LoadVariant(LanguageMoniker);
+            var lessonTasks = variant.Lessons.Select(l => workspace.LoadLesson(LanguageMoniker, l));
             var lessons = await Task.WhenAll(lessonTasks);
-            Lessons = lessons.Select(l => lessonRenderer.Render(l)).ToList();
+            Lessons = lessons.Select(l =>
+            {
+                var rendered = lessonRenderer.Render(l);
+                return new LessonMetadata
+                {
+                    Annotation = rendered.Source.Annotation,
+                    FirstStep = rendered.Source.Steps.FirstOrDefault(),
+                    Html = rendered.Html,
+                    ImageUrl = rendered.ImageUrl,
+                    Moniker = rendered.Source.Moniker,
+                    Name = rendered.Name
+                };
+            })
+            .ToList();
             await base.Load();
         }
 
-        protected override async Task<IEnumerable<string>> GetAvailableLanguages()
+        protected override async Task<IEnumerable<string>> GetAvailableLanguageMonikers()
         {
             var root = await workspace.LoadRoot();
             return root.Variants;

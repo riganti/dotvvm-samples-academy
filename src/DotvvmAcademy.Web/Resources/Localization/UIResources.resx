@@ -171,4 +171,16 @@ Watch &lt;strong&gt;DotVVM Coffee&lt;/strong&gt; videos!</value>
   <data name="Btn_Finish" xml:space="preserve">
     <value>Finish</value>
   </data>
+  <data name="Base_Language_en" xml:space="preserve">
+    <value>English</value>
+    <comment>Used in LanguageSwitch</comment>
+  </data>
+  <data name="Base_Language_cs" xml:space="preserve">
+    <value>Czech</value>
+    <comment>Used in LanguageSwitch</comment>
+  </data>
+  <data name="Base_Language_ru" xml:space="preserve">
+    <value>Russian</value>
+    <comment>Used in LangaageSwitch</comment>
+  </data>
 </root>
