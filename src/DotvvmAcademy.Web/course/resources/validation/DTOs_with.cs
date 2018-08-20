@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
-namespace DotvvmAcademy.Course
+namespace DotvvmAcademy.Course.Account
 {
     public class LoginDTO
     {

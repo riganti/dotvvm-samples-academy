@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using DotVVM.Framework.ViewModel;
 using DotVVM.Framework.ViewModel.Validation;
 
-namespace DotvvmAcademy.Course
+namespace DotvvmAcademy.Course.Account
 {
     public class FormViewModel : DotvvmViewModelBase
     {
