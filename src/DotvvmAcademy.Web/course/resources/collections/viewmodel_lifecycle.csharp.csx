@@ -2,6 +2,9 @@
 
 using DotVVM.Framework.ViewModel;
 
+Unit.SetDefaultCodePath("./ToDoViewModel_ctor.cs");
+Unit.SetCorrectCodePath("./ToDoViewModel_lifecycle.cs");
+
 Unit.GetType<DotvvmViewModelBase>().Allow();
 Unit.GetType<Task>().Allow();
 Unit.GetType($"System.Collections.Generic.IReadOnlyList`1[{ToDoItem}]").Allow();

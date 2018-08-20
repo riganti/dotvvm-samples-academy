@@ -6,8 +6,6 @@
     <meta charset="utf-8" />
 </head>
 <body>
-    <dot:Repeater DataSource="{value: Items}">
-        <div>{{value: Text}}</div>
-    </dot:Repeater>
+
 </body>
 </html>

@@ -1,5 +1,8 @@
 ﻿#load "./view_stub.dothtml.csx"
 
+Unit.SetDefaultCodePath("./todo_repeater.dothtml");
+Unit.SetCorrectCodePath("./todo_form.dothtml");
+
 Unit.SetSourcePath("ToDoViewModel.cs", "./ToDoViewModel_operations.cs");
 
 {

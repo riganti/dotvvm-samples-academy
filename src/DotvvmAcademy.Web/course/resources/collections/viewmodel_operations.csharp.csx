@@ -1,5 +1,8 @@
 ﻿#load "./viewmodel_lifecycle.csharp.csx"
 
+Unit.SetDefaultCodePath("./ToDoViewModel_lifecycle.cs");
+Unit.SetCorrectCodePath("./ToDoViewModel_operations.cs");
+
 Unit.GetType<string>().Allow();
 Unit.GetType<int>().Allow();
 facade.GetMethod("AddItem").Allow();
