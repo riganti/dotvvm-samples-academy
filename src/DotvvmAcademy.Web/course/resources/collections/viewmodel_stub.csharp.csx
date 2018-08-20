@@ -1,7 +1,8 @@
 ﻿#load "./constants.csx"
 
 Unit.SetFileName("ToDoViewModel.cs");
-Unit.SetCorrectCodePath("./ToDoViewModel_stub.cs");
+Unit.SetDefaultCodePath("./ToDoViewModel_stub.cs");
+Unit.SetCorrectCodePath("./ToDoViewModel_ctor.cs");
 Unit.SetSourcePath("ToDoFacade.cs", "./ToDoFacade.cs");
 Unit.SetSourcePath("ToDoItem.cs", "./ToDoItem.cs");
 

@@ -1,6 +1,6 @@
 ﻿# Facades and DTOs
 
-Our application already has a few classes, you'll get to know now:
+Our application already has a few classes you'll get to know now:
 
 ## ToDoFacade
 

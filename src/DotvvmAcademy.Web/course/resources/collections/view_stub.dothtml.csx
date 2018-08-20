@@ -1,7 +1,9 @@
 ﻿#load "./constants.csx"
 
 Unit.SetFileName("todo.dothtml");
-Unit.SetSourcePath("ToDoViewModel.cs", "./ToDoViewModel_stub.cs");
+Unit.SetDefaultCodePath("./todo_stub.dothtml");
+Unit.SetCorrectCodePath("./todo_repeater.dothtml");
+Unit.SetSourcePath("ToDoViewModel.cs", "./ToDoViewModel_ctor.cs");
 
 Unit.GetDirective("/attribute::*")
     .IsViewModelDirective(ToDoViewModel);

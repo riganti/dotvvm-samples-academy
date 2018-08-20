@@ -1,4 +1,4 @@
-﻿@viewModel DotvvmAcademy.Course.FormViewModel
+﻿@viewModel DotvvmAcademy.Course.Account.FormViewModel
 
 <!doctype html>
 <html>

@@ -8,7 +8,7 @@ MVVM stands for Model-View-ViewModel. It's an architectural pattern that divides
 
 ### Models
 
-Models contain the data and business logic. In most applications they handle database access.
+Models contain the data and business logic (e.g. database queries).
 
 ### Views
 
@@ -16,7 +16,7 @@ Views are what users see and interact with. In DotVVM they are written in [dotht
 
 ### ViewModels
 
-It is their job to interact with Models and reshape the data into a form that Views can display.
+It is the job of ViewModels to interact with Models and reshape the data into a form that Views can display.
 
 Views depend on ViewModels. ViewModels depend of Models. __Models have no idea about Views.__
 
@@ -25,21 +25,13 @@ Views depend on ViewModels. ViewModels depend of Models. __Models have no idea a
 In these lessons and in our [documentation], we make a distinction between the Server, the Client, and the User. 
 
 - User is a person using our application
-- Client is the User's browser / computer
+- Client is the User's browser sending requests to the Server
 - Server is the computer our application is running on
 
-Client connects to the Server in order to display content to the User.
+Client communicates with the Server in order to display content to the User.
 
-Since we won't need any models in our calculator, we'll start with the ViewModel instead.
-
----
-
-## Your Task
-
-Declare an empty class named `CalculatorViewModel` in the `DotvvmAcademy.Course.Calculator` namespace.
+Since we are not going to need any models in our calculator, we'll start with the ViewModel instead.
 
 [mvvm]: https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel
 [dothtml]: https://www.dotvvm.com/docs/tutorials/basics-first-page
 [documentation]: https://www.dotvvm.com/docs
-
-[CodeTask](/resources/principles/viewmodel_stub.csharp.csx)

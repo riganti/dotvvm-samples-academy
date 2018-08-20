@@ -1,3 +1,5 @@
 # DotVVM Academy
 
-This is the source code of all lessons on academy.dotvvm.com.
+DotVVM Academy is a collection of interactive lessons that tutor the usage of the [DotVVM Framework][dotvvm].
+
+[dotvvm]: https://dotvvm.com
