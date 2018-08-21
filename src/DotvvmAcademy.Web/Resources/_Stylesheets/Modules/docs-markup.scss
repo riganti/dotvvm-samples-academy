@@ -1,0 +1,70 @@
+﻿@import "../Base/_global.scss";
+
+.step-info-box {
+
+    h2 {
+        font-size: 28px;
+        margin-top: 32px;
+        margin-bottom: 12px;
+        font-weight: 400;
+    }
+
+    h3 {
+        font-size: 19px;
+        margin-top: 30px;
+        margin-bottom: 18px;
+    }
+
+    p, strong, b, a:not(.button), ul li {
+        margin-top: 16px;
+        font-size: 16px;
+        line-height: 160%;
+        margin-bottom: 0;
+    }
+
+    img {
+        display: block;
+        margin-top: 16px;
+        width: auto;
+        max-width: 100%;
+    }
+
+    a {
+        font-weight: 500;
+        color: $color-dotvvm-blue;
+
+        &:hover {
+            color: darken($color-dotvvm-blue, 10%);
+        }
+    }
+
+    blockquote {
+        margin: 20px 0;
+        background-color: $color-white;
+        background: none;
+        border: 1px solid $color-dotvvm-blue;
+        padding: .5rem;
+        border-left-width: .5rem;
+
+        p {
+            margin: 0;
+        }
+    }
+
+    pre {
+        background-color: $color-white;
+        font-family: Consolas !important;
+        border: 1px solid #d3d6db;
+        background-color: #f9f9f9;
+        font-size: 12.8px;
+        line-height: 19px;
+        padding: 5px 7px;
+        direction: ltr;
+        border-radius: 2px;
+
+        code {
+            font-family: Consolas !important;
+            color: $color-black;
+        }
+    }
+}
