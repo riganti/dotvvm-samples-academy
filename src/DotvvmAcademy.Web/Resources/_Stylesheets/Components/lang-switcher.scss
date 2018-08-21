@@ -2,7 +2,6 @@
 
 .lang-switcher {
     position: relative;
-    min-width: 20rem;
     display: flex;
     flex-wrap: nowrap;
     justify-content: flex-start;
@@ -10,47 +9,36 @@
     background-color: $color-primary;
     z-index: 10;
 
-    @include res-max-mobile {
-        width: auto;
-        min-width: unset;
-    }
-
     &_list {
         position: absolute;
         top: 100%;
-        width: calc(100% - 4.7rem);
+        right: 0;
         height: 0;
         overflow: hidden;
         transition: $animate-all;
-        background-color: $color-white;
-        left: 4.5rem;
-        border: .1rem solid $color-transparent;
-        transform: translateY(-.2rem);
         z-index: 9;
 
-        @include res-max-mobile {
-            width: calc(100% - .2rem);
-            left: 0;
-        }
-
         a {
-            text-align: left;
             display: block;
             text-decoration: none;
             color: $color-primary;
-            padding: .2rem 0;
-            padding-left: 1rem;
+            margin: auto;
             box-sizing: border-box;
+            padding: 0 .5rem;
+            height: auto;
             transition: $animate-all;
+            background-color: $color-transparent;
 
             &:hover {
+                background-color: $color-primary;
                 color: $color-white;
                 transition: $animate-all;
             }
         }
 
         &.open {
-            height: 7.8rem;
+            height: auto;
+            min-height: 2.6rem;
             transition: $animate-all;
             transform: translateY(-.1rem);
         }
@@ -74,65 +62,14 @@
         width: auto;
         position: relative;
         z-index: 15;
-
-        @include res-max-mobile {
-            -webkit-box-shadow: 2px -2px 5px 0px rgba(191,191,191,1);
-            -moz-box-shadow: 2px -2px 5px 0px rgba(191,191,191,1);
-            box-shadow: 2px -2px 5px 0px rgba(191,191,191,1);
-        }
     }
 
     p {
         display: inline-block;
-        margin: 0 auto;
+        margin: auto;
         box-sizing: border-box;
         color: $color-white;
-
-        @include res-max-mobile {
-            display: none;
-        }
-    }
-
-    &.en {
-        background-color: $color-en;
-
-        + div {
-            border-color: $color-en;
-            width: calc(100% - 5.9rem);
-            left: 5.7rem;
-
-            @include res-max-mobile {
-                width: calc(100% - .2rem);
-                left: 0;
-            }
-
-            a:hover {
-                background-color: $color-en;
-            }
-        }
-    }
-
-    &.cz {
-        background-color: $color-cz;
-
-        + div {
-            border-color: $color-cz;
-
-            a:hover {
-                background-color: $color-cz;
-            }
-        }
-    }
-
-    &.ru {
-        background-color: $color-ru;
-
-        + div {
-            border-color: $color-ru;
-
-            a:hover {
-                background-color: $color-ru;
-            }
-        }
+        padding: 0 .5rem;
+        height: auto;
     }
 }
