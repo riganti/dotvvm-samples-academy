@@ -5,7 +5,7 @@
 <div class="{resource:"lang-btn " + _control.CurrentLanguage}">
     <cc:SvgToHtml Source="{resource: _control.CurrentImage}"
                   RenderSettings.Mode="Server" />
-    <p>EN</p> <%--TODO - Dotahoval by som sem vzdy aktualny zvoleny jayzk--%> 
+    <p>{{resource: _control.CurrentLanguage.Moniker.ToUpper()}}</p>
 </div>
 <div class="lang-switcher_list">
     <dot:Repeater DataSource="{value: _control.AvailableLanguages}"
