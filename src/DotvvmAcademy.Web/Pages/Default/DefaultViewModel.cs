@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DotvvmAcademy.Web.ViewModels
+namespace DotvvmAcademy.Web.Pages.Default
 {
     public class DefaultViewModel : SiteViewModel
     {
@@ -18,7 +18,7 @@ namespace DotvvmAcademy.Web.ViewModels
         }
 
         [Bind(Direction.ServerToClientFirstRequest)]
-        public List<LessonMetadata> Lessons { get; set; }
+        public List<LessonDetail> Lessons { get; set; }
 
         public override async Task Load()
         {
@@ -28,7 +28,7 @@ namespace DotvvmAcademy.Web.ViewModels
             Lessons = lessons.Select(l =>
             {
                 var rendered = lessonRenderer.Render(l);
-                return new LessonMetadata
+                return new LessonDetail
                 {
                     Annotation = rendered.Source.Annotation,
                     FirstStep = rendered.Source.Steps.FirstOrDefault(),

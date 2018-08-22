@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using System.IO;
 
-namespace DotvvmAcademy.Web.Controls
+namespace DotvvmAcademy.Web.Pages
 {
     public class SvgToHtml : HtmlGenericControl
     {

@@ -1,5 +1,5 @@
 ﻿@viewModel System.Object, mscorlib
-@baseType DotvvmAcademy.Web.Controls.LanguageSwitch, DotvvmAcademy.Web
+@baseType DotvvmAcademy.Web.Pages.LanguageSwitch, DotvvmAcademy.Web
 @import DotvvmAcademy.Web.Resources.Localization
 
 <div class="{resource:"lang-btn " + _control.CurrentLanguage}">

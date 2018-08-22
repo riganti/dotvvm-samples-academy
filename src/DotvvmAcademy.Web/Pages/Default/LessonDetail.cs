@@ -1,7 +1,6 @@
-﻿namespace DotvvmAcademy.Web.ViewModels
+﻿namespace DotvvmAcademy.Web.Pages.Default
 {
-    // This dummy type is to be used on client instead of Lesson and RenderedLesson
-    public class LessonMetadata
+    public class LessonDetail
     {
         public string Annotation { get; set; }
 

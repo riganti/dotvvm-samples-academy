@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DotvvmAcademy.Web.ViewModels
+namespace DotvvmAcademy.Web.Pages
 {
     public class LanguageOption
     {

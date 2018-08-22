@@ -1,5 +1,6 @@
 ﻿using DotVVM.Framework.ViewModel;
 using DotvvmAcademy.CourseFormat;
+using DotvvmAcademy.Meta;
 using DotvvmAcademy.Validation.Unit;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
@@ -7,21 +8,20 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DotvvmAcademy.Web.ViewModels
+namespace DotvvmAcademy.Web.Pages.Step
 {
     public class StepViewModel : SiteViewModel
     {
-        private readonly StepRenderer stepRenderer;
         private readonly ValidationScriptRunner runner;
+        private readonly StepRenderer stepRenderer;
         private readonly CodeTaskValidator validator;
         private readonly CourseWorkspace workspace;
         private Lesson lesson;
         private RenderedStep renderedStep;
-        private Step step;
 
         public StepViewModel(
-            CourseWorkspace workspace, 
-            CodeTaskValidator validator, 
+            CourseWorkspace workspace,
+            CodeTaskValidator validator,
             StepRenderer stepRenderer,
             ValidationScriptRunner runner)
         {
@@ -31,16 +31,10 @@ namespace DotvvmAcademy.Web.ViewModels
             this.runner = runner;
         }
 
-        [Bind(Direction.ServerToClient)]
-        public string Name { get; set; }
-
         public string Code { get; set; }
 
         [Bind(Direction.None)]
         public string CodeLanguage { get; set; }
-
-        [Bind(Direction.ServerToClient)]
-        public List<CodeTaskDiagnostic> Diagnostics { get; set; }
 
         [Bind(Direction.ServerToClient)]
         public bool HasCodeTask { get; set; }
@@ -53,6 +47,12 @@ namespace DotvvmAcademy.Web.ViewModels
 
         [FromRoute("Lesson")]
         public string Lesson { get; set; }
+
+        [Bind(Direction.ServerToClient)]
+        public List<MonacoMarker> Markers { get; set; }
+
+        [Bind(Direction.ServerToClient)]
+        public string Name { get; set; }
 
         [Bind(Direction.ServerToClient)]
         public string NextStep { get; set; }
@@ -69,7 +69,7 @@ namespace DotvvmAcademy.Web.ViewModels
         public override async Task Load()
         {
             lesson = await workspace.LoadLesson(LanguageMoniker, Lesson);
-            step = await workspace.LoadStep(LanguageMoniker, Lesson, Step);
+            var step = await workspace.LoadStep(LanguageMoniker, Lesson, Step);
             renderedStep = stepRenderer.Render(step);
             SetButtonProperties();
             await SetEditorProperties();
@@ -81,7 +81,10 @@ namespace DotvvmAcademy.Web.ViewModels
         public async Task Validate()
         {
             var unit = await runner.Run(renderedStep.CodeTaskPath);
-            Diagnostics = (await validator.Validate(unit, Code)).ToList();
+            var converter = new PositionConverter(Code);
+            Markers = (await validator.Validate(unit, Code))
+                .Select(d => GetMarker(converter, d))
+                .ToList();
         }
 
         protected override async Task<IEnumerable<string>> GetAvailableLanguageMonikers()
@@ -97,6 +100,35 @@ namespace DotvvmAcademy.Web.ViewModels
                 }
             }
             return builder.ToImmutable();
+        }
+
+        private MonacoMarker GetMarker(PositionConverter converter, CodeTaskDiagnostic diagnostic)
+        {
+            int startLineNumber;
+            int startColumn;
+            int endLineNumber;
+            int endColumn;
+            if (diagnostic.Start == -1 && diagnostic.End == -1)
+            {
+                // a global diagnostic should remain global
+                (startLineNumber, startColumn) = (-1, -1);
+                (endLineNumber, endColumn) = (-1, -1);
+            }
+            else
+            {
+                // the interval [start, end) is half-open and end may not actually exist!
+                (startLineNumber, startColumn) = converter.ToCoords(diagnostic.Start);
+                (endLineNumber, endColumn) = converter.ToCoords(diagnostic.End - 1);
+                // however, Monaco's intervals are half-open too, we have to compensate for that
+                endColumn++;
+            }
+            return new MonacoMarker(
+                message: diagnostic.Message,
+                severity: diagnostic.Severity.ToMonacoSeverity(),
+                startLineNumber: startLineNumber,
+                startColumn: startColumn,
+                endLineNumber: endLineNumber,
+                endColumn: endColumn);
         }
 
         private void SetButtonProperties()

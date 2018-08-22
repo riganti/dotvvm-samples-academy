@@ -2,7 +2,8 @@
 using DotVVM.Framework.Hosting;
 using DotVVM.Framework.ResourceManagement;
 using DotVVM.Framework.Routing;
-using DotvvmAcademy.Web.Controls;
+using DotvvmAcademy.Web.Pages;
+using DotvvmAcademy.Web.Pages.Step;
 
 namespace DotvvmAcademy.Web
 {
@@ -17,9 +18,9 @@ namespace DotvvmAcademy.Web
 
         private void ConfigureControls(DotvvmConfiguration config, string applicationPath)
         {
-            config.Markup.AddMarkupControl("cc", "LanguageSwitch", "Controls/LanguageSwitch.dotcontrol");
+            config.Markup.AddMarkupControl("cc", "LanguageSwitch", "Pages/LanguageSwitch.dotcontrol");
             config.Markup.AddCodeControls("cc", typeof(SvgToHtml));
-            config.Markup.AddCodeControls("cc", typeof(CodeTaskControl));
+            config.Markup.AddCodeControls("cc", typeof(MonacoEditor));
         }
 
         private void ConfigureResources(DotvvmConfiguration config, string applicationPath)
@@ -46,16 +47,15 @@ namespace DotvvmAcademy.Web
             config.RouteTable.Add(
                 routeName: "Step",
                 url: "{Language}/{Lesson}/{Step}",
-                virtualPath: "Views/step.dothtml",
+                virtualPath: "Pages/Step/step.dothtml",
                 defaultValues: new { Language = "en" },
                 presenterFactory: LocalizablePresenter.BasedOnParameter("Language"));
             config.RouteTable.Add(
                 routeName: "Default",
                 url: "{Language}",
-                virtualPath: "Views/default.dothtml",
+                virtualPath: "Pages/Default/default.dothtml",
                 defaultValues: new { Language = "en" },
                 presenterFactory: LocalizablePresenter.BasedOnParameter("Language"));
-            config.RouteTable.AutoDiscoverRoutes(new DefaultRouteStrategy(config));
         }
     }
 }

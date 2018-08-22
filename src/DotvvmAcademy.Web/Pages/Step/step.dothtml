@@ -1,5 +1,5 @@
-@viewModel DotvvmAcademy.Web.ViewModels.StepViewModel
-@masterPage Views/site.dotmaster
+@viewModel DotvvmAcademy.Web.Pages.Step.StepViewModel
+@masterPage Pages/site.dotmaster
 @import DotvvmAcademy.Web.Resources.Localization
 
 <dot:Content ContentPlaceHolderID="MainContent">
@@ -14,26 +14,20 @@
         <div class="container-small">
             <h1>{{resource: Name}}</h1>
             <dot:HtmlLiteral Html="{resource: Text}" class="step-info-box" />
-            <%-- TODO: Do not render at all (IncludeInPage is not working properly) --%>
-            <div IncludeInPage="{value: HasCodeTask}" 
-                 Visible="{resource: HasCodeTask}" 
-                 RenderSettings.Mode="Server">
-                <cc:CodeTaskControl Code="{value: Code}"
-                                    Diagnostics="{value: Diagnostics}"
-                                    Language="{resource: CodeLanguage}"
-                                    class="code-container" />
+            <div IncludeInPage="{value: HasCodeTask}"
+                 Visible="{resource: HasCodeTask}">
+                <cc:MonacoEditor Code="{value: Code}"
+                                 Markers="{value: Markers}"
+                                 Language="{resource: CodeLanguage}"
+                                 class="code-container" />
                 <dot:Button Click="{command: Validate()}" Text="Validate" />
-                
-                <dot:Repeater DataSource="{value: Diagnostics}" 
-                              RenderWrapperTag="true" 
-                              WrapperTagName="ul" 
-                              class="validation-summary"
-                              visible="{value: Diagnostics.Count > 0}">
-                    <ItemTemplate>
-                        <li>
-                            {{value: Severity}}: {{value: Message}}
-                        </li>
-                    </ItemTemplate>
+                <dot:Repeater DataSource="{value: Markers}"
+                              RenderWrapperTag="true"
+                              WrapperTagName="ul"
+                              class="validation-summary">
+                    <li>
+                        {{value: Severity}} [{{value: StartLineNumber}}, {{value: StartColumn}}] [{{value:  EndLineNumber}}, {{value:  EndColumn}}]: {{value: Message}}
+                    </li>
                 </dot:Repeater>
             </div>
         </div>

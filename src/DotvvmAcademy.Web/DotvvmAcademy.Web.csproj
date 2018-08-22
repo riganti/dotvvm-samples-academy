@@ -13,17 +13,6 @@
     <Content Include="**/*.dothtml;**/*.dotmaster;**/*.dotcontrol" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="content/**/;course/**/*" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="course\content\en\content_sample\10_sample_1\sample_1.md" />
-    <None Remove="course\content\en\content_sample\20_sample_2\sample_2.md" />
-    <None Remove="course\content\en\content_sample\content_sample.md" />
-    <None Remove="course\resources\content_sample\sample.dothtml" />
-    <None Remove="course\resources\content_sample\sample_1.csharp.csx" />
-    <None Remove="course\resources\content_sample\sample_2.dothtml.csx" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore" Version="2.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.1.1" />
     <PackageReference Include="DotVVM.AspNetCore" Version="2.0.0" />

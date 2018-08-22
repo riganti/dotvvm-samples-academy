@@ -1,4 +1,4 @@
-﻿@viewModel DotvvmAcademy.Web.ViewModels.SiteViewModel
+﻿@viewModel DotvvmAcademy.Web.Pages.SiteViewModel
 @import DotvvmAcademy.Web.Resources.Localization
 
 <!DOCTYPE html>

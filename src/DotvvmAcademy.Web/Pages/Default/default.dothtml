@@ -1,5 +1,5 @@
-﻿@viewModel DotvvmAcademy.Web.ViewModels.DefaultViewModel
-@masterPage Views/site.dotmaster
+﻿@viewModel DotvvmAcademy.Web.Pages.Default.DefaultViewModel
+@masterPage Pages/site.dotmaster
 @import DotvvmAcademy.Web.Resources.Localization
 @import System.Linq
 

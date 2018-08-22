@@ -4,15 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DotvvmAcademy.Web.ViewModels
+namespace DotvvmAcademy.Web.Pages
 {
     public abstract class SiteViewModel : DotvvmViewModelBase
     {
+        [Bind(Direction.ServerToClientFirstRequest)]
         public LanguageOption Language { get; set; }
 
         [FromRoute("Language")]
         public string LanguageMoniker { get; set; }
 
+        [Bind(Direction.ServerToClientFirstRequest)]
         public List<LanguageOption> Languages { get; set; }
 
         public override Task Init()

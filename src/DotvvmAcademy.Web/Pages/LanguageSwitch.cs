@@ -1,9 +1,8 @@
 using DotVVM.Framework.Binding;
 using DotVVM.Framework.Controls;
-using DotvvmAcademy.Web.ViewModels;
 using System.Collections.Generic;
 
-namespace DotvvmAcademy.Web.Controls
+namespace DotvvmAcademy.Web.Pages
 {
     public class LanguageSwitch : DotvvmMarkupControl
     {

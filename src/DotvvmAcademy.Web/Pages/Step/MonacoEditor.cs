@@ -1,23 +1,22 @@
 ﻿using DotVVM.Framework.Binding;
 using DotVVM.Framework.Controls;
 using DotVVM.Framework.Hosting;
-using DotvvmAcademy.CourseFormat;
 using System.Collections.Generic;
 
-namespace DotvvmAcademy.Web.Controls
+namespace DotvvmAcademy.Web.Pages.Step
 {
-    public class CodeTaskControl : HtmlGenericControl
+    public class MonacoEditor : HtmlGenericControl
     {
         public static readonly DotvvmProperty CodeProperty
-            = DotvvmProperty.Register<string, CodeTaskControl>(c => c.Code, null);
+            = DotvvmProperty.Register<string, MonacoEditor>(c => c.Code, null);
 
-        public static readonly DotvvmProperty DiagnosticsProperty
-            = DotvvmProperty.Register<IEnumerable<CodeTaskDiagnostic>, CodeTaskControl>(c => c.Diagnostics, null);
+        public static readonly DotvvmProperty MarkersProperty
+            = DotvvmProperty.Register<IEnumerable<MonacoMarker>, MonacoEditor>(c => c.Markers, null);
 
         public static readonly DotvvmProperty LanguageProperty
-            = DotvvmProperty.Register<string, CodeTaskControl>(c => c.Language, null);
+            = DotvvmProperty.Register<string, MonacoEditor>(c => c.Language, null);
 
-        public CodeTaskControl() : base("div")
+        public MonacoEditor() : base("div")
         {
         }
 
@@ -29,10 +28,10 @@ namespace DotvvmAcademy.Web.Controls
         }
 
         [MarkupOptions(Required = true, AllowBinding = true, AllowHardCodedValue = false)]
-        public IEnumerable<CodeTaskDiagnostic> Diagnostics
+        public IEnumerable<MonacoMarker> Markers
         {
-            get { return (IEnumerable<CodeTaskDiagnostic>)GetValue(DiagnosticsProperty); }
-            set { SetValue(DiagnosticsProperty, value); }
+            get { return (IEnumerable<MonacoMarker>)GetValue(MarkersProperty); }
+            set { SetValue(MarkersProperty, value); }
         }
 
         public string Language
@@ -48,7 +47,7 @@ namespace DotvvmAcademy.Web.Controls
             {
                 { "code", this, CodeProperty },
                 { "language", this, LanguageProperty },
-                { "diagnostics", this, DiagnosticsProperty }
+                { "markers", this, MarkersProperty }
             };
             writer.AddKnockoutDataBind("dotvvm-monaco", group);
         }
