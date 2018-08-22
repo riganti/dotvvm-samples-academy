@@ -39,11 +39,13 @@ namespace DotvvmAcademy {
         element: HTMLElement
         binding: IEditorBinding
         editor: monaco.editor.IStandaloneCodeEditor
+        ignoreChange: boolean
 
         constructor(element: HTMLElement, binding: IEditorBinding) {
             this.element = element;
             this.binding = binding;
             this.initializeEditor();
+            this.binding.code.subscribe(this.onCodeChange.bind(this));
             // this is complete and utter bollocks
             ko.computed(() => ko.toJSON(this.binding.markers))
                 .subscribe(_ => this.onMarkersChanged());
@@ -63,7 +65,7 @@ namespace DotvvmAcademy {
                 },
                 renderWhitespace: "all"
             });
-            this.editor.onDidChangeModelContent(this.onTextChange.bind(this));
+            this.editor.onDidChangeModelContent(this.onEditorChange.bind(this));
         }
 
         onMarkersChanged() {
@@ -116,8 +118,24 @@ namespace DotvvmAcademy {
             }
         }
 
-        onTextChange(e: monaco.editor.IModelContentChangedEvent) {
+        onEditorChange(e: monaco.editor.IModelContentChangedEvent) {
+            if (this.ignoreChange) {
+                this.ignoreChange = false;
+                return;
+            }
+
+            this.ignoreChange = true
             this.binding.code(this.editor.getValue());
+        }
+
+        onCodeChange(value: string) {
+            if (this.ignoreChange) {
+                this.ignoreChange = false;
+                return;
+            }
+
+            this.ignoreChange = true;
+            this.editor.setValue(value);
         }
     }
 }

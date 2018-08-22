@@ -21,14 +21,9 @@
                                  Language="{resource: CodeLanguage}"
                                  class="code-container" />
                 <dot:Button Click="{command: Validate()}" Text="Validate" />
-                <dot:Repeater DataSource="{value: Markers}"
-                              RenderWrapperTag="true"
-                              WrapperTagName="ul"
-                              class="validation-summary">
-                    <li>
-                        {{value: Severity}} [{{value: StartLineNumber}}, {{value: StartColumn}}] [{{value:  EndLineNumber}}, {{value:  EndColumn}}]: {{value: Message}}
-                    </li>
-                </dot:Repeater>
+                <dot:Button Click="{command: ShowSolution()}" Text="Show Solution" />
+                <dot:Button Click="{command: Reset()}" Text="Reset" />
+                <cc:DiagnosticList Diagnostics="{value: Markers}" />
             </div>
         </div>
     </section>

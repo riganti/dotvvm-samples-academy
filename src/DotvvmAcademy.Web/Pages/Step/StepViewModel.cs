@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
+using System;
 
 namespace DotvvmAcademy.Web.Pages.Step
 {
@@ -84,7 +85,24 @@ namespace DotvvmAcademy.Web.Pages.Step
             var converter = new PositionConverter(Code);
             Markers = (await validator.Validate(unit, Code))
                 .Select(d => GetMarker(converter, d))
+                .OrderBy(m => (m.StartLineNumber, m.StartColumn))
                 .ToList();
+        }
+
+        public async Task ShowSolution()
+        {
+            var unit = await runner.Run(renderedStep.CodeTaskPath);
+            var correctCodePath = unit.Provider.GetRequiredService<CodeTaskConfiguration>().CorrectCodePath;
+            var resource = await workspace.Load<Resource>(correctCodePath);
+            Code = resource.Text;
+        }
+
+        public async Task Reset()
+        {
+            var unit = await runner.Run(renderedStep.CodeTaskPath);
+            var defaultCodePath = unit.Provider.GetRequiredService<CodeTaskConfiguration>().DefaultCodePath;
+            var resource = await workspace.Load<Resource>(defaultCodePath);
+            Code = resource.Text;
         }
 
         protected override async Task<IEnumerable<string>> GetAvailableLanguageMonikers()

@@ -1,7 +1,6 @@
 ﻿using DotVVM.Framework.Configuration;
 using DotVVM.Framework.Hosting;
 using DotVVM.Framework.ResourceManagement;
-using DotVVM.Framework.Routing;
 using DotvvmAcademy.Web.Pages;
 using DotvvmAcademy.Web.Pages.Step;
 
@@ -19,6 +18,7 @@ namespace DotvvmAcademy.Web
         private void ConfigureControls(DotvvmConfiguration config, string applicationPath)
         {
             config.Markup.AddMarkupControl("cc", "LanguageSwitch", "Pages/LanguageSwitch.dotcontrol");
+            config.Markup.AddMarkupControl("cc", "DiagnosticList", "Pages/Step/DiagnosticList.dotcontrol");
             config.Markup.AddCodeControls("cc", typeof(SvgToHtml));
             config.Markup.AddCodeControls("cc", typeof(MonacoEditor));
         }
