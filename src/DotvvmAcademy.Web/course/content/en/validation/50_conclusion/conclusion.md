@@ -1,6 +1,6 @@
 ﻿# Conclusion
 
-Congratulations! You (likely) just learned that:
+Congratulations! You just learned that:
 
 - `DataAnnotation` attributes are easy to use but cannot be customised
 - `Validation.Target` is used to separate multiple validation areas

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DotvvmAcademy.Course
+namespace DotvvmAcademy.Course.Account
 {
     public class LoginDTO
     {

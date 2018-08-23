@@ -1,6 +1,6 @@
 # Commands
 
-[Commands] are a kind of binding that doesn't keep a value updated, it produces a [Postback],
+[Commands] are a kind of binding that doesn't keep a value updated, but produces a [Postback],
 request for the server to do something.
 
 ```dothtml
@@ -14,9 +14,9 @@ Upon clicking the button, a [postback] is sent to the Server, ViewModel is insta
 
 ## Your Task
 
-Add four [`<dot:Button>`][button] controls to the `<body>` element that each
+Add four [`<dot:Button>`][button] controls to the `<body>` element that each:
 
-- Have their `Click` property command-bound to a different arithmetic method we created earlier
+- Have their `Click` property command-bound to a different arithmetic method, which we created earlier, in this order: `Add`, `Subtract`, `Multiply`, `Divide`
 - Have their `Text` property set to an appropriate arithmetic operator (+, -, *, /)
 
 [command]: https://www.dotvvm.com/docs/tutorials/basics-command-binding

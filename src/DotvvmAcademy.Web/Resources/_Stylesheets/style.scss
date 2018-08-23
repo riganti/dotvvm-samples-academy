@@ -7,7 +7,7 @@
 
 // Components
 @import "Components/buttons.scss";
-@import "components/code-container";
+@import "Components/code-container";
 @import "Components/container.scss";
 @import "Components/data-pager.scss";
 @import "Components/filters.scss";
@@ -22,6 +22,7 @@
 
 // Modules
 @import "Modules/box-wrapper.scss";
+@import "Modules/docs-markup";
 @import "Modules/grid-view.scss";
 @import "Modules/navigation.scss";
 
@@ -33,4 +34,4 @@
 @import "Views/Public/Sections/header";
 @import "Views/Public/Sections/section-coffee";
 @import "Views/Public/Sections/footer";
-@import "views/public/sections/section-lesson";
+@import "Views/Public/Sections/section-lesson";

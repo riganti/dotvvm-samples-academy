@@ -13,9 +13,6 @@
     <Content Include="**/*.dothtml;**/*.dotmaster;**/*.dotcontrol" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="content/**/;course/**/*" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore" Version="2.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.1.1" />
     <PackageReference Include="DotVVM.AspNetCore" Version="2.0.0" />
@@ -25,5 +22,21 @@
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="DotVVM.Compiler.Light" Version="2.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Resources\Localization\UIResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>UIResources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\Localization\UIResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>UIResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="wwwroot\css\" />
   </ItemGroup>
 </Project>

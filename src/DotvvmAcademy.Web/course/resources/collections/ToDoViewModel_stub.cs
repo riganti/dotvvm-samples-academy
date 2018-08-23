@@ -9,12 +9,5 @@ namespace DotvvmAcademy.Course.ToDo
     public class ToDoViewModel
     {
         private readonly ToDoFacade facade;
-
-        public ToDoViewModel(ToDoFacade facade)
-        {
-            this.facade = facade;
-        }
-
-        public List<ToDoItem> Items { get; set; }
     }
 }

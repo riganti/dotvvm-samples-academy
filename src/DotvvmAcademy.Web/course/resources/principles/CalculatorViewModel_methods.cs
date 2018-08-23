@@ -18,9 +18,9 @@ namespace DotvvmAcademy.Course.Calculator
             Result = LeftOperand + RightOperand;
         }
 
-        public void Divide()
+        public void Subtract()
         {
-            Result = LeftOperand / RightOperand;
+            Result = LeftOperand - RightOperand;
         }
 
         public void Multiply()
@@ -28,9 +28,9 @@ namespace DotvvmAcademy.Course.Calculator
             Result = LeftOperand * RightOperand;
         }
 
-        public void Subtract()
+        public void Divide()
         {
-            Result = LeftOperand - RightOperand;
+            Result = LeftOperand / RightOperand;
         }
     }
 }

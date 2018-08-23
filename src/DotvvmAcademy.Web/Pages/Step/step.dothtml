@@ -1,5 +1,5 @@
-@viewModel DotvvmAcademy.Web.ViewModels.StepViewModel
-@masterPage Views/site.dotmaster
+@viewModel DotvvmAcademy.Web.Pages.Step.StepViewModel
+@masterPage Pages/site.dotmaster
 @import DotvvmAcademy.Web.Resources.Localization
 
 <dot:Content ContentPlaceHolderID="MainContent">
@@ -14,20 +14,17 @@
         <div class="container-small">
             <h1>{{resource: Name}}</h1>
             <dot:HtmlLiteral Html="{resource: Text}" class="step-info-box" />
-            <%-- TODO: Do not render at all (IncludeInPage is not working properly) --%>
-            <div IncludeInPage="{value: HasCodeTask}">
-                <cc:CodeTaskControl Code="{value: Code}"
-                                    Diagnostics="{value: Diagnostics}"
-                                    Language="{resource: CodeLanguage}"
-                                    class="code-container"/>
+            <div IncludeInPage="{value: HasCodeTask}"
+                 Visible="{resource: HasCodeTask}">
+                <cc:MonacoEditor Code="{value: Code}"
+                                 Markers="{value: Markers}"
+                                 Language="{resource: CodeLanguage}"
+                                 class="code-container"
+                                 style="width: 100%; height: 600px"/>
                 <dot:Button Click="{command: Validate()}" Text="Validate" />
-                <dot:Repeater DataSource="{value: Diagnostics}">
-                    <ItemTemplate>
-                        <div>
-                            {{value: Severity}}: {{value: Message}}
-                        </div>
-                    </ItemTemplate>
-                </dot:Repeater>
+                <dot:Button Click="{command: ShowSolution()}" Text="Show Solution" />
+                <dot:Button Click="{command: Reset()}" Text="Reset" />
+                <cc:DiagnosticList Diagnostics="{value: Markers}" />
             </div>
         </div>
     </section>
@@ -45,7 +42,7 @@
                 <dot:RouteLink RouteName="Step"
                                ButtonTagName="button"
                                class="button"
-                               Param-Language="{value: Language}"
+                               Param-Language="{value: LanguageMoniker}"
                                Param-Lesson="{value: Lesson}"
                                Param-Step="{value: PreviousStep}"
                                Visible="{resource: IsPreviousVisible}"
@@ -55,12 +52,20 @@
                 <dot:RouteLink RouteName="Step"
                                class="button"
                                ButtonTagName="button"
-                               Param-Language="{value: Language}"
+                               Param-Language="{value: LanguageMoniker}"
                                Param-Lesson="{value: Lesson}"
                                Param-Step="{value: NextStep}"
                                Visible="{resource: IsNextVisible}"
                                Class-success="{value: false}"
                                Text="{resource: UIResources.Btn_NextStep}" />
+
+                <dot:RouteLink RouteName="Default"
+                               class="button"
+                               ButtonTagName="button"
+                               Param-Language="{value: LanguageMoniker}"
+                               Visible="{resource: IsPreviousVisible && !IsNextVisible}"
+                               Class-success="{value: false}"
+                               Text="{resource: UIResources.Btn_Finish}" />
             </div>
         </div>
     </div>

@@ -16,7 +16,10 @@ h3 {
     font-family: $font-subheader-h3;
 }
 
-p, span, a {
-    font-size: $font-size-m;
-    font-family: $font-text;
+
+body > div:not(&:last-of-type) {
+    p, span, a {
+        font-size: $font-size-m;
+        font-family: $font-text;
+    }
 }

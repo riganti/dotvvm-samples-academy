@@ -124,7 +124,7 @@ namespace DotvvmAcademy.Validation.Dothtml
             var parser = provider.GetRequiredService<DothtmlParser>();
             var dothtmlRoot = parser.Parse(tokenizer.Tokens);
             var resolver = provider.GetRequiredService<ValidationTreeResolver>();
-            var root = (ValidationTreeRoot)resolver.ResolveTree(dothtmlRoot, ".dothtml");
+            var root = (ValidationTreeRoot)resolver.ResolveTree(dothtmlRoot, sourceCode.FileName);
             root.SourceCode = sourceCode;
             var reporter = provider.GetRequiredService<DothtmlValidationReporter>();
             var visitor = provider.GetRequiredService<ErrorAggregatingVisitor>();

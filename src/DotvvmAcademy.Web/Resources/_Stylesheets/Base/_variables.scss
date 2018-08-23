@@ -2,7 +2,7 @@
 
 $color-white: #fff;
 $color-black: #000;
-$color-transparent: transparent;
+$color-transparent: rgba(0,0,0,0);
 $color-primary: #3c3d3b;
 $color-secondary: #ffd94f;
 $color-error: #d91313;
@@ -20,6 +20,8 @@ $color-success: #bbce48;
 $color-btn-success: #729a40;
 $color-code-container-bg: #1e1e1e;
 $color-code: #e6755e;
+$color-dotvvm-blue: #3773c2;
+
 // Font family
 $font-header-h1: 'Open Sans', sans-serif;
 $font-subheader-h2: 'Open Sans', sans-serif;
@@ -45,4 +47,3 @@ $width-tablet: 768px;
 $width-desktop: 980px;
 $width-desktop-large: 1200px;
 $width-desktop-HD: 1440px;
-

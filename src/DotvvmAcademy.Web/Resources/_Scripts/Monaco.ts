@@ -20,29 +20,35 @@ ko.bindingHandlers["dotvvm-monaco"] = {
 namespace DotvvmAcademy {
     export let isMonacoLoaded = false;
 
-    export interface ICodeTaskDiagnostic {
-        Start: KnockoutObservable<number>,
-        End: KnockoutObservable<number>,
+    export interface IServerMarker {
         Message: KnockoutObservable<string>,
-        Severity: KnockoutObservable<string>
+        Severity: KnockoutObservable<string>,
+        StartLineNumber: KnockoutObservable<number>,
+        StartColumn: KnockoutObservable<number>,
+        EndLineNumber: KnockoutObservable<number>,
+        EndColumn: KnockoutObservable<number>
     }
 
     export interface IEditorBinding {
         code: KnockoutObservable<string>,
         language: string,
-        diagnostics: KnockoutObservableArray<KnockoutObservable<ICodeTaskDiagnostic>>
+        markers: KnockoutObservableArray<KnockoutObservable<IServerMarker>>
     }
 
     export class Editor {
         element: HTMLElement
         binding: IEditorBinding
         editor: monaco.editor.IStandaloneCodeEditor
+        ignoreChange: boolean
 
         constructor(element: HTMLElement, binding: IEditorBinding) {
             this.element = element;
             this.binding = binding;
             this.initializeEditor();
-            this.binding.diagnostics.subscribe(this.onDiagnosticsChange.bind(this));
+            this.binding.code.subscribe(this.onCodeChange.bind(this));
+            // this is complete and utter bollocks
+            ko.computed(() => ko.toJSON(this.binding.markers))
+                .subscribe(_ => this.onMarkersChanged());
         }
 
         initializeEditor() {
@@ -52,33 +58,34 @@ namespace DotvvmAcademy {
                 codeLens: false,
                 scrollBeyondLastLine: false,
                 contextmenu: false,
-                fontSize: 16,
                 theme: "vs-dark",
                 minimap: {
                     enabled: false
                 },
-                renderWhitespace: "all"
+                renderWhitespace: "all",
+                fontSize: 17
             });
-            this.editor.onDidChangeModelContent(this.onTextChange.bind(this));
+            this.editor.onDidChangeModelContent(this.onEditorChange.bind(this));
         }
 
-        onDiagnosticsChange(diagnostics: KnockoutObservable<ICodeTaskDiagnostic>[]) {
+        onMarkersChanged() {
             let model = this.editor.getModel();
             let markers: monaco.editor.IMarkerData[] = [];
-            for (let observable of diagnostics) {
-                let diagnostic = observable();
-                if (diagnostic.Start() < 0 || diagnostic.End() < 0) {
+            for (let observable of this.binding.markers()) {
+                let serverMarker = observable();
+                if (serverMarker.StartLineNumber() == -1
+                    || serverMarker.StartColumn() == -1
+                    || serverMarker.EndLineNumber() == -1
+                    || serverMarker.EndColumn() == -1) {
                     continue;
                 }
-                let startPosition = model.getPositionAt(diagnostic.Start());
-                let endPosition = model.getPositionAt(diagnostic.End());
                 markers.push({
-                    message: diagnostic.Message(),
-                    severity: this.getSeverity(diagnostic.Severity()),
-                    startLineNumber: startPosition.lineNumber,
-                    startColumn: startPosition.column,
-                    endLineNumber: endPosition.lineNumber,
-                    endColumn: endPosition.column
+                    message: serverMarker.Message(),
+                    severity: this.getSeverity(serverMarker.Severity()),
+                    startLineNumber: serverMarker.StartLineNumber(),
+                    startColumn: serverMarker.StartColumn(),
+                    endLineNumber: serverMarker.EndLineNumber(),
+                    endColumn: serverMarker.EndColumn()
                 });
             }
             monaco.editor.setModelMarkers(this.editor.getModel(), null, markers);
@@ -111,8 +118,24 @@ namespace DotvvmAcademy {
             }
         }
 
-        onTextChange(e: monaco.editor.IModelContentChangedEvent) {
+        onEditorChange(e: monaco.editor.IModelContentChangedEvent) {
+            if (this.ignoreChange) {
+                this.ignoreChange = false;
+                return;
+            }
+
+            this.ignoreChange = true
             this.binding.code(this.editor.getValue());
+        }
+
+        onCodeChange(value: string) {
+            if (this.ignoreChange) {
+                this.ignoreChange = false;
+                return;
+            }
+
+            this.ignoreChange = true;
+            this.editor.setValue(value);
         }
     }
 }

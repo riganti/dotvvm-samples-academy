@@ -98,6 +98,33 @@ namespace DotvvmAcademy.Web.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Czech.
+        /// </summary>
+        public static string Base_Language_cs {
+            get {
+                return ResourceManager.GetString("Base_Language_cs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to English.
+        /// </summary>
+        public static string Base_Language_en {
+            get {
+                return ResourceManager.GetString("Base_Language_en", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Russian.
+        /// </summary>
+        public static string Base_Language_ru {
+            get {
+                return ResourceManager.GetString("Base_Language_ru", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Do you wonder how DotVVM works?&lt;br&gt;
         ///It’s easy – all you need to know is &lt;strong&gt;HTML&lt;/strong&gt;, &lt;strong&gt;C#&lt;/strong&gt; and basics of &lt;strong&gt;CSS&lt;/strong&gt;.&lt;br&gt;
         ///We will explain everything to you in a few easy lessons..
@@ -141,6 +168,15 @@ namespace DotvvmAcademy.Web.Resources.Localization {
         public static string Btn_Coffee {
             get {
                 return ResourceManager.GetString("Btn_Coffee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Finish.
+        /// </summary>
+        public static string Btn_Finish {
+            get {
+                return ResourceManager.GetString("Btn_Finish", resourceCulture);
             }
         }
         

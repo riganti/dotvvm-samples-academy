@@ -1,6 +1,6 @@
 #load "./view_stub.dothtml.csx"
 
-Unit.SetDefaultCodePath("./calculator_stub.dothtml");
+Unit.SetDefaultCodePath("./calculator_directive.dothtml");
 Unit.SetCorrectCodePath("./calculator_controls.dothtml");
 Unit.SetSourcePath("CalculatorViewModel.cs", "./CalculatorViewModel_properties.cs");
 

@@ -17,7 +17,11 @@
 
         public override long GetSize()
         {
-            return Html.Length + CodeTaskPath.Length + Name.Length;
+            var result = 0;
+            result += (CodeTaskPath?.Length).GetValueOrDefault();
+            result += (Html?.Length).GetValueOrDefault();
+            result += (Name?.Length).GetValueOrDefault();
+            return result;
         }
     }
 }

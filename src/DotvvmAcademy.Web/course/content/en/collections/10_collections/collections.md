@@ -2,18 +2,17 @@
 
 In this lesson we're going to build a to-do list, because what is a to-do list, but a collection of to-do items.
 
-You should definitely know a few things before we start:
+You should definitely how to:
 
 - [HTML] - write static documents
 - [C#] - write classes, properties and methods
-- DotVVM - the [MVVM] pattern, Views and ViewModels
-- how to learn
+- DotVVM - compose Views and ViewModels
+- learn
 
 At the end of this lesson we'll have a ViewModel that:
 
-- Loads items from an external interface
-- Adds new items from the user
-- Removes items if the user desires so
+- Loads items from an external service
+- Adds and removes items
 
 ...and a View that:
 

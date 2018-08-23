@@ -168,4 +168,16 @@ Vše ostatní vám vysvětlíme v několika jednoduchých lekcích.</value>
   <data name="LangSwitcher_Title" xml:space="preserve">
     <value>Změnit jazyk</value>
   </data>
+  <data name="Btn_Finish" xml:space="preserve">
+    <value>Dokončit</value>
+  </data>
+  <data name="Base_Language_en" xml:space="preserve">
+    <value>Anglicky</value>
+  </data>
+  <data name="Base_Language_cs" xml:space="preserve">
+    <value>Česky</value>
+  </data>
+  <data name="Base_Language_ru" xml:space="preserve">
+    <value>Rusky</value>
+  </data>
 </root>

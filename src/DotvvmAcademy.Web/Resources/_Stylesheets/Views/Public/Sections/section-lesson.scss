@@ -2,30 +2,6 @@
 
 .section-lesson {
     background-color: $color-white;
-
-    .step-info-box {
-        h1 {
-            font-size: $font-size-xxl;
-            margin: 0;
-            color: $color-primary;
-            margin-bottom: 2rem;
-
-            @include res-max-desktop-small{
-                font-size: $font-size-xl;
-                margin-bottom: 1rem;
-            }
-        }
-
-        p {
-            margin: 0;
-            font-size: $font-size-m;
-
-            code, span {
-                color: $color-code;
-                font-size: $font-size-s;
-            }
-        }
-    }
 }
 
 .lesson-footer-container {

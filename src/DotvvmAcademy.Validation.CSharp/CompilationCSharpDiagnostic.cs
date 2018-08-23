@@ -14,13 +14,13 @@ namespace DotvvmAcademy.Validation.CSharp
 
         public Diagnostic Diagnostic { get; }
 
-        public int End => Diagnostic.Location.SourceSpan.Start;
+        public int End => Diagnostic.Location.SourceSpan.End;
 
         public string Message { get; }
 
         public ValidationSeverity Severity { get; }
 
-        public int Start => Diagnostic.Location.SourceSpan.End;
+        public int Start => Diagnostic.Location.SourceSpan.Start;
 
         public CSharpSourceCode Source { get; }
 

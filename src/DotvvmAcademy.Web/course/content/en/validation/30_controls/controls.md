@@ -1,14 +1,14 @@
 ﻿# Controls
 
-Of course, there are things in [Dothtml] that make validation easier.
+There are some things, you can use in [Dothtml], that make validation easier.
 
 ## General behavior
 
 __Validation occurs only on postbacks.__
 
-There are two attached properties you can set on any control to change the behavior of validation in its subtree:
+There are two so-called attached properties you can set on any control to change the behavior of validation in its subtree:
 
-- `Validation.Enabled` - any postback coming from the subtree either triggers validation or doesn't
+- `Validation.Enabled` - sets whether postbacks coming from the subtree trigger validation
 - [`Validation.Target`][target] - use this if you need to validate only a part of the ViewModel on a postback
 
 ## Validator
@@ -34,7 +34,7 @@ Or if I wanted to show the error message from the server instead, I would do it 
 <dot:TextBox Text="{value: Text}" />
 ```
 
-Since all Validator properties are so-called attached properties as well, you can set them directly on the TextBox and they will work just the same:
+Since all Validator properties are attached properties as well, you can set them directly on the TextBox and they will work just the same:
 
 ```dothtml
 <dot:TextBox Text="{value: Text}"
@@ -57,7 +57,7 @@ Let's say I have a property called `DTO` that I'm trying to validate and I want 
                        IncludeErrorsFromTarget="true" />
 ```
 
-By default only top-level properties of the [`Validation.Target`][target] get validated. `IncludeErrorsFromChildren` triggers recursion and `IncludeErrorsFromTarget` adds errors attached to the target itself.
+By default only top-level properties of the [`Validation.Target`][target] get validated. `IncludeErrorsFromChildren` triggers recursive search for errors and `IncludeErrorsFromTarget` adds errors attached to the target itself.
 
 ---
 

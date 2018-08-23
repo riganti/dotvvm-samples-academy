@@ -17,7 +17,11 @@
 
         public override long GetSize()
         {
-            return Html.Length + ImageUrl.Length + Name.Length;
+            var result = 0;
+            result += (Html?.Length).GetValueOrDefault();
+            result += (ImageUrl?.Length).GetValueOrDefault();
+            result += (Name?.Length).GetValueOrDefault();
+            return result;
         }
     }
 }

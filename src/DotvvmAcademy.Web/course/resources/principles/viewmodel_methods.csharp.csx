@@ -1,7 +1,5 @@
 #load "./viewmodel_properties.csharp.csx"
 
-using System;
-
 Unit.SetDefaultCodePath("./CalculatorViewModel_properties.cs");
 Unit.SetCorrectCodePath("./CalculatorViewModel_methods.cs");
 

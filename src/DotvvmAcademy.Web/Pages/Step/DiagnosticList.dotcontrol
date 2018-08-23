@@ -1,0 +1,20 @@
+﻿@viewModel System.Object, mscorlib
+@baseType DotvvmAcademy.Web.Pages.Step.DiagnosticList, DotvvmAcademy.Web
+
+<dot:GridView DataSource="{value: _control.Diagnostics}"
+              ShowHeaderWhenNoData="true">
+    <Columns>
+        <dot:GridViewTemplateColumn HeaderText="Severity">
+            <%-- TODO: Replace my garbage icons --%>
+            <img src="{value: "/images/Icons/temp_diagnostic_" + Severity.ToString() + ".png"}" 
+                 width="30px" 
+                 height="30px"/>
+        </dot:GridViewTemplateColumn>
+        <dot:GridViewTextColumn HeaderText="Message"
+                                ValueBinding="{value: Message}"/>
+        <dot:GridViewTextColumn HeaderText="Line"
+                                ValueBinding="{value: StartLineNumber}"/>
+        <dot:GridViewTextColumn HeaderText="Column"
+                                ValueBinding="{value: StartColumn}" />
+    </Columns>
+</dot:GridView>
