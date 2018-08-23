@@ -19,7 +19,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             DataContextTypeStack = dataContext;
         }
 
-        public ImmutableArray<ValidationControl> Content { get; private set;}
+        public ImmutableArray<ValidationControl> Content { get; private set; } = ImmutableArray.Create<ValidationControl>();
 
         IEnumerable<IAbstractControl> IAbstractContentNode.Content => Content;
 
@@ -33,7 +33,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         {
             child.Parent = this;
             child.TreeRoot = TreeRoot;
-            Content = Content.IsDefault ? ImmutableArray.Create(child) : Content.Add(child);
+            Content = Content.Add(child);
         }
     }
 }
