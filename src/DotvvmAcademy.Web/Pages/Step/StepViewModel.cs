@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
-using System;
 
 namespace DotvvmAcademy.Web.Pages.Step
 {
@@ -79,14 +78,12 @@ namespace DotvvmAcademy.Web.Pages.Step
             await base.Load();
         }
 
-        public async Task Validate()
+        public async Task Reset()
         {
             var unit = await runner.Run(renderedStep.CodeTaskPath);
-            var converter = new PositionConverter(Code);
-            Markers = (await validator.Validate(unit, Code))
-                .Select(d => GetMarker(converter, d))
-                .OrderBy(m => (m.StartLineNumber, m.StartColumn))
-                .ToList();
+            var defaultCodePath = unit.Provider.GetRequiredService<CodeTaskConfiguration>().DefaultCodePath;
+            var resource = await workspace.Load<Resource>(defaultCodePath);
+            Code = resource.Text;
         }
 
         public async Task ShowSolution()
@@ -97,12 +94,15 @@ namespace DotvvmAcademy.Web.Pages.Step
             Code = resource.Text;
         }
 
-        public async Task Reset()
+        public async Task Validate()
         {
             var unit = await runner.Run(renderedStep.CodeTaskPath);
-            var defaultCodePath = unit.Provider.GetRequiredService<CodeTaskConfiguration>().DefaultCodePath;
-            var resource = await workspace.Load<Resource>(defaultCodePath);
-            Code = resource.Text;
+            var converter = new PositionConverter(Code);
+            var diagnostics = await validator.Validate(unit, Code);
+            Markers = diagnostics
+                .Select(d => GetMarker(converter, d))
+                .OrderBy(m => (m.StartLineNumber, m.StartColumn))
+                .ToList();
         }
 
         protected override async Task<IEnumerable<string>> GetAvailableLanguageMonikers()

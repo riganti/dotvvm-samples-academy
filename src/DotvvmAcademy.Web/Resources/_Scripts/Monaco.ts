@@ -1,19 +1,13 @@
 ﻿declare let require;
-require.config({ baseUrl: "/", paths: { "vs": "libs/monaco" } });
-require(["vs/editor/editor.main"], () => DotvvmAcademy.isMonacoLoaded = true);
+
+require.config({ paths: { "vs": "/libs/monaco-editor/min/vs" } });
+require(["vs/editor/editor.main"], () => { });
+
 ko.bindingHandlers["dotvvm-monaco"] = {
     init(element: HTMLElement, value: () => DotvvmAcademy.IEditorBinding) {
-        if (!DotvvmAcademy.isMonacoLoaded) {
-            let interval = setInterval(() => {
-                if (DotvvmAcademy.isMonacoLoaded) {
-                    clearInterval(interval);
-                    new DotvvmAcademy.Editor(element, value());
-                }
-            }, 100);
-        }
-        else {
+        require(["vs/editor/editor.main"], () => {
             new DotvvmAcademy.Editor(element, value());
-        }
+        });
     }
 }
 
