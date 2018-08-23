@@ -58,12 +58,12 @@ namespace DotvvmAcademy {
                 codeLens: false,
                 scrollBeyondLastLine: false,
                 contextmenu: false,
-                fontSize: 16,
                 theme: "vs-dark",
                 minimap: {
                     enabled: false
                 },
-                renderWhitespace: "all"
+                renderWhitespace: "all",
+                fontSize: 17
             });
             this.editor.onDidChangeModelContent(this.onEditorChange.bind(this));
         }

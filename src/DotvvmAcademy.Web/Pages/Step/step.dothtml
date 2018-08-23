@@ -19,7 +19,8 @@
                 <cc:MonacoEditor Code="{value: Code}"
                                  Markers="{value: Markers}"
                                  Language="{resource: CodeLanguage}"
-                                 class="code-container" />
+                                 class="code-container"
+                                 style="width: 100%; height: 600px"/>
                 <dot:Button Click="{command: Validate()}" Text="Validate" />
                 <dot:Button Click="{command: ShowSolution()}" Text="Show Solution" />
                 <dot:Button Click="{command: Reset()}" Text="Reset" />
