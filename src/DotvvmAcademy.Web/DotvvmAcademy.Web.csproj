@@ -3,22 +3,18 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <TypeScriptToolsVersion>2.8</TypeScriptToolsVersion>
     <LangVersion>latest</LangVersion>
-    <EnableDefaultContentItems>false</EnableDefaultContentItems>
+    <UserSecretsId>7ac5f83c-f14d-4800-b2ec-e1fb18bbbc11</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="Course/**/*.cs" />
+    <Compile Remove="Course/**/*" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Course/**/*"
-             CopyToPublishDirectory="Always"/>
-    <Content Include="**/*.dothtml;**/*.dotmaster;**/*.dotcontrol"
-             Exclude="obj/**/*;bin/**/*"
-             CopyToPublishDirectory="Always"/>
+    <Content Include="Course/**/*" CopyToPublishDirectory="Always" />
+    <Content Include="**/*.dothtml;**/*.dotmaster;**/*.dotcontrol" Exclude="obj/**/*;bin/**/*;Course/**/*" CopyToPublishDirectory="Always" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore" Version="2.1.2" />
-    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.1.1" />
-    <PackageReference Include="DotVVM.AspNetCore" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.3" />
+    <PackageReference Include="DotVVM.AspNetCore" Version="2.0.2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DotvvmAcademy.CourseFormat\DotvvmAcademy.CourseFormat.csproj" />

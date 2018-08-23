@@ -3,16 +3,22 @@ using DotVVM.Framework.Hosting;
 using DotVVM.Framework.ResourceManagement;
 using DotvvmAcademy.Web.Pages;
 using DotvvmAcademy.Web.Pages.Step;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DotvvmAcademy.Web
 {
-    public class DotvvmStartup : IDotvvmStartup
+    public class DotvvmStartup : IDotvvmStartup, IDotvvmServiceConfigurator
     {
         public void Configure(DotvvmConfiguration config, string applicationPath)
         {
             ConfigureRoutes(config, applicationPath);
             ConfigureControls(config, applicationPath);
             ConfigureResources(config, applicationPath);
+        }
+
+        public void ConfigureServices(IDotvvmServiceCollection options)
+        {
+            options.AddDefaultTempStorages("temp");
         }
 
         private void ConfigureControls(DotvvmConfiguration config, string applicationPath)
