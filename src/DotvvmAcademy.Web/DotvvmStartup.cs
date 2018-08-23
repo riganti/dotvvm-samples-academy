@@ -33,7 +33,7 @@ namespace DotvvmAcademy.Web
         {
             config.Resources.Register(
                 name: "MonacoLoader",
-                resource: new ScriptResource(new FileResourceLocation("~/wwwroot/libs/monaco/loader.js")));
+                resource: new ScriptResource(new FileResourceLocation("~/wwwroot/libs/monaco-editor/min/vs/loader.js")));
             config.Resources.Register(
                 name: "jQuery",
                 resource: new ScriptResource(new FileResourceLocation("~/wwwroot/libs/jquery/jquery.js")));
