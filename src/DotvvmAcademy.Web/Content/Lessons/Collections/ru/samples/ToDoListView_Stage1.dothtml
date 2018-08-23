@@ -1,8 +1,0 @@
-﻿@viewModel DotvvmAcademy.Lessons.Collections.ViewModels.ToDoListViewModel, DotvvmAcademy.Lessons.Collections
-
-<p>
-    <!-- поместите Textbox и Button для добавления задачи, здесь -->
-</p>
-<div>
-    <!-- мы будем отображать список задач здесь позже -->
-</div>

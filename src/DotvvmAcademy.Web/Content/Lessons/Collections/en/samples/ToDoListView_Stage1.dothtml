@@ -1,8 +1,0 @@
-@viewModel DotvvmAcademy.Lessons.Collections.ViewModels.ToDoListViewModel, DotvvmAcademy.Lessons.Collections
-
-<p>
-    <!-- place a TextBox and a Button here -->
-</p>
-<div>
-    <!-- we'll display a list of tasks here later -->
-</div>
