@@ -6,11 +6,14 @@
     <EnableDefaultContentItems>false</EnableDefaultContentItems>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="content/**/*.cs;course/**/*.cs" />
+    <Compile Remove="Course/**/*.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="content/**/;course/**/*" />
-    <Content Include="**/*.dothtml;**/*.dotmaster;**/*.dotcontrol" />
+    <Content Include="Course/**/*"
+             CopyToPublishDirectory="Always"/>
+    <Content Include="**/*.dothtml;**/*.dotmaster;**/*.dotcontrol"
+             Exclude="obj/**/*;bin/**/*"
+             CopyToPublishDirectory="Always"/>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore" Version="2.1.2" />
@@ -21,22 +24,8 @@
     <ProjectReference Include="..\DotvvmAcademy.CourseFormat\DotvvmAcademy.CourseFormat.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <DotNetCliToolReference Include="DotVVM.Compiler.Light" Version="2.0.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="Resources\Localization\UIResources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>UIResources.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Update="Resources\Localization\UIResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>UIResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="wwwroot\css\" />
   </ItemGroup>
 </Project>
