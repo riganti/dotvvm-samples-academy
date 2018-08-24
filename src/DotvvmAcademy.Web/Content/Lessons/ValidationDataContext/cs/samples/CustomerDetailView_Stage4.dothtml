@@ -1,9 +1,0 @@
-<div Validator.Value="{value: City}" Validator.InvalidCssClass="has-error">
-    <dot:TextBox Text="{value: City}" />
-</div>
-<div Validator.Value="{value: ZIP}" Validator.InvalidCssClass="has-error">
-    <dot:TextBox Text="{value: ZIP}" />
-</div>
-<div Validator.Value="{value: Email}" Validator.InvalidCssClass="has-error">
-    <dot:TextBox Text="{value: Email}" />
-</div>

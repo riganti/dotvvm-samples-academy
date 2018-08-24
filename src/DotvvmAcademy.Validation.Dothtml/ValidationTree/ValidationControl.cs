@@ -21,6 +21,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         public object[] ConstructorParameters { get; set; }
 
         public ImmutableArray<ValidationPropertySetter> PropertySetters { get; private set; }
+            = ImmutableArray.Create<ValidationPropertySetter>();
 
         IEnumerable<IPropertyDescriptor> IAbstractControl.PropertyNames => PropertySetters.Select(s => s.Property);
 
@@ -28,7 +29,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         {
             property.Parent = this;
             property.TreeRoot = TreeRoot;
-            PropertySetters = PropertySetters.IsDefault ? ImmutableArray.Create(property) : PropertySetters.Add(property);
+            PropertySetters = PropertySetters.Add(property);
         }
 
         public bool TryGetProperty(IPropertyDescriptor property, out IAbstractPropertySetter value)
