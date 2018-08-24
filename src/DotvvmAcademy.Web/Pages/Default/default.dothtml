@@ -16,8 +16,7 @@
                 <dot:Button ButtonTagName="button" 
                             class="button" 
                             Text="{resource: UIResources.Btn_StartCourse}" />
-                <cc:SvgToHtml Source="images/Illustrations/header-image.svg" 
-                              RenderSettings.Mode="Server" />
+                <cc:SvgToHtml Source="/images/Illustrations/header-image.svg"/>
             </div>
         </div>
     </section>
@@ -30,7 +29,7 @@
                 <%--<div class="{value: IsFinished ? "lessons-item finished" : "lessons-item" }">--%>
                 <div class="lessons-item">
                     <%--<cc:SvgToHtml Source="{value:IsFinished ? "images/Icons/medal.svg" : ImageUrl}">--%>
-                    <cc:SvgToHtml Source="{resource: ImageUrl ?? "images/Icons/ico-lesson-1.svg"}"/>
+                    <cc:SvgToHtml Source="{resource: ImageUrl ?? "/images/Icons/ico-lesson-1.svg"}"/>
                     <h2>{{resource: Name}}</h2>
                     <dot:HtmlLiteral Html="{resource: Html}" />
                     <dot:RouteLink RouteName="Step"
@@ -45,7 +44,7 @@
     </section>
     <section class="section-coffee">
         <div>
-            <cc:SvgToHtml Source="images/Illustrations/coffee-image.svg" RenderSettings.Mode="Server" />
+            <cc:SvgToHtml Source="/images/Illustrations/coffee-image.svg" />
         </div>
         <div>
             <dot:HtmlLiteral Html="{resource: UIResources.Base_CoffeeTitle}" RenderWrapperTag="true" WrapperTagName="h2" />

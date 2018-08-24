@@ -183,4 +183,10 @@ Watch &lt;strong&gt;DotVVM Coffee&lt;/strong&gt; videos!</value>
     <value>Russian</value>
     <comment>Used in LangaageSwitch</comment>
   </data>
+  <data name="Base_Correct_Solution" xml:space="preserve">
+    <value>Correct</value>
+  </data>
+  <data name="Base_Incorrect_Solution" xml:space="preserve">
+    <value>Incorrect</value>
+  </data>
 </root>

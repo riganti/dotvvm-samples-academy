@@ -16,6 +16,12 @@
     font-family: $font-text;
     font-size: $font-size-m;
 
+    &.small {
+        width: 12rem;
+        max-width: 12rem;
+        padding: .2rem .4rem;
+    }
+
     &:hover, &:focus {
         text-decoration: none;
         background-color: $color-hover;
@@ -62,5 +68,25 @@
             border-color: darken($color-btn-success, 10%);
             color: $color-white;
         }
+    }
+}
+
+.buttons-container {
+    background-color: $color-vs-dark;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem .5rem;
+    box-sizing: border-box;
+
+    > * {
+        flex: 0 0 auto;
+        width: auto;
+        max-width: none;
+    }
+
+    .button {
+        margin-left: .5rem;
     }
 }

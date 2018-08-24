@@ -41,7 +41,7 @@ namespace DotvvmAcademy {
             this.initializeEditor();
             this.binding.code.subscribe(this.onCodeChange.bind(this));
             // this is complete and utter bollocks
-            ko.computed(() => ko.toJSON(this.binding.markers))
+            ko.computed(() => ko.toJSON(this.binding))
                 .subscribe(_ => this.onMarkersChanged());
         }
 

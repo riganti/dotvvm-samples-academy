@@ -2,6 +2,7 @@
 using DotvvmAcademy.CourseFormat;
 using DotvvmAcademy.Meta;
 using DotvvmAcademy.Validation.Unit;
+using DotvvmAcademy.Web.Resources.Localization;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -37,7 +38,13 @@ namespace DotvvmAcademy.Web.Pages.Step
         public string CodeLanguage { get; set; }
 
         [Bind(Direction.ServerToClient)]
+        public string FooterText => IsCodeCorrect ? UIResources.Base_Correct_Solution : UIResources.Base_Incorrect_Solution;
+
+        [Bind(Direction.ServerToClient)]
         public bool HasCodeTask { get; set; }
+
+        [Bind(Direction.ServerToClient)]
+        public bool IsCodeCorrect => !(Markers?.Any()).GetValueOrDefault();
 
         [Bind(Direction.None)]
         public bool IsNextVisible { get; set; }
@@ -49,7 +56,7 @@ namespace DotvvmAcademy.Web.Pages.Step
         public string Lesson { get; set; }
 
         [Bind(Direction.ServerToClient)]
-        public List<MonacoMarker> Markers { get; set; }
+        public List<MonacoMarker> Markers { get; set; } = new List<MonacoMarker>();
 
         [Bind(Direction.ServerToClient)]
         public string Name { get; set; }
@@ -102,6 +109,7 @@ namespace DotvvmAcademy.Web.Pages.Step
             Markers = diagnostics
                 .Select(d => GetMarker(converter, d))
                 .OrderBy(m => (m.StartLineNumber, m.StartColumn))
+                .OrderBy(m => m.Severity)
                 .ToList();
         }
 
