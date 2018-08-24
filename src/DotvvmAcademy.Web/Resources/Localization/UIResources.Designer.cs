@@ -89,11 +89,29 @@ namespace DotvvmAcademy.Web.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Correct.
+        /// </summary>
+        public static string Base_Correct_Solution {
+            get {
+                return ResourceManager.GetString("Base_Correct_Solution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Documentation.
         /// </summary>
         public static string Base_Documentation {
             get {
                 return ResourceManager.GetString("Base_Documentation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Incorrect.
+        /// </summary>
+        public static string Base_Incorrect_Solution {
+            get {
+                return ResourceManager.GetString("Base_Incorrect_Solution", resourceCulture);
             }
         }
         

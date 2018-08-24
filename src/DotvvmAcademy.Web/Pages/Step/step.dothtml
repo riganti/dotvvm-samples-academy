@@ -20,8 +20,7 @@
                 <cc:MonacoEditor Code="{value: Code}"
                                  Markers="{value: Markers}"
                                  Language="{resource: CodeLanguage}"
-                                 class="code-container"
-                                 style="width: 100%; height: 600px"/>
+                                 class="code-container"/>
                 <div class="buttons-container">
                     <div>
                         <dot:Button Click="{command: Reset()}" Text="Reset" class="button small" />
@@ -38,12 +37,19 @@
 </dot:Content>
 
 <dot:content ContentPlaceHolderID="FooterContent">
-    <div class="lesson-footer-container" Class-success="{value: false}" Class-failed="{value: false}">
+    <div class="lesson-footer-container" 
+         Class-success="{value: IsCodeCorrect}">
         <div class="container-small">
             <div class="ico-container">
-                <cc:SvgToHtml Source="images/icons/success.svg" RenderSettings.Mode="Server" Visible="{value: true}" />
-                <%--<cc:SvgToHtml Source="images/icons/failed.svg" RenderSettings.Mode="Server" Visible="{value: false}"/>--%>
-                <dot:Literal Text="{value: "Spravne"}" RenderSpanElement="true" />
+                <div Visible="{value: IsCodeCorrect}">
+                    <cc:SvgToHtml Source="images/Icons/success.svg"
+                                  RenderSettings.Mode="Server"/>
+                </div>
+                <div Visible="{value: !IsCodeCorrect}">
+                    <cc:SvgToHtml Source="images/icons/failed.svg"
+                                  RenderSettings.Mode="Server"/>
+                </div>
+                <dot:Literal Text="{value: FooterText}" />
             </div>
             <div>
                 <dot:RouteLink RouteName="Step"
