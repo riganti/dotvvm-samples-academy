@@ -41,13 +41,11 @@
          Class-success="{value: IsCodeCorrect}">
         <div class="container-small">
             <div class="ico-container">
-                <div Visible="{value: IsCodeCorrect}">
-                    <cc:SvgToHtml Source="images/Icons/success.svg"
-                                  RenderSettings.Mode="Server"/>
+                <div Visible="{value:  IsCodeCorrect}">
+                    <cc:SvgToHtml Source="/images/Icons/success.svg"/>
                 </div>
                 <div Visible="{value: !IsCodeCorrect}">
-                    <cc:SvgToHtml Source="images/icons/failed.svg"
-                                  RenderSettings.Mode="Server"/>
+                    <cc:SvgToHtml Source="/images/icons/failed.svg"/>
                 </div>
                 <dot:Literal Text="{value: FooterText}" />
             </div>

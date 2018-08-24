@@ -56,7 +56,7 @@ namespace DotvvmAcademy.Web.Pages.Step
         public string Lesson { get; set; }
 
         [Bind(Direction.ServerToClient)]
-        public List<MonacoMarker> Markers { get; set; }
+        public List<MonacoMarker> Markers { get; set; } = new List<MonacoMarker>();
 
         [Bind(Direction.ServerToClient)]
         public string Name { get; set; }

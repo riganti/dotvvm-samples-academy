@@ -1,13 +1,13 @@
 ﻿@viewModel System.Object, mscorlib
 @baseType DotvvmAcademy.Web.Pages.Step.DiagnosticList, DotvvmAcademy.Web
+@import DotvvmAcademy.Web.Pages.Step
 
 <dot:GridView DataSource="{value: _control.Diagnostics}"
               ShowHeaderWhenNoData="true"
               class="diagnostics-grid">
     <Columns>
         <dot:GridViewTemplateColumn Width="3rem">
-            <!-- These images will never be generated statically, hence no SvgToHtml -->
-            <img src="{value: "/images/Icons/diagnostic_" + Severity.ToString() + ".svg"}" />
+            <cc:SvgToHtml Source="{value: "/images/Icons/diagnostic_" + Severity.ToString() + ".svg"}" />
         </dot:GridViewTemplateColumn>
         <dot:GridViewTextColumn HeaderText="Message"
                                 ValueBinding="{value: Message}"/>

@@ -2,9 +2,8 @@
 @baseType DotvvmAcademy.Web.Pages.LanguageSwitch, DotvvmAcademy.Web
 @import DotvvmAcademy.Web.Resources.Localization
 
-<div class="{resource:"lang-btn " + _control.CurrentLanguage}">
-    <cc:SvgToHtml Source="{resource: _control.CurrentImage}"
-                  RenderSettings.Mode="Server" />
+<div class="{resource:"lang-btn " + _control.CurrentLanguage.Moniker}">
+    <cc:SvgToHtml Source="{resource: _control.CurrentImage}" />
     <p>{{resource: _control.CurrentLanguage.Moniker.ToUpper()}}</p>
 </div>
 <div class="lang-switcher_list">
