@@ -8,6 +8,7 @@ namespace DotvvmAcademy.Web
         public static void Main(string[] args)
         {
             WebHost.CreateDefaultBuilder(args)
+                .UseApplicationInsights()
                .UseStartup<Startup>()
                .Build()
                .Run();
