@@ -9,7 +9,7 @@
             text-align: left;
             padding: .5rem 0;
             padding-left: .5rem;
-            border-left: .1rem solid $color-vs-hover;
+            border-left: $outline-width solid $color-vs-hover;
 
             &:first-child {
                 border: none;
@@ -36,7 +36,7 @@
                 padding-left: .5rem;
             }
 
-            > img {
+            > img, svg {
                 display: block;
                 width: 1.5rem;
                 height: 1.5rem;

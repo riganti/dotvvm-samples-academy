@@ -15,15 +15,22 @@
             <h1>{{resource: Name}}</h1>
             <dot:HtmlLiteral Html="{resource: Text}" class="step-info-box" />
             <div IncludeInPage="{value: HasCodeTask}"
-                 Visible="{resource: HasCodeTask}">
+                 Visible="{resource: HasCodeTask}"
+                 class="code-bg">
                 <cc:MonacoEditor Code="{value: Code}"
                                  Markers="{value: Markers}"
                                  Language="{resource: CodeLanguage}"
                                  class="code-container"
                                  style="width: 100%; height: 600px"/>
-                <dot:Button Click="{command: Validate()}" Text="Validate" />
-                <dot:Button Click="{command: ShowSolution()}" Text="Show Solution" />
-                <dot:Button Click="{command: Reset()}" Text="Reset" />
+                <div class="buttons-container">
+                    <div>
+                        <dot:Button Click="{command: Reset()}" Text="Reset" class="button small" />
+                    </div>
+                    <div>
+                        <dot:Button Click="{command: ShowSolution()}" Text="Show Solution" class="button small success" />
+                        <dot:Button Click="{command: Validate()}" Text="Validate" class="button small" />
+                    </div>
+                </div>
                 <cc:DiagnosticList Diagnostics="{value: Markers}" />
             </div>
         </div>

@@ -1,12 +1,16 @@
 ﻿@import "../Base/_global.scss";
 
+.code-bg{
+    background-color: $color-vs-dark;
+}
+
 .code-container {
     width: 100%;
     height: auto;
     min-height: 40rem;
-    margin: 2rem auto;
-    border: $outline-width solid $color-border;
-    background-color: $color-code-container-bg;
+    margin-top: 2rem;
+    border: none;
+    background-color: $color-vs-dark;
 
     @include res-max-desktop-small {
         margin: 1rem auto;

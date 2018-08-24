@@ -2,11 +2,12 @@
 @baseType DotvvmAcademy.Web.Pages.Step.DiagnosticList, DotvvmAcademy.Web
 
 <dot:GridView DataSource="{value: _control.Diagnostics}"
-              ShowHeaderWhenNoData="false"
+              ShowHeaderWhenNoData="true"
               class="diagnostics-grid">
     <Columns>
         <dot:GridViewTemplateColumn Width="3rem">
             <img src="{value: "/images/Icons/temp_diagnostic_" + Severity.ToString() + ".svg"}" />
+            <%--<cc:SvgToHtml Source="{value: "images/Icons/temp_diagnostic_" + Severity.ToString() + ".svg"}"></cc:SvgToHtml>--%>
         </dot:GridViewTemplateColumn>
         <dot:GridViewTextColumn HeaderText="Message"
                                 ValueBinding="{value: Message}"/>
