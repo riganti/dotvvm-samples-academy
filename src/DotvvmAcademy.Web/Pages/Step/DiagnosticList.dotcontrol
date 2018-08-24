@@ -2,19 +2,19 @@
 @baseType DotvvmAcademy.Web.Pages.Step.DiagnosticList, DotvvmAcademy.Web
 
 <dot:GridView DataSource="{value: _control.Diagnostics}"
-              ShowHeaderWhenNoData="true">
+              ShowHeaderWhenNoData="false"
+              class="diagnostics-grid">
     <Columns>
-        <dot:GridViewTemplateColumn HeaderText="Severity">
-            <%-- TODO: Replace my garbage icons --%>
-            <img src="{value: "/images/Icons/temp_diagnostic_" + Severity.ToString() + ".png"}" 
-                 width="30px" 
-                 height="30px"/>
+        <dot:GridViewTemplateColumn Width="3rem">
+            <img src="{value: "/images/Icons/temp_diagnostic_" + Severity.ToString() + ".svg"}" />
         </dot:GridViewTemplateColumn>
         <dot:GridViewTextColumn HeaderText="Message"
                                 ValueBinding="{value: Message}"/>
         <dot:GridViewTextColumn HeaderText="Line"
-                                ValueBinding="{value: StartLineNumber}"/>
+                                ValueBinding="{value: StartLineNumber}"
+                                Width="6rem" />
         <dot:GridViewTextColumn HeaderText="Column"
-                                ValueBinding="{value: StartColumn}" />
+                                ValueBinding="{value: StartColumn}"
+                                Width="6rem" />
     </Columns>
 </dot:GridView>
