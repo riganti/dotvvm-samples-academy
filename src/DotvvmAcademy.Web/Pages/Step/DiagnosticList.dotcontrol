@@ -6,8 +6,8 @@
               class="diagnostics-grid">
     <Columns>
         <dot:GridViewTemplateColumn Width="3rem">
-            <img src="{value: "/images/Icons/temp_diagnostic_" + Severity.ToString() + ".svg"}" />
-            <%--<cc:SvgToHtml Source="{value: "images/Icons/temp_diagnostic_" + Severity.ToString() + ".svg"}"></cc:SvgToHtml>--%>
+            <!-- These images will never be generated statically, hence no SvgToHtml -->
+            <img src="{value: "/images/Icons/diagnostic_" + Severity.ToString() + ".svg"}" />
         </dot:GridViewTemplateColumn>
         <dot:GridViewTextColumn HeaderText="Message"
                                 ValueBinding="{value: Message}"/>
