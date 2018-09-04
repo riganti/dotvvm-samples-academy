@@ -4,17 +4,12 @@ using System.Collections.Generic;
 
 namespace DotvvmAcademy.Validation.CSharp.Unit
 {
-    public class CSharpUnit : IValidationUnit
+    public class CSharpUnit : ValidationUnit
     {
-        public CSharpUnit(IServiceProvider provider)
+        public CSharpUnit(IServiceProvider provider) : base(provider)
         {
-            Provider = provider;
         }
 
-        public ICollection<IConstraint> Constraints { get; } = new HashSet<IConstraint>(new ConstraintEqualityComparer());
-
         public ICollection<Action<CSharpDynamicContext>> DynamicActions { get; } = new List<Action<CSharpDynamicContext>>();
-
-        public IServiceProvider Provider { get; }
     }
 }
