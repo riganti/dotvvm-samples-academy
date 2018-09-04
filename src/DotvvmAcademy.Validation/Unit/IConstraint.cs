@@ -3,5 +3,7 @@
     public interface IConstraint
     {
         void Validate(ConstraintContext context);
+
+        bool CanOverwrite(IConstraint other);
     }
 }

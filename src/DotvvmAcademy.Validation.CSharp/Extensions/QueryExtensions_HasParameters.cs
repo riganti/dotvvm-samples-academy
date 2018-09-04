@@ -1,4 +1,5 @@
-﻿using DotvvmAcademy.Validation.Unit;
+﻿using DotvvmAcademy.Meta.Syntax;
+using DotvvmAcademy.Validation.Unit;
 using Microsoft.CodeAnalysis;
 using System.Collections.Immutable;
 
@@ -6,17 +7,17 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 {
     public static class QueryExtensions_HasParameters
     {
-        public static IQuery<IMethodSymbol> HasParameters<T1>(this IQuery<IMethodSymbol> query)
+        public static CSharpQuery<IMethodSymbol> HasParameters<T1>(this CSharpQuery<IMethodSymbol> query)
         {
             return query.HasParameters(query.Unit.GetMetaName<T1>());
         }
 
-        public static IQuery<IMethodSymbol> HasParameters<T1, T2>(this IQuery<IMethodSymbol> query)
+        public static CSharpQuery<IMethodSymbol> HasParameters<T1, T2>(this CSharpQuery<IMethodSymbol> query)
         {
             return query.HasParameters(query.Unit.GetMetaName<T1>(), query.Unit.GetMetaName<T2>());
         }
 
-        public static IQuery<IMethodSymbol> HasParameters<T1, T2, T3>(this IQuery<IMethodSymbol> query)
+        public static CSharpQuery<IMethodSymbol> HasParameters<T1, T2, T3>(this CSharpQuery<IMethodSymbol> query)
         {
             return query.HasParameters(
                 query.Unit.GetMetaName<T1>(),
@@ -24,7 +25,7 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
                 query.Unit.GetMetaName<T3>());
         }
 
-        public static IQuery<IMethodSymbol> HasParameters<T1, T2, T3, T4>(this IQuery<IMethodSymbol> query)
+        public static CSharpQuery<IMethodSymbol> HasParameters<T1, T2, T3, T4>(this CSharpQuery<IMethodSymbol> query)
         {
             return query.HasParameters(
                 query.Unit.GetMetaName<T1>(),
@@ -33,7 +34,7 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
                 query.Unit.GetMetaName<T4>());
         }
 
-        public static IQuery<IMethodSymbol> HasParameters<T1, T2, T3, T4, T5>(this IQuery<IMethodSymbol> query)
+        public static CSharpQuery<IMethodSymbol> HasParameters<T1, T2, T3, T4, T5>(this CSharpQuery<IMethodSymbol> query)
         {
             return query.HasParameters(
                 query.Unit.GetMetaName<T1>(),
@@ -43,7 +44,7 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
                 query.Unit.GetMetaName<T5>());
         }
 
-        public static IQuery<IMethodSymbol> HasParameters<T1, T2, T3, T4, T5, T6>(this IQuery<IMethodSymbol> query)
+        public static CSharpQuery<IMethodSymbol> HasParameters<T1, T2, T3, T4, T5, T6>(this CSharpQuery<IMethodSymbol> query)
         {
             return query.HasParameters(
                 query.Unit.GetMetaName<T1>(),
@@ -54,7 +55,7 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
                 query.Unit.GetMetaName<T6>());
         }
 
-        public static IQuery<IMethodSymbol> HasParameters<T1, T2, T3, T4, T5, T6, T7>(this IQuery<IMethodSymbol> query)
+        public static CSharpQuery<IMethodSymbol> HasParameters<T1, T2, T3, T4, T5, T6, T7>(this CSharpQuery<IMethodSymbol> query)
         {
             return query.HasParameters(
                 query.Unit.GetMetaName<T1>(),
@@ -66,8 +67,8 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
                 query.Unit.GetMetaName<T7>());
         }
 
-        public static IQuery<IMethodSymbol> HasParameters<T1, T2, T3, T4, T5, T6, T7, T8>(
-            this IQuery<IMethodSymbol> query)
+        public static CSharpQuery<IMethodSymbol> HasParameters<T1, T2, T3, T4, T5, T6, T7, T8>(
+            this CSharpQuery<IMethodSymbol> query)
         {
             return query.HasParameters(
                 query.Unit.GetMetaName<T1>(),
@@ -80,16 +81,17 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
                 query.Unit.GetMetaName<T8>());
         }
 
-        public static IQuery<IMethodSymbol> HasParameters(this IQuery<IMethodSymbol> query, params string[] parameters)
+        public static CSharpQuery<IMethodSymbol> HasParameters(this CSharpQuery<IMethodSymbol> query, params string[] parameters)
         {
             return HasParameters(query, parameters.ToImmutableArray());
         }
 
-        private static IQuery<IMethodSymbol> HasParameters(IQuery<IMethodSymbol> query, ImmutableArray<string> parameters)
+        private static CSharpQuery<IMethodSymbol> HasParameters(CSharpQuery<IMethodSymbol> query, ImmutableArray<string> parameters)
         {
-            query.SetConstraint(nameof(HasParameters), context =>
+            query.Unit.AddDelegateConstraint(context =>
             {
-                foreach (var method in context.Result)
+                var result = context.Locate<IMethodSymbol>(query.Name);
+                foreach (var method in result)
                 {
                     if (parameters.Length != method.Parameters.Length)
                     {
@@ -101,7 +103,7 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 
                     for (var i = 0; i < method.Parameters.Length; i++)
                     {
-                        var expectedParameter = context.LocateSymbol<IMethodSymbol, ITypeSymbol>(parameters[i]);
+                        var expectedParameter = context.Locate<ITypeSymbol>(NameNode.Parse(parameters[i]));
                         if (!method.Parameters[i].Type.Equals(expectedParameter))
                         {
                             context.Report(

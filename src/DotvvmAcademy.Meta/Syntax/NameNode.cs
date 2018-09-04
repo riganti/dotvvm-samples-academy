@@ -14,6 +14,13 @@ namespace DotvvmAcademy.Meta.Syntax
 
         public NameNodeKind Kind { get; }
 
+        public static NameNode Parse(string source)
+        {
+            var lexer = new NameLexer(source);
+            var parser = new NameParser(lexer);
+            return parser.Parse();
+        }
+
         public abstract NameNode SetDiagnostics(ImmutableArray<NameDiagnostic> diagnostics);
 
         public abstract override string ToString();

@@ -1,21 +1,24 @@
 ﻿using DotvvmAcademy.Meta;
+using DotvvmAcademy.Meta.Syntax;
 using DotvvmAcademy.Validation.Unit;
 using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Immutable;
 using System.Linq;
 
 namespace DotvvmAcademy.Validation.CSharp.Unit
 {
-    public static class QueryExtensions_Constraints
+    public static class CSharpQueryExtensions_Constraints
     {
-        public static IQuery<TResult> Allow<TResult>(this IQuery<TResult> query)
+        public static CSharpQuery<TResult> Allow<TResult>(this CSharpQuery<TResult> query)
             where TResult : ISymbol
         {
-            query.SetConstraint(nameof(Allow), context =>
+            query.Unit.AddDelegateConstraint(context =>
             {
+                var result = context.Locate<TResult>(query.Name);
                 var storage = context.Provider.GetRequiredService<AllowedSymbolStorage>();
-                foreach (var symbol in context.Result)
+                foreach(var symbol in result)
                 {
                     storage.Allow(symbol);
                 }
@@ -23,12 +26,47 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
             return query;
         }
 
-        public static IQuery<TResult> HasAccessibility<TResult>(this IQuery<TResult> query, Accessibility accessibility)
+        public static CSharpQuery<TResult> Exists<TResult>(this CSharpQuery<TResult> query)
             where TResult : ISymbol
         {
-            query.SetConstraint(nameof(HasAccessibility), context =>
+            query.Unit.AddDelegateConstraint(context =>
             {
-                foreach (var symbol in context.Result)
+                var result = context.Locate<TResult>(query.Name);
+                if (!result.IsEmpty)
+                {
+                    return;
+                }
+
+                var current = query.Name;
+                ImmutableArray<ISymbol> parents = default;
+                while (parents.IsDefaultOrEmpty && current != null)
+                {
+                    current = query.Name.GetLogicalParent();
+                    parents = context.Locate(current);
+                }
+
+                if (parents.IsDefaultOrEmpty)
+                {
+                    context.Provider.GetRequiredService<IValidationReporter>()
+                        .Report($"Symbol '{query.Name}' must exist.");
+                    return;
+                }
+
+                foreach (var parent in parents)
+                {
+                    context.Report($"Symbol '{query.Name}' must exist.", parent);
+                }
+            });
+            return query;
+        }
+
+        public static CSharpQuery<TResult> HasAccessibility<TResult>(this CSharpQuery<TResult> query, Accessibility accessibility)
+            where TResult : ISymbol
+        {
+            query.Unit.AddDelegateConstraint(context =>
+            {
+                var result = context.Locate<TResult>(query.Name);
+                foreach (var symbol in result)
                 {
                     if (!accessibility.HasFlag(symbol.DeclaredAccessibility.ToUnitAccessibility()))
                     {
@@ -41,18 +79,19 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
             return query;
         }
 
-        public static IQuery<ITypeSymbol> HasBaseType<TBase>(this IQuery<ITypeSymbol> query)
+        public static CSharpQuery<ITypeSymbol> HasBaseType<TBase>(this CSharpQuery<ITypeSymbol> query)
             where TBase : class
         {
             return query.HasBaseType(query.Unit.GetMetaName<TBase>());
         }
 
-        public static IQuery<ITypeSymbol> HasBaseType(this IQuery<ITypeSymbol> query, string typeName)
+        public static CSharpQuery<ITypeSymbol> HasBaseType(this CSharpQuery<ITypeSymbol> query, string typeName)
         {
-            query.SetConstraint(nameof(HasBaseType), context =>
+            query.Unit.AddDelegateConstraint(context =>
             {
-                var baseType = context.LocateSymbol<ITypeSymbol, ITypeSymbol>(typeName);
-                foreach (var typeSymbol in context.Result)
+                var baseType = context.Locate<ITypeSymbol>(NameNode.Parse(typeName)).Single();
+                var result = context.Locate<ITypeSymbol>(query.Name);
+                foreach (var typeSymbol in result)
                 {
                     if (!typeSymbol.BaseType.Equals(baseType))
                     {
@@ -65,13 +104,14 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
             return query;
         }
 
-        public static IQuery<IPropertySymbol> HasGetter(
-            this IQuery<IPropertySymbol> query,
+        public static CSharpQuery<IPropertySymbol> HasGetter(
+            this CSharpQuery<IPropertySymbol> query,
             Accessibility accessibility = Accessibility.Public)
         {
-            query.SetConstraint(nameof(HasGetter), context =>
+            query.Unit.AddDelegateConstraint(context =>
             {
-                foreach (var property in context.Result)
+                var result = context.Locate<IPropertySymbol>(query.Name);
+                foreach (var property in result)
                 {
                     if (property.GetMethod == null)
                     {
@@ -90,13 +130,14 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
             return query;
         }
 
-        public static IQuery<IPropertySymbol> HasSetter(
-            this IQuery<IPropertySymbol> query,
+        public static CSharpQuery<IPropertySymbol> HasSetter(
+            this CSharpQuery<IPropertySymbol> query,
             Accessibility accessibility = Accessibility.Public)
         {
-            query.SetConstraint(nameof(HasSetter), context =>
+            query.Unit.AddDelegateConstraint(context =>
             {
-                foreach (var property in context.Result)
+                var result = context.Locate<IPropertySymbol>(query.Name);
+                foreach (var property in result)
                 {
                     if (property.SetMethod == null)
                     {
@@ -115,17 +156,18 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
             return query;
         }
 
-        public static IQuery<ITypeSymbol> Implements<TInterface>(this IQuery<ITypeSymbol> query)
+        public static CSharpQuery<ITypeSymbol> Implements<TInterface>(this CSharpQuery<ITypeSymbol> query)
         {
             return query.Implements(query.Unit.GetMetaName<TInterface>());
         }
 
-        public static IQuery<ITypeSymbol> Implements(this IQuery<ITypeSymbol> query, string typeName)
+        public static CSharpQuery<ITypeSymbol> Implements(this CSharpQuery<ITypeSymbol> query, string typeName)
         {
-            query.SetConstraint($"{nameof(Implements)}_{typeName}", context =>
+            query.Unit.AddDelegateConstraint(context =>
             {
-                var interfaceSymbol = context.LocateSymbol<ITypeSymbol, ITypeSymbol>(typeName);
-                foreach (var typeSymbol in context.Result)
+                var interfaceSymbol = context.Locate<ITypeSymbol>(NameNode.Parse(typeName)).Single();
+                var result = context.Locate<ITypeSymbol>(NameNode.Parse(typeName));
+                foreach (var typeSymbol in result)
                 {
                     if (!typeSymbol.AllInterfaces.Contains(interfaceSymbol))
                     {
@@ -134,21 +176,22 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
                             symbol: typeSymbol);
                     }
                 }
-            });
+            }, false);
             return query;
         }
 
-        public static IQuery<IFieldSymbol> IsOfType<TType>(this IQuery<IFieldSymbol> query)
+        public static CSharpQuery<IFieldSymbol> IsOfType<TType>(this CSharpQuery<IFieldSymbol> query)
         {
             return query.IsOfType(query.Unit.GetMetaName<TType>());
         }
 
-        public static IQuery<IFieldSymbol> IsOfType(this IQuery<IFieldSymbol> query, string typeName)
+        public static CSharpQuery<IFieldSymbol> IsOfType(this CSharpQuery<IFieldSymbol> query, string typeName)
         {
-            query.SetConstraint(nameof(IsOfType), context =>
+            query.Unit.AddDelegateConstraint(context =>
             {
-                var type = context.LocateSymbol<IFieldSymbol, ITypeSymbol>(typeName);
-                foreach (var field in context.Result)
+                var type = context.Locate<IFieldSymbol>(NameNode.Parse(typeName)).Single();
+                var result = context.Locate<IFieldSymbol>(query.Name);
+                foreach (var field in result)
                 {
                     if (!field.Type.Equals(type))
                     {
@@ -161,17 +204,18 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
             return query;
         }
 
-        public static IQuery<IPropertySymbol> IsOfType<TType>(this IQuery<IPropertySymbol> query)
+        public static CSharpQuery<IPropertySymbol> IsOfType<TType>(this CSharpQuery<IPropertySymbol> query)
         {
             return query.IsOfType(query.Unit.GetMetaName<TType>());
         }
 
-        public static IQuery<IPropertySymbol> IsOfType(this IQuery<IPropertySymbol> query, string typeName)
+        public static CSharpQuery<IPropertySymbol> IsOfType(this CSharpQuery<IPropertySymbol> query, string typeName)
         {
-            query.SetConstraint(nameof(IsOfType), context =>
+            query.Unit.AddDelegateConstraint(context =>
             {
-                var type = context.LocateSymbol<IPropertySymbol, ITypeSymbol>(typeName);
-                foreach (var property in context.Result)
+                var type = context.Locate<ITypeSymbol>(NameNode.Parse(typeName)).Single();
+                var result = context.Locate<IPropertySymbol>(query.Name);
+                foreach (var property in result)
                 {
                     if (!property.Type.Equals(type))
                     {
@@ -184,11 +228,12 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
             return query;
         }
 
-        public static IQuery<IFieldSymbol> IsReadonly(this IQuery<IFieldSymbol> query)
+        public static CSharpQuery<IFieldSymbol> IsReadonly(this CSharpQuery<IFieldSymbol> query)
         {
-            query.SetConstraint(nameof(IsReadonly), context =>
+            query.Unit.AddDelegateConstraint(context =>
             {
-                foreach (var field in context.Result)
+                var result = context.Locate<IFieldSymbol>(query.Name);
+                foreach (var field in result)
                 {
                     if (!field.IsReadOnly)
                     {
@@ -201,11 +246,12 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
             return query;
         }
 
-        public static IQuery<ITypeSymbol> IsTypeKind(this IQuery<ITypeSymbol> query, TypeKind typeKind)
+        public static CSharpQuery<ITypeSymbol> IsTypeKind(this CSharpQuery<ITypeSymbol> query, TypeKind typeKind)
         {
-            query.SetConstraint(nameof(IsTypeKind), context =>
+            query.Unit.AddDelegateConstraint(context =>
             {
-                foreach (var symbol in context.Result)
+                var result = context.Locate<ITypeSymbol>(query.Name);
+                foreach (var symbol in result)
                 {
                     if (!typeKind.HasFlag(symbol.TypeKind.ToUnitTypeKind()))
                     {
@@ -218,17 +264,18 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
             return query;
         }
 
-        public static IQuery<IMethodSymbol> Returns<TType>(this IQuery<IMethodSymbol> query)
+        public static CSharpQuery<IMethodSymbol> Returns<TType>(this CSharpQuery<IMethodSymbol> query)
         {
             return query.Returns(query.Unit.GetMetaName<TType>());
         }
 
-        public static IQuery<IMethodSymbol> Returns(this IQuery<IMethodSymbol> query, string typeName)
+        public static CSharpQuery<IMethodSymbol> Returns(this CSharpQuery<IMethodSymbol> query, string typeName)
         {
-            query.SetConstraint(nameof(Returns), context =>
+            query.Unit.AddDelegateConstraint(context =>
             {
-                var type = context.LocateSymbol<IMethodSymbol, ITypeSymbol>(typeName);
-                foreach (var method in context.Result)
+                var type = context.Locate<ITypeSymbol>(NameNode.Parse(typeName)).Single();
+                var result = context.Locate<IMethodSymbol>(query.Name);
+                foreach (var method in result)
                 {
                     if (!method.ReturnType.Equals(type))
                     {

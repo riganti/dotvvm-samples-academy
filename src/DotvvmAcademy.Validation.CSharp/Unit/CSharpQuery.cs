@@ -1,11 +1,13 @@
 ﻿using DotvvmAcademy.Meta.Syntax;
-using DotvvmAcademy.Validation.Unit;
+using Microsoft.CodeAnalysis;
 
 namespace DotvvmAcademy.Validation.CSharp.Unit
 {
-    public class CSharpQuery<TResult> : Query<TResult>
+    // NOTICE: More or less reservered for future use together with IDefinitions. Currently used only in constraint extension methods.
+    public class CSharpQuery<TResult>
+        where TResult : ISymbol
     {
-        public CSharpQuery(CSharpUnit unit, NameNode name) : base(unit, name.ToString())
+        public CSharpQuery(CSharpUnit unit, NameNode name)
         {
             Unit = unit;
             Name = name;
@@ -13,6 +15,6 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 
         public NameNode Name { get; }
 
-        public new CSharpUnit Unit { get; }
+        public CSharpUnit Unit { get; }
     }
 }

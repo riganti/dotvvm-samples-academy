@@ -10,7 +10,7 @@ namespace DotvvmAcademy.Validation.Unit
             Provider = provider;
         }
 
-        IServiceProvider Provider { get; }
+        public IServiceProvider Provider { get; }
     }
 
     public class ConstraintContext<TResult>

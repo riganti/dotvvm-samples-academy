@@ -51,7 +51,7 @@ namespace DotvvmAcademy.CourseFormat
         }
 
         public Task<IUnit> Run<TUnit>(Resource script)
-            where TUnit : IUnit
+            where TUnit : IValidationUnit
         {
             return units.GetOrAdd(script.Path, async p =>
             {

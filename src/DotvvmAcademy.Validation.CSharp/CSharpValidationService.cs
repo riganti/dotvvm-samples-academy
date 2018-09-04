@@ -25,9 +25,7 @@ namespace DotvvmAcademy.Validation.CSharp
             globalProvider = GetServiceProvider();
         }
 
-        public async Task<ImmutableArray<IValidationDiagnostic>> Validate(
-            CSharpUnit unit,
-            ImmutableArray<ISourceCode> sources)
+        public async Task<ImmutableArray<IValidationDiagnostic>> Validate(CSharpUnit unit, ImmutableArray<ISourceCode> sources)
         {
             using (var scope = globalProvider.CreateScope())
             {
@@ -45,11 +43,11 @@ namespace DotvvmAcademy.Validation.CSharp
 
                 // run static analysis
                 var reporter = scope.ServiceProvider.GetRequiredService<CSharpValidationReporter>();
-                HandleQueries<ITypeSymbol>(scope.ServiceProvider);
-                HandleQueries<IMethodSymbol>(scope.ServiceProvider);
-                HandleQueries<IPropertySymbol>(scope.ServiceProvider);
-                HandleQueries<IFieldSymbol>(scope.ServiceProvider);
-                HandleQueries<IEventSymbol>(scope.ServiceProvider);
+                var constraintContext = new ConstraintContext(scope.ServiceProvider);
+                foreach (var constraint in unit.Constraints)
+                {
+                    constraint.Validate(constraintContext);
+                }
                 await RunAnalyzers(scope.ServiceProvider);
                 if (reporter.WorstSeverity == ValidationSeverity.Error)
                 {
@@ -125,11 +123,6 @@ namespace DotvvmAcademy.Validation.CSharp
             return compilation;
         }
 
-        private ImmutableArray<ISymbol> GetMetadataNameResult(IServiceProvider provider, string name)
-        {
-            return provider.GetRequiredService<ISymbolLocator>().Locate(name);
-        }
-
         private IServiceProvider GetServiceProvider()
         {
             var c = new ServiceCollection();
@@ -155,21 +148,6 @@ namespace DotvvmAcademy.Validation.CSharp
                 .GetReportedDiagnostics()
                 .Where(d => d.Source == null || d.Source.IsValidated)
                 .ToImmutableArray();
-        }
-
-        private void HandleQueries<TResult>(IServiceProvider provider)
-            where TResult : ISymbol
-        {
-            var unit = provider.GetRequiredService<Context>().Unit;
-            foreach (var query in unit.GetQueries<TResult>())
-            {
-                var result = GetMetadataNameResult(provider, query.Source).OfType<TResult>().ToImmutableArray();
-                foreach (var constraint in query.GetConstraints())
-                {
-                    var context = new ConstraintContext<TResult>(provider, query, result);
-                    constraint(context);
-                }
-            }
         }
 
         private void OnAnalyzerException(
@@ -208,7 +186,7 @@ namespace DotvvmAcademy.Validation.CSharp
             var unit = provider.GetRequiredService<Context>().Unit;
             var context = provider.GetRequiredService<CSharpDynamicContext>();
             var reporter = provider.GetRequiredService<CSharpValidationReporter>();
-            foreach (var action in unit.GetDynamicActions())
+            foreach (var action in unit.DynamicActions)
             {
                 try
                 {

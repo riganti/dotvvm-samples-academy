@@ -1,37 +1,20 @@
-﻿using DotvvmAcademy.Meta.Syntax;
-using Microsoft.CodeAnalysis;
-using Microsoft.Extensions.DependencyInjection;
+﻿using DotvvmAcademy.Validation.Unit;
 using System;
 using System.Collections.Generic;
 
 namespace DotvvmAcademy.Validation.CSharp.Unit
 {
-    public class CSharpUnit : Validation.Unit.Unit
+    public class CSharpUnit : IValidationUnit
     {
-        private readonly List<Action<CSharpDynamicContext>> dynamicActions = new List<Action<CSharpDynamicContext>>();
-
-        public CSharpUnit(IServiceProvider provider) : base(provider)
+        public CSharpUnit(IServiceProvider provider)
         {
+            Provider = provider;
         }
 
-        public IEnumerable<Action<CSharpDynamicContext>> GetDynamicActions()
-        {
-            return dynamicActions;
-        }
+        public ICollection<IConstraint> Constraints { get; } = new HashSet<IConstraint>(new ConstraintEqualityComparer());
 
-        public CSharpQuery<TSymbol> GetQuery<TSymbol>(string name)
-            where TSymbol : ISymbol
-        {
-            var lexer = new NameLexer(name);
-            var nameNode = new NameParser(lexer).Parse();
-            var query = ActivatorUtilities.CreateInstance<CSharpQuery<TSymbol>>(Provider, nameNode);
-            AddQuery(query);
-            return query;
-        }
+        public ICollection<Action<CSharpDynamicContext>> DynamicActions { get; } = new List<Action<CSharpDynamicContext>>();
 
-        public void Run(Action<CSharpDynamicContext> action)
-        {
-            dynamicActions.Add(action);
-        }
+        public IServiceProvider Provider { get; }
     }
 }

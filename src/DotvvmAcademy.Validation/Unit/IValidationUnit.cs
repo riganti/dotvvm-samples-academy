@@ -5,7 +5,7 @@ namespace DotvvmAcademy.Validation.Unit
 {
     public interface IValidationUnit
     {
-        IList<IConstraint> Constraints { get; }
+        ICollection<IConstraint> Constraints { get; }
 
         IServiceProvider Provider { get; }
     }

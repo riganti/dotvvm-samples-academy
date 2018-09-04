@@ -1,21 +1,27 @@
 ﻿using DotvvmAcademy.Meta;
+using DotvvmAcademy.Meta.Syntax;
 using DotvvmAcademy.Validation.CSharp;
 using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.DependencyInjection;
-using System.Linq;
+using System.Collections.Immutable;
 
 namespace DotvvmAcademy.Validation.Unit
 {
     public static class ConstraintContextExtensions
     {
-        internal static TSymbol LocateSymbol<TResult, TSymbol>(this ConstraintContext<TResult> context, string name)
-            where TSymbol : ISymbol
+        public static ImmutableArray<ISymbol> Locate(this ConstraintContext context, NameNode name)
         {
-            return (TSymbol)context.Provider.GetRequiredService<ISymbolLocator>().Locate(name).Single();
+            return context.Provider.GetRequiredService<ISymbolLocator>().Locate(name);
         }
 
-        internal static void Report<TResult>(
-            this ConstraintContext<TResult> context,
+        public static ImmutableArray<TSymbol> Locate<TSymbol>(this ConstraintContext context, NameNode name)
+            where TSymbol : ISymbol
+        {
+            return context.Provider.GetRequiredService<ISymbolLocator>().Locate<TSymbol>(name);
+        }
+
+        public static void Report(
+            this ConstraintContext context,
             string message,
             ISymbol symbol,
             ValidationSeverity severity = default)
