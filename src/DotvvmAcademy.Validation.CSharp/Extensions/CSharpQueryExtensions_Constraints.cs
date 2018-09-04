@@ -37,12 +37,12 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
                     return;
                 }
 
-                var current = query.Name;
+                var current = query.Name.GetLogicalParent();
                 ImmutableArray<ISymbol> parents = default;
                 while (parents.IsDefaultOrEmpty && current != null)
                 {
-                    current = query.Name.GetLogicalParent();
                     parents = context.Locate(current);
+                    current = query.Name.GetLogicalParent();
                 }
 
                 if (parents.IsDefaultOrEmpty)
