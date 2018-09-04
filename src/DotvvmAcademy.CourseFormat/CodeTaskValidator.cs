@@ -29,7 +29,7 @@ namespace DotvvmAcademy.CourseFormat
             this.dothtmlService = dothtmlService;
         }
 
-        public async Task<ImmutableArray<CodeTaskDiagnostic>> Validate(IUnit unit, string code)
+        public async Task<ImmutableArray<CodeTaskDiagnostic>> Validate(IValidationUnit unit, string code)
         {
             ImmutableArray<IValidationDiagnostic> diagnostics;
             var configuration = unit.Provider.GetRequiredService<CodeTaskConfiguration>();
@@ -48,7 +48,7 @@ namespace DotvvmAcademy.CourseFormat
                     break;
 
                 default:
-                    throw new NotSupportedException($"{nameof(IUnit)} type '{unit.GetType().Name}' is not supported.");
+                    throw new NotSupportedException($"{nameof(IValidationUnit)} type '{unit.GetType().Name}' is not supported.");
             }
 
             return diagnostics.Select(d => new CodeTaskDiagnostic(

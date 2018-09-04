@@ -11,19 +11,27 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 {
     public static class CSharpQueryExtensions_Constraints
     {
+        public static CSharpQuery<TResult> AddQueryConstraint<TResult>(
+            this CSharpQuery<TResult> query,
+            Action<ConstraintContext, ImmutableArray<TResult>> action,
+            bool overwrite = true)
+            where TResult : ISymbol
+        {
+            query.Unit.Constraints.Add(new CSharpQueryConstraint<TResult>(action, query, overwrite));
+            return query;
+        }
+
         public static CSharpQuery<TResult> Allow<TResult>(this CSharpQuery<TResult> query)
             where TResult : ISymbol
         {
-            query.Unit.AddDelegateConstraint(context =>
+            return query.AddQueryConstraint((context, result) =>
             {
-                var result = context.Locate<TResult>(query.Name);
                 var storage = context.Provider.GetRequiredService<AllowedSymbolStorage>();
-                foreach(var symbol in result)
+                foreach (var symbol in result)
                 {
                     storage.Allow(symbol);
                 }
             });
-            return query;
         }
 
         public static CSharpQuery<TResult> Exists<TResult>(this CSharpQuery<TResult> query)
@@ -63,9 +71,8 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
         public static CSharpQuery<TResult> HasAccessibility<TResult>(this CSharpQuery<TResult> query, Accessibility accessibility)
             where TResult : ISymbol
         {
-            query.Unit.AddDelegateConstraint(context =>
+            return query.AddQueryConstraint((context, result) =>
             {
-                var result = context.Locate<TResult>(query.Name);
                 foreach (var symbol in result)
                 {
                     if (!accessibility.HasFlag(symbol.DeclaredAccessibility.ToUnitAccessibility()))
@@ -76,7 +83,6 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
                     }
                 }
             });
-            return query;
         }
 
         public static CSharpQuery<ITypeSymbol> HasBaseType<TBase>(this CSharpQuery<ITypeSymbol> query)
@@ -87,10 +93,9 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 
         public static CSharpQuery<ITypeSymbol> HasBaseType(this CSharpQuery<ITypeSymbol> query, string typeName)
         {
-            query.Unit.AddDelegateConstraint(context =>
+            return query.AddQueryConstraint((context, result) =>
             {
                 var baseType = context.Locate<ITypeSymbol>(NameNode.Parse(typeName)).Single();
-                var result = context.Locate<ITypeSymbol>(query.Name);
                 foreach (var typeSymbol in result)
                 {
                     if (!typeSymbol.BaseType.Equals(baseType))
@@ -101,16 +106,14 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
                     }
                 }
             });
-            return query;
         }
 
         public static CSharpQuery<IPropertySymbol> HasGetter(
             this CSharpQuery<IPropertySymbol> query,
             Accessibility accessibility = Accessibility.Public)
         {
-            query.Unit.AddDelegateConstraint(context =>
+            return query.AddQueryConstraint((context, result) =>
             {
-                var result = context.Locate<IPropertySymbol>(query.Name);
                 foreach (var property in result)
                 {
                     if (property.GetMethod == null)
@@ -127,16 +130,14 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
                     }
                 }
             });
-            return query;
         }
 
         public static CSharpQuery<IPropertySymbol> HasSetter(
             this CSharpQuery<IPropertySymbol> query,
             Accessibility accessibility = Accessibility.Public)
         {
-            query.Unit.AddDelegateConstraint(context =>
+            return query.AddQueryConstraint((context, result) =>
             {
-                var result = context.Locate<IPropertySymbol>(query.Name);
                 foreach (var property in result)
                 {
                     if (property.SetMethod == null)
@@ -153,7 +154,6 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
                     }
                 }
             });
-            return query;
         }
 
         public static CSharpQuery<ITypeSymbol> Implements<TInterface>(this CSharpQuery<ITypeSymbol> query)
@@ -163,10 +163,9 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 
         public static CSharpQuery<ITypeSymbol> Implements(this CSharpQuery<ITypeSymbol> query, string typeName)
         {
-            query.Unit.AddDelegateConstraint(context =>
+            return query.AddQueryConstraint((context, result) =>
             {
                 var interfaceSymbol = context.Locate<ITypeSymbol>(NameNode.Parse(typeName)).Single();
-                var result = context.Locate<ITypeSymbol>(NameNode.Parse(typeName));
                 foreach (var typeSymbol in result)
                 {
                     if (!typeSymbol.AllInterfaces.Contains(interfaceSymbol))
@@ -177,7 +176,6 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
                     }
                 }
             }, false);
-            return query;
         }
 
         public static CSharpQuery<IFieldSymbol> IsOfType<TType>(this CSharpQuery<IFieldSymbol> query)
@@ -187,10 +185,9 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 
         public static CSharpQuery<IFieldSymbol> IsOfType(this CSharpQuery<IFieldSymbol> query, string typeName)
         {
-            query.Unit.AddDelegateConstraint(context =>
+            return query.AddQueryConstraint((context, result) =>
             {
                 var type = context.Locate<IFieldSymbol>(NameNode.Parse(typeName)).Single();
-                var result = context.Locate<IFieldSymbol>(query.Name);
                 foreach (var field in result)
                 {
                     if (!field.Type.Equals(type))
@@ -201,7 +198,6 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
                     }
                 }
             });
-            return query;
         }
 
         public static CSharpQuery<IPropertySymbol> IsOfType<TType>(this CSharpQuery<IPropertySymbol> query)
@@ -211,10 +207,9 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 
         public static CSharpQuery<IPropertySymbol> IsOfType(this CSharpQuery<IPropertySymbol> query, string typeName)
         {
-            query.Unit.AddDelegateConstraint(context =>
+            return query.AddQueryConstraint((context, result) =>
             {
                 var type = context.Locate<ITypeSymbol>(NameNode.Parse(typeName)).Single();
-                var result = context.Locate<IPropertySymbol>(query.Name);
                 foreach (var property in result)
                 {
                     if (!property.Type.Equals(type))
@@ -225,14 +220,12 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
                     }
                 }
             });
-            return query;
         }
 
         public static CSharpQuery<IFieldSymbol> IsReadonly(this CSharpQuery<IFieldSymbol> query)
         {
-            query.Unit.AddDelegateConstraint(context =>
+            return query.AddQueryConstraint((context, result) =>
             {
-                var result = context.Locate<IFieldSymbol>(query.Name);
                 foreach (var field in result)
                 {
                     if (!field.IsReadOnly)
@@ -243,14 +236,12 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
                     }
                 }
             });
-            return query;
         }
 
         public static CSharpQuery<ITypeSymbol> IsTypeKind(this CSharpQuery<ITypeSymbol> query, TypeKind typeKind)
         {
-            query.Unit.AddDelegateConstraint(context =>
+            return query.AddQueryConstraint((context, result) =>
             {
-                var result = context.Locate<ITypeSymbol>(query.Name);
                 foreach (var symbol in result)
                 {
                     if (!typeKind.HasFlag(symbol.TypeKind.ToUnitTypeKind()))
@@ -261,7 +252,6 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
                     }
                 }
             });
-            return query;
         }
 
         public static CSharpQuery<IMethodSymbol> Returns<TType>(this CSharpQuery<IMethodSymbol> query)
@@ -271,10 +261,9 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 
         public static CSharpQuery<IMethodSymbol> Returns(this CSharpQuery<IMethodSymbol> query, string typeName)
         {
-            query.Unit.AddDelegateConstraint(context =>
+            return query.AddQueryConstraint((context, result) =>
             {
                 var type = context.Locate<ITypeSymbol>(NameNode.Parse(typeName)).Single();
-                var result = context.Locate<IMethodSymbol>(query.Name);
                 foreach (var method in result)
                 {
                     if (!method.ReturnType.Equals(type))
@@ -285,7 +274,6 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
                     }
                 }
             });
-            return query;
         }
     }
 }

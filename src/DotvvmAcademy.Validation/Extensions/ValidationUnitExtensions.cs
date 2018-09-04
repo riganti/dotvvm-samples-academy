@@ -4,9 +4,9 @@ namespace DotvvmAcademy.Validation.Unit
 {
     public static class ValidationUnitExtensions
     {
-        public static void AddDelegateConstraint(this IValidationUnit unit, Action<ConstraintContext> constraint, bool overwrite = true)
+        public static void AddDelegateConstraint(this IValidationUnit unit, Action<ConstraintContext> constraint)
         {
-            unit.Constraints.Add(new DelegateConstraint(constraint, overwrite));
+            unit.Constraints.Add(new DelegateConstraint(constraint));
         }
     }
 }

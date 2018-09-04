@@ -8,7 +8,7 @@ namespace DotvvmAcademy.Validation.Unit
 {
     public static class UnitExtensions
     {
-        public static string GetValidatedLanguage(this IUnit unit)
+        public static string GetValidatedLanguage(this IValidationUnit unit)
         {
             // TODO: Make language validation pluggable into CourseFormat
             switch (unit)
@@ -20,11 +20,11 @@ namespace DotvvmAcademy.Validation.Unit
                     return ValidatedLanguages.Dothtml;
 
                 default:
-                    throw new NotSupportedException($"{nameof(IUnit)} type '{unit.GetType()}' is not supported.");
+                    throw new NotSupportedException($"{nameof(IValidationUnit)} type '{unit.GetType()}' is not supported.");
             }
         }
 
-        public static void SetCorrectCodePath(this IUnit unit, string sourcePath)
+        public static void SetCorrectCodePath(this IValidationUnit unit, string sourcePath)
         {
             var configuration = unit.Provider.GetRequiredService<CodeTaskConfiguration>();
             // TODO: Minimize string operations
@@ -33,7 +33,7 @@ namespace DotvvmAcademy.Validation.Unit
             configuration.CorrectCodePath = absolutePath;
         }
 
-        public static void SetDefaultCodePath(this IUnit unit, string sourcePath)
+        public static void SetDefaultCodePath(this IValidationUnit unit, string sourcePath)
         {
             var configuration = unit.Provider.GetRequiredService<CodeTaskConfiguration>();
             // TODO: Minimize string operations
@@ -42,13 +42,13 @@ namespace DotvvmAcademy.Validation.Unit
             configuration.DefaultCodePath = absolutePath;
         }
 
-        public static void SetFileName(this IUnit unit, string fileName)
+        public static void SetFileName(this IValidationUnit unit, string fileName)
         {
             var configuration = unit.Provider.GetRequiredService<CodeTaskConfiguration>();
             configuration.FileName = fileName;
         }
 
-        public static void SetSourcePath(this IUnit unit, string fileName, string sourcePath)
+        public static void SetSourcePath(this IValidationUnit unit, string fileName, string sourcePath)
         {
             var configuration = unit.Provider.GetRequiredService<CodeTaskConfiguration>();
             var absolutePath = SourcePath.Normalize(SourcePath.Combine(SourcePath.GetParent(configuration.ScriptPath), sourcePath));
