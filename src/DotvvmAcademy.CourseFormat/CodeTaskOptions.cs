@@ -1,14 +1,10 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 
 namespace DotvvmAcademy.CourseFormat
 {
-    public class CodeTaskConfiguration
+    public class CodeTaskOptions
     {
-        public CodeTaskConfiguration(string scriptPath)
+        public CodeTaskOptions(string scriptPath)
         {
             ScriptPath = scriptPath;
         }

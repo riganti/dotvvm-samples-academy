@@ -26,7 +26,7 @@ namespace DotvvmAcademy.Validation.Unit
 
         public static void SetCorrectCodePath(this IUnit unit, string sourcePath)
         {
-            var configuration = unit.Provider.GetRequiredService<CodeTaskConfiguration>();
+            var configuration = unit.Provider.GetRequiredService<CodeTaskOptions>();
             // TODO: Minimize string operations
             var scriptDirectory = SourcePath.GetParent(configuration.ScriptPath);
             var absolutePath = SourcePath.Normalize(SourcePath.Combine(scriptDirectory, sourcePath));
@@ -35,7 +35,7 @@ namespace DotvvmAcademy.Validation.Unit
 
         public static void SetDefaultCodePath(this IUnit unit, string sourcePath)
         {
-            var configuration = unit.Provider.GetRequiredService<CodeTaskConfiguration>();
+            var configuration = unit.Provider.GetRequiredService<CodeTaskOptions>();
             // TODO: Minimize string operations
             var scriptDirectory = SourcePath.GetParent(configuration.ScriptPath);
             var absolutePath = SourcePath.Normalize(SourcePath.Combine(scriptDirectory, sourcePath));
@@ -44,13 +44,13 @@ namespace DotvvmAcademy.Validation.Unit
 
         public static void SetFileName(this IUnit unit, string fileName)
         {
-            var configuration = unit.Provider.GetRequiredService<CodeTaskConfiguration>();
+            var configuration = unit.Provider.GetRequiredService<CodeTaskOptions>();
             configuration.FileName = fileName;
         }
 
         public static void SetSourcePath(this IUnit unit, string fileName, string sourcePath)
         {
-            var configuration = unit.Provider.GetRequiredService<CodeTaskConfiguration>();
+            var configuration = unit.Provider.GetRequiredService<CodeTaskOptions>();
             var absolutePath = SourcePath.Normalize(SourcePath.Combine(SourcePath.GetParent(configuration.ScriptPath), sourcePath));
             configuration.SourcePaths.AddOrUpdate(fileName, absolutePath, (k, v) => absolutePath);
         }

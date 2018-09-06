@@ -1,6 +1,8 @@
 ﻿using Markdig;
+using Markdig.Renderers;
 using Microsoft.Extensions.Caching.Memory;
 using System;
+using System.IO;
 
 namespace DotvvmAcademy.CourseFormat
 {
@@ -26,17 +28,24 @@ namespace DotvvmAcademy.CourseFormat
 
             return wrapper.Cache.GetOrCreate($"{RenderedLessonPrefix}{lesson.Path}", entry =>
             {
-                var pipelineBuilder = new MarkdownPipelineBuilder();
-                pipelineBuilder.UsePipeTables();
-                var document = Markdown.Parse(lesson.Annotation, pipelineBuilder.Build());
+                var pipeline = new MarkdownPipelineBuilder()
+                    .UseAdvancedExtensions()
+                    .Build();
+                var document = Markdown.Parse(lesson.Annotation, pipeline);
                 var name = extractor.ExtractName(document);
                 var imageUrl = extractor.ExtractImageUrl(document);
-                var html = extractor.ExtractHtml(document);
-                var renderedLesson = new RenderedLesson(lesson, html, imageUrl, name);
-                entry.Value = renderedLesson;
-                entry.AddExpirationToken(lesson.EvictionToken);
-                entry.SetSize(renderedLesson?.GetSize() ?? 1);
-                return renderedLesson;
+                using (var writer = new StringWriter())
+                {
+                    var renderer = new HtmlRenderer(writer);
+                    pipeline.Setup(renderer);
+                    renderer.Render(document);
+                    var html = writer.ToString();
+                    var renderedLesson = new RenderedLesson(lesson, html, imageUrl, name);
+                    entry.Value = renderedLesson;
+                    entry.AddExpirationToken(lesson.EvictionToken);
+                    entry.SetSize(renderedLesson.GetSize());
+                    return renderedLesson;
+                }
             });
         }
     }

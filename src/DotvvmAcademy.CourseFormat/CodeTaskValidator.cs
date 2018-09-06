@@ -32,7 +32,7 @@ namespace DotvvmAcademy.CourseFormat
         public async Task<ImmutableArray<CodeTaskDiagnostic>> Validate(IUnit unit, string code)
         {
             ImmutableArray<IValidationDiagnostic> diagnostics;
-            var configuration = unit.Provider.GetRequiredService<CodeTaskConfiguration>();
+            var configuration = unit.Provider.GetRequiredService<CodeTaskOptions>();
             var sourceCodeTasks = configuration.SourcePaths.Select(p => GetSourceCode(p.Key, p.Value));
             var sourceCodes = (await Task.WhenAll(sourceCodeTasks)).ToImmutableArray();
             switch (unit)

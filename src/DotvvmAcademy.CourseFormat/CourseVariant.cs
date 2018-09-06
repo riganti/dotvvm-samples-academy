@@ -1,4 +1,5 @@
-﻿using System.Collections.Immutable;
+﻿using System;
+using System.Collections.Immutable;
 
 namespace DotvvmAcademy.CourseFormat
 {
@@ -19,7 +20,7 @@ namespace DotvvmAcademy.CourseFormat
 
         public override long GetSize()
         {
-            return Annotation.Length;
+            return Annotation?.Length ?? 1;
         }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using Markdig;
 using Markdig.Extensions.Tables;
+using Markdig.Renderers;
 using Microsoft.Extensions.Caching.Memory;
 using System;
+using System.IO;
 
 namespace DotvvmAcademy.CourseFormat
 {
@@ -27,19 +29,24 @@ namespace DotvvmAcademy.CourseFormat
 
             return wrapper.Cache.GetOrCreate($"{RenderedStepPrefix}{step.Path}", entry =>
             {
-                var pipelineBuilder = new MarkdownPipelineBuilder();
-                pipelineBuilder.UseAdvancedExtensions();
-                var pipeline = pipelineBuilder.Build();
-                var html = Markdown.ToHtml(step.Text, pipeline);
+                var pipeline = new MarkdownPipelineBuilder()
+                    .UseAdvancedExtensions()
+                    .Build();
                 var document = Markdown.Parse(step.Text, pipeline);
                 var name = extractor.ExtractName(document);
                 var codeTaskPath = extractor.ExtractCodeTaskPath(document);
-                //var html = extractor.ExtractHtml(document);
-                var renderedStep = new RenderedStep(step, html, codeTaskPath, name);
-                entry.Value = renderedStep;
-                entry.AddExpirationToken(step.EvictionToken);
-                entry.SetSize(step?.GetSize() ?? 1);
-                return renderedStep;
+                using (var writer = new StringWriter())
+                {
+                    var renderer = new HtmlRenderer(writer);
+                    pipeline.Setup(renderer);
+                    renderer.Render(document);
+                    var html = writer.ToString();
+                    var renderedStep = new RenderedStep(step, html, codeTaskPath, name);
+                    entry.Value = renderedStep;
+                    entry.AddExpirationToken(step.EvictionToken);
+                    entry.SetSize(step.GetSize());
+                    return renderedStep;
+                }
             });
         }
     }
