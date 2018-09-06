@@ -11,7 +11,7 @@
 
         public override long GetSize()
         {
-            return Text.Length;
+            return Text?.Length ?? 1;
         }
     }
 }

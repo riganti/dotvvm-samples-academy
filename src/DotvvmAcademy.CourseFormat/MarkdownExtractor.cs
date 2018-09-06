@@ -28,16 +28,6 @@ namespace DotvvmAcademy.CourseFormat
             return null;
         }
 
-        public string ExtractHtml(MarkdownDocument document)
-        {
-            using (var writer = new StringWriter())
-            {
-                var renderer = new HtmlRenderer(writer);
-                renderer.Render(document);
-                return writer.ToString();
-            }
-        }
-
         public string ExtractImageUrl(MarkdownDocument document)
         {
             if (document.Count > 0

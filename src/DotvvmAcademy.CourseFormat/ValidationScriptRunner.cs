@@ -118,7 +118,7 @@ namespace DotvvmAcademy.CourseFormat
             c.AddScoped(p =>
             {
                 var context = p.GetRequiredService<Context>();
-                return new CodeTaskConfiguration(context.Script.Path);
+                return new CodeTaskOptions(context.Script.Path);
             });
             c.AddScoped<Context>();
             c.AddScoped<DothtmlUnit>();
