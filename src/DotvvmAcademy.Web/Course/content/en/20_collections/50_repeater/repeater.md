@@ -1,4 +1,9 @@
-﻿# Repeater
+﻿---
+Title: Repeater
+CodeTask: /resources/collections/view_stub.dothtml.csx
+---
+
+# Repeater
 In a way the [`<dot:Repeater>`][repeater] control is analogous to a C# `foreach`. You bind a collection of items to it. Then you give it a template for the items. Finally, `Repeater` iterates over the collection and applies the template for each item.
 
 For instance, let's say you have a collection of strings called `Texts` and you want to display
@@ -24,5 +29,3 @@ inserts the current string in the `Repeater`'s loop.
 
 [repeater]: https://www.dotvvm.com/docs/controls/builtin/Repeater
 [datacontext]: https://www.dotvvm.com/docs/tutorials/basics-binding-context
-
-[CodeTask](/resources/collections/view_stub.dothtml.csx)

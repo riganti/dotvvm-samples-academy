@@ -1,3 +1,8 @@
+---
+Title: Dothtml
+CodeTask: /resources/principles/view_stub.dothtml.csx
+---
+
 # Dothtml
 
 DotVVM uses a special html-like syntax, [Dothtml], to define Views. It's html with features that make it easier to use the [MVVM] pattern.
@@ -35,5 +40,3 @@ Add a `@viewModel` directive to our View with our ViewModel, `DotvvmAcademy.Cour
 [head]: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head
 [meta]: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta
 [doctype]: https://developer.mozilla.org/en-US/docs/Glossary/Doctype
-
-[CodeTask](/resources/principles/view_stub.dothtml.csx)

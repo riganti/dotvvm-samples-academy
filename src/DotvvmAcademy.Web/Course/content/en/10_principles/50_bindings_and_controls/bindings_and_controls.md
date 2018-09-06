@@ -1,3 +1,8 @@
+---
+Title: Bindings and Controls
+CodeTask: /resources/principles/view_controls.dothtml.csx
+---
+
 # Bindings and Controls
 
 We continue our tour of [Dothtml]'s features.
@@ -39,5 +44,3 @@ and `RightOperand` respectively
 [controls]: https://www.dotvvm.com/docs/tutorials/basics-built-in-controls
 [properties]: https://www.dotvvm.com/docs/tutorials/basics-control-properties-and-attributes
 [textbox]: https://www.dotvvm.com/docs/controls/builtin/TextBox
-
-[CodeTask](/resources/principles/view_controls.dothtml.csx)

@@ -1,3 +1,8 @@
+---
+Title: Commands
+CodeTask: /resources/principles/view_commands.dothtml.csx
+---
+
 # Commands
 
 [Commands] are a kind of binding that doesn't keep a value updated, but produces a [Postback],
@@ -22,5 +27,3 @@ Add four [`<dot:Button>`][button] controls to the `<body>` element that each:
 [command]: https://www.dotvvm.com/docs/tutorials/basics-command-binding
 [button]: https://www.dotvvm.com/docs/controls/businesspack/Button
 [postback]: https://stackoverflow.com/questions/183254/what-is-a-postback
-
-[CodeTask](/resources/principles/view_commands.dothtml.csx)

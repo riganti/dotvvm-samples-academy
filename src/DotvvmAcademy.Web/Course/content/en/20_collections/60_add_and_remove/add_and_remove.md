@@ -1,4 +1,9 @@
-﻿# Add and Remove
+﻿---
+Title: Add and Remove
+CodeTask: /resources/collections/viewmodel_operations.csharp.csx
+---
+
+# Add and Remove
 
 To enable the user to add and remove to-do items, we need a few more declarations in the ViewModel.
 
@@ -12,5 +17,3 @@ To enable the user to add and remove to-do items, we need a few more declaration
       - It has to asynchronously call `ToDoFacade`'s `AddItem` with `NewItemText` as argument.
     - `public Task RemoveItem(int id);`
       - It has to wrap around `ToDoFacade`'s `RemoveItem`.
-
-[CodeTask](/resources/collections/viewmodel_operations.csharp.csx)

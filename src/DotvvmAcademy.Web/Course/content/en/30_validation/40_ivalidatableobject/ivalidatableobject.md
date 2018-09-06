@@ -1,4 +1,9 @@
-﻿# IValidatableObject
+﻿---
+Title: IValidatableObject
+CodeTask: /resources/validation/viewmodel.csharp.csx
+---
+
+# IValidatableObject
 
 Last but definitely not least, you can gain finer-grained control over validation by using the [`IValidatableObject`][ivalidatableobject] interface.
 
@@ -41,5 +46,3 @@ Make `FormViewModel` implement `IValidatableObject`. If the `Validation.Target` 
 
 [ivalidatableobject]: https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.ivalidatableobjec
 [target]: https://www.dotvvm.com/docs/tutorials/basics-validation-target
-
-[CodeTask](/resources/validation/viewmodel.csharp.csx)

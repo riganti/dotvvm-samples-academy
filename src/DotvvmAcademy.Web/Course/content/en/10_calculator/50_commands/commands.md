@@ -9,7 +9,7 @@ Commands are another kind of binding. They call a method from the ViewModel on t
 
 ^^^
 ```csharp
-public string Message {get; set; }
+public string Message { get; set; }
 
 public void Foo()
 {

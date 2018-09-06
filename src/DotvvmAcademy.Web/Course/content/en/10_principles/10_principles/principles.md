@@ -1,3 +1,7 @@
+---
+Title: Principles of DotVVM
+---
+
 # Principles of DotVVM
 
 To illustrate the Principles of DotVVM, we're going to build a calculator app.

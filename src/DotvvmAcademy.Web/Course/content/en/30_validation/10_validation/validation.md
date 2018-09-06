@@ -1,4 +1,8 @@
-﻿# Validation
+﻿---
+Title: Validation
+---
+
+# Validation
 
 The goal of this lesson is to show you the various ways you can validate your ViewModels. We'll
 tackle the usage of [attributes][validation], [controls], and the [`IValidatableObject`][validation] interface.

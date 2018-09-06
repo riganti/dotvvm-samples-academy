@@ -1,4 +1,8 @@
-﻿# Facades and DTOs
+﻿---
+Title: Facades and DTOs
+---
+
+# Facades and DTOs
 
 Our application already has a few classes you'll get to know now:
 

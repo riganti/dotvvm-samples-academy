@@ -1,4 +1,9 @@
-﻿# A Form
+﻿---
+Title: A Form
+CodeTask: /resources/collections/view_form.dothtml.csx
+---
+
+# A Form
 
 Finally, we add some item-adding and item-removing controls.
 
@@ -12,6 +17,3 @@ Finally, we add some item-adding and item-removing controls.
   - Pick whatever you deem appropriate as the value of the `Text` property
 - Add a `<dot:TextBox>` below the `Repeater` and bind it to the `NewItemText` property.
 - Add a `<dot:Button>` next to the `TextBox`. It must call the `AddItem` command.
-
-
-[CodeTask](/resources/collections/view_form.dothtml.csx)

@@ -1,4 +1,8 @@
-﻿# Collections
+﻿---
+Title: Collections
+---
+
+# Collections
 
 In this lesson we're going to build a to-do list, because what is a to-do list, but a collection of to-do items.
 

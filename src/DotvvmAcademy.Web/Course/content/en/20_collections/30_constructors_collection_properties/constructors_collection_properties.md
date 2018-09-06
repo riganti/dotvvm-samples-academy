@@ -1,4 +1,9 @@
-﻿# Constructors and Collection Properties
+﻿---
+Title: Constructors and Collection Properties
+CodeTask: /resources/collections/viewmodel_stub.csharp.csx
+---
+
+# Constructors and Collection Properties
 
 ## Dependency Injection
 
@@ -27,5 +32,3 @@ Edit `ToDoViewModel` to contain:
 [di]: https://www.dotvvm.com/docs/tutorials/advanced-ioc-di-container
 [json]: https://json.org/
 [list]: https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1
-
-[CodeTask](/resources/collections/viewmodel_stub.csharp.csx)

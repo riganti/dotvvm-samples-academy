@@ -1,4 +1,9 @@
-﻿# Attributes
+﻿---
+Title: Attributes
+CodeTask: /resources/validation/dto.csharp.csx
+---
+
+# Attributes
 
 Let's validate a Log In form and a Registration form that are next to each other in a single View.
 
@@ -27,5 +32,3 @@ Add some attributes to our DTOs. Put:
 [RangeAttribute]: https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.rangeattribute
 [EmailAddressAttribute]: https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.emailaddressattribute
 [RegularExpressionAttribute]: https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations.regularexpressionattribute
-
-[CodeTask](/resources/validation/dto.csharp.csx)

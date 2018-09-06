@@ -1,4 +1,9 @@
-﻿# Controls
+﻿---
+Title: Controls
+CodeTask: /resources/validation/view.dothtml.csx
+---
+
+# Controls
 
 There are some things, you can use in [Dothtml], that make validation easier.
 
@@ -74,5 +79,3 @@ and let them show error messages
 [validationsummary]: https://www.dotvvm.com/docs/controls/builtin/ValidationSummary
 [controls]: https://www.dotvvm.com/docs/tutorials/basics-validator-controls
 [dothtml]: https://www.dotvvm.com/docs/tutorials/basics-first-page
-
-[CodeTask](/resources/validation/view.dothtml.csx)

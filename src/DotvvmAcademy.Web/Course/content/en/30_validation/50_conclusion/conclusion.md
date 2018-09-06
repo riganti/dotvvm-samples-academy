@@ -1,4 +1,8 @@
-﻿# Conclusion
+﻿---
+Title: Conclusion
+---
+
+# Conclusion
 
 Congratulations! You just learned that:
 

@@ -1,3 +1,7 @@
+---
+Title: Short Glossary
+---
+
 # Short Glossary
 
 DotVVM is a [MVVM] web framework, but what does that even mean?

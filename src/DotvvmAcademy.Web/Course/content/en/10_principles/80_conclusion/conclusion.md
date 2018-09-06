@@ -1,3 +1,7 @@
+---
+Title: Conclusion
+---
+
 # Conclusion
 
 You successfully created a View and a ViewModel that use:
