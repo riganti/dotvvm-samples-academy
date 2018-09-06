@@ -26,7 +26,9 @@ namespace DotvvmAcademy.CourseFormat
 
             return wrapper.Cache.GetOrCreate($"{RenderedLessonPrefix}{lesson.Path}", entry =>
             {
-                var document = Markdown.Parse(lesson.Annotation);
+                var pipelineBuilder = new MarkdownPipelineBuilder();
+                pipelineBuilder.UsePipeTables();
+                var document = Markdown.Parse(lesson.Annotation, pipelineBuilder.Build());
                 var name = extractor.ExtractName(document);
                 var imageUrl = extractor.ExtractImageUrl(document);
                 var html = extractor.ExtractHtml(document);

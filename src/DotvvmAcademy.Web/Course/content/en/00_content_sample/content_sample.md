@@ -1,4 +1,4 @@
 ﻿# Content Sample
 
-All used Markdown feature neatly placed in one place.
+Lesson used for testing and styling purposes only.
 
