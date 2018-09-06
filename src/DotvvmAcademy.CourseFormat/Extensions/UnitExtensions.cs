@@ -24,6 +24,13 @@ namespace DotvvmAcademy.Validation.Unit
             }
         }
 
+        public static void SetCorrect(this IUnit unit, string correctPath)
+        {
+            var options = unit.Provider.GetRequiredService<CodeTaskOptions>();
+            options.CorrectCodePath = unit.GetAbsolutePath(correctPath);
+        }
+
+        [Obsolete("Name too long")]
         public static void SetCorrectCodePath(this IUnit unit, string sourcePath)
         {
             var configuration = unit.Provider.GetRequiredService<CodeTaskOptions>();
@@ -33,6 +40,13 @@ namespace DotvvmAcademy.Validation.Unit
             configuration.CorrectCodePath = absolutePath;
         }
 
+        public static void SetDefault(this IUnit unit, string defaultPath)
+        {
+            var options = unit.Provider.GetRequiredService<CodeTaskOptions>();
+            options.DefaultCodePath = unit.GetAbsolutePath(defaultPath);
+        }
+
+        [Obsolete("Name too long")]
         public static void SetDefaultCodePath(this IUnit unit, string sourcePath)
         {
             var configuration = unit.Provider.GetRequiredService<CodeTaskOptions>();
@@ -53,6 +67,14 @@ namespace DotvvmAcademy.Validation.Unit
             var configuration = unit.Provider.GetRequiredService<CodeTaskOptions>();
             var absolutePath = SourcePath.Normalize(SourcePath.Combine(SourcePath.GetParent(configuration.ScriptPath), sourcePath));
             configuration.SourcePaths.AddOrUpdate(fileName, absolutePath, (k, v) => absolutePath);
+        }
+
+        private static string GetAbsolutePath(this IUnit unit, string scriptRelativePath)
+        {
+            var options = unit.Provider.GetRequiredService<CodeTaskOptions>();
+            var scriptDirectory = SourcePath.GetParent(options.ScriptPath);
+            var absolutePath = SourcePath.Normalize(SourcePath.Combine(scriptDirectory, scriptRelativePath));
+            return absolutePath;
         }
     }
 }

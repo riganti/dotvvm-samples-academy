@@ -1,4 +1,9 @@
-﻿# Header 1
+﻿---
+Title: Markdown
+CodeTask: /resources/00_content_sample/10_markdown.csharp.csx
+---
+
+# Header 1
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec hendrerit nisl nec erat posuere, id vehicula mi convallis. Donec vehicula eu quam vel tincidunt. Nullam ante felis, blandit ut urna sed, ultrices commodo nunc.
 
@@ -89,5 +94,3 @@ namespace Namespace
 ---
 
 [link]: https://example.com
-
-[CodeTask](/resources/00_content_sample/10_markdown.csharp.csx)

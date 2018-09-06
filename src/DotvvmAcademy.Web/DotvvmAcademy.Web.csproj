@@ -15,6 +15,12 @@
     <Content Include="**/*.dothtml;**/*.dotmaster;**/*.dotcontrol" Exclude="obj/**/*;bin/**/*;Course/**/*" CopyToPublishDirectory="Always" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Course\content\en\09_calculator\10_viewmodel\viewmodel.md" />
+    <None Remove="Course\content\en\09_calculator\calculator.md" />
+    <None Remove="Course\resources\10_calculator\00_constants.csx" />
+    <None Remove="Course\resources\10_calculator\10_viewmodel.csharp.csx" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.2" />
     <PackageReference Include="DotVVM.AspNetCore" Version="2.0.2" />
