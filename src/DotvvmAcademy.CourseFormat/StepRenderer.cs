@@ -34,6 +34,7 @@ namespace DotvvmAcademy.CourseFormat
                     .UsePipeTables()
                     .UseEmphasisExtras()
                     .UseYamlFrontMatter()
+                    .UseFigures()
                     .Build();
                 var document = Markdown.Parse(step.Text ?? string.Empty, pipeline);
                 StepFrontMatter frontMatter;
