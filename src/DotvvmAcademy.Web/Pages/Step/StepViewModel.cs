@@ -88,7 +88,7 @@ namespace DotvvmAcademy.Web.Pages.Step
         public async Task Reset()
         {
             var unit = await runner.Run(renderedStep.CodeTaskPath);
-            var defaultCodePath = unit.Provider.GetRequiredService<CodeTaskConfiguration>().DefaultCodePath;
+            var defaultCodePath = unit.Provider.GetRequiredService<CodeTaskOptions>().DefaultCodePath;
             var resource = await workspace.Load<Resource>(defaultCodePath);
             Code = resource.Text;
         }
@@ -96,7 +96,7 @@ namespace DotvvmAcademy.Web.Pages.Step
         public async Task ShowSolution()
         {
             var unit = await runner.Run(renderedStep.CodeTaskPath);
-            var correctCodePath = unit.Provider.GetRequiredService<CodeTaskConfiguration>().CorrectCodePath;
+            var correctCodePath = unit.Provider.GetRequiredService<CodeTaskOptions>().CorrectCodePath;
             var resource = await workspace.Load<Resource>(correctCodePath);
             Code = resource.Text;
         }
@@ -178,7 +178,7 @@ namespace DotvvmAcademy.Web.Pages.Step
             if (!Context.IsPostBack && HasCodeTask)
             {
                 var unit = await runner.Run(renderedStep.CodeTaskPath);
-                var defaultCodePath = unit.Provider.GetRequiredService<CodeTaskConfiguration>().DefaultCodePath;
+                var defaultCodePath = unit.Provider.GetRequiredService<CodeTaskOptions>().DefaultCodePath;
                 Code = defaultCodePath == null ? string.Empty : (await workspace.Load<Resource>(defaultCodePath)).Text;
                 CodeLanguage = unit.GetValidatedLanguage();
             }

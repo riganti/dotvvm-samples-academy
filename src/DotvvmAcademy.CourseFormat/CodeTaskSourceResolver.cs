@@ -13,11 +13,20 @@ namespace DotvvmAcademy.CourseFormat
             this.environment = environment;
         }
 
-        public override bool Equals(object other) => throw new NotImplementedException();
+        public override bool Equals(object other)
+        {
+            throw new NotSupportedException();
+        }
 
-        public override int GetHashCode() => throw new NotImplementedException();
+        public override int GetHashCode()
+        {
+            throw new NotSupportedException();
+        }
 
-        public override string NormalizePath(string path, string baseFilePath) => path;
+        public override string NormalizePath(string path, string baseFilePath)
+        {
+            return path;
+        }
 
         public override Stream OpenRead(string resolvedPath)
         {
