@@ -1,4 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DotvvmAcademy.Validation.CSharp
 {
@@ -12,6 +14,8 @@ namespace DotvvmAcademy.Validation.CSharp
             Severity = diagnostic.Severity.ToValidationSeverity();
         }
 
+        public IEnumerable<object> Arguments { get; } = Enumerable.Empty<object>();
+
         public Diagnostic Diagnostic { get; }
 
         public int End => Diagnostic.Location.SourceSpan.End;
@@ -20,9 +24,9 @@ namespace DotvvmAcademy.Validation.CSharp
 
         public ValidationSeverity Severity { get; }
 
-        public int Start => Diagnostic.Location.SourceSpan.Start;
-
         public CSharpSourceCode Source { get; }
+
+        public int Start => Diagnostic.Location.SourceSpan.Start;
 
         ISourceCode IValidationDiagnostic.Source => Source;
 

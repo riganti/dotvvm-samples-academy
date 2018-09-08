@@ -24,6 +24,11 @@ namespace DotvvmAcademy.Validation.CSharp
 
         public void Report(string message, ISymbol symbol, ValidationSeverity severity = default)
         {
+            Report(message, Enumerable.Empty<object>(), symbol, severity);
+        }
+
+        public void Report(string message, IEnumerable<object> arguments, ISymbol symbol, ValidationSeverity severity = default)
+        {
             foreach (var reference in symbol.DeclaringSyntaxReferences)
             {
                 var source = sourceCodeProvider.GetSourceCode(reference.SyntaxTree);
@@ -40,6 +45,7 @@ namespace DotvvmAcademy.Validation.CSharp
                 }
                 Report(new SymbolCSharpDiagnostic(
                     message: message,
+                    arguments: arguments,
                     start: start,
                     end: end,
                     source: source,

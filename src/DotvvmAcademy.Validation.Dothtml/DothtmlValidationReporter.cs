@@ -1,5 +1,7 @@
 ﻿using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 using DotvvmAcademy.Validation.Dothtml.ValidationTree;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DotvvmAcademy.Validation.Dothtml
 {
@@ -14,6 +16,11 @@ namespace DotvvmAcademy.Validation.Dothtml
 
         public void Report(string message, ValidationTreeNode node, ValidationSeverity severity = default)
         {
+            Report(message, Enumerable.Empty<object>(), node, severity);
+        }
+
+        public void Report(string message, IEnumerable<object> arguments, ValidationTreeNode node, ValidationSeverity severity = default)
+        {
             if (node is ValidationTreeRoot)
             {
                 this.Report(message, severity);
@@ -21,10 +28,20 @@ namespace DotvvmAcademy.Validation.Dothtml
             }
 
             var sourceCode = sourceCodeProvider.GetSourceCode(node.TreeRoot);
-            Report(new ResolverDothtmlDiagnostic(message, node, sourceCode, severity));
+            Report(new ResolverDothtmlDiagnostic(message, arguments, node, sourceCode, severity));
         }
 
         public void Report(string message, DothtmlNode node, DothtmlSourceCode source, ValidationSeverity severity = default)
+        {
+            Report(message, Enumerable.Empty<object>(), node, source, severity);
+        }
+
+        public void Report(
+            string message,
+            IEnumerable<object> arguments,
+            DothtmlNode node,
+            DothtmlSourceCode source,
+            ValidationSeverity severity = default)
         {
             if (node is DothtmlRootNode)
             {
@@ -32,7 +49,7 @@ namespace DotvvmAcademy.Validation.Dothtml
                 return;
             }
 
-            Report(new ParserDothtmlDiagnostic(message, node, source, severity));
+            Report(new ParserDothtmlDiagnostic(message, arguments, node, source, severity));
         }
     }
 }

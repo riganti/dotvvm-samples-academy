@@ -7,10 +7,10 @@
             switch (node)
             {
                 case ArrayTypeNameNode array:
-                    return array.ElementType;
+                    return array.ElementType.GetLogicalParent();
 
                 case ConstructedTypeNameNode constructed:
-                    return constructed.UnboundTypeName;
+                    return constructed.UnboundTypeName.GetLogicalParent();
 
                 case SimpleNameNode generic:
                     return null;
@@ -22,7 +22,7 @@
                     return nested.Left;
 
                 case PointerTypeNameNode pointer:
-                    return pointer.ElementType;
+                    return pointer.ElementType.GetLogicalParent();
 
                 case QualifiedNameNode qualified:
                     return qualified.Left;

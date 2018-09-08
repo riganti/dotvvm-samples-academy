@@ -51,12 +51,13 @@ namespace DotvvmAcademy.CourseFormat
                     throw new NotSupportedException($"{nameof(IValidationUnit)} type '{unit.GetType().Name}' is not supported.");
             }
 
-            return diagnostics.Select(d => new CodeTaskDiagnostic(
-                message: d.Message,
-                start: d.Start,
-                end: d.End,
-                severity: d.Severity.ToCodeTaskDiagnosticSeverity()))
-                    .ToImmutableArray();
+            return diagnostics.Select(d =>
+                new CodeTaskDiagnostic(
+                    message: string.Format(d.Message, d.Arguments.ToArray()),
+                    start: d.Start,
+                    end: d.End,
+                    severity: d.Severity.ToCodeTaskDiagnosticSeverity()))
+                .ToImmutableArray();
         }
 
         private async Task<ISourceCode> GetSourceCode(string fileName, string sourcePath)
