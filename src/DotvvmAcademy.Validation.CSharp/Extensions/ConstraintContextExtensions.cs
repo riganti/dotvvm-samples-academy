@@ -3,6 +3,7 @@ using DotvvmAcademy.Meta.Syntax;
 using DotvvmAcademy.Validation.CSharp;
 using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.DependencyInjection;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 
 namespace DotvvmAcademy.Validation.Unit
@@ -18,6 +19,16 @@ namespace DotvvmAcademy.Validation.Unit
             where TSymbol : ISymbol
         {
             return context.Provider.GetRequiredService<ISymbolLocator>().Locate<TSymbol>(name);
+        }
+
+        public static void Report(
+            this ConstraintContext context,
+            string message,
+            IEnumerable<object> arguments,
+            ISymbol symbol,
+            ValidationSeverity severity = default)
+        {
+            context.Provider.GetRequiredService<CSharpValidationReporter>().Report(message, arguments, symbol, severity);
         }
 
         public static void Report(

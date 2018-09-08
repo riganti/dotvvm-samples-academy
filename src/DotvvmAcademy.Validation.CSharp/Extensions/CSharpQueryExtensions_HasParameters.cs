@@ -5,7 +5,7 @@ using System.Collections.Immutable;
 
 namespace DotvvmAcademy.Validation.CSharp.Unit
 {
-    public static class QueryExtensions_HasParameters
+    public static class CSharpQueryExtensions_HasParameters
     {
         public static CSharpQuery<IMethodSymbol> HasParameters<T1>(this CSharpQuery<IMethodSymbol> query)
         {
@@ -96,7 +96,8 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
                     if (parameters.Length != method.Parameters.Length)
                     {
                         context.Report(
-                            message: $"Method must have '{parameters.Length}' parameters.",
+                            message: Resources.ERR_WrongParemeterCount,
+                            arguments: new object[] { method, parameters.Length },
                             symbol: method);
                         continue;
                     }
@@ -107,7 +108,8 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
                         if (!method.Parameters[i].Type.Equals(expectedParameter))
                         {
                             context.Report(
-                                message: $"Parameter must be of type '{expectedParameter}'.",
+                                message: Resources.ERR_WrongParameterType,
+                                arguments: new object[] { expectedParameter },
                                 symbol: method.Parameters[i]);
                         }
                     }

@@ -78,7 +78,8 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
                     if (!accessibility.HasFlag(symbol.DeclaredAccessibility.ToUnitAccessibility()))
                     {
                         context.Report(
-                            message: $"Symbol '{symbol}' has to declare accessibility '{accessibility}'.",
+                            message: Resources.ERR_WrongAccessibility,
+                            arguments: new object[] { symbol, accessibility },
                             symbol: symbol);
                     }
                 }
@@ -101,7 +102,8 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
                     if (!typeSymbol.BaseType.Equals(baseType))
                     {
                         context.Report(
-                            message: $"Type '{typeSymbol}' must have '{baseType}' as its base type.",
+                            message: Resources.ERR_WrongBaseType,
+                            arguments: new object[] { typeSymbol, baseType },
                             symbol: typeSymbol);
                     }
                 }
@@ -116,17 +118,13 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
             {
                 foreach (var property in result)
                 {
-                    if (property.GetMethod == null)
+                    if (property.GetMethod == null
+                        || !accessibility.HasFlag(property.GetMethod.DeclaredAccessibility.ToUnitAccessibility()))
                     {
                         context.Report(
-                            message: "Property must have a getter.",
-                            symbol: property);
-                    }
-                    else if (!accessibility.HasFlag(property.GetMethod.DeclaredAccessibility.ToUnitAccessibility()))
-                    {
-                        context.Report(
-                            message: $"Getter must have '{accessibility}' accessibility.",
-                            symbol: property.GetMethod);
+                            message: Resources.ERR_MissingGetter,
+                            arguments: new object[] { property, accessibility },
+                            symbol: (ISymbol)property.GetMethod ?? property);
                     }
                 }
             });
@@ -140,17 +138,13 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
             {
                 foreach (var property in result)
                 {
-                    if (property.SetMethod == null)
+                    if (property.SetMethod == null
+                        || !accessibility.HasFlag(property.SetMethod.DeclaredAccessibility.ToUnitAccessibility()))
                     {
                         context.Report(
-                            message: "Property must have a setter.",
-                            symbol: property);
-                    }
-                    else if (!accessibility.HasFlag(property.SetMethod.DeclaredAccessibility.ToUnitAccessibility()))
-                    {
-                        context.Report(
-                            message: $"Setter must have '{accessibility}' accessibility.",
-                            symbol: property.SetMethod);
+                            message: Resources.ERR_MissingSetter,
+                            arguments: new object[] { property, accessibility },
+                            symbol: (ISymbol)property.SetMethod ?? property);
                     }
                 }
             });
@@ -171,7 +165,8 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
                     if (!typeSymbol.AllInterfaces.Contains(interfaceSymbol))
                     {
                         context.Report(
-                            message: $"Type '{typeSymbol}' must implement '{interfaceSymbol}'.",
+                            message: Resources.ERR_MissingInterfaceImplementation,
+                            arguments: new object[] { typeSymbol, interfaceSymbol },
                             symbol: typeSymbol);
                     }
                 }
@@ -193,7 +188,8 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
                     if (!field.Type.Equals(type))
                     {
                         context.Report(
-                            message: $"Field '{field}' must be of type '{type}'.",
+                            message: Resources.ERR_WrongFieldType,
+                            arguments: new object[] { field, type },
                             symbol: field);
                     }
                 }
@@ -215,7 +211,8 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
                     if (!property.Type.Equals(type))
                     {
                         context.Report(
-                            message: $"Property '{property}' must be of type '{type}'.",
+                            message: Resources.ERR_WrongPropertyType,
+                            arguments: new object[] { property, type },
                             symbol: property);
                     }
                 }
@@ -231,7 +228,8 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
                     if (!field.IsReadOnly)
                     {
                         context.Report(
-                            message: $"Field '{field}' must be readonly.",
+                            message: Resources.ERR_MissingReadonly,
+                            arguments: new object[] { field },
                             symbol: field);
                     }
                 }
@@ -247,7 +245,8 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
                     if (!typeKind.HasFlag(symbol.TypeKind.ToUnitTypeKind()))
                     {
                         context.Report(
-                            message: $"Type '{symbol}' has to be a '{typeKind}'.",
+                            message: Resources.ERR_WrongTypeKind,
+                            arguments: new object[] { symbol, typeKind },
                             symbol: symbol);
                     }
                 }
@@ -269,7 +268,8 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
                     if (!method.ReturnType.Equals(type))
                     {
                         context.Report(
-                            message: $"Method '{method}' must return a '{type}'.",
+                            message: Resources.ERR_WrongReturnType,
+                            arguments: new object[] { method, type },
                             symbol: method);
                     }
                 }

@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace DotvvmAcademy.Validation.CSharp.Unit
 {
-    public static class QueryExtensions_HasAttribute
+    public static class CSharpQueryExtensions_HasAttribute
     {
         public static CSharpQuery<TResult> HasAttribute<TResult>(this CSharpQuery<TResult> query, Type attributeType)
             where TResult : ISymbol
@@ -21,7 +21,8 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
                     if (!symbol.GetAttributes().Any(a => a.AttributeClass.Equals(attributeClass)))
                     {
                         context.Report(
-                            message: $"Symbol '{symbol}' must have a '{attributeClass}' attribute.",
+                            message: Resources.ERR_MissingAttribute,
+                            arguments: new object[] { symbol, attributeClass },
                             symbol: symbol);
                     }
                 }
@@ -73,7 +74,8 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
                         if (attribute.AttributeClass.Equals(attributeClass))
                         {
                             context.Report(
-                                message: $"Symbol '{symbol}' must have no '{attributeType}' attributes.",
+                                message: Resources.ERR_ForbiddenAttribute,
+                                arguments: new object[] {symbol, attributeType},
                                 symbol: symbol);
                         }
                     }

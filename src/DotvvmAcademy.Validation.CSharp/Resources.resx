@@ -123,4 +123,43 @@
   <data name="ERR_WrongCount" xml:space="preserve">
     <value>There must be '{0}' of '{1}'.</value>
   </data>
+  <data name="ERR_WrongBaseType" xml:space="preserve">
+    <value>Type '{0}' must have '{1}' as its base type.</value>
+  </data>
+  <data name="ERR_MissingGetter" xml:space="preserve">
+    <value>Property '{0}' must have a '{1}' getter.</value>
+  </data>
+  <data name="ERR_MissingSetter" xml:space="preserve">
+    <value>Property '{0}' must have a '{1}' setter.</value>
+  </data>
+  <data name="ERR_MissingInterfaceImplementation" xml:space="preserve">
+    <value>Type '{0}' must implement the '{1}' interface.</value>
+  </data>
+  <data name="ERR_WrongFieldType" xml:space="preserve">
+    <value>Field '{0}' must be of type '{1}'.</value>
+  </data>
+  <data name="ERR_WrongPropertyType" xml:space="preserve">
+    <value>Property '{0}' must be of type '{1}'.</value>
+  </data>
+  <data name="ERR_MissingReadonly" xml:space="preserve">
+    <value>Field '{0}' must be read-only.</value>
+  </data>
+  <data name="ERR_WrongTypeKind" xml:space="preserve">
+    <value>Type '{0}' has to be a '{1}'.</value>
+  </data>
+  <data name="ERR_WrongReturnType" xml:space="preserve">
+    <value>Method '{0}' must return a '{1}'.</value>
+  </data>
+  <data name="ERR_MissingAttribute" xml:space="preserve">
+    <value>Symbol '{0}' must have a '{1}' attribute.</value>
+  </data>
+  <data name="ERR_ForbiddenAttribute" xml:space="preserve">
+    <value>Symbol '{0}' must have no '{1}' attribute.</value>
+  </data>
+  <data name="ERR_WrongParemeterCount" xml:space="preserve">
+    <value>Method '{0}' must have '{1}' parameters.</value>
+  </data>
+  <data name="ERR_WrongParameterType" xml:space="preserve">
+    <value>Parameter must be of type '{0}'.</value>
+  </data>
 </root>
