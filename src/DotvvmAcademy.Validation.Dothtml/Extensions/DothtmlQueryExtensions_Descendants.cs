@@ -6,16 +6,16 @@ using System.Xml.XPath;
 
 namespace DotvvmAcademy.Validation.Dothtml.Unit
 {
-    public static class QueryExtensions_Descendants
+    public static class DothtmlQueryExtensions_Descendants
     {
         public static DothtmlQuery<ValidationControl> GetControl(this DothtmlQuery<ValidationControl> query, string xpath)
         {
-            return query.GetControls(xpath).Exists();
+            return query.GetControls(xpath).CountEquals(1);
         }
 
         public static DothtmlQuery<ValidationControl> GetControl(this DothtmlQuery<ValidationPropertySetter> query, string xpath)
         {
-            return query.GetControls(xpath).Exists();
+            return query.GetControls(xpath).CountEquals(1);
         }
 
         public static DothtmlQuery<ValidationControl> GetControls(this DothtmlQuery<ValidationControl> query, string xpath)
@@ -35,7 +35,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
 
         public static DothtmlQuery<ValidationPropertySetter> GetProperty(this DothtmlQuery<ValidationControl> query, string xpath)
         {
-            return query.GetProperties(xpath).Exists();
+            return query.GetProperties(xpath).CountEquals(1);
         }
 
         private static DothtmlQuery<TOut> GetDescendantQuery<TIn, TOut>(this DothtmlQuery<TIn> query, string xpath)

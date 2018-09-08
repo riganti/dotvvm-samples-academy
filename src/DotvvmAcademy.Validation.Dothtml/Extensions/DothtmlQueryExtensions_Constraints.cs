@@ -1,14 +1,12 @@
 ﻿using DotvvmAcademy.Validation.Dothtml.ValidationTree;
 using DotvvmAcademy.Validation.Unit;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Immutable;
 using System.Linq;
-using System.Xml.XPath;
 
 namespace DotvvmAcademy.Validation.Dothtml.Unit
 {
-    public static class QueryExtensions_Constraints
+    public static class DothtmlQueryExtensions_Constraints
     {
         public static DothtmlQuery<TResult> AddQueryConstraint<TResult>(
             this DothtmlQuery<TResult> query,
@@ -20,37 +18,10 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
             return query;
         }
 
-        public static DothtmlQuery<TResult> Exists<TResult>(this DothtmlQuery<TResult> query)
+        public static DothtmlQuery<TResult> CountEquals<TResult>(this DothtmlQuery<TResult> query, int count)
             where TResult : ValidationTreeNode
         {
-            query.Unit.AddDelegateConstraint(context =>
-            {
-                var result = context.Locate<TResult>(query.XPath);
-                if (!result.IsEmpty)
-                {
-                    return;
-                }
-
-                var current = GetLogicalParent(query.XPath);
-                var parents = default(ImmutableArray<ValidationTreeNode>);
-                while (parents.IsDefaultOrEmpty && current != null)
-                {
-                    parents = context.Locate(current);
-                    current = GetLogicalParent(current);
-                }
-
-                if (parents.IsDefaultOrEmpty)
-                {
-                    context.Provider.GetRequiredService<IValidationReporter>()
-                        .Report($"Node '{query.XPath.Expression}' must exist.");
-                    return;
-                }
-
-                foreach (var parent in parents)
-                {
-                    context.Report($"Node '{query.XPath.Expression}' must exist.", parent);
-                }
-            });
+            query.Unit.Constraints.Add(new DothtmlCountConstraint<TResult>(query.XPath, count));
             return query;
         }
 
@@ -66,19 +37,22 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
                     if (!(setter is ValidationPropertyBinding propertyBinding))
                     {
                         context.Report(
-                            message: "Property is not set using a binding.",
+                            message: Resources.ERR_MandatoryBinding,
+                            arguments: new object[] { setter.Property.FullName },
                             node: setter);
                     }
                     else if (propertyBinding.Binding.GetBindingKind() != kind)
                     {
                         context.Report(
-                            message: $"Property has to be set using '{kind}' binding.",
+                            message: Resources.ERR_WrongBindingKind,
+                            arguments: new object[] { kind },
                             node: propertyBinding);
                     }
                     else if (!propertyBinding.Binding.Value.Equals(value))
                     {
                         context.Report(
-                            message: $"Property is to be bound to '{value}'.",
+                            message: Resources.ERR_WrongBindingValue,
+                            arguments: new object[] { setter.Property.FullName, value },
                             node: propertyBinding.Binding);
                     }
                 }
@@ -103,31 +77,36 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
                     if (!expectedContent.Equals(actualContent, comparison))
                     {
                         context.Report(
-                            message: $"Control's raw content is supposed to be '{expectedContent}'.",
+                            message: Resources.ERR_WrongRawContent,
+                            arguments: new object[] { expectedContent },
                             node: control);
                     }
                 }
             });
         }
 
-        public static DothtmlQuery<ValidationControl> HasRawText(
-            this DothtmlQuery<ValidationControl> query,
-            string expectedContent,
-            bool isCaseSensitive = false)
+        public static DothtmlQuery<ValidationDirective> HasTypeArgument(
+            this DothtmlQuery<ValidationDirective> query,
+            string typeFullName)
         {
             return query.AddQueryConstraint((context, result) =>
             {
-                foreach (var control in result)
+                foreach (var directive in result)
                 {
-                    var actualContent = string.Concat(control.DothtmlNode.Tokens.Select(t => t.Text)).Trim();
-                    var comparison = isCaseSensitive
-                        ? StringComparison.InvariantCulture
-                        : StringComparison.InvariantCultureIgnoreCase;
-                    if (!expectedContent.Equals(actualContent, comparison))
+                    if (!(directive is ValidationTypeDirective typeDirective))
                     {
                         context.Report(
-                            message: $"Control's raw text is supposed to be'{expectedContent}'.",
-                            node: control);
+                            message: Resources.ERR_MandatoryTypeDirective,
+                            arguments: new object[] { directive.Name },
+                            node: directive);
+                    }
+                    // TODO: Use Roslyn's symbols instead of mere string comparison
+                    else if (typeDirective.Type?.FullName != typeFullName)
+                    {
+                        context.Report(
+                            message: Resources.ERR_WrongTypeDirectiveArgument,
+                            arguments: new object[] { typeFullName },
+                            node: typeDirective);
                     }
                 }
             });
@@ -144,13 +123,15 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
                     if (!(setter is ValidationPropertyValue propertyValue))
                     {
                         context.Report(
-                            message: "Property is not using a hard-coded value.",
+                            message: Resources.ERR_MandatoryHardcodedValue,
+                            arguments: new object[] { setter.Property.FullName },
                             node: setter);
                     }
                     else if (!propertyValue.Value.Equals(value))
                     {
                         context.Report(
-                            message: $"Property value is supposed to be '{value}'.",
+                            message: Resources.ERR_WrongHardcodedValue,
+                            arguments: new object[] { value },
                             node: propertyValue);
                     }
                 }
@@ -166,52 +147,36 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
                     if (!control.Metadata.Type.IsEqualTo(typeof(TControl)))
                     {
                         context.Report(
-                            message: $"Control is not of type '{typeof(TControl)}'.",
+                            message: Resources.ERR_WrongControlType,
+                            arguments: new object[] { typeof(TControl) },
                             node: control);
                     }
                 }
             });
         }
 
-        public static DothtmlQuery<ValidationDirective> IsViewModelDirective(
-            this DothtmlQuery<ValidationDirective> query,
-            string typeFullName)
+        public static DothtmlQuery<ValidationControl> IsRawText(
+                                    this DothtmlQuery<ValidationControl> query,
+            string expected,
+            bool isCaseSensitive = false)
         {
             return query.AddQueryConstraint((context, result) =>
             {
-                foreach (var directive in result)
+                foreach (var control in result)
                 {
-                    if (!(directive is ValidationViewModelDirective viewModelDirective))
+                    var actualContent = string.Concat(control.DothtmlNode.Tokens.Select(t => t.Text)).Trim();
+                    var comparison = isCaseSensitive
+                        ? StringComparison.InvariantCulture
+                        : StringComparison.InvariantCultureIgnoreCase;
+                    if (!expected.Equals(actualContent, comparison))
                     {
                         context.Report(
-                            message: "Directive is not a @viewModel directive.",
-                            node: directive);
-                    }
-                    else if (viewModelDirective.Type?.FullName != typeFullName)
-                    {
-                        context.Report(
-                            message: $"@viewModel directive is not referencing '{typeFullName}'.",
-                            node: viewModelDirective);
+                            message: Resources.ERR_WrongRawText,
+                            arguments: new object[] { expected },
+                            node: control);
                     }
                 }
             });
-        }
-
-        private static XPathExpression GetLogicalParent(XPathExpression xpath)
-        {
-            var lastSeparator = xpath.Expression.LastIndexOf('/');
-            if (lastSeparator == -1)
-            {
-                return null;
-            }
-
-            var source = xpath.Expression.Substring(0, lastSeparator);
-            if (string.IsNullOrEmpty(source))
-            {
-                return null;
-            }
-
-            return XPathExpression.Compile(source);
         }
     }
 }

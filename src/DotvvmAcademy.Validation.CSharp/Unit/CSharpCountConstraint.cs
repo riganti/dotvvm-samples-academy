@@ -20,12 +20,8 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 
         public bool CanOverwrite(IConstraint other)
         {
-            if (other is CSharpCountConstraint<TResult> otherCount)
-            {
-                return Name.ToString() == otherCount.Name.ToString();
-            }
-
-            return false;
+            return other is CSharpCountConstraint<TResult> otherCount
+                && Name.ToString().Equals(otherCount.Name.ToString());
         }
 
         public int GetOverwriteHashCode()

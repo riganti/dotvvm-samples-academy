@@ -7,7 +7,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
     {
         public static DothtmlQuery<ValidationControl> GetControl(this DothtmlUnit unit, string xpath)
         {
-            return unit.GetControls(xpath).Exists();
+            return unit.GetControls(xpath).CountEquals(1);
         }
 
         public static DothtmlQuery<ValidationControl> GetControls(this DothtmlUnit unit, string xpath)
@@ -17,7 +17,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
 
         public static DothtmlQuery<ValidationDirective> GetDirective(this DothtmlUnit unit, string xpath)
         {
-            return unit.GetDirectives(xpath).Exists();
+            return unit.GetDirectives(xpath).CountEquals(1);
         }
 
         public static DothtmlQuery<ValidationDirective> GetDirectives(this DothtmlUnit unit, string xpath)
@@ -32,7 +32,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
 
         public static DothtmlQuery<ValidationPropertySetter> GetProperty(this DothtmlUnit unit, string xpath)
         {
-            return unit.GetProperties(xpath).Exists();
+            return unit.GetProperties(xpath).CountEquals(1);
         }
 
         public static DothtmlQuery<TResult> GetQuery<TResult>(this DothtmlUnit unit, string xpath)

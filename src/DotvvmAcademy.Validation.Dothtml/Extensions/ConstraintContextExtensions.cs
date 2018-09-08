@@ -1,6 +1,7 @@
 ﻿using DotvvmAcademy.Validation.Dothtml;
 using DotvvmAcademy.Validation.Dothtml.ValidationTree;
 using Microsoft.Extensions.DependencyInjection;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Xml;
 using System.Xml.XPath;
@@ -30,6 +31,16 @@ namespace DotvvmAcademy.Validation.Unit
             where TResult : ValidationTreeNode
         {
             return context.Locate(xpath).OfType<TResult>().ToImmutableArray();
+        }
+
+        public static void Report(
+            this ConstraintContext context,
+            string message,
+            IEnumerable<object> arguments,
+            ValidationTreeNode node,
+            ValidationSeverity severity = default)
+        {
+            context.Provider.GetRequiredService<DothtmlValidationReporter>().Report(message, arguments, node, severity);
         }
 
         public static void Report(

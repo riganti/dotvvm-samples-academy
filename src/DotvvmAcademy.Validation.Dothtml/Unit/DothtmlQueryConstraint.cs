@@ -24,22 +24,15 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
 
         public bool CanOverwrite(IConstraint other)
         {
-            if (!overwrite)
-            {
-                return false;
-            }
-
-            if (other is DothtmlQueryConstraint<TResult> otherConstraint)
-            {
-                return query.XPath.Expression.Equals(otherConstraint.query.XPath.Expression);
-            }
-
-            return false;
+            return overwrite
+                && other is DothtmlQueryConstraint<TResult> otherConstraint
+                && action.Method.Equals(otherConstraint.action.Method)
+                && query.XPath.Expression.Equals(otherConstraint.query.XPath.Expression.ToString());
         }
 
         public int GetOverwriteHashCode()
         {
-            return typeof(DothtmlQueryConstraint<TResult>).GetHashCode() ^ query.XPath.Expression.GetHashCode();
+            return query.XPath.Expression.GetHashCode();
         }
 
         public void Validate(ConstraintContext context)
