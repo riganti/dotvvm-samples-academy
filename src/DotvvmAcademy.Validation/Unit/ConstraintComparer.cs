@@ -2,7 +2,7 @@
 
 namespace DotvvmAcademy.Validation.Unit
 {
-    public class ConstraintEqualityComparer : IEqualityComparer<IConstraint>
+    public class ConstraintComparer : IEqualityComparer<IConstraint>
     {
         public bool Equals(IConstraint x, IConstraint y)
         {

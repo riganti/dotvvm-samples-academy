@@ -10,7 +10,7 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
     {
         public static CSharpQuery<IEventSymbol> GetEvent(this CSharpUnit unit, string name)
         {
-            return unit.GetEvents(name).Exists();
+            return unit.GetEvents(name).CountEquals(1);
         }
 
         public static CSharpQuery<IEventSymbol> GetEvents(this CSharpUnit unit, string name)
@@ -20,7 +20,7 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 
         public static CSharpQuery<IFieldSymbol> GetField(this CSharpUnit unit, string name)
         {
-            return unit.GetFields(name).Exists();
+            return unit.GetFields(name).CountEquals(1);
         }
 
         public static CSharpQuery<IFieldSymbol> GetFields(this CSharpUnit unit, string name)
@@ -40,7 +40,7 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 
         public static CSharpQuery<IMethodSymbol> GetMethod(this CSharpUnit unit, string name)
         {
-            return unit.GetMethods(name).Exists();
+            return unit.GetMethods(name).CountEquals(1);
         }
 
         public static CSharpQuery<IMethodSymbol> GetMethods(this CSharpUnit unit, string name)
@@ -55,12 +55,12 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 
         public static CSharpQuery<IPropertySymbol> GetProperty(this CSharpUnit unit, string name)
         {
-            return unit.GetProperties(name).Exists();
+            return unit.GetProperties(name).CountEquals(1);
         }
 
         public static CSharpQuery<ITypeSymbol> GetType(this CSharpUnit unit, string name)
         {
-            return unit.GetTypes(name).Exists();
+            return unit.GetTypes(name).CountEquals(1);
         }
 
         public static CSharpQuery<ITypeSymbol> GetType<TType>(this CSharpUnit unit)

@@ -121,16 +121,16 @@
     <value>Symbol '{0}' has to declare accessibility '{1}'.</value>
   </data>
   <data name="ERR_WrongCount" xml:space="preserve">
-    <value>There must be '{0}' of '{1}'.</value>
+    <value>There must be '{0}' of the '{1}' symbol.</value>
   </data>
   <data name="ERR_WrongBaseType" xml:space="preserve">
     <value>Type '{0}' must have '{1}' as its base type.</value>
   </data>
   <data name="ERR_MissingGetter" xml:space="preserve">
-    <value>Property '{0}' must have a '{1}' getter.</value>
+    <value>Property '{0}' must declare a getter with accessibility '{1}'.</value>
   </data>
   <data name="ERR_MissingSetter" xml:space="preserve">
-    <value>Property '{0}' must have a '{1}' setter.</value>
+    <value>Property '{0}' must declare a setter with accessibility '{1}'.</value>
   </data>
   <data name="ERR_MissingInterfaceImplementation" xml:space="preserve">
     <value>Type '{0}' must implement the '{1}' interface.</value>
@@ -161,5 +161,44 @@
   </data>
   <data name="ERR_WrongParameterType" xml:space="preserve">
     <value>Parameter must be of type '{0}'.</value>
+  </data>
+  <data name="ERR_MissingNamespaceType" xml:space="preserve">
+    <value>Namespace '{0}' is missing type '{1}'.</value>
+  </data>
+  <data name="ERR_MissingTypeProperty" xml:space="preserve">
+    <value>Type '{0}' is missing property '{1}'.</value>
+  </data>
+  <data name="ERR_MissingTypeField" xml:space="preserve">
+    <value>Type '{0}' is missing field '{1}'.</value>
+  </data>
+  <data name="ERR_MissingTypeEvent" xml:space="preserve">
+    <value>Type '{0}' is missing event '{1}'.</value>
+  </data>
+  <data name="ERR_MissingTypeMethod" xml:space="preserve">
+    <value>Type '{0}' is missing method '{1}'.</value>
+  </data>
+  <data name="ERR_MissingNestedType" xml:space="preserve">
+    <value>Type '{0}' is missing nested type '{1}'.</value>
+  </data>
+  <data name="ERR_MissingType" xml:space="preserve">
+    <value>Type '{0}' is missing.</value>
+  </data>
+  <data name="ERR_MissingProperty" xml:space="preserve">
+    <value>Property '{0}' is missing.</value>
+  </data>
+  <data name="ERR_MissingField" xml:space="preserve">
+    <value>Field '{0}' is missing.</value>
+  </data>
+  <data name="ERR_MissingEvent" xml:space="preserve">
+    <value>Event '{0}' is missing.</value>
+  </data>
+  <data name="ERR_MissingMethod" xml:space="preserve">
+    <value>Method '{0}' is missing.</value>
+  </data>
+  <data name="ERR_MissingSymbol" xml:space="preserve">
+    <value>Symbol '{0}' is missing.</value>
+  </data>
+  <data name="ERR_MissingSymbolMember" xml:space="preserve">
+    <value>Symbol '{0}' is missing member '{1}'.</value>
   </data>
 </root>

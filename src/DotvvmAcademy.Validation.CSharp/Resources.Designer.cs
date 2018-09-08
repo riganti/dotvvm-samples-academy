@@ -79,7 +79,25 @@ namespace DotvvmAcademy.Validation.CSharp {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Property &apos;{0}&apos; must have a &apos;{1}&apos; getter..
+        ///   Looks up a localized string similar to Event &apos;{0}&apos; is missing..
+        /// </summary>
+        public static string ERR_MissingEvent {
+            get {
+                return ResourceManager.GetString("ERR_MissingEvent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Field &apos;{0}&apos; is missing..
+        /// </summary>
+        public static string ERR_MissingField {
+            get {
+                return ResourceManager.GetString("ERR_MissingField", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Property &apos;{0}&apos; must declare a getter with accessibility &apos;{1}&apos;..
         /// </summary>
         public static string ERR_MissingGetter {
             get {
@@ -97,6 +115,42 @@ namespace DotvvmAcademy.Validation.CSharp {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Method &apos;{0}&apos; is missing..
+        /// </summary>
+        public static string ERR_MissingMethod {
+            get {
+                return ResourceManager.GetString("ERR_MissingMethod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Namespace &apos;{0}&apos; is missing type &apos;{1}&apos;..
+        /// </summary>
+        public static string ERR_MissingNamespaceType {
+            get {
+                return ResourceManager.GetString("ERR_MissingNamespaceType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type &apos;{0}&apos; is missing nested type &apos;{1}&apos;..
+        /// </summary>
+        public static string ERR_MissingNestedType {
+            get {
+                return ResourceManager.GetString("ERR_MissingNestedType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Property &apos;{0}&apos; is missing..
+        /// </summary>
+        public static string ERR_MissingProperty {
+            get {
+                return ResourceManager.GetString("ERR_MissingProperty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Field &apos;{0}&apos; must be read-only..
         /// </summary>
         public static string ERR_MissingReadonly {
@@ -106,11 +160,74 @@ namespace DotvvmAcademy.Validation.CSharp {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Property &apos;{0}&apos; must have a &apos;{1}&apos; setter..
+        ///   Looks up a localized string similar to Property &apos;{0}&apos; must declare a setter with accessibility &apos;{1}&apos;..
         /// </summary>
         public static string ERR_MissingSetter {
             get {
                 return ResourceManager.GetString("ERR_MissingSetter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Symbol &apos;{0}&apos; is missing..
+        /// </summary>
+        public static string ERR_MissingSymbol {
+            get {
+                return ResourceManager.GetString("ERR_MissingSymbol", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Symbol &apos;{0}&apos; is missing member &apos;{1}&apos;..
+        /// </summary>
+        public static string ERR_MissingSymbolMember {
+            get {
+                return ResourceManager.GetString("ERR_MissingSymbolMember", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type &apos;{0}&apos; is missing..
+        /// </summary>
+        public static string ERR_MissingType {
+            get {
+                return ResourceManager.GetString("ERR_MissingType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type &apos;{0}&apos; is missing event &apos;{1}&apos;..
+        /// </summary>
+        public static string ERR_MissingTypeEvent {
+            get {
+                return ResourceManager.GetString("ERR_MissingTypeEvent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type &apos;{0}&apos; is missing field &apos;{1}&apos;..
+        /// </summary>
+        public static string ERR_MissingTypeField {
+            get {
+                return ResourceManager.GetString("ERR_MissingTypeField", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type &apos;{0}&apos; is missing method &apos;{1}&apos;..
+        /// </summary>
+        public static string ERR_MissingTypeMethod {
+            get {
+                return ResourceManager.GetString("ERR_MissingTypeMethod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type &apos;{0}&apos; is missing property &apos;{1}&apos;..
+        /// </summary>
+        public static string ERR_MissingTypeProperty {
+            get {
+                return ResourceManager.GetString("ERR_MissingTypeProperty", resourceCulture);
             }
         }
         
@@ -133,7 +250,7 @@ namespace DotvvmAcademy.Validation.CSharp {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to There must be &apos;{0}&apos; of &apos;{1}&apos;..
+        ///   Looks up a localized string similar to There must be &apos;{0}&apos; of the &apos;{1}&apos; symbol..
         /// </summary>
         public static string ERR_WrongCount {
             get {

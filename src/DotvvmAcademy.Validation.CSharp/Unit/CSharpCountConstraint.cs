@@ -1,8 +1,7 @@
 ﻿using DotvvmAcademy.Meta.Syntax;
 using DotvvmAcademy.Validation.Unit;
 using Microsoft.CodeAnalysis;
-using Microsoft.Extensions.DependencyInjection;
-using System.Collections.Immutable;
+using System;
 
 namespace DotvvmAcademy.Validation.CSharp.Unit
 {
@@ -37,38 +36,113 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
         public void Validate(ConstraintContext context)
         {
             var result = context.Locate<TResult>(Name);
+
+            // Correct count
             if (result.Length == Count)
             {
                 return;
             }
 
+            // Incorrect positive count
             if (result.Length > 0)
             {
                 foreach (var symbol in result)
                 {
-                    context.Report($"There must be '{Count}' of '{Name}'.", symbol);
+                    context.Report(
+                        message: Resources.ERR_WrongCount,
+                        arguments: new object[] { Count, symbol },
+                        symbol: symbol);
                 }
-            }
-
-            var current = Name.GetLogicalParent();
-            ImmutableArray<ISymbol> parents = default;
-            while (parents.IsDefaultOrEmpty && current != null)
-            {
-                parents = context.Locate(current);
-                current = Name.GetLogicalParent();
-            }
-
-            if (parents.IsDefaultOrEmpty)
-            {
-                context.Provider.GetRequiredService<IValidationReporter>()
-                    .Report($"Symbol '{Name}' must exist.");
                 return;
             }
 
-            foreach (var parent in parents)
+            // Incorrect zero count with logical parent
+            var parents = context.Locate(Name.GetLogicalParent());
+            if (!parents.IsDefaultOrEmpty)
             {
-                context.Report($"Symbol '{Name}' must exist.", parent);
+                foreach (var parent in parents)
+                {
+                    context.Report(
+                        message: GetErrorParentMissing(parent.GetType()),
+                        arguments: new object[] { parent, Name.GetShortName() },
+                        symbol: parent);
+                }
+                return;
             }
+
+            // Incorrect zero count without parent
+            context.Report(
+                message: GetErrorMissing(),
+                arguments: new object[] { Name });
+        }
+
+        private string GetErrorMissing()
+        {
+            var symbolType = typeof(TResult);
+            if (typeof(ITypeSymbol).IsAssignableFrom(symbolType))
+            {
+                return Resources.ERR_MissingType;
+            }
+
+            if (typeof(IMethodSymbol).IsAssignableFrom(symbolType))
+            {
+                return Resources.ERR_MissingMethod;
+            }
+
+            if (typeof(IPropertySymbol).IsAssignableFrom(symbolType))
+            {
+                return Resources.ERR_MissingProperty;
+            }
+
+            if (typeof(IMethodSymbol).IsAssignableFrom(symbolType))
+            {
+                return Resources.ERR_MissingMethod;
+            }
+
+            if (typeof(IEventSymbol).IsAssignableFrom(symbolType))
+            {
+                return Resources.ERR_MissingEvent;
+            }
+
+            return Resources.ERR_MissingSymbol;
+        }
+
+        private string GetErrorParentMissing(Type parentType)
+        {
+            var symbolType = typeof(TResult);
+            if (typeof(ITypeSymbol).IsAssignableFrom(symbolType)
+                && typeof(INamespaceSymbol).IsAssignableFrom(parentType))
+            {
+                return Resources.ERR_MissingNamespaceType;
+            }
+
+            if (typeof(ITypeSymbol).IsAssignableFrom(symbolType)
+                && typeof(ITypeSymbol).IsAssignableFrom(parentType))
+            {
+                return Resources.ERR_MissingNestedType;
+            }
+
+            if (typeof(IMethodSymbol).IsAssignableFrom(symbolType))
+            {
+                return Resources.ERR_MissingTypeMethod;
+            }
+
+            if (typeof(IPropertySymbol).IsAssignableFrom(symbolType))
+            {
+                return Resources.ERR_MissingTypeProperty;
+            }
+
+            if (typeof(IMethodSymbol).IsAssignableFrom(symbolType))
+            {
+                return Resources.ERR_MissingTypeMethod;
+            }
+
+            if (typeof(IEventSymbol).IsAssignableFrom(symbolType))
+            {
+                return Resources.ERR_MissingTypeEvent;
+            }
+
+            return Resources.ERR_MissingSymbolMember;
         }
     }
 }

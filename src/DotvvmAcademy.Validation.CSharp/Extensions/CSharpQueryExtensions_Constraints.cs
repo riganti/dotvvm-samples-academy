@@ -34,37 +34,10 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
             });
         }
 
-        public static CSharpQuery<TResult> Exists<TResult>(this CSharpQuery<TResult> query)
+        public static CSharpQuery<TResult> CountEquals<TResult>(this CSharpQuery<TResult> query, int count)
             where TResult : ISymbol
         {
-            query.Unit.AddDelegateConstraint(context =>
-            {
-                var result = context.Locate<TResult>(query.Name);
-                if (!result.IsEmpty)
-                {
-                    return;
-                }
-
-                var current = query.Name.GetLogicalParent();
-                ImmutableArray<ISymbol> parents = default;
-                while (parents.IsDefaultOrEmpty && current != null)
-                {
-                    parents = context.Locate(current);
-                    current = query.Name.GetLogicalParent();
-                }
-
-                if (parents.IsDefaultOrEmpty)
-                {
-                    context.Provider.GetRequiredService<IValidationReporter>()
-                        .Report($"Symbol '{query.Name}' must exist.");
-                    return;
-                }
-
-                foreach (var parent in parents)
-                {
-                    context.Report($"Symbol '{query.Name}' must exist.", parent);
-                }
-            });
+            query.Unit.Constraints.Add(new CSharpCountConstraint<TResult>(query.Name, count));
             return query;
         }
 

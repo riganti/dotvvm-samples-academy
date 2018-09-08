@@ -10,7 +10,7 @@ namespace DotvvmAcademy.Validation.Unit
             Provider = provider;
         }
 
-        public ICollection<IConstraint> Constraints { get; } = new HashSet<IConstraint>(new ConstraintEqualityComparer());
+        public ICollection<IConstraint> Constraints { get; } = new ConstraintCollection();
 
         public IServiceProvider Provider { get; }
     }

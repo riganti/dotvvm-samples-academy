@@ -18,6 +18,7 @@ namespace DotvvmAcademy.Validation.Unit
 
         public int GetOverwriteHashCode()
         {
+            // It could be anything since no DelegateConstraint can be overwritten
             return action.GetHashCode();
         }
 

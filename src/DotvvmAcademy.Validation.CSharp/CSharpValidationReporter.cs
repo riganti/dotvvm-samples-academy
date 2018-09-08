@@ -37,11 +37,26 @@ namespace DotvvmAcademy.Validation.CSharp
                 var end = reference.Span.End;
                 switch(syntax)
                 {
+                    case NamespaceDeclarationSyntax namespaceDeclaration:
+                        start = namespaceDeclaration.Name.Span.Start;
+                        end = namespaceDeclaration.Name.Span.End;
+                        break;
+
                     case BaseTypeDeclarationSyntax typeDeclaration:
                         start = typeDeclaration.Identifier.Span.Start;
                         end = typeDeclaration.Identifier.Span.End;
                         break;
-                    // TODO: Eventually handle properties, events, fields and methods
+
+                    case PropertyDeclarationSyntax propertyDeclaration:
+                        start = propertyDeclaration.Identifier.Span.Start;
+                        end = propertyDeclaration.Identifier.Span.End;
+                        break;
+
+                    case EventDeclarationSyntax eventDeclaration:
+                        start = eventDeclaration.Identifier.Span.Start;
+                        end = eventDeclaration.Identifier.Span.End;
+                        break;
+                    // TODO: Eventually handler fields
                 }
                 Report(new SymbolCSharpDiagnostic(
                     message: message,

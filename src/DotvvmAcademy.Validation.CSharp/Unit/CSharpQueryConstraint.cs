@@ -21,22 +21,15 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 
         public bool CanOverwrite(IConstraint other)
         {
-            if (!overwrite)
-            {
-                return false;
-            }
-
-            if (other is CSharpQueryConstraint<TResult> otherConstraint)
-            {
-                return query.Name.ToString().Equals(otherConstraint.query.Name.ToString());
-            }
-
-            return false;
+            return overwrite
+                && other is CSharpQueryConstraint<TResult> otherConstraint
+                && action.Method.Equals(otherConstraint.action.Method)
+                && query.Name.ToString().Equals(otherConstraint.query.Name.ToString());
         }
 
         public int GetOverwriteHashCode()
         {
-            return typeof(CSharpQueryConstraint<TResult>).GetHashCode() ^ query.Name.ToString().GetHashCode();
+            return query.Name.ToString().GetHashCode();
         }
 
         public void Validate(ConstraintContext context)

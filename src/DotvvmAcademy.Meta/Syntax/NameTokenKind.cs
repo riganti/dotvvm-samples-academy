@@ -13,6 +13,6 @@
         NumericLiteral,
         ColonColon,
         Plus,
-        End,
+        End
     }
 }

@@ -12,7 +12,7 @@
                 case ConstructedTypeNameNode constructed:
                     return constructed.UnboundTypeName.GetLogicalParent();
 
-                case SimpleNameNode generic:
+                case SimpleNameNode simple:
                     return null;
 
                 case MemberNameNode member:
@@ -29,6 +29,36 @@
 
                 default:
                     return null;
+            }
+        }
+
+        public static string GetShortName(this NameNode node)
+        {
+            switch (node)
+            {
+                case ArrayTypeNameNode array:
+                    return array.ElementType.GetShortName();
+
+                case ConstructedTypeNameNode constructed:
+                    return constructed.UnboundTypeName.GetShortName();
+
+                case SimpleNameNode simple:
+                    return simple.IdentifierToken.ToString();
+
+                case MemberNameNode member:
+                    return member.Member.IdentifierToken.ToString();
+
+                case NestedTypeNameNode nested:
+                    return nested.Right.IdentifierToken.ToString();
+
+                case PointerTypeNameNode pointer:
+                    return pointer.ElementType.GetShortName();
+
+                case QualifiedNameNode qualified:
+                    return qualified.Right.IdentifierToken.ToString();
+
+                default:
+                    return node.ToString();
             }
         }
     }
