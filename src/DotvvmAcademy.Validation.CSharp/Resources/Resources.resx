@@ -120,4 +120,7 @@
   <data name="ERR_WrongAccessibility" xml:space="preserve">
     <value>Symbol '{0}' has to declare accessibility '{1}'.</value>
   </data>
+  <data name="ERR_WrongCount" xml:space="preserve">
+    <value>There must be '{0}' of '{1}'.</value>
+  </data>
 </root>

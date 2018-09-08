@@ -37,6 +37,11 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
             return false;
         }
 
+        public int GetOverwriteHashCode()
+        {
+            return typeof(DothtmlQueryConstraint<TResult>).GetHashCode() ^ query.XPath.Expression.GetHashCode();
+        }
+
         public void Validate(ConstraintContext context)
         {
             var result = context.Locate<TResult>(query.XPath);

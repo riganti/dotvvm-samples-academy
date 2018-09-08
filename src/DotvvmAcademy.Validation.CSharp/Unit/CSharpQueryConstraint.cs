@@ -34,6 +34,11 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
             return false;
         }
 
+        public int GetOverwriteHashCode()
+        {
+            return typeof(CSharpQueryConstraint<TResult>).GetHashCode() ^ query.Name.ToString().GetHashCode();
+        }
+
         public void Validate(ConstraintContext context)
         {
             var result = context.Locate<TResult>(query.Name);

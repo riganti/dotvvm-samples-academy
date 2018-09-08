@@ -68,5 +68,14 @@ namespace DotvvmAcademy.Validation.CSharp.Resources {
                 return ResourceManager.GetString("ERR_WrongAccessibility", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There must be &apos;{0}&apos; of &apos;{1}&apos;..
+        /// </summary>
+        public static string ERR_WrongCount {
+            get {
+                return ResourceManager.GetString("ERR_WrongCount", resourceCulture);
+            }
+        }
     }
 }

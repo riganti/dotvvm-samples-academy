@@ -11,7 +11,7 @@ namespace DotvvmAcademy.Validation.Unit
 
         public int GetHashCode(IConstraint obj)
         {
-            return obj.GetType().GetHashCode();
+            return obj.GetOverwriteHashCode();
         }
     }
 }

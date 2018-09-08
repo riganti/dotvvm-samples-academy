@@ -5,5 +5,7 @@
         void Validate(ConstraintContext context);
 
         bool CanOverwrite(IConstraint other);
+
+        int GetOverwriteHashCode();
     }
 }

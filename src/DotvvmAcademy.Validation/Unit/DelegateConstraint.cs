@@ -16,6 +16,11 @@ namespace DotvvmAcademy.Validation.Unit
             return false;
         }
 
+        public int GetOverwriteHashCode()
+        {
+            return action.GetHashCode();
+        }
+
         public void Validate(ConstraintContext context)
         {
             action(context);
