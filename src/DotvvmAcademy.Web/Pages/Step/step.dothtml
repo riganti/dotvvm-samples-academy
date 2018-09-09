@@ -19,7 +19,7 @@
                 <cc:MonacoEditor Code="{value: Code}"
                                  Markers="{value: Markers}"
                                  Language="{resource: CodeLanguage}"
-                                 class="code-container"/>
+                                 class="code-container" />
                 <div class="buttons-container">
                     <div>
                         <dot:Button Click="{command: Reset()}" Text="Reset" class="button small" />
@@ -36,15 +36,15 @@
 </dot:Content>
 
 <dot:content ContentPlaceHolderID="FooterContent">
-    <div class="lesson-footer-container" 
-         Class-success="{value: IsCodeCorrect}">
+    <div class="lesson-footer-container"
+         Class-success="{value: !IsCodeCorrect}">
         <div class="container-small">
             <div class="ico-container">
-                <div Visible="{value:  IsCodeCorrect}">
-                    <cc:SvgToHtml Source="/images/Icons/success.svg"/>
+                <div Visible="{value: IsCodeCorrect}">
+                    <cc:SvgToHtml Source="/images/Icons/success.svg" />
                 </div>
-                <div Visible="{value: !IsCodeCorrect}">
-                    <cc:SvgToHtml Source="/images/icons/failed.svg"/>
+                <div Visible="{value: IsCodeCorrect}" class="error-ico">
+                    <cc:SvgToHtml Source="/images/icons/failed.svg" />
                 </div>
                 <dot:Literal Text="{value: FooterText}" />
             </div>
