@@ -18,6 +18,9 @@ namespace DotvvmAcademy.Web.Pages.Default
         }
 
         [Bind(Direction.ServerToClientFirstRequest)]
+        public LessonDetail FirstLesson { get; set; }
+
+        [Bind(Direction.ServerToClientFirstRequest)]
         public List<LessonDetail> Lessons { get; set; }
 
         public override async Task Load()
@@ -30,7 +33,6 @@ namespace DotvvmAcademy.Web.Pages.Default
                 var rendered = lessonRenderer.Render(l);
                 return new LessonDetail
                 {
-                    Annotation = rendered.Source.Annotation,
                     FirstStep = rendered.Source.Steps.FirstOrDefault(),
                     Html = rendered.Html,
                     ImageUrl = rendered.ImageUrl,
@@ -39,6 +41,7 @@ namespace DotvvmAcademy.Web.Pages.Default
                 };
             })
             .ToList();
+            FirstLesson = Lessons.FirstOrDefault();
             await base.Load();
         }
 

@@ -2,13 +2,14 @@
 @baseType DotvvmAcademy.Web.Pages.LanguageSwitch, DotvvmAcademy.Web
 @import DotvvmAcademy.Web.Resources.Localization
 
-<div class="{resource:"lang-btn " + _control.CurrentLanguage.Moniker}">
+<div class="{resource:"lang-btn " + _control.CurrentLanguage.Moniker}"
+     RenderSettings.Mode="Server">
     <cc:SvgToHtml Source="{resource: _control.CurrentImage}" />
     <p>{{resource: _control.CurrentLanguage.Moniker.ToUpper()}}</p>
 </div>
-<div class="lang-switcher_list">
+<div class="lang-switcher_list"
+     RenderSettings.Mode="Server">
     <dot:Repeater DataSource="{value: _control.AvailableLanguages}"
-                  RenderSettings.Mode="Server"
                   RenderWrapperTag="false">
         <dot:RouteLink RouteName="{resource: _control.RouteName}"
                        Param-Language="{value: _this.Moniker}"
