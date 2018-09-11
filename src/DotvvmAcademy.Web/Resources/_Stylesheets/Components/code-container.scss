@@ -1,7 +1,17 @@
 ﻿@import "../Base/_global.scss";
 
-.code-bg{
+.code-bg {
     background-color: $color-vs-dark;
+    flex: 0 0 55%;
+    width: 55%;
+    max-width: 55%;
+    align-self: flex-start;
+
+    @include res-max-desktop-large {
+        flex: 0 0 100%;
+        width: 100%;
+        max-width: 100%;
+    }
 }
 
 .code-container {
@@ -14,5 +24,10 @@
 
     @include res-max-desktop-small {
         margin: 1rem auto;
+    }
+
+    + div {
+        max-height: 30rem;
+        overflow: auto;
     }
 }

@@ -16,12 +16,6 @@
     font-family: $font-text;
     font-size: $font-size-m;
 
-    &.small {
-        width: 12rem;
-        max-width: 12rem;
-        padding: .2rem .4rem;
-    }
-
     &:hover, &:focus {
         text-decoration: none;
         background-color: $color-hover;
@@ -72,13 +66,19 @@
 }
 
 .buttons-container {
-    background-color: $color-vs-dark;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
-    padding: 1rem .5rem;
-    box-sizing: border-box;
+    overflow: hidden;
+
+    @include res-max-desktop-small {
+        justify-content: center;
+        flex: 0 0 100%;
+        flex-wrap: wrap;
+        max-width: 100%;
+        width: 100%;
+    }
 
     > * {
         flex: 0 0 auto;
@@ -87,6 +87,21 @@
     }
 
     .button {
-        margin-left: .5rem;
+        margin-left: 1rem;
+
+        @include res-max-tablet {
+            margin: 0 .5rem;
+            margin-bottom: 1rem;
+        }
+
+        @include res-max-mobile {
+            flex: 0 0 100%;
+            width: 100%;
+            max-width: 100%;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
     }
 }

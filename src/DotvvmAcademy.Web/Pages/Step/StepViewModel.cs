@@ -33,12 +33,17 @@ namespace DotvvmAcademy.Web.Pages.Step
         [Bind(Direction.ServerToClientFirstRequest)]
         public StepDetail Step { get; set; }
 
+        [Bind(Direction.ServerToClientFirstRequest)]
+        public IEnumerable<StepListDetail> Steps { get; set; }
+
         [FromRoute("Step"), Bind(Direction.None)]
         public string StepMoniker { get; set; }
 
         public override async Task Load()
         {
             var lesson = await workspace.LoadLesson(LanguageMoniker, LessonMoniker);
+            var steps = await Task.WhenAll(lesson.Steps.Select(async s => await workspace.LoadStep(LanguageMoniker, LessonMoniker, s)));
+            Steps = steps.Select(s => new StepListDetail { Moniker = s.Moniker, Name = s.Name });
             var step = await workspace.LoadStep(LanguageMoniker, LessonMoniker, StepMoniker);
             var index = lesson.Steps.IndexOf(StepMoniker);
             Step = new StepDetail
@@ -50,10 +55,11 @@ namespace DotvvmAcademy.Web.Pages.Step
             };
             if (!string.IsNullOrEmpty(step.CodeTaskPath))
             {
-                CodeTask = new CodeTaskDetail
+                if (!Context.IsPostBack)
                 {
-                    Path = step.CodeTaskPath
-                };
+                    CodeTask = new CodeTaskDetail();
+                }
+                CodeTask.Path = step.CodeTaskPath;
                 if (!Context.IsPostBack)
                 {
                     await Reset();
@@ -85,6 +91,10 @@ namespace DotvvmAcademy.Web.Pages.Step
             var script = await workspace.Require<ValidationScript>(CodeTask.Path);
             var converter = new PositionConverter(CodeTask.Code);
             var diagnostics = await validator.Validate(script.Unit, CodeTask.Code);
+            if (diagnostics.Length == 0)
+            {
+                Context.RedirectToRoute("Step", new { Step = Step.NextStep });
+            }
 
             MonacoMarker GetMarker(CodeTaskDiagnostic diagnostic)
             {
