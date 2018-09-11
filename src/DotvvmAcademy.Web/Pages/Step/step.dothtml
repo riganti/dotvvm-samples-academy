@@ -12,51 +12,47 @@
             </dot:Repeater>--%>
         </div>
         <div class="container-small">
-            <h1>{{resource: Name}}</h1>
-            <dot:HtmlLiteral Html="{resource: Text}" class="step-info-box" />
-            <div IncludeInPage="{value: HasCodeTask}"
-                 Visible="{resource: HasCodeTask}"
+            <dot:HtmlLiteral Html="{resource: Step.Html}" class="step-info-box" />
+            <div IncludeInPage="{resource: CodeTask != null}"
                  class="code-bg">
-                <cc:MonacoEditor Code="{value: Code}"
-                                 Markers="{value: Markers}"
-                                 Language="{resource: CodeLanguage}"
+                <cc:MonacoEditor Code="{value: CodeTask.Code}"
+                                 Markers="{value: CodeTask.Markers}"
+                                 Language="{resource: CodeTask.CodeLanguage}"
                                  class="code-container" />
                 <div class="buttons-container">
                     <div>
-                        <dot:Button Click="{command: Reset()}" Text="Reset" class="button small" />
+                        <dot:Button Click="{command: Reset()}" 
+                                    Text="Reset" 
+                                    class="button small" />
                     </div>
                     <div>
-                        <dot:Button Click="{command: ShowSolution()}" Text="Show Solution" class="button small success" />
-                        <dot:Button Click="{command: Validate()}" Text="Validate" class="button small" />
+                        <dot:Button Click="{command: ShowSolution()}" 
+                                    Text="Show Solution" 
+                                    class="button small success" />
+                        <dot:Button Click="{command: Validate()}" 
+                                    Text="Validate" 
+                                    class="button small" />
                     </div>
                 </div>
-                <cc:DiagnosticList Diagnostics="{value: Markers}" />
+                <cc:DiagnosticList Diagnostics="{value: CodeTask.Markers}" />
             </div>
         </div>
     </section>
 </dot:Content>
 
 <dot:content ContentPlaceHolderID="FooterContent">
-    <div class="lesson-footer-container"
-         Class-success="{value: !IsCodeCorrect}">
+    <div class="lesson-footer-container">
         <div class="container-small">
-            <div class="ico-container">
-                <div Visible="{value: IsCodeCorrect}">
-                    <cc:SvgToHtml Source="/images/Icons/success.svg" />
-                </div>
-                <div Visible="{value: IsCodeCorrect}" class="error-ico">
-                    <cc:SvgToHtml Source="/images/icons/failed.svg" />
-                </div>
-                <dot:Literal Text="{value: FooterText}" />
-            </div>
+            <%-- TODO: Get rid of this pointless div --%>
+            <div />
             <div>
                 <dot:RouteLink RouteName="Step"
                                ButtonTagName="button"
                                class="button"
                                Param-Language="{value: LanguageMoniker}"
-                               Param-Lesson="{value: Lesson}"
-                               Param-Step="{value: PreviousStep}"
-                               Visible="{resource: IsPreviousVisible}"
+                               Param-Lesson="{value: LessonMoniker}"
+                               Param-Step="{value: Step.PreviousStep ?? string.Empty}"
+                               Visible="{resource: Step.PreviousStep != null}"
                                Class-success="{value: false}"
                                Text="{resource: UIResources.Btn_PreviousStep}" />
 
@@ -64,9 +60,9 @@
                                class="button"
                                ButtonTagName="button"
                                Param-Language="{value: LanguageMoniker}"
-                               Param-Lesson="{value: Lesson}"
-                               Param-Step="{value: NextStep}"
-                               Visible="{resource: IsNextVisible}"
+                               Param-Lesson="{value: LessonMoniker}"
+                               Param-Step="{value: Step.NextStep ?? string.Empty}"
+                               Visible="{resource: Step.NextStep != null}"
                                Class-success="{value: false}"
                                Text="{resource: UIResources.Btn_NextStep}" />
 
@@ -74,7 +70,7 @@
                                class="button"
                                ButtonTagName="button"
                                Param-Language="{value: LanguageMoniker}"
-                               Visible="{resource: IsPreviousVisible && !IsNextVisible}"
+                               Visible="{resource: Step.NextStep == null}"
                                Class-success="{value: false}"
                                Text="{resource: UIResources.Btn_Finish}" />
             </div>

@@ -4,19 +4,22 @@
 @import System.Linq
 
 <dot:Content ContentPlaceHolderID="HeaderContent">
-    <section class="main-header no-padding" RenderSettings.Mode="Server">
+    <section class="main-header no-padding">
         <div class="container-large">
             <div>
-                <dot:HtmlLiteral Html="{resource: UIResources.Base_MainTitle}" 
-                                 RenderWrapperTag="true" 
+                <dot:HtmlLiteral Html="{resource: UIResources.Base_MainTitle}"
+                                 RenderWrapperTag="true"
                                  WrapperTagName="h1" />
-                <dot:HtmlLiteral Html="{resource: UIResources.Base_MainDescription}" 
-                                 RenderWrapperTag="true" 
+                <dot:HtmlLiteral Html="{resource: UIResources.Base_MainDescription}"
+                                 RenderWrapperTag="true"
                                  WrapperTagName="p" />
-                <dot:Button ButtonTagName="button" 
-                            class="button" 
-                            Text="{resource: UIResources.Btn_StartCourse}" />
-                <cc:SvgToHtml Source="/images/Illustrations/header-image.svg"/>
+                <dot:RouteLink RouteName="Step"
+                               class="button"
+                               Text="{resource: UIResources.Btn_StartCourse}"
+                               Param-Language="{value: _root.LanguageMoniker}"
+                               Param-Lesson="{value: FirstLesson.Moniker}"
+                               Param-Step="{value: FirstLesson.FirstStep}" />
+                <cc:SvgToHtml Source="/images/Illustrations/header-image.svg" />
             </div>
         </div>
     </section>
@@ -25,11 +28,11 @@
 <dot:Content ContentPlaceHolderID="MainContent">
     <section class="section-lections no-padding-top">
         <div class="container-large">
-            <dot:Repeater DataSource="{value: Lessons}" class="lessons-container" RenderSettings.Mode="Server">
+            <dot:Repeater DataSource="{value: Lessons}" class="lessons-container">
                 <%--<div class="{value: IsFinished ? "lessons-item finished" : "lessons-item" }">--%>
                 <div class="lessons-item">
                     <%--<cc:SvgToHtml Source="{value:IsFinished ? "images/Icons/medal.svg" : ImageUrl}">--%>
-                    <cc:SvgToHtml Source="{resource: ImageUrl ?? "/images/Icons/ico-lesson-1.svg"}"/>
+                    <cc:SvgToHtml Source="{resource: ImageUrl ?? "/images/Icons/ico-lesson-1.svg"}" />
                     <h2>{{resource: Name}}</h2>
                     <dot:HtmlLiteral Html="{resource: Html}" />
                     <dot:RouteLink RouteName="Step"
@@ -47,10 +50,14 @@
             <cc:SvgToHtml Source="/images/Illustrations/coffee-image.svg" />
         </div>
         <div>
-            <dot:HtmlLiteral Html="{resource: UIResources.Base_CoffeeTitle}" RenderWrapperTag="true" WrapperTagName="h2" />
-            <dot:HtmlLiteral Html="{resource: UIResources.Base_CoffeeDescription}" RenderWrapperTag="true" WrapperTagName="p" />
+            <dot:HtmlLiteral Html="{resource: UIResources.Base_CoffeeTitle}"
+                             RenderWrapperTag="true" 
+                             WrapperTagName="h2" />
+            <dot:HtmlLiteral Html="{resource: UIResources.Base_CoffeeDescription}" 
+                             RenderWrapperTag="true" 
+                             WrapperTagName="p" />
             <a href="https://goo.gl/PDrdpZ" target="_blank" class="button">
-                {{resource:UIResources.Btn_Coffee}}
+                {{resource: UIResources.Btn_Coffee}}
             </a>
         </div>
     </section>

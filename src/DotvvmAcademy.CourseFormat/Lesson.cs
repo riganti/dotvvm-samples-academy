@@ -19,7 +19,7 @@ namespace DotvvmAcademy.CourseFormat
 
         public override long GetSize()
         {
-            return Annotation.Length;
+            return Annotation?.Length ?? 1;
         }
     }
 }

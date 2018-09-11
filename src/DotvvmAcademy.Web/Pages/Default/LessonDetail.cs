@@ -2,8 +2,6 @@
 {
     public class LessonDetail
     {
-        public string Annotation { get; set; }
-
         public string FirstStep { get; set; }
 
         public string Html { get; set; }
