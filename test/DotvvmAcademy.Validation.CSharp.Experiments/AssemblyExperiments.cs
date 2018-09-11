@@ -1,10 +1,9 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace DotvvmAcademy.Validation.CSharp.Experiments
 {
-    [TestClass]
     public class AssemblyExperiments : CSharpExperimentBase
     {
         public const string Source1 = @"
@@ -25,7 +24,7 @@ namespace TwoAssemblies
     }
 }";
 
-        [TestMethod]
+        [Fact]
         public void ConflictExperiment()
         {
             var assembly1 = GetAssembly(GetCompilation(
