@@ -53,6 +53,16 @@ namespace DotvvmAcademy.Validation.Dothtml
             });
         }
 
+        Task<ImmutableArray<IValidationDiagnostic>> IValidationService.Validate(IUnit unit, ImmutableArray<ISourceCode> sources)
+        {
+            if (unit is DothtmlUnit dothtmlUnit)
+            {
+                return Validate(dothtmlUnit, sources);
+            }
+
+            throw new NotSupportedException($"Type '{unit.GetType()}' is not supported.");
+        }
+
         private CSharpCompilation GetCompilation(IServiceProvider provider)
         {
             var context = provider.GetRequiredService<Context>();

@@ -13,23 +13,14 @@ namespace DotvvmAcademy.Web.Pages.Step
 {
     public class StepViewModel : SiteViewModel
     {
-        private readonly ValidationScriptRunner runner;
-        private readonly StepRenderer stepRenderer;
         private readonly CodeTaskValidator validator;
         private readonly CourseWorkspace workspace;
         private Lesson lesson;
-        private RenderedStep renderedStep;
 
-        public StepViewModel(
-            CourseWorkspace workspace,
-            CodeTaskValidator validator,
-            StepRenderer stepRenderer,
-            ValidationScriptRunner runner)
+        public StepViewModel(CourseWorkspace workspace, CodeTaskValidator validator)
         {
             this.workspace = workspace;
             this.validator = validator;
-            this.stepRenderer = stepRenderer;
-            this.runner = runner;
         }
 
         public string Code { get; set; }

@@ -6,69 +6,55 @@ using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Concurrent;
 using System.Threading.Tasks;
 
 namespace DotvvmAcademy.CourseFormat
 {
-    public class ValidationScriptRunner
+    public class ValidationScriptProvider : ISourceProvider<ValidationScript>
     {
-        private readonly CourseEnvironment environment;
+        private readonly ICourseEnvironment environment;
         private readonly IServiceProvider globalProvider;
 
-        private readonly ConcurrentDictionary<string, Task<IUnit>> units
-            = new ConcurrentDictionary<string, Task<IUnit>>();
-
-        private readonly CourseWorkspace workspace;
-
-        public ValidationScriptRunner(CourseWorkspace workspace, CourseEnvironment environment)
+        public ValidationScriptProvider(ICourseEnvironment environment)
         {
-            this.workspace = workspace;
             this.environment = environment;
             globalProvider = GetServiceProvider();
         }
 
-        public async Task<IUnit> Run(string scriptPath)
+        public Task<ValidationScript> Get(string path)
         {
-            var script = await workspace.Load<Resource>(scriptPath);
-            return await Run(script);
-        }
-
-        public Task<IUnit> Run(Resource script)
-        {
-            var language = SourcePath.GetValidatedLanguage(script.Path);
+            var language = SourcePath.GetValidatedLanguage(path);
+            // TODO: Make extensible (remove switch)
             switch (language)
             {
                 case ValidatedLanguages.CSharp:
-                    return Run<CSharpUnit>(script);
+                    return Get<CSharpUnit>(path);
 
                 case ValidatedLanguages.Dothtml:
-                    return Run<DothtmlUnit>(script);
+                    return Get<DothtmlUnit>(path);
 
                 default:
                     throw new NotSupportedException($"Validated language '{language}' is not supported.");
             }
         }
 
-        public Task<IUnit> Run<TUnit>(Resource script)
+        public async Task<ValidationScript> Get<TUnit>(string path)
             where TUnit : IUnit
         {
-            return units.GetOrAdd(script.Path, async p =>
-            {
-                var scope = globalProvider.CreateScope();
-                var context = scope.ServiceProvider.GetRequiredService<Context>();
-                context.Script = script;
-                var csharpScript = CSharpScript.Create(
-                    code: script.Text,
-                    options: GetScriptOptions(script),
-                    globalsType: typeof(UnitWrapper<TUnit>));
-                var unit = scope.ServiceProvider.GetRequiredService<TUnit>();
-                await csharpScript.RunAsync(new UnitWrapper<TUnit>(unit));
-                return unit;
-            });
+            var scriptSource = await environment.Read(path);
+            var scope = globalProvider.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<Context>();
+            context.ScriptPath = path;
+            var csharpScript = CSharpScript.Create(
+                code: scriptSource,
+                options: GetScriptOptions(path),
+                globalsType: typeof(UnitWrapper<TUnit>));
+            var unit = scope.ServiceProvider.GetRequiredService<TUnit>();
+            await csharpScript.RunAsync(new UnitWrapper<TUnit>(unit));
+            return new ValidationScript(path, unit);
         }
 
-        private ScriptOptions GetScriptOptions(Resource script)
+        private ScriptOptions GetScriptOptions(string scriptPath)
         {
             return ScriptOptions.Default
                 .AddReferences(
@@ -101,8 +87,8 @@ namespace DotvvmAcademy.CourseFormat
                     "System.Linq",
                     "System.Text",
                     "System.Threading.Tasks")
-                .WithFilePath(script.Path)
-                .WithSourceResolver(new CodeTaskSourceResolver(environment));
+                .WithFilePath(scriptPath)
+                .WithSourceResolver(new CourseSourceReferenceResolver(environment));
         }
 
         private IServiceProvider GetServiceProvider()
@@ -112,13 +98,7 @@ namespace DotvvmAcademy.CourseFormat
             c.AddScoped(p =>
             {
                 var context = p.GetRequiredService<Context>();
-                var scriptDirectory = SourcePath.GetParent(context.Script.Path);
-                return new SourcePathStorage(scriptDirectory);
-            });
-            c.AddScoped(p =>
-            {
-                var context = p.GetRequiredService<Context>();
-                return new CodeTaskOptions(context.Script.Path);
+                return new CodeTaskOptions(context.ScriptPath);
             });
             c.AddScoped<Context>();
             c.AddScoped<DothtmlUnit>();
@@ -128,7 +108,7 @@ namespace DotvvmAcademy.CourseFormat
 
         private class Context
         {
-            public Resource Script { get; set; }
+            public string ScriptPath { get; set; }
         }
     }
 }

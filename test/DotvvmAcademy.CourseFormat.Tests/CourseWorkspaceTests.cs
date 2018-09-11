@@ -10,11 +10,11 @@ namespace DotvvmAcademy.CourseFormat.Tests
         [TestMethod]
         public async Task BasicLoadingTest()
         {
-            var wrapper = new CourseCacheWrapper();
+            var wrapper = new CourseCache();
             var environment = new CourseEnvironment(new DirectoryInfo("../../../../../sample/sample_course"));
             var loader = new SourceLoader(environment);
             var workspace = new CourseWorkspace(environment, loader, wrapper);
-            var variant = await workspace.Load<CourseVariant>("/content/en");
+            var variant = await workspace.Load<Variant>("/content/en");
             var lesson = await workspace.Load<Lesson>("/content/en/calculator");
             var step = await workspace.Load<Step>("/content/en/calculator/10_a_classic");
         }
