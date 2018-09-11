@@ -38,21 +38,24 @@ namespace DotvvmAcademy.Web.Pages.Step
         [Bind(Direction.ServerToClientFirstRequest)]
         public StepDetail Step { get; set; }
 
+        [Bind(Direction.ServerToClientFirstRequest)]
+        public Lesson Lesson { get; set; }
+
         [FromRoute("Step"), Bind(Direction.None)]
         public string StepMoniker { get; set; }
 
         public override async Task Load()
         {
-            var lesson = await workspace.LoadLesson(LanguageMoniker, LessonMoniker);
+            Lesson = await workspace.LoadLesson(LanguageMoniker, LessonMoniker);
             var step = await workspace.LoadStep(LanguageMoniker, LessonMoniker, StepMoniker);
-            var index = lesson.Steps.IndexOf(StepMoniker);
+            var index = Lesson.Steps.IndexOf(StepMoniker);
             renderedStep = stepRenderer.Render(step);
             Step = new StepDetail
             {
                 Html = renderedStep.Html,
                 Name = renderedStep.Name,
-                PreviousStep = lesson.Steps.ElementAtOrDefault(index - 1),
-                NextStep = lesson.Steps.ElementAtOrDefault(index + 1)
+                PreviousStep = Lesson.Steps.ElementAtOrDefault(index - 1),
+                NextStep = Lesson.Steps.ElementAtOrDefault(index + 1)
             };
 
             if (!Context.IsPostBack && !string.IsNullOrEmpty(renderedStep.CodeTaskPath))

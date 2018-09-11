@@ -4,36 +4,14 @@
 
 <dot:Content ContentPlaceHolderID="MainContent">
     <section class="section-lesson">
-        <div class="container-large">
-            <%--<dot:Repeater DataSource="{value: Steps}" class="lesson-progress-bar" RenderSettings.Mode="Server">
-                <div class="{value: IsStepFinish ? "progress-item completed" : "progress-item"}">
-                    <span>{{value: StepNumber}}</span>
-                </div>
-            </dot:Repeater>--%>
-        </div>
-        <div class="container-small">
-            <dot:HtmlLiteral Html="{resource: Step.Html}" class="step-info-box" />
+        <div class="container-large with-flex">
+            <dot:HtmlLiteral Html="{resource: Step.Html}" class="step-info-box" Class-no-flex="{resource: CodeTask == null}" />
             <div IncludeInPage="{resource: CodeTask != null}"
                  class="code-bg">
                 <cc:MonacoEditor Code="{value: CodeTask.Code}"
                                  Markers="{value: CodeTask.Markers}"
                                  Language="{resource: CodeTask.CodeLanguage}"
                                  class="code-container" />
-                <div class="buttons-container">
-                    <div>
-                        <dot:Button Click="{command: Reset()}" 
-                                    Text="Reset" 
-                                    class="button small" />
-                    </div>
-                    <div>
-                        <dot:Button Click="{command: ShowSolution()}" 
-                                    Text="Show Solution" 
-                                    class="button small success" />
-                        <dot:Button Click="{command: Validate()}" 
-                                    Text="Validate" 
-                                    class="button small" />
-                    </div>
-                </div>
                 <cc:DiagnosticList Diagnostics="{value: CodeTask.Markers}" />
             </div>
         </div>
@@ -42,36 +20,54 @@
 
 <dot:content ContentPlaceHolderID="FooterContent">
     <div class="lesson-footer-container">
-        <div class="container-small">
-            <%-- TODO: Get rid of this pointless div --%>
-            <div />
-            <div>
+        <div class="container-large with-flex">
+            <div class="pager">
                 <dot:RouteLink RouteName="Step"
                                ButtonTagName="button"
-                               class="button"
+                               class="pager__button"
                                Param-Language="{value: LanguageMoniker}"
                                Param-Lesson="{value: LessonMoniker}"
                                Param-Step="{value: Step.PreviousStep ?? string.Empty}"
-                               Visible="{resource: Step.PreviousStep != null}"
-                               Class-success="{value: false}"
-                               Text="{resource: UIResources.Btn_PreviousStep}" />
+                               Enabled="{value: Step.PreviousStep != null}"
+                               Class-disabled="{resource: Step.PreviousStep == null}"
+                               Text="{resource: UIResources.Btn_PreviousStep}"></dot:RouteLink>
+
+                <dot:Repeater DataSource="{value: Lesson.Steps}">
+                    <dot:RouteLink RouteName="Step"
+                                   class="pager__item"
+                                   Class-active="{value: _root.StepMoniker == _this}"
+                                   Param-Language="{value: _root.LanguageMoniker}"
+                                   Param-Lesson="{value: _root.LessonMoniker}"
+                                   Param-Step="{value: _this}"
+                                   Tooltip="{value: _parent.Step.Name}" />
+                </dot:Repeater>
 
                 <dot:RouteLink RouteName="Step"
-                               class="button"
+                               class="pager__button"
                                ButtonTagName="button"
                                Param-Language="{value: LanguageMoniker}"
                                Param-Lesson="{value: LessonMoniker}"
                                Param-Step="{value: Step.NextStep ?? string.Empty}"
-                               Visible="{resource: Step.NextStep != null}"
-                               Class-success="{value: false}"
-                               Text="{resource: UIResources.Btn_NextStep}" />
+                               Enabled="{resource: Step.NextStep != null}"
+                               Class-disabled="{resource: Step.NextStep == null}"
+                               Text="{resource: UIResources.Btn_NextStep}"></dot:RouteLink>
+            </div>
+
+            <div class="buttons-container">
+
+                <dot:Button Click="{command: Reset()}"
+                            Text="Reset"
+                            class="button" />
+
+                <dot:Button Click="{command: ShowSolution()}"
+                            Text="Show Solution"
+                            class="button" />
 
                 <dot:RouteLink RouteName="Default"
-                               class="button"
+                               class="button success"
                                ButtonTagName="button"
                                Param-Language="{value: LanguageMoniker}"
                                Visible="{resource: Step.NextStep == null}"
-                               Class-success="{value: false}"
                                Text="{resource: UIResources.Btn_Finish}" />
             </div>
         </div>

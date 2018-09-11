@@ -1,0 +1,107 @@
+﻿@import "../Base/_global.scss";
+
+.pager {
+    display: flex;
+    padding: 0;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
+
+    @include res-max-desktop-small {
+        justify-content: center;
+        margin-bottom: 2rem;
+        flex: 0 0 100%;
+        max-width: 100%;
+        width: 100%;
+    }
+
+    &__button {
+        width: auto;
+        height: auto;
+        padding: 0;
+        display: block;
+        color: $color-secondary;
+        text-decoration: none;
+        font-size: $font-size-m;
+
+        &:hover {
+            text-decoration: underline;
+        }
+
+        &.disabled {
+            color: $color-border;
+            cursor: not-allowed;
+
+            &:hover {
+                text-decoration: none;
+            }
+        }
+    }
+
+    > div {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        margin: 0 1rem;
+    }
+
+    &__item {
+        position: relative;
+        display: block;
+        flex: 0 0 2rem;
+        max-width: 2rem;
+        width: 2rem;
+        height: 2rem;
+        border-radius: 100%;
+        background-color: $color-primary;
+        text-decoration: none;
+        transform: scale(1,1);
+        transition: $animate-all;
+        margin-right: 1rem;
+        transition: $animate-all;
+
+        &:after {
+            position: absolute;
+            bottom: 2.5rem;
+            left: 50%;
+            transform: translateX(-50%) scale(0,0);
+            display: block;
+            width: auto;
+            padding: .5rem;
+            text-align: center;
+            color: $color-white;
+            font-size: $font-size-s;
+            background-color: $color-primary;
+            content: attr(Tooltip);
+            transition: $animate-all;
+            min-width: 10rem;
+        }
+
+        &:hover {
+            background-color: $color-border;
+            transition: $animate-all;
+
+            &:after {
+                transform: translateX(-50%) scale(1,1);
+                transition: $animate-all;
+            }
+        }
+
+        &:last-child {
+            margin-right: 0;
+        }
+
+        &.active {
+            background-color: $color-secondary;
+            transform: scale(1.2,1.2);
+            transition: $animate-all;
+
+            &:hover:after {
+                transform: translateX(-50%) scale(.9,.9);
+                transition: $animate-all;
+            }
+        }
+    }
+}
