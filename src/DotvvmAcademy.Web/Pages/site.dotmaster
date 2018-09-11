@@ -41,8 +41,8 @@
 
     <dot:RequiredResource Name="StyleCSS" />
 </head>
-<body>
-    <header Class-bordered="{resource: Context.Route.RouteName == "Step"}">
+<body Class-step-body="{resource: Context.Route.RouteName == "Step"}">
+    <header>
         <nav class="container-large">
             <dot:RouteLink RouteName="Default">
                 <cc:SvgToHtml Source="/images/Logos/logo-dotvvm.svg"/>
@@ -61,7 +61,7 @@
     <main>
         <dot:ContentPlaceHolder ID="MainContent" />
     </main>
-    <footer Class-centered="{resource: Context.Route.RouteName == "Step"}">
+    <footer>
         <dot:ContentPlaceHolder ID="FooterContent" />
     </footer>
     <dot:RequiredResource Name="jQuery" />

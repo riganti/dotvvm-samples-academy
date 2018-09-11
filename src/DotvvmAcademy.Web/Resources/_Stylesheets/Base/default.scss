@@ -45,10 +45,6 @@ body {
 
     header {
         flex: 0 0 auto;
-
-        &.bordered {
-            border-bottom: 1px solid $color-border;
-        }
     }
 
     main {
@@ -59,10 +55,37 @@ body {
 
     footer {
         flex: 0 0 auto;
+    }
 
-        &.centered {
+    &.step-body {
+        header {
+            border-bottom: 1px solid $color-border;
+        }
+
+        main {
+            padding-bottom: 8rem;
+
+            @include res-max-desktop-small {
+                position: relative;
+                padding-bottom: 0;
+            }
+        }
+
+        footer {
             display: flex;
             align-items: center;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            flex: none;
+            height: 8rem;
+
+            @include res-max-desktop-small {
+                position: relative;
+                height: auto;
+                flex: 0 0 auto;
+            }
         }
     }
 }

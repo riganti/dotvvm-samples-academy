@@ -29,7 +29,6 @@
                                Param-Lesson="{value: LessonMoniker}"
                                Param-Step="{value: Step.PreviousStep ?? string.Empty}"
                                Enabled="{value: Step.PreviousStep != null}"
-                               Class-disabled="{resource: Step.PreviousStep == null}"
                                Text="{resource: UIResources.Btn_PreviousStep}" />
 
                 <dot:Repeater DataSource="{value: Steps}">
@@ -45,7 +44,6 @@
                 <dot:Button Click="{command: Validate()}"
                             class="pager__button"
                             Enabled="{value: Step.NextStep != null}"
-                            Class-disabled="{resource: Step.NextStep == null}"
                             Text="{resource: UIResources.Btn_NextStep}" />
             </div>
 
