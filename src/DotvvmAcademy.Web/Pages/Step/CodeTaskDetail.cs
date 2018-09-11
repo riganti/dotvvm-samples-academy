@@ -16,5 +16,8 @@ namespace DotvvmAcademy.Web.Pages.Step
 
         [Bind(Direction.ServerToClient)]
         public List<MonacoMarker> Markers { get; set; } = new List<MonacoMarker>();
+
+        [Bind(Direction.None)]
+        public string Path { get; set; }
     }
 }

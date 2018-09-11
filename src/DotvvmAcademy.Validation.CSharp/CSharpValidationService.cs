@@ -62,6 +62,16 @@ namespace DotvvmAcademy.Validation.CSharp
             }
         }
 
+        Task<ImmutableArray<IValidationDiagnostic>> IValidationService.Validate(IValidationUnit unit, ImmutableArray<ISourceCode> sources)
+        {
+            if (unit is CSharpUnit csharpUnit)
+            {
+                return Validate(csharpUnit, sources);
+            }
+
+            throw new NotSupportedException($"Type '{unit.GetType()}' is not supported.");
+        }
+
         private async Task<Assembly> GetAssembly(IServiceProvider provider)
         {
             var compilation = provider.GetRequiredService<ICSharpCompilationAccessor>().Compilation;

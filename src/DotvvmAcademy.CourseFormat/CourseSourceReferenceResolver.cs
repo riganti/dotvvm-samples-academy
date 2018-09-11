@@ -4,11 +4,11 @@ using System.IO;
 
 namespace DotvvmAcademy.CourseFormat
 {
-    public class CodeTaskSourceResolver : SourceReferenceResolver
+    public class CourseSourceReferenceResolver : SourceReferenceResolver
     {
-        private readonly CourseEnvironment environment;
+        private readonly ICourseEnvironment environment;
 
-        public CodeTaskSourceResolver(CourseEnvironment environment)
+        public CourseSourceReferenceResolver(ICourseEnvironment environment)
         {
             this.environment = environment;
         }
@@ -30,13 +30,7 @@ namespace DotvvmAcademy.CourseFormat
 
         public override Stream OpenRead(string resolvedPath)
         {
-            var file = environment.GetFile(resolvedPath);
-            if (file.Exists)
-            {
-                return file.OpenRead();
-            }
-
-            return Stream.Null;
+            return environment.OpenRead(resolvedPath);
         }
 
         public override string ResolveReference(string path, string baseFilePath)

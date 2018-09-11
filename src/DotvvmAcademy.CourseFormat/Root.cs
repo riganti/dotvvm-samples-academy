@@ -2,9 +2,9 @@
 
 namespace DotvvmAcademy.CourseFormat
 {
-    public class WorkspaceRoot : Source
+    public class Root : Source
     {
-        public WorkspaceRoot(
+        public Root(
             ImmutableArray<string> variants,
             bool hasContent,
             bool hasResources)

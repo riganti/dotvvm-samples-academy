@@ -30,27 +30,23 @@
                                Param-Step="{value: Step.PreviousStep ?? string.Empty}"
                                Enabled="{value: Step.PreviousStep != null}"
                                Class-disabled="{resource: Step.PreviousStep == null}"
-                               Text="{resource: UIResources.Btn_PreviousStep}"></dot:RouteLink>
+                               Text="{resource: UIResources.Btn_PreviousStep}" />
 
-                <dot:Repeater DataSource="{value: Lesson.Steps}">
+                <dot:Repeater DataSource="{value: Steps}">
                     <dot:RouteLink RouteName="Step"
                                    class="pager__item"
-                                   Class-active="{value: _root.StepMoniker == _this}"
+                                   Class-active="{value: _root.StepMoniker == Moniker}"
                                    Param-Language="{value: _root.LanguageMoniker}"
                                    Param-Lesson="{value: _root.LessonMoniker}"
-                                   Param-Step="{value: _this}"
-                                   Tooltip="{value: _parent.Step.Name}" />
+                                   Param-Step="{value: Moniker}"
+                                   Tooltip="{value: Name}" />
                 </dot:Repeater>
 
-                <dot:RouteLink RouteName="Step"
-                               class="pager__button"
-                               ButtonTagName="button"
-                               Param-Language="{value: LanguageMoniker}"
-                               Param-Lesson="{value: LessonMoniker}"
-                               Param-Step="{value: Step.NextStep ?? string.Empty}"
-                               Enabled="{resource: Step.NextStep != null}"
-                               Class-disabled="{resource: Step.NextStep == null}"
-                               Text="{resource: UIResources.Btn_NextStep}"></dot:RouteLink>
+                <dot:Button Click="{command: Validate()}"
+                            class="pager__button"
+                            Enabled="{value: Step.NextStep != null}"
+                            Class-disabled="{resource: Step.NextStep == null}"
+                            Text="{resource: UIResources.Btn_NextStep}" />
             </div>
 
             <div class="buttons-container">

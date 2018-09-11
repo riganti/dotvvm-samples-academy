@@ -3,7 +3,6 @@ using System.Collections.Immutable;
 
 namespace DotvvmAcademy.Meta
 {
-    // TODO: Move to Meta once Memory becomes available on netstandard
     public class PositionConverter : IPositionConverter
     {
         private readonly ImmutableArray<ReadOnlyMemory<char>> lines;
