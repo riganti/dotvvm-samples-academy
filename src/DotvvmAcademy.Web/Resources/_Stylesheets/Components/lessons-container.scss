@@ -30,6 +30,11 @@
     box-sizing: border-box;
     padding-bottom: 10rem;
     position: relative;
+    margin-top: 3rem;
+
+    &:first-child, &:nth-child(2), &:nth-child(3), &:nth-child(4) {
+        margin-top: 0;
+    }
 
     @include res-max-desktop-HD {
         padding: 2rem;
@@ -42,7 +47,11 @@
         width: 49%;
 
         &:first-child, &:nth-child(2) {
-            margin-bottom: 3rem;
+            margin-top: 0;
+        }
+
+        &:nth-child(3), &:nth-child(4) {
+            margin-top: 3rem;
         }
     }
 
@@ -51,6 +60,14 @@
         max-width: 65%;
         width: 65%;
         margin-bottom: 3rem;
+
+        &:first-child {
+            margin-bottom: 0;
+        }
+
+        &:nth-child(2), &:nth-child(3), &:last-child {
+            margin-top: 3rem;
+        }
     }
 
     @include res-max-mobile {

@@ -12,7 +12,8 @@ nav {
 
     > a {
         display: flex;
-        width: 20rem;
+        width: auto;
+        height: 9rem;
         padding: 1rem 0;
         flex-direction: row;
         flex-wrap: nowrap;
@@ -21,13 +22,34 @@ nav {
         text-decoration: none;
         color: $color-primary;
 
+        @include res-max-mobile {
+            height: 7rem;
+            margin-left: -1.7rem;
+        }
+
         svg {
-            height: 6rem;
+            height: 100%;
+            width: 17rem;
+            display: block;
+            margin-right: .5rem;
+
+            @include res-max-mobile {
+                width: 13rem;
+                margin-right: .3rem;
+            }
         }
 
         p {
-            font-weight: 500;
+            font-weight: 300;
             color: $color-primary;
+            font-size: 2.4rem;
+            margin-bottom: .1rem;
+
+            @include res-max-mobile {
+                font-size: $font-size-l;
+                margin-bottom: .2rem;
+                margin-right: .3rem;
+            }
         }
     }
 

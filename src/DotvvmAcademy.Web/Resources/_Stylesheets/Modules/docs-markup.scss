@@ -1,6 +1,27 @@
 ﻿@import "../Base/_global.scss";
 
 .step-info-box {
+    flex: 0 0 45%;
+    width: 45%;
+    max-width: 45%;
+    align-self: flex-start;
+    padding-right: 2rem;
+    box-sizing: border-box;
+
+    &.no-flex {
+        flex: 0 0 100%;
+        width: 100%;
+        max-width: 100%;
+        padding-right: 0;
+    }
+
+    @include res-max-desktop-large {
+        flex: 0 0 100%;
+        width: 100%;
+        max-width: 100%;
+        padding-right: 0;
+        margin-bottom: 2rem;
+    }
 
     h2 {
         font-size: 28px;

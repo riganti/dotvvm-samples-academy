@@ -6,9 +6,11 @@
 
 .lesson-footer-container {
     background-color: $color-transparent;
-    border-top: $outline-width solid $color-primary;
     padding: 1rem 0;
     transition: $animate-all;
+    flex: 0 0 100%;
+    width: 100%;
+    max-width: 100%;
 
     &.success {
         background-color: $color-success;
@@ -59,6 +61,10 @@
             @include res-max-desktop-large {
                 justify-content: center;
                 margin-bottom: 2rem;
+            }
+
+            .error-ico svg path {
+                fill: $color-error !important;
             }
 
             svg {

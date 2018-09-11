@@ -17,6 +17,7 @@
 
     @include res-max-desktop-small {
         background: rgba(78, 78, 77, 0.90);
+        margin-bottom: 3rem;
     }
 
     > div > div {
@@ -54,6 +55,7 @@
 
             @include res-max-mobile {
                 left: 40%;
+                max-width: 32rem;
             }
         }
 
