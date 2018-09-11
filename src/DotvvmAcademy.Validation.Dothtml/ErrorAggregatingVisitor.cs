@@ -3,8 +3,15 @@ using System.Collections.Immutable;
 
 namespace DotvvmAcademy.Validation.Dothtml
 {
-    internal class ErrorAggregatingVisitor
+    public class ErrorAggregatingVisitor
     {
+        private readonly DothtmlValidationReporter reporter;
+
+        public ErrorAggregatingVisitor(DothtmlValidationReporter reporter)
+        {
+            this.reporter = reporter;
+        }
+
         public ImmutableArray<IValidationDiagnostic> Visit(ValidationTreeRoot root)
         {
             var builder = ImmutableArray.CreateBuilder<IValidationDiagnostic>();
@@ -32,19 +39,19 @@ namespace DotvvmAcademy.Validation.Dothtml
         {
             foreach (var error in node.DothtmlNode.NodeErrors)
             {
-                builder.Add(new ParserDothtmlDiagnostic(
+                reporter.Report(
                     message: error,
                     node: node.DothtmlNode,
                     source: node.TreeRoot.SourceCode,
-                    severity: ValidationSeverity.Error));
+                    severity: ValidationSeverity.Error);
             }
             foreach (var warning in node.DothtmlNode.NodeWarnings)
             {
-                builder.Add(new ParserDothtmlDiagnostic(
+                reporter.Report(
                     message: warning,
                     node: node.DothtmlNode,
                     source: node.TreeRoot.SourceCode,
-                    severity: ValidationSeverity.Warning));
+                    severity: ValidationSeverity.Warning);
             }
         }
 

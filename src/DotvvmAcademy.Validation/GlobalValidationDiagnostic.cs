@@ -1,15 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace DotvvmAcademy.Validation
 {
     public class GlobalValidationDiagnostic : IValidationDiagnostic
     {
-        public GlobalValidationDiagnostic(string message, ValidationSeverity severity)
+        public GlobalValidationDiagnostic(string message, IEnumerable<object> arguments, ValidationSeverity severity)
         {
             Message = message;
+            Arguments = arguments;
             Severity = severity;
         }
+
+        public IEnumerable<object> Arguments { get; }
 
         public int End { get; } = -1;
 

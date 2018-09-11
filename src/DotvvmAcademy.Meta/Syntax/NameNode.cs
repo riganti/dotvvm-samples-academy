@@ -4,7 +4,12 @@ namespace DotvvmAcademy.Meta.Syntax
 {
     public abstract class NameNode
     {
-        public NameNode(NameNodeKind kind, ImmutableArray<NameDiagnostic> diagnostics = default)
+        public NameNode(NameNodeKind kind)
+        {
+            Kind = kind;
+        }
+
+        public NameNode(NameNodeKind kind, ImmutableArray<NameDiagnostic> diagnostics)
         {
             Kind = kind;
             Diagnostics = diagnostics;
@@ -14,8 +19,13 @@ namespace DotvvmAcademy.Meta.Syntax
 
         public NameNodeKind Kind { get; }
 
-        public abstract NameNode SetDiagnostics(ImmutableArray<NameDiagnostic> diagnostics);
+        public static NameNode Parse(string source)
+        {
+            var lexer = new NameLexer(source);
+            var parser = new NameParser(lexer);
+            return parser.Parse();
+        }
 
-        public abstract override string ToString();
+        public abstract NameNode SetDiagnostics(ImmutableArray<NameDiagnostic> diagnostics);
     }
 }
