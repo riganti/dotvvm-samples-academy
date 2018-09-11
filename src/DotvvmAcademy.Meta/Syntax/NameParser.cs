@@ -58,68 +58,6 @@ namespace DotvvmAcademy.Meta.Syntax
             return new NameToken(kind, Lexer.Source, -1, -1, true);
         }
 
-        private NameNodeKind GetPredefinedTypeKind(NameToken token)
-        {
-            if (token.Kind != NameTokenKind.Identifier)
-            {
-                return NameNodeKind.Bad;
-            }
-
-            switch (token.ToString())
-            {
-                case "bool":
-                    return NameNodeKind.BoolType;
-
-                case "byte":
-                    return NameNodeKind.ByteType;
-
-                case "sbyte":
-                    return NameNodeKind.SByteType;
-
-                case "int":
-                    return NameNodeKind.IntType;
-
-                case "uint":
-                    return NameNodeKind.UIntType;
-
-                case "short":
-                    return NameNodeKind.ShortType;
-
-                case "ushort":
-                    return NameNodeKind.UShortType;
-
-                case "long":
-                    return NameNodeKind.LongType;
-
-                case "ulong":
-                    return NameNodeKind.ULongType;
-
-                case "float":
-                    return NameNodeKind.FloatType;
-
-                case "double":
-                    return NameNodeKind.DoubleType;
-
-                case "decimal":
-                    return NameNodeKind.DecimalType;
-
-                case "string":
-                    return NameNodeKind.StringType;
-
-                case "char":
-                    return NameNodeKind.CharType;
-
-                case "object":
-                    return NameNodeKind.ObjectType;
-
-                case "void":
-                    return NameNodeKind.VoidType;
-
-                default:
-                    return NameNodeKind.Bad;
-            }
-        }
-
         private ArrayTypeNameNode ParseArrayTypeName(NameNode elementType)
         {
             var diagnosticsBuilder = ImmutableArray.CreateBuilder<NameDiagnostic>();
@@ -308,13 +246,6 @@ namespace DotvvmAcademy.Meta.Syntax
         private NameNode ParseTypeName()
         {
             NameNode name;
-            var predefinedTypeKind = GetPredefinedTypeKind(Current);
-            if (predefinedTypeKind != NameNodeKind.Bad)
-            {
-                name = new PredefinedTypeNameNode(predefinedTypeKind, Current);
-                Advance();
-                return name;
-            }
             name = ParseBoundTypeName();
             while (true)
             {

@@ -1,7 +1,11 @@
-﻿namespace DotvvmAcademy.Validation
+﻿using System.Collections.Generic;
+
+namespace DotvvmAcademy.Validation
 {
     public interface IValidationDiagnostic
     {
+        IEnumerable<object> Arguments { get; }
+
         int End { get; }
 
         string Message { get; }

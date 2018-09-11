@@ -63,10 +63,6 @@ namespace DotvvmAcademy.Meta
                     result = VisitGeneric(generic);
                     break;
 
-                case PredefinedTypeNameNode predefinedType:
-                    result = VisitPredefinedType(predefinedType);
-                    break;
-
                 case QualifiedNameNode qualified:
                     result = VisitQualified(qualified);
                     break;
@@ -160,82 +156,6 @@ namespace DotvvmAcademy.Meta
             return Visit(pointerType.ElementType)
                 .Cast<ITypeSymbol>()
                 .Select(t => compilationAccessor.Compilation.CreatePointerTypeSymbol(t));
-        }
-
-        private IEnumerable<ISymbol> VisitPredefinedType(PredefinedTypeNameNode predefinedType)
-        {
-            INamedTypeSymbol type;
-            switch (predefinedType.Kind)
-            {
-                case NameNodeKind.BoolType:
-                    type = GetTypeByMetadataName(WellKnownTypes.Bool);
-                    break;
-
-                case NameNodeKind.ByteType:
-                    type = GetTypeByMetadataName(WellKnownTypes.Byte);
-                    break;
-
-                case NameNodeKind.SByteType:
-                    type = GetTypeByMetadataName(WellKnownTypes.SByte);
-                    break;
-
-                case NameNodeKind.IntType:
-                    type = GetTypeByMetadataName(WellKnownTypes.Int);
-                    break;
-
-                case NameNodeKind.UIntType:
-                    type = GetTypeByMetadataName(WellKnownTypes.UInt);
-                    break;
-
-                case NameNodeKind.ShortType:
-                    type = GetTypeByMetadataName(WellKnownTypes.Short);
-                    break;
-
-                case NameNodeKind.UShortType:
-                    type = GetTypeByMetadataName(WellKnownTypes.UShort);
-                    break;
-
-                case NameNodeKind.LongType:
-                    type = GetTypeByMetadataName(WellKnownTypes.Long);
-                    break;
-
-                case NameNodeKind.ULongType:
-                    type = GetTypeByMetadataName(WellKnownTypes.ULong);
-                    break;
-
-                case NameNodeKind.FloatType:
-                    type = GetTypeByMetadataName(WellKnownTypes.Float);
-                    break;
-
-                case NameNodeKind.DoubleType:
-                    type = GetTypeByMetadataName(WellKnownTypes.Double);
-                    break;
-
-                case NameNodeKind.DecimalType:
-                    type = GetTypeByMetadataName(WellKnownTypes.Decimal);
-                    break;
-
-                case NameNodeKind.StringType:
-                    type = GetTypeByMetadataName(WellKnownTypes.String);
-                    break;
-
-                case NameNodeKind.CharType:
-                    type = GetTypeByMetadataName(WellKnownTypes.Char);
-                    break;
-
-                case NameNodeKind.ObjectType:
-                    type = GetTypeByMetadataName(WellKnownTypes.Object);
-                    break;
-
-                case NameNodeKind.VoidType:
-                    type = GetTypeByMetadataName(WellKnownTypes.Void);
-                    break;
-
-                default:
-                    throw new NotSupportedException($"{nameof(NameNodeKind)} '{predefinedType.Kind}' is not " +
-                        $"a supported prefined type kind.");
-            }
-            return ImmutableArray.Create(type);
         }
 
         private IEnumerable<ISymbol> VisitQualified(QualifiedNameNode qualified)

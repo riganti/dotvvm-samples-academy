@@ -16,8 +16,8 @@ namespace DotvvmAcademy.CourseFormat
         private readonly CourseEnvironment environment;
         private readonly IServiceProvider globalProvider;
 
-        private readonly ConcurrentDictionary<string, Task<IUnit>> units
-            = new ConcurrentDictionary<string, Task<IUnit>>();
+        private readonly ConcurrentDictionary<string, Task<IValidationUnit>> units
+            = new ConcurrentDictionary<string, Task<IValidationUnit>>();
 
         private readonly CourseWorkspace workspace;
 
@@ -28,13 +28,13 @@ namespace DotvvmAcademy.CourseFormat
             globalProvider = GetServiceProvider();
         }
 
-        public async Task<IUnit> Run(string scriptPath)
+        public async Task<IValidationUnit> Run(string scriptPath)
         {
             var script = await workspace.Load<Resource>(scriptPath);
             return await Run(script);
         }
 
-        public Task<IUnit> Run(Resource script)
+        public Task<IValidationUnit> Run(Resource script)
         {
             var language = SourcePath.GetValidatedLanguage(script.Path);
             switch (language)
@@ -50,8 +50,8 @@ namespace DotvvmAcademy.CourseFormat
             }
         }
 
-        public Task<IUnit> Run<TUnit>(Resource script)
-            where TUnit : IUnit
+        public Task<IValidationUnit> Run<TUnit>(Resource script)
+            where TUnit : IValidationUnit
         {
             return units.GetOrAdd(script.Path, async p =>
             {
