@@ -45,6 +45,10 @@ body {
 
     header {
         flex: 0 0 auto;
+
+        &.bordered {
+            border-bottom: 1px solid $color-border;
+        }
     }
 
     main {
@@ -55,6 +59,11 @@ body {
 
     footer {
         flex: 0 0 auto;
+
+        &.centered {
+            display: flex;
+            align-items: center;
+        }
     }
 }
 
