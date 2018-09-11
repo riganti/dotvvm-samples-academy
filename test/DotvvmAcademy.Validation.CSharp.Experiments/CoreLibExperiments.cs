@@ -1,15 +1,14 @@
 ﻿using DotvvmAcademy.Meta;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
+using Xunit;
 
 namespace DotvvmAcademy.Validation.CSharp.Experiments
 {
-    [TestClass]
     public class CoreLibExperiments
     {
-        [TestMethod]
+        [Fact]
         public void NecessaryDependenciesExperiment()
         {
             var options = new CSharpCompilationOptions(
@@ -28,9 +27,9 @@ namespace DotvvmAcademy.Validation.CSharp.Experiments
             var @enum = compilation.GetTypeByMetadataName("System.Enum");
             var markupOptions = compilation.GetTypeByMetadataName("DotVVM.Framework.Controls.MarkupOptionsAttribute");
             var mappingMode = compilation.GetTypeByMetadataName("DotVVM.Framework.Controls.MappingMode");
-            Assert.AreEqual(@enum.Kind, SymbolKind.NamedType);
-            Assert.AreEqual(markupOptions.BaseType.Kind, SymbolKind.NamedType);
-            Assert.AreEqual(mappingMode.BaseType.Kind, SymbolKind.NamedType);
+            Assert.Equal(SymbolKind.NamedType, @enum.Kind);
+            Assert.Equal(SymbolKind.NamedType, markupOptions.BaseType.Kind);
+            Assert.Equal(SymbolKind.NamedType, mappingMode.BaseType.Kind);
         }
     }
 }
