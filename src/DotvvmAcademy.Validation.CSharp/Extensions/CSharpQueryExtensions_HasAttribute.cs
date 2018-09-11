@@ -7,33 +7,33 @@ using System.Linq;
 
 namespace DotvvmAcademy.Validation.CSharp.Unit
 {
-    public static class QueryExtensions_HasAttribute
+    public static class CSharpQueryExtensions_HasAttribute
     {
-        public static IQuery<TResult> HasAttribute<TResult>(this IQuery<TResult> query, Type attributeType)
+        public static CSharpQuery<TResult> HasAttribute<TResult>(this CSharpQuery<TResult> query, Type attributeType)
             where TResult : ISymbol
         {
-            query.SetConstraint($"{nameof(HasAttribute)}_{attributeType}", context =>
+            return query.AddQueryConstraint((context, result) =>
             {
                 var converter = context.Provider.GetRequiredService<IMemberInfoConverter>();
                 var attributeClass = (INamedTypeSymbol)converter.Convert(attributeType);
-                foreach (var symbol in context.Result)
+                foreach (var symbol in result)
                 {
                     if (!symbol.GetAttributes().Any(a => a.AttributeClass.Equals(attributeClass)))
                     {
                         context.Report(
-                            message: $"Symbol '{symbol}' must have a '{attributeClass}' attribute.",
+                            message: Resources.ERR_MissingAttribute,
+                            arguments: new object[] { symbol, attributeClass },
                             symbol: symbol);
                     }
                 }
-            });
-            return query;
+            }, false);
         }
 
-        public static IQuery<TResult> HasAttribute<TResult>(this IQuery<TResult> query, Attribute expected)
+        public static CSharpQuery<TResult> HasAttribute<TResult>(this CSharpQuery<TResult> query, Attribute expected)
             where TResult : ISymbol
         {
             var attributeType = expected.GetType();
-            query.SetConstraint($"{nameof(HasAttribute)}_{attributeType}", context =>
+            return query.AddQueryConstraint((context, result) =>
             {
                 var converter = context.Provider.GetRequiredService<IMemberInfoConverter>();
                 var extractor = context.Provider.GetRequiredService<ITypedAttributeExtractor>();
@@ -41,7 +41,7 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
                 // TODO: Use something else for object comparison. This generates errors that are too broad.
                 var propertyComparer = context.Provider.GetRequiredService<PropertyEqualityComparer>();
 
-                foreach (var symbol in context.Result)
+                foreach (var symbol in result)
                 {
                     var attribute = extractor.Extract(attributeType, symbol).SingleOrDefault();
                     if (attribute == null)
@@ -57,31 +57,30 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
                             symbol: symbol);
                     }
                 }
-            });
-            return query;
+            }, false);
         }
 
-        public static IQuery<TResult> HasNoAttribute<TResult>(this IQuery<TResult> query, Type attributeType)
+        public static CSharpQuery<TResult> HasNoAttribute<TResult>(this CSharpQuery<TResult> query, Type attributeType)
             where TResult : ISymbol
         {
-            query.SetConstraint($"{nameof(HasNoAttribute)}_{attributeType}", context =>
+            return query.AddQueryConstraint((context, result) =>
             {
                 var converter = context.Provider.GetRequiredService<IMemberInfoConverter>();
                 var attributeClass = (INamedTypeSymbol)converter.Convert(attributeType);
-                foreach (var symbol in context.Result)
+                foreach (var symbol in result)
                 {
                     foreach (var attribute in symbol.GetAttributes())
                     {
                         if (attribute.AttributeClass.Equals(attributeClass))
                         {
                             context.Report(
-                                message: $"Symbol '{symbol}' must have no '{attributeType}' attributes.",
+                                message: Resources.ERR_ForbiddenAttribute,
+                                arguments: new object[] {symbol, attributeType},
                                 symbol: symbol);
                         }
                     }
                 }
-            });
-            return query;
+            }, false);
         }
     }
 }

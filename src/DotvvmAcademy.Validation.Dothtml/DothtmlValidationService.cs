@@ -45,15 +45,17 @@ namespace DotvvmAcademy.Validation.Dothtml
                         .GetReferencedAssemblies()
                         .Select(Assembly.Load)
                         .ToImmutableArray();
-                    HandleQueries<ValidationControl>(scope.ServiceProvider);
-                    HandleQueries<ValidationPropertySetter>(scope.ServiceProvider);
-                    HandleQueries<ValidationDirective>(scope.ServiceProvider);
+                    var constraintContext = new ConstraintContext(scope.ServiceProvider);
+                    foreach (var constraint in unit.Constraints)
+                    {
+                        constraint.Validate(constraintContext);
+                    }
                     return GetValidationDiagnostics(scope.ServiceProvider);
                 }
             });
         }
 
-        Task<ImmutableArray<IValidationDiagnostic>> IValidationService.Validate(IUnit unit, ImmutableArray<ISourceCode> sources)
+        Task<ImmutableArray<IValidationDiagnostic>> IValidationService.Validate(IValidationUnit unit, ImmutableArray<ISourceCode> sources)
         {
             if (unit is DothtmlUnit dothtmlUnit)
             {
@@ -89,7 +91,6 @@ namespace DotvvmAcademy.Validation.Dothtml
         {
             var c = new ServiceCollection();
             c.AddMetaSingletonFriendly();
-            c.AddSingleton<ErrorAggregatingVisitor>();
             c.AddScoped(GetValidationTree);
             c.AddScoped(GetXPathTree);
             c.AddScoped<ValidationTypeDescriptorFactory>();
@@ -107,6 +108,7 @@ namespace DotvvmAcademy.Validation.Dothtml
             c.AddScoped<DothtmlTokenizer>();
             c.AddScoped<DothtmlParser>();
             c.AddScoped<XPathTreeVisitor>();
+            c.AddScoped<ErrorAggregatingVisitor>();
             c.AddScoped<IValidationReporter>(p => p.GetRequiredService<DothtmlValidationReporter>());
             c.AddScoped<DothtmlValidationReporter>();
             c.AddScoped<DothtmlSourceCodeProvider>();
@@ -145,43 +147,11 @@ namespace DotvvmAcademy.Validation.Dothtml
             return root;
         }
 
-        private ImmutableArray<ValidationTreeNode> GetXPathResult(IServiceProvider provider, string xpath)
-        {
-            var tree = provider.GetRequiredService<XPathDothtmlRoot>();
-            var namespaceResolver = provider.GetRequiredService<XPathDothtmlNamespaceResolver>();
-            var nameTable = provider.GetRequiredService<NameTable>();
-            var navigator = new XPathDothtmlNavigator(nameTable, tree);
-            var expression = XPathExpression.Compile(xpath, namespaceResolver);
-            var result = (XPathNodeIterator)navigator.Evaluate(expression);
-            var builder = ImmutableArray.CreateBuilder<ValidationTreeNode>();
-            while (result.MoveNext())
-            {
-                var current = (XPathDothtmlNavigator)result.Current;
-                builder.Add(current.Node.UnderlyingObject);
-            }
-            return builder.ToImmutable();
-        }
-
         private XPathDothtmlRoot GetXPathTree(IServiceProvider provider)
         {
             var validationTree = provider.GetRequiredService<ValidationTreeRoot>();
             var visitor = provider.GetRequiredService<XPathTreeVisitor>();
             return visitor.Visit(validationTree);
-        }
-
-        private void HandleQueries<TResult>(IServiceProvider provider)
-            where TResult : ValidationTreeNode
-        {
-            var unit = provider.GetRequiredService<Context>().Unit;
-            foreach (var query in unit.GetQueries<TResult>())
-            {
-                var result = GetXPathResult(provider, query.Source).OfType<TResult>().ToImmutableArray();
-                foreach (var constraint in query.GetConstraints())
-                {
-                    var context = new ConstraintContext<TResult>(provider, query, result);
-                    constraint(context);
-                }
-            }
         }
 
         private class Context

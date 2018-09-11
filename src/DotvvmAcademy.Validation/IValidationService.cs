@@ -6,11 +6,11 @@ namespace DotvvmAcademy.Validation
 {
     public interface IValidationService
     {
-        Task<ImmutableArray<IValidationDiagnostic>> Validate(IUnit unit, ImmutableArray<ISourceCode> sources);
+        Task<ImmutableArray<IValidationDiagnostic>> Validate(IValidationUnit unit, ImmutableArray<ISourceCode> sources);
     }
 
     public interface IValidationService<TUnit> : IValidationService
-        where TUnit : IUnit
+        where TUnit : IValidationUnit
     {
         Task<ImmutableArray<IValidationDiagnostic>> Validate(TUnit unit, ImmutableArray<ISourceCode> sources);
     }

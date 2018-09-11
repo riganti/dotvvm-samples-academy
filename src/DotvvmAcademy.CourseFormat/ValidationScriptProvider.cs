@@ -39,7 +39,7 @@ namespace DotvvmAcademy.CourseFormat
         }
 
         public async Task<ValidationScript> Get<TUnit>(string path)
-            where TUnit : IUnit
+            where TUnit : IValidationUnit
         {
             var scriptSource = await environment.Read(path);
             var scope = globalProvider.CreateScope();

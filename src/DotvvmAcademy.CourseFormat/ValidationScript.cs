@@ -4,12 +4,12 @@ namespace DotvvmAcademy.CourseFormat
 {
     public class ValidationScript : Source
     {
-        public ValidationScript(string path, IUnit unit) : base(path)
+        public ValidationScript(string path, IValidationUnit unit) : base(path)
         {
             Unit = unit;
         }
 
-        public IUnit Unit { get; }
+        public IValidationUnit Unit { get; }
 
         public override long GetSize()
         {

@@ -26,7 +26,7 @@ namespace DotvvmAcademy.CourseFormat
             this.provider = provider;
         }
 
-        public async Task<ImmutableArray<CodeTaskDiagnostic>> Validate(IUnit unit, string code)
+        public async Task<ImmutableArray<CodeTaskDiagnostic>> Validate(IValidationUnit unit, string code)
         {
             var configuration = unit.Provider.GetRequiredService<CodeTaskOptions>();
             var sourceCodeTasks = configuration.SourcePaths.Select(async p => (fileName: p.Key, source: await environment.Read(p.Value)));

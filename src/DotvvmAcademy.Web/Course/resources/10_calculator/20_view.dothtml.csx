@@ -5,7 +5,7 @@ Unit.SetDefault("./Calculator_10.dothtml");
 Unit.SetCorrect("./Calculator_20.dothtml");
 
 Unit.GetDirective("/@viewModel")
-    .IsViewModelDirective(CalculatorViewModel);
+    .HasTypeArgument(CalculatorViewModel);
 
 var body = Unit.GetControl("/html/body");
 {
