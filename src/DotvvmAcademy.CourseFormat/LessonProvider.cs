@@ -1,4 +1,5 @@
-﻿using System.Collections.Immutable;
+﻿using System;
+using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,12 +21,17 @@ namespace DotvvmAcademy.CourseFormat
         {
             var file = (await environment.GetFiles(path))
                 .Single(f => f.EndsWith(".md"));
-            using (var stream = environment.OpenRead(file))
+            using (var stream = environment.OpenRead($"{path}/{file}"))
             using (var reader = new StreamReader(stream))
             {
                 var steps = (await environment.GetDirectories(path)).ToImmutableArray();
                 var fileText = await reader.ReadToEndAsync();
                 (var html, var frontMatter) = await renderer.Render<LessonFrontMatter>(fileText);
+                if (frontMatter == null)
+                {
+                    throw new NotSupportedException($"Lesson at '{path}' doesn't have YAML Front Matter.");
+                }
+
                 return new Lesson(
                     path: path,
                     annotation: html,

@@ -16,14 +16,29 @@ namespace DotvvmAcademy.Web.Pages.Default
         }
 
         [Bind(Direction.ServerToClientFirstRequest)]
-        public List<Lesson> Lessons { get; set; }
+        public LessonDetail FirstLesson { get; set; }
+
+        [Bind(Direction.ServerToClientFirstRequest)]
+        public List<LessonDetail> Lessons { get; set; }
 
         public override async Task Load()
         {
             var variant = await workspace.LoadVariant(LanguageMoniker);
             var lessonTasks = variant.Lessons.Select(l => workspace.LoadLesson(LanguageMoniker, l));
             var lessons = await Task.WhenAll(lessonTasks);
-            Lessons = lessons.ToList();
+            Lessons = lessons.Select(l =>
+            {
+                return new LessonDetail
+                {
+                    FirstStep = l.Steps.FirstOrDefault(),
+                    Html = l.Annotation,
+                    ImageUrl = l.ImageUrl,
+                    Moniker = l.Moniker,
+                    Name = l.Name
+                };
+            })
+            .ToList();
+            FirstLesson = Lessons.FirstOrDefault();
             await base.Load();
         }
 

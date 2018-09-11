@@ -61,6 +61,10 @@
                 margin-bottom: 2rem;
             }
 
+            .error-ico svg path {
+                fill: $color-error !important;
+            }
+
             svg {
                 height: 8rem;
                 margin-right: 2rem;

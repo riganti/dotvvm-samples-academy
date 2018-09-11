@@ -1,6 +1,7 @@
-# Validation
-
-![](/images/Icons/ico-lesson-4.svg)
+---
+Title: Validation
+Image: /images/Icons/ico-lesson-4.svg
+---
 
 This lesson attempts to answer the question: Just how do I use [Validation][validation] and [Validation Controls][controls]
 properly?

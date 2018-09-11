@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DotvvmAcademy.CourseFormat
@@ -38,7 +39,7 @@ namespace DotvvmAcademy.CourseFormat
                 throw new ArgumentException($"Directory at '{path}' does not exist.", nameof(path));
             }
 
-            return Task.FromResult((IEnumerable<string>)Directory.GetDirectories(directory.FullName));
+            return Task.FromResult(directory.GetDirectories().Select(d => d.Name));
         }
 
         public DirectoryInfo GetDirectoryInfo(string path)
@@ -59,7 +60,7 @@ namespace DotvvmAcademy.CourseFormat
                 throw new ArgumentException($"Directory at '{path}' does not exist.", nameof(path));
             }
 
-            return Task.FromResult((IEnumerable<string>)Directory.GetFiles(directory.FullName));
+            return Task.FromResult(directory.GetFiles().Select(f => f.Name));
         }
 
         public Stream OpenRead(string path)

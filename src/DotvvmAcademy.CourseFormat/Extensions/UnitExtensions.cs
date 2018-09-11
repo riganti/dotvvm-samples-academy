@@ -30,6 +30,11 @@ namespace DotvvmAcademy.Validation.Unit
             options.CorrectCodePath = unit.GetAbsolutePath(correctPath);
         }
 
+        public static CodeTaskOptions GetCodeTaskOptions(this IValidationUnit unit)
+        {
+            return unit.Provider.GetRequiredService<CodeTaskOptions>();
+        }
+
         [Obsolete("Name too long")]
         public static void SetCorrectCodePath(this IValidationUnit unit, string sourcePath)
         {

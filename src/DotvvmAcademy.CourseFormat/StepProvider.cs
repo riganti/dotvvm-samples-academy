@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -19,11 +20,16 @@ namespace DotvvmAcademy.CourseFormat
         {
             var file = (await environment.GetFiles(path))
                 .Single(f => f.EndsWith(".md"));
-            using (var stream = environment.OpenRead(file))
+            using (var stream = environment.OpenRead($"{path}/{file}"))
             using (var reader = new StreamReader(stream))
             {
                 var fileText = await reader.ReadToEndAsync();
                 (var html, var frontMatter) = await renderer.Render<StepFrontMatter>(fileText);
+                if (frontMatter == null)
+                {
+                    throw new NotSupportedException($"Step at {path} doesn't have YAML Front Matter.");
+                }
+
                 return new Step(
                     path: path,
                     text: html,
