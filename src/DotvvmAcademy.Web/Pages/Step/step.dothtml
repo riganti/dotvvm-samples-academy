@@ -5,7 +5,9 @@
 <dot:Content ContentPlaceHolderID="MainContent">
     <section class="section-lesson">
         <div class="container-large with-flex">
-            <dot:HtmlLiteral Html="{resource: Step.Html}" class="step-info-box" Class-no-flex="{resource: Step.HasCodeTask}" />
+            <dot:HtmlLiteral Html="{resource: Step.Html}"
+                             Class-no-flex="{resource: !Step.HasCodeTask && !Step.HasEmbeddedView}"
+                             class="step-info-box" />
             <div IncludeInPage="{resource: Step.HasCodeTask}"
                  class="code-bg">
                 <cc:MonacoEditor Code="{value: CodeTask.Code}"
@@ -14,9 +16,9 @@
                                  class="code-container" />
                 <cc:DiagnosticList Diagnostics="{value: CodeTask.Markers}" />
             </div>
-            <div class="embedded-view" IncludeInPage="{resource: Step.HasEmbeddedView}">
-                <iframe src="{resource: "/embeddedView/" + LanguageMoniker + "/" + LessonMoniker + "/" + StepMoniker}"
-                        style="width: 100rem; height: 100rem;"/>
+            <div IncludeInPage="{resource: Step.HasEmbeddedView}"
+                 class="embedded-view">
+                <iframe src="{resource: "/embeddedView/" + LanguageMoniker + "/" + LessonMoniker + "/" + StepMoniker}" />
             </div>
         </div>
     </section>
