@@ -24,12 +24,19 @@
         color: $color-secondary;
         text-decoration: none;
         font-size: $font-size-m;
+        background: none;
+        border: none;
+        cursor: pointer;
 
         &:hover {
             text-decoration: underline;
         }
 
-        &.disabled {
+        &:focus{
+            outline: none;
+        }
+
+        &[disabled=disabled] {
             color: $color-border;
             cursor: not-allowed;
 

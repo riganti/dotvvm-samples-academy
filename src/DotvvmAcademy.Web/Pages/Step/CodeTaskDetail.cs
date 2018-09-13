@@ -18,6 +18,6 @@ namespace DotvvmAcademy.Web.Pages.Step
         public List<MonacoMarker> Markers { get; set; } = new List<MonacoMarker>();
 
         [Bind(Direction.None)]
-        public string Path { get; set; }
+        public string ValidationScriptPath { get; set; }
     }
 }
