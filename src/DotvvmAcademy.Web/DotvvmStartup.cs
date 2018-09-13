@@ -1,6 +1,7 @@
 ﻿using DotVVM.Framework.Configuration;
 using DotVVM.Framework.Hosting;
 using DotVVM.Framework.ResourceManagement;
+using DotvvmAcademy.Web.Hosting;
 using DotvvmAcademy.Web.Pages;
 using DotvvmAcademy.Web.Pages.Step;
 using Microsoft.Extensions.DependencyInjection;
@@ -65,7 +66,9 @@ namespace DotvvmAcademy.Web
             config.RouteTable.Add(
                 routeName: "EmbeddedView",
                 url: "embeddedView/{Language}/{Lesson}/{Step}",
-                typeof(EVPresenter));
+                p => new LifecyclePresenter(p)
+                    .RegisterStrategy<EVPostbackLifecycleStrategy>()
+                    .RegisterStrategy<EVRegularLifecycleStrategy>());
         }
     }
 }

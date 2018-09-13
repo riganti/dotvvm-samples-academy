@@ -8,7 +8,7 @@ using System;
 using System.Collections.Immutable;
 using System.Linq;
 
-namespace DotvvmAcademy.Web
+namespace DotvvmAcademy.Web.Hosting
 {
     public class EVViewCompiler : DefaultViewCompiler
     {

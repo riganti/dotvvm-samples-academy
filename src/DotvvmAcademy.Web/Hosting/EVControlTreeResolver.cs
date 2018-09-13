@@ -1,7 +1,7 @@
 ﻿using DotVVM.Framework.Compilation;
 using DotVVM.Framework.Compilation.ControlTree;
 
-namespace DotvvmAcademy.Web
+namespace DotvvmAcademy.Web.Hosting
 {
     public class EVControlTreeResolver : DefaultControlTreeResolver
     {

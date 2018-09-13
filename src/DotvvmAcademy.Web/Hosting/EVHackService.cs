@@ -1,5 +1,6 @@
 ﻿using DotVVM.Framework.Compilation;
 using DotVVM.Framework.Controls.Infrastructure;
+using DotVVM.Framework.Hosting;
 using DotvvmAcademy.CourseFormat;
 using DotvvmAcademy.Meta;
 using Microsoft.CodeAnalysis;
@@ -12,11 +13,11 @@ using System.Reflection;
 using System.Runtime.Loader;
 using System.Threading.Tasks;
 
-namespace DotvvmAcademy.Web
+namespace DotvvmAcademy.Web.Hosting
 {
     public class EVHackService
     {
-        public async Task<DotvvmView> BuildView(EVPresenter.PresenterContext context)
+        public async Task<DotvvmView> BuildView(IDotvvmRequestContext context)
         {
             var step = await GetStep(context);
             var viewModelCompilation = await GetViewModelCompilation(context, step);
@@ -26,8 +27,8 @@ namespace DotvvmAcademy.Web
             var viewAssembly = EmitToMemory(viewCompilation);
             var className = $"{Path.GetFileNameWithoutExtension(step.EmbeddedView.Path)}EVControlBuilder";
             var builder = (IControlBuilder)viewAssembly.CreateInstance($"DotvvmAcademy.Course.{className}");
-            var controlFactory = context.DotvvmContext.Services.GetRequiredService<IControlBuilderFactory>();
-            return (DotvvmView)builder.BuildControl(controlFactory, context.DotvvmContext.Services);
+            var controlFactory = context.Services.GetRequiredService<IControlBuilderFactory>();
+            return (DotvvmView)builder.BuildControl(controlFactory, context.Services);
         }
 
         private Assembly EmitToMemory(CSharpCompilation compilation)
@@ -44,7 +45,7 @@ namespace DotvvmAcademy.Web
             }
         }
 
-        private string EmitToTemp(EVPresenter.PresenterContext context, CSharpCompilation compilation)
+        private string EmitToTemp(IDotvvmRequestContext context, CSharpCompilation compilation)
         {
             var path = $"{Path.GetTempPath()}/{compilation.AssemblyName}.dll";
             var result = compilation.Emit(path);
@@ -56,11 +57,11 @@ namespace DotvvmAcademy.Web
             return path;
         }
 
-        private (string languageMoniker, string lessonMoniker, string stepMoniker) GetParameters(EVPresenter.PresenterContext context)
+        private (string languageMoniker, string lessonMoniker, string stepMoniker) GetParameters(IDotvvmRequestContext context)
         {
-            if (!context.DotvvmContext.Parameters.TryGetValue("Language", out var languageMoniker)
-                || !context.DotvvmContext.Parameters.TryGetValue("Lesson", out var lessonMoniker)
-                || !context.DotvvmContext.Parameters.TryGetValue("Step", out var stepMoniker))
+            if (!context.Parameters.TryGetValue("Language", out var languageMoniker)
+                || !context.Parameters.TryGetValue("Lesson", out var lessonMoniker)
+                || !context.Parameters.TryGetValue("Step", out var stepMoniker))
             {
                 throw new NotSupportedException("EVPresenter cannot be used with this route.");
             }
@@ -68,10 +69,10 @@ namespace DotvvmAcademy.Web
             return ((string)languageMoniker, (string)lessonMoniker, (string)stepMoniker);
         }
 
-        private async Task<Step> GetStep(EVPresenter.PresenterContext context)
+        private async Task<Step> GetStep(IDotvvmRequestContext context)
         {
             (var languageMoniker, var lessonMoniker, var stepMoniker) = GetParameters(context);
-            var workspace = context.DotvvmContext.Services.GetRequiredService<CourseWorkspace>();
+            var workspace = context.Services.GetRequiredService<CourseWorkspace>();
             var step = await workspace.LoadStep(languageMoniker, lessonMoniker, stepMoniker);
             if (step.EmbeddedView == null)
             {
@@ -81,16 +82,16 @@ namespace DotvvmAcademy.Web
         }
 
         private async Task<CSharpCompilation> GetViewCompilation(
-            EVPresenter.PresenterContext context, 
+            IDotvvmRequestContext context, 
             Step step, 
             Assembly viewModelAssembly, 
             CSharpCompilation viewModelCompilation)
         {
-            var environment = context.DotvvmContext.Services.GetRequiredService<ICourseEnvironment>();
+            var environment = context.Services.GetRequiredService<ICourseEnvironment>();
             var viewSource = await environment.Read(step.EmbeddedView.Path);
-            var builder = context.DotvvmContext.Services.GetRequiredService<EVResolvedTreeBuilder>();
+            var builder = context.Services.GetRequiredService<EVResolvedTreeBuilder>();
             builder.AdditionalAssembly = viewModelAssembly;
-            var viewCompiler = context.DotvvmContext.Services.GetRequiredService<EVViewCompiler>();
+            var viewCompiler = context.Services.GetRequiredService<EVViewCompiler>();
             viewCompiler.AdditionalReference = viewModelCompilation.ToMetadataReference();
             var className = $"{Path.GetFileNameWithoutExtension(step.EmbeddedView.Path)}EVControlBuilder";
             var viewCompilation = viewCompiler.CreateCompilation($"EVView_{Guid.NewGuid()}");
@@ -104,9 +105,9 @@ namespace DotvvmAcademy.Web
             return viewCompilation;
         }
 
-        private async Task<CSharpCompilation> GetViewModelCompilation(EVPresenter.PresenterContext context, Step step)
+        private async Task<CSharpCompilation> GetViewModelCompilation(IDotvvmRequestContext context, Step step)
         {
-            var environment = context.DotvvmContext.Services.GetRequiredService<ICourseEnvironment>();
+            var environment = context.Services.GetRequiredService<ICourseEnvironment>();
             var dependencies = await Task.WhenAll(step.EmbeddedView.Dependencies.Select(async d => await environment.Read(d)));
             var id = Guid.NewGuid();
             var viewModelCompilation = CSharpCompilation.Create(

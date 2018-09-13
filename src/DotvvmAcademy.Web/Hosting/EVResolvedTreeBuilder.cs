@@ -11,7 +11,7 @@ using System.Collections.Immutable;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace DotvvmAcademy.Web
+namespace DotvvmAcademy.Web.Hosting
 {
     public class EVResolvedTreeBuilder : IAbstractTreeBuilder
     {
