@@ -1,32 +1,21 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.IO;
+using Xunit;
 
 namespace DotvvmAcademy.Validation.CSharp.Experiments
 {
-    [TestClass]
     public class SymbolFullNameExperiments : CSharpExperimentBase
     {
         public const string SampleResourceName = "DotvvmAcademy.Validation.CSharp.Experiments.ShopSample.cs";
 
         public string Sample { get; set; }
 
-        [TestInitialize]
-        public void LoadSample()
-        {
-            var assembly = typeof(SymbolFullNameExperiments).Assembly;
-            var stream = assembly.GetManifestResourceStream(SampleResourceName);
-            using (var sr = new StreamReader(stream))
-            {
-                Sample = sr.ReadToEnd();
-            }
-        }
-
-        [TestMethod]
+        [Fact]
         public void SymbolFullNameExperiment()
         {
+            LoadSample();
             var compilation = GetCompilation(Sample, "Shop", new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
             compilation = compilation.AddReferences(GetMetadataReference("System.Linq"));
             var roslyn = new NameAggregationRoslynVisitor();
@@ -41,6 +30,16 @@ namespace DotvvmAcademy.Validation.CSharp.Experiments
             SerializeFullNames(roslyn.FullNames, "roslyn.txt");
             SerializeFullNames(cecil.FullNames, "cecil.txt");
             SerializeFullNames(reflection.FullNames, "reflection.txt");
+        }
+
+        private void LoadSample()
+        {
+            var assembly = typeof(SymbolFullNameExperiments).Assembly;
+            var stream = assembly.GetManifestResourceStream(SampleResourceName);
+            using (var sr = new StreamReader(stream))
+            {
+                Sample = sr.ReadToEnd();
+            }
         }
 
         private void SerializeFullNames(List<string> fullNames, string fileName)

@@ -9,6 +9,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Course/**/*" />
+    <None Remove="Course/**/*" />
+    <Content Remove="Course/**/*" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Course/**/*" CopyToPublishDirectory="Always" />

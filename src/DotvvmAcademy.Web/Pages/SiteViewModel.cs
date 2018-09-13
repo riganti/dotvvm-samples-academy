@@ -12,6 +12,7 @@ namespace DotvvmAcademy.Web.Pages
         public LanguageOption Language { get; set; }
 
         [FromRoute("Language")]
+        [Bind(Direction.ServerToClientFirstRequest)]
         public string LanguageMoniker { get; set; }
 
         [Bind(Direction.ServerToClientFirstRequest)]

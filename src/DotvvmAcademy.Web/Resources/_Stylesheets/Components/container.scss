@@ -30,5 +30,13 @@
             min-width: 100%;
             padding: 0 2rem;
         }
+
+        &.with-flex {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
     }
 }

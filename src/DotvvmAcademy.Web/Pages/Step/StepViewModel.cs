@@ -2,8 +2,6 @@
 using DotvvmAcademy.CourseFormat;
 using DotvvmAcademy.Meta;
 using DotvvmAcademy.Validation.Unit;
-using DotvvmAcademy.Web.Resources.Localization;
-using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
@@ -13,101 +11,124 @@ namespace DotvvmAcademy.Web.Pages.Step
 {
     public class StepViewModel : SiteViewModel
     {
-        private readonly ValidationScriptRunner runner;
-        private readonly StepRenderer stepRenderer;
+        private readonly ICourseEnvironment environment;
         private readonly CodeTaskValidator validator;
         private readonly CourseWorkspace workspace;
-        private Lesson lesson;
-        private RenderedStep renderedStep;
 
         public StepViewModel(
             CourseWorkspace workspace,
-            CodeTaskValidator validator,
-            StepRenderer stepRenderer,
-            ValidationScriptRunner runner)
+            ICourseEnvironment environment,
+            CodeTaskValidator validator)
         {
             this.workspace = workspace;
+            this.environment = environment;
             this.validator = validator;
-            this.stepRenderer = stepRenderer;
-            this.runner = runner;
         }
 
-        public string Code { get; set; }
-
-        [Bind(Direction.None)]
-        public string CodeLanguage { get; set; }
-
-        [Bind(Direction.ServerToClient)]
-        public string FooterText => IsCodeCorrect ? UIResources.Base_Correct_Solution : UIResources.Base_Incorrect_Solution;
-
-        [Bind(Direction.ServerToClient)]
-        public bool HasCodeTask { get; set; }
-
-        [Bind(Direction.ServerToClient)]
-        public bool IsCodeCorrect => !(Markers?.Any()).GetValueOrDefault();
-
-        [Bind(Direction.None)]
-        public bool IsNextVisible { get; set; }
-
-        [Bind(Direction.None)]
-        public bool IsPreviousVisible { get; set; }
+        public CodeTaskDetail CodeTask { get; set; }
 
         [FromRoute("Lesson")]
-        public string Lesson { get; set; }
+        [Bind(Direction.ServerToClientFirstRequest)]
+        public string LessonMoniker { get; set; }
 
-        [Bind(Direction.ServerToClient)]
-        public List<MonacoMarker> Markers { get; set; } = new List<MonacoMarker>();
+        [Bind(Direction.ServerToClientFirstRequest)]
+        public StepDetail Step { get; set; }
 
-        [Bind(Direction.ServerToClient)]
-        public string Name { get; set; }
+        [Bind(Direction.ServerToClientFirstRequest)]
+        public IEnumerable<StepListDetail> Steps { get; set; }
 
-        [Bind(Direction.ServerToClient)]
-        public string NextStep { get; set; }
-
-        [Bind(Direction.ServerToClient)]
-        public string PreviousStep { get; set; }
-
-        [FromRoute("Step"), Bind(Direction.None)]
-        public string Step { get; set; }
-
-        [Bind(Direction.None)]
-        public string Text { get; set; }
+        [FromRoute("Step")]
+        [Bind(Direction.ServerToClientFirstRequest)]
+        public string StepMoniker { get; set; }
 
         public override async Task Load()
         {
-            lesson = await workspace.LoadLesson(LanguageMoniker, Lesson);
-            var step = await workspace.LoadStep(LanguageMoniker, Lesson, Step);
-            renderedStep = stepRenderer.Render(step);
-            SetButtonProperties();
-            await SetEditorProperties();
-            Name = renderedStep.Name;
-            Text = renderedStep.Html;
+            var lesson = await workspace.LoadLesson(LanguageMoniker, LessonMoniker);
+            var steps = await Task.WhenAll(lesson.Steps.Select(async s => await workspace.LoadStep(LanguageMoniker, LessonMoniker, s)));
+            Steps = steps.Select(s => new StepListDetail { Moniker = s.Moniker, Name = s.Name });
+            var step = await workspace.LoadStep(LanguageMoniker, LessonMoniker, StepMoniker);
+            var index = lesson.Steps.IndexOf(StepMoniker);
+            Step = new StepDetail
+            {
+                Html = step.Text,
+                Name = step.Name,
+                PreviousStep = lesson.Steps.ElementAtOrDefault(index - 1),
+                NextStep = lesson.Steps.ElementAtOrDefault(index + 1),
+                HasCodeTask = step.CodeTask != null,
+                HasEmbeddedView = step.EmbeddedView != null
+            };
+            if (step.CodeTask != null)
+            {
+                if (!Context.IsPostBack)
+                {
+                    CodeTask = new CodeTaskDetail();
+                }
+                CodeTask.ValidationScriptPath = step.CodeTask.ValidationScriptPath;
+                if (!Context.IsPostBack)
+                {
+                    await Reset();
+                }
+            }
+
             await base.Load();
         }
 
         public async Task Reset()
         {
-            var unit = await runner.Run(renderedStep.CodeTaskPath);
-            var defaultCodePath = unit.Provider.GetRequiredService<CodeTaskOptions>().DefaultCodePath;
-            var resource = await workspace.Load<Resource>(defaultCodePath);
-            Code = resource.Text;
+            var script = await workspace.Require<ValidationScript>(CodeTask.ValidationScriptPath);
+            CodeTask = new CodeTaskDetail
+            {
+                Code = await environment.Read(script.Unit.GetCodeTaskOptions().DefaultCodePath),
+                CodeLanguage = script.Unit.GetValidatedLanguage()
+            };
         }
 
         public async Task ShowSolution()
         {
-            var unit = await runner.Run(renderedStep.CodeTaskPath);
-            var correctCodePath = unit.Provider.GetRequiredService<CodeTaskOptions>().CorrectCodePath;
-            var resource = await workspace.Load<Resource>(correctCodePath);
-            Code = resource.Text;
+            var script = await workspace.Require<ValidationScript>(CodeTask.ValidationScriptPath);
+            var correctCodePath = script.Unit.GetCodeTaskOptions().CorrectCodePath;
+            CodeTask.Code = await environment.Read(correctCodePath);
         }
 
         public async Task Validate()
         {
-            var unit = await runner.Run(renderedStep.CodeTaskPath);
-            var converter = new PositionConverter(Code);
-            var diagnostics = await validator.Validate(unit, Code);
-            Markers = diagnostics
-                .Select(d => GetMarker(converter, d))
+            var script = await workspace.Require<ValidationScript>(CodeTask.ValidationScriptPath);
+            var converter = new PositionConverter(CodeTask.Code);
+            var diagnostics = await validator.Validate(script.Unit, CodeTask.Code);
+            if (diagnostics.Length == 0)
+            {
+                Context.RedirectToRoute("Step", new { Step = Step.NextStep });
+            }
+
+            MonacoMarker GetMarker(CodeTaskDiagnostic diagnostic)
+            {
+                int startLineNumber, startColumn;
+                int endLineNumber, endColumn;
+                if (diagnostic.Start == -1 && diagnostic.End == -1)
+                {
+                    // a global diagnostic should remain global
+                    (startLineNumber, startColumn) = (-1, -1);
+                    (endLineNumber, endColumn) = (-1, -1);
+                }
+                else
+                {
+                    // interval [start, end) is half-open
+                    (startLineNumber, startColumn) = converter.ToCoords(diagnostic.Start);
+                    (endLineNumber, endColumn) = converter.ToCoords(diagnostic.End - 1);
+                    // however, Monaco's intervals are half-open too, we have to compensate for that
+                    endColumn++;
+                }
+                return new MonacoMarker(
+                    message: diagnostic.Message,
+                    severity: diagnostic.Severity.ToMonacoSeverity(),
+                    startLineNumber: startLineNumber,
+                    startColumn: startColumn,
+                    endLineNumber: endLineNumber,
+                    endColumn: endColumn);
+            }
+
+            CodeTask.Markers = diagnostics
+                .Select(GetMarker)
                 .OrderBy(m => (m.StartLineNumber, m.StartColumn))
                 .OrderBy(m => m.Severity)
                 .ToList();
@@ -119,69 +140,13 @@ namespace DotvvmAcademy.Web.Pages.Step
             var builder = ImmutableArray.CreateBuilder<string>();
             foreach (var variant in root.Variants)
             {
-                var step = await workspace.LoadStep(variant, Lesson, Step);
+                var step = await workspace.LoadStep(variant, LessonMoniker, StepMoniker);
                 if (step != null)
                 {
                     builder.Add(variant);
                 }
             }
             return builder.ToImmutable();
-        }
-
-        private MonacoMarker GetMarker(PositionConverter converter, CodeTaskDiagnostic diagnostic)
-        {
-            int startLineNumber;
-            int startColumn;
-            int endLineNumber;
-            int endColumn;
-            if (diagnostic.Start == -1 && diagnostic.End == -1)
-            {
-                // a global diagnostic should remain global
-                (startLineNumber, startColumn) = (-1, -1);
-                (endLineNumber, endColumn) = (-1, -1);
-            }
-            else
-            {
-                // the interval [start, end) is half-open and end may not actually exist!
-                (startLineNumber, startColumn) = converter.ToCoords(diagnostic.Start);
-                (endLineNumber, endColumn) = converter.ToCoords(diagnostic.End - 1);
-                // however, Monaco's intervals are half-open too, we have to compensate for that
-                endColumn++;
-            }
-            return new MonacoMarker(
-                message: diagnostic.Message,
-                severity: diagnostic.Severity.ToMonacoSeverity(),
-                startLineNumber: startLineNumber,
-                startColumn: startColumn,
-                endLineNumber: endLineNumber,
-                endColumn: endColumn);
-        }
-
-        private void SetButtonProperties()
-        {
-            var index = lesson.Steps.IndexOf(Step);
-            IsPreviousVisible = index > 0;
-            IsNextVisible = index < lesson.Steps.Length - 1;
-            if (IsPreviousVisible)
-            {
-                PreviousStep = lesson.Steps[index - 1];
-            }
-            if (IsNextVisible)
-            {
-                NextStep = lesson.Steps[index + 1];
-            }
-        }
-
-        private async Task SetEditorProperties()
-        {
-            HasCodeTask = renderedStep.CodeTaskPath != null;
-            if (!Context.IsPostBack && HasCodeTask)
-            {
-                var unit = await runner.Run(renderedStep.CodeTaskPath);
-                var defaultCodePath = unit.Provider.GetRequiredService<CodeTaskOptions>().DefaultCodePath;
-                Code = defaultCodePath == null ? string.Empty : (await workspace.Load<Resource>(defaultCodePath)).Text;
-                CodeLanguage = unit.GetValidatedLanguage();
-            }
         }
     }
 }

@@ -1,12 +1,9 @@
 ﻿using DotvvmAcademy.Validation;
 using DotvvmAcademy.Validation.CSharp;
-using DotvvmAcademy.Validation.CSharp.Unit;
 using DotvvmAcademy.Validation.Dothtml;
-using DotvvmAcademy.Validation.Dothtml.Unit;
 using DotvvmAcademy.Validation.Unit;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,62 +12,51 @@ namespace DotvvmAcademy.CourseFormat
 {
     public class CodeTaskValidator
     {
-        private readonly CSharpValidationService csharpService;
-        private readonly DothtmlValidationService dothtmlService;
+        private readonly ICourseEnvironment environment;
+        private readonly IServiceProvider provider;
         private readonly CourseWorkspace workspace;
 
         public CodeTaskValidator(
+            ICourseEnvironment environment,
             CourseWorkspace workspace,
-            CSharpValidationService csharpService,
-            DothtmlValidationService dothtmlService)
+            IServiceProvider provider)
         {
+            this.environment = environment;
             this.workspace = workspace;
-            this.csharpService = csharpService;
-            this.dothtmlService = dothtmlService;
+            this.provider = provider;
         }
 
-        public async Task<ImmutableArray<CodeTaskDiagnostic>> Validate(IUnit unit, string code)
+        public async Task<ImmutableArray<CodeTaskDiagnostic>> Validate(IValidationUnit unit, string code)
         {
-            ImmutableArray<IValidationDiagnostic> diagnostics;
             var configuration = unit.Provider.GetRequiredService<CodeTaskOptions>();
-            var sourceCodeTasks = configuration.SourcePaths.Select(p => GetSourceCode(p.Key, p.Value));
-            var sourceCodes = (await Task.WhenAll(sourceCodeTasks)).ToImmutableArray();
-            switch (unit)
-            {
-                case CSharpUnit csharpUnit:
-                    sourceCodes = sourceCodes.Add(new CSharpSourceCode(code, configuration.FileName, true));
-                    diagnostics = await csharpService.Validate(csharpUnit, sourceCodes);
-                    break;
-
-                case DothtmlUnit dothtmlUnit:
-                    sourceCodes = sourceCodes.Add(new DothtmlSourceCode(code, configuration.FileName, true));
-                    diagnostics = await dothtmlService.Validate(dothtmlUnit, sourceCodes);
-                    break;
-
-                default:
-                    throw new NotSupportedException($"{nameof(IUnit)} type '{unit.GetType().Name}' is not supported.");
-            }
-
-            return diagnostics.Select(d => new CodeTaskDiagnostic(
-                message: d.Message,
-                start: d.Start,
-                end: d.End,
-                severity: d.Severity.ToCodeTaskDiagnosticSeverity()))
-                    .ToImmutableArray();
+            var sourceCodeTasks = configuration.SourcePaths.Select(async p => (fileName: p.Key, source: await environment.Read(p.Value)));
+            var sourceCodes = (await Task.WhenAll(sourceCodeTasks))
+                .Select(t => CreateSourceCode(t.fileName, t.source, false))
+                .ToImmutableArray()
+                .Add(CreateSourceCode(configuration.FileName, code, true));
+            var validationServiceType = typeof(IValidationService<>).MakeGenericType(unit.GetType());
+            var validationService = (IValidationService)provider.GetRequiredService(validationServiceType);
+            var diagnostics = await validationService.Validate(unit, sourceCodes);
+            return diagnostics.Select(d =>
+                new CodeTaskDiagnostic(
+                    message: d.Message,
+                    start: d.Start,
+                    end: d.End,
+                    severity: d.Severity.ToCodeTaskDiagnosticSeverity()))
+                .ToImmutableArray();
         }
 
-        private async Task<ISourceCode> GetSourceCode(string fileName, string sourcePath)
+        private ISourceCode CreateSourceCode(string fileName, string source, bool isValidated)
         {
-            var resource = await workspace.Require<Resource>(sourcePath);
             // TODO: Judging file type merely by extension is not exactly great
-            var extension = SourcePath.GetExtension(resource.Path).ToString();
+            var extension = SourcePath.GetExtension(fileName).ToString();
             switch (extension)
             {
                 case ".cs":
-                    return new CSharpSourceCode(resource.Text, fileName, false);
+                    return new CSharpSourceCode(source, fileName, isValidated);
 
                 case ".dothtml":
-                    return new DothtmlSourceCode(resource.Text, fileName, false);
+                    return new DothtmlSourceCode(source, fileName, isValidated);
 
                 default:
                     throw new NotSupportedException($"File extension '{extension}' is not supported.");

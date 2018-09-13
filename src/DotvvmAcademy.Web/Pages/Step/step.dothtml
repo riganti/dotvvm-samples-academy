@@ -4,77 +4,70 @@
 
 <dot:Content ContentPlaceHolderID="MainContent">
     <section class="section-lesson">
-        <div class="container-large">
-            <%--<dot:Repeater DataSource="{value: Steps}" class="lesson-progress-bar" RenderSettings.Mode="Server">
-                <div class="{value: IsStepFinish ? "progress-item completed" : "progress-item"}">
-                    <span>{{value: StepNumber}}</span>
-                </div>
-            </dot:Repeater>--%>
-        </div>
-        <div class="container-small">
-            <dot:HtmlLiteral Html="{resource: Text}" class="step-info-box" />
-            <div IncludeInPage="{value: HasCodeTask}"
-                 Visible="{resource: HasCodeTask}"
+        <div class="container-large with-flex">
+            <dot:HtmlLiteral Html="{resource: Step.Html}"
+                             Class-no-flex="{resource: !Step.HasCodeTask && !Step.HasEmbeddedView}"
+                             class="step-info-box" />
+            <div IncludeInPage="{resource: Step.HasCodeTask}"
                  class="code-bg">
-                <cc:MonacoEditor Code="{value: Code}"
-                                 Markers="{value: Markers}"
-                                 Language="{resource: CodeLanguage}"
-                                 class="code-container"/>
-                <div class="buttons-container">
-                    <div>
-                        <dot:Button Click="{command: Reset()}" Text="Reset" class="button small" />
-                    </div>
-                    <div>
-                        <dot:Button Click="{command: ShowSolution()}" Text="Show Solution" class="button small success" />
-                        <dot:Button Click="{command: Validate()}" Text="Validate" class="button small" />
-                    </div>
-                </div>
-                <cc:DiagnosticList Diagnostics="{value: Markers}" />
+                <cc:MonacoEditor Code="{value: CodeTask.Code}"
+                                 Markers="{value: CodeTask.Markers}"
+                                 Language="{resource: CodeTask.CodeLanguage}"
+                                 class="code-container" />
+                <cc:DiagnosticList Diagnostics="{value: CodeTask.Markers}" />
+            </div>
+            <div IncludeInPage="{resource: Step.HasEmbeddedView}"
+                 class="embedded-view">
+                <iframe src="{resource: "/embeddedView/" + LanguageMoniker + "/" + LessonMoniker + "/" + StepMoniker}" />
             </div>
         </div>
     </section>
 </dot:Content>
 
 <dot:content ContentPlaceHolderID="FooterContent">
-    <div class="lesson-footer-container" 
-         Class-success="{value: IsCodeCorrect}">
-        <div class="container-small">
-            <div class="ico-container">
-                <div Visible="{value:  IsCodeCorrect}">
-                    <cc:SvgToHtml Source="/images/Icons/success.svg"/>
-                </div>
-                <div Visible="{value: !IsCodeCorrect}">
-                    <cc:SvgToHtml Source="/images/icons/failed.svg"/>
-                </div>
-                <dot:Literal Text="{value: FooterText}" />
-            </div>
-            <div>
+    <div class="lesson-footer-container">
+        <div class="container-large with-flex">
+            <div class="pager">
                 <dot:RouteLink RouteName="Step"
                                ButtonTagName="button"
-                               class="button"
+                               class="pager__button"
                                Param-Language="{value: LanguageMoniker}"
-                               Param-Lesson="{value: Lesson}"
-                               Param-Step="{value: PreviousStep}"
-                               Visible="{resource: IsPreviousVisible}"
-                               Class-success="{value: false}"
+                               Param-Lesson="{value: LessonMoniker}"
+                               Param-Step="{value: Step.PreviousStep ?? string.Empty}"
+                               Enabled="{value: Step.PreviousStep != null}"
                                Text="{resource: UIResources.Btn_PreviousStep}" />
 
-                <dot:RouteLink RouteName="Step"
-                               class="button"
-                               ButtonTagName="button"
-                               Param-Language="{value: LanguageMoniker}"
-                               Param-Lesson="{value: Lesson}"
-                               Param-Step="{value: NextStep}"
-                               Visible="{resource: IsNextVisible}"
-                               Class-success="{value: false}"
-                               Text="{resource: UIResources.Btn_NextStep}" />
+                <dot:Repeater DataSource="{value: Steps}">
+                    <dot:RouteLink RouteName="Step"
+                                   class="pager__item"
+                                   Class-active="{value: _root.StepMoniker == Moniker}"
+                                   Param-Language="{value: _root.LanguageMoniker}"
+                                   Param-Lesson="{value: _root.LessonMoniker}"
+                                   Param-Step="{value: Moniker}"
+                                   Tooltip="{value: Name}" />
+                </dot:Repeater>
+
+                <dot:Button Click="{command: Validate()}"
+                            class="pager__button"
+                            Enabled="{value: Step.NextStep != null}"
+                            Text="{resource: UIResources.Btn_NextStep}" />
+            </div>
+
+            <div class="buttons-container">
+
+                <dot:Button Click="{command: Reset()}"
+                            Text="Reset"
+                            class="button" />
+
+                <dot:Button Click="{command: ShowSolution()}"
+                            Text="Show Solution"
+                            class="button" />
 
                 <dot:RouteLink RouteName="Default"
-                               class="button"
+                               class="button success"
                                ButtonTagName="button"
                                Param-Language="{value: LanguageMoniker}"
-                               Visible="{resource: IsPreviousVisible && !IsNextVisible}"
-                               Class-success="{value: false}"
+                               Visible="{resource: Step.NextStep == null}"
                                Text="{resource: UIResources.Btn_Finish}" />
             </div>
         </div>

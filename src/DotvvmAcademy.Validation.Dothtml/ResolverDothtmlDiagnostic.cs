@@ -1,4 +1,5 @@
 ﻿using DotvvmAcademy.Validation.Dothtml.ValidationTree;
+using System.Collections.Generic;
 
 namespace DotvvmAcademy.Validation.Dothtml
 {
@@ -6,15 +7,19 @@ namespace DotvvmAcademy.Validation.Dothtml
     {
         public ResolverDothtmlDiagnostic(
             string message,
+            IEnumerable<object> arguments,
             ValidationTreeNode node,
             DothtmlSourceCode source,
             ValidationSeverity severity)
         {
             Message = message;
+            Arguments = arguments;
             Severity = severity;
             Node = node;
             Source = source;
         }
+
+        public IEnumerable<object> Arguments { get; }
 
         public string Message { get; }
 
@@ -22,13 +27,13 @@ namespace DotvvmAcademy.Validation.Dothtml
 
         public ValidationSeverity Severity { get; }
 
-        public int End => Node?.DothtmlNode.EndPosition ?? -1;
-
-        public int Start => Node?.DothtmlNode.StartPosition ?? -1;
-
         public DothtmlSourceCode Source { get; }
 
+        public int End => Node?.DothtmlNode.EndPosition ?? -1;
+
         ISourceCode IValidationDiagnostic.Source => Source;
+
+        public int Start => Node?.DothtmlNode.StartPosition ?? -1;
 
         object IValidationDiagnostic.UnderlyingObject => Node;
     }

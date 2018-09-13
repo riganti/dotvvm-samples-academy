@@ -1,22 +1,24 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.IO;
+using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace DotvvmAcademy.CourseFormat.Tests
 {
-    [TestClass]
     public class CourseWorkspaceTests
     {
-        [TestMethod]
-        public async Task BasicLoadingTest()
+        [Fact]
+        public async Task CourseWorkspace_Loading_NotNull()
         {
-            var wrapper = new CourseCacheWrapper();
-            var environment = new CourseEnvironment(new DirectoryInfo("../../../../../sample/sample_course"));
-            var loader = new SourceLoader(environment);
-            var workspace = new CourseWorkspace(environment, loader, wrapper);
-            var variant = await workspace.Load<CourseVariant>("/content/en");
+            var collection = new ServiceCollection();
+            collection.AddCourseFormat("../../../../../sample/sample_course");
+            var provider = collection.BuildServiceProvider();
+            var workspace = provider.GetRequiredService<CourseWorkspace>();
+            var variant = await workspace.Load<Variant>("/content/en");
+            Assert.NotNull(variant);
             var lesson = await workspace.Load<Lesson>("/content/en/calculator");
+            Assert.NotNull(lesson);
             var step = await workspace.Load<Step>("/content/en/calculator/10_a_classic");
+            Assert.NotNull(step);
         }
     }
 }

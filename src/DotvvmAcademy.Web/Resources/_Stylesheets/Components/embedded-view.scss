@@ -1,0 +1,19 @@
+﻿@import "../Base/_global.scss";
+
+.embedded-view {
+    flex: 0 0 55%;
+    width: 55%;
+    max-width: 55%;
+    align-self: flex-start;
+
+    iframe {
+        width: 100%;
+        height: 100%
+    }
+
+    @include res-max-desktop-large {
+        flex: 0 0 100%;
+        width: 100%;
+        max-width: 100%;
+    }
+}

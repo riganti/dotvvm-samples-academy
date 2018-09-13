@@ -45,24 +45,6 @@ namespace DotvvmAcademy.Meta
                 case NameNodeKind.ArrayType:
                     return GetTypeFromAssemblies(node.ToString());
 
-                case NameNodeKind.BoolType:
-                case NameNodeKind.ByteType:
-                case NameNodeKind.SByteType:
-                case NameNodeKind.IntType:
-                case NameNodeKind.UIntType:
-                case NameNodeKind.ShortType:
-                case NameNodeKind.UShortType:
-                case NameNodeKind.LongType:
-                case NameNodeKind.ULongType:
-                case NameNodeKind.FloatType:
-                case NameNodeKind.DoubleType:
-                case NameNodeKind.DecimalType:
-                case NameNodeKind.StringType:
-                case NameNodeKind.CharType:
-                case NameNodeKind.ObjectType:
-                case NameNodeKind.VoidType:
-                    return VisitPredefinedType((PredefinedTypeNameNode)node);
-
                 case NameNodeKind.ConstructedType:
                     return VisitConstructedType((ConstructedTypeNameNode)node);
 
@@ -91,82 +73,6 @@ namespace DotvvmAcademy.Meta
             return Visit(member.Type)
                 .OfType<Type>()
                 .SelectMany(t => t.GetMember(memberName, BindingFlags.Public | BindingFlags.NonPublic));
-        }
-
-        private IEnumerable<MemberInfo> VisitPredefinedType(PredefinedTypeNameNode predefinedType)
-        {
-            MemberInfo result;
-            switch (predefinedType.Kind)
-            {
-                case NameNodeKind.BoolType:
-                    result = typeof(bool);
-                    break;
-
-                case NameNodeKind.ByteType:
-                    result = typeof(byte);
-                    break;
-
-                case NameNodeKind.SByteType:
-                    result = typeof(sbyte);
-                    break;
-
-                case NameNodeKind.IntType:
-                    result = typeof(int);
-                    break;
-
-                case NameNodeKind.UIntType:
-                    result = typeof(uint);
-                    break;
-
-                case NameNodeKind.ShortType:
-                    result = typeof(short);
-                    break;
-
-                case NameNodeKind.UShortType:
-                    result = typeof(ushort);
-                    break;
-
-                case NameNodeKind.LongType:
-                    result = typeof(long);
-                    break;
-
-                case NameNodeKind.ULongType:
-                    result = typeof(ulong);
-                    break;
-
-                case NameNodeKind.FloatType:
-                    result = typeof(float);
-                    break;
-
-                case NameNodeKind.DoubleType:
-                    result = typeof(double);
-                    break;
-
-                case NameNodeKind.DecimalType:
-                    result = typeof(decimal);
-                    break;
-
-                case NameNodeKind.StringType:
-                    result = typeof(string);
-                    break;
-
-                case NameNodeKind.CharType:
-                    result = typeof(char);
-                    break;
-
-                case NameNodeKind.ObjectType:
-                    result = typeof(object);
-                    break;
-
-                case NameNodeKind.VoidType:
-                    result = typeof(void);
-                    break;
-
-                default:
-                    throw new NotSupportedException($"{nameof(NameNodeKind)} '{predefinedType.Kind}' is not " +
-                        $"a supported prefined type kind.");
-            }
-            return ImmutableArray.Create(result);
         }
     }
 }

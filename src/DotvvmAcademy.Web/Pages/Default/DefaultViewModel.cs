@@ -8,14 +8,15 @@ namespace DotvvmAcademy.Web.Pages.Default
 {
     public class DefaultViewModel : SiteViewModel
     {
-        private readonly LessonRenderer lessonRenderer;
         private readonly CourseWorkspace workspace;
 
-        public DefaultViewModel(CourseWorkspace workspace, LessonRenderer lessonRenderer)
+        public DefaultViewModel(CourseWorkspace workspace)
         {
             this.workspace = workspace;
-            this.lessonRenderer = lessonRenderer;
         }
+
+        [Bind(Direction.ServerToClientFirstRequest)]
+        public LessonDetail FirstLesson { get; set; }
 
         [Bind(Direction.ServerToClientFirstRequest)]
         public List<LessonDetail> Lessons { get; set; }
@@ -27,18 +28,17 @@ namespace DotvvmAcademy.Web.Pages.Default
             var lessons = await Task.WhenAll(lessonTasks);
             Lessons = lessons.Select(l =>
             {
-                var rendered = lessonRenderer.Render(l);
                 return new LessonDetail
                 {
-                    Annotation = rendered.Source.Annotation,
-                    FirstStep = rendered.Source.Steps.FirstOrDefault(),
-                    Html = rendered.Html,
-                    ImageUrl = rendered.ImageUrl,
-                    Moniker = rendered.Source.Moniker,
-                    Name = rendered.Name
+                    FirstStep = l.Steps.FirstOrDefault(),
+                    Html = l.Annotation,
+                    ImageUrl = l.ImageUrl,
+                    Moniker = l.Moniker,
+                    Name = l.Name
                 };
             })
             .ToList();
+            FirstLesson = Lessons.FirstOrDefault();
             await base.Load();
         }
 

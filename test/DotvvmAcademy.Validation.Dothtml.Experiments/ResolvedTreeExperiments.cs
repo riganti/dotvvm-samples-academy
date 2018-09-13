@@ -4,11 +4,10 @@ using DotVVM.Framework.Compilation.Parser.Dothtml.Tokenizer;
 using DotVVM.Framework.Configuration;
 using DotVVM.Framework.Security;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace DotvvmAcademy.Validation.Dothtml.Experiments
 {
-    [TestClass]
     public class ResolvedTreeExperiments
     {
         public const string Sample = @"
@@ -23,8 +22,8 @@ namespace DotvvmAcademy.Validation.Dothtml.Experiments
     </body>
 </html>";
 
-        [TestMethod]
-        public void BasicCompilerExperiment()
+        [Fact]
+        public void DothtmlCompiler_CompileSample_DoesNotThrow()
         {
             var tokenizer = new DothtmlTokenizer();
             var parser = new DothtmlParser();
@@ -35,8 +34,8 @@ namespace DotvvmAcademy.Validation.Dothtml.Experiments
             var root = resolver.ResolveTree(rootNode, "Test.dothtml");
         }
 
-        [TestMethod]
-        public void HtmlAttributesExperiment()
+        [Fact]
+        public void DothtmlCompiler_WithAttributes_ResolvesProperty()
         {
             var tokenizer = new DothtmlTokenizer();
             var parser = new DothtmlParser();

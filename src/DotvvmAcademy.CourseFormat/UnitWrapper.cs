@@ -3,7 +3,7 @@
 namespace DotvvmAcademy.CourseFormat
 {
     public class UnitWrapper<TUnit>
-        where TUnit : IUnit
+        where TUnit : IValidationUnit
     {
         public UnitWrapper(TUnit unit)
         {

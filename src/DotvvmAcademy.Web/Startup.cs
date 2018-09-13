@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using DotvvmAcademy.Web.Hosting;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DotvvmAcademy.Web
@@ -15,6 +16,14 @@ namespace DotvvmAcademy.Web
         {
             services.AddDotVVM<DotvvmStartup>();
             services.AddCourseFormat("./Course");
+            services.AddScoped<RegularLifecycleStrategy>();
+            services.AddScoped<PostbackLifecycleStrategy>();
+            services.AddScoped<EVRegularLifecycleStrategy>();
+            services.AddScoped<EVPostbackLifecycleStrategy>();
+            services.AddScoped<EVHackService>();
+            services.AddScoped<EVControlTreeResolver>();
+            services.AddScoped<EVResolvedTreeBuilder>();
+            services.AddScoped<EVViewCompiler>();
         }
     }
 }
