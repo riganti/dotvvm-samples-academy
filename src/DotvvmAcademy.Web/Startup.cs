@@ -15,6 +15,11 @@ namespace DotvvmAcademy.Web
         {
             services.AddDotVVM<DotvvmStartup>();
             services.AddCourseFormat("./Course");
+            services.AddSingleton<EVPresenter>();
+            services.AddScoped<EVHackService>();
+            services.AddScoped<EVControlTreeResolver>();
+            services.AddScoped<EVResolvedTreeBuilder>();
+            services.AddScoped<EVViewCompiler>();
         }
     }
 }

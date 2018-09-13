@@ -62,6 +62,10 @@ namespace DotvvmAcademy.Web
                 virtualPath: "Pages/Default/default.dothtml",
                 defaultValues: new { Language = "en" },
                 presenterFactory: LocalizablePresenter.BasedOnParameter("Language"));
+            config.RouteTable.Add(
+                routeName: "EmbeddedView",
+                url: "embeddedView/{Language}/{Lesson}/{Step}",
+                typeof(EVPresenter));
         }
     }
 }

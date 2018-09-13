@@ -5,14 +5,18 @@
 <dot:Content ContentPlaceHolderID="MainContent">
     <section class="section-lesson">
         <div class="container-large with-flex">
-            <dot:HtmlLiteral Html="{resource: Step.Html}" class="step-info-box" Class-no-flex="{resource: CodeTask == null}" />
-            <div IncludeInPage="{resource: CodeTask != null}"
+            <dot:HtmlLiteral Html="{resource: Step.Html}" class="step-info-box" Class-no-flex="{resource: Step.HasCodeTask}" />
+            <div IncludeInPage="{resource: Step.HasCodeTask}"
                  class="code-bg">
                 <cc:MonacoEditor Code="{value: CodeTask.Code}"
                                  Markers="{value: CodeTask.Markers}"
                                  Language="{resource: CodeTask.CodeLanguage}"
                                  class="code-container" />
                 <cc:DiagnosticList Diagnostics="{value: CodeTask.Markers}" />
+            </div>
+            <div class="embedded-view" IncludeInPage="{resource: Step.HasEmbeddedView}">
+                <iframe src="{resource: "/embeddedView/" + LanguageMoniker + "/" + LessonMoniker + "/" + StepMoniker}"
+                        style="width: 100rem; height: 100rem;"/>
             </div>
         </div>
     </section>

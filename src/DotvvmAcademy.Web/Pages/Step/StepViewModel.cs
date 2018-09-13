@@ -28,6 +28,7 @@ namespace DotvvmAcademy.Web.Pages.Step
         public CodeTaskDetail CodeTask { get; set; }
 
         [FromRoute("Lesson")]
+        [Bind(Direction.ServerToClientFirstRequest)]
         public string LessonMoniker { get; set; }
 
         [Bind(Direction.ServerToClientFirstRequest)]
@@ -36,7 +37,8 @@ namespace DotvvmAcademy.Web.Pages.Step
         [Bind(Direction.ServerToClientFirstRequest)]
         public IEnumerable<StepListDetail> Steps { get; set; }
 
-        [FromRoute("Step"), Bind(Direction.None)]
+        [FromRoute("Step")]
+        [Bind(Direction.ServerToClientFirstRequest)]
         public string StepMoniker { get; set; }
 
         public override async Task Load()
@@ -51,15 +53,17 @@ namespace DotvvmAcademy.Web.Pages.Step
                 Html = step.Text,
                 Name = step.Name,
                 PreviousStep = lesson.Steps.ElementAtOrDefault(index - 1),
-                NextStep = lesson.Steps.ElementAtOrDefault(index + 1)
+                NextStep = lesson.Steps.ElementAtOrDefault(index + 1),
+                HasCodeTask = step.CodeTask != null,
+                HasEmbeddedView = step.EmbeddedView != null
             };
-            if (!string.IsNullOrEmpty(step.CodeTaskPath))
+            if (step.CodeTask != null)
             {
                 if (!Context.IsPostBack)
                 {
                     CodeTask = new CodeTaskDetail();
                 }
-                CodeTask.Path = step.CodeTaskPath;
+                CodeTask.ValidationScriptPath = step.CodeTask.ValidationScriptPath;
                 if (!Context.IsPostBack)
                 {
                     await Reset();
@@ -71,7 +75,7 @@ namespace DotvvmAcademy.Web.Pages.Step
 
         public async Task Reset()
         {
-            var script = await workspace.Require<ValidationScript>(CodeTask.Path);
+            var script = await workspace.Require<ValidationScript>(CodeTask.ValidationScriptPath);
             CodeTask = new CodeTaskDetail
             {
                 Code = await environment.Read(script.Unit.GetCodeTaskOptions().DefaultCodePath),
@@ -81,14 +85,14 @@ namespace DotvvmAcademy.Web.Pages.Step
 
         public async Task ShowSolution()
         {
-            var script = await workspace.Require<ValidationScript>(CodeTask.Path);
+            var script = await workspace.Require<ValidationScript>(CodeTask.ValidationScriptPath);
             var correctCodePath = script.Unit.GetCodeTaskOptions().CorrectCodePath;
             CodeTask.Code = await environment.Read(correctCodePath);
         }
 
         public async Task Validate()
         {
-            var script = await workspace.Require<ValidationScript>(CodeTask.Path);
+            var script = await workspace.Require<ValidationScript>(CodeTask.ValidationScriptPath);
             var converter = new PositionConverter(CodeTask.Code);
             var diagnostics = await validator.Validate(script.Unit, CodeTask.Code);
             if (diagnostics.Length == 0)
