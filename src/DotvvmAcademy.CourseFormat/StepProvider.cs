@@ -34,12 +34,11 @@ namespace DotvvmAcademy.CourseFormat
                 var step = new Step(
                     path: path,
                     text: html,
-                    name: frontMatter.Title);
-                if (frontMatter.CodeTask != null)
+                    name: frontMatter.Title)
                 {
-                    step.CodeTask = new CodeTask(frontMatter.CodeTask);
-                }
-
+                    ValidationScriptPath = frontMatter.CodeTask,
+                    SolutionArchivePath = frontMatter.Solution
+                };
                 if (frontMatter.EmbeddedView != null)
                 {
                     var dependencies = frontMatter.EmbeddedView.Dependencies?.ToImmutableArray() ?? ImmutableArray.Create<string>();

@@ -24,6 +24,7 @@ namespace DotvvmAcademy.Web
             services.AddScoped<EVControlTreeResolver>();
             services.AddScoped<EVResolvedTreeBuilder>();
             services.AddScoped<EVViewCompiler>();
+            services.AddSingleton<ArchivePresenter>();
         }
     }
 }

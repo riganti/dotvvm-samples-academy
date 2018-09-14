@@ -54,16 +54,17 @@ namespace DotvvmAcademy.Web.Pages.Step
                 Name = step.Name,
                 PreviousStep = lesson.Steps.ElementAtOrDefault(index - 1),
                 NextStep = lesson.Steps.ElementAtOrDefault(index + 1),
-                HasCodeTask = step.CodeTask != null,
-                HasEmbeddedView = step.EmbeddedView != null
+                HasCodeTask = step.ValidationScriptPath != null,
+                HasEmbeddedView = step.EmbeddedView != null,
+                HasArchive = step.SolutionArchivePath != null
             };
-            if (step.CodeTask != null)
+            if (step.ValidationScriptPath != null)
             {
                 if (!Context.IsPostBack)
                 {
                     CodeTask = new CodeTaskDetail();
                 }
-                CodeTask.ValidationScriptPath = step.CodeTask.ValidationScriptPath;
+                CodeTask.ValidationScriptPath = step.ValidationScriptPath;
                 if (!Context.IsPostBack)
                 {
                     await Reset();

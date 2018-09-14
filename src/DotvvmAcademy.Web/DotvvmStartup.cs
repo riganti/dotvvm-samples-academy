@@ -69,6 +69,10 @@ namespace DotvvmAcademy.Web
                 p => new LifecyclePresenter(p)
                     .RegisterStrategy<EVPostbackLifecycleStrategy>()
                     .RegisterStrategy<EVRegularLifecycleStrategy>());
+            config.RouteTable.Add(
+                routeName: "Archive",
+                "archive/{Language}/{Lesson}/{Step}",
+                typeof(ArchivePresenter));
         }
     }
 }

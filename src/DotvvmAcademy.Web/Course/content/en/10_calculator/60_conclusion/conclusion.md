@@ -4,6 +4,7 @@ EmbeddedView:
     Path: /resources/10_calculator/solution/Calculator/Views/Calculator.dothtml
     Dependencies:
         - /resources/10_calculator/solution/Calculator/ViewModels/CalculatorViewModel.cs
+Solution: /resources/10_calculator/solution
 ---
 
 # Conclusion
