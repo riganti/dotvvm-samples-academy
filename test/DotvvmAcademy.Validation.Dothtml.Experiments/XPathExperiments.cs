@@ -30,7 +30,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Experiments
                 query2.SetContext(manager);
                 var result = (XPathNodeIterator)navigator.Evaluate(query1);
                 result.MoveNext();
-                var relquery = XPathExpression.Compile("dot:Button");
+                var relquery = XPathExpression.Compile("/book/author");
                 relquery.SetContext(manager);
                 var relresult = result.Current.Evaluate(relquery);
             }

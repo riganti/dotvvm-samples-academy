@@ -16,10 +16,14 @@ namespace DotvvmAcademy.Validation.CSharp.Experiments
 
     public class DelegateExperiments
     {
+        public void Test(IAmazing amazing)
+        {
+        }
+
         [Fact]
         public void CompatibilityExperiment()
         {
-            AmazingDelegate a = null;
+            AmazingDelegate a = Test;
             MoreAmazingDelegate m = new MoreAmazingDelegate(a);
         }
     }

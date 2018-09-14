@@ -15,9 +15,9 @@ namespace DotvvmAcademy.CourseFormat.Tests
             var workspace = provider.GetRequiredService<CourseWorkspace>();
             var variant = await workspace.Load<Variant>("/content/en");
             Assert.NotNull(variant);
-            var lesson = await workspace.Load<Lesson>("/content/en/calculator");
+            var lesson = await workspace.Load<Lesson>("/content/en/10_test");
             Assert.NotNull(lesson);
-            var step = await workspace.Load<Step>("/content/en/calculator/10_a_classic");
+            var step = await workspace.Load<Step>("/content/en/10_test/10_viewmodel");
             Assert.NotNull(step);
         }
     }
