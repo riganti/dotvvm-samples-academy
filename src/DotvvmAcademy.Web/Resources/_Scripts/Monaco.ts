@@ -38,6 +38,7 @@ namespace DotvvmAcademy {
         constructor(element: HTMLElement, binding: IEditorBinding) {
             this.element = element;
             this.binding = binding;
+            this.tryApplySessionStorage();
             this.initializeEditor();
             this.binding.code.subscribe(this.onCodeChange.bind(this));
             // this is complete and utter bollocks
@@ -123,6 +124,7 @@ namespace DotvvmAcademy {
         }
 
         onCodeChange(value: string) {
+            this.saveToSessionStorage();
             if (this.ignoreChange) {
                 this.ignoreChange = false;
                 return;
@@ -130,6 +132,19 @@ namespace DotvvmAcademy {
 
             this.ignoreChange = true;
             this.editor.setValue(value);
+        }
+
+        tryApplySessionStorage(): boolean {
+            var code = sessionStorage.getItem(`CodeTask_${location.pathname}`);
+            if (code != null) {
+                this.binding.code(code);
+                return true;
+            }
+            return false;
+        }
+
+        saveToSessionStorage() {
+            sessionStorage.setItem(`CodeTask_${location.pathname}`, this.binding.code());
         }
     }
 }

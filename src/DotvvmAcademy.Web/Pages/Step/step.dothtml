@@ -25,7 +25,8 @@
                                Param-Language="{value: LanguageMoniker}"
                                Param-Lesson="{value: LessonMoniker}"
                                Param-Step="{value: StepMoniker}"
-                               Text="Download Solution"/>
+                               Text="Download Solution"
+                               class="button" />
             </div>
         </div>
     </section>

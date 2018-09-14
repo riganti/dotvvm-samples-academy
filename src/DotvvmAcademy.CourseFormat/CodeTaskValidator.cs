@@ -39,7 +39,7 @@ namespace DotvvmAcademy.CourseFormat
             var diagnostics = await validationService.Validate(unit, sourceCodes);
             return diagnostics.Select(d =>
                 new CodeTaskDiagnostic(
-                    message: d.Message,
+                    message: string.Format(d.Message, d.Arguments.ToArray()),
                     start: d.Start,
                     end: d.End,
                     severity: d.Severity.ToCodeTaskDiagnosticSeverity()))
