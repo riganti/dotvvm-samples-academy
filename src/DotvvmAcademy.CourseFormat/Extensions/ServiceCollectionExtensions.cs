@@ -19,6 +19,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton<ISourceProvider<Lesson>, LessonProvider>();
             services.AddSingleton<ISourceProvider<Step>, StepProvider>();
             services.AddSingleton<ISourceProvider<ValidationScript>, ValidationScriptProvider>();
+            services.AddSingleton<ISourceProvider<Archive>, ArchiveProvider>();
             services.AddSingleton<CourseCache>();
             services.AddSingleton<CourseWorkspace>();
             services.AddSingleton<CodeTaskValidator>();

@@ -20,6 +20,13 @@
                  class="embedded-view">
                 <iframe src="{resource: "/embeddedView/" + LanguageMoniker + "/" + LessonMoniker + "/" + StepMoniker}" />
             </div>
+            <div IncludeInPage="{resource: Step.HasArchive}">
+                <dot:RouteLink RouteName="Archive"
+                               Param-Language="{value: LanguageMoniker}"
+                               Param-Lesson="{value: LessonMoniker}"
+                               Param-Step="{value: StepMoniker}"
+                               Text="Download Solution"/>
+            </div>
         </div>
     </section>
 </dot:Content>

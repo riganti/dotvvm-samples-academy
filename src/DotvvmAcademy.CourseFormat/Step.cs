@@ -9,7 +9,7 @@
             Moniker = SourcePath.GetLastSegment(Path).ToString();
         }
 
-        public CodeTask CodeTask { get; set; }
+        public string ValidationScriptPath { get; set; }
 
         public EmbeddedView EmbeddedView { get; set; }
 
@@ -18,6 +18,8 @@
         public string Name { get; }
 
         public string Text { get; }
+
+        public string SolutionArchivePath { get; set; }
 
         public override long GetSize()
         {
