@@ -42,7 +42,7 @@ namespace DotvvmAcademy.Web.Hosting
             var viewModelCompilation = await GetViewModelCompilation(context, step);
             var viewModelAssemblyPath = EmitToTemp(context, viewModelCompilation);
             var viewModelAssembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(viewModelAssemblyPath);
-            var viewCompilation = await GetViewCompilation(context, step, viewModelAssembly, viewModelCompilation);
+            var viewCompilation = await GetViewCompilation(context, step, viewModelAssembly);
             var viewAssembly = EmitToMemory(viewCompilation);
             pair = (viewModelAssembly, viewAssembly);
             return assemblies.AddOrUpdate(step.Path, pair, (k, v) => pair);
@@ -101,15 +101,13 @@ namespace DotvvmAcademy.Web.Hosting
         private async Task<CSharpCompilation> GetViewCompilation(
             IDotvvmRequestContext context, 
             Step step, 
-            Assembly viewModelAssembly, 
-            CSharpCompilation viewModelCompilation)
+            Assembly viewModelAssembly)
         {
             var environment = context.Services.GetRequiredService<ICourseEnvironment>();
             var viewSource = await environment.Read(step.EmbeddedView.Path);
             var builder = context.Services.GetRequiredService<EVResolvedTreeBuilder>();
             builder.AdditionalAssembly = viewModelAssembly;
             var viewCompiler = context.Services.GetRequiredService<EVViewCompiler>();
-            viewCompiler.AdditionalReference = viewModelCompilation.ToMetadataReference();
             var className = $"{Path.GetFileNameWithoutExtension(step.EmbeddedView.Path)}EVControlBuilder";
             var viewCompilation = viewCompiler.CreateCompilation($"EVView_{Guid.NewGuid()}");
             (var descriptor, var factory) = viewCompiler.CompileView(
