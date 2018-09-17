@@ -13,7 +13,7 @@ namespace DotvvmAcademy.Web.Hosting
 
         protected override Task<DotvvmView> GetView()
         {
-            var hack = Context.Services.GetRequiredService<EVHackService>();
+            var hack = Context.Services.GetRequiredService<EVViewBuilder>();
             return hack.BuildView(Context);
         }
     }
