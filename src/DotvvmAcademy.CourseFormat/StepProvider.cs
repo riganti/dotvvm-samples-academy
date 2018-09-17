@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,11 +31,21 @@ namespace DotvvmAcademy.CourseFormat
                     throw new NotSupportedException($"Step at {path} doesn't have YAML Front Matter.");
                 }
 
-                return new Step(
+                var step = new Step(
                     path: path,
                     text: html,
-                    name: frontMatter.Title,
-                    codeTaskPath: frontMatter.CodeTask);
+                    name: frontMatter.Title)
+                {
+                    ValidationScriptPath = frontMatter.CodeTask,
+                    SolutionArchivePath = frontMatter.Solution
+                };
+                if (frontMatter.EmbeddedView != null)
+                {
+                    var dependencies = frontMatter.EmbeddedView.Dependencies?.ToImmutableArray() ?? ImmutableArray.Create<string>();
+                    step.EmbeddedView = new EmbeddedView(frontMatter.EmbeddedView.Path, dependencies);
+                }
+
+                return step;
             }
         }
     }

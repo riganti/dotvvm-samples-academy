@@ -1,11 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.IO;
+﻿using System.IO;
 using System.Xml;
 using System.Xml.XPath;
+using Xunit;
 
 namespace DotvvmAcademy.Validation.Dothtml.Experiments
 {
-    [TestClass]
     public class XPathExperiments
     {
         public const string XmlSample = @"
@@ -14,8 +13,8 @@ namespace DotvvmAcademy.Validation.Dothtml.Experiments
     <price>12€</price>
 </book>";
 
-        [TestMethod]
-        public void BasicUsageExperiment()
+        [Fact]
+        public void XPath_BasicSample_Resolves()
         {
             var settings = new XmlReaderSettings { NameTable = new NameTable() };
             var manager = new XmlNamespaceManager(settings.NameTable);
@@ -31,7 +30,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Experiments
                 query2.SetContext(manager);
                 var result = (XPathNodeIterator)navigator.Evaluate(query1);
                 result.MoveNext();
-                var relquery = XPathExpression.Compile("dot:Button");
+                var relquery = XPathExpression.Compile("/book/author");
                 relquery.SetContext(manager);
                 var relresult = result.Current.Evaluate(relquery);
             }

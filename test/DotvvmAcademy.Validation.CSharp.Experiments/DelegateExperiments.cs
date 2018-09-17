@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 
 namespace DotvvmAcademy.Validation.CSharp.Experiments
 {
@@ -14,13 +14,16 @@ namespace DotvvmAcademy.Validation.CSharp.Experiments
     {
     }
 
-    [TestClass]
     public class DelegateExperiments
     {
-        [TestMethod]
+        public void Test(IAmazing amazing)
+        {
+        }
+
+        [Fact]
         public void CompatibilityExperiment()
         {
-            AmazingDelegate a = null;
+            AmazingDelegate a = Test;
             MoreAmazingDelegate m = new MoreAmazingDelegate(a);
         }
     }

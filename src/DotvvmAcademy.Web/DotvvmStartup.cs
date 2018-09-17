@@ -1,6 +1,7 @@
 ﻿using DotVVM.Framework.Configuration;
 using DotVVM.Framework.Hosting;
 using DotVVM.Framework.ResourceManagement;
+using DotvvmAcademy.Web.Hosting;
 using DotvvmAcademy.Web.Pages;
 using DotvvmAcademy.Web.Pages.Step;
 using Microsoft.Extensions.DependencyInjection;
@@ -62,6 +63,16 @@ namespace DotvvmAcademy.Web
                 virtualPath: "Pages/Default/default.dothtml",
                 defaultValues: new { Language = "en" },
                 presenterFactory: LocalizablePresenter.BasedOnParameter("Language"));
+            config.RouteTable.Add(
+                routeName: "EmbeddedView",
+                url: "embeddedView/{Language}/{Lesson}/{Step}",
+                p => new LifecyclePresenter(p)
+                    .RegisterStrategy<EVPostbackLifecycleStrategy>()
+                    .RegisterStrategy<EVRegularLifecycleStrategy>());
+            config.RouteTable.Add(
+                routeName: "Archive",
+                "archive/{Language}/{Lesson}/{Step}",
+                typeof(ArchivePresenter));
         }
     }
 }
