@@ -62,15 +62,17 @@
             </div>
 
             <div class="buttons-container">
-
+                <dot:UpdateProgress>
+                    <span style="color: white">Working...</span>
+                </dot:UpdateProgress>
                 <dot:Button Click="{command: Reset()}"
+                            IncludeInPage="{resource: Step.HasCodeTask}"
                             Text="Reset"
                             class="button" />
-
                 <dot:Button Click="{command: ShowSolution()}"
                             Text="Show Solution"
-                            class="button" />
-
+                            class="button"
+                            IncludeInPage="{resource: Step.HasCodeTask}"/>
                 <dot:RouteLink RouteName="Default"
                                class="button success"
                                ButtonTagName="button"
