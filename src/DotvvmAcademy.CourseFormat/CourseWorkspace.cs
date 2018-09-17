@@ -22,11 +22,14 @@ namespace DotvvmAcademy.CourseFormat
             {
                 throw new ArgumentException("Source path must not be null or whitespace.", nameof(sourcePath));
             }
-
+            if (cache.TryGetValue($"{CourseCache.SourcePrefix}{sourcePath}", out var existingSource))
+            {
+                return (TSource)existingSource;
+            }
             var sourceProvider = provider.GetRequiredService<ISourceProvider<TSource>>();
-            var source = await sourceProvider.Get(sourcePath);
-            cache.AddSource(source);
-            return source;
+            var newSource = await sourceProvider.Get(sourcePath);
+            cache.AddSource(newSource);
+            return newSource;
         }
     }
 }
