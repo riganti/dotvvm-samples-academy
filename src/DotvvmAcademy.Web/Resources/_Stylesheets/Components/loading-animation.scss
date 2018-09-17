@@ -1,0 +1,10 @@
+﻿@import "../Base/_global.scss";
+
+.loading-anim {
+
+    > svg {
+        width: 8rem;
+        display: block;
+        float: left;
+    }
+}
