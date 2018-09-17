@@ -1,6 +1,7 @@
 ﻿using DotVVM.Framework.Compilation;
 using DotVVM.Framework.Controls.Infrastructure;
 using DotVVM.Framework.Hosting;
+using DotVVM.Framework.Runtime;
 using DotvvmAcademy.CourseFormat;
 using DotvvmAcademy.Meta;
 using Microsoft.CodeAnalysis;
@@ -15,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace DotvvmAcademy.Web.Hosting
 {
-    public class EVHackService
+    public class EVViewBuilder
     {
         public async Task<DotvvmView> BuildView(IDotvvmRequestContext context)
         {

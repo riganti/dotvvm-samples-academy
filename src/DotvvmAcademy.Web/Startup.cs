@@ -20,7 +20,7 @@ namespace DotvvmAcademy.Web
             services.AddScoped<PostbackLifecycleStrategy>();
             services.AddScoped<EVRegularLifecycleStrategy>();
             services.AddScoped<EVPostbackLifecycleStrategy>();
-            services.AddScoped<EVHackService>();
+            services.AddScoped<EVViewBuilder>();
             services.AddScoped<EVControlTreeResolver>();
             services.AddScoped<EVResolvedTreeBuilder>();
             services.AddScoped<EVViewCompiler>();
