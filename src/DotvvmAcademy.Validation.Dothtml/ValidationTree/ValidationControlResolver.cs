@@ -15,7 +15,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
     public class ValidationControlResolver : IControlResolver
     {
         private readonly ImmutableDictionary<string, BindingParserOptions> bindingOptions = GetDefaultBindingOptions();
-        private readonly ICSharpCompilationAccessor compilationAccessor;
+        private readonly IMetaContext metaContext;
         private readonly ValidationTypeDescriptorFactory descriptorFactory;
         private readonly ValidationControlMetadataFactory metadataFactory;
         private readonly ValidationPropertyFactory propertyFactory;
@@ -25,13 +25,13 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         private readonly ValidationControlTypeFactory typeFactory;
 
         public ValidationControlResolver(
-            ICSharpCompilationAccessor compilationAccessor,
+            IMetaContext metaContext,
             ValidationTypeDescriptorFactory descriptorFactory,
             ValidationControlTypeFactory typeFactory,
             ValidationControlMetadataFactory metadataFactory,
             ValidationPropertyFactory propertyFactory)
         {
-            this.compilationAccessor = compilationAccessor;
+            this.metaContext = metaContext;
             this.descriptorFactory = descriptorFactory;
             this.typeFactory = typeFactory;
             this.metadataFactory = metadataFactory;
@@ -84,14 +84,14 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         public void RegisterNamespace(string prefix, string @namespace, string assembly)
         {
-            var assemblySymbol = compilationAccessor.Compilation.References
-                .Select(compilationAccessor.Compilation.GetAssemblyOrModuleSymbol)
+            var assemblySymbol = metaContext.Compilation.References
+                .Select(metaContext.Compilation.GetAssemblyOrModuleSymbol)
                 .OfType<IAssemblySymbol>()
                 .Single(a => a.MetadataName == assembly);
 
             // TODO: Replace with actual meta name analysis
             var segments = @namespace.Split('.');
-            INamespaceSymbol current = assemblySymbol.GlobalNamespace;
+            var current = assemblySymbol.GlobalNamespace;
             foreach (var segment in segments)
             {
                 current = current.GetMembers(segment).OfType<INamespaceSymbol>().SingleOrDefault();

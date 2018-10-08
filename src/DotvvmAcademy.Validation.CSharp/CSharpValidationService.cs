@@ -33,13 +33,13 @@ namespace DotvvmAcademy.Validation.CSharp
                 var context = scope.ServiceProvider.GetRequiredService<Context>();
                 context.Unit = unit;
                 context.Sources = sources;
-                var compilationAccessor = scope.ServiceProvider.GetRequiredService<ICSharpCompilationAccessor>();
-                compilationAccessor.Compilation = GetCompilation(scope.ServiceProvider);
-                var assemblyAccessor = scope.ServiceProvider.GetRequiredService<IAssemblyAccessor>();
-                assemblyAccessor.Assemblies = Assembly.GetEntryAssembly()
+                var metaContext = scope.ServiceProvider.GetRequiredService<IMetaContext>();
+                metaContext.Compilation = GetCompilation(scope.ServiceProvider);
+                var entryAssemblies = Assembly.GetEntryAssembly()
                     .GetReferencedAssemblies()
                     .Select(Assembly.Load)
                     .ToImmutableArray();
+                metaContext.Assemblies = entryAssemblies; 
 
                 // run static analysis
                 var reporter = scope.ServiceProvider.GetRequiredService<CSharpValidationReporter>();
@@ -56,7 +56,7 @@ namespace DotvvmAcademy.Validation.CSharp
 
                 // run dynamic analysis
                 var userAssembly = await GetAssembly(scope.ServiceProvider);
-                assemblyAccessor.Assemblies = assemblyAccessor.Assemblies.Add(userAssembly);
+                metaContext.Assemblies = entryAssemblies.Add(userAssembly);
                 RunDynamicActions(scope.ServiceProvider);
                 return GetValidationDiagnostics(scope.ServiceProvider);
             }
@@ -74,7 +74,7 @@ namespace DotvvmAcademy.Validation.CSharp
 
         private async Task<Assembly> GetAssembly(IServiceProvider provider)
         {
-            var compilation = provider.GetRequiredService<ICSharpCompilationAccessor>().Compilation;
+            var compilation = provider.GetRequiredService<IMetaContext>().Compilation;
             using (var originalStream = new MemoryStream())
             using (var rewrittenStream = new MemoryStream())
             {
@@ -136,7 +136,7 @@ namespace DotvvmAcademy.Validation.CSharp
         private IServiceProvider GetServiceProvider()
         {
             var c = new ServiceCollection();
-            c.AddMetaSingletonFriendly();
+            c.AddMeta();
             c.AddScoped<Context>();
             c.AddSingleton<AssemblyRewriter>();
             c.AddScoped<AllowedSymbolStorage>();
@@ -181,7 +181,7 @@ namespace DotvvmAcademy.Validation.CSharp
                 concurrentAnalysis: false,
                 logAnalyzerExecutionTime: false,
                 reportSuppressedDiagnostics: true);
-            var compilation = provider.GetRequiredService<ICSharpCompilationAccessor>().Compilation
+            var compilation = provider.GetRequiredService<IMetaContext>().Compilation
                 .WithAnalyzers(analyzers, analysisOptions);
             var diagnostics = await compilation.GetAnalyzerDiagnosticsAsync();
             var reporter = provider.GetRequiredService<CSharpValidationReporter>();

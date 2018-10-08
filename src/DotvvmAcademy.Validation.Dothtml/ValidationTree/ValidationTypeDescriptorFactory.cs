@@ -2,8 +2,8 @@
 using DotVVM.Framework.Compilation.ControlTree.Resolved;
 using DotVVM.Framework.Compilation.Parser.Binding.Parser;
 using DotvvmAcademy.Meta;
+using DotvvmAcademy.Meta.Syntax;
 using Microsoft.CodeAnalysis;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Concurrent;
 
@@ -14,13 +14,15 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         private readonly ConcurrentDictionary<ITypeSymbol, ValidationTypeDescriptor> cache
             = new ConcurrentDictionary<ITypeSymbol, ValidationTypeDescriptor>();
 
-        private readonly ICSharpCompilationAccessor compilationAccessor;
-        private readonly ISymbolNameBuilder symbolNameBuilder;
+        private readonly IMetaContext metaContext;
+        private readonly IMetaConverter<ISymbol, NameNode> symbolConverter;
 
-        public ValidationTypeDescriptorFactory(ICSharpCompilationAccessor compilationAccessor, ISymbolNameBuilder symbolNameBuilder)
+        public ValidationTypeDescriptorFactory(
+            IMetaContext metaContext,
+            IMetaConverter<ISymbol, NameNode> symbolConverter)
         {
-            this.compilationAccessor = compilationAccessor;
-            this.symbolNameBuilder = symbolNameBuilder;
+            this.metaContext = metaContext;
+            this.symbolConverter = symbolConverter;
         }
 
         public ValidationTypeDescriptor Convert(ITypeDescriptor other)
@@ -43,7 +45,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
                 return null;
             }
 
-            return cache.GetOrAdd(typeSymbol, s => new ValidationTypeDescriptor(this, compilationAccessor, symbolNameBuilder, s));
+            return cache.GetOrAdd(typeSymbol, s => new ValidationTypeDescriptor(this, metaContext, symbolConverter, s));
         }
 
         public ValidationTypeDescriptor Create(BindingParserNode name)
@@ -73,11 +75,11 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
                 return null;
             }
 
-            var symbol = compilationAccessor.Compilation.GetTypeByMetadataName(metadataName);
+            var symbol = metaContext.Compilation.GetTypeByMetadataName(metadataName);
             if (symbol == null)
             {
-                return Create(compilationAccessor.Compilation.CreateErrorTypeSymbol(
-                    container: compilationAccessor.Compilation.GlobalNamespace,
+                return Create(metaContext.Compilation.CreateErrorTypeSymbol(
+                    container: metaContext.Compilation.GlobalNamespace,
                     name: metadataName,
                     arity: 0));
             }

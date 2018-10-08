@@ -8,30 +8,28 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Reflection;
 
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
     public class ValidationControlMetadataFactory
     {
-        private readonly ITypedAttributeExtractor extractor;
-
+        private readonly IAttributeExtractor extractor;
+        private readonly IMetaConverter<MemberInfo, ISymbol> memberInfoConverter;
         private readonly ConcurrentDictionary<ITypeSymbol, ValidationControlMetadata> cache
             = new ConcurrentDictionary<ITypeSymbol, ValidationControlMetadata>();
 
-        private readonly IMemberInfoConverter memberInfoConverter;
         private readonly ValidationPropertyFactory propertyFactory;
         private readonly ValidationControlTypeFactory typeFactory;
 
         public ValidationControlMetadataFactory(
             ValidationControlTypeFactory typeFactory,
             ValidationPropertyFactory propertyFactory,
-            ITypedAttributeExtractor extractor,
-            IMemberInfoConverter memberInfoConverter)
+            IAttributeExtractor extractor)
         {
             this.typeFactory = typeFactory;
             this.propertyFactory = propertyFactory;
             this.extractor = extractor;
-            this.memberInfoConverter = memberInfoConverter;
         }
 
         public ValidationControlMetadata Create(ITypeDescriptor typeDescriptor)
@@ -65,7 +63,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
                                 .ToImmutableArray();
                 return new ValidationControlMetadata(
                  controlType: controlType,
-                 changeAttributes: extractor.Extract<DataContextChangeAttribute>(symbol),
+                 changeAttributes: extractor.Extract<DataContextChangeAttribute>(symbol).ToImmutableArray(),
                  manipulationAttribute: extractor.Extract<DataContextStackManipulationAttribute>(symbol).SingleOrDefault(),
                  markupOptionsAttribute: extractor.Extract<ControlMarkupOptionsAttribute>(symbol).SingleOrDefault(),
                  properties: propertyFactory.GetProperties(symbol),

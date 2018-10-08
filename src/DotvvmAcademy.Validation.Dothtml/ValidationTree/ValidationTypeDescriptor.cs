@@ -1,9 +1,9 @@
 ﻿using DotVVM.Framework.Compilation.ControlTree;
-using DotVVM.Framework.Compilation.ControlTree.Resolved;
 using DotVVM.Framework.Controls;
 using DotvvmAcademy.Meta;
 using DotvvmAcademy.Meta.Syntax;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -13,19 +13,19 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
     [DebuggerDisplay("TypeDescriptor: {FullName,nq}")]
     public class ValidationTypeDescriptor : ITypeDescriptor
     {
-        private readonly ICSharpCompilationAccessor compilationAccessor;
         private readonly ValidationTypeDescriptorFactory factory;
+        private readonly IMetaContext metaContext;
 
         public ValidationTypeDescriptor(
             ValidationTypeDescriptorFactory factory,
-            ICSharpCompilationAccessor compilationAccessor,
-            ISymbolNameBuilder nameBuilder,
+            IMetaContext metaContext,
+            IMetaConverter<ISymbol, NameNode> symbolConverter,
             ITypeSymbol typeSymbol)
         {
             this.factory = factory;
-            this.compilationAccessor = compilationAccessor;
+            this.metaContext = metaContext;
             TypeSymbol = typeSymbol;
-            MetaName = nameBuilder.Build(typeSymbol);
+            MetaName = symbolConverter.Convert(typeSymbol).Single();
             FullName = MetaName.ToString();
             Assembly = TypeSymbol.ContainingAssembly?.Identity.Name;
             Namespace = TypeSymbol.ContainingNamespace?.ToDisplayString();
@@ -47,7 +47,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         public bool IsAssignableFrom(ITypeDescriptor typeDescriptor)
         {
             var other = factory.Convert(typeDescriptor);
-            var conversion = compilationAccessor.Compilation.ClassifyConversion(other.TypeSymbol, TypeSymbol);
+            var conversion = metaContext.Compilation.ClassifyConversion(other.TypeSymbol, TypeSymbol);
             return conversion.Exists;
         }
 
@@ -108,7 +108,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             {
                 return factory.Create(arrayType.ElementType);
             }
-            var iEnumerableSymbol = compilationAccessor.Compilation.GetTypeByMetadataName(WellKnownTypes.IEnumerable);
+            var iEnumerableSymbol = metaContext.Compilation.GetTypeByMetadataName(WellKnownTypes.IEnumerable);
             if (TypeSymbol is INamedTypeSymbol namedType && namedType.ConstructedFrom.Equals(iEnumerableSymbol))
             {
                 return factory.Create(namedType.TypeArguments.First());

@@ -3,36 +3,38 @@ using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Controls;
 using DotvvmAcademy.Meta;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Reflection;
 
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
     public class ValidationPropertyFactory
     {
-        private readonly ICSharpCompilationAccessor compilationAccessor;
-        private readonly ITypedAttributeExtractor extractor;
+        private readonly IAttributeExtractor extractor;
 
         private readonly ConcurrentDictionary<(INamedTypeSymbol, string), IPropertyGroupDescriptor> groups
             = new ConcurrentDictionary<(INamedTypeSymbol, string), IPropertyGroupDescriptor>();
 
-        private readonly IMemberInfoConverter memberInfoConverter;
+        private readonly IMetaConverter<MemberInfo, ISymbol> memberInfoConverter;
+        private readonly IMetaContext metaContext;
 
         private readonly ConcurrentDictionary<(INamedTypeSymbol, string), IPropertyDescriptor> properties
-            = new ConcurrentDictionary<(INamedTypeSymbol, string), IPropertyDescriptor>();
+                    = new ConcurrentDictionary<(INamedTypeSymbol, string), IPropertyDescriptor>();
 
         private readonly ValidationTypeDescriptorFactory typeDescriptorFactory;
 
         public ValidationPropertyFactory(
             ValidationTypeDescriptorFactory typeDescriptorFactory,
-            ICSharpCompilationAccessor compilationAccessor,
-            ITypedAttributeExtractor extractor,
-            IMemberInfoConverter memberInfoConverter)
+            IMetaContext metaContext,
+            IAttributeExtractor extractor,
+            IMetaConverter<MemberInfo, ISymbol> memberInfoConverter)
         {
             this.typeDescriptorFactory = typeDescriptorFactory;
-            this.compilationAccessor = compilationAccessor;
+            this.metaContext = metaContext;
             this.extractor = extractor;
             this.memberInfoConverter = memberInfoConverter;
         }
@@ -137,7 +139,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
                 return ImmutableArray.Create<IPropertyGroupDescriptor>();
             }
 
-            var groupSymbol = compilationAccessor.Compilation.GetTypeByMetadataName(DotvvmTypes.DotvvmPropertyGroup);
+            var groupSymbol = metaContext.Compilation.GetTypeByMetadataName(DotvvmTypes.DotvvmPropertyGroup);
             var builder = ImmutableArray.CreateBuilder<IPropertyGroupDescriptor>();
             builder.AddRange(GetGroups(containingType.BaseType));
             var collectionGroups = containingType.GetMembers()
@@ -160,14 +162,14 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
                 return ImmutableArray.Create<IPropertyDescriptor>();
             }
 
-            var dotvvmPropertySymbol = compilationAccessor.Compilation.GetTypeByMetadataName(DotvvmTypes.DotvvmProperty);
+            var dotvvmPropertySymbol = metaContext.Compilation.GetTypeByMetadataName(DotvvmTypes.DotvvmProperty);
             var builder = ImmutableArray.CreateBuilder<IPropertyDescriptor>();
             builder.AddRange(GetProperties(containingType.BaseType));
             var fields = containingType.GetMembers()
                 .OfType<IFieldSymbol>()
                 .Where(f => f.IsStatic
                     && f.MetadataName.EndsWith("Property")
-                    && compilationAccessor.Compilation.ClassifyConversion(f.Type, dotvvmPropertySymbol).Exists);
+                    && metaContext.Compilation.ClassifyConversion(f.Type, dotvvmPropertySymbol).Exists);
             foreach (var field in fields)
             {
                 if (extractor.HasAttribute<AttachedPropertyAttribute>(field))
@@ -221,7 +223,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             var name = ValidationAttachedProperty.SanitizeName(fieldSymbol.MetadataName);
             return properties.GetOrAdd((fieldSymbol.ContainingType, name), _ =>
             {
-                var attachedAttribute = extractor.ExtractRoslyn<AttachedPropertyAttribute>(fieldSymbol).SingleOrDefault();
+                var attachedAttribute = extractor.ExtractAttributeData<AttachedPropertyAttribute>(fieldSymbol).SingleOrDefault();
                 if (attachedAttribute == null
                     || attachedAttribute.ConstructorArguments.Length != 1
                     || attachedAttribute.ConstructorArguments[0].Kind != TypedConstantKind.Type)
@@ -288,7 +290,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         private ImmutableArray<DataContextChangeAttribute> GetDataContextChangeAttributes(ISymbol symbol)
         {
-            return extractor.Extract<DataContextChangeAttribute>(symbol);
+            return extractor.Extract<DataContextChangeAttribute>(symbol).ToImmutableArray();
         }
 
         private DataContextStackManipulationAttribute GetDataContextManipulationAttribute(ISymbol symbol)
@@ -320,14 +322,14 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         private ITypeSymbol GetStringPairValueType(ITypeSymbol collectionType)
         {
-            var iEnumerable = compilationAccessor.Compilation.GetTypeByMetadataName(WellKnownTypes.IEnumerable);
-            var keyValuePair = compilationAccessor.Compilation.GetTypeByMetadataName(WellKnownTypes.KeyValuePair);
-            var @string = compilationAccessor.Compilation.GetTypeByMetadataName(WellKnownTypes.String);
+            var iEnumerable = metaContext.Compilation.GetTypeByMetadataName(WellKnownTypes.IEnumerable);
+            var keyValuePair = metaContext.Compilation.GetTypeByMetadataName(WellKnownTypes.KeyValuePair);
+            var @string = metaContext.Compilation.GetTypeByMetadataName(WellKnownTypes.String);
             return collectionType.AllInterfaces
                 .Where(i =>
                 {
                     // I know there are a lot of variables here, but please understand, this place is hell to debug.
-                    var isIEnumerable = compilationAccessor.Compilation.ClassifyConversion(i, iEnumerable).Exists;
+                    var isIEnumerable = metaContext.Compilation.ClassifyConversion(i, iEnumerable).Exists;
                     var hasOneArgument = i.TypeArguments.Length == 1;
                     if (isIEnumerable && hasOneArgument && i.TypeArguments[0] is INamedTypeSymbol pairArgument)
                     {

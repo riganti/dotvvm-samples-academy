@@ -5,6 +5,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq;
 
 namespace DotvvmAcademy.Validation.Unit
 {
@@ -12,13 +13,18 @@ namespace DotvvmAcademy.Validation.Unit
     {
         public static ImmutableArray<ISymbol> Locate(this ConstraintContext context, NameNode name)
         {
-            return context.Provider.GetRequiredService<ISymbolLocator>().Locate(name);
+            return context.Provider.GetRequiredService<IMetaConverter<NameNode, ISymbol>>()
+                .Convert(name)
+                .ToImmutableArray();
         }
 
         public static ImmutableArray<TSymbol> Locate<TSymbol>(this ConstraintContext context, NameNode name)
             where TSymbol : ISymbol
         {
-            return context.Provider.GetRequiredService<ISymbolLocator>().Locate<TSymbol>(name);
+            return context.Provider.GetRequiredService<IMetaConverter<NameNode, ISymbol>>()
+                .Convert(name)
+                .Cast<TSymbol>()
+                .ToImmutableArray();
         }
 
         public static void Report(

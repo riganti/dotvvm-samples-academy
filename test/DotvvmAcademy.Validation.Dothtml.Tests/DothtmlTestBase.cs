@@ -57,10 +57,9 @@ namespace DotvvmAcademy.Validation.Dothtml.Tests
             var root = parser.Parse(tokenizer.Tokens);
             using (var scope = Provider.CreateScope())
             {
-                var compilationAccessor = Provider.GetRequiredService<ICSharpCompilationAccessor>();
-                compilationAccessor.Compilation = GetCompilation(viewModel);
-                var assemblyAccessor = Provider.GetRequiredService<IAssemblyAccessor>();
-                assemblyAccessor.Assemblies = Assembly.GetEntryAssembly()
+                var metaContext = Provider.GetRequiredService<IMetaContext>();
+                metaContext.Compilation = GetCompilation(viewModel);
+                metaContext.Assemblies = Assembly.GetEntryAssembly()
                     .GetReferencedAssemblies()
                     .Select(Assembly.Load)
                     .ToImmutableArray();
@@ -71,7 +70,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Tests
 
         protected virtual void RegisterServices(IServiceCollection container)
         {
-            container.AddMetaScopeFriendly();
+            container.AddMeta();
             container.AddScoped(p => 
             {
                 var controlResolver = ActivatorUtilities.CreateInstance<ValidationControlResolver>(p);

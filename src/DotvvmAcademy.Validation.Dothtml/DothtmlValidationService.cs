@@ -38,10 +38,9 @@ namespace DotvvmAcademy.Validation.Dothtml
                     var context = scope.ServiceProvider.GetRequiredService<Context>();
                     context.Unit = unit;
                     context.Sources = sources;
-                    var compilationAccessor = scope.ServiceProvider.GetRequiredService<ICSharpCompilationAccessor>();
-                    compilationAccessor.Compilation = GetCompilation(scope.ServiceProvider);
-                    var assemblyAccessor = scope.ServiceProvider.GetRequiredService<IAssemblyAccessor>();
-                    assemblyAccessor.Assemblies = Assembly.GetEntryAssembly()
+                    var metaContext = scope.ServiceProvider.GetRequiredService<IMetaContext>();
+                    metaContext.Compilation = GetCompilation(scope.ServiceProvider);
+                    metaContext.Assemblies = Assembly.GetEntryAssembly()
                         .GetReferencedAssemblies()
                         .Select(Assembly.Load)
                         .ToImmutableArray();
@@ -90,7 +89,7 @@ namespace DotvvmAcademy.Validation.Dothtml
         private IServiceProvider GetServiceProvider()
         {
             var c = new ServiceCollection();
-            c.AddMetaSingletonFriendly();
+            c.AddMeta();
             c.AddScoped(GetValidationTree);
             c.AddScoped(GetXPathTree);
             c.AddScoped<ValidationTypeDescriptorFactory>();

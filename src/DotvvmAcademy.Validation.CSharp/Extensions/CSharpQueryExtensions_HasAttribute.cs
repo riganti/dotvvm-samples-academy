@@ -4,6 +4,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
+using System.Reflection;
 
 namespace DotvvmAcademy.Validation.CSharp.Unit
 {
@@ -14,8 +15,8 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
         {
             return query.AddQueryConstraint((context, result) =>
             {
-                var converter = context.Provider.GetRequiredService<IMemberInfoConverter>();
-                var attributeClass = (INamedTypeSymbol)converter.Convert(attributeType);
+                var converter = context.Provider.GetRequiredService<IMetaConverter<MemberInfo, ISymbol>>();
+                var attributeClass = (INamedTypeSymbol)converter.Convert(attributeType).Single();
                 foreach (var symbol in result)
                 {
                     if (!symbol.GetAttributes().Any(a => a.AttributeClass.Equals(attributeClass)))
@@ -35,8 +36,7 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
             var attributeType = expected.GetType();
             return query.AddQueryConstraint((context, result) =>
             {
-                var converter = context.Provider.GetRequiredService<IMemberInfoConverter>();
-                var extractor = context.Provider.GetRequiredService<ITypedAttributeExtractor>();
+                var extractor = context.Provider.GetRequiredService<IAttributeExtractor>();
 
                 // TODO: Use something else for object comparison. This generates errors that are too broad.
                 var propertyComparer = context.Provider.GetRequiredService<PropertyEqualityComparer>();
@@ -65,8 +65,8 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
         {
             return query.AddQueryConstraint((context, result) =>
             {
-                var converter = context.Provider.GetRequiredService<IMemberInfoConverter>();
-                var attributeClass = (INamedTypeSymbol)converter.Convert(attributeType);
+                var converter = context.Provider.GetRequiredService<IMetaConverter<MemberInfo, ISymbol>>();
+                var attributeClass = (INamedTypeSymbol)converter.Convert(attributeType).Single();
                 foreach (var symbol in result)
                 {
                     foreach (var attribute in symbol.GetAttributes())

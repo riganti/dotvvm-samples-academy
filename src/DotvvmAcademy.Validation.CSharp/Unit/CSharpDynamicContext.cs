@@ -1,4 +1,5 @@
 ﻿using DotvvmAcademy.Meta;
+using DotvvmAcademy.Meta.Syntax;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -7,12 +8,12 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 {
     public class CSharpDynamicContext
     {
-        private readonly IMemberInfoLocator locator;
+        private readonly IMetaConverter<NameNode, MemberInfo> nameConverter;
         private readonly CSharpValidationReporter reporter;
 
-        public CSharpDynamicContext(IMemberInfoLocator locator, CSharpValidationReporter reporter)
+        public CSharpDynamicContext(IMetaConverter<NameNode, MemberInfo> nameConverter, CSharpValidationReporter reporter)
         {
-            this.locator = locator;
+            this.nameConverter = nameConverter;
             this.reporter = reporter;
         }
 
@@ -30,7 +31,7 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 
         public dynamic Instantiate(string typeName, params object[] arguments)
         {
-            var type = locator.Locate(typeName).OfType<Type>().Single();
+            var type = nameConverter.Convert(typeName).OfType<Type>().Single();
             return Activator.CreateInstance(type, arguments);
         }
 

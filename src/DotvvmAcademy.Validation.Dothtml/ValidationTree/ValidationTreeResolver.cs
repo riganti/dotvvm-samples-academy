@@ -2,24 +2,27 @@
 using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 using DotvvmAcademy.Meta;
+using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq;
+using System.Reflection;
 
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
     public class ValidationTreeResolver : ControlTreeResolverBase
     {
         private readonly ValidationTypeDescriptorFactory descriptorFactory;
-        private readonly ISymbolConverter symbolConverter;
         private readonly ValidationControlTypeFactory typeFactory;
+        private readonly IMetaConverter<ISymbol, MemberInfo> symbolConverter;
 
         public ValidationTreeResolver(
             ValidationControlResolver controlResolver,
             ValidationTreeBuilder treeBuilder,
             ValidationTypeDescriptorFactory descriptorFactory,
             ValidationControlTypeFactory typeFactory,
-            ISymbolConverter symbolConverter)
+            IMetaConverter<ISymbol, MemberInfo> symbolConverter)
             : base(controlResolver, treeBuilder)
         {
             this.descriptorFactory = descriptorFactory;
@@ -40,7 +43,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         {
             if (propertyType is ValidationTypeDescriptor validationType)
             {
-                var type = (Type)symbolConverter.Convert(validationType.TypeSymbol);
+                var type = (Type)symbolConverter.Convert(validationType.TypeSymbol).Single();
                 if (type.IsEnum)
                 {
                     return Enum.Parse(type, value);

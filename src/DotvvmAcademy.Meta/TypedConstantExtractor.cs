@@ -1,14 +1,15 @@
 ﻿using Microsoft.CodeAnalysis;
 using System;
 using System.Linq;
+using System.Reflection;
 
 namespace DotvvmAcademy.Meta
 {
     public class TypedConstantExtractor : ITypedConstantExtractor
     {
-        private readonly ISymbolConverter symbolConverter;
+        private readonly IMetaConverter<ISymbol, MemberInfo> symbolConverter;
 
-        public TypedConstantExtractor(ISymbolConverter symbolConverter)
+        public TypedConstantExtractor(IMetaConverter<ISymbol, MemberInfo> symbolConverter)
         {
             this.symbolConverter = symbolConverter;
         }
@@ -27,10 +28,14 @@ namespace DotvvmAcademy.Meta
                     return constant.Value;
 
                 case TypedConstantKind.Type:
-                    return (Type)symbolConverter.Convert((ITypeSymbol)constant.Value);
+                    return (Type)symbolConverter
+                        .Convert((ITypeSymbol)constant.Value)
+                        .Single();
 
                 case TypedConstantKind.Array:
-                    var elementType = (Type)symbolConverter.Convert(((IArrayTypeSymbol)constant.Type).ElementType);
+                    var elementType = (Type)symbolConverter
+                        .Convert(((IArrayTypeSymbol)constant.Type).ElementType)
+                        .Single();
                     var objects = constant.Values.Select(Extract).ToArray();
                     var values = Array.CreateInstance(elementType, objects.Length);
                     for (int i = 0; i < values.Length; i++)

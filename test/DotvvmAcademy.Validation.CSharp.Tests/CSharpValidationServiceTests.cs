@@ -26,7 +26,7 @@ namespace DotvvmAcademy.Validation.CSharp.Tests
         private IServiceProvider GetServiceProvider()
         {
             var c = new ServiceCollection();
-            c.AddMetaScopeFriendly();
+            c.AddMeta();
             return c.BuildServiceProvider();
         }
     }

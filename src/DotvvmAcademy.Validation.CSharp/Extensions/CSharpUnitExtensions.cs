@@ -3,6 +3,8 @@ using DotvvmAcademy.Meta.Syntax;
 using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Linq;
+using System.Reflection;
 
 namespace DotvvmAcademy.Validation.CSharp.Unit
 {
@@ -35,7 +37,10 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 
         public static string GetMetaName(this CSharpUnit unit, Type type)
         {
-            return unit.Provider.GetRequiredService<IMemberInfoNameBuilder>().Build(type).ToString();
+            return unit.Provider.GetRequiredService<IMetaConverter<MemberInfo, NameNode>>()
+                .Convert(type)
+                .Single()
+                .ToString();
         }
 
         public static CSharpQuery<IMethodSymbol> GetMethod(this CSharpUnit unit, string name)

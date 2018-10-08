@@ -94,7 +94,7 @@ namespace DotvvmAcademy.CourseFormat
         private IServiceProvider GetServiceProvider()
         {
             var c = new ServiceCollection();
-            c.AddMetaScopeFriendly();
+            c.AddMeta();
             c.AddScoped(p =>
             {
                 var context = p.GetRequiredService<Context>();
