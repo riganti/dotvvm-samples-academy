@@ -1,10 +1,12 @@
-﻿using System.Collections.Immutable;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Text;
 
 namespace DotvvmAcademy.Meta.Syntax
 {
     // TODO: Merge with ConstructedTypeNameNode
-    public class TypeArgumentListNode : NameNode
+    public class TypeArgumentListNode : NameNode, IEquatable<TypeArgumentListNode>
     {
         public TypeArgumentListNode(
             ImmutableArray<NameNode> arguments,
@@ -27,6 +29,40 @@ namespace DotvvmAcademy.Meta.Syntax
         public ImmutableArray<NameToken> CommaTokens { get; }
 
         public NameToken OpenBracketToken { get; }
+
+        public static bool operator !=(TypeArgumentListNode node1, TypeArgumentListNode node2)
+        {
+            return !(node1 == node2);
+        }
+
+        public static bool operator ==(TypeArgumentListNode node1, TypeArgumentListNode node2)
+        {
+            return EqualityComparer<TypeArgumentListNode>.Default.Equals(node1, node2);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as TypeArgumentListNode);
+        }
+
+        public bool Equals(TypeArgumentListNode other)
+        {
+            return other != null &&
+                   Arguments.Equals(other.Arguments) &&
+                   CloseBracketToken.Equals(other.CloseBracketToken) &&
+                   CommaTokens.Equals(other.CommaTokens) &&
+                   OpenBracketToken.Equals(other.OpenBracketToken);
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = -2126204417;
+            hashCode = hashCode * -1521134295 + EqualityComparer<ImmutableArray<NameNode>>.Default.GetHashCode(Arguments);
+            hashCode = hashCode * -1521134295 + EqualityComparer<NameToken>.Default.GetHashCode(CloseBracketToken);
+            hashCode = hashCode * -1521134295 + EqualityComparer<ImmutableArray<NameToken>>.Default.GetHashCode(CommaTokens);
+            hashCode = hashCode * -1521134295 + EqualityComparer<NameToken>.Default.GetHashCode(OpenBracketToken);
+            return hashCode;
+        }
 
         public override NameNode SetDiagnostics(ImmutableArray<NameDiagnostic> diagnostics)
         {

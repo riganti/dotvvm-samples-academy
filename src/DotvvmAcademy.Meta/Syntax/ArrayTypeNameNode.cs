@@ -1,9 +1,11 @@
-﻿using System.Collections.Immutable;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Text;
 
 namespace DotvvmAcademy.Meta.Syntax
 {
-    public class ArrayTypeNameNode : NameNode
+    public class ArrayTypeNameNode : NameNode, IEquatable<ArrayTypeNameNode>
     {
         public ArrayTypeNameNode(
             NameNode elementType,
@@ -26,6 +28,40 @@ namespace DotvvmAcademy.Meta.Syntax
         public NameNode ElementType { get; }
 
         public NameToken OpenBracketToken { get; }
+
+        public static bool operator !=(ArrayTypeNameNode node1, ArrayTypeNameNode node2)
+        {
+            return !(node1 == node2);
+        }
+
+        public static bool operator ==(ArrayTypeNameNode node1, ArrayTypeNameNode node2)
+        {
+            return EqualityComparer<ArrayTypeNameNode>.Default.Equals(node1, node2);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as ArrayTypeNameNode);
+        }
+
+        public bool Equals(ArrayTypeNameNode other)
+        {
+            return other != null &&
+                   EqualityComparer<NameToken>.Default.Equals(CloseBracketToken, other.CloseBracketToken) &&
+                   CommaTokens.Equals(other.CommaTokens) &&
+                   EqualityComparer<NameNode>.Default.Equals(ElementType, other.ElementType) &&
+                   EqualityComparer<NameToken>.Default.Equals(OpenBracketToken, other.OpenBracketToken);
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = -767638305;
+            hashCode = hashCode * -1521134295 + EqualityComparer<NameToken>.Default.GetHashCode(CloseBracketToken);
+            hashCode = hashCode * -1521134295 + EqualityComparer<ImmutableArray<NameToken>>.Default.GetHashCode(CommaTokens);
+            hashCode = hashCode * -1521134295 + EqualityComparer<NameNode>.Default.GetHashCode(ElementType);
+            hashCode = hashCode * -1521134295 + EqualityComparer<NameToken>.Default.GetHashCode(OpenBracketToken);
+            return hashCode;
+        }
 
         public override NameNode SetDiagnostics(ImmutableArray<NameDiagnostic> diagnostics)
         {
