@@ -13,7 +13,7 @@ void ValidateMethod(string name, Func<int, int, int> operation)
     viewModelType.GetMethod(name)
         .HasAccessibility(Accessibility.Public)
         .HasParameters()
-        .Returns("void");
+        .Returns("System.Void");
 
     Unit.Run(c =>
     {
