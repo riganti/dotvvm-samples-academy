@@ -1,6 +1,6 @@
 ﻿---
 Title: Markdown
-CodeTask: /resources/00_content_sample/10_markdown.csharp.csx
+CodeTask: /resources/000_content_sample/10_markdown.csharp.csx
 ---
 
 # Header 1

@@ -1,11 +1,11 @@
 ﻿---
 Title: Commands
-CodeTask: /resources/10_calculator/50_commands.dothtml.csx
+CodeTask: /resources/010_calculator/50_commands.dothtml.csx
 ---
 
 # Commands
 
-Commands are another kind of binding. They call a method from the ViewModel on the server. Let's take a look at a `Button` sample:
+Commands are another kind of binding. They invoke a function on the server. Let's take a look at a `Button` sample:
 
 ^^^
 ```csharp

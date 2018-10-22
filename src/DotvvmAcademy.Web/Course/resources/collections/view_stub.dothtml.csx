@@ -5,12 +5,12 @@ Unit.SetDefaultCodePath("./todo_stub.dothtml");
 Unit.SetCorrectCodePath("./todo_repeater.dothtml");
 Unit.SetSourcePath("ToDoViewModel.cs", "./ToDoViewModel_ctor.cs");
 
-Unit.GetDirective("/attribute::*")
-    .IsViewModelDirective(ToDoViewModel);
+Unit.GetDirective("/@viewModel")
+    .HasTypeArgument(ToDoViewModel);
 
 Unit.GetControl("/child::*[1]")
     .IsOfType<RawLiteral>()
-    .HasRawText("<!DOCTYPE html>", false);
+    .IsRawText("<!DOCTYPE html>", false);
 
 var body = Unit.GetControl("/html/body");
 

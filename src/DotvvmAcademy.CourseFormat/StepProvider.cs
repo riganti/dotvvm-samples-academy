@@ -28,7 +28,7 @@ namespace DotvvmAcademy.CourseFormat
                 (var html, var frontMatter) = await renderer.Render<StepFrontMatter>(fileText);
                 if (frontMatter == null)
                 {
-                    throw new NotSupportedException($"Step at {path} doesn't have YAML Front Matter.");
+                    throw new NotSupportedException($"Step at {path} doesn't have a YAML Front Matter.");
                 }
 
                 var step = new Step(

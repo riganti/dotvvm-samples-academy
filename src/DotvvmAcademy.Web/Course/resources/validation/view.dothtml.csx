@@ -7,7 +7,7 @@ Unit.SetSourcePath("FormViewModel.cs", "./FormViewModel_without.cs");
 
 Unit.GetControl("/child::node()[1]")
     .IsOfType<RawLiteral>()
-    .HasRawText("<!doctype html>", false);
+    .IsRawText("<!doctype html>", false);
 
 var loginForm = Unit.GetControl("/html/body/div[1]");
 loginForm.GetProperty("@Validation.Target").HasBinding("Login");
