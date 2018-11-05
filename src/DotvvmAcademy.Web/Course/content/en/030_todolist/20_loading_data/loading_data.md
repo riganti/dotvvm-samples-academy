@@ -1,11 +1,13 @@
 ﻿---
 Title: Loading Data
+CodeTask: /resources/030_todolist/20_loading_data.csharp.csx
 ---
 
 # Loading Data
 
-We're going to load the Todos from an external `IToDoService`. We can get an instance of this service through a technique called Constructor Dependency Injection. If you don't know what that is, imagine it as a magical being that always gives you what you want as long as it's a constructor parameter.
 
-Where are we going to use it? We'll hook into DotVVM's lifecycle by overriding the `PreRender()` method of `DotvvmViewModelBase`. This method gets called after all commands have been invoked.
+Now, in a real application, you'd probably use the database to store the Todo items. We, however, will opt in for a simpler solution: bouncing a list of items between the Server and the Client. That means we have to instantiate the `List` only on the first request. How are we gonna do that, I hear?
 
-Finish the `PreRender()` method by calling `GetItems()` on the `toDoService` field. Assign the result to the `Items` property.
+We'll hook into DotVVM's lifecycle by overriding the `Init()` method of `DotvvmViewModelBase`. We can use the `Context.IsPostBack` property to check if the request is NOT first.
+
+Finish the `Init()` method by initializing `Items` only if `Context.IsPostBack` is false.
