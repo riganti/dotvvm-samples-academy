@@ -45,3 +45,18 @@ viewModelType.GetProperty("NewLastName")
     .HasGetter()
     .HasSetter()
     .Allow();
+
+Unit.Run(c =>
+{
+    var vm = c.Instantiate(ProfileDetailViewModel);
+    if (vm.Profile == null)
+    {
+        c.Report("You must initialize the Profile property.");
+    }
+    string original = vm.Profile.LastName;
+    vm.NewLastName = $"{original}ish";
+    vm.Rename();
+    if (vm.NewLastName != vm.Profile.LastName) {
+        c.Report("Your Rename method doesn't work properly.");
+    }
+});
