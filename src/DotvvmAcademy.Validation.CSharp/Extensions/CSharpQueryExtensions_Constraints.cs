@@ -178,7 +178,11 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
         {
             return query.AddQueryConstraint((context, result) =>
             {
-                var type = context.Locate<ITypeSymbol>(NameNode.Parse(typeName)).Single();
+                var type = context.Locate<ITypeSymbol>(NameNode.Parse(typeName)).SingleOrDefault();
+                if (type == null)
+                {
+                    return;
+                }
                 foreach (var property in result)
                 {
                     if (!property.Type.Equals(type))
