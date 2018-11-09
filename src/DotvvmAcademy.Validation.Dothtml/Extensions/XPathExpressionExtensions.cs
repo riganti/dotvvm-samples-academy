@@ -52,6 +52,10 @@
             {
                 return null;
             }
+            if (source.EndsWith("/"))
+            {
+                source = source.Substring(0, source.Length - 1);
+            }
 
             return XPathExpression.Compile(source);
         }

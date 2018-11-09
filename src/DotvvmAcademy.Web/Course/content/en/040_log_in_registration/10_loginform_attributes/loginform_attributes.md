@@ -1,9 +1,12 @@
 ﻿---
-Title: LoginForm Attributes
+Title: "Log-In Form: Validation Attributes"
+CodeTask: /resources/040_login_registration/10_loginform_attributes.csharp.csx
 ---
 
-# Log-In Form Attributes
+# Log-In Form: Validation Attributes
 
-Greetings! Validation is an important part of any form. Nowhere is it as important as in a Log-In & Registration Form. That's what we're going to build now.
+Greetings, traveller! If you want to learn how to use DotVVM validation by building a Log-In and Registration form, you've come to the right place.
 
-The easiest way to validate anything is using `System.ComponentModel.DataAnnotations` attributes. Add `[Required]` and `[Email]` attribute to `LogIn.Email` and `[Required]` `LogIn.Password`.
+Please look at the ViewModel. You may notice it has a constructor parameter of type `AccountService`. This type is used to simulate database access. You may also notice that it extends `DotvvmViewModelBase`. This base type allows you to hook into the ViewModel's life-cycle; here by overriding the `Init` method.
+
+The easiest way to validate anything in DotVVM is by using attributes from the `System.ComponentModel.DataAnnotations` namespace. Add `RequiredAttribute` and `EmailAddressAttribute` to the `Email` property and `RequiredAddressAttribute` to the `Password` property.
