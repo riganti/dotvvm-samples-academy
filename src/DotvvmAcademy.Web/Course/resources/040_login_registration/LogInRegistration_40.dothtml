@@ -31,5 +31,29 @@
         <dot:Button Click="{command: LogIn()}"
                     Text="Log-In" />
     </section>
+    <section>
+        <h2>Registration</h2>
+        <div>
+            <span>Email: </span>
+            <dot:TextBox Text="{value: RegistrationForm.Email}"/>
+        </div>
+        <div>
+            <span>Password: </span>
+            <dot:TextBox Text="{value: RegistrationForm.Password}"/>
+        </div>
+        <div>
+            <span>Name: </span>
+            <dot:TextBox Text="{value: RegistrationForm.Name}"/>
+        </div>
+        <div>
+            <span>Age: </span>
+            <dot:TextBox Text="{value: RegistrationForm.Age}"/>
+        </div>
+        <div>
+            <dot:ValidationSummary Validation.Target="{value: RegistrationForm}"
+                                   IncludeErrorsFromTarget="true"/>
+        </div>
+        <dot:Button Click="{command: Register()}"
+                    Text="Register"/>
 </body>
 </html>

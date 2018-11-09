@@ -25,6 +25,7 @@ var accountService = Unit.GetType(AccountService).Allow();
 accountService.GetMethod("LogIn").Allow();
 var context = Unit.GetType<IDotvvmRequestContext>().Allow();
 context.GetProperty("IsPostBack").Allow();
+Unit.GetMethod("DotvvmRequestContextExtensions.FailOnInvalidModelState");
 var viewModel = Unit.GetType(ViewModel);
 viewModel.GetField("accountService").Allow();
 viewModel.GetMethod("LogIn").Allow();

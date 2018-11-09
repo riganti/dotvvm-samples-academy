@@ -17,8 +17,7 @@
             <dot:TextBox Text="{value: LogInForm.Password}" />
         </div>
         <dot:Button Click="{command: LogIn()}"
-                    Text="Log-In"
-                    Validation.Target="{value: LogInForm}"/>
+                    Text="Log-In" />
     </section>
 </body>
 </html>

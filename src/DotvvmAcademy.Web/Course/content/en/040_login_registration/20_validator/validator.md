@@ -14,4 +14,4 @@ To display the automatically created error message you'd to this:
                ShowErrorMessageText="true" />
 ```
 
-Add a `Validator` control next to both `TextBoxes`. Bind them to the same properties as the `TextBoxes`' `Text`.
+Add a `Validator` control next to both `TextBox` controls. Bind their `Value` to the same properties as the respective `TextBox's` `Text`.
