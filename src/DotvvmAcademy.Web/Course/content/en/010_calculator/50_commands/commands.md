@@ -5,9 +5,8 @@ CodeTask: /resources/010_calculator/50_commands.dothtml.csx
 
 # Commands
 
-Commands are just a different kind of binding. They invoke a function on the server. Let's take a look at a `Button` sample:
+Commands are just a different kind of binding. They invoke a function on the server. Let's take a look at a sample. This is an excerpt from the ViewModel:
 
-^^^
 ```csharp
 public string Message { get; set; }
 
@@ -16,15 +15,12 @@ public void Foo()
     Message = "Bar";
 }
 ```
-^^^ A ViewModel Excerpt
 
-
-^^^
+Commands can be used by a control like the `Button`:
 ```dothtml
 <dot:Button Click="{command: Foo()}" />
 <dot:TextBox Text="{value: Message}" />
 ```
-^^^ A View Excerpt
 
 When a user clicks the button, the following things happen:
 - The `Foo` method gets called on the server
