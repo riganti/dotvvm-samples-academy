@@ -1,8 +1,8 @@
 ﻿#load "./00_constants.csx"
 
 Unit.SetFileName("ProfileDetailViewModel.cs");
-Unit.SetDefault("./ProfileDetailViewModel_10.cs");
-Unit.SetCorrect("./ProfileDetailViewModel_20.cs");
+Unit.SetDefault("ProfileDetailViewModel_10.cs");
+Unit.SetCorrect("ProfileDetailViewModel_20.cs");
 
 Unit.GetType<string>()
     .Allow();

@@ -5,7 +5,7 @@ CodeTask: /resources/010_calculator/50_commands.dothtml.csx
 
 # Commands
 
-Commands are just a different kind of binding. They invoke a function on the server. Let's take a look at a sample. This is an excerpt from the ViewModel:
+Commands are just a different kind of binding. They invoke a function on the server. We call that a postback. Let's take a look at a sample. This is an excerpt from the ViewModel:
 
 ```csharp
 public string Message { get; set; }

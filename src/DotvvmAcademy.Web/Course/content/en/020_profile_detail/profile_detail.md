@@ -3,4 +3,4 @@ Title: Profile Detail
 Image: /images/Icons/ico-lesson-2.svg
 ---
 
-A complex Profile Detail form would require a lot of DataContext switching, wouldn't you say?
+DataContext allows for shorter bindings as well as DotVVM's more advanced features.
