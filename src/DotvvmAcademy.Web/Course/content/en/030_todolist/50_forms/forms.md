@@ -1,6 +1,6 @@
 ﻿---
 Title: Forms
-CodeTask: /resources/030_todolist/50_add_form.dothtml.csx
+CodeTask: /resources/030_todolist/50_forms.dothtml.csx
 ---
 
 # Forms

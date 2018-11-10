@@ -14,4 +14,4 @@ repeater.GetProperty("@DataSource")
 
 repeater.GetControl("p/dot:Literal")
     .GetProperty("@Text")
-    .HasBinding("this");
+    .HasBinding("_this");
