@@ -27,10 +27,11 @@ namespace DotvvmAcademy.Meta
                 case TypedConstantKind.Primitive:
                     return constant.Value;
 
+                // TODO: this should never ever never return null, but right now it does
                 case TypedConstantKind.Type:
                     return (Type)symbolConverter
                         .Convert((ITypeSymbol)constant.Value)
-                        .Single();
+                        .SingleOrDefault();
 
                 case TypedConstantKind.Array:
                     var elementType = (Type)symbolConverter
