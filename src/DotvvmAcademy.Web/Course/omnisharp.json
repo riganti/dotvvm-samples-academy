@@ -1,0 +1,6 @@
+{
+    "Script": {
+        "EnableScriptNuGetReferences": true,
+        "RspFilePath": "./csi.rsp"
+    }
+}

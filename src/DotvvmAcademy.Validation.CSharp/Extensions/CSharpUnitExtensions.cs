@@ -63,6 +63,11 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
             return unit.GetProperties(name).CountEquals(1);
         }
 
+        public static CSharpQuery<ITypeSymbol> GetType(this CSharpUnit unit, Type type)
+        {
+            return GetType(unit, type.FullName);
+        }
+
         public static CSharpQuery<ITypeSymbol> GetType(this CSharpUnit unit, string name)
         {
             return unit.GetTypes(name).CountEquals(1);
