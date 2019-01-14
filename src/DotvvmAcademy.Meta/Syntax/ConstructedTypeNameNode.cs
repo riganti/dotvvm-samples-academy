@@ -28,8 +28,6 @@ namespace DotvvmAcademy.Meta.Syntax
 
         public NameToken OpenBracketToken { get; }
 
-        public TypeArgumentListNode TypeArgumentList { get; }
-
         public NameNode UnboundTypeName { get; }
 
         public static bool operator !=(ConstructedTypeNameNode node1, ConstructedTypeNameNode node2)
@@ -70,7 +68,7 @@ namespace DotvvmAcademy.Meta.Syntax
 
         public override string ToString()
         {
-            return $"{UnboundTypeName}{TypeArgumentList}";
+            return $"{UnboundTypeName}[{string.Join(", ", Arguments)}]";
         }
 
         internal override TResult Accept<TResult>(NameNodeVisitor<TResult> visitor)

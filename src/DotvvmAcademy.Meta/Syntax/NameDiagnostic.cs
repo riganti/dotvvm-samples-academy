@@ -2,11 +2,14 @@
 {
     public class NameDiagnostic
     {
-        public NameDiagnostic(string message)
+        public NameDiagnostic(NameNode node, string message)
         {
+            Node = node;
             Message = message;
         }
 
         public string Message { get; }
+
+        public NameNode Node { get; set; }
     }
 }

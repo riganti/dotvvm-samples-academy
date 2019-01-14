@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq;
 
 namespace DotvvmAcademy.Meta.Syntax
 {
     internal class NameParser
     {
         private readonly List<NameToken> tokens = new List<NameToken>();
+        private List<NameDiagnostic> diagnostics = new List<NameDiagnostic>();
         private int position;
 
         public NameParser(NameLexer lexer)
@@ -54,7 +56,7 @@ namespace DotvvmAcademy.Meta.Syntax
 
         private ArrayTypeNameNode ParseArrayTypeName(NameNode elementType)
         {
-            var diagnosticsBuilder = ImmutableArray.CreateBuilder<NameDiagnostic>();
+            var messages = new List<string>();
             NameToken openBracket;
             if (Current.Kind == NameTokenKind.OpenBracket)
             {
@@ -64,7 +66,7 @@ namespace DotvvmAcademy.Meta.Syntax
             else
             {
                 openBracket = CreateMissingToken(NameTokenKind.OpenBracket);
-                diagnosticsBuilder.Add(new NameDiagnostic("An opening bracket was expected."));
+                messages.Add("An opening bracket was expected.");
             }
 
             var commaBuilder = ImmutableArray.CreateBuilder<NameToken>();
@@ -83,26 +85,71 @@ namespace DotvvmAcademy.Meta.Syntax
             else
             {
                 closeBracket = CreateMissingToken(NameTokenKind.CloseBracket);
-                diagnosticsBuilder.Add(new NameDiagnostic("A closing bracket was expected."));
+                messages.Add("A closing bracket was expected.");
             }
 
-            return new ArrayTypeNameNode(
+            var result = new ArrayTypeNameNode(
                 elementType: elementType,
                 openBracketToken: openBracket,
                 closeBracketToken: closeBracket,
-                commaTokens: commaBuilder.ToImmutable(),
-                diagnostics: diagnosticsBuilder.ToImmutable());
+                commaTokens: commaBuilder.ToImmutable());
+            diagnostics.AddRange(messages.Select(m => new NameDiagnostic(result, m)));
+            return result;
         }
 
         private NameNode ParseBoundTypeName()
         {
             var name = ParseNestedTypeName();
-            if (Current.Kind == NameTokenKind.OpenBracket && Peek(1).Kind == NameTokenKind.Identifier)
+            if (Current.Kind != NameTokenKind.OpenBracket || Peek(1).Kind != NameTokenKind.Identifier)
             {
-                return new ConstructedTypeNameNode(name, ParseTypeArgumentList());
+                return name;
             }
 
-            return name;
+            var messages = new List<string>();
+            var argumentBuilder = ImmutableArray.CreateBuilder<NameNode>();
+            var separatorBuilder = ImmutableArray.CreateBuilder<NameToken>();
+            NameToken openBracket;
+            if (Current.Kind == NameTokenKind.OpenBracket)
+            {
+                openBracket = Current;
+                Advance();
+            }
+            else
+            {
+                openBracket = CreateMissingToken(NameTokenKind.OpenBracket);
+                messages.Add("An opening bracket was expected.");
+            }
+
+            while (Current.Kind == NameTokenKind.Identifier)
+            {
+                argumentBuilder.Add(ParseTypeName());
+                if (Current.Kind == NameTokenKind.Comma)
+                {
+                    separatorBuilder.Add(Current);
+                    Advance();
+                }
+            }
+
+            NameToken closeBracket;
+            if (Current.Kind == NameTokenKind.CloseBracket)
+            {
+                closeBracket = Current;
+                Advance();
+            }
+            else
+            {
+                closeBracket = CreateMissingToken(NameTokenKind.CloseBracket);
+                messages.Add("A closing bracket was expected.");
+            }
+
+            var result = new ConstructedTypeNameNode(
+                unboundTypeName: name,
+                arguments: argumentBuilder.ToImmutable(),
+                commaTokens: separatorBuilder.ToImmutable(),
+                openBracketToken: openBracket,
+                closeBracketToken: closeBracket);
+            diagnostics.AddRange(messages.Select(m => new NameDiagnostic(result, m)));
+            return result;
         }
 
         private IdentifierNameNode ParseIdentifier()
@@ -113,33 +160,29 @@ namespace DotvvmAcademy.Meta.Syntax
                 Advance();
                 return name;
             }
+            else
+            {
+                var name = new IdentifierNameNode(CreateMissingToken(NameTokenKind.Identifier));
+                diagnostics.Add(new NameDiagnostic(name, "An identifier was expected."));
+                return name;
+            }
 
-            var diagnostic = new NameDiagnostic("An identifier was expected.");
-            return new IdentifierNameNode(
-                identifierToken: CreateMissingToken(NameTokenKind.Identifier),
-                diagnostics: ImmutableArray.Create(diagnostic));
         }
 
         private MemberNameNode ParseMemberName(NameNode type)
         {
-            var diagnosticBuilder = ImmutableArray.CreateBuilder<NameDiagnostic>();
-            NameToken colonColon;
             if (Current.Kind == NameTokenKind.ColonColon)
             {
-                colonColon = Current;
+                var result = new MemberNameNode(type, ParseIdentifier(), Current);
                 Advance();
+                return result;
             }
             else
             {
-                diagnosticBuilder.Add(new NameDiagnostic("A '::' token was expected."));
-                colonColon = CreateMissingToken(NameTokenKind.ColonColon);
+                var result = new MemberNameNode(type, ParseIdentifier(), CreateMissingToken(NameTokenKind.ColonColon));
+                diagnostics.Add(new NameDiagnostic(result, "A '::' token was expected."));
+                return result;
             }
-
-            return new MemberNameNode(
-                type: type,
-                member: ParseIdentifier(),
-                colonColonToken: colonColon,
-                diagnostics: diagnosticBuilder.ToImmutable());
         }
 
         private NameNode ParseNestedTypeName()
@@ -170,8 +213,8 @@ namespace DotvvmAcademy.Meta.Syntax
 
         private SimpleNameNode ParseSimpleName()
         {
-            SimpleNameNode name = ParseIdentifier();
-            if (name.IdentifierToken.IsMissing || Current.Kind != NameTokenKind.Backtick)
+            var name = ParseIdentifier();
+            if (Current.Kind != NameTokenKind.Backtick)
             {
                 return name;
             }
@@ -181,60 +224,16 @@ namespace DotvvmAcademy.Meta.Syntax
             if (Current.Kind != NameTokenKind.NumericLiteral)
             {
                 var arity = CreateMissingToken(NameTokenKind.NumericLiteral);
-                var diagnostic = new NameDiagnostic("A numerical value of arity is missing.");
-                return new GenericNameNode(name.IdentifierToken, backtickToken, arity);
-            }
-
-            name = new GenericNameNode(name.IdentifierToken, backtickToken, Current);
-            Advance();
-            return name;
-        }
-
-        private TypeArgumentListNode ParseTypeArgumentList()
-        {
-            var diagnosticBuilder = ImmutableArray.CreateBuilder<NameDiagnostic>();
-            var argumentBuilder = ImmutableArray.CreateBuilder<NameNode>();
-            var separatorBuilder = ImmutableArray.CreateBuilder<NameToken>();
-            NameToken openBracket;
-            if (Current.Kind == NameTokenKind.OpenBracket)
-            {
-                openBracket = Current;
-                Advance();
+                var result = new GenericNameNode(name.IdentifierToken, backtickToken, arity);
+                diagnostics.Add(new NameDiagnostic(result, "A numerical value of arity is missing."));
+                return result;
             }
             else
             {
-                openBracket = CreateMissingToken(NameTokenKind.OpenBracket);
-                diagnosticBuilder.Add(new NameDiagnostic("An opening bracket was expected."));
-            }
-
-            while (Current.Kind == NameTokenKind.Identifier)
-            {
-                argumentBuilder.Add(ParseTypeName());
-                if (Current.Kind == NameTokenKind.Comma)
-                {
-                    separatorBuilder.Add(Current);
-                    Advance();
-                }
-            }
-
-            NameToken closeBracket;
-            if (Current.Kind == NameTokenKind.CloseBracket)
-            {
-                closeBracket = Current;
+                var result = new GenericNameNode(name.IdentifierToken, backtickToken, Current);
                 Advance();
+                return result;
             }
-            else
-            {
-                closeBracket = CreateMissingToken(NameTokenKind.CloseBracket);
-                diagnosticBuilder.Add(new NameDiagnostic("A closing bracket was expected."));
-            }
-
-            return new TypeArgumentListNode(
-                arguments: argumentBuilder.ToImmutable(),
-                commaTokens: separatorBuilder.ToImmutable(),
-                openBracketToken: openBracket,
-                closeBracketToken: closeBracket,
-                diagnostics: diagnosticBuilder.ToImmutable());
         }
 
         private NameNode ParseTypeName()
