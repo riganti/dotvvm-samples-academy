@@ -6,13 +6,10 @@ namespace DotvvmAcademy.Meta.Syntax
 {
     public class IdentifierNameNode : SimpleNameNode, IEquatable<IdentifierNameNode>
     {
-        public IdentifierNameNode(NameToken identifierToken, ImmutableArray<NameDiagnostic> diagnostics = default)
-            : base(NameNodeKind.Identifier, diagnostics)
+        public IdentifierNameNode(NameToken identifierToken)
+            : base(identifierToken)
         {
-            IdentifierToken = identifierToken;
         }
-
-        public override NameToken IdentifierToken { get; }
 
         public static bool operator !=(IdentifierNameNode node1, IdentifierNameNode node2)
         {
@@ -40,14 +37,14 @@ namespace DotvvmAcademy.Meta.Syntax
             return 736718691 + EqualityComparer<NameToken>.Default.GetHashCode(IdentifierToken);
         }
 
-        public override NameNode SetDiagnostics(ImmutableArray<NameDiagnostic> diagnostics)
-        {
-            return new IdentifierNameNode(IdentifierToken, diagnostics);
-        }
-
         public override string ToString()
         {
             return IdentifierToken.ToString();
+        }
+
+        internal override TResult Accept<TResult>(NameNodeVisitor<TResult> visitor)
+        {
+            return visitor.VisitIdentifier(this);
         }
     }
 }

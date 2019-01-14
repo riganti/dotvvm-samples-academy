@@ -9,11 +9,9 @@ namespace DotvvmAcademy.Meta.Syntax
         public GenericNameNode(
             NameToken identifierToken,
             NameToken backtickToken,
-            NameToken arityToken,
-            ImmutableArray<NameDiagnostic> diagnostics = default)
-            : base(NameNodeKind.Generic, diagnostics)
+            NameToken arityToken)
+            : base(identifierToken)
         {
-            IdentifierToken = identifierToken;
             BacktickToken = backtickToken;
             ArityToken = arityToken;
         }
@@ -21,8 +19,6 @@ namespace DotvvmAcademy.Meta.Syntax
         public NameToken ArityToken { get; }
 
         public NameToken BacktickToken { get; }
-
-        public override NameToken IdentifierToken { get; }
 
         public static bool operator !=(GenericNameNode node1, GenericNameNode node2)
         {
@@ -56,14 +52,14 @@ namespace DotvvmAcademy.Meta.Syntax
             return hashCode;
         }
 
-        public override NameNode SetDiagnostics(ImmutableArray<NameDiagnostic> diagnostics)
-        {
-            return new GenericNameNode(IdentifierToken, BacktickToken, ArityToken, diagnostics);
-        }
-
         public override string ToString()
         {
             return $"{IdentifierToken}`{ArityToken}";
+        }
+
+        internal override TResult Accept<TResult>(NameNodeVisitor<TResult> visitor)
+        {
+            return visitor.VisitGeneric(this);
         }
     }
 }

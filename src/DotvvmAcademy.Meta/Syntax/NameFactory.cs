@@ -19,22 +19,23 @@ namespace DotvvmAcademy.Meta.Syntax
 
         public static ConstructedTypeNameNode ConstructedType(NameNode unboundTypeName, IEnumerable<NameNode> typeArguments)
         {
-            var immutableArguments = typeArguments.ToImmutableArray();
-            Debug.Assert(immutableArguments.Length > 0);
-            var typeArgumentList = new TypeArgumentListNode(
-                arguments: immutableArguments,
-                commaTokens: MissingTokens(NameTokenKind.Comma, immutableArguments.Length - 1),
-                openBracketToken: MissingToken(NameTokenKind.OpenBracket),
-                closeBracketToken: MissingToken(NameTokenKind.CloseBracket));
+            var arguments = typeArguments.ToImmutableArray();
+            Debug.Assert(arguments.Length > 0);
             return new ConstructedTypeNameNode(
                 unboundTypeName: unboundTypeName,
-                typeArgumentList: typeArgumentList);
+                arguments: arguments,
+                commaTokens: MissingTokens(NameTokenKind.Comma, arguments.Length - 1),
+                openBracketToken: MissingToken(NameTokenKind.OpenBracket),
+                closeBracketToken: MissingToken(NameTokenKind.CloseBracket));
         }
 
         public static GenericNameNode Generic(string identifier, int arity)
         {
             Debug.Assert(arity >= 0);
-            return new GenericNameNode(IdentifierToken(identifier), MissingToken(NameTokenKind.Backtick), NumericLiteralToken(arity));
+            return new GenericNameNode(
+                identifierToken: IdentifierToken(identifier),
+                backtickToken: MissingToken(NameTokenKind.Backtick),
+                arityToken: NumericLiteralToken(arity));
         }
 
         public static IdentifierNameNode Identifier(string identifier)

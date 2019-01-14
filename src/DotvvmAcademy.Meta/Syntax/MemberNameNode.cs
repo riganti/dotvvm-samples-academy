@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 
 namespace DotvvmAcademy.Meta.Syntax
 {
@@ -9,9 +8,7 @@ namespace DotvvmAcademy.Meta.Syntax
         public MemberNameNode(
             NameNode type,
             IdentifierNameNode member,
-            NameToken colonColonToken,
-            ImmutableArray<NameDiagnostic> diagnostics = default)
-            : base(NameNodeKind.Member, diagnostics)
+            NameToken colonColonToken)
         {
             Type = type;
             Member = member;
@@ -23,6 +20,16 @@ namespace DotvvmAcademy.Meta.Syntax
         public IdentifierNameNode Member { get; }
 
         public NameNode Type { get; }
+
+        public static bool operator !=(MemberNameNode node1, MemberNameNode node2)
+        {
+            return !(node1 == node2);
+        }
+
+        public static bool operator ==(MemberNameNode node1, MemberNameNode node2)
+        {
+            return EqualityComparer<MemberNameNode>.Default.Equals(node1, node2);
+        }
 
         public override bool Equals(object obj)
         {
@@ -46,24 +53,14 @@ namespace DotvvmAcademy.Meta.Syntax
             return hashCode;
         }
 
-        public override NameNode SetDiagnostics(ImmutableArray<NameDiagnostic> diagnostics)
-        {
-            return new MemberNameNode(Type, Member, ColonColonToken, diagnostics);
-        }
-
         public override string ToString()
         {
             return $"{Type}::{Member}";
         }
 
-        public static bool operator ==(MemberNameNode node1, MemberNameNode node2)
+        internal override TResult Accept<TResult>(NameNodeVisitor<TResult> visitor)
         {
-            return EqualityComparer<MemberNameNode>.Default.Equals(node1, node2);
-        }
-
-        public static bool operator !=(MemberNameNode node1, MemberNameNode node2)
-        {
-            return !(node1 == node2);
+            return visitor.VisitMember(this);
         }
     }
 }

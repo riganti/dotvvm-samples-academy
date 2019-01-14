@@ -7,9 +7,7 @@ namespace DotvvmAcademy.Meta.Syntax
     {
         public PointerTypeNameNode(
             NameNode elementType,
-            NameToken asteriskToken,
-            ImmutableArray<NameDiagnostic> diagnostics = default)
-            : base(NameNodeKind.PointerType, diagnostics)
+            NameToken asteriskToken)
         {
             ElementType = elementType;
             AsteriskToken = asteriskToken;
@@ -19,14 +17,14 @@ namespace DotvvmAcademy.Meta.Syntax
 
         public NameNode ElementType { get; }
 
-        public override NameNode SetDiagnostics(ImmutableArray<NameDiagnostic> diagnostics)
-        {
-            return new PointerTypeNameNode(ElementType, AsteriskToken, diagnostics);
-        }
-
         public override string ToString()
         {
             return $"{ElementType}*";
+        }
+
+        internal override TResult Accept<TResult>(NameNodeVisitor<TResult> visitor)
+        {
+            return visitor.VisitPointerType(this);
         }
     }
 }

@@ -1,24 +1,9 @@
-﻿using System.Collections.Immutable;
+﻿using System;
 
 namespace DotvvmAcademy.Meta.Syntax
 {
     public abstract class NameNode
     {
-        public NameNode(NameNodeKind kind)
-        {
-            Kind = kind;
-        }
-
-        public NameNode(NameNodeKind kind, ImmutableArray<NameDiagnostic> diagnostics)
-        {
-            Kind = kind;
-            Diagnostics = diagnostics;
-        }
-
-        public ImmutableArray<NameDiagnostic> Diagnostics { get; }
-
-        public NameNodeKind Kind { get; }
-
         public static NameNode Parse(string source)
         {
             var lexer = new NameLexer(source);
@@ -26,6 +11,6 @@ namespace DotvvmAcademy.Meta.Syntax
             return parser.Parse();
         }
 
-        public abstract NameNode SetDiagnostics(ImmutableArray<NameDiagnostic> diagnostics);
+        internal abstract TResult Accept<TResult>(NameNodeVisitor<TResult> visitor);
     }
 }

@@ -11,9 +11,7 @@ namespace DotvvmAcademy.Meta.Syntax
             NameNode elementType,
             NameToken openBracketToken,
             NameToken closeBracketToken,
-            ImmutableArray<NameToken> commaTokens,
-            ImmutableArray<NameDiagnostic> diagnostics = default)
-            : base(NameNodeKind.ArrayType, diagnostics)
+            ImmutableArray<NameToken> commaTokens)
         {
             ElementType = elementType;
             OpenBracketToken = openBracketToken;
@@ -47,10 +45,10 @@ namespace DotvvmAcademy.Meta.Syntax
         public bool Equals(ArrayTypeNameNode other)
         {
             return other != null &&
-                   EqualityComparer<NameToken>.Default.Equals(CloseBracketToken, other.CloseBracketToken) &&
-                   CommaTokens.Equals(other.CommaTokens) &&
-                   EqualityComparer<NameNode>.Default.Equals(ElementType, other.ElementType) &&
-                   EqualityComparer<NameToken>.Default.Equals(OpenBracketToken, other.OpenBracketToken);
+                EqualityComparer<NameToken>.Default.Equals(CloseBracketToken, other.CloseBracketToken) &&
+                CommaTokens.Equals(other.CommaTokens) &&
+                EqualityComparer<NameNode>.Default.Equals(ElementType, other.ElementType) &&
+                EqualityComparer<NameToken>.Default.Equals(OpenBracketToken, other.OpenBracketToken);
         }
 
         public override int GetHashCode()
@@ -61,11 +59,6 @@ namespace DotvvmAcademy.Meta.Syntax
             hashCode = hashCode * -1521134295 + EqualityComparer<NameNode>.Default.GetHashCode(ElementType);
             hashCode = hashCode * -1521134295 + EqualityComparer<NameToken>.Default.GetHashCode(OpenBracketToken);
             return hashCode;
-        }
-
-        public override NameNode SetDiagnostics(ImmutableArray<NameDiagnostic> diagnostics)
-        {
-            return new ArrayTypeNameNode(ElementType, OpenBracketToken, CloseBracketToken, CommaTokens, diagnostics);
         }
 
         public override string ToString()
@@ -79,6 +72,11 @@ namespace DotvvmAcademy.Meta.Syntax
             }
             sb.Append(']');
             return sb.ToString();
+        }
+
+        internal override TResult Accept<TResult>(NameNodeVisitor<TResult> visitor)
+        {
+            return visitor.VisitArrayType(this);
         }
     }
 }

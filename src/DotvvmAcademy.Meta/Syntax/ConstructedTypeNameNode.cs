@@ -8,13 +8,25 @@ namespace DotvvmAcademy.Meta.Syntax
     {
         public ConstructedTypeNameNode(
             NameNode unboundTypeName,
-            TypeArgumentListNode typeArgumentList,
-            ImmutableArray<NameDiagnostic> diagnostics = default)
-            : base(NameNodeKind.ConstructedType, diagnostics)
+            ImmutableArray<NameNode> arguments,
+            ImmutableArray<NameToken> commaTokens,
+            NameToken openBracketToken,
+            NameToken closeBracketToken)
         {
             UnboundTypeName = unboundTypeName;
-            TypeArgumentList = typeArgumentList;
+            Arguments = arguments;
+            CommaTokens = commaTokens;
+            OpenBracketToken = openBracketToken;
+            CloseBracketToken = closeBracketToken;
         }
+
+        public ImmutableArray<NameNode> Arguments { get; }
+
+        public NameToken CloseBracketToken { get; }
+
+        public ImmutableArray<NameToken> CommaTokens { get; }
+
+        public NameToken OpenBracketToken { get; }
 
         public TypeArgumentListNode TypeArgumentList { get; }
 
@@ -37,27 +49,33 @@ namespace DotvvmAcademy.Meta.Syntax
 
         public bool Equals(ConstructedTypeNameNode other)
         {
-            return other != null &&
-                   EqualityComparer<TypeArgumentListNode>.Default.Equals(TypeArgumentList, other.TypeArgumentList) &&
-                   EqualityComparer<NameNode>.Default.Equals(UnboundTypeName, other.UnboundTypeName);
+            return other != null
+                && EqualityComparer<NameNode>.Default.Equals(UnboundTypeName, other.UnboundTypeName)
+                && Arguments.Equals(other.Arguments)
+                && CommaTokens.Equals(other.CommaTokens)
+                && OpenBracketToken.Equals(other.OpenBracketToken)
+                && CloseBracketToken.Equals(other.CloseBracketToken);
         }
 
         public override int GetHashCode()
         {
-            var hashCode = -251295557;
-            hashCode = hashCode * -1521134295 + EqualityComparer<TypeArgumentListNode>.Default.GetHashCode(TypeArgumentList);
+            var hashCode = -1125981776;
             hashCode = hashCode * -1521134295 + EqualityComparer<NameNode>.Default.GetHashCode(UnboundTypeName);
+            hashCode = hashCode * -1521134295 + EqualityComparer<ImmutableArray<NameNode>>.Default.GetHashCode(Arguments);
+            hashCode = hashCode * -1521134295 + EqualityComparer<ImmutableArray<NameToken>>.Default.GetHashCode(CommaTokens);
+            hashCode = hashCode * -1521134295 + EqualityComparer<NameToken>.Default.GetHashCode(OpenBracketToken);
+            hashCode = hashCode * -1521134295 + EqualityComparer<NameToken>.Default.GetHashCode(CloseBracketToken);
             return hashCode;
-        }
-
-        public override NameNode SetDiagnostics(ImmutableArray<NameDiagnostic> diagnostics)
-        {
-            return new ConstructedTypeNameNode(UnboundTypeName, TypeArgumentList, diagnostics);
         }
 
         public override string ToString()
         {
             return $"{UnboundTypeName}{TypeArgumentList}";
+        }
+
+        internal override TResult Accept<TResult>(NameNodeVisitor<TResult> visitor)
+        {
+            return visitor.VisitConstructedType(this);
         }
     }
 }

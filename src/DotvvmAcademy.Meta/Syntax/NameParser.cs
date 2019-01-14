@@ -3,7 +3,7 @@ using System.Collections.Immutable;
 
 namespace DotvvmAcademy.Meta.Syntax
 {
-    public class NameParser
+    internal class NameParser
     {
         private readonly List<NameToken> tokens = new List<NameToken>();
         private int position;
@@ -26,12 +26,6 @@ namespace DotvvmAcademy.Meta.Syntax
             }
 
             return typeName;
-        }
-
-        protected TNode AddError<TNode>(TNode node, NameDiagnostic diagnostic) where TNode : NameNode
-        {
-            var diagnostics = node.Diagnostics.Add(diagnostic);
-            return (TNode)node.SetDiagnostics(diagnostics);
         }
 
         protected void Advance()

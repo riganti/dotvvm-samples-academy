@@ -9,9 +9,7 @@ namespace DotvvmAcademy.Meta.Syntax
         public NestedTypeNameNode(
             NameNode left,
             SimpleNameNode right,
-            NameToken plusToken,
-            ImmutableArray<NameDiagnostic> diagnostics = default)
-            : base(NameNodeKind.NestedType, diagnostics)
+            NameToken plusToken)
         {
             Left = left;
             Right = right;
@@ -56,14 +54,14 @@ namespace DotvvmAcademy.Meta.Syntax
             return hashCode;
         }
 
-        public override NameNode SetDiagnostics(ImmutableArray<NameDiagnostic> diagnostics)
-        {
-            return new NestedTypeNameNode(Left, Right, PlusToken, diagnostics);
-        }
-
         public override string ToString()
         {
             return $"{Left}+{Right}";
+        }
+
+        internal override TResult Accept<TResult>(NameNodeVisitor<TResult> visitor)
+        {
+            return visitor.VisitNestedType(this);
         }
     }
 }

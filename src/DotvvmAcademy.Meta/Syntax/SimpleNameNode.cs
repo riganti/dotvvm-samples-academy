@@ -1,14 +1,12 @@
-﻿using System.Collections.Immutable;
-
-namespace DotvvmAcademy.Meta.Syntax
+﻿namespace DotvvmAcademy.Meta.Syntax
 {
     public abstract class SimpleNameNode : NameNode
     {
-        public SimpleNameNode(NameNodeKind kind, ImmutableArray<NameDiagnostic> diagnostics = default)
-            : base(kind, diagnostics)
+        public SimpleNameNode(NameToken identifierToken)
         {
+            IdentifierToken = identifierToken;
         }
 
-        public abstract NameToken IdentifierToken { get; }
+        public NameToken IdentifierToken { get; }
     }
 }

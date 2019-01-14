@@ -2,7 +2,7 @@
 
 namespace DotvvmAcademy.Meta.Syntax
 {
-    public class NameLexer
+    internal class NameLexer
     {
         public const char InvalidCharacter = char.MaxValue;
 
