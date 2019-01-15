@@ -1,17 +1,16 @@
 ﻿using Microsoft.CodeAnalysis;
 using System;
 using System.Linq;
-using System.Reflection;
 
 namespace DotvvmAcademy.Meta
 {
     public class TypedConstantExtractor : ITypedConstantExtractor
     {
-        private readonly IMetaConverter<ISymbol, MemberInfo> symbolConverter;
+        private readonly MetaConverter converter;
 
-        public TypedConstantExtractor(IMetaConverter<ISymbol, MemberInfo> symbolConverter)
+        public TypedConstantExtractor(MetaConverter converter)
         {
-            this.symbolConverter = symbolConverter;
+            this.converter = converter;
         }
 
         public object Extract(TypedConstant constant)
@@ -27,21 +26,15 @@ namespace DotvvmAcademy.Meta
                 case TypedConstantKind.Primitive:
                     return constant.Value;
 
-                // TODO: this should never ever never return null, but right now it does
                 case TypedConstantKind.Type:
-                    return (Type)symbolConverter
-                        .Convert((ITypeSymbol)constant.Value)
-                        .SingleOrDefault();
+                    return (Type)converter.ToReflection((ITypeSymbol)constant.Value).Single();
 
                 case TypedConstantKind.Array:
-                    var elementType = (Type)symbolConverter
-                        .Convert(((IArrayTypeSymbol)constant.Type).ElementType)
-                        .Single();
-                    var objects = constant.Values.Select(Extract).ToArray();
-                    var values = Array.CreateInstance(elementType, objects.Length);
-                    for (int i = 0; i < values.Length; i++)
+                    var elementType = (Type)converter.ToReflection(((IArrayTypeSymbol)constant.Type).ElementType).Single();
+                    var values = Array.CreateInstance(elementType, constant.Values.Length);
+                    for (var i = 0; i < constant.Values.Length; ++i)
                     {
-                        values.SetValue(objects[i], i);
+                        values.SetValue(Extract(constant.Values[i]), i);
                     }
                     return values;
 

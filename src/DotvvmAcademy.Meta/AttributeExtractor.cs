@@ -2,35 +2,29 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 namespace DotvvmAcademy.Meta
 {
     public class AttributeExtractor : IAttributeExtractor
     {
-        private readonly ITypedConstantExtractor constantExtractor;
-        private readonly IMetaConverter<MemberInfo, ISymbol> memberInfoConverter;
-        private readonly IMetaConverter<ISymbol, MemberInfo> symbolConverter;
+        private readonly TypedConstantExtractor constantExtractor;
+        private readonly MetaConverter converter;
 
-        public AttributeExtractor(
-            ITypedConstantExtractor constantExtractor,
-            IMetaConverter<ISymbol, MemberInfo> symbolConverter,
-            IMetaConverter<MemberInfo, ISymbol> memberInfoConverter)
+        public AttributeExtractor(MetaConverter converter, TypedConstantExtractor constantExtractor)
         {
+            this.converter = converter;
             this.constantExtractor = constantExtractor;
-            this.symbolConverter = symbolConverter;
-            this.memberInfoConverter = memberInfoConverter;
         }
 
         public Attribute Extract(AttributeData attributeData)
         {
-            var attributeType = (Type)symbolConverter.Convert(attributeData.AttributeClass).Single();
+            var attributeType = (Type)converter.ToReflection(attributeData.AttributeClass).Single();
             return Instantiate(attributeType, attributeData);
         }
 
         public IEnumerable<Attribute> Extract(Type attributeType, ISymbol symbol)
         {
-            var attributeClass = (INamedTypeSymbol)memberInfoConverter.Convert(attributeType).Single();
+            var attributeClass = (INamedTypeSymbol)converter.ToRoslyn(attributeType).Single();
             return symbol.GetAttributes()
                 .Where(t => t.AttributeClass.Equals(attributeClass))
                 .Select(a => Instantiate(attributeType, a));
@@ -38,14 +32,14 @@ namespace DotvvmAcademy.Meta
 
         public IEnumerable<AttributeData> ExtractAttributeData(Type attributeType, ISymbol symbol)
         {
-            var attributeClass = (INamedTypeSymbol)memberInfoConverter.Convert(attributeType).Single();
+            var attributeClass = (INamedTypeSymbol)converter.ToRoslyn(attributeType).Single();
             return symbol.GetAttributes()
                 .Where(a => a.AttributeClass.Equals(attributeClass));
         }
 
         public bool HasAttribute(Type attributeType, ISymbol symbol)
         {
-            var attributeClass = (INamedTypeSymbol)memberInfoConverter.Convert(attributeType).Single();
+            var attributeClass = (INamedTypeSymbol)converter.ToRoslyn(attributeType).Single();
             return symbol.GetAttributes().Any(a => a.AttributeClass.Equals(attributeClass));
         }
 
