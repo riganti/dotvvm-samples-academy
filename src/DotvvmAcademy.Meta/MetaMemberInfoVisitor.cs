@@ -9,7 +9,7 @@ namespace DotvvmAcademy.Meta
     {
         public override NameNode DefaultVisit(MemberInfo info)
         {
-            throw new NotSupportedException($"Symbol of type \"{info.GetType()}\" is not supported.");
+            throw new NotSupportedException($"MemberInfo of type \"{info.GetType()}\" is not supported.");
         }
 
         public override NameNode VisitConstructor(ConstructorInfo info)
