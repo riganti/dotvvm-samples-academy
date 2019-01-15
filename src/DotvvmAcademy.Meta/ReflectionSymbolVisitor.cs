@@ -7,7 +7,7 @@ using System.Text;
 
 namespace DotvvmAcademy.Meta
 {
-    public class ReflectionSymbolVisitor : SymbolVisitor<IEnumerable<MemberInfo>>
+    internal class ReflectionSymbolVisitor : SymbolVisitor<IEnumerable<MemberInfo>>
     {
         private readonly IEnumerable<Assembly> assemblies;
 

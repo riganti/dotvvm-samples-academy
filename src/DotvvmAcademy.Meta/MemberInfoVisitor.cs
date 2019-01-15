@@ -23,6 +23,8 @@ namespace DotvvmAcademy.Meta
                     return VisitConstructor(constructorInfo);
                 case MethodInfo methodInfo:
                     return VisitMethod(methodInfo);
+                case Type type:
+                    return VisitType(type);
                 default:
                     throw new InvalidOperationException($"\"{info.GetType()}\" is not a supported MemberInfo.");
             }
@@ -54,6 +56,11 @@ namespace DotvvmAcademy.Meta
         }
 
         public virtual TResult VisitMethod(MethodInfo info)
+        {
+            return DefaultVisit(info);
+        }
+
+        public virtual TResult VisitType(Type info)
         {
             return DefaultVisit(info);
         }
