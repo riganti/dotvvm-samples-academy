@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DotvvmAcademy.Validation.CSharp
 {
-    public class DynamicActionStorage
+    internal class DynamicActionStorage
     {
         public List<Action<CSharpDynamicContext>> DynamicActions { get; } = new List<Action<CSharpDynamicContext>>();
     }

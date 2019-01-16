@@ -14,7 +14,10 @@ namespace DotvvmAcademy.Validation.CSharp
 
         public int TimeLimit { get; }
 
-        public void OnInstruction() => CheckTime();
+        public void OnInstruction()
+        {
+            CheckTime();
+        }
 
         private void CheckTime()
         {
