@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace DotvvmAcademy.Validation.CSharp.Unit
+namespace DotvvmAcademy.Validation.CSharp
 {
     [Flags]
-    public enum TypeKind
+    public enum AllowedTypeKind
     {
         None = 0,
         Class = 1 << 0,

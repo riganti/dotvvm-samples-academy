@@ -5,9 +5,9 @@ using System.Linq;
 
 namespace DotvvmAcademy.Validation.CSharp.Constraints
 {
-    internal class PropertyTypeConstraint
+    internal class FieldTypeConstraint
     {
-        public PropertyTypeConstraint(NameNode node, NameNode type)
+        public FieldTypeConstraint(NameNode node, NameNode type)
         {
             Node = node;
             Type = type;
@@ -23,15 +23,15 @@ namespace DotvvmAcademy.Validation.CSharp.Constraints
                 .OfType<ITypeSymbol>()
                 .Single();
             var symbols = converter.ToRoslyn(Node)
-                .OfType<IPropertySymbol>();
-            foreach (var property in symbols)
+                .OfType<IFieldSymbol>();
+            foreach (var field in symbols)
             {
-                if (!property.Type.Equals(type))
+                if (!field.Type.Equals(type))
                 {
                     reporter.Report(
-                        message: Resources.ERR_WrongPropertyType,
-                        arguments: new object[] { property, type },
-                        symbol: property);
+                        message: Resources.ERR_WrongFieldType,
+                        arguments: new object[] { field, type },
+                        symbol: field);
                 }
             }
         }

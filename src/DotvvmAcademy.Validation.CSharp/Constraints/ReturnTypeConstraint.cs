@@ -5,33 +5,33 @@ using System.Linq;
 
 namespace DotvvmAcademy.Validation.CSharp.Constraints
 {
-    internal class PropertyTypeConstraint
+    internal class ReturnTypeConstraint
     {
-        public PropertyTypeConstraint(NameNode node, NameNode type)
+        public ReturnTypeConstraint(NameNode node, NameNode returnType)
         {
             Node = node;
-            Type = type;
+            ReturnType = returnType;
         }
 
         public NameNode Node { get; }
 
-        public NameNode Type { get; }
+        public NameNode ReturnType { get; }
 
         public void Validate(CSharpValidationReporter reporter, MetaConverter converter)
         {
-            var type = converter.ToRoslyn(Type)
+            var type = converter.ToRoslyn(ReturnType)
                 .OfType<ITypeSymbol>()
                 .Single();
             var symbols = converter.ToRoslyn(Node)
-                .OfType<IPropertySymbol>();
-            foreach (var property in symbols)
+                .OfType<IMethodSymbol>();
+            foreach (var method in symbols)
             {
-                if (!property.Type.Equals(type))
+                if (!method.ReturnType.Equals(type))
                 {
                     reporter.Report(
-                        message: Resources.ERR_WrongPropertyType,
-                        arguments: new object[] { property, type },
-                        symbol: property);
+                        message: Resources.ERR_WrongReturnType,
+                        arguments: new object[] { method, type },
+                        symbol: method);
                 }
             }
         }
