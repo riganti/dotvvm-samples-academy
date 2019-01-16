@@ -6,7 +6,7 @@ using System.Collections.Immutable;
 namespace DotvvmAcademy.Validation.CSharp
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class SymbolAllowedAnalyzer : DiagnosticAnalyzer
+    internal class SymbolAllowedAnalyzer : DiagnosticAnalyzer
     {
         public static readonly DiagnosticDescriptor SymbolUsageForbidden = new DiagnosticDescriptor(
             id: nameof(SymbolUsageForbidden),
@@ -34,12 +34,12 @@ namespace DotvvmAcademy.Validation.CSharp
         public void ValidateNode(SyntaxNodeAnalysisContext context)
         {
             var symbol = context.SemanticModel.GetSymbolInfo(context.Node).Symbol;
-            if(symbol is IMethodSymbol method && method.IsExtensionMethod)
+            if (symbol is IMethodSymbol method && method.IsExtensionMethod)
             {
                 symbol = method.ReducedFrom;
             }
 
-            if (IsSupportedSymbol(symbol) && !storage.IsAllowed(symbol))
+            if (IsSupportedSymbol(symbol) && !storage.AllowedSymbols.Contains(symbol))
             {
                 context.ReportDiagnostic(Diagnostic.Create(
                     descriptor: SymbolUsageForbidden,

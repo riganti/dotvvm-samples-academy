@@ -28,7 +28,7 @@ namespace DotvvmAcademy.Validation.CSharp.Constraints
             {
                 if (!compilation.ClassifyCommonConversion(source, destination).Exists)
                 {
-                    converter.Report(
+                    reporter.Report(
                         message: Resources.ERR_NoConversion,
                         arguments: new object[] { source, destination },
                         symbol: source);

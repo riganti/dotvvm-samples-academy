@@ -7,7 +7,7 @@ namespace DotvvmAcademy.Validation.CSharp
     {
         public HashSet<ISymbol> AllowedSymbols { get; } = new HashSet<ISymbol>(new SymbolComparer());
 
-        // TODO: This is dumb
+        // TODO: This is dumb. Fix it.
         private class SymbolComparer : IEqualityComparer<ISymbol>
         {
             public bool Equals(ISymbol x, ISymbol y)
