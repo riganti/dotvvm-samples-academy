@@ -4,12 +4,26 @@ using System.Collections.Generic;
 
 namespace DotvvmAcademy.Validation.CSharp.Unit
 {
-    public class CSharpUnit : ValidationUnit
+    public class CSharpUnit : IValidationUnit
     {
-        public CSharpUnit(IServiceProvider provider) : base(provider)
+        internal Dictionary<string, IConstraint> Constraints = new Dictionary<string, IConstraint>();
+
+        internal void AddUniqueConstraint<TConstraint>(TConstraint constraint)
         {
+            var key = $"{typeof(TConstraint).Name}_{Guid.NewGuid()}";
+            if (constraint is IConstraint interfaceConstraint)
+            {
+                Constraints.Add(key, interfaceConstraint);
+            }
+            else
+            {
+                Constraints.Add(key, new ConventionConstraint<TConstraint>(constraint));
+            }
         }
 
-        public ICollection<Action<CSharpDynamicContext>> DynamicActions { get; } = new List<Action<CSharpDynamicContext>>();
+        public IEnumerable<IConstraint> GetConstraints()
+        {
+            return Constraints.Values;
+        }
     }
 }

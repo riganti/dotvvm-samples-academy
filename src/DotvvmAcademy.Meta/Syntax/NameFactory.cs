@@ -70,9 +70,14 @@ namespace DotvvmAcademy.Meta.Syntax
             return commaBuilder.ToImmutable();
         }
 
+        public static NestedTypeNameNode NestedType(NameNode type, SimpleNameNode name)
+        {
+            return new NestedTypeNameNode(type, name, MissingToken(NameTokenKind.Plus));
+        }
+
         public static NestedTypeNameNode NestedType(NameNode type, string identifier, int arity = 0)
         {
-            return new NestedTypeNameNode(type, Simple(identifier, arity), MissingToken(NameTokenKind.Plus));
+            return NestedType(type, Simple(identifier, arity));
         }
 
         public static NameToken NumericLiteralToken(int number)
@@ -91,7 +96,7 @@ namespace DotvvmAcademy.Meta.Syntax
             return new QualifiedNameNode(left, Simple(identifier, arity), MissingToken(NameTokenKind.Dot));
         }
 
-        internal static SimpleNameNode Simple(string identifier, int arity = 0)
+        public static SimpleNameNode Simple(string identifier, int arity = 0)
         {
             return arity > 0
                 ? Identifier(identifier)

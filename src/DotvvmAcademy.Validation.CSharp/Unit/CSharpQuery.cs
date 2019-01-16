@@ -3,6 +3,7 @@ using Microsoft.CodeAnalysis;
 
 namespace DotvvmAcademy.Validation.CSharp.Unit
 {
+    // essentially a constraint builder
     public class CSharpQuery<TResult>
         where TResult : ISymbol
     {

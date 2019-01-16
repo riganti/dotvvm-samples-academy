@@ -1,10 +1,7 @@
-﻿using DotvvmAcademy.Meta;
-using DotvvmAcademy.Meta.Syntax;
+﻿using DotvvmAcademy.Meta.Syntax;
+using DotvvmAcademy.Validation.CSharp.Constraints;
 using Microsoft.CodeAnalysis;
-using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Linq;
-using System.Reflection;
 
 namespace DotvvmAcademy.Validation.CSharp.Unit
 {
@@ -28,19 +25,6 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
         public static CSharpQuery<IFieldSymbol> GetFields(this CSharpUnit unit, string name)
         {
             return unit.GetQuery<IFieldSymbol>(name);
-        }
-
-        public static string GetMetaName<TType>(this CSharpUnit unit)
-        {
-            return unit.GetMetaName(typeof(TType));
-        }
-
-        public static string GetMetaName(this CSharpUnit unit, Type type)
-        {
-            return unit.Provider.GetRequiredService<IMetaConverter<MemberInfo, NameNode>>()
-                .Convert(type)
-                .Single()
-                .ToString();
         }
 
         public static CSharpQuery<IMethodSymbol> GetMethod(this CSharpUnit unit, string name)
@@ -85,13 +69,12 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 
         public static void Run(this CSharpUnit unit, Action<CSharpDynamicContext> action)
         {
-            unit.DynamicActions.Add(action);
+            unit.AddUniqueConstraint(new DynamicActionConstraint(action));
         }
 
         private static CSharpQuery<TResult> GetQuery<TResult>(this CSharpUnit unit, string name)
             where TResult : ISymbol
         {
-            // It's not CSharpQuery's responsibility to parse the name
             return new CSharpQuery<TResult>(unit, NameNode.Parse(name));
         }
     }

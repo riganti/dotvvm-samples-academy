@@ -1,5 +1,4 @@
 ﻿using DotvvmAcademy.Meta.Syntax;
-using DotvvmAcademy.Validation.Unit;
 using Microsoft.CodeAnalysis;
 
 namespace DotvvmAcademy.Validation.CSharp.Unit
@@ -59,16 +58,12 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
         private static CSharpQuery<TResult> GetMemberQuery<TResult>(this CSharpQuery<ITypeSymbol> query, string name)
             where TResult : ISymbol
         {
-            var member = new IdentifierNameNode(NameFactory.IdentifierToken(name));
-            var nameNode = new MemberNameNode(query.Name, member, NameFactory.MissingToken(NameTokenKind.ColonColon));
-            return new CSharpQuery<TResult>(query.Unit, nameNode);
+            return new CSharpQuery<TResult>(query.Unit, NameFactory.Member(query.Name, name));
         }
 
         private static CSharpQuery<ITypeSymbol> GetNestedTypeQuery(this CSharpQuery<ITypeSymbol> query, string name)
         {
-            var right = (SimpleNameNode)NameNode.Parse(name);
-            var nameNode = new NestedTypeNameNode(query.Name, right, NameFactory.MissingToken(NameTokenKind.Plus));
-            return new CSharpQuery<ITypeSymbol>(query.Unit, nameNode);
+            return new CSharpQuery<ITypeSymbol>(query.Unit, NameFactory.NestedType(query.Name, (SimpleNameNode)NameNode.Parse(name)));
         }
     }
 }
