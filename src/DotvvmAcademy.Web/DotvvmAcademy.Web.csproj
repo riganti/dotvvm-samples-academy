@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <TypeScriptToolsVersion>3.0</TypeScriptToolsVersion>
     <LangVersion>latest</LangVersion>
     <UserSecretsId>7ac5f83c-f14d-4800-b2ec-e1fb18bbbc11</UserSecretsId>
