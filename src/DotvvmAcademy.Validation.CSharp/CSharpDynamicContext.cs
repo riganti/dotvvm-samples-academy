@@ -4,16 +4,16 @@ using System;
 using System.Linq;
 using System.Reflection;
 
-namespace DotvvmAcademy.Validation.CSharp.Unit
+namespace DotvvmAcademy.Validation.CSharp
 {
     public class CSharpDynamicContext
     {
-        private readonly IMetaConverter<NameNode, MemberInfo> nameConverter;
+        private readonly MetaConverter converter;
         private readonly CSharpValidationReporter reporter;
 
-        public CSharpDynamicContext(IMetaConverter<NameNode, MemberInfo> nameConverter, CSharpValidationReporter reporter)
+        public CSharpDynamicContext(MetaConverter converter, CSharpValidationReporter reporter)
         {
-            this.nameConverter = nameConverter;
+            this.converter = converter;
             this.reporter = reporter;
         }
 
@@ -31,16 +31,19 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 
         public dynamic Instantiate(string typeName, params object[] arguments)
         {
-            var type = nameConverter.Convert(typeName).OfType<Type>().Single();
+            var node = NameNode.Parse(typeName);
+            var type = converter.ToReflection(node)
+                .OfType<Type>()
+                .Single();
             return Activator.CreateInstance(type, arguments);
         }
 
         public dynamic Invoke(object instance, string name, params object[] arguments)
         {
-            var flags = BindingFlags.InvokeMethod 
-                | BindingFlags.Instance 
-                | BindingFlags.Static 
-                | BindingFlags.Public 
+            var flags = BindingFlags.InvokeMethod
+                | BindingFlags.Instance
+                | BindingFlags.Static
+                | BindingFlags.Public
                 | BindingFlags.NonPublic;
             return instance.GetType().InvokeMember(name, flags, Type.DefaultBinder, instance, arguments);
         }
