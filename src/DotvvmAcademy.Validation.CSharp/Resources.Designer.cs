@@ -232,6 +232,15 @@ namespace DotvvmAcademy.Validation.CSharp {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Symbol &apos;{0}&apos; must have only one &apos;{1}&apos; attribute..
+        /// </summary>
+        public static string ERR_MultipleAttributes {
+            get {
+                return ResourceManager.GetString("ERR_MultipleAttributes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Type &apos;{0}&apos; must be convertible to &apos;{1}&apos;..
         /// </summary>
         public static string ERR_NoConversion {
@@ -246,6 +255,15 @@ namespace DotvvmAcademy.Validation.CSharp {
         public static string ERR_WrongAccessibility {
             get {
                 return ResourceManager.GetString("ERR_WrongAccessibility", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The &apos;{0}&apos; property of this attribute must be set to &apos;{1}&apos;..
+        /// </summary>
+        public static string ERR_WrongAttributePropertyValue {
+            get {
+                return ResourceManager.GetString("ERR_WrongAttributePropertyValue", resourceCulture);
             }
         }
         

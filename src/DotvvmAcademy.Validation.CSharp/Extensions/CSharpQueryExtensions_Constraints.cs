@@ -2,6 +2,7 @@
 using DotvvmAcademy.Meta.Syntax;
 using DotvvmAcademy.Validation.CSharp.Constraints;
 using Microsoft.CodeAnalysis;
+using System;
 
 namespace DotvvmAcademy.Validation.CSharp.Unit
 {
@@ -17,6 +18,56 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
             where TResult : ISymbol
         {
             return query.AddOverwritableConstraint(new AccessConstraint<TResult>(query.Node, access));
+        }
+
+        public static CSharpQuery<TResult> RequireAttribute<TResult>(
+            this CSharpQuery<TResult> query,
+            Type attributeType,
+            object values = null)
+            where TResult : ISymbol
+        {
+            var attributeNode = MetaConvert.ToMeta(attributeType);
+            return query.AddOverwritableConstraint(new AttributeConstraint(query.Node, attributeNode, values), attributeNode);
+        }
+
+        public static CSharpQuery<TResult> RequireAttribute<TResult>(
+            this CSharpQuery<TResult> query,
+            string attributeType,
+            object values = null)
+            where TResult : ISymbol
+        {
+            var attributeNode = NameNode.Parse(attributeType);
+            return query.AddOverwritableConstraint(new AttributeConstraint(query.Node, attributeNode, values), attributeNode);
+        }
+
+        public static CSharpQuery<ITypeSymbol> RequireAttribute<TAttribute>(this CSharpQuery<ITypeSymbol> query, object values = null)
+            where TAttribute : Attribute
+        {
+            return query.RequireAttribute(typeof(TAttribute), values);
+        }
+
+        public static CSharpQuery<IPropertySymbol> RequireAttribute<TAttribute>(this CSharpQuery<IPropertySymbol> query, object values = null)
+            where TAttribute : Attribute
+        {
+            return query.RequireAttribute(typeof(TAttribute), values);
+        }
+
+        public static CSharpQuery<IFieldSymbol> RequireAttribute<TAttribute>(this CSharpQuery<IFieldSymbol> query, object values = null)
+            where TAttribute : Attribute
+        {
+            return query.RequireAttribute(typeof(TAttribute), values);
+        }
+
+        public static CSharpQuery<IMethodSymbol> RequireAttribute<TAttribute>(this CSharpQuery<IMethodSymbol> query, object values = null)
+            where TAttribute : Attribute
+        {
+            return query.RequireAttribute(typeof(TAttribute), values);
+        }
+
+        public static CSharpQuery<IEventSymbol> RequireAttribute<TAttribute>(this CSharpQuery<IEventSymbol> query, object values = null)
+            where TAttribute : Attribute
+        {
+            return query.RequireAttribute(typeof(TAttribute), values);
         }
 
         public static CSharpQuery<ITypeSymbol> RequireBaseType<TBase>(this CSharpQuery<ITypeSymbol> query)
@@ -61,6 +112,50 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
             return query.AddOverwritableConstraint(new InterfaceConstraint(query.Node, interfaceNode), interfaceNode);
         }
 
+        public static CSharpQuery<TResult> RequireNoAttribute<TResult>(this CSharpQuery<TResult> query, Type attributeType)
+            where TResult : ISymbol
+        {
+            var attributeNode = MetaConvert.ToMeta(attributeType);
+            return query.AddOverwritableConstraint(new NoAttributeConstraint(query.Node, attributeNode), attributeNode);
+        }
+
+        public static CSharpQuery<TResult> RequireNoAttribute<TResult>(this CSharpQuery<TResult> query, string attributeType)
+            where TResult : ISymbol
+        {
+            var attributeNode = NameNode.Parse(attributeType);
+            return query.AddOverwritableConstraint(new NoAttributeConstraint(query.Node, attributeNode), attributeNode);
+        }
+
+        public static CSharpQuery<ITypeSymbol> RequireNoAttribute<TAttribute>(this CSharpQuery<ITypeSymbol> query)
+            where TAttribute : Attribute
+        {
+            return query.RequireNoAttribute(typeof(TAttribute));
+        }
+
+        public static CSharpQuery<IPropertySymbol> RequireNoAttribute<TAttribute>(this CSharpQuery<IPropertySymbol> query)
+            where TAttribute : Attribute
+        {
+            return query.RequireNoAttribute(typeof(TAttribute));
+        }
+
+        public static CSharpQuery<IFieldSymbol> RequireNoAttribute<TAttribute>(this CSharpQuery<IFieldSymbol> query)
+            where TAttribute : Attribute
+        {
+            return query.RequireNoAttribute(typeof(TAttribute));
+        }
+
+        public static CSharpQuery<IEventSymbol> RequireNoAttribute<TAttribute>(this CSharpQuery<IEventSymbol> query)
+            where TAttribute : Attribute
+        {
+            return query.RequireNoAttribute(typeof(TAttribute));
+        }
+
+        public static CSharpQuery<IMethodSymbol> RequireNoAttribute<TAttribute>(this CSharpQuery<IMethodSymbol> query)
+            where TAttribute : Attribute
+        {
+            return query.RequireNoAttribute(typeof(TAttribute));
+        }
+
         public static CSharpQuery<IFieldSymbol> RequireReadonly(this CSharpQuery<IFieldSymbol> query)
         {
             return query.AddOverwritableConstraint(new ReadonlyConstraint(query.Node));
@@ -77,7 +172,7 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
         }
 
         public static CSharpQuery<IPropertySymbol> RequireSetter(
-                            this CSharpQuery<IPropertySymbol> query,
+            this CSharpQuery<IPropertySymbol> query,
             AllowedAccess access = AllowedAccess.Public)
         {
             return query.RequireAccessor("set", access);
