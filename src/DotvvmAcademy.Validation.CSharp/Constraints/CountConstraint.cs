@@ -1,75 +1,69 @@
-﻿using DotvvmAcademy.Meta.Syntax;
-using DotvvmAcademy.Validation.Unit;
+﻿using DotvvmAcademy.Meta;
+using DotvvmAcademy.Meta.Syntax;
 using Microsoft.CodeAnalysis;
 using System;
+using System.Linq;
 
 namespace DotvvmAcademy.Validation.CSharp.Unit
 {
-    public class CSharpCountConstraint<TResult> : IConstraint
+    internal class CountConstraint<TResult>
         where TResult : ISymbol
     {
-        public CSharpCountConstraint(NameNode name, int count)
+        public CountConstraint(NameNode node, int count)
         {
-            Name = name;
+            Node = node;
             Count = count;
         }
 
         public int Count { get; }
 
-        public NameNode Name { get; }
+        public NameNode Node { get; }
 
-        public bool CanOverwrite(IConstraint other)
+        public void Validate(CSharpValidationReporter reporter, MetaConverter converter)
         {
-            return other is CSharpCountConstraint<TResult> otherCount
-                && Name.ToString().Equals(otherCount.Name.ToString());
-        }
+            var result = converter.ToRoslyn(Node)
+                .OfType<TResult>()
+                .ToArray();
 
-        public int GetOverwriteHashCode()
-        {
-            return Name.ToString().GetHashCode();
-        }
-
-        public void Validate(ConstraintContext context)
-        {
-            var result = context.Locate<TResult>(Name);
-
-            // Correct count
             if (result.Length == Count)
             {
                 return;
             }
 
-            // Incorrect positive count
             if (result.Length > 0)
             {
                 foreach (var symbol in result)
                 {
-                    context.Report(
+                    reporter.Report(
                         message: Resources.ERR_WrongCount,
                         arguments: new object[] { Count, symbol },
                         symbol: symbol);
                 }
                 return;
             }
-
-            // Incorrect zero count with logical parent
-            var parents = context.Locate(Name.GetLogicalParent());
-            if (!parents.IsDefaultOrEmpty)
+            else
             {
-                foreach (var parent in parents)
+                var parents = converter.ToRoslyn(Node.GetLogicalParent())
+                    .ToArray();
+                if (parents.Length != 0)
                 {
-                    context.Report(
-                        message: GetErrorParentMissing(parent.GetType()),
-                        arguments: new object[] { parent, Name.GetShortName() },
-                        symbol: parent);
+                    // report parents that lost their children
+                    foreach (var parent in parents)
+                    {
+                        reporter.Report(
+                            message: GetErrorParentMissing(parent.GetType()),
+                            arguments: new object[] { parent, Node.GetShortName() },
+                            symbol: parent);
+                    }
                 }
-                return;
+                else
+                {
+                    // report the world for losing several generations
+                    reporter.Report(
+                        message: GetErrorMissing(),
+                        arguments: new object[] { Node });
+                }
             }
-
-            // Incorrect zero count without parent
-            context.Report(
-                message: GetErrorMissing(),
-                arguments: new object[] { Name });
         }
 
         private string GetErrorMissing()

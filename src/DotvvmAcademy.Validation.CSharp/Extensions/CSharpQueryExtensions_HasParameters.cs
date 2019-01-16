@@ -90,7 +90,7 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
         {
             query.Unit.AddDelegateConstraint(context =>
             {
-                var result = context.Locate<IMethodSymbol>(query.Name);
+                var result = context.Locate<IMethodSymbol>(query.Node);
                 foreach (var method in result)
                 {
                     if (parameters.Length != method.Parameters.Length)

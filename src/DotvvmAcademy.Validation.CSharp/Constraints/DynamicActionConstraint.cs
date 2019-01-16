@@ -2,7 +2,7 @@
 
 namespace DotvvmAcademy.Validation.CSharp.Constraints
 {
-    public class DynamicActionConstraint
+    internal class DynamicActionConstraint
     {
         public DynamicActionConstraint(Action<CSharpDynamicContext> action)
         {

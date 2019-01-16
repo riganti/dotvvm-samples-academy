@@ -3,19 +3,9 @@ using System.Collections.Generic;
 
 namespace DotvvmAcademy.Validation.CSharp
 {
-    public class AllowedSymbolStorage
+    internal class AllowedSymbolStorage
     {
-        private HashSet<ISymbol> storage = new HashSet<ISymbol>(new SymbolComparer());
-
-        public void Allow(ISymbol symbol)
-        {
-            storage.Add(symbol);
-        }
-
-        public bool IsAllowed(ISymbol symbol)
-        {
-            return storage.Contains(symbol);
-        }
+        public HashSet<ISymbol> AllowedSymbols { get; } = new HashSet<ISymbol>(new SymbolComparer());
 
         // TODO: This is dumb
         private class SymbolComparer : IEqualityComparer<ISymbol>

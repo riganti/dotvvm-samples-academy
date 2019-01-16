@@ -201,4 +201,7 @@
   <data name="ERR_MissingSymbolMember" xml:space="preserve">
     <value>Symbol '{0}' is missing member '{1}'.</value>
   </data>
+  <data name="ERR_NoConversion" xml:space="preserve">
+    <value>Type '{0}' must be convertible to '{1}'.</value>
+  </data>
 </root>

@@ -10,11 +10,20 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
         public CSharpQuery(CSharpUnit unit, NameNode name)
         {
             Unit = unit;
-            Name = name;
+            Node = name;
         }
 
-        public NameNode Name { get; }
+        public NameNode Node { get; }
 
         public CSharpUnit Unit { get; }
+
+        internal CSharpQuery<TResult> AddOverwritableConstraint<TConstraint>(TConstraint constraint, params object[] parameters)
+        {
+            var queryParameters = new object[parameters.Length + 1];
+            queryParameters[0] = Node;
+            parameters.CopyTo(queryParameters, 1);
+            Unit.AddOverwritableConstraint(constraint, queryParameters);
+            return this;
+        }
     }
 }

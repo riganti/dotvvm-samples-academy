@@ -1,8 +1,7 @@
 ﻿using DotvvmAcademy.Meta;
 using DotvvmAcademy.Meta.Syntax;
-using DotvvmAcademy.Validation.Unit;
+using DotvvmAcademy.Validation.CSharp.Constraints;
 using Microsoft.CodeAnalysis;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Immutable;
 using System.Linq;
@@ -11,139 +10,28 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 {
     public static class CSharpQueryExtensions_Constraints
     {
-        public static CSharpQuery<TResult> AddQueryConstraint<TResult>(
-            this CSharpQuery<TResult> query,
-            Action<ConstraintContext, ImmutableArray<TResult>> action,
-            bool overwrite = true)
-            where TResult : ISymbol
-        {
-            query.Unit.Constraints.Add(new CSharpQueryConstraint<TResult>(action, query, overwrite));
-            return query;
-        }
-
         public static CSharpQuery<TResult> Allow<TResult>(this CSharpQuery<TResult> query)
             where TResult : ISymbol
         {
-            return query.AddQueryConstraint((context, result) =>
-            {
-                var storage = context.Provider.GetRequiredService<AllowedSymbolStorage>();
-                foreach (var symbol in result)
-                {
-                    storage.Allow(symbol);
-                }
-            });
+            return query.AddOverwritableConstraint(new AllowConstraint<TResult>(query.Node));
         }
 
-        public static CSharpQuery<TResult> CountEquals<TResult>(this CSharpQuery<TResult> query, int count)
-            where TResult : ISymbol
+        public static CSharpQuery<ITypeSymbol> RequireInterface<TInterface>(this CSharpQuery<ITypeSymbol> query)
         {
-            query.Unit.Constraints.Add(new CSharpCountConstraint<TResult>(query.Name, count));
-            return query;
+            var interfaceNode = MetaConvert.ToMeta(typeof(TInterface));
+            return query.AddOverwritableConstraint(new InterfaceConstraint(query.Node, interfaceNode), interfaceNode);
         }
 
-        public static CSharpQuery<TResult> HasAccessibility<TResult>(this CSharpQuery<TResult> query, Accessibility accessibility)
-            where TResult : ISymbol
+        public static CSharpQuery<ITypeSymbol> RequireInterface(this CSharpQuery<ITypeSymbol> query, string @interface)
         {
-            return query.AddQueryConstraint((context, result) =>
-            {
-                foreach (var symbol in result)
-                {
-                    if (!accessibility.HasFlag(symbol.DeclaredAccessibility.ToUnitAccessibility()))
-                    {
-                        context.Report(
-                            message: Resources.ERR_WrongAccessibility,
-                            arguments: new object[] { symbol, accessibility },
-                            symbol: symbol);
-                    }
-                }
-            });
+            var interfaceNode = NameNode.Parse(@interface);
+            return query.AddOverwritableConstraint(new InterfaceConstraint(query.Node, interfaceNode), interfaceNode);
         }
 
-        public static CSharpQuery<ITypeSymbol> HasBaseType<TBase>(this CSharpQuery<ITypeSymbol> query)
-            where TBase : class
+        public static CSharpQuery<ITypeSymbol> RequireConversion(this CSharpQuery<ITypeSymbol> query, string destination)
         {
-            return query.HasBaseType(query.Unit.GetMetaName<TBase>());
-        }
-
-        public static CSharpQuery<ITypeSymbol> HasBaseType(this CSharpQuery<ITypeSymbol> query, string typeName)
-        {
-            return query.AddQueryConstraint((context, result) =>
-            {
-                var baseType = context.Locate<ITypeSymbol>(NameNode.Parse(typeName)).Single();
-                foreach (var typeSymbol in result)
-                {
-                    if (!typeSymbol.BaseType.Equals(baseType))
-                    {
-                        context.Report(
-                            message: Resources.ERR_WrongBaseType,
-                            arguments: new object[] { typeSymbol, baseType },
-                            symbol: typeSymbol);
-                    }
-                }
-            });
-        }
-
-        public static CSharpQuery<IPropertySymbol> HasGetter(
-            this CSharpQuery<IPropertySymbol> query,
-            Accessibility accessibility = Accessibility.Public)
-        {
-            return query.AddQueryConstraint((context, result) =>
-            {
-                foreach (var property in result)
-                {
-                    if (property.GetMethod == null
-                        || !accessibility.HasFlag(property.GetMethod.DeclaredAccessibility.ToUnitAccessibility()))
-                    {
-                        context.Report(
-                            message: Resources.ERR_MissingGetter,
-                            arguments: new object[] { property, accessibility },
-                            symbol: (ISymbol)property.GetMethod ?? property);
-                    }
-                }
-            });
-        }
-
-        public static CSharpQuery<IPropertySymbol> HasSetter(
-            this CSharpQuery<IPropertySymbol> query,
-            Accessibility accessibility = Accessibility.Public)
-        {
-            return query.AddQueryConstraint((context, result) =>
-            {
-                foreach (var property in result)
-                {
-                    if (property.SetMethod == null
-                        || !accessibility.HasFlag(property.SetMethod.DeclaredAccessibility.ToUnitAccessibility()))
-                    {
-                        context.Report(
-                            message: Resources.ERR_MissingSetter,
-                            arguments: new object[] { property, accessibility },
-                            symbol: (ISymbol)property.SetMethod ?? property);
-                    }
-                }
-            });
-        }
-
-        public static CSharpQuery<ITypeSymbol> Implements<TInterface>(this CSharpQuery<ITypeSymbol> query)
-        {
-            return query.Implements(query.Unit.GetMetaName<TInterface>());
-        }
-
-        public static CSharpQuery<ITypeSymbol> Implements(this CSharpQuery<ITypeSymbol> query, string typeName)
-        {
-            return query.AddQueryConstraint((context, result) =>
-            {
-                var interfaceSymbol = context.Locate<ITypeSymbol>(NameNode.Parse(typeName)).Single();
-                foreach (var typeSymbol in result)
-                {
-                    if (!typeSymbol.AllInterfaces.Contains(interfaceSymbol))
-                    {
-                        context.Report(
-                            message: Resources.ERR_MissingInterfaceImplementation,
-                            arguments: new object[] { typeSymbol, interfaceSymbol },
-                            symbol: typeSymbol);
-                    }
-                }
-            }, false);
+            var destinationNode = NameNode.Parse(destination);
+            return query.AddOverwritableConstraint(new ConversionConstraint(query.Node, destinationNode), destinationNode);
         }
 
         public static CSharpQuery<IFieldSymbol> IsOfType<TType>(this CSharpQuery<IFieldSymbol> query)
@@ -169,31 +57,14 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
             });
         }
 
-        public static CSharpQuery<IPropertySymbol> IsOfType<TType>(this CSharpQuery<IPropertySymbol> query)
+        public static CSharpQuery<IPropertySymbol> RequireType<TType>(this CSharpQuery<IPropertySymbol> query)
         {
-            return query.IsOfType(query.Unit.GetMetaName<TType>());
+            return query.AddOverwritableConstraint(new PropertyTypeConstraint(query.Node, MetaConvert.ToMeta(typeof(TType))));
         }
 
-        public static CSharpQuery<IPropertySymbol> IsOfType(this CSharpQuery<IPropertySymbol> query, string typeName)
+        public static CSharpQuery<IPropertySymbol> RequireType(this CSharpQuery<IPropertySymbol> query, string typeName)
         {
-            return query.AddQueryConstraint((context, result) =>
-            {
-                var type = context.Locate<ITypeSymbol>(NameNode.Parse(typeName)).SingleOrDefault();
-                if (type == null)
-                {
-                    return;
-                }
-                foreach (var property in result)
-                {
-                    if (!property.Type.Equals(type))
-                    {
-                        context.Report(
-                            message: Resources.ERR_WrongPropertyType,
-                            arguments: new object[] { property, type },
-                            symbol: property);
-                    }
-                }
-            });
+            return query.AddOverwritableConstraint(new PropertyTypeConstraint(query.Node, NameNode.Parse(typeName)));
         }
 
         public static CSharpQuery<IFieldSymbol> IsReadonly(this CSharpQuery<IFieldSymbol> query)
@@ -230,6 +101,43 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
             });
         }
 
+        public static CSharpQuery<TResult> RequireAccess<TResult>(this CSharpQuery<TResult> query, AllowedAccess access)
+            where TResult : ISymbol
+        {
+            return query.AddOverwritableConstraint(new AccessConstraint<TResult>(query.Node, access));
+        }
+
+        public static CSharpQuery<ITypeSymbol> RequireBaseType<TBase>(this CSharpQuery<ITypeSymbol> query)
+            where TBase : class
+        {
+            return query.AddOverwritableConstraint(new BaseTypeConstraint(query.Node, MetaConvert.ToMeta(typeof(TBase))));
+        }
+
+        public static CSharpQuery<ITypeSymbol> RequireBaseType(this CSharpQuery<ITypeSymbol> query, string typeName)
+        {
+            return query.AddOverwritableConstraint(new BaseTypeConstraint(query.Node, NameNode.Parse(typeName)));
+        }
+
+        public static CSharpQuery<TResult> RequireCount<TResult>(this CSharpQuery<TResult> query, int count)
+            where TResult : ISymbol
+        {
+            return query.AddOverwritableConstraint(new CountConstraint<TResult>(query.Node, count));
+        }
+
+        public static CSharpQuery<IPropertySymbol> RequireGetter(
+            this CSharpQuery<IPropertySymbol> query,
+            AllowedAccess access = AllowedAccess.Public)
+        {
+            return query.RequireAccessor("get", access);
+        }
+
+        public static CSharpQuery<IPropertySymbol> RequireSetter(
+            this CSharpQuery<IPropertySymbol> query,
+            AllowedAccess access = AllowedAccess.Public)
+        {
+            return query.RequireAccessor("set", access);
+        }
+
         public static CSharpQuery<IMethodSymbol> Returns<TType>(this CSharpQuery<IMethodSymbol> query)
         {
             return query.Returns(query.Unit.GetMetaName<TType>());
@@ -251,6 +159,18 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
                     }
                 }
             });
+        }
+
+        private static CSharpQuery<IPropertySymbol> RequireAccessor(
+                            this CSharpQuery<IPropertySymbol> query,
+            string accessorKind,
+            AllowedAccess access)
+        {
+            var member = (MemberNameNode)query.Node;
+            var accessor = NameFactory.Member(member.Type, $"{accessorKind}_{member.Member.IdentifierToken.ToString()}");
+            query.Unit.AddOverwritableConstraint(new CountConstraint<IMethodSymbol>(accessor, 1), accessor);
+            query.Unit.AddOverwritableConstraint(new AccessConstraint<IMethodSymbol>(accessor, access), accessor);
+            return query;
         }
     }
 }
