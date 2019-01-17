@@ -8,35 +8,30 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Immutable;
 using System.Linq;
-using System.Reflection;
 
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
     public class ValidationPropertyFactory
     {
+        private readonly Compilation compilation;
         private readonly IAttributeExtractor extractor;
 
         private readonly ConcurrentDictionary<(INamedTypeSymbol, string), IPropertyGroupDescriptor> groups
             = new ConcurrentDictionary<(INamedTypeSymbol, string), IPropertyGroupDescriptor>();
 
-        private readonly IMetaConverter<MemberInfo, ISymbol> memberInfoConverter;
-        private readonly IMetaContext metaContext;
-
         private readonly ConcurrentDictionary<(INamedTypeSymbol, string), IPropertyDescriptor> properties
-                    = new ConcurrentDictionary<(INamedTypeSymbol, string), IPropertyDescriptor>();
+            = new ConcurrentDictionary<(INamedTypeSymbol, string), IPropertyDescriptor>();
 
         private readonly ValidationTypeDescriptorFactory typeDescriptorFactory;
 
         public ValidationPropertyFactory(
             ValidationTypeDescriptorFactory typeDescriptorFactory,
-            IMetaContext metaContext,
-            IAttributeExtractor extractor,
-            IMetaConverter<MemberInfo, ISymbol> memberInfoConverter)
+            Compilation compilation,
+            IAttributeExtractor extractor)
         {
             this.typeDescriptorFactory = typeDescriptorFactory;
-            this.metaContext = metaContext;
+            this.compilation = compilation;
             this.extractor = extractor;
-            this.memberInfoConverter = memberInfoConverter;
         }
 
         public IPropertyDescriptor Convert(IPropertyDescriptor property)
@@ -139,7 +134,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
                 return ImmutableArray.Create<IPropertyGroupDescriptor>();
             }
 
-            var groupSymbol = metaContext.Compilation.GetTypeByMetadataName(DotvvmTypes.DotvvmPropertyGroup);
+            var groupSymbol = compilation.GetTypeByMetadataName(DotvvmTypes.DotvvmPropertyGroup);
             var builder = ImmutableArray.CreateBuilder<IPropertyGroupDescriptor>();
             builder.AddRange(GetGroups(containingType.BaseType));
             var collectionGroups = containingType.GetMembers()
@@ -162,14 +157,14 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
                 return ImmutableArray.Create<IPropertyDescriptor>();
             }
 
-            var dotvvmPropertySymbol = metaContext.Compilation.GetTypeByMetadataName(DotvvmTypes.DotvvmProperty);
+            var dotvvmPropertySymbol = compilation.GetTypeByMetadataName(DotvvmTypes.DotvvmProperty);
             var builder = ImmutableArray.CreateBuilder<IPropertyDescriptor>();
             builder.AddRange(GetProperties(containingType.BaseType));
             var fields = containingType.GetMembers()
                 .OfType<IFieldSymbol>()
                 .Where(f => f.IsStatic
                     && f.MetadataName.EndsWith("Property")
-                    && metaContext.Compilation.ClassifyConversion(f.Type, dotvvmPropertySymbol).Exists);
+                    && compilation.ClassifyConversion(f.Type, dotvvmPropertySymbol).Exists);
             foreach (var field in fields)
             {
                 if (extractor.HasAttribute<AttachedPropertyAttribute>(field))
@@ -322,14 +317,14 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         private ITypeSymbol GetStringPairValueType(ITypeSymbol collectionType)
         {
-            var iEnumerable = metaContext.Compilation.GetTypeByMetadataName(WellKnownTypes.IEnumerable);
-            var keyValuePair = metaContext.Compilation.GetTypeByMetadataName(WellKnownTypes.KeyValuePair);
-            var @string = metaContext.Compilation.GetTypeByMetadataName(WellKnownTypes.String);
+            var iEnumerable = compilation.GetTypeByMetadataName(WellKnownTypes.IEnumerable);
+            var keyValuePair = compilation.GetTypeByMetadataName(WellKnownTypes.KeyValuePair);
+            var @string = compilation.GetTypeByMetadataName(WellKnownTypes.String);
             return collectionType.AllInterfaces
                 .Where(i =>
                 {
                     // I know there are a lot of variables here, but please understand, this place is hell to debug.
-                    var isIEnumerable = metaContext.Compilation.ClassifyConversion(i, iEnumerable).Exists;
+                    var isIEnumerable = compilation.ClassifyConversion(i, iEnumerable).Exists;
                     var hasOneArgument = i.TypeArguments.Length == 1;
                     if (isIEnumerable && hasOneArgument && i.TypeArguments[0] is INamedTypeSymbol pairArgument)
                     {

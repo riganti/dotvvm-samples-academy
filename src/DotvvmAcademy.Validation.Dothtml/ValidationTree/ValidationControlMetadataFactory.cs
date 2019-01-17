@@ -15,7 +15,6 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
     public class ValidationControlMetadataFactory
     {
         private readonly IAttributeExtractor extractor;
-        private readonly IMetaConverter<MemberInfo, ISymbol> memberInfoConverter;
         private readonly ConcurrentDictionary<ITypeSymbol, ValidationControlMetadata> cache
             = new ConcurrentDictionary<ITypeSymbol, ValidationControlMetadata>();
 

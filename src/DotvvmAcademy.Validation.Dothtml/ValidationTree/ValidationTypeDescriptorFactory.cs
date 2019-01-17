@@ -13,16 +13,11 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
     {
         private readonly ConcurrentDictionary<ITypeSymbol, ValidationTypeDescriptor> cache
             = new ConcurrentDictionary<ITypeSymbol, ValidationTypeDescriptor>();
+        private readonly Compilation compilation;
 
-        private readonly IMetaContext metaContext;
-        private readonly IMetaConverter<ISymbol, NameNode> symbolConverter;
-
-        public ValidationTypeDescriptorFactory(
-            IMetaContext metaContext,
-            IMetaConverter<ISymbol, NameNode> symbolConverter)
+        public ValidationTypeDescriptorFactory(Compilation compilation)
         {
-            this.metaContext = metaContext;
-            this.symbolConverter = symbolConverter;
+            this.compilation = compilation;
         }
 
         public ValidationTypeDescriptor Convert(ITypeDescriptor other)
@@ -45,7 +40,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
                 return null;
             }
 
-            return cache.GetOrAdd(typeSymbol, s => new ValidationTypeDescriptor(this, metaContext, symbolConverter, s));
+            return cache.GetOrAdd(typeSymbol, s => new ValidationTypeDescriptor(this, compilation, s));
         }
 
         public ValidationTypeDescriptor Create(BindingParserNode name)
@@ -75,11 +70,11 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
                 return null;
             }
 
-            var symbol = metaContext.Compilation.GetTypeByMetadataName(metadataName);
+            var symbol = compilation.GetTypeByMetadataName(metadataName);
             if (symbol == null)
             {
-                return Create(metaContext.Compilation.CreateErrorTypeSymbol(
-                    container: metaContext.Compilation.GlobalNamespace,
+                return Create(compilation.CreateErrorTypeSymbol(
+                    container: compilation.GlobalNamespace,
                     name: metadataName,
                     arity: 0));
             }

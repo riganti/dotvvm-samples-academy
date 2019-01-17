@@ -35,12 +35,12 @@ namespace DotvvmAcademy.Validation.Dothtml
                 var context = scope.ServiceProvider.GetRequiredService<Context>();
                 context.SourceCodeStorage = new SourceCodeStorage(sources);
                 var reporter = scope.ServiceProvider.GetRequiredService<IValidationReporter>();
-                var compilation = GetCompilation(reporter, sources, id);
+                context.Compilation = GetCompilation(reporter, sources, id);
                 var assemblies = Assembly.GetEntryAssembly()
                     .GetReferencedAssemblies()
                     .Select(Assembly.Load)
                     .ToImmutableArray();
-                context.Converter = new MetaConverter(compilation, assemblies);
+                context.Converter = new MetaConverter(context.Compilation, assemblies);
 
                 // compile tree
                 var sourceCode = sources.OfType<DothtmlSourceCode>().Single();
@@ -93,6 +93,7 @@ namespace DotvvmAcademy.Validation.Dothtml
             c.AddTransient(p => p.GetRequiredService<Context>().Converter);
             c.AddTransient(p => p.GetRequiredService<Context>().SourceCodeStorage);
             c.AddTransient(p => p.GetRequiredService<Context>().Tree);
+            c.AddTransient(p => p.GetRequiredService<Context>().Compilation);
             c.AddScoped<IValidationReporter, ValidationReporter>();
             c.AddScoped<SourceCodeStorage>();
             c.AddScoped<NodeLocator>();
@@ -155,6 +156,8 @@ namespace DotvvmAcademy.Validation.Dothtml
 
         private class Context
         {
+            public Compilation Compilation { get; set; }
+
             public MetaConverter Converter { get; set; }
 
             public SourceCodeStorage SourceCodeStorage { get; set; }

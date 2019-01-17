@@ -14,18 +14,17 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
     public class ValidationTypeDescriptor : ITypeDescriptor
     {
         private readonly ValidationTypeDescriptorFactory factory;
-        private readonly IMetaContext metaContext;
+        private readonly Compilation compilation;
 
         public ValidationTypeDescriptor(
             ValidationTypeDescriptorFactory factory,
-            IMetaContext metaContext,
-            IMetaConverter<ISymbol, NameNode> symbolConverter,
+            Compilation compilation,
             ITypeSymbol typeSymbol)
         {
             this.factory = factory;
-            this.metaContext = metaContext;
+            this.compilation = compilation;
             TypeSymbol = typeSymbol;
-            MetaName = symbolConverter.Convert(typeSymbol).Single();
+            MetaName = MetaConvert.ToMeta(typeSymbol);
             FullName = MetaName.ToString();
             Assembly = TypeSymbol.ContainingAssembly?.Identity.Name;
             Namespace = TypeSymbol.ContainingNamespace?.ToDisplayString();
@@ -47,7 +46,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         public bool IsAssignableFrom(ITypeDescriptor typeDescriptor)
         {
             var other = factory.Convert(typeDescriptor);
-            var conversion = metaContext.Compilation.ClassifyConversion(other.TypeSymbol, TypeSymbol);
+            var conversion = compilation.ClassifyConversion(other.TypeSymbol, TypeSymbol);
             return conversion.Exists;
         }
 
@@ -108,7 +107,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             {
                 return factory.Create(arrayType.ElementType);
             }
-            var iEnumerableSymbol = metaContext.Compilation.GetTypeByMetadataName(WellKnownTypes.IEnumerable);
+            var iEnumerableSymbol = compilation.GetTypeByMetadataName(WellKnownTypes.IEnumerable);
             if (TypeSymbol is INamedTypeSymbol namedType && namedType.ConstructedFrom.Equals(iEnumerableSymbol))
             {
                 return factory.Create(namedType.TypeArguments.First());

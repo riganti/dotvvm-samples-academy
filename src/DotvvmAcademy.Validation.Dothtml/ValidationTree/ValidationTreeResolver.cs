@@ -15,19 +15,19 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
     {
         private readonly ValidationTypeDescriptorFactory descriptorFactory;
         private readonly ValidationControlTypeFactory typeFactory;
-        private readonly IMetaConverter<ISymbol, MemberInfo> symbolConverter;
+        private readonly MetaConverter converter;
 
         public ValidationTreeResolver(
             ValidationControlResolver controlResolver,
             ValidationTreeBuilder treeBuilder,
             ValidationTypeDescriptorFactory descriptorFactory,
             ValidationControlTypeFactory typeFactory,
-            IMetaConverter<ISymbol, MemberInfo> symbolConverter)
+            MetaConverter converter)
             : base(controlResolver, treeBuilder)
         {
             this.descriptorFactory = descriptorFactory;
             this.typeFactory = typeFactory;
-            this.symbolConverter = symbolConverter;
+            this.converter = converter;
         }
 
         protected override IAbstractBinding CompileBinding(
@@ -43,7 +43,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         {
             if (propertyType is ValidationTypeDescriptor validationType)
             {
-                var type = (Type)symbolConverter.Convert(validationType.TypeSymbol).Single();
+                var type = (Type)converter.ToReflection(validationType.TypeSymbol).Single();
                 if (type.IsEnum)
                 {
                     return Enum.Parse(type, value);

@@ -15,7 +15,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
     public class ValidationControlResolver : IControlResolver
     {
         private readonly ImmutableDictionary<string, BindingParserOptions> bindingOptions = GetDefaultBindingOptions();
-        private readonly IMetaContext metaContext;
+        private readonly Compilation compilation;
         private readonly ValidationTypeDescriptorFactory descriptorFactory;
         private readonly ValidationControlMetadataFactory metadataFactory;
         private readonly ValidationPropertyFactory propertyFactory;
@@ -25,13 +25,13 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         private readonly ValidationControlTypeFactory typeFactory;
 
         public ValidationControlResolver(
-            IMetaContext metaContext,
+            Compilation compilation,
             ValidationTypeDescriptorFactory descriptorFactory,
             ValidationControlTypeFactory typeFactory,
             ValidationControlMetadataFactory metadataFactory,
             ValidationPropertyFactory propertyFactory)
         {
-            this.metaContext = metaContext;
+            this.compilation = compilation;
             this.descriptorFactory = descriptorFactory;
             this.typeFactory = typeFactory;
             this.metadataFactory = metadataFactory;
@@ -84,8 +84,8 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         public void RegisterNamespace(string prefix, string @namespace, string assembly)
         {
-            var assemblySymbol = metaContext.Compilation.References
-                .Select(metaContext.Compilation.GetAssemblyOrModuleSymbol)
+            var assemblySymbol = compilation.References
+                .Select(compilation.GetAssemblyOrModuleSymbol)
                 .OfType<IAssemblySymbol>()
                 .Single(a => a.MetadataName == assembly);
 

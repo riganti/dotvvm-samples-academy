@@ -32,7 +32,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Constraints
                         arguments: new object[] { setter.Property.FullName },
                         node: setter);
                 }
-                else if (AllowedBinding.HasFlag(GetAllowedBinding(propertyBinding.Binding.BindingType))
+                else if (AllowedBinding.HasFlag(GetAllowedBinding(propertyBinding.Binding.BindingType)))
                 {
                     reporter.Report(
                         message: Resources.ERR_WrongBindingKind,

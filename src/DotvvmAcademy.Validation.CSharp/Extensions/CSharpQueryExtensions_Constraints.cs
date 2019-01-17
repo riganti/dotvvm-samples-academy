@@ -262,8 +262,8 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
         {
             var member = (MemberNameNode)query.Node;
             var accessor = NameFactory.Member(member.Type, $"{accessorKind}_{member.Member.IdentifierToken.ToString()}");
-            query.Unit.AddOverwritableConstraint(new CountConstraint<IMethodSymbol>(accessor, 1), accessor);
-            query.Unit.AddOverwritableConstraint(new AccessConstraint<IMethodSymbol>(accessor, access), accessor);
+            query.Unit.AddConstraint(new CountConstraint<IMethodSymbol>(accessor, 1), accessor);
+            query.Unit.AddConstraint(new AccessConstraint<IMethodSymbol>(accessor, access), accessor);
             return query;
         }
     }
