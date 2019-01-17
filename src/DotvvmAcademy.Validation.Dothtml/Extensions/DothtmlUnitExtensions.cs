@@ -5,40 +5,40 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
 {
     public static class DothtmlUnitExtensions
     {
-        public static DothtmlQuery<ValidationControl> GetControl(this DothtmlUnit unit, string xpath)
+        public static DothtmlQuery<ValidationControl> GetControl(this DothtmlUnit unit, string expression)
         {
-            return unit.GetControls(xpath).CountEquals(1);
+            return unit.GetControls(expression).CountEquals(1);
         }
 
-        public static DothtmlQuery<ValidationControl> GetControls(this DothtmlUnit unit, string xpath)
+        public static DothtmlQuery<ValidationControl> GetControls(this DothtmlUnit unit, string expression)
         {
-            return unit.GetQuery<ValidationControl>(xpath);
+            return unit.GetQuery<ValidationControl>(expression);
         }
 
-        public static DothtmlQuery<ValidationDirective> GetDirective(this DothtmlUnit unit, string xpath)
+        public static DothtmlQuery<ValidationDirective> GetDirective(this DothtmlUnit unit, string expression)
         {
-            return unit.GetDirectives(xpath).CountEquals(1);
+            return unit.GetDirectives(expression).CountEquals(1);
         }
 
-        public static DothtmlQuery<ValidationDirective> GetDirectives(this DothtmlUnit unit, string xpath)
+        public static DothtmlQuery<ValidationDirective> GetDirectives(this DothtmlUnit unit, string expression)
         {
-            return unit.GetQuery<ValidationDirective>(xpath);
+            return unit.GetQuery<ValidationDirective>(expression);
         }
 
-        public static DothtmlQuery<ValidationPropertySetter> GetProperties(this DothtmlUnit unit, string xpath)
+        public static DothtmlQuery<ValidationPropertySetter> GetProperties(this DothtmlUnit unit, string expression)
         {
-            return unit.GetQuery<ValidationPropertySetter>(xpath);
+            return unit.GetQuery<ValidationPropertySetter>(expression);
         }
 
-        public static DothtmlQuery<ValidationPropertySetter> GetProperty(this DothtmlUnit unit, string xpath)
+        public static DothtmlQuery<ValidationPropertySetter> GetProperty(this DothtmlUnit unit, string expression)
         {
-            return unit.GetProperties(xpath).CountEquals(1);
+            return unit.GetProperties(expression).CountEquals(1);
         }
 
-        public static DothtmlQuery<TResult> GetQuery<TResult>(this DothtmlUnit unit, string xpath)
+        public static DothtmlQuery<TResult> GetQuery<TResult>(this DothtmlUnit unit, string expression)
             where TResult : ValidationTreeNode
         {
-            return new DothtmlQuery<TResult>(unit, XPathExpression.Compile(xpath));
+            return new DothtmlQuery<TResult>(unit, XPathExpression.Compile(expression));
         }
     }
 }

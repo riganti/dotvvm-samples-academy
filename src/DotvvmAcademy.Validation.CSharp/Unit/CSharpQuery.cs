@@ -17,12 +17,12 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 
         public CSharpUnit Unit { get; }
 
-        internal CSharpQuery<TResult> AddOverwritableConstraint<TConstraint>(TConstraint constraint, params object[] parameters)
+        internal CSharpQuery<TResult> AddConstraint<TConstraint>(TConstraint constraint, params object[] parameters)
         {
             var queryParameters = new object[parameters.Length + 1];
             queryParameters[0] = Node;
             parameters.CopyTo(queryParameters, 1);
-            Unit.AddOverwritableConstraint(constraint, queryParameters);
+            Unit.AddConstraint(constraint, queryParameters);
             return this;
         }
     }

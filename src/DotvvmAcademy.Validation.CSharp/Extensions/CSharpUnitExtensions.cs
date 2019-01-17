@@ -69,7 +69,7 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 
         public static void Run(this CSharpUnit unit, Action<CSharpDynamicContext> action)
         {
-            unit.AddUniqueConstraint(new DynamicActionConstraint(action));
+            unit.AddConstraint(new DynamicActionConstraint(action), action.GetHashCode());
         }
 
         private static CSharpQuery<TResult> GetQuery<TResult>(this CSharpUnit unit, string name)

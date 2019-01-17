@@ -5,9 +5,9 @@ namespace DotvvmAcademy.Validation.Dothtml
 {
     public class ErrorAggregatingVisitor
     {
-        private readonly DothtmlValidationReporter reporter;
+        private readonly IValidationReporter reporter;
 
-        public ErrorAggregatingVisitor(DothtmlValidationReporter reporter)
+        public ErrorAggregatingVisitor(IValidationReporter reporter)
         {
             this.reporter = reporter;
         }
@@ -42,7 +42,7 @@ namespace DotvvmAcademy.Validation.Dothtml
                 reporter.Report(
                     message: error,
                     node: node.DothtmlNode,
-                    source: node.TreeRoot.SourceCode,
+                    fileName: node.TreeRoot.FileName,
                     severity: ValidationSeverity.Error);
             }
             foreach (var warning in node.DothtmlNode.NodeWarnings)
@@ -50,7 +50,7 @@ namespace DotvvmAcademy.Validation.Dothtml
                 reporter.Report(
                     message: warning,
                     node: node.DothtmlNode,
-                    source: node.TreeRoot.SourceCode,
+                    fileName: node.TreeRoot.FileName,
                     severity: ValidationSeverity.Warning);
             }
         }

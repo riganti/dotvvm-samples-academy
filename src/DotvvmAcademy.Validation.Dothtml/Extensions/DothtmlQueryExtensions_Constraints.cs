@@ -21,7 +21,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
         public static DothtmlQuery<TResult> CountEquals<TResult>(this DothtmlQuery<TResult> query, int count)
             where TResult : ValidationTreeNode
         {
-            query.Unit.Constraints.Add(new DothtmlCountConstraint<TResult>(query.XPath, count));
+            query.Unit.Constraints.Add(new DothtmlCountConstraint<TResult>(query.Expression, count));
             return query;
         }
 

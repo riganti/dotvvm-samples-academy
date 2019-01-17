@@ -27,8 +27,6 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         Dictionary<string, List<IAbstractDirective>> IAbstractTreeRoot.Directives => directivesDictionary;
 
-        public DothtmlSourceCode SourceCode { get; set; }
-
         public string FileName { get; set; }
     }
 }
