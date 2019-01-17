@@ -15,5 +15,14 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
         public DothtmlUnit Unit { get; }
 
         public XPathExpression Expression { get; }
+
+        internal DothtmlQuery<TResult> AddConstraint<TConstraint>(TConstraint constraint, params object[] parameters)
+        {
+            var queryParameters = new object[parameters.Length + 1];
+            queryParameters[0] = Expression.Expression;
+            parameters.CopyTo(queryParameters, 1);
+            Unit.AddConstraint(constraint, queryParameters);
+            return this;
+        }
     }
 }

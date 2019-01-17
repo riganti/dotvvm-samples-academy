@@ -1,34 +1,16 @@
-﻿using DotvvmAcademy.Validation.Dothtml.ValidationTree;
-using DotvvmAcademy.Validation.Unit;
+﻿using DotvvmAcademy.Validation.Dothtml.Constraints;
+using DotvvmAcademy.Validation.Dothtml.ValidationTree;
 using System;
-using System.Collections.Immutable;
 using System.Linq;
 
 namespace DotvvmAcademy.Validation.Dothtml.Unit
 {
     public static class DothtmlQueryExtensions_Constraints
     {
-        public static DothtmlQuery<TResult> AddQueryConstraint<TResult>(
-            this DothtmlQuery<TResult> query,
-            Action<ConstraintContext, ImmutableArray<TResult>> action,
-            bool overwrite = true)
-            where TResult : ValidationTreeNode
-        {
-            query.Unit.Constraints.Add(new DothtmlQueryConstraint<TResult>(action, query, overwrite));
-            return query;
-        }
-
-        public static DothtmlQuery<TResult> CountEquals<TResult>(this DothtmlQuery<TResult> query, int count)
-            where TResult : ValidationTreeNode
-        {
-            query.Unit.Constraints.Add(new DothtmlCountConstraint<TResult>(query.Expression, count));
-            return query;
-        }
-
-        public static DothtmlQuery<ValidationPropertySetter> HasBinding(
+        public static DothtmlQuery<ValidationPropertySetter> RequireBinding(
             this DothtmlQuery<ValidationPropertySetter> query,
             string value,
-            BindingKind kind = default)
+            AllowedBinding kind = default)
         {
             return query.AddQueryConstraint((context, result) =>
             {
@@ -59,7 +41,13 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
             });
         }
 
-        public static DothtmlQuery<ValidationControl> HasRawContent(
+        public static DothtmlQuery<TResult> RequireCount<TResult>(this DothtmlQuery<TResult> query, int count)
+            where TResult : ValidationTreeNode
+        {
+            return query.AddConstraint(new CountConstraint<TResult>(query.Expression, count));
+        }
+
+        public static DothtmlQuery<ValidationControl> RequireRawContent(
             this DothtmlQuery<ValidationControl> query,
             string expectedContent,
             bool isCaseSensitive = false)
@@ -85,8 +73,49 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
             });
         }
 
-        public static DothtmlQuery<ValidationDirective> HasTypeArgument(
-            this DothtmlQuery<ValidationDirective> query,
+        public static DothtmlQuery<ValidationControl> RequireRawText(
+                                    this DothtmlQuery<ValidationControl> query,
+            string expected,
+            bool isCaseSensitive = false)
+        {
+            return query.AddQueryConstraint((context, result) =>
+            {
+                foreach (var control in result)
+                {
+                    var actualContent = string.Concat(control.DothtmlNode.Tokens.Select(t => t.Text)).Trim();
+                    var comparison = isCaseSensitive
+                        ? StringComparison.InvariantCulture
+                        : StringComparison.InvariantCultureIgnoreCase;
+                    if (!expected.Equals(actualContent, comparison))
+                    {
+                        context.Report(
+                            message: Resources.ERR_WrongRawText,
+                            arguments: new object[] { expected },
+                            node: control);
+                    }
+                }
+            });
+        }
+
+        public static DothtmlQuery<ValidationControl> RequireType<TControl>(this DothtmlQuery<ValidationControl> query)
+        {
+            return query.AddQueryConstraint((context, result) =>
+            {
+                foreach (var control in result)
+                {
+                    if (!control.Metadata.Type.IsEqualTo(typeof(TControl)))
+                    {
+                        context.Report(
+                            message: Resources.ERR_WrongControlType,
+                            arguments: new object[] { typeof(TControl) },
+                            node: control);
+                    }
+                }
+            });
+        }
+
+        public static DothtmlQuery<ValidationDirective> RequireTypeArgument(
+                            this DothtmlQuery<ValidationDirective> query,
             string typeFullName)
         {
             return query.AddQueryConstraint((context, result) =>
@@ -112,7 +141,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
             });
         }
 
-        public static DothtmlQuery<ValidationPropertySetter> HasValue(
+        public static DothtmlQuery<ValidationPropertySetter> RequireValue(
             this DothtmlQuery<ValidationPropertySetter> query,
             object value)
         {
@@ -133,47 +162,6 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
                             message: Resources.ERR_WrongHardcodedValue,
                             arguments: new object[] { value },
                             node: propertyValue);
-                    }
-                }
-            });
-        }
-
-        public static DothtmlQuery<ValidationControl> IsOfType<TControl>(this DothtmlQuery<ValidationControl> query)
-        {
-            return query.AddQueryConstraint((context, result) =>
-            {
-                foreach (var control in result)
-                {
-                    if (!control.Metadata.Type.IsEqualTo(typeof(TControl)))
-                    {
-                        context.Report(
-                            message: Resources.ERR_WrongControlType,
-                            arguments: new object[] { typeof(TControl) },
-                            node: control);
-                    }
-                }
-            });
-        }
-
-        public static DothtmlQuery<ValidationControl> IsRawText(
-                                    this DothtmlQuery<ValidationControl> query,
-            string expected,
-            bool isCaseSensitive = false)
-        {
-            return query.AddQueryConstraint((context, result) =>
-            {
-                foreach (var control in result)
-                {
-                    var actualContent = string.Concat(control.DothtmlNode.Tokens.Select(t => t.Text)).Trim();
-                    var comparison = isCaseSensitive
-                        ? StringComparison.InvariantCulture
-                        : StringComparison.InvariantCultureIgnoreCase;
-                    if (!expected.Equals(actualContent, comparison))
-                    {
-                        context.Report(
-                            message: Resources.ERR_WrongRawText,
-                            arguments: new object[] { expected },
-                            node: control);
                     }
                 }
             });

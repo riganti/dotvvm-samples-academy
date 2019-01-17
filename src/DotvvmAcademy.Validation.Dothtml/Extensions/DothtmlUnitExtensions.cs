@@ -7,7 +7,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
     {
         public static DothtmlQuery<ValidationControl> GetControl(this DothtmlUnit unit, string expression)
         {
-            return unit.GetControls(expression).CountEquals(1);
+            return unit.GetControls(expression).RequireCount(1);
         }
 
         public static DothtmlQuery<ValidationControl> GetControls(this DothtmlUnit unit, string expression)
@@ -17,7 +17,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
 
         public static DothtmlQuery<ValidationDirective> GetDirective(this DothtmlUnit unit, string expression)
         {
-            return unit.GetDirectives(expression).CountEquals(1);
+            return unit.GetDirectives(expression).RequireCount(1);
         }
 
         public static DothtmlQuery<ValidationDirective> GetDirectives(this DothtmlUnit unit, string expression)
@@ -32,7 +32,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
 
         public static DothtmlQuery<ValidationPropertySetter> GetProperty(this DothtmlUnit unit, string expression)
         {
-            return unit.GetProperties(expression).CountEquals(1);
+            return unit.GetProperties(expression).RequireCount(1);
         }
 
         public static DothtmlQuery<TResult> GetQuery<TResult>(this DothtmlUnit unit, string expression)

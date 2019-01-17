@@ -8,12 +8,12 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
     {
         public static DothtmlQuery<ValidationControl> GetControl(this DothtmlQuery<ValidationControl> query, string expression)
         {
-            return query.GetControls(expression).CountEquals(1);
+            return query.GetControls(expression).RequireCount(1);
         }
 
         public static DothtmlQuery<ValidationControl> GetControl(this DothtmlQuery<ValidationPropertySetter> query, string expression)
         {
-            return query.GetControls(expression).CountEquals(1);
+            return query.GetControls(expression).RequireCount(1);
         }
 
         public static DothtmlQuery<ValidationControl> GetControls(this DothtmlQuery<ValidationControl> query, string expression)
@@ -33,7 +33,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
 
         public static DothtmlQuery<ValidationPropertySetter> GetProperty(this DothtmlQuery<ValidationControl> query, string expression)
         {
-            return query.GetProperties(expression).CountEquals(1);
+            return query.GetProperties(expression).RequireCount(1);
         }
 
         private static DothtmlQuery<TOut> GetDescendantQuery<TIn, TOut>(this DothtmlQuery<TIn> query, string expression)
