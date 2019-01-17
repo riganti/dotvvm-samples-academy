@@ -5,6 +5,8 @@ namespace DotvvmAcademy.Validation.Unit
 {
     public abstract class ValidationUnit
     {
+        public Dictionary<string, object> AdditionalData { get; } = new Dictionary<string, object>();
+
         public Dictionary<string, IConstraint> Constraints { get; } = new Dictionary<string, IConstraint>();
 
         public void AddConstraint<TConstraint>(TConstraint constraint, params object[] parameters)
@@ -27,9 +29,23 @@ namespace DotvvmAcademy.Validation.Unit
             }
         }
 
+        public object GetAdditionalData(string key)
+        {
+            if (AdditionalData.TryGetValue(key, out var value))
+            {
+                return value;
+            }
+            return null;
+        }
+
         public IEnumerable<IConstraint> GetConstraints()
         {
             return Constraints.Values;
+        }
+
+        public void SetAdditionalData(string key, object value)
+        {
+            AdditionalData[key] = value;
         }
     }
 }

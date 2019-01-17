@@ -1,4 +1,9 @@
-﻿Unit.SetDefault("./Sample_10.cs");
+﻿using DotvvmAcademy.Validation.CSharp;
+using DotvvmAcademy.Validation.CSharp.Unit;
+
+public CSharpUnit Unit { get; set; }
+
+Unit.SetDefault("./Sample_10.cs");
 Unit.SetCorrect("./Sample_20.cs");
 Unit.SetFileName("Sample.cs");
 
@@ -6,7 +11,7 @@ Unit.GetType<int>().Allow();
 
 var sampleType = Unit.GetType("DotvvmAcademy.Course.ContentSample.Sample");
 sampleType.GetProperty("Property")
-    .IsOfType<int>()
-    .HasAccessibility(Accessibility.Public)
-    .HasGetter()
-    .HasSetter();
+    .RequireType<int>()
+    .RequireAccess(AllowedAccess.Public)
+    .RequireGetter()
+    .RequireSetter();
