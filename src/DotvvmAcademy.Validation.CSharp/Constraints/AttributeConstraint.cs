@@ -20,7 +20,7 @@ namespace DotvvmAcademy.Validation.CSharp.Constraints
 
         public object Values { get; }
 
-        public void Validate(CSharpValidationReporter reporter, MetaConverter converter, AttributeExtractor extractor)
+        public void Validate(IValidationReporter reporter, MetaConverter converter, AttributeExtractor extractor)
         {
             var attributeClass = converter.ToRoslyn(AttributeClass)
                 .OfType<INamedTypeSymbol>()

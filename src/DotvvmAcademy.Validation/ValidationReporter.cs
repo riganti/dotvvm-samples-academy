@@ -1,28 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace DotvvmAcademy.Validation
 {
     public class ValidationReporter : IValidationReporter
     {
         private readonly List<IValidationDiagnostic> diagnostics = new List<IValidationDiagnostic>();
+        private ValidationSeverity worstSeverity = (ValidationSeverity)int.MaxValue;
 
-        public ValidationSeverity WorstSeverity { get; private set; } = (ValidationSeverity)int.MaxValue;
+        public ValidationReporter(SourceCodeStorage sourceCodeStorage)
+        {
+            SourceCodeStorage = sourceCodeStorage;
+        }
 
-        public IEnumerable<IValidationDiagnostic> GetReportedDiagnostics()
+        public SourceCodeStorage SourceCodeStorage { get; }
+
+        public IEnumerable<IValidationDiagnostic> GetDiagnostics()
         {
             return diagnostics;
         }
 
+        public ValidationSeverity GetWorstSeverity()
+        {
+            return worstSeverity;
+        }
+
         public void Report(IValidationDiagnostic diagnostic)
         {
-            if (diagnostic.Severity < WorstSeverity)
+            if (diagnostic.Severity < worstSeverity)
             {
-                WorstSeverity = diagnostic.Severity;
+                worstSeverity = diagnostic.Severity;
             }
-
             diagnostics.Add(diagnostic);
         }
     }

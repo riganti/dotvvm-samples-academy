@@ -17,7 +17,7 @@ namespace DotvvmAcademy.Validation.CSharp.Constraints
 
         public NameNode Source { get; }
 
-        public void Validate(CSharpValidationReporter reporter, MetaConverter converter, Compilation compilation)
+        public void Validate(IValidationReporter reporter, MetaConverter converter, Compilation compilation)
         {
             var destination = converter.ToRoslyn(Destination)
                 .OfType<ITypeSymbol>()

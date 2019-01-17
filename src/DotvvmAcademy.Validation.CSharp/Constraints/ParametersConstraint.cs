@@ -19,7 +19,7 @@ namespace DotvvmAcademy.Validation.CSharp.Constraints
 
         public ImmutableArray<NameNode> Parameters { get; }
 
-        public void Validate(CSharpValidationReporter reporter, MetaConverter converter)
+        public void Validate(IValidationReporter reporter, MetaConverter converter)
         {
             var symbols = converter.ToRoslyn(Node)
                 .OfType<IMethodSymbol>();

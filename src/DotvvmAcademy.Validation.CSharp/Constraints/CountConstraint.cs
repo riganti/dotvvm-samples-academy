@@ -19,7 +19,7 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 
         public NameNode Node { get; }
 
-        public void Validate(CSharpValidationReporter reporter, MetaConverter converter)
+        public void Validate(IValidationReporter reporter, MetaConverter converter)
         {
             var result = converter.ToRoslyn(Node)
                 .OfType<TResult>()

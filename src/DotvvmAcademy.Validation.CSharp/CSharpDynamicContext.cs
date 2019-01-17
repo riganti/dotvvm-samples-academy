@@ -9,9 +9,9 @@ namespace DotvvmAcademy.Validation.CSharp
     public class CSharpDynamicContext
     {
         private readonly MetaConverter converter;
-        private readonly CSharpValidationReporter reporter;
+        private readonly IValidationReporter reporter;
 
-        public CSharpDynamicContext(MetaConverter converter, CSharpValidationReporter reporter)
+        public CSharpDynamicContext(MetaConverter converter, IValidationReporter reporter)
         {
             this.converter = converter;
             this.reporter = reporter;

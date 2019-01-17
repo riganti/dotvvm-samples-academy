@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DotvvmAcademy.Validation.CSharp
+﻿namespace DotvvmAcademy.Validation.CSharp
 {
     public class CSharpSourceCode : ISourceCode
     {

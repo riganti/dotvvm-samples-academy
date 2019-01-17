@@ -1,41 +1,38 @@
-﻿using Microsoft.CodeAnalysis;
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using DotvvmAcademy.Validation.CSharp;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace DotvvmAcademy.Validation.CSharp
+namespace DotvvmAcademy.Validation
 {
-    public class CSharpValidationReporter : ValidationReporter
+    public static class ValidationReporterExtensions
     {
-        private readonly CSharpSourceCodeProvider sourceCodeProvider;
-
-        public CSharpValidationReporter(CSharpSourceCodeProvider sourceCodeProvider)
+        public static void Report(this IValidationReporter reporter, Diagnostic diagnostic)
         {
-            this.sourceCodeProvider = sourceCodeProvider;
+            var source = reporter.SourceCodeStorage.GetSourceCode(diagnostic.Location.SourceTree);
+            reporter.Report(new CompilationCSharpDiagnostic(diagnostic, source));
         }
 
-        public void Report(Diagnostic diagnostic)
+        public static void Report(this IValidationReporter reporter, string message, ISymbol symbol, ValidationSeverity severity = default)
         {
-            var source = sourceCodeProvider.GetSourceCode(diagnostic.Location.SourceTree);
-            Report(new CompilationCSharpDiagnostic(diagnostic, source));
+            reporter.Report(message, Enumerable.Empty<object>(), symbol, severity);
         }
 
-        public void Report(string message, ISymbol symbol, ValidationSeverity severity = default)
-        {
-            Report(message, Enumerable.Empty<object>(), symbol, severity);
-        }
-
-        public void Report(string message, IEnumerable<object> arguments, ISymbol symbol, ValidationSeverity severity = default)
+        public static void Report(
+            this IValidationReporter reporter,
+            string message,
+            IEnumerable<object> arguments,
+            ISymbol symbol,
+            ValidationSeverity severity = default)
         {
             foreach (var reference in symbol.DeclaringSyntaxReferences)
             {
-                var source = sourceCodeProvider.GetSourceCode(reference.SyntaxTree);
+                var source = reporter.SourceCodeStorage.GetSourceCode(reference.SyntaxTree);
                 var syntax = reference.GetSyntax();
                 var start = reference.Span.Start;
                 var end = reference.Span.End;
-                switch(syntax)
+                switch (syntax)
                 {
                     case NamespaceDeclarationSyntax namespaceDeclaration:
                         start = namespaceDeclaration.Name.Span.Start;
@@ -56,9 +53,9 @@ namespace DotvvmAcademy.Validation.CSharp
                         start = eventDeclaration.Identifier.Span.Start;
                         end = eventDeclaration.Identifier.Span.End;
                         break;
-                    // TODO: Eventually handler fields
+                        // TODO: Eventually handle fields
                 }
-                Report(new SymbolCSharpDiagnostic(
+                reporter.Report(new SymbolCSharpDiagnostic(
                     message: message,
                     arguments: arguments,
                     start: start,

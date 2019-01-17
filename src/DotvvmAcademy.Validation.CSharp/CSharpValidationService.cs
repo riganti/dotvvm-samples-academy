@@ -37,15 +37,15 @@ namespace DotvvmAcademy.Validation.CSharp
                 var id = Guid.NewGuid();
 
                 // compile user code and prepare MetaConverter
-                var reporter = scope.ServiceProvider.GetRequiredService<CSharpValidationReporter>();
+                var context = scope.ServiceProvider.GetRequiredService<Context>();
+                context.SourceCodeStorage = new SourceCodeStorage(sources);
+                var reporter = scope.ServiceProvider.GetRequiredService<IValidationReporter>();
                 var compilation = GetCompilation(reporter, sources, id);
                 var assemblies = Assembly.GetEntryAssembly()
                     .GetReferencedAssemblies()
                     .Select(Assembly.Load)
                     .ToImmutableArray();
-                var context = scope.ServiceProvider.GetRequiredService<Context>();
                 context.Converter = new MetaConverter(compilation, assemblies);
-                context.SourceCodeProvider = new CSharpSourceCodeProvider(sources.Cast<CSharpSourceCode>());
 
                 // constraints, static analysis
                 foreach (var constraint in constraints)
@@ -54,9 +54,9 @@ namespace DotvvmAcademy.Validation.CSharp
                 }
                 var analyzers = scope.ServiceProvider.GetRequiredService<IEnumerable<DiagnosticAnalyzer>>();
                 await RunAnalyzers(reporter, compilation, analyzers);
-                if (reporter.WorstSeverity == ValidationSeverity.Error)
+                if (reporter.GetWorstSeverity() == ValidationSeverity.Error)
                 {
-                    return GetValidationDiagnostics(scope.ServiceProvider);
+                    return GetValidationDiagnostics(reporter);
                 }
 
                 // dynamic analysis
@@ -66,11 +66,11 @@ namespace DotvvmAcademy.Validation.CSharp
                 var dynamicContext = scope.ServiceProvider.GetRequiredService<CSharpDynamicContext>();
                 var dynamicActionStorage = scope.ServiceProvider.GetRequiredService<DynamicActionStorage>();
                 RunDynamicActions(reporter, dynamicContext, dynamicActionStorage);
-                return GetValidationDiagnostics(scope.ServiceProvider);
+                return GetValidationDiagnostics(reporter);
             }
         }
 
-        private async Task<Assembly> GetAssembly(CSharpValidationReporter reporter, Compilation compilation)
+        private async Task<Assembly> GetAssembly(IValidationReporter reporter, Compilation compilation)
         {
             using (var originalStream = new MemoryStream())
             using (var rewrittenStream = new MemoryStream())
@@ -93,7 +93,7 @@ namespace DotvvmAcademy.Validation.CSharp
             }
         }
 
-        private CSharpCompilation GetCompilation(CSharpValidationReporter reporter, IEnumerable<ISourceCode> sources, Guid id)
+        private CSharpCompilation GetCompilation(IValidationReporter reporter, IEnumerable<ISourceCode> sources, Guid id)
         {
             var trees = sources.OfType<CSharpSourceCode>()
                 .Select(s => CSharpSyntaxTree.ParseText(
@@ -131,36 +131,24 @@ namespace DotvvmAcademy.Validation.CSharp
             var c = new ServiceCollection();
             c.AddScoped<Context>();
             c.AddTransient(p => p.GetService<Context>().Converter);
-            c.AddTransient(p => p.GetService<Context>().SourceCodeProvider);
+            c.AddTransient(p => p.GetService<Context>().SourceCodeStorage);
             c.AddSingleton<AssemblyRewriter>();
             c.AddScoped<AllowedSymbolStorage>();
             c.AddScoped<DynamicActionStorage>();
             c.AddScoped<DiagnosticAnalyzer, SymbolAllowedAnalyzer>();
-            c.AddScoped<CSharpValidationReporter>();
-            c.AddScoped<IValidationReporter>(p => p.GetRequiredService<CSharpValidationReporter>());
+            c.AddScoped<IValidationReporter, ValidationReporter>();
             c.AddScoped<CSharpDynamicContext>();
             return c.BuildServiceProvider();
         }
 
-        private ImmutableArray<IValidationDiagnostic> GetValidationDiagnostics(IServiceProvider provider)
+        private ImmutableArray<IValidationDiagnostic> GetValidationDiagnostics(IValidationReporter reporter)
         {
-            return provider.GetRequiredService<CSharpValidationReporter>()
-                .GetReportedDiagnostics()
+            return reporter.GetDiagnostics()
                 .Where(d => d.Source == null || d.Source.IsValidated)
                 .ToImmutableArray();
         }
 
-        private void OnAnalyzerException(
-            IServiceProvider provider,
-            Exception exception,
-            DiagnosticAnalyzer analyzer,
-            Diagnostic diagnostic)
-        {
-            var reporter = provider.GetRequiredService<CSharpValidationReporter>();
-            reporter.Report(diagnostic);
-        }
-
-        private async Task RunAnalyzers(CSharpValidationReporter reporter, Compilation compilation, IEnumerable<DiagnosticAnalyzer> analyzers)
+        private async Task RunAnalyzers(IValidationReporter reporter, Compilation compilation, IEnumerable<DiagnosticAnalyzer> analyzers)
         {
             var analysisOptions = new CompilationWithAnalyzersOptions(
                 options: null,
@@ -177,7 +165,7 @@ namespace DotvvmAcademy.Validation.CSharp
             }
         }
 
-        private void RunDynamicActions(CSharpValidationReporter reporter, CSharpDynamicContext context, DynamicActionStorage storage)
+        private void RunDynamicActions(IValidationReporter reporter, CSharpDynamicContext context, DynamicActionStorage storage)
         {
             foreach (var action in storage.DynamicActions)
             {
@@ -197,7 +185,7 @@ namespace DotvvmAcademy.Validation.CSharp
         {
             public MetaConverter Converter { get; set; }
 
-            public CSharpSourceCodeProvider SourceCodeProvider { get; set; }
+            public SourceCodeStorage SourceCodeStorage { get; set; }
         }
     }
 }
