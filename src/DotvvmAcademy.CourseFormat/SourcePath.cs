@@ -170,7 +170,7 @@ namespace DotvvmAcademy.CourseFormat
             return sb.ToString();
         }
 
-        public static ReadOnlyMemory<char> GetExtension(string path)
+        public static string GetExtension(string path)
         {
             var segment = GetLastSegment(path);
             var span = segment.Span;
@@ -178,7 +178,7 @@ namespace DotvvmAcademy.CourseFormat
             {
                 if (span[i] == '.')
                 {
-                    return segment.Slice(i);
+                    return segment.Slice(i).ToString();
                 }
             }
 

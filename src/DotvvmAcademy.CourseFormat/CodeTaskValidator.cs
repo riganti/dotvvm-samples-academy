@@ -1,9 +1,11 @@
 ﻿using DotvvmAcademy.Validation;
 using DotvvmAcademy.Validation.CSharp;
+using DotvvmAcademy.Validation.CSharp.Unit;
 using DotvvmAcademy.Validation.Dothtml;
+using DotvvmAcademy.Validation.Dothtml.Unit;
 using DotvvmAcademy.Validation.Unit;
-using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,33 +14,31 @@ namespace DotvvmAcademy.CourseFormat
 {
     public class CodeTaskValidator
     {
+        private readonly CSharpValidationService csharpValidationService;
+        private readonly DothtmlValidationService dothtmlValidationService;
         private readonly ICourseEnvironment environment;
-        private readonly IServiceProvider provider;
-        private readonly CourseWorkspace workspace;
 
         public CodeTaskValidator(
             ICourseEnvironment environment,
-            CourseWorkspace workspace,
-            IServiceProvider provider)
+            CSharpValidationService csharpValidationService,
+            DothtmlValidationService dothtmlValidationService)
         {
             this.environment = environment;
-            this.workspace = workspace;
-            this.provider = provider;
+            this.csharpValidationService = csharpValidationService;
+            this.dothtmlValidationService = dothtmlValidationService;
         }
 
-        public async Task<ImmutableArray<CodeTaskDiagnostic>> Validate(IValidationUnit unit, string code)
+        public async Task<IEnumerable<CodeTaskDiagnostic>> Validate(CodeTask codeTask, string code)
         {
-            var configuration = unit.Provider.GetRequiredService<CodeTaskOptions>();
-            var sourceCodeTasks = configuration.SourcePaths.Select(async p => (fileName: p.Key, source: await environment.Read(p.Value)));
-            var sourceCodes = (await Task.WhenAll(sourceCodeTasks))
-                .Select(t => CreateSourceCode(t.fileName, t.source, false))
+            var absolutePath = SourcePath.Combine(codeTask.Path, codeTask.Unit.GetDefault());
+            var sources = (await Task.WhenAll(codeTask.Unit.GetDependencies()
+                .Select(async p => (path: SourcePath.Combine(codeTask.Path, p), content: await environment.Read(p)))))
+                .Select(t => CreateSourceCode(t.path, t.content, false))
                 .ToImmutableArray()
-                .Add(CreateSourceCode(configuration.FileName, code, true));
-            var validationServiceType = typeof(IValidationService<>).MakeGenericType(unit.GetType());
-            var validationService = (IValidationService)provider.GetRequiredService(validationServiceType);
-            var diagnostics = await validationService.Validate(unit, sourceCodes);
-            return diagnostics.Select(d =>
-                new CodeTaskDiagnostic(
+                .Add(CreateSourceCode(absolutePath, code, true));
+            var service = GetValidationService(codeTask.Unit);
+            return (await service.Validate(codeTask.Unit.GetConstraints(), sources))
+                .Select(d => new CodeTaskDiagnostic(
                     message: string.Format(d.Message, d.Arguments.ToArray()),
                     start: d.Start,
                     end: d.End,
@@ -60,6 +60,21 @@ namespace DotvvmAcademy.CourseFormat
 
                 default:
                     throw new NotSupportedException($"File extension '{extension}' is not supported.");
+            }
+        }
+
+        private IValidationService GetValidationService(IValidationUnit unit)
+        {
+            switch (unit)
+            {
+                case CSharpUnit csharpUnit:
+                    return csharpValidationService;
+
+                case DothtmlUnit dothmlUnit:
+                    return dothtmlValidationService;
+
+                default:
+                    throw new NotSupportedException($"IValidationUnit type \"{unit.GetType()}\" is not supported.");
             }
         }
     }

@@ -3,7 +3,7 @@ using System.Text;
 
 namespace DotvvmAcademy.Validation.Unit
 {
-    public abstract class ValidationUnit
+    public abstract class ValidationUnit : IValidationUnit
     {
         public Dictionary<string, object> AdditionalData { get; } = new Dictionary<string, object>();
 

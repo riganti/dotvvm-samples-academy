@@ -2,9 +2,10 @@
 
 namespace DotvvmAcademy.CourseFormat
 {
-    public class ValidationScript : Source
+    public class CodeTask : Source
     {
-        public ValidationScript(string path, IValidationUnit unit) : base(path)
+        public CodeTask(string path, IValidationUnit unit)
+            : base(path)
         {
             Unit = unit;
         }

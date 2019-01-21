@@ -18,14 +18,14 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton<ISourceProvider<Variant>, VariantProvider>();
             services.AddSingleton<ISourceProvider<Lesson>, LessonProvider>();
             services.AddSingleton<ISourceProvider<Step>, StepProvider>();
-            services.AddSingleton<ISourceProvider<ValidationScript>, ValidationScriptProvider>();
+            services.AddSingleton<ISourceProvider<CodeTask>, CodeTaskProvider>();
             services.AddSingleton<ISourceProvider<Archive>, ArchiveProvider>();
             services.AddSingleton<CourseCache>();
             services.AddSingleton<CourseWorkspace>();
             services.AddSingleton<CodeTaskValidator>();
             services.AddSingleton<IMarkdownRenderer, MarkdigRenderer>();
-            services.AddSingleton<IValidationService<CSharpUnit>, CSharpValidationService>();
-            services.AddSingleton<IValidationService<DothtmlUnit>, DothtmlValidationService>();
+            services.AddSingleton<CSharpValidationService>();
+            services.AddSingleton<DothtmlValidationService>();
             return services;
         }
     }
