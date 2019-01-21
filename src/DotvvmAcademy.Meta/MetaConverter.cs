@@ -1,6 +1,7 @@
 ﻿using DotvvmAcademy.Meta.Syntax;
 using Microsoft.CodeAnalysis;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace DotvvmAcademy.Meta
@@ -46,7 +47,9 @@ namespace DotvvmAcademy.Meta
 
         public IEnumerable<ISymbol> ToRoslyn(NameNode node)
         {
-            return roslynNameNodeVisitor.Visit(node);
+            // TODO: Why do I have to call Distinct()?
+            return roslynNameNodeVisitor.Visit(node)
+                .Distinct();
         }
 
         public IEnumerable<ISymbol> ToRoslyn(MemberInfo info)

@@ -76,26 +76,27 @@ namespace DotvvmAcademy.Web.Pages.Step
 
         public async Task Reset()
         {
-            var script = await workspace.Require<ValidationScript>(CodeTask.ValidationScriptPath);
+            var script = await workspace.Require<CodeTask>(CodeTask.ValidationScriptPath);
+            var defaultCodePath = SourcePath.Combine(SourcePath.GetParent(script.Path), script.Unit.GetDefault());
             CodeTask = new CodeTaskDetail
             {
-                Code = await environment.Read(script.Unit.GetCodeTaskOptions().DefaultCodePath),
+                Code = await environment.Read(defaultCodePath),
                 CodeLanguage = script.Unit.GetValidatedLanguage()
             };
         }
 
         public async Task ShowSolution()
         {
-            var script = await workspace.Require<ValidationScript>(CodeTask.ValidationScriptPath);
-            var correctCodePath = script.Unit.GetCodeTaskOptions().CorrectCodePath;
+            var script = await workspace.Require<CodeTask>(CodeTask.ValidationScriptPath);
+            var correctCodePath = SourcePath.Combine(SourcePath.GetParent(script.Path), script.Unit.GetCorrect());
             CodeTask.Code = await environment.Read(correctCodePath);
         }
 
         public async Task Validate()
         {
-            var script = await workspace.Require<ValidationScript>(CodeTask.ValidationScriptPath);
-            var converter = new PositionConverter(CodeTask.Code);
-            var diagnostics = await validator.Validate(script.Unit, CodeTask.Code);
+            var script = await workspace.Require<CodeTask>(CodeTask.ValidationScriptPath);
+            var diagnostics = (await validator.Validate(script, CodeTask.Code))
+                .ToArray();
             if (diagnostics.Length == 0)
             {
                 Context.RedirectToRoute("Step", new { Step = Step.NextStep });
@@ -114,8 +115,8 @@ namespace DotvvmAcademy.Web.Pages.Step
                 else
                 {
                     // interval [start, end) is half-open
-                    (startLineNumber, startColumn) = converter.ToCoords(diagnostic.Start);
-                    (endLineNumber, endColumn) = converter.ToCoords(diagnostic.End - 1);
+                    (startLineNumber, startColumn) = MetaConvert.ToCoords(CodeTask.Code, diagnostic.Start);
+                    (endLineNumber, endColumn) = MetaConvert.ToCoords(CodeTask.Code, diagnostic.End - 1);
                     // however, Monaco's intervals are half-open too, we have to compensate for that
                     endColumn++;
                 }

@@ -30,9 +30,9 @@ namespace DotvvmAcademy.CourseFormat
 
         public async Task<IEnumerable<CodeTaskDiagnostic>> Validate(CodeTask codeTask, string code)
         {
-            var absolutePath = SourcePath.Combine(codeTask.Path, codeTask.Unit.GetDefault());
+            var absolutePath = SourcePath.Combine(SourcePath.GetParent(codeTask.Path), codeTask.Unit.GetDefault());
             var sources = (await Task.WhenAll(codeTask.Unit.GetDependencies()
-                .Select(async p => (path: SourcePath.Combine(codeTask.Path, p), content: await environment.Read(p)))))
+                .Select(async p => (path: SourcePath.Combine(SourcePath.GetParent(codeTask.Path), p), content: await environment.Read(p)))))
                 .Select(t => CreateSourceCode(t.path, t.content, false))
                 .ToImmutableArray()
                 .Add(CreateSourceCode(absolutePath, code, true));

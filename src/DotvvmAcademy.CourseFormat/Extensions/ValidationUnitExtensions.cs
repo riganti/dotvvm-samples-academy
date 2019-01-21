@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace DotvvmAcademy.Validation.Unit
 {
@@ -31,7 +32,7 @@ namespace DotvvmAcademy.Validation.Unit
 
         public static IEnumerable<string> GetDependencies(this IValidationUnit unit)
         {
-            return (IEnumerable<string>)unit.GetAdditionalData(DependenciesKey);
+            return (IEnumerable<string>)unit.GetAdditionalData(DependenciesKey) ?? Enumerable.Empty<string>();
         }
 
         public static string GetValidatedLanguage(this IValidationUnit unit)

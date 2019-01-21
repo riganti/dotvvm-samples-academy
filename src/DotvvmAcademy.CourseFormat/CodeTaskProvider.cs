@@ -18,16 +18,16 @@ namespace DotvvmAcademy.CourseFormat
         public async Task<CodeTask> Get(string path)
         {
             var scriptSource = await environment.Read(path);
-            var csharpScript = CSharpScript.Create<IValidationUnit>(
+            var csharpScript = CSharpScript.Create(
                 code: scriptSource,
                 options: GetScriptOptions(path));
-            csharpScript = csharpScript.ContinueWith<IValidationUnit>("return Unit;");
+            csharpScript = csharpScript.ContinueWith("return Unit;");
             var state = await csharpScript.RunAsync();
             if (state.Exception != null)
             {
                 throw new CodeTaskCompilationException(state.Exception);
             }
-            return new CodeTask(path, state.ReturnValue);
+            return new CodeTask(path, (IValidationUnit)state.ReturnValue);
         }
 
         private ScriptOptions GetScriptOptions(string scriptPath)
