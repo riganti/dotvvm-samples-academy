@@ -15,6 +15,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             : base(node, property)
         {
             Control = control;
+            Control.Parent = this;
         }
 
         public ValidationControl Control { get; }

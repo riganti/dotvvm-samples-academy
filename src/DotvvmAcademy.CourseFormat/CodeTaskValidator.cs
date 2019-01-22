@@ -32,7 +32,8 @@ namespace DotvvmAcademy.CourseFormat
         {
             var absolutePath = SourcePath.Combine(SourcePath.GetParent(codeTask.Path), codeTask.Unit.GetDefault());
             var sources = (await Task.WhenAll(codeTask.Unit.GetDependencies()
-                .Select(async p => (path: SourcePath.Combine(SourcePath.GetParent(codeTask.Path), p), content: await environment.Read(p)))))
+                .Select(p => SourcePath.Combine(SourcePath.GetParent(codeTask.Path), p))
+                .Select(async p => (path: p, content: await environment.Read(p)))))
                 .Select(t => CreateSourceCode(t.path, t.content, false))
                 .ToImmutableArray()
                 .Add(CreateSourceCode(absolutePath, code, true));

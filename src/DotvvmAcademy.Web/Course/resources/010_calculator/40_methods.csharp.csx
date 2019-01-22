@@ -1,7 +1,12 @@
 ﻿#load "./10_viewmodel.csharp.csx"
 
-Unit.SetDefault("./CalculatorViewModel_30.cs");
-Unit.SetCorrect("./CalculatorViewModel_40.cs");
+using DotvvmAcademy.Meta;
+using DotvvmAcademy.Validation.Unit;
+using DotvvmAcademy.Validation.CSharp;
+using DotvvmAcademy.Validation.CSharp.Unit;
+
+Unit.SetDefault("CalculatorViewModel_30.cs");
+Unit.SetCorrect("CalculatorViewModel_40.cs");
 
 var @void = Unit.GetType(WellKnownTypes.Void)
     .Allow();

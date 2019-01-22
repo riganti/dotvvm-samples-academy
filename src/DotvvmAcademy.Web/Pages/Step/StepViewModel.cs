@@ -94,14 +94,6 @@ namespace DotvvmAcademy.Web.Pages.Step
 
         public async Task Validate()
         {
-            var script = await workspace.Require<CodeTask>(CodeTask.ValidationScriptPath);
-            var diagnostics = (await validator.Validate(script, CodeTask.Code))
-                .ToArray();
-            if (diagnostics.Length == 0)
-            {
-                Context.RedirectToRoute("Step", new { Step = Step.NextStep });
-            }
-
             MonacoMarker GetMarker(CodeTaskDiagnostic diagnostic)
             {
                 int startLineNumber, startColumn;
@@ -129,11 +121,26 @@ namespace DotvvmAcademy.Web.Pages.Step
                     endColumn: endColumn);
             }
 
-            CodeTask.Markers = diagnostics
-                .Select(GetMarker)
-                .OrderBy(m => (m.StartLineNumber, m.StartColumn))
-                .OrderBy(m => m.Severity)
-                .ToList();
+            try
+            {
+                var script = await workspace.Require<CodeTask>(CodeTask.ValidationScriptPath);
+                var diagnostics = (await validator.Validate(script, CodeTask.Code))
+                    .ToArray();
+                if (diagnostics.Length == 0)
+                {
+                    Context.RedirectToRoute("Step", new { Step = Step.NextStep });
+                }
+                CodeTask.Markers = diagnostics
+                    .Select(GetMarker)
+                    .OrderBy(m => (m.StartLineNumber, m.StartColumn))
+                    .OrderBy(m => m.Severity)
+                    .ToList();
+            }
+            catch(CodeTaskException)
+            {
+                CodeTask.Markers.Clear();
+                CodeTask.Markers.Add(new MonacoMarker("An error occured during validation.", MonacoSeverity.Error, -1, -1, -1, -1));
+            }
         }
 
         protected override async Task<IEnumerable<string>> GetAvailableLanguageMonikers()

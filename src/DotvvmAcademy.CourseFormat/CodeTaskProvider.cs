@@ -2,6 +2,7 @@
 using DotvvmAcademy.Validation.Unit;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.Scripting;
+using System;
 using System.Threading.Tasks;
 
 namespace DotvvmAcademy.CourseFormat
@@ -22,12 +23,15 @@ namespace DotvvmAcademy.CourseFormat
                 code: scriptSource,
                 options: GetScriptOptions(path));
             csharpScript = csharpScript.ContinueWith("return Unit;");
-            var state = await csharpScript.RunAsync();
-            if (state.Exception != null)
+            try
             {
-                throw new CodeTaskCompilationException(state.Exception);
+                var state = await csharpScript.RunAsync();
+                return new CodeTask(path, (IValidationUnit)state.ReturnValue);
             }
-            return new CodeTask(path, (IValidationUnit)state.ReturnValue);
+            catch(Exception e)
+            {
+                throw new CodeTaskException("An exception occured during validation script compilation.", e);
+            }
         }
 
         private ScriptOptions GetScriptOptions(string scriptPath)

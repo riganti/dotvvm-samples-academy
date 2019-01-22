@@ -18,7 +18,12 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         IAbstractTreeNode IAbstractTreeNode.Parent => Parent;
 
-        public ValidationTreeRoot TreeRoot { get; set; }
+        public ValidationTreeRoot TreeRoot => GetTreeRoot();
+
+        protected virtual ValidationTreeRoot GetTreeRoot()
+        {
+            return Parent.TreeRoot;
+        }
 
         IAbstractTreeRoot IAbstractTreeNode.TreeRoot => TreeRoot;
 

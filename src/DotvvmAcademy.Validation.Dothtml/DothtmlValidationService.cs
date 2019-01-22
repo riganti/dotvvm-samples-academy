@@ -94,6 +94,8 @@ namespace DotvvmAcademy.Validation.Dothtml
             c.AddTransient(p => p.GetRequiredService<Context>().SourceCodeStorage);
             c.AddTransient(p => p.GetRequiredService<Context>().Tree);
             c.AddTransient(p => p.GetRequiredService<Context>().Compilation);
+            c.AddTransient<IAttributeExtractor, AttributeExtractor>();
+            c.AddTransient<ITypedConstantExtractor, TypedConstantExtractor>();
             c.AddScoped<IValidationReporter, ValidationReporter>();
             c.AddScoped<SourceCodeStorage>();
             c.AddScoped<NodeLocator>();

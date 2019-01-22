@@ -28,7 +28,6 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         public void AddProperty(ValidationPropertySetter property)
         {
             property.Parent = this;
-            property.TreeRoot = TreeRoot;
             PropertySetters = PropertySetters.Add(property);
         }
 

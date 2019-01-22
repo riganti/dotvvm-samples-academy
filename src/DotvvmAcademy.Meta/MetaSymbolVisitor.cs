@@ -34,7 +34,7 @@ namespace DotvvmAcademy.Meta
 
         public override NameNode VisitNamedType(INamedTypeSymbol symbol)
         {
-            if (IsConstructedType(symbol))
+            if (symbol.IsConstructedType())
             {
                 var typeArguments = symbol.TypeArguments.Select(Visit);
                 return NameFactory.ConstructedType(Visit(symbol.ConstructedFrom), typeArguments);
@@ -42,6 +42,10 @@ namespace DotvvmAcademy.Meta
             else if (symbol.ContainingType != default)
             {
                 return NameFactory.NestedType(Visit(symbol.ContainingType), symbol.Name, symbol.Arity);
+            }
+            else if (symbol.ContainingNamespace.IsGlobalNamespace)
+            {
+                return NameFactory.Simple(symbol.Name, symbol.Arity);
             }
             else
             {
@@ -51,7 +55,7 @@ namespace DotvvmAcademy.Meta
 
         public override NameNode VisitNamespace(INamespaceSymbol symbol)
         {
-            if (symbol.ContainingNamespace == default)
+            if (symbol.ContainingNamespace.IsGlobalNamespace)
             {
                 return NameFactory.Identifier(symbol.Name);
             }
@@ -69,11 +73,6 @@ namespace DotvvmAcademy.Meta
         public override NameNode VisitProperty(IPropertySymbol symbol)
         {
             return VisitMember(symbol);
-        }
-
-        private bool IsConstructedType(INamedTypeSymbol symbol)
-        {
-            return !symbol.TypeArguments.Any(t => t.TypeKind == TypeKind.TypeParameter);
         }
 
         private NameNode VisitMember(ISymbol symbol)

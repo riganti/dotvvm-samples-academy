@@ -32,7 +32,6 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         public void AddChildControl(ValidationControl child)
         {
             child.Parent = this;
-            child.TreeRoot = TreeRoot;
             Content = Content.Add(child);
         }
     }

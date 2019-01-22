@@ -1,12 +1,17 @@
 ﻿#load "./20_view.dothtml.csx"
 
-Unit.SetDefault("./Calculator_20.dothtml");
-Unit.SetCorrect("./Calculator_30.dothtml");
+using DotvvmAcademy.Validation.Unit;
+using DotvvmAcademy.Validation.Dothtml;
+using DotvvmAcademy.Validation.Dothtml.Unit;
+
+Unit.SetDefault("Calculator_20.dothtml");
+Unit.SetCorrect("Calculator_30.dothtml");
+Unit.AddDependency("CalculatorViewModel_20.cs");
 
 body.GetControl("dot:TextBox[1]")
     .GetProperty("@Text")
-    .HasBinding("Number1");
+    .RequireBinding("Number1");
 
 body.GetControl("dot:TextBox[2]")
     .GetProperty("@Text")
-    .HasBinding("Number2");
+    .RequireBinding("Number2");

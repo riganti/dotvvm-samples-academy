@@ -143,7 +143,6 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
                 metadata: (ValidationControlMetadata)metadata,
                 dataContext: dataContext,
                 directives: immutableDirectives);
-            root.TreeRoot = root;
             return root;
         }
 

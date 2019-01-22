@@ -7,10 +7,10 @@ namespace DotvvmAcademy.Meta
 {
     public class AttributeExtractor : IAttributeExtractor
     {
-        private readonly TypedConstantExtractor constantExtractor;
+        private readonly ITypedConstantExtractor constantExtractor;
         private readonly MetaConverter converter;
 
-        public AttributeExtractor(MetaConverter converter, TypedConstantExtractor constantExtractor)
+        public AttributeExtractor(MetaConverter converter, ITypedConstantExtractor constantExtractor)
         {
             this.converter = converter;
             this.constantExtractor = constantExtractor;

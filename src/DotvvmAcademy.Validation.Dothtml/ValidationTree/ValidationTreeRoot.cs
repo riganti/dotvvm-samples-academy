@@ -28,5 +28,10 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         Dictionary<string, List<IAbstractDirective>> IAbstractTreeRoot.Directives => directivesDictionary;
 
         public string FileName { get; set; }
+
+        protected override ValidationTreeRoot GetTreeRoot()
+        {
+            return this;
+        }
     }
 }

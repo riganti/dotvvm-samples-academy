@@ -29,11 +29,11 @@ namespace DotvvmAcademy.Validation.Dothtml
 
         public DothtmlSourceCode Source { get; }
 
-        public int End => Node?.DothtmlNode.EndPosition ?? -1;
+        public int End => Node?.DothtmlNode?.EndPosition ?? -1;
 
         ISourceCode IValidationDiagnostic.Source => Source;
 
-        public int Start => Node?.DothtmlNode.StartPosition ?? -1;
+        public int Start => Node?.DothtmlNode?.StartPosition ?? -1;
 
         object IValidationDiagnostic.UnderlyingObject => Node;
     }

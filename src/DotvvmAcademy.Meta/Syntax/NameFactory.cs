@@ -31,7 +31,7 @@ namespace DotvvmAcademy.Meta.Syntax
 
         public static GenericNameNode Generic(string identifier, int arity)
         {
-            Debug.Assert(arity >= 0);
+            Debug.Assert(arity > 0);
             return new GenericNameNode(
                 identifierToken: IdentifierToken(identifier),
                 backtickToken: MissingToken(NameTokenKind.Backtick),
@@ -98,7 +98,8 @@ namespace DotvvmAcademy.Meta.Syntax
 
         public static SimpleNameNode Simple(string identifier, int arity = 0)
         {
-            return arity > 0
+            Debug.Assert(arity >= 0);
+            return arity == 0
                 ? Identifier(identifier)
                 : (SimpleNameNode)Generic(identifier, arity);
         }

@@ -32,7 +32,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Constraints
                         arguments: new object[] { setter.Property.FullName },
                         node: setter);
                 }
-                else if (AllowedBinding.HasFlag(GetAllowedBinding(propertyBinding.Binding.BindingType)))
+                else if (!AllowedBinding.HasFlag(GetAllowedBinding(propertyBinding.Binding.BindingType)))
                 {
                     reporter.Report(
                         message: Resources.ERR_WrongBindingKind,
@@ -44,7 +44,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Constraints
                     reporter.Report(
                         message: Resources.ERR_WrongBindingValue,
                         arguments: new object[] { setter.Property.FullName, Value },
-                        node: propertyBinding.Binding);
+                        node: propertyBinding);
                 }
             }
         }
@@ -77,7 +77,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Constraints
             }
             else
             {
-                throw new NotSupportedException($"Binding type \"{type}\" is not supporter");
+                throw new NotSupportedException($"Binding type \"{type}\" is not supported.");
             }
         }
     }

@@ -6,7 +6,7 @@ namespace Microsoft.CodeAnalysis
     {
         public static bool IsConstructedType(this INamedTypeSymbol symbol)
         {
-            return !symbol.TypeArguments.Any(t => t.TypeKind == TypeKind.TypeParameter);
+            return symbol.IsGenericType && !symbol.TypeArguments.Any(t => t.TypeKind == TypeKind.TypeParameter);
         }
     }
 }

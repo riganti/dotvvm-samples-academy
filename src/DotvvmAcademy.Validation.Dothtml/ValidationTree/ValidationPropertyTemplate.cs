@@ -1,5 +1,4 @@
-﻿using DotVVM.Framework.Binding;
-using DotVVM.Framework.Compilation.ControlTree;
+﻿using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -17,6 +16,10 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             : base(node, property)
         {
             Content = content;
+            foreach (var control in Content)
+            {
+                control.Parent = this;
+            }
         }
 
         public ImmutableArray<ValidationControl> Content { get; }
