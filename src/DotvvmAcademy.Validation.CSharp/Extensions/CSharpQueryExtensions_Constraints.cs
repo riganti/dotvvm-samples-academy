@@ -15,49 +15,8 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
             return query.AddConstraint(new AllowConstraint<TResult>(query.Node));
         }
 
-        public static CSharpQuery<IMethodSymbol> HasParameters<T1>(this CSharpQuery<IMethodSymbol> query)
-        {
-            return query.RequireParameters(typeof(T1));
-        }
-
-        public static CSharpQuery<IMethodSymbol> HasParameters<T1, T2>(this CSharpQuery<IMethodSymbol> query)
-        {
-            return query.RequireParameters(typeof(T1), typeof(T2));
-        }
-
-        public static CSharpQuery<IMethodSymbol> HasParameters<T1, T2, T3>(this CSharpQuery<IMethodSymbol> query)
-        {
-            return query.RequireParameters(typeof(T1), typeof(T2), typeof(T3));
-        }
-
-        public static CSharpQuery<IMethodSymbol> HasParameters<T1, T2, T3, T4>(this CSharpQuery<IMethodSymbol> query)
-        {
-            return query.RequireParameters(typeof(T1), typeof(T2), typeof(T3), typeof(T4));
-        }
-
-        public static CSharpQuery<IMethodSymbol> HasParameters<T1, T2, T3, T4, T5>(this CSharpQuery<IMethodSymbol> query)
-        {
-            return query.RequireParameters(typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5));
-        }
-
-        public static CSharpQuery<IMethodSymbol> HasParameters<T1, T2, T3, T4, T5, T6>(this CSharpQuery<IMethodSymbol> query)
-        {
-            return query.RequireParameters(typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6));
-        }
-
-        public static CSharpQuery<IMethodSymbol> HasParameters<T1, T2, T3, T4, T5, T6, T7>(this CSharpQuery<IMethodSymbol> query)
-        {
-            return query.RequireParameters(typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6), typeof(T7));
-        }
-
-        public static CSharpQuery<IMethodSymbol> HasParameters<T1, T2, T3, T4, T5, T6, T7, T8>(
-            this CSharpQuery<IMethodSymbol> query)
-        {
-            return query.RequireParameters(typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6), typeof(T7), typeof(T8));
-        }
-
         public static CSharpQuery<TResult> RequireAccess<TResult>(this CSharpQuery<TResult> query, AllowedAccess access)
-                                                                            where TResult : ISymbol
+            where TResult : ISymbol
         {
             return query.AddConstraint(new AccessConstraint<TResult>(query.Node, access));
         }
@@ -198,6 +157,52 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
             return query.RequireNoAttribute(typeof(TAttribute));
         }
 
+        public static CSharpQuery<IMethodSymbol> RequireParameterless(this CSharpQuery<IMethodSymbol> query)
+        {
+            return query.AddConstraint(new ParametersConstraint(query.Node, Enumerable.Empty<NameNode>()));
+        }
+
+        public static CSharpQuery<IMethodSymbol> RequireParameters<T1>(this CSharpQuery<IMethodSymbol> query)
+        {
+            return query.RequireParameters(typeof(T1));
+        }
+
+        public static CSharpQuery<IMethodSymbol> RequireParameters<T1, T2>(this CSharpQuery<IMethodSymbol> query)
+        {
+            return query.RequireParameters(typeof(T1), typeof(T2));
+        }
+
+        public static CSharpQuery<IMethodSymbol> RequireParameters<T1, T2, T3>(this CSharpQuery<IMethodSymbol> query)
+        {
+            return query.RequireParameters(typeof(T1), typeof(T2), typeof(T3));
+        }
+
+        public static CSharpQuery<IMethodSymbol> RequireParameters<T1, T2, T3, T4>(this CSharpQuery<IMethodSymbol> query)
+        {
+            return query.RequireParameters(typeof(T1), typeof(T2), typeof(T3), typeof(T4));
+        }
+
+        public static CSharpQuery<IMethodSymbol> RequireParameters<T1, T2, T3, T4, T5>(this CSharpQuery<IMethodSymbol> query)
+        {
+            return query.RequireParameters(typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5));
+        }
+
+        public static CSharpQuery<IMethodSymbol> RequireParameters<T1, T2, T3, T4, T5, T6>(this CSharpQuery<IMethodSymbol> query)
+        {
+            return query.RequireParameters(typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6));
+        }
+
+        public static CSharpQuery<IMethodSymbol> RequireParameters<T1, T2, T3, T4, T5, T6, T7>(this CSharpQuery<IMethodSymbol> query)
+        {
+            return query.RequireParameters(typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6), typeof(T7));
+        }
+
+        public static CSharpQuery<IMethodSymbol> RequireParameters<T1, T2, T3, T4, T5, T6, T7, T8>(
+            this CSharpQuery<IMethodSymbol> query)
+        {
+            return query.RequireParameters(typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6), typeof(T7), typeof(T8));
+        }
+
         public static CSharpQuery<IMethodSymbol> RequireParameters(this CSharpQuery<IMethodSymbol> query, params string[] parameters)
         {
             return query.AddConstraint(new ParametersConstraint(query.Node, parameters.Select(NameNode.Parse)));
@@ -220,7 +225,12 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 
         public static CSharpQuery<IMethodSymbol> RequireReturnType<TType>(this CSharpQuery<IMethodSymbol> query)
         {
-            return query.AddConstraint(new ReturnTypeConstraint(query.Node, MetaConvert.ToMeta(typeof(TType))));
+            return query.RequireReturnType(typeof(TType));
+        }
+
+        public static CSharpQuery<IMethodSymbol> RequireReturnType(this CSharpQuery<IMethodSymbol> query, Type returnType)
+        {
+            return query.AddConstraint(new ReturnTypeConstraint(query.Node, MetaConvert.ToMeta(returnType)));
         }
 
         public static CSharpQuery<IPropertySymbol> RequireSetter(

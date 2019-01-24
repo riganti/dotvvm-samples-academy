@@ -23,7 +23,7 @@ namespace DotvvmAcademy.Web.Hosting
             context.HttpContext.Response.ContentType = "application/zip";
             var contentDisposition = new ContentDisposition
             {
-                FileName = $"{stepMoniker}.zip"
+                FileName = $"{lessonMoniker}.zip"
             };
             context.HttpContext.Response.Headers["Content-Disposition"] = contentDisposition.ToString();
             archive.Stream.Position = 0;
