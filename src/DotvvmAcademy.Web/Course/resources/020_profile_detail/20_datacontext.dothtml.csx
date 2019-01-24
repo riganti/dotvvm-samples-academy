@@ -1,36 +1,41 @@
 ﻿#load "./00_constants.csx"
 
-Unit.SetFileName("ProfileDetail.dothtml");
-Unit.SetDefault("./ProfileDetail_10.dothtml");
-Unit.SetCorrect("./ProfileDetail_20.dothtml");
+using DotvvmAcademy.Validation.Dothtml.Unit;
+using DotvvmAcademy.Validation.Unit;
+
+public DothtmlUnit Unit { get; set; } = new DothtmlUnit();
+
+Unit.SetDefault("ProfileDetail_10.dothtml");
+Unit.SetCorrect("ProfileDetail_20.dothtml");
+Unit.AddDependency("ProfileDetailViewModel_20.cs");
 
 Unit.GetDirective("/@viewModel")
-    .HasTypeArgument(ProfileDetailViewModel);
+    .RequireTypeArgument(ProfileDetailViewModel);
 
 var div = Unit.GetControl("/html/body/div");
 var inner = div.GetControl("div");
 {
     div.GetProperty("@DataContext")
-        .HasBinding("Profile");
+        .RequireBinding("Profile");
 
     div.GetControl("p[1]/dot:Literal")
         .GetProperty("@Text")
-        .HasBinding("FirstName");
+        .RequireBinding("FirstName");
 
     div.GetControl("p[2]/dot:Literal")
         .GetProperty("@Text")
-        .HasBinding("LastName");
+        .RequireBinding("LastName");
     {
         inner.GetControl("p[1]/dot:Literal")
             .GetProperty("@Text")
-            .HasBinding("Country");
+            .RequireBinding("Country");
 
         inner.GetControl("p[2]/dot:Literal")
             .GetProperty("@Text")
-            .HasBinding("City");
+            .RequireBinding("City");
 
         inner.GetControl("p[3]/dot:Literal")
             .GetProperty("@Text")
-            .HasBinding("Street");
+            .RequireBinding("Street");
     }
 }

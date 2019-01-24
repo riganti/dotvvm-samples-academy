@@ -1,49 +1,53 @@
 ﻿#load "./00_constants.csx"
 
-Unit.SetFileName("ProfileDetailViewModel.cs");
+using DotvvmAcademy.Validation.CSharp.Unit;
+using DotvvmAcademy.Validation.Unit;
+
+public CSharpUnit Unit { get; set; } = new CSharpUnit();
+
 Unit.SetDefault("ProfileDetailViewModel_10.cs");
 Unit.SetCorrect("ProfileDetailViewModel_20.cs");
 
 Unit.GetType<string>()
     .Allow();
 
-Unit.GetType("System.Void")
+Unit.GetType(typeof(void))
     .Allow();
 
 var profileType = Unit.GetType(Profile);
 profileType.Allow();
 profileType.GetProperty("FirstName")
-    .IsOfType<string>()
-    .HasGetter()
-    .HasSetter();
+    .RequireType<string>()
+    .RequireGetter()
+    .RequireSetter();
 profileType.GetProperty("LastName")
-    .IsOfType<string>()
-    .HasGetter()
-    .HasSetter()
+    .RequireType<string>()
+    .RequireGetter()
+    .RequireSetter()
     .Allow();
 profileType.GetProperty("Country")
-    .IsOfType<string>()
-    .HasGetter()
-    .HasSetter();
+    .RequireType<string>()
+    .RequireGetter()
+    .RequireSetter();
 profileType.GetProperty("City")
-    .IsOfType<string>()
-    .HasGetter()
-    .HasSetter();
+    .RequireType<string>()
+    .RequireGetter()
+    .RequireSetter();
 profileType.GetProperty("Street")
-    .IsOfType<string>()
-    .HasGetter()
-    .HasSetter();
+    .RequireType<string>()
+    .RequireGetter()
+    .RequireSetter();
 
 var viewModelType = Unit.GetType(ProfileDetailViewModel);
 viewModelType.GetProperty("Profile")
-    .IsOfType(Profile)
-    .HasGetter()
-    .HasSetter()
+    .RequireType(Profile)
+    .RequireGetter()
+    .RequireSetter()
     .Allow();
 viewModelType.GetProperty("NewLastName")
-    .IsOfType<string>()
-    .HasGetter()
-    .HasSetter()
+    .RequireType<string>()
+    .RequireGetter()
+    .RequireSetter()
     .Allow();
 
 Unit.Run(c =>

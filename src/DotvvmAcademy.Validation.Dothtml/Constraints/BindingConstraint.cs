@@ -30,23 +30,28 @@ namespace DotvvmAcademy.Validation.Dothtml.Constraints
                     reporter.Report(
                         message: Resources.ERR_MandatoryBinding,
                         arguments: new object[] { setter.Property.FullName },
-                        node: setter);
+                        node: GetValidatedNode(setter));
                 }
                 else if (!AllowedBinding.HasFlag(GetAllowedBinding(propertyBinding.Binding.BindingType)))
                 {
                     reporter.Report(
                         message: Resources.ERR_WrongBindingKind,
                         arguments: new object[] { AllowedBinding },
-                        node: propertyBinding);
+                        node: GetValidatedNode(setter));
                 }
                 else if (!propertyBinding.Binding.Value.Equals(Value))
                 {
                     reporter.Report(
                         message: Resources.ERR_WrongBindingValue,
                         arguments: new object[] { setter.Property.FullName, Value },
-                        node: propertyBinding);
+                        node: GetValidatedNode(setter));
                 }
             }
+        }
+
+        private ValidationTreeNode GetValidatedNode(ValidationPropertySetter setter)
+        {
+            return setter.Property.FullName == "DotVVM.Framework.Controls.Literal.Text" ? setter.Parent : setter;
         }
 
         private AllowedBinding GetAllowedBinding(Type type)

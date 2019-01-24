@@ -17,6 +17,8 @@ namespace DotvvmAcademy.Validation.Dothtml
             Severity = severity;
             Node = node;
             Source = source;
+            Start = Node?.DothtmlNode?.StartPosition ?? -1;
+            End = Node?.DothtmlNode?.EndPosition ?? -1;
         }
 
         public IEnumerable<object> Arguments { get; }
@@ -29,11 +31,11 @@ namespace DotvvmAcademy.Validation.Dothtml
 
         public DothtmlSourceCode Source { get; }
 
-        public int End => Node?.DothtmlNode?.EndPosition ?? -1;
+        public int End { get; }
 
         ISourceCode IValidationDiagnostic.Source => Source;
 
-        public int Start => Node?.DothtmlNode?.StartPosition ?? -1;
+        public int Start { get; }
 
         object IValidationDiagnostic.UnderlyingObject => Node;
     }
