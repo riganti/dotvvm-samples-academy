@@ -1,6 +1,8 @@
 #load "30_modelstate.csharp.csx"
 
 using System.ComponentModel.DataAnnotations;
+using DotvvmAcademy.Validation.CSharp.Unit;
+using DotvvmAcademy.Validation.Unit;
 
 Unit.SetDefault("LogInRegistrationViewModel_50.cs");
 Unit.SetCorrect("LogInRegistrationViewModel_60.cs");
@@ -19,7 +21,7 @@ Unit.GetType<RangeAttribute>()
     .Allow();
 
 viewModel.GetProperty("RegistrationForm")
-    .IsOfType(RegistrationForm)
+    .RequireType(RegistrationForm)
     .Allow();
 
 accountService.GetMethod("Register")
@@ -28,23 +30,23 @@ accountService.GetMethod("Register")
 var registrationForm = Unit.GetType(RegistrationForm);
 registrationForm.Allow();
 registrationForm.GetProperty("Age")
-    .IsOfType<int>()
-    .HasAttribute(typeof(RequiredAttribute))
-    .HasAttribute(typeof(RangeAttribute))
+    .RequireType<int>()
+    .RequireAttribute(typeof(RequiredAttribute))
+    .RequireAttribute(typeof(RangeAttribute))
     .Allow();
 
 registrationForm.GetProperty("Email")
-    .IsOfType<string>()
-    .HasAttribute(typeof(RequiredAttribute))
-    .HasAttribute(typeof(EmailAddressAttribute))
+    .RequireType<string>()
+    .RequireAttribute(typeof(RequiredAttribute))
+    .RequireAttribute(typeof(EmailAddressAttribute))
     .Allow();
 
 registrationForm.GetProperty("Name")
-    .IsOfType<string>()
-    .HasAttribute(typeof(RequiredAttribute))
+    .RequireType<string>()
+    .RequireAttribute(typeof(RequiredAttribute))
     .Allow();
 
 registrationForm.GetProperty("Password")
-    .IsOfType<string>()
-    .HasAttribute(typeof(RequiredAttribute))
+    .RequireType<string>()
+    .RequireAttribute(typeof(RequiredAttribute))
     .Allow();

@@ -1,6 +1,8 @@
 #load "40_registration_attributes.csharp.csx"
 
 using DotVVM.Framework.Hosting;
+using DotvvmAcademy.Validation.CSharp.Unit;
+using DotvvmAcademy.Validation.Unit;
 
 Unit.SetDefault("LogInRegistrationViewModel_60.cs");
 Unit.SetCorrect("LogInRegistrationViewModel_70.cs");

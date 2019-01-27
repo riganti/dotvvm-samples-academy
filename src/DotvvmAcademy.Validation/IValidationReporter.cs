@@ -8,8 +8,6 @@ namespace DotvvmAcademy.Validation
 
         IEnumerable<IValidationDiagnostic> GetDiagnostics();
 
-        ValidationSeverity GetWorstSeverity();
-
         void Report(IValidationDiagnostic diagnostic);
     }
 }

@@ -1,6 +1,4 @@
 ﻿using DotvvmAcademy.Meta;
-using DotvvmAcademy.Validation.CSharp.Unit;
-using DotvvmAcademy.Validation.Unit;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
@@ -54,7 +52,8 @@ namespace DotvvmAcademy.Validation.CSharp
                 }
                 var analyzers = scope.ServiceProvider.GetRequiredService<IEnumerable<DiagnosticAnalyzer>>();
                 await RunAnalyzers(reporter, compilation, analyzers);
-                if (reporter.GetWorstSeverity() == ValidationSeverity.Error)
+                if (reporter.GetDiagnostics()
+                    .Any(d => d.Source.IsValidated && d.Severity == ValidationSeverity.Error))
                 {
                     return GetValidationDiagnostics(reporter);
                 }
@@ -86,10 +85,10 @@ namespace DotvvmAcademy.Validation.CSharp
                 }
 
                 originalStream.Position = 0;
-                var rewriter = new AssemblyRewriter();
-                await rewriter.Rewrite(originalStream, rewrittenStream);
-                rewrittenStream.Position = 0;
-                return AssemblyLoadContext.Default.LoadFromStream(rewrittenStream);
+                //var rewriter = new AssemblyRewriter();
+                //await rewriter.Rewrite(originalStream, rewrittenStream);
+                //rewrittenStream.Position = 0;
+                return AssemblyLoadContext.Default.LoadFromStream(originalStream);
             }
         }
 
@@ -113,7 +112,6 @@ namespace DotvvmAcademy.Validation.CSharp
                     RoslynReference.FromName("System.Linq"),
                     RoslynReference.FromName("System.Linq.Expressions"),
                     RoslynReference.FromName("System.ComponentModel.Annotations"),
-                    RoslynReference.FromName("System.ComponentModel.DataAnnotations"),
                     RoslynReference.FromName("DotVVM.Framework"),
                     RoslynReference.FromName("DotVVM.Core")
                 },

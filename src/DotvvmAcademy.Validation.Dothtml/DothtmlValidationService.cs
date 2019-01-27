@@ -74,6 +74,9 @@ namespace DotvvmAcademy.Validation.Dothtml
                     RoslynReference.FromName("System.Runtime"),
                     RoslynReference.FromName("System.Collections"),
                     RoslynReference.FromName("System.Reflection"),
+                    RoslynReference.FromName("System.Linq"),
+                    RoslynReference.FromName("System.Linq.Expressions"),
+                    RoslynReference.FromName("System.ComponentModel.Annotations"),
                     RoslynReference.FromName("DotVVM.Framework"),
                     RoslynReference.FromName("DotVVM.Core")
                 },

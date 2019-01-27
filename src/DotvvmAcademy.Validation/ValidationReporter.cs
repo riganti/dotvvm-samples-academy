@@ -5,7 +5,6 @@ namespace DotvvmAcademy.Validation
     public class ValidationReporter : IValidationReporter
     {
         private readonly List<IValidationDiagnostic> diagnostics = new List<IValidationDiagnostic>();
-        private ValidationSeverity worstSeverity = (ValidationSeverity)int.MaxValue;
 
         public ValidationReporter(SourceCodeStorage sourceCodeStorage)
         {
@@ -19,17 +18,8 @@ namespace DotvvmAcademy.Validation
             return diagnostics;
         }
 
-        public ValidationSeverity GetWorstSeverity()
-        {
-            return worstSeverity;
-        }
-
         public void Report(IValidationDiagnostic diagnostic)
         {
-            if (diagnostic.Severity < worstSeverity)
-            {
-                worstSeverity = diagnostic.Severity;
-            }
             diagnostics.Add(diagnostic);
         }
     }

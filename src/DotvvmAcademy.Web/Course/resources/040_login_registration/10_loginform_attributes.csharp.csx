@@ -5,22 +5,36 @@ using System.Threading.Tasks;
 using DotVVM.Framework.ViewModel;
 using DotVVM.Framework.ViewModel.Validation;
 using DotVVM.Framework.Hosting;
+using DotvvmAcademy.Validation.CSharp.Unit;
+using DotvvmAcademy.Validation.Unit;
+
+public CSharpUnit Unit { get; set; } = new CSharpUnit();
 
 Unit.SetDefault("LogInRegistrationViewModel_10.cs");
 Unit.SetCorrect("LogInRegistrationViewModel_20.cs");
-Unit.SetFileName("LogInRegistrationViewModel.cs");
-Unit.SetSourcePath("AccountService.cs", "./solution/LogInRegistration/AccountService.cs");
+Unit.AddDependency("./solution/LogInRegistration/AccountService.cs");
 
-Unit.GetType(typeof(void)).Allow();
-Unit.GetType<string>().Allow();
-Unit.GetType<Task>().Allow();
-Unit.GetType<EmailAddressAttribute>().Allow()
-    .GetMethod(".ctor").Allow();
-Unit.GetType<RequiredAttribute>().Allow()
-    .GetMethod(".ctor").Allow();
-var vmBase = Unit.GetType<DotvvmViewModelBase>().Allow();
-vmBase.GetProperty("Context").Allow();
-vmBase.GetMethod("Init").Allow();
+Unit.GetType(typeof(void))
+    .Allow();
+
+Unit.GetType<string>()
+    .Allow();
+Unit.GetType<Task>()
+    .Allow();
+Unit.GetType<EmailAddressAttribute>()
+    .Allow()
+        .GetMethod(".ctor")
+        .Allow();
+Unit.GetType<RequiredAttribute>()
+    .Allow()
+        .GetMethod(".ctor")
+        .Allow();
+var vmBase = Unit.GetType<DotvvmViewModelBase>()
+    .Allow();
+vmBase.GetProperty("Context")
+    .Allow();
+vmBase.GetMethod("Init")
+    .Allow();
 var accountService = Unit.GetType(AccountService).Allow();
 accountService.GetMethod("LogIn").Allow();
 var context = Unit.GetType<IDotvvmRequestContext>().Allow();
@@ -32,14 +46,14 @@ viewModel.GetMethod("LogIn").Allow();
 viewModel.GetProperty("LogInForm").Allow();
 
 var logInForm = Unit.GetType(LogInForm).Allow();
-// logInForm.GetMethod(".ctor").Allow();
+logInForm.GetMethod(".ctor").Allow();
 logInForm.GetProperty("Email")
-    .IsOfType<string>()
-    .HasAttribute(typeof(EmailAddressAttribute))
-    .HasAttribute(typeof(RequiredAttribute))
+    .RequireType<string>()
+    .RequireAttribute(typeof(EmailAddressAttribute))
+    .RequireAttribute(typeof(RequiredAttribute))
     .Allow();
 
 logInForm.GetProperty("Password")
-    .IsOfType<string>()
-    .HasAttribute(typeof(RequiredAttribute))
+    .RequireType<string>()
+    .RequireAttribute(typeof(RequiredAttribute))
     .Allow();

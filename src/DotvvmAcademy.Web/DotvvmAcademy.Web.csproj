@@ -19,7 +19,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.5.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="DotVVM.AspNetCore" Version="2.0.3" />
+    <PackageReference Include="DotVVM.AspNetCore" Version="2.1.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DotvvmAcademy.CourseFormat\DotvvmAcademy.CourseFormat.csproj" />
