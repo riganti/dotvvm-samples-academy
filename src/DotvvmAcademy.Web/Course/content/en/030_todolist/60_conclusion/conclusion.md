@@ -2,6 +2,8 @@
 Title: Conclusion
 EmbeddedView:
     Path: /resources/030_todolist/solution/ToDoList/Views/ToDo.dothtml
+    Dependencies:
+        - /resources/030_todolist/solution/ToDoList/ViewModels/ToDoViewModel.cs
 Solution: /resources/030_todolist/solution
 ---
 

@@ -1,25 +1,33 @@
 #load "./20_loading_data.csharp.csx"
 
-Unit.SetDefault("./ToDoViewModel_40.cs");
-Unit.SetCorrect("./ToDoViewModel_50.cs");
+using System;
+using System.Collections.Generic;
+using DotvvmAcademy.Validation.CSharp.Unit;
+using DotvvmAcademy.Validation.Unit;
 
-Unit.GetType("System.Void")
+Unit.SetDefault("ToDoViewModel_40.cs");
+Unit.SetCorrect("ToDoViewModel_50.cs");
+
+Unit.GetType(typeof(void))
     .Allow();
 
-Unit.GetType<List<string>>()
-    .GetMethod("Add")
+var listType = Unit.GetType<List<string>>()
+    .Allow();
+listType.GetMethod("Add")
+    .Allow();
+listType.GetMethod("Remove")
     .Allow();
 
 viewModelType.GetProperty("NewItem")
-    .IsOfType<string>()
+    .RequireType<string>()
     .Allow();
 
 viewModelType.GetMethod("Add")
-    .Returns("System.Void");
+    .RequireReturnType(typeof(void));
 
 viewModelType.GetMethod("Remove")
-    .Returns("System.Void")
-    .HasParameters<string>();
+    .RequireReturnType(typeof(void))
+    .RequireParameters<string>();
 
 Unit.Run(c =>
 {
@@ -40,7 +48,7 @@ Unit.Run(c =>
     var vm = c.Instantiate(ToDoViewModel);
     vm.Items = new List<string> {item};
     vm.Remove(item);
-    if (vm.Items != 0)
+    if (vm.Items.Count != 0)
     {
         c.Report("Your Remove command doesn't work properly.");
     }

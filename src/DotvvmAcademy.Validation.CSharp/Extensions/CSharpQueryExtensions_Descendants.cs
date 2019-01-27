@@ -52,18 +52,13 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 
         public static CSharpQuery<ITypeSymbol> GetTypes(this CSharpQuery<ITypeSymbol> query, string name)
         {
-            return query.GetNestedTypeQuery(name);
+            return new CSharpQuery<ITypeSymbol>(query.Unit, NameFactory.NestedType(query.Node, NameFactory.Simple(name)));
         }
 
         private static CSharpQuery<TResult> GetMemberQuery<TResult>(this CSharpQuery<ITypeSymbol> query, string name)
             where TResult : ISymbol
         {
             return new CSharpQuery<TResult>(query.Unit, NameFactory.Member(query.Node, name));
-        }
-
-        private static CSharpQuery<ITypeSymbol> GetNestedTypeQuery(this CSharpQuery<ITypeSymbol> query, string name)
-        {
-            return new CSharpQuery<ITypeSymbol>(query.Unit, NameFactory.NestedType(query.Node, (SimpleNameNode)NameNode.Parse(name)));
         }
     }
 }

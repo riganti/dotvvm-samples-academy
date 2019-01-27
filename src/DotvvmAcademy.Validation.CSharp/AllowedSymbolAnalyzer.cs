@@ -6,7 +6,7 @@ using System.Collections.Immutable;
 namespace DotvvmAcademy.Validation.CSharp
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    internal class SymbolAllowedAnalyzer : DiagnosticAnalyzer
+    internal class AllowedSymbolAnalyzer : DiagnosticAnalyzer
     {
         public static readonly DiagnosticDescriptor SymbolUsageForbidden = new DiagnosticDescriptor(
             id: nameof(SymbolUsageForbidden),
@@ -18,7 +18,7 @@ namespace DotvvmAcademy.Validation.CSharp
 
         private readonly AllowedSymbolStorage storage;
 
-        public SymbolAllowedAnalyzer(AllowedSymbolStorage storage)
+        public AllowedSymbolAnalyzer(AllowedSymbolStorage storage)
         {
             this.storage = storage;
         }
@@ -34,18 +34,28 @@ namespace DotvvmAcademy.Validation.CSharp
         public void ValidateNode(SyntaxNodeAnalysisContext context)
         {
             var symbol = context.SemanticModel.GetSymbolInfo(context.Node).Symbol;
+            if (!IsSupportedSymbol(symbol))
+            {
+                return;
+            }
             if (symbol is IMethodSymbol method && method.IsExtensionMethod)
             {
                 symbol = method.ReducedFrom;
             }
-
-            if (IsSupportedSymbol(symbol) && !storage.AllowedSymbols.Contains(symbol))
+            if (storage.AllowedSymbols.Contains(symbol))
             {
-                context.ReportDiagnostic(Diagnostic.Create(
-                    descriptor: SymbolUsageForbidden,
-                    location: context.Node.GetLocation(),
-                    messageArgs: symbol.ToDisplayString()));
+                return;
             }
+            if (symbol is IMethodSymbol methodSymbol 
+                && methodSymbol.IsGenericMethod 
+                && storage.AllowedSymbols.Contains(methodSymbol.OriginalDefinition))
+            {
+                return;
+            }
+            context.ReportDiagnostic(Diagnostic.Create(
+                descriptor: SymbolUsageForbidden,
+                location: context.Node.GetLocation(),
+                messageArgs: symbol.ToDisplayString()));
         }
 
         private bool IsSupportedSymbol(ISymbol symbol)

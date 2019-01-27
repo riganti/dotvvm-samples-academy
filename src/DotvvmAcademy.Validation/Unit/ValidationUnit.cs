@@ -21,11 +21,11 @@ namespace DotvvmAcademy.Validation.Unit
             var key = sb.ToString();
             if (constraint is IConstraint interfaceConstraint)
             {
-                Constraints.Add(key, interfaceConstraint);
+                Constraints[key] = interfaceConstraint;
             }
             else
             {
-                Constraints.Add(key, new ConventionConstraint<TConstraint>(constraint));
+                Constraints[key] = new ConventionConstraint<TConstraint>(constraint);
             }
         }
 

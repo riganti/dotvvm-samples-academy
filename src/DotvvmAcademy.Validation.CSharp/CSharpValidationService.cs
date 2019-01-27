@@ -135,7 +135,7 @@ namespace DotvvmAcademy.Validation.CSharp
             c.AddSingleton<AssemblyRewriter>();
             c.AddScoped<AllowedSymbolStorage>();
             c.AddScoped<DynamicActionStorage>();
-            c.AddScoped<DiagnosticAnalyzer, SymbolAllowedAnalyzer>();
+            c.AddScoped<DiagnosticAnalyzer, AllowedSymbolAnalyzer>();
             c.AddScoped<IValidationReporter, ValidationReporter>();
             c.AddScoped<CSharpDynamicContext>();
             return c.BuildServiceProvider();

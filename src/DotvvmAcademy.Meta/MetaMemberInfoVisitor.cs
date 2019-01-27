@@ -1,5 +1,6 @@
 ﻿using DotvvmAcademy.Meta.Syntax;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 
@@ -61,11 +62,11 @@ namespace DotvvmAcademy.Meta
             {
                 if (info.Namespace == null)
                 {
-                    return NameFactory.Simple(info.Name, info.GenericTypeArguments.Length);
+                    return NameFactory.Simple(info.Name);
                 }
                 else
                 {
-                    return NameFactory.Qualified(VisitNamespace(info.Namespace), info.Name, info.GenericTypeArguments.Length);
+                    return NameFactory.Qualified(VisitNamespace(info.Namespace), NameFactory.Simple(info.Name));
                 }
             }
         }

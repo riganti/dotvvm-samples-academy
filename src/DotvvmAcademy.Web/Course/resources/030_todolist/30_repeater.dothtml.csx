@@ -1,17 +1,22 @@
 #load "./00_constants.csx"
 
-Unit.SetFileName("ToDo.dothtml");
-Unit.SetDefault("./ToDo_10.dothtml");
-Unit.SetCorrect("./ToDo_20.dothtml");
+using DotvvmAcademy.Validation.Dothtml.Unit;
+using DotvvmAcademy.Validation.Unit;
+
+public DothtmlUnit Unit { get; set; } = new DothtmlUnit();
+
+Unit.SetDefault("ToDo_10.dothtml");
+Unit.SetCorrect("ToDo_20.dothtml");
+Unit.AddDependency("ToDoViewModel_40.cs");
 
 Unit.GetDirective("/@viewModel")
-    .HasTypeArgument(ToDoViewModel);
+    .RequireTypeArgument(ToDoViewModel);
 
 var repeater = Unit.GetControl("/html/body/dot:Repeater");
 
 repeater.GetProperty("@DataSource")
-    .HasBinding("Items");
+    .RequireBinding("Items");
 
 repeater.GetControl("p/dot:Literal")
     .GetProperty("@Text")
-    .HasBinding("_this");
+    .RequireBinding("_this");

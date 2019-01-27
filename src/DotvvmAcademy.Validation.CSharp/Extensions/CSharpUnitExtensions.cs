@@ -1,4 +1,5 @@
-﻿using DotvvmAcademy.Meta.Syntax;
+﻿using DotvvmAcademy.Meta;
+using DotvvmAcademy.Meta.Syntax;
 using DotvvmAcademy.Validation.CSharp.Constraints;
 using Microsoft.CodeAnalysis;
 using System;
@@ -14,7 +15,7 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 
         public static CSharpQuery<IEventSymbol> GetEvents(this CSharpUnit unit, string name)
         {
-            return unit.GetQuery<IEventSymbol>(name);
+            return unit.GetQuery<IEventSymbol>(NameNode.Parse(name));
         }
 
         public static CSharpQuery<IFieldSymbol> GetField(this CSharpUnit unit, string name)
@@ -24,7 +25,7 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 
         public static CSharpQuery<IFieldSymbol> GetFields(this CSharpUnit unit, string name)
         {
-            return unit.GetQuery<IFieldSymbol>(name);
+            return unit.GetQuery<IFieldSymbol>(NameNode.Parse(name));
         }
 
         public static CSharpQuery<IMethodSymbol> GetMethod(this CSharpUnit unit, string name)
@@ -34,12 +35,12 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 
         public static CSharpQuery<IMethodSymbol> GetMethods(this CSharpUnit unit, string name)
         {
-            return unit.GetQuery<IMethodSymbol>(name);
+            return unit.GetQuery<IMethodSymbol>(NameNode.Parse(name));
         }
 
         public static CSharpQuery<IPropertySymbol> GetProperties(this CSharpUnit unit, string name)
         {
-            return unit.GetQuery<IPropertySymbol>(name);
+            return unit.GetQuery<IPropertySymbol>(NameNode.Parse(name));
         }
 
         public static CSharpQuery<IPropertySymbol> GetProperty(this CSharpUnit unit, string name)
@@ -49,7 +50,7 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 
         public static CSharpQuery<ITypeSymbol> GetType(this CSharpUnit unit, Type type)
         {
-            return GetType(unit, type.FullName);
+            return unit.GetTypes(type).RequireCount(1);
         }
 
         public static CSharpQuery<ITypeSymbol> GetType(this CSharpUnit unit, string name)
@@ -59,23 +60,33 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 
         public static CSharpQuery<ITypeSymbol> GetType<TType>(this CSharpUnit unit)
         {
-            return unit.GetType(typeof(TType).FullName);
+            return unit.GetTypes<TType>().RequireCount(1);
         }
 
         public static CSharpQuery<ITypeSymbol> GetTypes(this CSharpUnit unit, string name)
         {
-            return unit.GetQuery<ITypeSymbol>(name);
+            return unit.GetQuery<ITypeSymbol>(NameNode.Parse(name));
+        }
+
+        public static CSharpQuery<ITypeSymbol> GetTypes(this CSharpUnit unit, Type type)
+        {
+            return unit.GetQuery<ITypeSymbol>(MetaConvert.ToMeta(type));
+        }
+
+        public static CSharpQuery<ITypeSymbol> GetTypes<TType>(this CSharpUnit unit)
+        {
+            return unit.GetTypes(typeof(TType));
         }
 
         public static void Run(this CSharpUnit unit, Action<CSharpDynamicContext> action)
         {
-            unit.AddConstraint(new DynamicActionConstraint(action), action.GetHashCode());
+            unit.AddConstraint(new DynamicActionConstraint(action), action.Method.Name);
         }
 
-        private static CSharpQuery<TResult> GetQuery<TResult>(this CSharpUnit unit, string name)
+        private static CSharpQuery<TResult> GetQuery<TResult>(this CSharpUnit unit, NameNode node)
             where TResult : ISymbol
         {
-            return new CSharpQuery<TResult>(unit, NameNode.Parse(name));
+            return new CSharpQuery<TResult>(unit, node);
         }
     }
 }

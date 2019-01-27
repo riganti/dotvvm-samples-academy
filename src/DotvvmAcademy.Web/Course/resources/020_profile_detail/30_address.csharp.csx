@@ -1,56 +1,60 @@
 ﻿#load "./00_constants.csx"
 
-Unit.SetFileName("ProfileDetailViewModel.cs");
-Unit.SetDefault("./ProfileDetailViewModel_30.cs");
-Unit.SetCorrect("./ProfileDetailViewModel_40.cs");
+using DotvvmAcademy.Validation.CSharp.Unit;
+using DotvvmAcademy.Validation.Unit;
+
+public CSharpUnit Unit { get; set; } = new CSharpUnit();
+
+Unit.SetDefault("ProfileDetailViewModel_30.cs");
+Unit.SetCorrect("ProfileDetailViewModel_40.cs");
 
 Unit.GetType<string>()
     .Allow();
 
-Unit.GetType("System.Void")
+Unit.GetType(typeof(void))
     .Allow();
 
 var addressType = Unit.GetType(Address);
 addressType.Allow();
 addressType.GetProperty("Country")
-    .IsOfType<string>()
-    .HasGetter()
-    .HasSetter();
+    .RequireType<string>()
+    .RequireGetter()
+    .RequireSetter();
 addressType.GetProperty("City")
-    .IsOfType<string>()
-    .HasGetter()
-    .HasSetter();
+    .RequireType<string>()
+    .RequireGetter()
+    .RequireSetter();
 addressType.GetProperty("Street")
-    .IsOfType<string>()
-    .HasGetter()
-    .HasSetter();
+    .RequireType<string>()
+    .RequireGetter()
+    .RequireSetter();
 
 var profileType = Unit.GetType(Profile);
 profileType.Allow();
 profileType.GetProperty("FirstName")
-    .IsOfType<string>()
-    .HasGetter()
-    .HasSetter();
+    .RequireType<string>()
+    .RequireGetter()
+    .RequireSetter();
 profileType.GetProperty("LastName")
-    .IsOfType<string>()
-    .HasGetter()
-    .HasSetter()
+    .RequireType<string>()
+    .RequireGetter()
+    .RequireSetter()
     .Allow();
 profileType.GetProperty("Address")
-    .IsOfType(Address)
-    .HasGetter()
-    .HasSetter();
+    .RequireType(Address)
+    .RequireGetter()
+    .RequireSetter();
 
 var viewModelType = Unit.GetType(ProfileDetailViewModel);
 viewModelType.GetProperty("Profile")
-    .IsOfType(Profile)
-    .HasGetter()
-    .HasSetter()
+    .RequireType(Profile)
+    .RequireGetter()
+    .RequireSetter()
     .Allow();
 viewModelType.GetProperty("NewLastName")
-    .IsOfType<string>()
-    .HasGetter()
-    .HasSetter()
+    .RequireType<string>()
+    .RequireGetter()
+    .RequireSetter()
     .Allow();
 
 Unit.Run(c =>

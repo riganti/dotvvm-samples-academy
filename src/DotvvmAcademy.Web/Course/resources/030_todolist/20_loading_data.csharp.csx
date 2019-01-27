@@ -3,9 +3,11 @@
 using DotVVM.Framework.ViewModel;
 using DotVVM.Framework.Hosting;
 using System.Threading.Tasks;
+using DotvvmAcademy.Validation.Unit;
+using DotvvmAcademy.Validation.CSharp.Unit;
 
-Unit.SetDefault("./ToDoViewModel_30.cs");
-Unit.SetCorrect("./ToDoViewModel_40.cs");
+Unit.SetDefault("ToDoViewModel_30.cs");
+Unit.SetCorrect("ToDoViewModel_40.cs");
 
 var viewModelBase = Unit.GetType<DotvvmViewModelBase>()
     .Allow();
@@ -22,10 +24,10 @@ context.GetProperty("IsPostBack")
 Unit.GetType<Task>()
     .Allow();
 
-viewModelType.HasBaseType<DotvvmViewModelBase>();
+viewModelType.RequireBaseType<DotvvmViewModelBase>();
 
 viewModelType.GetMethod("Init")
-    .Returns<Task>();
+    .RequireReturnType<Task>();
 
 Unit.Run(c =>
 {

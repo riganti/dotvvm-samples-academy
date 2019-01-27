@@ -91,17 +91,36 @@ namespace DotvvmAcademy.Meta.Syntax
             return new PointerTypeNameNode(elementType, MissingToken(NameTokenKind.Asterisk));
         }
 
-        public static QualifiedNameNode Qualified(NameNode left, string identifier, int arity = 0)
+        public static QualifiedNameNode Qualified(NameNode left, SimpleNameNode right)
         {
-            return new QualifiedNameNode(left, Simple(identifier, arity), MissingToken(NameTokenKind.Dot));
+            return new QualifiedNameNode(left, right, MissingToken(NameTokenKind.Dot));
         }
 
-        public static SimpleNameNode Simple(string identifier, int arity = 0)
+        public static QualifiedNameNode Qualified(NameNode left, string identifier, int arity = 0)
+        {
+            return Qualified(left, Simple(identifier, arity));
+        }
+
+        public static SimpleNameNode Simple(string identifier, int arity)
         {
             Debug.Assert(arity >= 0);
             return arity == 0
                 ? Identifier(identifier)
                 : (SimpleNameNode)Generic(identifier, arity);
+        }
+
+        public static SimpleNameNode Simple(string name)
+        {
+            for (int i = 0; i < name.Length; i++)
+            {
+                if (name[i] == '`')
+                {
+                    Debug.Assert(i != name.Length - 1);
+                    var arity = int.Parse(name.Substring(i + 1));
+                    return Generic(name.Substring(0, i), arity);
+                }
+            }
+            return Identifier(name);
         }
     }
 }

@@ -1,10 +1,13 @@
 #load "./00_constants.csx"
 
 using System.Collections.Generic;
+using DotvvmAcademy.Validation.CSharp.Unit;
+using DotvvmAcademy.Validation.Unit;
 
-Unit.SetFileName("ToDoViewModel.cs");
-Unit.SetDefault("./ToDoViewModel_10.cs");
-Unit.SetCorrect("./ToDoViewModel_20.cs");
+public CSharpUnit Unit { get; set; } = new CSharpUnit();
+
+Unit.SetDefault("ToDoViewModel_10.cs");
+Unit.SetCorrect("ToDoViewModel_20.cs");
 
 Unit.GetType<string>()
     .Allow();
@@ -12,5 +15,5 @@ Unit.GetType<string>()
 var viewModelType = Unit.GetType(ToDoViewModel);
 
 viewModelType.GetProperty("Items")
-    .IsOfType<List<string>>()
+    .RequireType<List<string>>()
     .Allow();

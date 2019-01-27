@@ -1,8 +1,10 @@
 ﻿#load "./20_datacontext.dothtml.csx"
 
-Unit.SetFileName("ProfileDetail.dothtml");
-Unit.SetDefault("./ProfileDetail_20.dothtml");
-Unit.SetCorrect("./ProfileDetail_30.dothtml");
+using DotvvmAcademy.Validation.Dothtml.Unit;
+using DotvvmAcademy.Validation.Unit;
+
+Unit.SetDefault("ProfileDetail_20.dothtml");
+Unit.SetCorrect("ProfileDetail_30.dothtml");
 
 inner.GetProperty("@DataContext")
-    .HasBinding("Address");
+    .RequireBinding("Address");
