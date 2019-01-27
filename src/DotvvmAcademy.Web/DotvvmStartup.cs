@@ -66,9 +66,7 @@ namespace DotvvmAcademy.Web
             config.RouteTable.Add(
                 routeName: "EmbeddedView",
                 url: "embeddedView/{Language}/{Lesson}/{Step}",
-                p => new LifecyclePresenter(p)
-                    .RegisterStrategy<EVPostbackLifecycleStrategy>()
-                    .RegisterStrategy<EVRegularLifecycleStrategy>());
+                presenterType: typeof(EmbeddedViewPresenter));
             config.RouteTable.Add(
                 routeName: "Archive",
                 "archive/{Language}/{Lesson}/{Step}",

@@ -13,11 +13,11 @@ using System.Reflection;
 
 namespace DotvvmAcademy.Web.Hosting
 {
-    public class EVResolvedTreeBuilder : IAbstractTreeBuilder
+    public class EmbeddedViewTreeBuilder : IAbstractTreeBuilder
     {
         private readonly IAbstractTreeBuilder builder;
 
-        public EVResolvedTreeBuilder(IAbstractTreeBuilder builder)
+        public EmbeddedViewTreeBuilder(IAbstractTreeBuilder builder)
         {
             this.builder = builder;
         }

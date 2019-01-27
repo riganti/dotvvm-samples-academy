@@ -6,11 +6,11 @@ using System;
 
 namespace DotvvmAcademy.Web.Hosting
 {
-    public class EVViewCompiler : DefaultViewCompiler
+    public class EmbeddedViewCompiler : DefaultViewCompiler
     {
-        public EVViewCompiler(
+        public EmbeddedViewCompiler(
             IOptions<ViewCompilerConfiguration> config,
-            EVControlTreeResolver controlTreeResolver,
+            EmbeddedViewTreeResolver controlTreeResolver,
             IBindingCompiler bindingCompiler,
             Func<ControlUsageValidationVisitor> controlValidatorFactory,
             DotvvmMarkupConfiguration markupConfiguration)

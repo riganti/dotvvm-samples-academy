@@ -3,11 +3,11 @@ using DotVVM.Framework.Compilation.ControlTree;
 
 namespace DotvvmAcademy.Web.Hosting
 {
-    public class EVControlTreeResolver : DefaultControlTreeResolver
+    public class EmbeddedViewTreeResolver : DefaultControlTreeResolver
     {
-        public EVControlTreeResolver(
+        public EmbeddedViewTreeResolver(
             IControlResolver controlResolver,
-            EVResolvedTreeBuilder treeBuilder,
+            EmbeddedViewTreeBuilder treeBuilder,
             IBindingExpressionBuilder expressionBuilder)
             : base(controlResolver, treeBuilder, expressionBuilder)
         {

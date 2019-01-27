@@ -17,14 +17,11 @@ namespace DotvvmAcademy.Web
             services.AddDotVVM<DotvvmStartup>();
             services.AddCourseFormat("./Course");
             services.AddSingleton<ArchivePresenter>();
-            services.AddSingleton<EVViewBuilder>();
-            services.AddSingleton<EVViewCompiler>();
-            services.AddSingleton<EVControlTreeResolver>();
-            services.AddSingleton<EVResolvedTreeBuilder>();
-            services.AddScoped<RegularLifecycleStrategy>();
-            services.AddScoped<PostbackLifecycleStrategy>();
-            services.AddScoped<EVRegularLifecycleStrategy>();
-            services.AddScoped<EVPostbackLifecycleStrategy>();
+            services.AddSingleton<EmbeddedViewBuilder>();
+            services.AddSingleton<EmbeddedViewCompiler>();
+            services.AddSingleton<EmbeddedViewPresenter>();
+            services.AddSingleton<EmbeddedViewTreeBuilder>();
+            services.AddSingleton<EmbeddedViewTreeResolver>();
         }
     }
 }
