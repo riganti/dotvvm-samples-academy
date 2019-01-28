@@ -21,5 +21,16 @@ namespace DotvvmAcademy.Meta.Tests
             var name = parser.Parse();
         }
 
+        [Fact]
+        public void NameParse_MemberName_CreateValidNode()
+        {
+            var lexer = new NameLexer("Type::Member");
+            var parser = new NameParser(lexer);
+            var name = parser.Parse();
+            Assert.IsType<MemberNameNode>(name);
+            Assert.Equal("Member", ((MemberNameNode)name).Member.IdentifierToken.ToString());
+            Assert.Equal("Type", ((MemberNameNode)name).Type.ToString());
+        }
+
     }
 }

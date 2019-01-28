@@ -173,6 +173,7 @@ namespace DotvvmAcademy.Meta.Syntax
         {
             if (Current.Kind == NameTokenKind.ColonColon)
             {
+                Advance();
                 var result = new MemberNameNode(type, ParseIdentifier(), Current);
                 Advance();
                 return result;

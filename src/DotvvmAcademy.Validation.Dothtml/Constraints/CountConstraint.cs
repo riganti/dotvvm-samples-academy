@@ -43,10 +43,10 @@ namespace DotvvmAcademy.Validation.Dothtml.Constraints
             }
 
             // Incorrect zero count with logical parent
-            var parentXPath = Expression.GetLogicalParent();
-            if (parentXPath != null)
+            var parentExpression = Expression.GetLogicalParent();
+            if (parentExpression != null)
             {
-                var parents = locator.Locate(parentXPath);
+                var parents = locator.Locate(parentExpression);
                 ReportParentedMissing(reporter, parents);
             }
             else
@@ -58,7 +58,6 @@ namespace DotvvmAcademy.Validation.Dothtml.Constraints
 
         private void ReportMissing(IValidationReporter reporter)
         {
-            var parentExpression = Expression.GetLogicalParent();
             if (typeof(ValidationDirective).IsAssignableFrom(typeof(TNode)))
             {
                 reporter.Report(
@@ -69,19 +68,19 @@ namespace DotvvmAcademy.Validation.Dothtml.Constraints
             {
                 reporter.Report(
                     message: Resources.ERR_MissingControl,
-                    arguments: new object[] { Expression.GetControlName(), parentExpression.Expression });
+                    arguments: new object[] { Expression.GetControlName(), Expression.Expression });
             }
             else if (typeof(ValidationPropertySetter).IsAssignableFrom(typeof(TNode)))
             {
                 reporter.Report(
                     message: Resources.ERR_MissingProperty,
-                    arguments: new object[] { Expression.GetPropertyName(), parentExpression.Expression });
+                    arguments: new object[] { Expression.GetPropertyName(), Expression.Expression });
             }
             else
             {
                 reporter.Report(
                     message: Resources.ERR_MissingNode,
-                    arguments: new object[] { Expression.GetLastSegment(), parentExpression.Expression });
+                    arguments: new object[] { Expression.GetLastSegment(), Expression.Expression });
             }
         }
 
