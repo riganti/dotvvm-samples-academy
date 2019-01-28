@@ -11,7 +11,7 @@ namespace DotvvmAcademy.Web.Hosting
         public EmbeddedViewPresenter(
             DotvvmConfiguration configuration,
             EmbeddedViewBuilder viewBuilder,
-            IViewModelLoader viewModelLoader,
+            EmbeddedViewModelLoader viewModelLoader,
             IViewModelSerializer viewModelSerializer,
             IOutputRenderer outputRender,
             ICsrfProtector csrfProtector,

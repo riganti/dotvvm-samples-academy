@@ -85,10 +85,10 @@ namespace DotvvmAcademy.Validation.CSharp
                 }
 
                 originalStream.Position = 0;
-                //var rewriter = new AssemblyRewriter();
-                //await rewriter.Rewrite(originalStream, rewrittenStream);
-                //rewrittenStream.Position = 0;
-                return AssemblyLoadContext.Default.LoadFromStream(originalStream);
+                var rewriter = new AssemblyRewriter();
+                await rewriter.Rewrite(originalStream, rewrittenStream);
+                rewrittenStream.Position = 0;
+                return AssemblyLoadContext.Default.LoadFromStream(rewrittenStream);
             }
         }
 

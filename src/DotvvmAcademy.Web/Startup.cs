@@ -22,6 +22,7 @@ namespace DotvvmAcademy.Web
             services.AddSingleton<EmbeddedViewPresenter>();
             services.AddSingleton<EmbeddedViewTreeBuilder>();
             services.AddSingleton<EmbeddedViewTreeResolver>();
+            services.AddSingleton<EmbeddedViewModelLoader>();
         }
     }
 }

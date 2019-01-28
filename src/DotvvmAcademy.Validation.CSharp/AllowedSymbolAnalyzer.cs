@@ -42,13 +42,7 @@ namespace DotvvmAcademy.Validation.CSharp
             {
                 symbol = method.ReducedFrom;
             }
-            if (storage.AllowedSymbols.Contains(symbol))
-            {
-                return;
-            }
-            if (symbol is IMethodSymbol methodSymbol 
-                && methodSymbol.IsGenericMethod 
-                && storage.AllowedSymbols.Contains(methodSymbol.OriginalDefinition))
+            if (storage.AllowedSymbols.Contains(symbol) || storage.AllowedSymbols.Contains(symbol.OriginalDefinition))
             {
                 return;
             }
