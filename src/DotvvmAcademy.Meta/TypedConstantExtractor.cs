@@ -27,10 +27,10 @@ namespace DotvvmAcademy.Meta
                     return constant.Value;
 
                 case TypedConstantKind.Type:
-                    return (Type)converter.ToReflection((ITypeSymbol)constant.Value).Single();
+                    return (Type)converter.ToReflectionSingle((ITypeSymbol)constant.Value);
 
                 case TypedConstantKind.Array:
-                    var elementType = (Type)converter.ToReflection(((IArrayTypeSymbol)constant.Type).ElementType).Single();
+                    var elementType = (Type)converter.ToReflectionSingle(((IArrayTypeSymbol)constant.Type).ElementType);
                     var values = Array.CreateInstance(elementType, constant.Values.Length);
                     for (var i = 0; i < constant.Values.Length; ++i)
                     {
