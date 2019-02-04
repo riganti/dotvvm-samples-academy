@@ -52,7 +52,7 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
                     {
                         reporter.Report(
                             message: GetErrorParentMissing(parent.GetType()),
-                            arguments: new object[] { parent, Node.GetShortName() },
+                            arguments: new object[] { parent.Name, Node.GetShortName() },
                             symbol: parent);
                     }
                 }

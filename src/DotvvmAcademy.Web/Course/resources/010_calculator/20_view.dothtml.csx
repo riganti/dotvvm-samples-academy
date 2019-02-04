@@ -8,6 +8,7 @@ public DothtmlUnit Unit { get; set; } = new DothtmlUnit();
 
 Unit.SetDefault("Calculator_10.dothtml");
 Unit.SetCorrect("Calculator_20.dothtml");
+Unit.AddDependency("CalculatorViewModel_20.cs");
 
 Unit.GetDirective("/@viewModel")
     .RequireTypeArgument(CalculatorViewModel);

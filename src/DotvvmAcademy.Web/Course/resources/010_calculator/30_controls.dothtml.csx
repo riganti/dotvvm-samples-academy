@@ -6,7 +6,6 @@ using DotvvmAcademy.Validation.Dothtml.Unit;
 
 Unit.SetDefault("Calculator_20.dothtml");
 Unit.SetCorrect("Calculator_30.dothtml");
-Unit.AddDependency("CalculatorViewModel_20.cs");
 
 body.GetControl("dot:TextBox[1]")
     .GetProperty("@Text")

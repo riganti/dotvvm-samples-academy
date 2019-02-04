@@ -80,7 +80,7 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 
         public static void Run(this CSharpUnit unit, Action<CSharpDynamicContext> action)
         {
-            unit.AddConstraint(new DynamicActionConstraint(action), action.Method.Name);
+            unit.AddConstraint(new DynamicActionConstraint(action), Guid.NewGuid());
         }
 
         private static CSharpQuery<TResult> GetQuery<TResult>(this CSharpUnit unit, NameNode node)

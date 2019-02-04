@@ -6,7 +6,8 @@ using DotvvmAcademy.Validation.Dothtml.Unit;
 
 Unit.SetDefault("./Calculator_30.dothtml");
 Unit.SetCorrect("./Calculator_40.dothtml");
-
+Unit.RemoveDependency("CalculatorViewModel_20.cs");
+Unit.AddDependency("CalculatorViewModel_40.cs");
 void ValidateButton(int index, string command)
 {
     body.GetControl($"dot:Button[{index}]")
