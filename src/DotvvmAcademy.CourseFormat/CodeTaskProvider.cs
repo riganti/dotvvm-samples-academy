@@ -32,6 +32,11 @@ namespace DotvvmAcademy.CourseFormat
             {
                 throw new CodeTaskException("An exception occured during validation script compilation.", e);
             }
+            finally
+            {
+                // TODO: Compile the script without forcing the GC
+                GC.Collect();
+            }
         }
 
         private ScriptOptions GetScriptOptions(string scriptPath)

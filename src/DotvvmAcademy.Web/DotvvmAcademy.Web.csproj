@@ -4,8 +4,8 @@
     <TypeScriptToolsVersion>3.0</TypeScriptToolsVersion>
     <LangVersion>latest</LangVersion>
     <UserSecretsId>7ac5f83c-f14d-4800-b2ec-e1fb18bbbc11</UserSecretsId>
-    <ApplicationInsightsResourceId>/subscriptions/fa73b1a2-747d-469f-899c-bb14579121c1/resourcegroups/DotvvmAcademyGroup/providers/microsoft.insights/components/dotvvmacademynewinsights</ApplicationInsightsResourceId>
-    <ApplicationInsightsAnnotationResourceId>/subscriptions/fa73b1a2-747d-469f-899c-bb14579121c1/resourcegroups/DotvvmAcademyGroup/providers/microsoft.insights/components/dotvvmacademynewinsights</ApplicationInsightsAnnotationResourceId>
+    <ApplicationInsightsResourceId>/subscriptions/fa73b1a2-747d-469f-899c-bb14579121c1/resourcegroups/DotvvmAcademyGroup/providers/microsoft.insights/components/dotvvmacademynew</ApplicationInsightsResourceId>
+    <ApplicationInsightsAnnotationResourceId>/subscriptions/fa73b1a2-747d-469f-899c-bb14579121c1/resourcegroups/DotvvmAcademyGroup/providers/microsoft.insights/components/dotvvmacademynew</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Course/**/*" />
