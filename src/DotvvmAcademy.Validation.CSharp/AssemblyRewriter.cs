@@ -97,25 +97,63 @@ namespace DotvvmAcademy.Validation.CSharp
             for (int i = 0; i < instructions.Length; i++)
             {
                 var instruction = instructions[i];
-                if (instruction.OpCode == OpCodes.Nop)
+                switch (instruction.OpCode.Code)
                 {
-                    continue;
+                    case Code.Nop:
+                        continue;
+                    case Code.Br_S:
+                        instruction.OpCode = OpCodes.Br;
+                        break;
+                    case Code.Brfalse_S:
+                        instruction.OpCode = OpCodes.Brfalse;
+                        break;
+                    case Code.Brtrue_S:
+                        instruction.OpCode = OpCodes.Brtrue;
+                        break;
+                    case Code.Beq_S:
+                        instruction.OpCode = OpCodes.Beq;
+                        break;
+                    case Code.Bge_S:
+                        instruction.OpCode = OpCodes.Bge_S;
+                        break;
+                    case Code.Bgt_S:
+                        instruction.OpCode = OpCodes.Bgt;
+                        break;
+                    case Code.Ble_S:
+                        instruction.OpCode = OpCodes.Ble;
+                        break;
+                    case Code.Blt_S:
+                        instruction.OpCode = OpCodes.Blt;
+                        break;
+                    case Code.Bne_Un_S:
+                        instruction.OpCode = OpCodes.Bne_Un;
+                        break;
+                    case Code.Bge_Un_S:
+                        instruction.OpCode = OpCodes.Bge_Un;
+                        break;
+                    case Code.Bgt_Un_S:
+                        instruction.OpCode = OpCodes.Bgt_Un;
+                        break;
+                    case Code.Ble_Un_S:
+                        instruction.OpCode = OpCodes.Ble_Un;
+                        break;
+                    case Code.Blt_Un_S:
+                        instruction.OpCode = OpCodes.Blt_Un;
+                        break;
                 }
                 var checkCall = il.Create(OpCodes.Call, checkMethod);
                 il.InsertBefore(instruction, checkCall);
-                ReplaceOperand(il, instruction, checkCall);
-            }
-        }
-
-        private void ReplaceOperand(ILProcessor il, object original, object replacement)
-        {
-            var instructions = il.Body.Instructions;
-            for (int i = 0; i < instructions.Count; i++)
-            {
-                var instruction = instructions[i];
-                if (instruction.Operand == original)
+                if (instruction.OpCode == OpCodes.Brfalse_S)
                 {
-                    instruction.Operand = replacement;
+                    instruction.Operand = instructions[instructions.Length - 1];
+                }
+                for (int j = 0; j < instructions.Length; j++)
+                {
+                    var referent = instructions[j];
+                    if (referent.Operand == instruction)
+                    {
+                        referent.Operand = checkCall;
+                    }
                 }
             }
         }

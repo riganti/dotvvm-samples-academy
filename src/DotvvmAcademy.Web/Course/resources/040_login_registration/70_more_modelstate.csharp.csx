@@ -1,6 +1,8 @@
 #load "40_registration_attributes.csharp.csx"
 
+using System;
 using DotVVM.Framework.Hosting;
+using DotvvmAcademy.Validation.CSharp;
 using DotvvmAcademy.Validation.CSharp.Unit;
 using DotvvmAcademy.Validation.Unit;
 
@@ -12,13 +14,20 @@ Unit.GetType<bool>()
 
 Unit.Run(context =>
 {
-    context.Report("Dynamic Validation is currently broken at 70_more_modelstate.");
-    // var accountService = context.Instantiate(AccountService);
-    // var vm = context.Instantiate(ViewModel, accountService);
-    // vm.Context = new DotvvmRequestContext();
-    // vm.Register();
-    // if (vm.Context.ModelState.Errors.Count == 0)
-    // {
-    //     context.Report("You must create an error in the 'Register' Command.");
-    // }
+    var accountService = context.Instantiate(AccountService);
+    var vm = CSharpDynamicContextExtensions.InstantiateViewModel(context, ViewModel, accountService);
+    vm.Init().GetAwaiter().GetResult();
+    var id = Guid.NewGuid().ToString("N");
+    vm.RegistrationForm.Email = $"{id}@example.com";
+    vm.RegistrationForm.Password = id;
+    vm.RegistrationForm.Name = id;
+    vm.RegistrationForm.
+    try
+    {
+        vm.Register();
+    }
+    catch(DotvvmInterruptRequestExecutionException e) when (e.Message.Contains("The ViewModel contains validation errors!"))
+    {
+        context.Report("You must create an error in the 'Register' Command.");
+    }
 });

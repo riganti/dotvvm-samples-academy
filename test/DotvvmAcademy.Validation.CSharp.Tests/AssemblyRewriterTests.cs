@@ -46,10 +46,8 @@ public class Test
                     RoslynReference.FromName("System.Linq.Expressions")
                 },
                 new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
-            using (var originalStream = new FileStream("C:/Users/Adam/Desktop/original.dll", FileMode.Create))
-            using (var rewrittenStream = new FileStream("C:/Users/Adam/Desktop/rewritten.dll", FileMode.Create))
-            //using (var originalStream = new MemoryStream())
-            //using (var rewrittenStream = new MemoryStream())
+            using (var originalStream = new MemoryStream())
+            using (var rewrittenStream = new MemoryStream())
             {
                 var result = compilation.Emit(originalStream);
                 Assert.True(result.Success);
