@@ -5,23 +5,12 @@ namespace DotvvmAcademy.Validation.CSharp
 {
     public class AssemblySafeguard
     {
+        private const long Limit = 1000;
         private Lazy<Stopwatch> stopwatch = new Lazy<Stopwatch>(() => Stopwatch.StartNew());
 
-        public AssemblySafeguard(int timeLimit = 1)
+        public void Check()
         {
-            TimeLimit = timeLimit;
-        }
-
-        public int TimeLimit { get; }
-
-        public void OnInstruction()
-        {
-            CheckTime();
-        }
-
-        private void CheckTime()
-        {
-            if (stopwatch.Value.ElapsedTicks >= TimeSpan.TicksPerSecond * TimeLimit)
+            if (stopwatch.Value.ElapsedMilliseconds >= Limit)
             {
                 throw new AssemblySafeguardException($"Your code ran for too long.");
             }

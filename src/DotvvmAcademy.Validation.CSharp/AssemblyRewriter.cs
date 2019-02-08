@@ -2,84 +2,97 @@
 using Mono.Cecil.Cil;
 using System;
 using System.IO;
-using System.Threading.Tasks;
 
 namespace DotvvmAcademy.Validation.CSharp
 {
     public class AssemblyRewriter
     {
-        public const string RewriterNamespace = "DotvvmAcademy.Validation.CSharp";
-        public const string ContainingClassPrefix = "SafeguardContainer";
+        public const string ContainerClassName = "SafeguardContainer";
         public const string SafeguardFieldName = "Safeguard";
 
-        public Task Rewrite(Stream source, Stream target)
+        public void Rewrite(Stream source, Stream target)
         {
-            var rewriteId = Guid.NewGuid();
-            return Task.Run(() =>
+            var assembly = AssemblyDefinition.ReadAssembly(source);
+            foreach (var module in assembly.Modules)
             {
-                var assembly = AssemblyDefinition.ReadAssembly(source);
-                foreach (var module in assembly.Modules)
+                var checkMethod = InjectSafeguard(module);
+                foreach (var type in module.Types)
                 {
-                    var safeguardField = InjectSafeguardField(rewriteId, module);
-                    foreach (var type in module.Types)
+                    foreach (var method in type.Methods)
                     {
-                        foreach (var method in type.Methods)
-                        {
-                            InjectSafeguardIntoMethod(safeguardField, method, module);
-                        }
+                        InjectSafeguardCalls(method, checkMethod);
                     }
                 }
-                assembly.Write(target);
-            });
+            }
+            assembly.Write(target);
         }
 
-        private FieldDefinition InjectSafeguardField(Guid rewriteId, ModuleDefinition module)
+        private MethodDefinition InjectSafeguard(ModuleDefinition module)
         {
-            // Create SafeContainer{Guid} class
-            var containingClassName = $"{ContainingClassPrefix}{rewriteId.ToString("N")}";
-            var typeAttributes = TypeAttributes.Class | TypeAttributes.Abstract | TypeAttributes.Sealed;
-            var containingClass = new TypeDefinition(RewriterNamespace, containingClassName,
-                typeAttributes, module.ImportReference(typeof(object)));
+            var safeguardReference = module.ImportReference(typeof(AssemblySafeguard));
 
-            // Create Safeguard field
-            var fieldAttributes = FieldAttributes.Static | FieldAttributes.Assembly;
-            var field = new FieldDefinition(SafeguardFieldName, fieldAttributes,
-                module.ImportReference(typeof(AssemblySafeguard)));
-            containingClass.Fields.Add(field);
+            // the safeguard container shouldn't be called the same every time
+            var id = Guid.NewGuid();
 
-            // Create static constructor
-            var methodAttributes =
-                MethodAttributes.Private |
-                MethodAttributes.HideBySig |
-                MethodAttributes.Static |
-                MethodAttributes.SpecialName |
-                MethodAttributes.RTSpecialName;
-            var staticConstructor = new MethodDefinition(".cctor", methodAttributes,
-                module.ImportReference(typeof(void)));
-            var il = staticConstructor.Body.GetILProcessor();
-            var safeguardConstructor = module.ImportReference(typeof(AssemblySafeguard)
-                .GetConstructor(new[] { typeof(int) }));
-            il.Emit(OpCodes.Ldc_I4_1);
-            il.Emit(OpCodes.Newobj, safeguardConstructor);
-            il.Emit(OpCodes.Stsfld, field);
-            il.Emit(OpCodes.Ret);
-            containingClass.Methods.Add(staticConstructor);
-            module.Types.Add(containingClass);
+            // create the SafeguardContainer class
+            var containerNamespace = $"{nameof(AssemblyRewriter)}.{id.ToString("N")}";
+            var containerClass = new TypeDefinition(
+                @namespace: containerNamespace,
+                name: ContainerClassName,
+                attributes: TypeAttributes.Class | TypeAttributes.Abstract | TypeAttributes.Sealed,
+                baseType: module.ImportReference(typeof(object)));
 
-            return field;
+            // create the safeguard field
+            var field = new FieldDefinition(
+                name: SafeguardFieldName,
+                attributes: FieldAttributes.Static | FieldAttributes.Assembly,
+                fieldType: safeguardReference);
+            containerClass.Fields.Add(field);
+
+            // create .cctor and assign the field
+            var cctor = new MethodDefinition(
+                name: ".cctor", // static constructor
+                attributes: MethodAttributes.Private
+                            | MethodAttributes.HideBySig
+                            | MethodAttributes.Static
+                            | MethodAttributes.SpecialName
+                            | MethodAttributes.RTSpecialName,
+                returnType: module.ImportReference(typeof(void)));
+            {
+                var il = cctor.Body.GetILProcessor();
+                var safeguardCtor = typeof(AssemblySafeguard).GetConstructor(Type.EmptyTypes);
+                il.Emit(OpCodes.Newobj, module.ImportReference(safeguardCtor));
+                il.Emit(OpCodes.Stsfld, field);
+                il.Emit(OpCodes.Ret);
+            }
+            containerClass.Methods.Add(cctor);
+
+            // create the static Check method
+            var checkMethod = new MethodDefinition(
+                name: "Check",
+                attributes: MethodAttributes.Public | MethodAttributes.HideBySig | MethodAttributes.Static,
+                returnType: module.ImportReference(typeof(void)));
+            {
+                var il = checkMethod.Body.GetILProcessor();
+                var safeguardCheck = typeof(AssemblySafeguard).GetMethod(nameof(AssemblySafeguard.Check));
+                il.Emit(OpCodes.Ldsfld, field);
+                il.Emit(OpCodes.Callvirt, module.ImportReference(safeguardCheck));
+                il.Emit(OpCodes.Ret);
+            }
+            containerClass.Methods.Add(checkMethod);
+
+            module.Types.Add(containerClass);
+            return checkMethod;
         }
 
-        private void InjectSafeguardIntoMethod(FieldDefinition safeguard, MethodDefinition method,
-            ModuleDefinition module)
+        private void InjectSafeguardCalls(MethodDefinition method, MethodDefinition checkMethod)
         {
-            if (method.DeclaringType == safeguard.DeclaringType)
+            if (method.DeclaringType == checkMethod.DeclaringType)
             {
                 return;
             }
 
             var il = method.Body.GetILProcessor();
-            var onInstruction = module.ImportReference(typeof(AssemblySafeguard)
-                .GetMethod(nameof(AssemblySafeguard.OnInstruction)));
             var instructions = method.Body.Instructions.ToArray();
             for (int i = 0; i < instructions.Length; i++)
             {
@@ -88,22 +101,21 @@ namespace DotvvmAcademy.Validation.CSharp
                 {
                     continue;
                 }
-                var ldsfld = il.Create(OpCodes.Ldsfld, safeguard);
-                il.InsertBefore(instruction, ldsfld);
-                il.InsertBefore(instruction, il.Create(OpCodes.Callvirt, onInstruction));
-                ReplaceOperand(il, instruction, ldsfld);
+                var checkCall = il.Create(OpCodes.Call, checkMethod);
+                il.InsertBefore(instruction, checkCall);
+                ReplaceOperand(il, instruction, checkCall);
             }
         }
 
-        private void ReplaceOperand(ILProcessor il, object target, object operand)
+        private void ReplaceOperand(ILProcessor il, object original, object replacement)
         {
             var instructions = il.Body.Instructions;
             for (int i = 0; i < instructions.Count; i++)
             {
                 var instruction = instructions[i];
-                if (instruction.Operand == target)
+                if (instruction.Operand == original)
                 {
-                    instruction.Operand = operand;
+                    instruction.Operand = replacement;
                 }
             }
         }

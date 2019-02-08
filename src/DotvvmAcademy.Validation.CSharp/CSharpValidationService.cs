@@ -59,7 +59,7 @@ namespace DotvvmAcademy.Validation.CSharp
                 }
 
                 // dynamic analysis
-                var userAssembly = await GetAssembly(reporter, compilation);
+                var userAssembly = GetAssembly(reporter, compilation);
                 assemblies = assemblies.Add(userAssembly);
                 context.Converter = new MetaConverter(compilation, assemblies);
                 var dynamicContext = scope.ServiceProvider.GetRequiredService<CSharpDynamicContext>();
@@ -69,7 +69,7 @@ namespace DotvvmAcademy.Validation.CSharp
             }
         }
 
-        private async Task<Assembly> GetAssembly(IValidationReporter reporter, Compilation compilation)
+        private Assembly GetAssembly(IValidationReporter reporter, Compilation compilation)
         {
             using (var originalStream = new MemoryStream())
             using (var rewrittenStream = new MemoryStream())
@@ -86,7 +86,7 @@ namespace DotvvmAcademy.Validation.CSharp
 
                 originalStream.Position = 0;
                 var rewriter = new AssemblyRewriter();
-                await rewriter.Rewrite(originalStream, rewrittenStream);
+                rewriter.Rewrite(originalStream, rewrittenStream);
                 rewrittenStream.Position = 0;
                 return AssemblyLoadContext.Default.LoadFromStream(rewrittenStream);
             }
