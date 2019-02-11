@@ -1,5 +1,6 @@
 using DotVVM.Framework.ViewModel;
 using DotvvmAcademy.CourseFormat;
+using Microsoft.AspNetCore.Hosting;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,10 +10,12 @@ namespace DotvvmAcademy.Web.Pages.Default
     public class DefaultViewModel : SiteViewModel
     {
         private readonly CourseWorkspace workspace;
+        private readonly IHostingEnvironment environment;
 
-        public DefaultViewModel(CourseWorkspace workspace)
+        public DefaultViewModel(CourseWorkspace workspace, IHostingEnvironment environment)
         {
             this.workspace = workspace;
+            this.environment = environment;
         }
 
         [Bind(Direction.ServerToClientFirstRequest)]
@@ -26,6 +29,11 @@ namespace DotvvmAcademy.Web.Pages.Default
             var variant = await workspace.LoadVariant(LanguageMoniker);
             var lessonTasks = variant.Lessons.Select(l => workspace.LoadLesson(LanguageMoniker, l));
             var lessons = await Task.WhenAll(lessonTasks);
+            if (environment.IsProduction())
+            {
+                lessons = lessons.Where(l => l.Status == LessonStatus.Released)
+                    .ToArray();
+            }
             Lessons = lessons.Select(l =>
             {
                 return new LessonDetail
