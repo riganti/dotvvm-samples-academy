@@ -8,9 +8,7 @@
     background-color: $color-transparent;
     padding: 1rem 0;
     transition: $animate-all;
-    flex: 0 0 100%;
     width: 100%;
-    max-width: 100%;
 
     &.success {
         background-color: $color-success;

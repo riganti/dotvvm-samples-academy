@@ -1,14 +1,12 @@
-﻿declare let dotvvm;
+﻿let langSwitcher = document.querySelector(".lang-switcher");
+let langSwitcherList = document.querySelector(".lang-switcher_list");
 
-dotvvm.events.init.subscribe(function () {
-    $('.lang-switcher').click(function (e) {
-        $('.lang-switcher_list').toggleClass('open');
-    });
+langSwitcher.addEventListener("click", function () {
+    langSwitcherList.classList.toggle("open");
 });
 
-
-$(document).click(function (e) {
-    if ($(e.target).closest($('.lang-switcher')).length == 0) {
-        $('.lang-switcher_list').removeClass('open');
+document.addEventListener("click", function (e) {
+    if (!(<HTMLElement>e.target).closest(".lang-switcher")) {
+        langSwitcherList.classList.remove("open");
     }
-})
+});

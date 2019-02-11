@@ -9,11 +9,26 @@
                              Class-no-flex="{resource: !Step.HasCodeTask && !Step.HasEmbeddedView}"
                              class="step-info-box" />
             <div IncludeInPage="{resource: Step.HasCodeTask}"
-                 class="code-bg">
+                 class="code__bg">
+                <div class="code__top-bar">
+                    <dot:Button Click="{command: ShowSolution()}"
+                                IncludeInPage="{resource: Step.HasCodeTask}"
+                                class="code__button"
+                                ButtonTagName="button">
+                        <span InnerText="Show Solution" />
+                    </dot:Button>
+                    <dot:Button Click="{command: Reset()}"
+                                IncludeInPage="{resource: Step.HasCodeTask}"
+                                class="code__button"
+                                ButtonTagName="button">
+                        <span InnerText="Reset" />
+                        <cc:SvgToHtml Source="/images/Icons/reset.svg" />
+                    </dot:Button>
+                </div>
                 <cc:MonacoEditor Code="{value: CodeTask.Code}"
                                  Markers="{value: CodeTask.Markers}"
                                  Language="{resource: CodeTask.CodeLanguage}"
-                                 class="code-container" />
+                                 class="code__container" />
                 <cc:DiagnosticList Diagnostics="{value: CodeTask.Markers}" />
             </div>
             <div IncludeInPage="{resource: Step.HasEmbeddedView}"
@@ -38,12 +53,15 @@
             <div class="pager">
                 <dot:RouteLink RouteName="Step"
                                ButtonTagName="button"
-                               class="pager__button"
+                               class="button with-icon with-icon--left"
                                Param-Language="{value: LanguageMoniker}"
                                Param-Lesson="{value: LessonMoniker}"
                                Param-Step="{value: Step.PreviousStep ?? string.Empty}"
-                               Enabled="{value: Step.PreviousStep != null}"
-                               Text="{resource: UIResources.Btn_PreviousStep}" />
+                               Enabled="{value: Step.PreviousStep != null}">
+                    <cc:SvgToHtml Source="/images/Icons/prev.svg">
+                    </cc:SvgToHtml>
+                    <span InnerText="{resource: UIResources.Btn_PreviousStep}" />
+                </dot:RouteLink>
 
                 <dot:Repeater DataSource="{value: Steps}">
                     <dot:RouteLink RouteName="Step"
@@ -56,29 +74,26 @@
                 </dot:Repeater>
 
                 <dot:Button Click="{command: Validate()}"
-                            class="pager__button"
-                            Enabled="{value: Step.NextStep != null}"
-                            Text="{resource: UIResources.Btn_NextStep}" />
-            </div>
-
-            <div class="buttons-container">
-                <dot:UpdateProgress class="loading-anim">
-                    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-book"><path d="M20 25L80 25L80 75L20 75Z" fill="#ffd94f" stroke="#3c3d3b" stroke-width="2"></path><path d="M 50 25 L 80 25 L 80 75 L 50 75" stroke-linejoin="round" stroke-linecap="round" fill="#ffd94f" stroke="#3c3d3b" stroke-width="2"><animate attributeName="d" calcMode="linear" values="M50 25L80 25L80 75L50 75;M50 25L50 20L50 80L50 75;M50 25L80 25L80 75L50 75;M50 25L80 25L80 75L50 75" keyTimes="0;0.5;0.501;1" dur="1" begin="0s" repeatCount="indefinite"></animate><animate attributeName="opacity" calcMode="linear" values="1;1;0;0" keyTimes="0;0.5;0.5001;1" dur="1" begin="0s" repeatCount="indefinite"></animate></path><path d="M 50 25 L 78.2917 24.7153 L 78.2917 75.2847 L 50 75" stroke-linejoin="round" stroke-linecap="round" fill="#ffd94f" stroke="#3c3d3b" stroke-width="2"><animate attributeName="d" calcMode="linear" values="M50 25L80 25L80 75L50 75;M50 25L50 20L50 80L50 75;M50 25L80 25L80 75L50 75;M50 25L80 25L80 75L50 75" keyTimes="0;0.5;0.501;1" dur="1" begin="-0.166s" repeatCount="indefinite"></animate><animate attributeName="opacity" calcMode="linear" values="1;1;0;0" keyTimes="0;0.5;0.5001;1" dur="1" begin="-0.166s" repeatCount="indefinite"></animate></path><path d="M 50 25 L 68.4517 23.0753 L 68.4517 76.9247 L 50 75" stroke-linejoin="round" stroke-linecap="round" fill="#ffd94f" stroke="#3c3d3b" stroke-width="2"><animate attributeName="d" calcMode="linear" values="M50 25L80 25L80 75L50 75;M50 25L50 20L50 80L50 75;M50 25L80 25L80 75L50 75;M50 25L80 25L80 75L50 75" keyTimes="0;0.5;0.501;1" dur="1" begin="-0.33s" repeatCount="indefinite"></animate><animate attributeName="opacity" calcMode="linear" values="1;1;0;0" keyTimes="0;0.5;0.5001;1" dur="1" begin="-0.33s" repeatCount="indefinite"></animate></path><path d="M 50 25 L 20 25 L 20 75 L 50 75" stroke-linejoin="round" stroke-linecap="round" fill="#ffd94f" stroke="#3c3d3b" stroke-width="2"><animate attributeName="d" calcMode="linear" values="M50 25L20 25L20 75L50 75;M50 25L20 25L20 75L50 75;M50 25L50 20L50 80L50 75;M50 25L20 25L20 75L50 75" keyTimes="0;0.499;0.5;1" dur="1" begin="-0.33s" repeatCount="indefinite"></animate><animate attributeName="opacity" calcMode="linear" values="0;0;1;1" keyTimes="0;0.4999;0.5;1" dur="1" begin="-0.33s" repeatCount="indefinite"></animate></path><path d="M 50 25 L 20 25 L 20 75 L 50 75" stroke-linejoin="round" stroke-linecap="round" fill="#ffd94f" stroke="#3c3d3b" stroke-width="2"><animate attributeName="d" calcMode="linear" values="M50 25L20 25L20 75L50 75;M50 25L20 25L20 75L50 75;M50 25L50 20L50 80L50 75;M50 25L20 25L20 75L50 75" keyTimes="0;0.499;0.5;1" dur="1" begin="-0.166s" repeatCount="indefinite"></animate><animate attributeName="opacity" calcMode="linear" values="0;0;1;1" keyTimes="0;0.4999;0.5;1" dur="1" begin="-0.166s" repeatCount="indefinite"></animate></path><path d="M 50 25 L 28.2517 23.6247 L 28.2517 76.3753 L 50 75" stroke-linejoin="round" stroke-linecap="round" fill="#ffd94f" stroke="#3c3d3b" stroke-width="2"><animate attributeName="d" calcMode="linear" values="M50 25L20 25L20 75L50 75;M50 25L20 25L20 75L50 75;M50 25L50 20L50 80L50 75;M50 25L20 25L20 75L50 75" keyTimes="0;0.499;0.5;1" dur="1" begin="0s" repeatCount="indefinite"></animate><animate attributeName="opacity" calcMode="linear" values="0;0;1;1" keyTimes="0;0.4999;0.5;1" dur="1" begin="0s" repeatCount="indefinite"></animate></path></svg>
-                </dot:UpdateProgress>
-                <dot:Button Click="{command: Reset()}"
-                            IncludeInPage="{resource: Step.HasCodeTask}"
-                            Text="Reset"
-                            class="button" />
-                <dot:Button Click="{command: ShowSolution()}"
-                            Text="Show Solution"
-                            class="button"
-                            IncludeInPage="{resource: Step.HasCodeTask}"/>
+                            class="button with-icon with-tooltip"
+                            Visible="{value: Step.NextStep != null}"
+                            ButtonTagName="button"
+                            Tooltip="Validate and Continue">
+                    <span InnerText="{resource: UIResources.Btn_NextStep}" />
+                    <cc:SvgToHtml Source="/images/Icons/next.svg">
+                    </cc:SvgToHtml>
+                </dot:Button>
                 <dot:RouteLink RouteName="Default"
                                class="button success"
                                ButtonTagName="button"
                                Param-Language="{value: LanguageMoniker}"
                                Visible="{resource: Step.NextStep == null}"
                                Text="{resource: UIResources.Btn_Finish}" />
+
+                <%--<div class="buttons-container">
+                    <dot:UpdateProgress class="loading-anim">
+                        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-book"><path d="M20 25L80 25L80 75L20 75Z" fill="#ffd94f" stroke="#3c3d3b" stroke-width="2"></path><path d="M 50 25 L 80 25 L 80 75 L 50 75" stroke-linejoin="round" stroke-linecap="round" fill="#ffd94f" stroke="#3c3d3b" stroke-width="2"><animate attributeName="d" calcMode="linear" values="M50 25L80 25L80 75L50 75;M50 25L50 20L50 80L50 75;M50 25L80 25L80 75L50 75;M50 25L80 25L80 75L50 75" keyTimes="0;0.5;0.501;1" dur="1" begin="0s" repeatCount="indefinite"></animate><animate attributeName="opacity" calcMode="linear" values="1;1;0;0" keyTimes="0;0.5;0.5001;1" dur="1" begin="0s" repeatCount="indefinite"></animate></path><path d="M 50 25 L 78.2917 24.7153 L 78.2917 75.2847 L 50 75" stroke-linejoin="round" stroke-linecap="round" fill="#ffd94f" stroke="#3c3d3b" stroke-width="2"><animate attributeName="d" calcMode="linear" values="M50 25L80 25L80 75L50 75;M50 25L50 20L50 80L50 75;M50 25L80 25L80 75L50 75;M50 25L80 25L80 75L50 75" keyTimes="0;0.5;0.501;1" dur="1" begin="-0.166s" repeatCount="indefinite"></animate><animate attributeName="opacity" calcMode="linear" values="1;1;0;0" keyTimes="0;0.5;0.5001;1" dur="1" begin="-0.166s" repeatCount="indefinite"></animate></path><path d="M 50 25 L 68.4517 23.0753 L 68.4517 76.9247 L 50 75" stroke-linejoin="round" stroke-linecap="round" fill="#ffd94f" stroke="#3c3d3b" stroke-width="2"><animate attributeName="d" calcMode="linear" values="M50 25L80 25L80 75L50 75;M50 25L50 20L50 80L50 75;M50 25L80 25L80 75L50 75;M50 25L80 25L80 75L50 75" keyTimes="0;0.5;0.501;1" dur="1" begin="-0.33s" repeatCount="indefinite"></animate><animate attributeName="opacity" calcMode="linear" values="1;1;0;0" keyTimes="0;0.5;0.5001;1" dur="1" begin="-0.33s" repeatCount="indefinite"></animate></path><path d="M 50 25 L 20 25 L 20 75 L 50 75" stroke-linejoin="round" stroke-linecap="round" fill="#ffd94f" stroke="#3c3d3b" stroke-width="2"><animate attributeName="d" calcMode="linear" values="M50 25L20 25L20 75L50 75;M50 25L20 25L20 75L50 75;M50 25L50 20L50 80L50 75;M50 25L20 25L20 75L50 75" keyTimes="0;0.499;0.5;1" dur="1" begin="-0.33s" repeatCount="indefinite"></animate><animate attributeName="opacity" calcMode="linear" values="0;0;1;1" keyTimes="0;0.4999;0.5;1" dur="1" begin="-0.33s" repeatCount="indefinite"></animate></path><path d="M 50 25 L 20 25 L 20 75 L 50 75" stroke-linejoin="round" stroke-linecap="round" fill="#ffd94f" stroke="#3c3d3b" stroke-width="2"><animate attributeName="d" calcMode="linear" values="M50 25L20 25L20 75L50 75;M50 25L20 25L20 75L50 75;M50 25L50 20L50 80L50 75;M50 25L20 25L20 75L50 75" keyTimes="0;0.499;0.5;1" dur="1" begin="-0.166s" repeatCount="indefinite"></animate><animate attributeName="opacity" calcMode="linear" values="0;0;1;1" keyTimes="0;0.4999;0.5;1" dur="1" begin="-0.166s" repeatCount="indefinite"></animate></path><path d="M 50 25 L 28.2517 23.6247 L 28.2517 76.3753 L 50 75" stroke-linejoin="round" stroke-linecap="round" fill="#ffd94f" stroke="#3c3d3b" stroke-width="2"><animate attributeName="d" calcMode="linear" values="M50 25L20 25L20 75L50 75;M50 25L20 25L20 75L50 75;M50 25L50 20L50 80L50 75;M50 25L20 25L20 75L50 75" keyTimes="0;0.499;0.5;1" dur="1" begin="0s" repeatCount="indefinite"></animate><animate attributeName="opacity" calcMode="linear" values="0;0;1;1" keyTimes="0;0.4999;0.5;1" dur="1" begin="0s" repeatCount="indefinite"></animate></path></svg>
+                    </dot:UpdateProgress>
+                </div>--%>
             </div>
         </div>
     </div>

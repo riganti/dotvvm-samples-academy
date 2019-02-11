@@ -23,6 +23,12 @@
         outline: none;
     }
 
+    &[disabled="disabled"] {
+        background-color: $color-border;
+        border-color: $color-border;
+        cursor: not-allowed;
+    }
+
     &.with-borders {
         position: relative;
         z-index: 9;
@@ -61,6 +67,57 @@
             background-color: darken($color-btn-success, 10%);
             border-color: darken($color-btn-success, 10%);
             color: $color-white;
+        }
+    }
+
+    &.with-tooltip {
+        position: relative;
+
+        &:after {
+            position: absolute;
+            bottom: 4.5rem;
+            left: 50%;
+            transform: translateX(-50%) scale(0,0);
+            display: block;
+            width: auto;
+            padding: .5rem;
+            text-align: center;
+            color: $color-white;
+            font-size: $font-size-s;
+            background-color: $color-primary;
+            content: attr(Tooltip);
+            transition: $animate-all;
+            min-width: 10rem;
+            z-index: 10;
+        }
+
+        &:hover:after {
+            transform: translateX(-50%) scale(1,1);
+        }
+    }
+
+    &.with-icon {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: nowrap;
+        flex-direction: row;
+
+        > svg {
+            display: block;
+            width: 2rem;
+            height: 2rem;
+            margin-left: .5rem;
+        }
+
+        span {
+            color: $color-font;
+        }
+
+        &--left > svg {
+            margin-left: 0;
+            margin-right: .5rem;
         }
     }
 }

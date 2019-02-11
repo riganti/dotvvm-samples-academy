@@ -18,6 +18,7 @@ $color-en: rgb(60, 59, 110);
 $color-ru: rgb(0, 57, 166);
 $color-success: #bbce48;
 $color-btn-success: #729a40;
+$color-btn-success-hover: lighten($color-btn-success, 10%);
 $color-code-container-bg: #1e1e1e;
 $color-code: #e6755e;
 $color-dotvvm-blue: #3773c2;
@@ -42,7 +43,7 @@ $font-size-xxl: 4.2rem;
 // Helpfull variables
 $outline-width: .1rem;
 $transition-time: .3s;
-$animate-all: all $transition-time;
+$animate-all: all ease-in-out $transition-time;
 
 // All devices width for responsivity
 $width-mobile: 480px;

@@ -16,34 +16,10 @@
         width: 100%;
     }
 
-    &__button {
-        width: auto;
-        height: auto;
-        padding: 0;
-        display: block;
-        color: $color-secondary;
-        text-decoration: none;
-        font-size: $font-size-m;
-        background: none;
-        border: none;
-        cursor: pointer;
-
-        &:hover {
-            text-decoration: underline;
-        }
-
-        &:focus{
-            outline: none;
-        }
-
-        &[disabled=disabled] {
-            color: $color-border;
-            cursor: not-allowed;
-
-            &:hover {
-                text-decoration: none;
-            }
-        }
+    .button {
+        width: 12rem;
+        min-width: 5rem;
+        padding: .8rem 0;
     }
 
     > div {
@@ -51,7 +27,7 @@
         flex-direction: row;
         justify-content: flex-start;
         align-items: center;
-        margin: 0 1rem;
+        margin: 0 2rem;
     }
 
     &__item {
@@ -84,15 +60,14 @@
             content: attr(Tooltip);
             transition: $animate-all;
             min-width: 10rem;
+            z-index: 10;
         }
 
         &:hover {
             background-color: $color-border;
-            transition: $animate-all;
 
             &:after {
                 transform: translateX(-50%) scale(1,1);
-                transition: $animate-all;
             }
         }
 
