@@ -1,6 +1,6 @@
 ﻿{
   "compilerOptions": {
-    "outFile": "wwwroot/scripts/app.js",
+    "outFile": "../../wwwroot/scripts/app.js",
     "lib": [ "dom", "es5", "es2015.core", "es2015.promise" ],
     "strictNullChecks": false,
     "noEmitOnError": true,
@@ -11,8 +11,8 @@
   },
   "compileOnSave": false,
   "include": [
-    "node_modules/@types/**/*.d.ts",
-    "Resources/_Scripts/**/*",
-    "node_modules/monaco-editor/monaco.d.ts"
+    "**/*",
+    "../../wwwroot/libs/monaco-editor/monaco.d.ts",
+    "../../node_modules/@types/**/*.d.ts"
   ]
 }
