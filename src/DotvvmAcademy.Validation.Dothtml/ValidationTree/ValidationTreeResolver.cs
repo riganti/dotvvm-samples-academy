@@ -1,6 +1,7 @@
 ﻿using DotVVM.Framework.Compilation;
 using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
+using DotVVM.Framework.Utils;
 using DotvvmAcademy.Meta;
 using Microsoft.CodeAnalysis;
 using System;
@@ -44,15 +45,12 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             if (propertyType is ValidationTypeDescriptor validationType)
             {
                 var type = (Type)converter.ToReflection(validationType.TypeSymbol).Single();
-                if (type.IsEnum)
-                {
-                    return Enum.Parse(type, value);
-                }
-
-                return Convert.ChangeType(value, type);
+                return ReflectionUtils.ConvertValue(value, type);
             }
-
-            throw new NotSupportedException($"ITypeDescriptor type '{propertyType.GetType()}' is not supported.");
+            else
+            {
+                throw new NotSupportedException($"ITypeDescriptor type '{propertyType.GetType()}' is not supported.");
+            }
         }
 
         protected override IControlType CreateControlType(ITypeDescriptor wrapperType, string virtualPath)

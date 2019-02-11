@@ -1,4 +1,5 @@
-﻿using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
+﻿using DotVVM.Framework.Compilation;
+using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Tokenizer;
 using DotvvmAcademy.Meta;
 using DotvvmAcademy.Validation.CSharp;
@@ -49,6 +50,10 @@ namespace DotvvmAcademy.Validation.Dothtml
                     scope.ServiceProvider.GetRequiredService<ValidationTreeResolver>(),
                     scope.ServiceProvider.GetRequiredService<ErrorAggregatingVisitor>(),
                     sourceCode);
+                if (validationTree == null)
+                {
+                    return Task.FromResult<IEnumerable<IValidationDiagnostic>>(GetValidationDiagnostics(reporter));
+                }
                 context.Tree = GetXPathTree(scope.ServiceProvider.GetRequiredService<XPathTreeVisitor>(), validationTree);
 
                 foreach (var constraint in constraints)
@@ -136,22 +141,29 @@ namespace DotvvmAcademy.Validation.Dothtml
             ErrorAggregatingVisitor visitor,
             DothtmlSourceCode sourceCode)
         {
-            // TODO: Figure out how to handle master pages.
-
-            // parse syntax
-            var tokenizer = new DothtmlTokenizer();
-            tokenizer.Tokenize(sourceCode.GetContent() ?? string.Empty);
-            var parser = new DothtmlParser();
-            var dothtmlRoot = parser.Parse(tokenizer.Tokens);
-
-            // semantics
-            var root = (ValidationTreeRoot)resolver.ResolveTree(dothtmlRoot, sourceCode.FileName);
-            root.FileName = sourceCode.FileName;
-            foreach (var diagnostic in visitor.Visit(root))
+            try
             {
-                reporter.Report(diagnostic);
+                // TODO: Figure out how to handle master pages.
+                // parse syntax
+                var tokenizer = new DothtmlTokenizer();
+                tokenizer.Tokenize(sourceCode.GetContent() ?? string.Empty);
+                var parser = new DothtmlParser();
+                var dothtmlRoot = parser.Parse(tokenizer.Tokens);
+
+                // parse semantics
+                var root = (ValidationTreeRoot)resolver.ResolveTree(dothtmlRoot, sourceCode.FileName);
+                root.FileName = sourceCode.FileName;
+                foreach (var diagnostic in visitor.Visit(root))
+                {
+                    reporter.Report(diagnostic);
+                }
+                return root;
             }
-            return root;
+            catch(DotvvmCompilationException exception)
+            {
+                reporter.Report(exception, sourceCode);
+                return null;
+            }
         }
 
         private XPathDothtmlRoot GetXPathTree(XPathTreeVisitor visitor, ValidationTreeRoot validationTree)

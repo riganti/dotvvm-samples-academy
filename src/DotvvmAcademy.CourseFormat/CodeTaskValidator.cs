@@ -38,7 +38,8 @@ namespace DotvvmAcademy.CourseFormat
                 .ToImmutableArray()
                 .Add(CreateSourceCode(absolutePath, code, true));
             var service = GetValidationService(codeTask.Unit);
-            return (await service.Validate(codeTask.Unit.GetConstraints(), sources))
+            var diagnostics = await service.Validate(codeTask.Unit.GetConstraints(), sources);
+            return diagnostics
                 .Select(d => new CodeTaskDiagnostic(
                     message: string.Format(d.Message, d.Arguments.ToArray()),
                     start: d.Start,

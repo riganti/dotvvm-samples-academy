@@ -1,6 +1,8 @@
-﻿using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
+﻿using DotVVM.Framework.Compilation;
+using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 using DotvvmAcademy.Validation.Dothtml;
 using DotvvmAcademy.Validation.Dothtml.ValidationTree;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -60,6 +62,11 @@ namespace DotvvmAcademy.Validation
             {
                 reporter.Report(message, severity);
             }
+        }
+
+        public static void Report(this IValidationReporter reporter, DotvvmCompilationException exception, ISourceCode source)
+        {
+            reporter.Report(new DotvvmCompilationExceptionDiagnostic(exception, source));
         }
     }
 }
