@@ -1,1 +1,0 @@
-var dotvvm=window.dotvvm;dotvvm.events.init.subscribe(function(){});var ko=window.ko;ko.bindingHandlers.svg={init:function(t,n,e,o,s){var i=n(),a=new XMLHttpRequest;a.open("GET",i,!0),a.onreadystatechange=function(){4===a.readyState&&(200!==a.status&&0!==a.status||$(t).replaceWith(a.response))},a.send()}};

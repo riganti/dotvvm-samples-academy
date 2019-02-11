@@ -4,6 +4,7 @@
   "private": true,
   "devDependencies": {
     "@types/knockout": "^3.4.63",
+    "monaco-editor": "^0.15.6",
     "autoprefixer": "^8.6.5",
     "browser-sync": "^2.26.3",
     "clean-css-cli": "^4.2.1",
