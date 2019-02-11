@@ -37,7 +37,8 @@ namespace DotvvmAcademy.CourseFormat
                     annotation: html,
                     steps: steps,
                     name: frontMatter.Title,
-                    imageUrl: frontMatter.Image);
+                    imageUrl: frontMatter.Image,
+                    status: frontMatter.Status);
             }
         }
     }
