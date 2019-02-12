@@ -1,6 +1,6 @@
 ﻿---
 Title: Commands
-CodeTask: /resources/010_calculator/50_commands.dothtml.csx
+CodeTask: 50_commands.dothtml.csx
 ---
 
 # Commands

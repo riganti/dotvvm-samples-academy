@@ -1,4 +1,4 @@
-﻿#load "./00_constants.csx"
+﻿#load "00_constants.csx"
 
 using DotvvmAcademy.Validation.Unit;
 using DotvvmAcademy.Validation.Dothtml;

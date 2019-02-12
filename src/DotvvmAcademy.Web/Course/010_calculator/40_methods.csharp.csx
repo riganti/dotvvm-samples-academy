@@ -1,4 +1,4 @@
-﻿#load "./10_viewmodel.csharp.csx"
+﻿#load "10_viewmodel.csharp.csx"
 
 using System;
 using DotvvmAcademy.Meta;

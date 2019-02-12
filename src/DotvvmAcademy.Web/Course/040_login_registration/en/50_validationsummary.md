@@ -1,6 +1,6 @@
 ---
 Title: ValidationSummary
-CodeTask: /resources/040_login_registration/50_validationsummary.dothtml.csx
+CodeTask: 50_validationsummary.dothtml.csx
 ---
 
 # ValidationSummary

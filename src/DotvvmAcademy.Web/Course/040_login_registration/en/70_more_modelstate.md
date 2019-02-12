@@ -1,6 +1,6 @@
 ---
 Title: More ModelState
-CodeTask: /resources/040_login_registration/70_more_modelstate.csharp.csx
+CodeTask: 70_more_modelstate.csharp.csx
 ---
 
 Finally, we need to create errors when registration goes awry.

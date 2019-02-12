@@ -1,4 +1,4 @@
-#load "./20_loading_data.csharp.csx"
+#load "20_loading_data.csharp.csx"
 
 using System;
 using System.Collections.Generic;

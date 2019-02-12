@@ -1,6 +1,6 @@
 ﻿---
 Title: Address
-CodeTask: /resources/020_profile_detail/30_address.csharp.csx
+CodeTask: 30_address.csharp.csx
 ---
 
 # Address

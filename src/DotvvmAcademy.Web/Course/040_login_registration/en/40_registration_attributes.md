@@ -1,6 +1,6 @@
 ---
 Title: Registration Attributes
-CodeTask: /resources/040_login_registration/40_registration_attributes.csharp.csx
+CodeTask: 40_registration_attributes.csharp.csx
 ---
 
 # Registration Attributes

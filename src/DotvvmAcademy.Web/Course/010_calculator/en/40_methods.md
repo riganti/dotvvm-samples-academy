@@ -1,6 +1,6 @@
 ﻿---
 Title: Methods
-CodeTask: /resources/010_calculator/40_methods.csharp.csx
+CodeTask: 40_methods.csharp.csx
 ---
 
 # Methods

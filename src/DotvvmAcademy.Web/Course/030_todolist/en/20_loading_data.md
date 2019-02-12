@@ -1,6 +1,6 @@
 ﻿---
 Title: Loading Data
-CodeTask: /resources/030_todolist/20_loading_data.csharp.csx
+CodeTask: 20_loading_data.csharp.csx
 ---
 
 # Loading Data

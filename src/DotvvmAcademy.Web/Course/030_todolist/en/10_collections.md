@@ -1,6 +1,6 @@
 ﻿---
 Title: Collections in a ViewModel
-CodeTask: /resources/030_todolist/10_collections.csharp.csx
+CodeTask: 10_collections.csharp.csx
 ---
 
 # Collections

@@ -1,6 +1,6 @@
 ﻿---
 Title: The ViewModel
-CodeTask: /resources/010_calculator/10_viewmodel.csharp.csx
+CodeTask: 10_viewmodel.csharp.csx
 ---
 
 # The ViewModel

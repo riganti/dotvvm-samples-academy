@@ -1,6 +1,6 @@
 ---
 Title: ValidationTarget
-CodeTask: /resources/040_login_registration/60_validationtarget.dothtml.csx
+CodeTask: 60_validationtarget.dothtml.csx
 ---
 
 # ValidationTarget

@@ -1,4 +1,4 @@
-﻿#load "./20_view.dothtml.csx"
+﻿#load "20_view.dothtml.csx"
 
 using DotvvmAcademy.Validation.Unit;
 using DotvvmAcademy.Validation.Dothtml;

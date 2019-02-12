@@ -1,6 +1,6 @@
 ﻿---
 Title: Commands
-CodeTask: /resources/030_todolist/40_commands.csharp.csx
+CodeTask: 40_commands.csharp.csx
 ---
 
 # Commands

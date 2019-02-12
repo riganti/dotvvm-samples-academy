@@ -1,12 +1,12 @@
 ﻿---
 Title: Conclusion
 EmbeddedView:
-    Path: /resources/020_profile_detail/solution/ProfileDetail/Views/ProfileDetail.dothtml
+    Path: .solution/ProfileDetail/Views/ProfileDetail.dothtml
     Dependencies:
-        - /resources/020_profile_detail/solution/ProfileDetail/ViewModels/ProfileDetailViewModel.cs
-        - /resources/020_profile_detail/solution/ProfileDetail/ViewModels/Profile.cs
-        - /resources/020_profile_detail/solution/ProfileDetail/ViewModels/Address.cs
-Solution: /resources/020_profile_detail/solution
+        - .solution/ProfileDetail/ViewModels/ProfileDetailViewModel.cs
+        - .solution/ProfileDetail/ViewModels/Profile.cs
+        - .solution/ProfileDetail/ViewModels/Address.cs
+Solution: .solution
 ---
 
 # Conclusion

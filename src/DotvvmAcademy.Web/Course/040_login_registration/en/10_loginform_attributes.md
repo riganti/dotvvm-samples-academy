@@ -1,6 +1,6 @@
 ﻿---
 Title: "Log-In Form: Validation Attributes"
-CodeTask: /resources/040_login_registration/10_loginform_attributes.csharp.csx
+CodeTask: 10_loginform_attributes.csharp.csx
 ---
 
 # Log-In Form: Validation Attributes

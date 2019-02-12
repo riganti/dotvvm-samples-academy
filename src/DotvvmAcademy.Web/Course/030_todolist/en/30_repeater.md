@@ -1,6 +1,6 @@
 ﻿---
 Title: Repeater
-CodeTask: /resources/030_todolist/30_repeater.dothtml.csx
+CodeTask: 30_repeater.dothtml.csx
 ---
 
 # Repeater

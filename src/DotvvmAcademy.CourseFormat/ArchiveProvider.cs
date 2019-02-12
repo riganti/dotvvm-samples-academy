@@ -25,6 +25,10 @@ namespace DotvvmAcademy.CourseFormat
 
         private async Task AddRecursive(string basePath, string path, ZipArchive archive)
         {
+            if (!await environment.Exists(basePath))
+            {
+                return;
+            }
             foreach (var fileName in await environment.GetFiles(basePath))
             {
                 var entry = archive.CreateEntry(Path.Combine(path, fileName));

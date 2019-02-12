@@ -1,6 +1,6 @@
 ﻿---
 Title: DataContext
-CodeTask: /resources/020_profile_detail/20_datacontext.dothtml.csx
+CodeTask: 20_datacontext.dothtml.csx
 ---
 
 # DataContext

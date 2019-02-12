@@ -50,7 +50,7 @@ namespace DotvvmAcademy.Web.Hosting
             var languageMoniker = RequireMoniker(context, "Language");
             var lessonMoniker = RequireMoniker(context, "Lesson");
             var stepMoniker = RequireMoniker(context, "Step");
-            var step = workspace.LoadStep(languageMoniker, lessonMoniker, stepMoniker)
+            var step = workspace.LoadStep(lessonMoniker, languageMoniker, stepMoniker)
                 .GetAwaiter()
                 .GetResult();
             if (step.EmbeddedView == null)
@@ -72,7 +72,7 @@ namespace DotvvmAcademy.Web.Hosting
                 var id = Guid.NewGuid();
 
                 // compile and emit the viewModel assembly
-                var dependencies = step.EmbeddedView.Dependencies.Select(d => environment.Read(d)
+                var dependencies = step.EmbeddedView.Dependencies.Select(d => environment.ContextRead(lessonMoniker, languageMoniker, d)
                     .GetAwaiter()
                     .GetResult());
                 var viewModelCompilation = CSharpCompilation.Create(
@@ -104,7 +104,7 @@ namespace DotvvmAcademy.Web.Hosting
                 viewModelAssembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(viewModelAssemblyPath);
 
                 // compile and emit the view assembly
-                var viewSource = environment.Read(step.EmbeddedView.Path)
+                var viewSource = environment.ContextRead(lessonMoniker, languageMoniker, step.EmbeddedView.Path)
                     .GetAwaiter()
                     .GetResult();
                 treeBuilder.AdditionalAssembly = viewModelAssembly;

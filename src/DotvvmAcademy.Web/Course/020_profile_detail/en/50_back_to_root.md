@@ -1,6 +1,6 @@
 ﻿---
 Title: Back to Root
-CodeTask: /resources/020_profile_detail/50_back_to_root.dothtml.csx
+CodeTask: 50_back_to_root.dothtml.csx
 ---
 
 # Back to Root

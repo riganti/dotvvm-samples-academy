@@ -1,13 +1,13 @@
 ---
 Title: Conclusion
 EmbeddedView:
-    Path: /resources/040_login_registration/solution/LogInRegistration/Views/LogInRegistration.dothtml
+    Path: .solution/LogInRegistration/Views/LogInRegistration.dothtml
     Dependencies:
-        - /resources/040_login_registration/solution/LogInRegistration/ViewModels/LogInRegistrationViewModel.cs
-        - /resources/040_login_registration/solution/LogInRegistration/ViewModels/LogInForm.cs
-        - /resources/040_login_registration/solution/LogInRegistration/ViewModels/RegistrationForm.cs
-        - /resources/040_login_registration/solution/LogInRegistration/AccountService.cs
-Solution: /resources/040_login_registration/solution
+        - .solution/LogInRegistration/ViewModels/LogInRegistrationViewModel.cs
+        - .solution/LogInRegistration/ViewModels/LogInForm.cs
+        - .solution/LogInRegistration/ViewModels/RegistrationForm.cs
+        - .solution/LogInRegistration/AccountService.cs
+Solution: .solution
 ---
 
 # Conclusion

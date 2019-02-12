@@ -1,6 +1,6 @@
 ﻿---
 Title: Profile
-CodeTask: /resources/020_profile_detail/10_profile.csharp.csx
+CodeTask: 10_profile.csharp.csx
 ---
 
 # Profile

@@ -1,4 +1,4 @@
-#load "./00_constants.csx"
+#load "00_constants.csx"
 
 using System.Collections.Generic;
 using DotvvmAcademy.Validation.CSharp.Unit;

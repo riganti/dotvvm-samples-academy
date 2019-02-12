@@ -1,10 +1,10 @@
 ﻿---
 Title: Conclusion
 EmbeddedView:
-    Path: /resources/010_calculator/solution/Calculator/Views/Calculator.dothtml
+    Path: .solution/Calculator/Views/Calculator.dothtml
     Dependencies:
-        - /resources/010_calculator/solution/Calculator/ViewModels/CalculatorViewModel.cs
-Solution: /resources/010_calculator/solution
+        - .solution/Calculator/ViewModels/CalculatorViewModel.cs
+Solution: .solution
 ---
 
 # Conclusion

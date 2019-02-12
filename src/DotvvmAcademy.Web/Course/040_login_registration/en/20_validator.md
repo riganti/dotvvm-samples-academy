@@ -1,6 +1,6 @@
 ﻿---
 Title: Validator
-CodeTask: /resources/040_login_registration/20_validator.dothtml.csx
+CodeTask: 20_validator.dothtml.csx
 ---
 
 # Validator

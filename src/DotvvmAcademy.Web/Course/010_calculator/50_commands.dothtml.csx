@@ -1,4 +1,4 @@
-﻿#load "./30_controls.dothtml.csx"
+﻿#load "30_controls.dothtml.csx"
 
 using DotvvmAcademy.Validation.Unit;
 using DotvvmAcademy.Validation.Dothtml;

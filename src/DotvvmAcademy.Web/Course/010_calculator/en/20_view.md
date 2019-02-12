@@ -1,6 +1,6 @@
 ﻿---
 Title: The View
-CodeTask: /resources/010_calculator/20_view.dothtml.csx
+CodeTask: 20_view.dothtml.csx
 ---
 
 # The View

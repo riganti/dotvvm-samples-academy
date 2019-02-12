@@ -1,6 +1,6 @@
 ﻿---
 Title: Nested DataContext
-CodeTask: /resources/020_profile_detail/40_nested_datacontext.dothtml.csx
+CodeTask: 40_nested_datacontext.dothtml.csx
 ---
 
 # Nested DataContext

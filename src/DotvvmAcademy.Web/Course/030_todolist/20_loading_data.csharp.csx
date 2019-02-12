@@ -1,4 +1,4 @@
-#load "./10_collections.csharp.csx"
+#load "10_collections.csharp.csx"
 
 using DotVVM.Framework.ViewModel;
 using DotVVM.Framework.Hosting;

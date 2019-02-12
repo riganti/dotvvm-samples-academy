@@ -1,6 +1,6 @@
 ---
 Title: ModelState
-CodeTask: /resources/040_login_registration/30_modelstate.csharp.csx
+CodeTask: 30_modelstate.csharp.csx
 ---
 
 # ModelState

@@ -1,4 +1,4 @@
-#load "./30_repeater.dothtml.csx"
+#load "30_repeater.dothtml.csx"
 
 using DotvvmAcademy.Validation.Dothtml;
 using DotvvmAcademy.Validation.Dothtml.Unit;

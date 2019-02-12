@@ -19,6 +19,10 @@ namespace DotvvmAcademy.CourseFormat
             var lessons = ImmutableArray.CreateBuilder<string>();
             foreach(var directory in await environment.GetDirectories("/"))
             {
+                if (directory.StartsWith("."))
+                {
+                    continue;
+                }
                 var isLesson = false;
                 foreach(var subdirectory in await environment.GetDirectories($"/{directory}"))
                 {

@@ -1,6 +1,6 @@
 ﻿---
 Title: Controls
-CodeTask: /resources/010_calculator/30_controls.dothtml.csx
+CodeTask: 30_controls.dothtml.csx
 ---
 
 # Controls
