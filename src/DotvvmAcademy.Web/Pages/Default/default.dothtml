@@ -29,19 +29,16 @@
     <section class="section-lections no-padding-top">
         <div class="container-large">
             <dot:Repeater DataSource="{value: Lessons}" class="lessons-container">
-                <%--<div class="{value: IsFinished ? "lessons-item finished" : "lessons-item" }">--%>
-                <div class="lessons-item">
-                    <%--<cc:SvgToHtml Source="{value:IsFinished ? "images/Icons/medal.svg" : ImageUrl}">--%>
+                <dot:RouteLink RouteName="Step"
+                               Param-Language="{value: _root.LanguageMoniker}"
+                               Param-Lesson="{value: Moniker}"
+                               Param-Step="{value: FirstStep}"
+                               class="lessons-item">
                     <cc:SvgToHtml Source="{resource: ImageUrl ?? "/images/Icons/ico-lesson-1.svg"}" />
                     <h2>{{resource: Name}}</h2>
                     <dot:HtmlLiteral Html="{resource: Html}" />
-                    <dot:RouteLink RouteName="Step"
-                                   Param-Language="{value: _root.LanguageMoniker}"
-                                   Param-Lesson="{value: Moniker}"
-                                   Param-Step="{value: FirstStep}"
-                                   Text="{value: UIResources.Btn_StartLesson}"
-                                   class="button" />
-                </div>
+                    <span InnerText="{value: UIResources.Btn_StartLesson}" class="button" />
+                </dot:RouteLink>
             </dot:Repeater>
         </div>
     </section>
@@ -51,10 +48,10 @@
         </div>
         <div>
             <dot:HtmlLiteral Html="{resource: UIResources.Base_CoffeeTitle}"
-                             RenderWrapperTag="true" 
+                             RenderWrapperTag="true"
                              WrapperTagName="h2" />
-            <dot:HtmlLiteral Html="{resource: UIResources.Base_CoffeeDescription}" 
-                             RenderWrapperTag="true" 
+            <dot:HtmlLiteral Html="{resource: UIResources.Base_CoffeeDescription}"
+                             RenderWrapperTag="true"
                              WrapperTagName="p" />
             <a href="https://goo.gl/PDrdpZ" target="_blank" class="button">
                 {{resource: UIResources.Btn_Coffee}}
@@ -63,7 +60,7 @@
     </section>
 </dot:Content>
 
-<dot:content ContentPlaceHolderID="FooterContent">
+<dot:Content ContentPlaceHolderID="FooterContent">
     <div class="main-link">
         <a target="_blank" href="https://www.dotvvm.com/">www.dotvvm.com</a>
     </div>
@@ -72,4 +69,4 @@
         <a target="_blank" href="https://www.dotvvm.com/docs/tutorials/introduction/latest">{{resource: UIResources.Base_Tutorials}}</a>
         <a target="_blank" href="https://www.dotvvm.com/docs/samples/latest">{{resource: UIResources.Base_Samples}}</a>
     </div>
-</dot:content>
+</dot:Content>
