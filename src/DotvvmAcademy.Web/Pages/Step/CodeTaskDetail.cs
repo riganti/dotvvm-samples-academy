@@ -12,7 +12,7 @@ namespace DotvvmAcademy.Web.Pages.Step
         public string CodeLanguage { get; set; }
 
         [Bind(Direction.ServerToClient)]
-        public bool IsCodeCorrect => !(Markers?.Any()).GetValueOrDefault();
+        public bool IsCodeCorrect { get; set; }
 
         [Bind(Direction.ServerToClient)]
         public List<MonacoMarker> Markers { get; set; } = new List<MonacoMarker>();

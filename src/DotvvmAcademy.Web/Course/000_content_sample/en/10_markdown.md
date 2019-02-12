@@ -36,5 +36,7 @@ public class Test
 - This is a To-Do list.
 - A user has to fulfill these tasks in order to continue.
 - The tasks should be validated by the server upon clicking the 'Next' button.
+- Create a public property of type `int` called `Property`.
+- Create a public method called `Method` that returns `42` as type `int`.
 
 > Note: There might be some notes at the end of a step.

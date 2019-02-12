@@ -127,7 +127,8 @@ namespace DotvvmAcademy.Web.Pages.Step
                 var script = await workspace.ContextLoad<CodeTask>(LessonMoniker, LanguageMoniker, CodeTask.SourcePath);
                 var diagnostics = (await validator.Validate(script, CodeTask.Code))
                     .ToArray();
-                if (diagnostics.Length == 0)
+                CodeTask.IsCodeCorrect = !diagnostics.Any(d => d.Severity == CodeTaskDiagnosticSeverity.Error);
+                if (CodeTask.IsCodeCorrect)
                 {
                     Context.RedirectToRoute("Step", new { Step = Step.NextStep });
                 }
