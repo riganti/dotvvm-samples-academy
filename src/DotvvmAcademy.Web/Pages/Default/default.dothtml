@@ -15,6 +15,7 @@
                                  WrapperTagName="p" />
                 <dot:RouteLink RouteName="Step"
                                class="button"
+                               IncludeInPage="{resource: FirstLesson != null}"
                                Text="{resource: UIResources.Btn_StartCourse}"
                                Param-Language="{value: _root.LanguageMoniker}"
                                Param-Lesson="{value: FirstLesson.Moniker}"
@@ -36,8 +37,8 @@
                                class="lessons-item">
                     <cc:SvgToHtml Source="{resource: ImageUrl ?? "/images/Icons/ico-lesson-1.svg"}" />
                     <h2>{{resource: Name}}</h2>
-                    <dot:HtmlLiteral Html="{resource: Html}" />
-                    <span InnerText="{value: UIResources.Btn_StartLesson}" class="button" />
+                    <dot:HtmlLiteral Html="{resource: AnnotationHtml}" />
+                    <span InnerText="{resource: UIResources.Btn_StartLesson}" class="button" />
                 </dot:RouteLink>
             </dot:Repeater>
         </div>

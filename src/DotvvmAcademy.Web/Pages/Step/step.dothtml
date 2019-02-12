@@ -56,7 +56,7 @@
                                class="button with-icon with-icon--left"
                                Param-Language="{value: LanguageMoniker}"
                                Param-Lesson="{value: LessonMoniker}"
-                               Param-Step="{value: Step.PreviousStep ?? string.Empty}"
+                               Param-Step="{value: Step.PreviousStep ?? ""}"
                                Enabled="{value: Step.PreviousStep != null}">
                     <cc:SvgToHtml Source="/images/Icons/prev.svg">
                     </cc:SvgToHtml>
@@ -78,9 +78,11 @@
                             Visible="{value: Step.NextStep != null}"
                             ButtonTagName="button"
                             Tooltip="Validate and Continue">
+                    <PostBack.Handlers>
+                        <cc:LoadingPostBackHandler AddedClasses="with-loading" RemovedClasses="with-tooltip" />
+                    </PostBack.Handlers>
                     <span InnerText="{resource: UIResources.Btn_NextStep}" />
-                    <cc:SvgToHtml Source="/images/Icons/next.svg">
-                    </cc:SvgToHtml>
+                    <cc:SvgToHtml Source="/images/Icons/next.svg" />
                 </dot:Button>
                 <dot:RouteLink RouteName="Default"
                                class="button success"
