@@ -18,6 +18,11 @@ namespace DotvvmAcademy.CourseFormat
 
         public async Task<CodeTask> Get(string path)
         {
+            if (!await environment.Exists(path))
+            {
+                return null;
+            }
+
             var scriptSource = await environment.Read(path);
             var csharpScript = CSharpScript.Create(
                 code: scriptSource,
@@ -26,9 +31,13 @@ namespace DotvvmAcademy.CourseFormat
             try
             {
                 var state = await csharpScript.RunAsync();
+                if (state.ReturnValue == null)
+                {
+                    throw new InvalidOperationException($"Validation script at '{path}' doesn't initialize the Unit property.");
+                }
                 return new CodeTask(path, (IValidationUnit)state.ReturnValue);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw new CodeTaskException("An exception occured during validation script compilation.", e);
             }

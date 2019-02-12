@@ -34,7 +34,7 @@
                     <%--<cc:SvgToHtml Source="{value:IsFinished ? "images/Icons/medal.svg" : ImageUrl}">--%>
                     <cc:SvgToHtml Source="{resource: ImageUrl ?? "/images/Icons/ico-lesson-1.svg"}" />
                     <h2>{{resource: Name}}</h2>
-                    <dot:HtmlLiteral Html="{resource: Html}" />
+                    <dot:HtmlLiteral Html="{resource: AnnotationHtml}" />
                     <dot:RouteLink RouteName="Step"
                                    Param-Language="{value: _root.LanguageMoniker}"
                                    Param-Lesson="{value: Moniker}"

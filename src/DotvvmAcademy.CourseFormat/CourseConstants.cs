@@ -2,8 +2,6 @@
 {
     public static class CourseConstants
     {
-        public const string ContentDirectory = "content";
-
-        public const string ResourcesDirectory = "resources";
+        public const string LessonFile = "lesson.md";
     }
 }

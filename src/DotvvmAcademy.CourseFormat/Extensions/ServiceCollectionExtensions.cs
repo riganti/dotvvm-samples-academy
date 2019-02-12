@@ -14,9 +14,9 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             var root = new DirectoryInfo(courseRoot);
             services.AddSingleton<ICourseEnvironment>(new FileSystemEnvironment(root));
-            services.AddSingleton<ISourceProvider<Root>, RootProvider>();
-            services.AddSingleton<ISourceProvider<Variant>, VariantProvider>();
+            services.AddSingleton<ISourceProvider<Course>, CourseProvider>();
             services.AddSingleton<ISourceProvider<Lesson>, LessonProvider>();
+            services.AddSingleton<ISourceProvider<LessonVariant>, LessonVariantProvider>();
             services.AddSingleton<ISourceProvider<Step>, StepProvider>();
             services.AddSingleton<ISourceProvider<CodeTask>, CodeTaskProvider>();
             services.AddSingleton<ISourceProvider<Archive>, ArchiveProvider>();

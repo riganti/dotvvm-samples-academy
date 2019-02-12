@@ -1,30 +1,28 @@
 ﻿using System;
-using System.Linq;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace DotvvmAcademy.CourseFormat
 {
     public static class CourseWorkspaceExtensions
     {
-        public static Task<Lesson> LoadLesson(this CourseWorkspace workspace, string variant, string lesson)
+        public static Task<Course> LoadCourse(this CourseWorkspace workspace)
         {
-            return workspace.Load<Lesson>($"/{CourseConstants.ContentDirectory}/{variant}/{lesson}");
+            return workspace.Load<Course>("/");
         }
 
-        public static Task<Root> LoadRoot(this CourseWorkspace workspace)
+        public static Task<Lesson> LoadLesson(this CourseWorkspace workspace, string lessonMoniker)
         {
-            return workspace.Load<Root>("/");
+            return workspace.Load<Lesson>($"/{lessonMoniker}");
         }
 
-        public static Task<Step> LoadStep(this CourseWorkspace workspace, string variant, string lesson, string step)
+        public static Task<LessonVariant> LoadLessonVariant(this CourseWorkspace workspace, string lessonMoniker, string variantMoniker)
         {
-            return workspace.Load<Step>($"/{CourseConstants.ContentDirectory}/{variant}/{lesson}/{step}");
+            return workspace.Load<LessonVariant>($"/{lessonMoniker}/{variantMoniker}");
         }
 
-        public static Task<Variant> LoadVariant(this CourseWorkspace workspace, string variant)
+        public static Task<Step> LoadStep(this CourseWorkspace workspace, string lessonMoniker, string variantMoniker, string stepMoniker)
         {
-            return workspace.Load<Variant>($"/{CourseConstants.ContentDirectory}/{variant}");
+            return workspace.Load<Step>($"/{lessonMoniker}/{variantMoniker}/{stepMoniker}");
         }
 
         public static async Task<TSource> Require<TSource>(this CourseWorkspace workspace, string sourcePath)

@@ -12,7 +12,7 @@ using System;
 
 public class Test
 {
-    public const string Constant = "This is a C# code snippet. It's syntax should be highlighted.";
+    public const string Constant = "This is a C# code snippet. Its syntax should be highlighted.";
 }
 ```
 

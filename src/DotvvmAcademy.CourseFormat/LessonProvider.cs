@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Immutable;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,37 +8,35 @@ namespace DotvvmAcademy.CourseFormat
     public class LessonProvider : ISourceProvider<Lesson>
     {
         private readonly ICourseEnvironment environment;
-        private readonly IMarkdownRenderer renderer;
 
-        public LessonProvider(ICourseEnvironment environment, IMarkdownRenderer renderer)
+        public LessonProvider(ICourseEnvironment environment)
         {
             this.environment = environment;
-            this.renderer = renderer;
         }
 
         public async Task<Lesson> Get(string path)
         {
-            var file = (await environment.GetFiles(path))
-                .Single(f => f.EndsWith(".md"));
-            using (var stream = environment.OpenRead($"{path}/{file}"))
-            using (var reader = new StreamReader(stream))
+            var segments = SourcePath.GetSegments(path).ToArray();
+            if (segments.Length != 1)
             {
-                var steps = (await environment.GetDirectories(path)).ToImmutableArray();
-                var fileText = await reader.ReadToEndAsync();
-                (var html, var frontMatter) = await renderer.Render<LessonFrontMatter>(fileText);
-                if (frontMatter == null)
-                {
-                    throw new NotSupportedException($"Lesson at '{path}' doesn't have YAML Front Matter.");
-                }
-
-                return new Lesson(
-                    path: path,
-                    annotation: html,
-                    steps: steps,
-                    name: frontMatter.Title,
-                    imageUrl: frontMatter.Image,
-                    status: frontMatter.Status);
+                throw new ArgumentException($"Source path '{path}' is not composed of a single segment.");
             }
+            if (!await environment.Exists(path))
+            {
+                return null;
+            }
+            var variants = ImmutableArray.CreateBuilder<string>();
+            foreach (var directory in await environment.GetDirectories(path))
+            {
+                var files = await environment.GetFiles($"{path}/{directory}");
+                if (files.Contains(CourseConstants.LessonFile))
+                {
+                    variants.Add(directory);
+                }
+            }
+            return new Lesson(
+                moniker: segments[0].ToString(),
+                variants: variants.ToImmutable());
         }
     }
 }

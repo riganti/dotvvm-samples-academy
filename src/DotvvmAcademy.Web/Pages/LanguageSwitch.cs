@@ -12,7 +12,7 @@ namespace DotvvmAcademy.Web.Pages
             = DotvvmProperty.Register<IEnumerable<LanguageOption>, LanguageSwitch>(c => c.AvailableLanguages, null);
 
         public static readonly DotvvmProperty CurrentLanguageProperty
-            = DotvvmProperty.Register<LanguageOption, LanguageSwitch>(c => c.CurrentLanguage, null);
+            = DotvvmProperty.Register<LanguageOption, LanguageSwitch>(c => c.CurrentLanguage, default);
 
         public static readonly DotvvmProperty RouteNameProperty
             = DotvvmProperty.Register<string, LanguageSwitch>(c => c.RouteName, null);

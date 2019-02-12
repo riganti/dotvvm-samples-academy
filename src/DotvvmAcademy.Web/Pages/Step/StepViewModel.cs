@@ -43,28 +43,31 @@ namespace DotvvmAcademy.Web.Pages.Step
 
         public override async Task Load()
         {
-            var lesson = await workspace.LoadLesson(LanguageMoniker, LessonMoniker);
-            var steps = await Task.WhenAll(lesson.Steps.Select(async s => await workspace.LoadStep(LanguageMoniker, LessonMoniker, s)));
-            Steps = steps.Select(s => new StepListDetail { Moniker = s.Moniker, Name = s.Name });
-            var step = await workspace.LoadStep(LanguageMoniker, LessonMoniker, StepMoniker);
-            var index = lesson.Steps.IndexOf(StepMoniker);
+            var lesson = await workspace.LoadLesson(LessonMoniker);
+            Languages = lesson.Variants.Select(LanguageOption.Create).ToList();
+            var variant = await workspace.LoadLessonVariant(LessonMoniker, LanguageMoniker);
+            var stepTasks = variant.Steps.Select(async s => await workspace.LoadStep(LessonMoniker, LanguageMoniker, s));
+            var steps = await Task.WhenAll(stepTasks);
+            Steps = steps.Select(s => new StepListDetail { Moniker = s.StepMoniker, Name = s.Name });
+            var step = steps.Single(s => s.StepMoniker == StepMoniker);
+            var index = variant.Steps.IndexOf(StepMoniker);
             Step = new StepDetail
             {
                 Html = step.Text,
                 Name = step.Name,
-                PreviousStep = lesson.Steps.ElementAtOrDefault(index - 1),
-                NextStep = lesson.Steps.ElementAtOrDefault(index + 1),
-                HasCodeTask = step.ValidationScriptPath != null,
+                PreviousStep = variant.Steps.ElementAtOrDefault(index - 1),
+                NextStep = variant.Steps.ElementAtOrDefault(index + 1),
+                HasCodeTask = step.CodeTaskPath != null,
                 HasEmbeddedView = step.EmbeddedView != null,
                 HasArchive = step.SolutionArchivePath != null
             };
-            if (step.ValidationScriptPath != null)
+            if (step.CodeTaskPath != null)
             {
                 if (!Context.IsPostBack)
                 {
                     CodeTask = new CodeTaskDetail();
                 }
-                CodeTask.ValidationScriptPath = step.ValidationScriptPath;
+                CodeTask.SourcePath = step.CodeTaskPath;
                 if (!Context.IsPostBack)
                 {
                     await Reset();
@@ -76,20 +79,18 @@ namespace DotvvmAcademy.Web.Pages.Step
 
         public async Task Reset()
         {
-            var script = await workspace.Require<CodeTask>(CodeTask.ValidationScriptPath);
-            var defaultCodePath = SourcePath.Combine(SourcePath.GetParent(script.Path), script.Unit.GetDefault());
+            var script = await workspace.ContextLoad<CodeTask>(LessonMoniker, LanguageMoniker, CodeTask.SourcePath);
             CodeTask = new CodeTaskDetail
             {
-                Code = await environment.Read(defaultCodePath),
+                Code = await environment.ContextRead(LessonMoniker, LanguageMoniker, script.Unit.GetDefault()),
                 CodeLanguage = script.Unit.GetValidatedLanguage()
             };
         }
 
         public async Task ShowSolution()
         {
-            var script = await workspace.Require<CodeTask>(CodeTask.ValidationScriptPath);
-            var correctCodePath = SourcePath.Combine(SourcePath.GetParent(script.Path), script.Unit.GetCorrect());
-            CodeTask.Code = await environment.Read(correctCodePath);
+            var script = await workspace.ContextLoad<CodeTask>(LessonMoniker, LanguageMoniker, CodeTask.SourcePath);
+            CodeTask.Code = await environment.ContextRead(LessonMoniker, LanguageMoniker, script.Unit.GetCorrect());
         }
 
         public async Task Validate()
@@ -123,7 +124,7 @@ namespace DotvvmAcademy.Web.Pages.Step
 
             try
             {
-                var script = await workspace.Require<CodeTask>(CodeTask.ValidationScriptPath);
+                var script = await workspace.ContextLoad<CodeTask>(LessonMoniker, LanguageMoniker, CodeTask.SourcePath);
                 var diagnostics = (await validator.Validate(script, CodeTask.Code))
                     .ToArray();
                 if (diagnostics.Length == 0)
@@ -141,21 +142,6 @@ namespace DotvvmAcademy.Web.Pages.Step
                 CodeTask.Markers.Clear();
                 CodeTask.Markers.Add(new MonacoMarker("An error occured during validation.", MonacoSeverity.Error, -1, -1, -1, -1));
             }
-        }
-
-        protected override async Task<IEnumerable<string>> GetAvailableLanguageMonikers()
-        {
-            var root = await workspace.LoadRoot();
-            var builder = ImmutableArray.CreateBuilder<string>();
-            foreach (var variant in root.Variants)
-            {
-                var step = await workspace.LoadStep(variant, LessonMoniker, StepMoniker);
-                if (step != null)
-                {
-                    builder.Add(variant);
-                }
-            }
-            return builder.ToImmutable();
         }
     }
 }

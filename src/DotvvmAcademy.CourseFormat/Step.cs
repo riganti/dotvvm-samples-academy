@@ -2,24 +2,31 @@
 {
     public class Step : Source
     {
-        public Step(string path, string text, string name) : base(path)
+        public Step(string lessonMoniker, string variantMoniker, string stepMoniker, string text, string name)
+            : base($"/{lessonMoniker}/{variantMoniker}/{stepMoniker}")
         {
+            LessonMoniker = lessonMoniker;
+            VariantMoniker = variantMoniker;
+            StepMoniker = stepMoniker;
             Text = text;
             Name = name;
-            Moniker = SourcePath.GetLastSegment(Path).ToString();
         }
-
-        public string ValidationScriptPath { get; set; }
 
         public EmbeddedView EmbeddedView { get; set; }
 
-        public string Moniker { get; }
+        public string LessonMoniker { get; }
 
         public string Name { get; }
 
+        public string SolutionArchivePath { get; set; }
+
+        public string StepMoniker { get; }
+
         public string Text { get; }
 
-        public string SolutionArchivePath { get; set; }
+        public string CodeTaskPath { get; set; }
+
+        public string VariantMoniker { get; }
 
         public override long GetSize()
         {

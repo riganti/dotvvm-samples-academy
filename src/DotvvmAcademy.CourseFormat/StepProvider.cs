@@ -19,9 +19,12 @@ namespace DotvvmAcademy.CourseFormat
 
         public async Task<Step> Get(string path)
         {
-            var file = (await environment.GetFiles(path))
-                .Single(f => f.EndsWith(".md"));
-            using (var stream = environment.OpenRead($"{path}/{file}"))
+            var segments = SourcePath.GetSegments(path).ToArray();
+            if (segments.Length != 3)
+            {
+                throw new ArgumentException($"Source path '{path}' is not composed of 3 segments.");
+            }
+            using (var stream = environment.OpenRead($"{path}.md"))
             using (var reader = new StreamReader(stream))
             {
                 var fileText = await reader.ReadToEndAsync();
@@ -32,11 +35,13 @@ namespace DotvvmAcademy.CourseFormat
                 }
 
                 var step = new Step(
-                    path: path,
+                    lessonMoniker: segments[0].ToString(),
+                    variantMoniker: segments[1].ToString(),
+                    stepMoniker: segments[2].ToString(),
                     text: html,
                     name: frontMatter.Title)
                 {
-                    ValidationScriptPath = frontMatter.CodeTask,
+                    CodeTaskPath = frontMatter.CodeTask,
                     SolutionArchivePath = frontMatter.Solution
                 };
                 if (frontMatter.EmbeddedView != null)
@@ -44,7 +49,6 @@ namespace DotvvmAcademy.CourseFormat
                     var dependencies = frontMatter.EmbeddedView.Dependencies?.ToImmutableArray() ?? ImmutableArray.Create<string>();
                     step.EmbeddedView = new EmbeddedView(frontMatter.EmbeddedView.Path, dependencies);
                 }
-
                 return step;
             }
         }

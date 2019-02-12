@@ -9,7 +9,18 @@ namespace DotvvmAcademy.CourseFormat
     public static class SourcePath
     {
         public const char DirectorySeparator = '/';
+        public const char ExtensionSeparator = '.';
         public const string RootDirectory = "/";
+
+        public static bool IsAbsolute(string sourcePath)
+        {
+            return sourcePath != null && sourcePath.Length > 0 && sourcePath[0] == DirectorySeparator;
+        }
+
+        public static bool IsRelative(string sourcePath)
+        {
+            return sourcePath != null && sourcePath.Length > 1 && sourcePath[0] == ExtensionSeparator && sourcePath[1] == DirectorySeparator;
+        }
 
         public static string Combine(string one, string two)
         {
@@ -50,6 +61,12 @@ namespace DotvvmAcademy.CourseFormat
         {
             var index = path.LastIndexOf(DirectorySeparator);
             return path.AsMemory(index + 1);
+        }
+
+        public static ReadOnlyMemory<char> TrimExtension(ReadOnlyMemory<char> path)
+        {
+            var index = path.Span.LastIndexOf(ExtensionSeparator);
+            return path.Slice(0, index);
         }
 
         public static string GetParent(string path)

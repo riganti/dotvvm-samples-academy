@@ -4,32 +4,19 @@ namespace DotvvmAcademy.CourseFormat
 {
     public class Lesson : Source
     {
-        public Lesson(string path, string annotation, ImmutableArray<string> steps, string name, string imageUrl, LessonStatus status)
-            : base(path)
+        public Lesson(string moniker, ImmutableArray<string> variants) : base($"/{moniker}")
         {
-            Annotation = annotation;
-            Steps = steps;
-            Name = name;
-            ImageUrl = imageUrl;
-            Status = status;
-            Moniker = SourcePath.GetLastSegment(Path).ToString();
+            Moniker = moniker;
+            Variants = variants;
         }
-
-        public string Annotation { get; }
-
-        public string ImageUrl { get; }
 
         public string Moniker { get; }
 
-        public string Name { get; }
-
-        public LessonStatus Status { get; }
-
-        public ImmutableArray<string> Steps { get; }
+        public ImmutableArray<string> Variants { get; }
 
         public override long GetSize()
         {
-            return Annotation?.Length ?? 1;
+            return 1;
         }
     }
 }

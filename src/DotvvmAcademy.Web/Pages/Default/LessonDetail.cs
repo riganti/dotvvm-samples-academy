@@ -4,7 +4,7 @@
     {
         public string FirstStep { get; set; }
 
-        public string Html { get; set; }
+        public string AnnotationHtml { get; set; }
 
         public string ImageUrl { get; set; }
 

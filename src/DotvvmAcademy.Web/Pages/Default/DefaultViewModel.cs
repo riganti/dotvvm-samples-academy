@@ -1,5 +1,6 @@
 using DotVVM.Framework.ViewModel;
 using DotvvmAcademy.CourseFormat;
+using DotvvmAcademy.Web.Resources.Localization;
 using Microsoft.AspNetCore.Hosting;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,34 +27,38 @@ namespace DotvvmAcademy.Web.Pages.Default
 
         public override async Task Load()
         {
-            var variant = await workspace.LoadVariant(LanguageMoniker);
-            var lessonTasks = variant.Lessons.Select(l => workspace.LoadLesson(LanguageMoniker, l));
+            Languages = new List<LanguageOption>
+            {
+                LanguageOption.Create("cs"),
+                LanguageOption.Create("en"),
+                LanguageOption.Create("ru")
+            };
+
+            var course = await workspace.LoadCourse();
+            var lessonTasks = course.Lessons.Select(l => workspace.LoadLesson(l));
             var lessons = await Task.WhenAll(lessonTasks);
+            var variantTasks = lessons.Where(l => l.Variants.Contains(LanguageMoniker))
+                .Select(l => workspace.LoadLessonVariant(l.Moniker, LanguageMoniker));
+            var variants = await Task.WhenAll(variantTasks);
             if (environment.IsProduction())
             {
-                lessons = lessons.Where(l => l.Status == LessonStatus.Released)
+                variants = variants.Where(v => v.Status == LessonStatus.Released)
                     .ToArray();
             }
-            Lessons = lessons.Select(l =>
+            Lessons = variants.Select(v =>
             {
                 return new LessonDetail
                 {
-                    FirstStep = l.Steps.FirstOrDefault(),
-                    Html = l.Annotation,
-                    ImageUrl = l.ImageUrl,
-                    Moniker = l.Moniker,
-                    Name = l.Name
+                    FirstStep = v.Steps.FirstOrDefault(),
+                    AnnotationHtml = v.Annotation,
+                    ImageUrl = v.ImageUrl,
+                    Moniker = v.LessonMoniker,
+                    Name = v.Name
                 };
             })
             .ToList();
             FirstLesson = Lessons.FirstOrDefault();
             await base.Load();
-        }
-
-        protected override async Task<IEnumerable<string>> GetAvailableLanguageMonikers()
-        {
-            var root = await workspace.LoadRoot();
-            return root.Variants;
         }
     }
 }

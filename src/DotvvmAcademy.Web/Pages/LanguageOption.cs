@@ -1,17 +1,17 @@
-﻿using System;
+﻿using DotvvmAcademy.Web.Resources.Localization;
 
 namespace DotvvmAcademy.Web.Pages
 {
-    public class LanguageOption
+    public struct LanguageOption
     {
-        public LanguageOption(string moniker, string name)
+        public string Moniker { get; set; }
+
+        public string Name { get; set; }
+
+        public static LanguageOption Create(string moniker)
         {
-            Moniker = moniker ?? throw new ArgumentNullException(nameof(moniker));
-            Name = name ?? throw new ArgumentNullException(nameof(name));
+            var name = UIResources.ResourceManager.GetString($"Base_Language_{moniker}");
+            return new LanguageOption { Moniker = moniker, Name = name };
         }
-
-        public string Moniker { get; }
-
-        public string Name { get; }
     }
 }
