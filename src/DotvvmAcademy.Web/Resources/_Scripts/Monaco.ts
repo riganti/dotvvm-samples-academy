@@ -6,8 +6,23 @@ require(["vs/editor/editor.main"], () => { });
 ko.bindingHandlers["dotvvm-monaco"] = {
     init(element: HTMLElement, value: () => DotvvmAcademy.IEditorBinding) {
         require(["vs/editor/editor.main"], () => {
+            highlightSnippets()
             new DotvvmAcademy.Editor(element, value());
         });
+    }
+}
+
+
+function highlightSnippets() {
+    let snippets = document.querySelectorAll("code[class^=language-]");
+    for (var i = 0; i < snippets.length; i++) {
+        let snippet = snippets[i];
+        if (snippet.classList.length != 1) {
+            throw new Error("Snippet must have a single class.");
+        }
+        let language = snippet.classList[0].substr(9, snippet.classList[0].length - 8);
+        snippet.setAttribute("data-lang", language);
+        monaco.editor.colorizeElement(<HTMLElement>snippet, { tabSize: 4 });
     }
 }
 
