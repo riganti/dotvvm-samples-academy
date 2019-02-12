@@ -76,12 +76,13 @@
         background-color: $color-white;
         font-family: Consolas !important;
         border: 1px solid #d3d6db;
-        background-color: #f9f9f9;
+        background-color: $color-vs-dark;
         font-size: 12.8px;
         line-height: 19px;
-        padding: 5px 7px;
+        padding: 1rem;
         direction: ltr;
         border-radius: 2px;
+        overflow-x: auto;
 
         code {
             font-family: Consolas !important;

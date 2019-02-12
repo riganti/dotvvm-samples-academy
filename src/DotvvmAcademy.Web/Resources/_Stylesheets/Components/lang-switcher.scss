@@ -16,6 +16,8 @@
         height: 0;
         overflow: hidden;
         transition: $animate-all;
+        border: 1px solid $color-transparent;
+        border-top: none;
         z-index: 9;
 
         a {
@@ -41,6 +43,7 @@
             min-height: 2.6rem;
             transition: $animate-all;
             transform: translateY(-.1rem);
+            border-color: $color-vs-dark;
         }
     }
 }

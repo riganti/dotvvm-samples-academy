@@ -123,6 +123,7 @@
 
     &.with-loading {
         position: relative;
+        min-height: 4rem;
 
         span, svg {
             display: none;
