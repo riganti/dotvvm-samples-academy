@@ -5,7 +5,7 @@
 <div class="{resource:"lang-btn " + _control.CurrentLanguage.Moniker}"
      RenderSettings.Mode="Server">
     <cc:SvgToHtml Source="{resource: _control.CurrentImage}" />
-    <p>{{resource: _control.CurrentLanguage.Name}}</p>
+    <p>{{resource: _control.CurrentLanguage.Moniker.ToUpper()}}</p>
 </div>
 <div class="lang-switcher_list"
      RenderSettings.Mode="Server">
