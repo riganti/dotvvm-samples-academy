@@ -33,8 +33,8 @@
             </div>
             <div IncludeInPage="{resource: Step.HasEmbeddedView}"
                  class="embedded-view">
-                <h2>Interactive sample: {{resource: LessonName}}</h2>
-                <iframe src="{resource: "/embeddedView/" + LanguageMoniker + "/" + LessonMoniker + "/" + StepMoniker}" />
+                <h2 class="embedded-view__header" InnerText="{resource: "Interactive sample: " + LessonName}" />
+                <iframe class="embedded-view__content" src="{resource: "/embeddedView/" + LanguageMoniker + "/" + LessonMoniker + "/" + StepMoniker}" />
             </div>
             <div IncludeInPage="{resource: Step.HasArchive}">
                 <dot:RouteLink RouteName="Archive"
