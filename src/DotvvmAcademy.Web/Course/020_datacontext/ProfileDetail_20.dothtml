@@ -1,0 +1,17 @@
+﻿@viewModel DotvvmAcademy.Course.ProfileDetail.ProfileDetailViewModel
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+</head>
+<body>
+    <div DataContext="{value: Profile}">
+        <span>First Name: </span>
+        <dot:TextBox Text="{value: FirstName}"/>
+
+        <span>Last Name: </span>
+        <dot:TextBox Text="{value: LastName}"/>
+    </div>
+</body>
+</html>
