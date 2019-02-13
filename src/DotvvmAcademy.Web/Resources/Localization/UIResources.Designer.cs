@@ -116,7 +116,7 @@ namespace DotvvmAcademy.Web.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Czech.
+        ///   Looks up a localized string similar to česky.
         /// </summary>
         public static string Base_Language_cs {
             get {
@@ -134,7 +134,7 @@ namespace DotvvmAcademy.Web.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Russian.
+        ///   Looks up a localized string similar to русский.
         /// </summary>
         public static string Base_Language_ru {
             get {
