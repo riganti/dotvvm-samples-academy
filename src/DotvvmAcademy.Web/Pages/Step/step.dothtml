@@ -74,14 +74,12 @@
                                    Tooltip="{value: Name}" />
                 </dot:Repeater>
 
-                <dot:Button Click="{command: Validate()}"
+                <dot:Button ID="validation-button"
+                            Click="{command: Validate()}"
                             class="button with-icon with-tooltip"
                             Visible="{value: Step.NextStep != null}"
                             ButtonTagName="button"
                             Tooltip="Validate and Continue">
-                    <PostBack.Handlers>
-                        <cc:LoadingPostBackHandler AddedClasses="with-loading" RemovedClasses="with-tooltip" />
-                    </PostBack.Handlers>
                     <span InnerText="{resource: UIResources.Btn_NextStep}" />
                     <cc:SvgToHtml Source="/images/Icons/next.svg" />
                 </dot:Button>

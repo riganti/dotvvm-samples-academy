@@ -176,11 +176,11 @@ Watch &lt;strong&gt;DotVVM Coffee&lt;/strong&gt; videos!</value>
     <comment>Used in LanguageSwitch</comment>
   </data>
   <data name="Base_Language_cs" xml:space="preserve">
-    <value>Czech</value>
+    <value>česky</value>
     <comment>Used in LanguageSwitch</comment>
   </data>
   <data name="Base_Language_ru" xml:space="preserve">
-    <value>Russian</value>
+    <value>русский</value>
     <comment>Used in LangaageSwitch</comment>
   </data>
   <data name="Base_Correct_Solution" xml:space="preserve">
