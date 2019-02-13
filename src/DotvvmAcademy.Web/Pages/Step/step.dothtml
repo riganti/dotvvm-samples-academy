@@ -84,7 +84,7 @@
                     <cc:SvgToHtml Source="/images/Icons/next.svg" />
                 </dot:Button>
                 <dot:RouteLink RouteName="Default"
-                               class="button success"
+                               class="button finish"
                                ButtonTagName="button"
                                Param-Language="{value: LanguageMoniker}"
                                Visible="{resource: Step.NextStep == null}"
