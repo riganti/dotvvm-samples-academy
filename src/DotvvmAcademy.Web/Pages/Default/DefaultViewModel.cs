@@ -27,12 +27,10 @@ namespace DotvvmAcademy.Web.Pages.Default
 
         public override async Task Load()
         {
-            Languages = new List<LanguageOption>
-            {
-                LanguageOption.Create("cs"),
-                LanguageOption.Create("en"),
-                LanguageOption.Create("ru")
-            };
+            Languages = UILanguage.AvailableLanguages
+                .Where(l => l != LanguageMoniker)
+                .Select(LanguageOption.Create)
+                .ToList();
 
             var course = await workspace.LoadCourse();
             var lessonTasks = course.Lessons.Select(l => workspace.LoadLesson(l));

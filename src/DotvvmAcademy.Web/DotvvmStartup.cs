@@ -3,8 +3,10 @@ using DotVVM.Framework.Hosting;
 using DotVVM.Framework.ResourceManagement;
 using DotvvmAcademy.Web.Hosting;
 using DotvvmAcademy.Web.Pages;
+using DotvvmAcademy.Web.Pages.Error;
 using DotvvmAcademy.Web.Pages.Step;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace DotvvmAcademy.Web
 {
@@ -50,15 +52,21 @@ namespace DotvvmAcademy.Web
         private void ConfigureRoutes(DotvvmConfiguration config, string applicationPath)
         {
             config.RouteTable.Add(
-                routeName: "Step",
-                url: "{Language}/{Lesson}/{Step}",
-                virtualPath: "Pages/Step/step.dothtml",
-                defaultValues: new { Language = "en" },
-                presenterFactory: LocalizablePresenter.BasedOnParameter("Language"));
-            config.RouteTable.Add(
                 routeName: "Default",
                 url: "{Language}",
                 virtualPath: "Pages/Default/default.dothtml",
+                defaultValues: new { Language = "en" },
+                presenterFactory: LocalizablePresenter.BasedOnParameter("Language"));
+            config.RouteTable.Add(
+                routeName: "Error",
+                url: "{Language}/error/{ErrorCode}",
+                virtualPath: "Pages/Error/Error.dothtml",
+                defaultValues: new { Language = "en" },
+                presenterFactory: LocalizablePresenter.BasedOnParameter("Language"));
+            config.RouteTable.Add(
+                routeName: "Step",
+                url: "{Language}/{Lesson}/{Step}",
+                virtualPath: "Pages/Step/step.dothtml",
                 defaultValues: new { Language = "en" },
                 presenterFactory: LocalizablePresenter.BasedOnParameter("Language"));
             config.RouteTable.Add(
@@ -69,6 +77,11 @@ namespace DotvvmAcademy.Web
                 routeName: "Archive",
                 "archive/{Language}/{Lesson}/{Step}",
                 typeof(ArchivePresenter));
+            if (!config.Debug)
+            {
+                Console.WriteLine("Not debug");
+                config.Runtime.GlobalFilters.Add(new ErrorRedirectingFilter());
+            }
         }
     }
 }

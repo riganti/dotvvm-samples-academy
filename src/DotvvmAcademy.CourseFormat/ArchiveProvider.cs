@@ -15,6 +15,10 @@ namespace DotvvmAcademy.CourseFormat
 
         public async Task<Archive> Get(string path)
         {
+            if (!await environment.Exists(path))
+            {
+                return null;
+            }
             var memoryStream = new MemoryStream();
             using (var zipArchive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
             {
@@ -25,10 +29,6 @@ namespace DotvvmAcademy.CourseFormat
 
         private async Task AddRecursive(string basePath, string path, ZipArchive archive)
         {
-            if (!await environment.Exists(basePath))
-            {
-                return;
-            }
             foreach (var fileName in await environment.GetFiles(basePath))
             {
                 var entry = archive.CreateEntry(Path.Combine(path, fileName));

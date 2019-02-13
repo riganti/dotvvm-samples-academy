@@ -32,6 +32,9 @@ namespace DotvvmAcademy.Web.Pages.Step
         public string LessonMoniker { get; set; }
 
         [Bind(Direction.ServerToClientFirstRequest)]
+        public string LessonName { get; set; }
+
+        [Bind(Direction.ServerToClientFirstRequest)]
         public StepDetail Step { get; set; }
 
         [Bind(Direction.ServerToClientFirstRequest)]
@@ -43,9 +46,15 @@ namespace DotvvmAcademy.Web.Pages.Step
 
         public override async Task Load()
         {
+            // get available languages
             var lesson = await workspace.LoadLesson(LessonMoniker);
-            Languages = lesson.Variants.Select(LanguageOption.Create).ToList();
+            Languages = lesson.Variants.Where(v => v != LanguageMoniker)
+                .Select(LanguageOption.Create)
+                .ToList();
+
+            // load step
             var variant = await workspace.LoadLessonVariant(LessonMoniker, LanguageMoniker);
+            LessonName = variant.Name;
             var stepTasks = variant.Steps.Select(async s => await workspace.LoadStep(LessonMoniker, LanguageMoniker, s));
             var steps = await Task.WhenAll(stepTasks);
             Steps = steps.Select(s => new StepListDetail { Moniker = s.StepMoniker, Name = s.Name });
