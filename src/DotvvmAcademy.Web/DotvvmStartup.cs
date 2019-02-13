@@ -30,7 +30,6 @@ namespace DotvvmAcademy.Web
             config.Markup.AddMarkupControl("cc", "DiagnosticList", "Pages/Step/DiagnosticList.dotcontrol");
             config.Markup.AddCodeControls("cc", typeof(SvgToHtml));
             config.Markup.AddCodeControls("cc", typeof(MonacoEditor));
-            config.Markup.AddCodeControls("cc", typeof(LoadingPostBackHandler));
         }
 
         private void ConfigureResources(DotvvmConfiguration config, string applicationPath)

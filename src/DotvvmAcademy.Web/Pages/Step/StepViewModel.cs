@@ -137,10 +137,6 @@ namespace DotvvmAcademy.Web.Pages.Step
                 var diagnostics = (await validator.Validate(script, CodeTask.Code))
                     .ToArray();
                 CodeTask.IsCodeCorrect = !diagnostics.Any(d => d.Severity == CodeTaskDiagnosticSeverity.Error);
-                if (CodeTask.IsCodeCorrect)
-                {
-                    Context.RedirectToRoute("Step", new { Step = Step.NextStep });
-                }
                 CodeTask.Markers = diagnostics
                     .Select(GetMarker)
                     .OrderBy(m => (m.StartLineNumber, m.StartColumn))
