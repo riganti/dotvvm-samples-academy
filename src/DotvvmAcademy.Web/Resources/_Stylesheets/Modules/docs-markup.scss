@@ -43,6 +43,22 @@
         margin-bottom: 0;
     }
 
+    p {
+        line-height: 2;
+
+        code {
+            border: 1px solid #d3d6db;
+            background-color: #f9f9f9;
+            font-size: 12.8px;
+            line-height: 19px;
+            padding: 5px 7px;
+            direction: ltr;
+            color: $color-black;
+            border-radius: 2px;
+            font-family: Consolas !important;
+        }
+    }
+
     img {
         display: block;
         margin-top: 16px;

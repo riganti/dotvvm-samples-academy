@@ -1,5 +1,9 @@
 ﻿@import "../Base/_global.scss";
 
+code {
+    font-size: 1.7rem;
+}
+
 .code {
     &__bg {
         background-color: $color-vs-dark;
