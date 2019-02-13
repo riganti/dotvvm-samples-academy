@@ -15,7 +15,7 @@
                                 IncludeInPage="{resource: Step.HasCodeTask}"
                                 class="code__button"
                                 ButtonTagName="button">
-                        <span InnerText="Show Solution" />
+                        <span InnerText="Get solution" />
                     </dot:Button>
                     <dot:Button Click="{command: Reset()}"
                                 IncludeInPage="{resource: Step.HasCodeTask}"
@@ -33,6 +33,7 @@
             </div>
             <div IncludeInPage="{resource: Step.HasEmbeddedView}"
                  class="embedded-view">
+                <h2>Interactive sample: {{resource: LessonName}}</h2>
                 <iframe src="{resource: "/embeddedView/" + LanguageMoniker + "/" + LessonMoniker + "/" + StepMoniker}" />
             </div>
             <div IncludeInPage="{resource: Step.HasArchive}">

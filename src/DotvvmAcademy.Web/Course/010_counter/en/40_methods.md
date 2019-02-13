@@ -11,5 +11,5 @@ ViewModel's methods are accessible from the View. Beware, however, that a POST r
 
 ## Tasks
 
-- Add `Difference` to `Result` inside the `Increment` method.
-- Subtract `Difference` from `Result` inside the `Decrement` method.
+- The `Increment` method must __add assign__ `Difference` to `Result`.
+- The `Decrement` method must __subtract assign__ `Difference` from `Result`.
