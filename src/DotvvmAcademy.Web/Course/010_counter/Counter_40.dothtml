@@ -1,0 +1,16 @@
+﻿@viewModel DotvvmAcademy.Course.Counter.CounterViewModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <p>{{value: Result}}</p>
+    <dot:TextBox Text="{value: Difference}" />
+    <dot:Button Click="{command: Increment()}"
+                Text="++"/>
+    <dot:Button Click="{command: Decrement()}"
+                Text="--"/>
+</body>
+</html>
