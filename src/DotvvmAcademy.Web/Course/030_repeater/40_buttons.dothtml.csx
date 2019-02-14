@@ -1,4 +1,4 @@
-#load "30_repeater.dothtml.csx"
+#load "20_repeater.dothtml.csx"
 
 using DotvvmAcademy.Validation.Dothtml;
 using DotvvmAcademy.Validation.Dothtml.Unit;
@@ -9,12 +9,12 @@ Unit.SetCorrect("ToDo_30.dothtml");
 
 Unit.GetControl("/html/body/dot:TextBox")
     .GetProperty("@Text")
-    .RequireBinding("NewItem");
+    .RequireBinding(NewItemProperty);
 
 Unit.GetControl("/html/body/dot:Button")
     .GetProperty("@Click")
-    .RequireBinding("Add()", AllowedBinding.Command);
+    .RequireBinding($"{AddMethod}()", AllowedBinding.Command);
 
 repeater.GetControl("@ItemTemplate/dot:Button")
     .GetProperty("@Click")
-    .RequireBinding("_root.Remove(_this)", AllowedBinding.Command);
+    .RequireBinding($"_root.{RemoveMethod}(_this)", AllowedBinding.Command);

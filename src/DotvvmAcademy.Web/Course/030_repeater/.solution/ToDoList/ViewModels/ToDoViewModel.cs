@@ -10,9 +10,9 @@ namespace DotvvmAcademy.Course.ToDoList
 
         public string NewItem { get; set; }
 
-        public override Task Init()
+        public override Task Load()
         {
-            if (!Context.IsPostBack)
+            if (Items == null)
             {
                 Items = new List<string>();
             }

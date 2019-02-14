@@ -2,14 +2,14 @@
 using DotVVM.Framework.Hosting;
 using DotVVM.Framework.Security;
 using DotVVM.Framework.ViewModel;
-using DotvvmAcademy.Validation.Dothtml;
+using DotvvmAcademy.Validation.CSharp;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DotvvmAcademy.Validation.CSharp
+namespace DotvvmAcademy.Validation.Dothtml
 {
-    public static class CSharpDynamicContextExtensions
+    public static class ViewModel
     {
-        public static dynamic InstantiateViewModel(this CSharpDynamicContext context, string typeName, params object[] arguments)
+        public static dynamic Instantiate(CSharpDynamicContext context, string typeName, params object[] arguments)
         {
             var instance = context.Instantiate(typeName, arguments);
             if (!(instance is IDotvvmViewModel viewModel))

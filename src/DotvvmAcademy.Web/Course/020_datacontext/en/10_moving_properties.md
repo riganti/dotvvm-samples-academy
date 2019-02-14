@@ -5,7 +5,7 @@ CodeTask: 10_moving_properties.csharp.csx
 
 # Moving properties
 
-Hello and, again, welcome to DotVVM Academy! 
+Hello and, again, welcome to DotVVM Academy! Let's make an 'Edit profile' page!
 
 _DataContext_ or also _Binding Context_ is the target of every binding you make. You can use it to shorten your bindings and hide parts of the View.
 

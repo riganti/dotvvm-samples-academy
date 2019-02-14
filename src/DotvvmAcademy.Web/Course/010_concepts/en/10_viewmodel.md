@@ -5,7 +5,7 @@ CodeTask: 10_viewmodel.csharp.csx
 
 # The ViewModel
 
-Hello and welcome to DotVVM Academy! _DotVVM_ is a web framework based on the _Model-View-ViewModel_ (MVVM) pattern.
+Hello and welcome to DotVVM Academy! _DotVVM_ is a web framework based on the _Model-View-ViewModel_ (MVVM) pattern. Let's build a simple counter!
 
 _ViewModels_ are just plain old C# classes that contain the page's data and logic. They get sent between the application and its users.
 

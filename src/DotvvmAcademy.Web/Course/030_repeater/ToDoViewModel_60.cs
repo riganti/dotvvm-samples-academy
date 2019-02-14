@@ -6,27 +6,27 @@ namespace DotvvmAcademy.Course.ToDoList
 {
     public class ToDoViewModel : DotvvmViewModelBase
     {
-        public List<string> Items { get; set; }
-
         public string NewItem { get; set; }
 
-        public override Task Init()
-        {
-            if (!Context.IsPostBack)
-            {
-                Items = new List<string>();
-            }
-
-            return base.Init();
-        }
+        public List<string> Items { get; set; }
 
         public void Add()
         {
             Items.Add(NewItem);
         }
 
-        public void Remove(string item) {
+        public void Remove(string item)
+        {
             Items.Remove(item);
+        }
+
+        public override Task Load()
+        {
+            if (Items == null)
+            {
+                Items = new List<string>();
+            }
+            return base.Load();
         }
     }
 }

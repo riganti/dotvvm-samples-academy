@@ -1,0 +1,16 @@
+﻿---
+Title: Add & Remove
+CodeTask: 30_add_remove.csharp.csx
+---
+
+# Add & Remove
+
+We want to be able to add and remove items from the `Items` collection.
+
+---
+
+## Tasks
+
+- Add a `string` property called `NewItem`.
+- Inside the `Add` method, append `NewItem` to `Items`.
+- Inside the `Remove` method, delete the `item` parameter from `Items`.
