@@ -23,7 +23,12 @@ namespace DotvvmAcademy.Validation.Dothtml.Constraints
         {
             var type = converter.ToRoslyn(Type)
                 .OfType<ITypeSymbol>()
-                .Single();
+                .SingleOrDefault();
+            if (type == null)
+            {
+                return;
+            }
+
             var nodes = locator.Locate<ValidationControl>(Expression);
             foreach (var control in nodes)
             {

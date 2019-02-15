@@ -22,7 +22,12 @@ namespace DotvvmAcademy.Validation.CSharp.Constraints
         {
             var interfaceSymbol = converter.ToRoslyn(Interface)
                 .OfType<ITypeSymbol>()
-                .Single();
+                .SingleOrDefault();
+            if (interfaceSymbol == null)
+            {
+                return;
+            }
+
             var symbols = converter.ToRoslyn(Node)
                 .OfType<ITypeSymbol>();
             foreach (var typeSymbol in symbols)
