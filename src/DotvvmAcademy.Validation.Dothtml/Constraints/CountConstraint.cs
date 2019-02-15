@@ -46,8 +46,16 @@ namespace DotvvmAcademy.Validation.Dothtml.Constraints
             var parentExpression = Expression.GetLogicalParent();
             if (parentExpression != null)
             {
-                var parents = locator.Locate(parentExpression);
-                ReportParentedMissing(reporter, parents);
+                var parents = locator.Locate(parentExpression)
+                    .ToArray();
+                if (parents.Length == 0)
+                {
+                    ReportMissing(reporter);
+                }
+                else
+                {
+                    ReportParentedMissing(reporter, parents);
+                }
             }
             else
             {
