@@ -1,46 +1,52 @@
 ﻿@import "../../../Base/global";
 
-.page-error-code {
-    position: relative;
-    width: 100%;
-    min-height: 100vh;
-
-    > div {
-        display: inline-block;
+.error {
+    &__container {
+        max-width: $width-tablet;
         text-align: center;
-        padding: 2rem;
+        margin: 0 auto;
         width: 100%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
 
-        h1 {
-            font-size: 6rem;
+
+        > h1 {
             margin: 0;
+            text-align: center;
+            color: $color-dotvvm-blue;
+            margin-bottom: 1.5rem;
+            font-size: 5rem;
+            font-weight: 900;
 
-            @include res-min-mobile-max-tablet {
-                font-size: 4.5rem;
-            }
-
-            @include res-max-mobile {
-                font-size: 3rem;
+            @include res-max-tablet {
+                font-size: $font-size-xl;
             }
         }
 
-        p {
-            font-size: 3rem;
-            margin: 0;
+        > strong {
+            font-size: $font-size-xl;
+            margin-bottom: 1rem;
+            display: block;
+            color: $color-font;
+            text-align: center;
 
-            @include res-min-mobile-max-tablet {
-                margin-top: 1rem;
-                font-size: 2.3rem;
+            @include res-max-tablet {
+                font-size: $font-size-l;
             }
+        }
 
-            @include res-max-mobile {
-                margin-top: 1rem;
-                font-size: 1.8rem;
-            }
+        > p {
+            text-align: center;
+            display: block;
+            margin-bottom: 2rem;
+            color: $color-font;
+            font-size: $font-size-m;
         }
 
         .button {
-            margin-top: 3rem;
+            margin: 0 auto;
         }
     }
 }
