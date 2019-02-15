@@ -5,6 +5,8 @@ CodeTask: 40_back_to_root.dothtml.csx
 
 # Back to Root
 
+We need buttons to call the `Create` and `Delete` methods.
+
 Even inside a changed DataContext, you can access the ViewModel using the `_root` pseudo-variable:
 
 ```dothtml

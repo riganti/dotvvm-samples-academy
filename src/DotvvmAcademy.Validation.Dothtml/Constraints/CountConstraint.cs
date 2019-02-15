@@ -36,7 +36,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Constraints
                 {
                     reporter.Report(
                         message: Resources.ERR_WrongCount,
-                        arguments: new object[] { Count, node },
+                        arguments: new object[] { Count, Expression.GetControlName() },
                         node: node);
                 }
                 return;

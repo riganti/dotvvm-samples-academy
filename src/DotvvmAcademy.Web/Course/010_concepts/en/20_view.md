@@ -5,15 +5,17 @@ CodeTask: 20_view.dothtml.csx
 
 # The View
 
-_Views_ are everything users see and interact with. In DotVVM, they are written in _Dothtml_, a flavour of _HTML_. At the beginning of every View is a `@viewModel` directive that tells DotVVM what ViewModel goes with it.
+__Views__ are everything users see and interact with. ViewModels provide the data and logic for them. In DotVVM, they are written in __Dothtml__, a flavour of _HTML_.
 
-A _Value Binding_ is a bond between the View and the ViewModel. It looks like this:
+A `@viewModel` __directive__ is at the beginning of every View. It tells DotVVM what ViewModel goes with it.
+
+A __Value Binding__ is a bond between the View and the ViewModel. It looks like this:
 
 ```dothtml
 <p>{{value: Result}}</p>
 ```
 
-When user loads the page, `Result` will be inside the `<p>` element and will update itself automatically.
+When user loads the page, value of the `Result` property will be inside the `<p>` element and will update itself automatically.
 
 ---
 

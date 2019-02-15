@@ -19,4 +19,4 @@ Good job! Now you know what DataContext is!
 - DataContext is the default target of bindings.
 - Every control has a `DataContext` property.
 - Controls by default inherit their `DataContext` from their parent.
-- If the DataContext is `null` the element doesn't get rendered.
+- If the DataContext is `null`, the element doesn't get rendered.
