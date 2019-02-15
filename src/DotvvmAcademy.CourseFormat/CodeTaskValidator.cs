@@ -30,6 +30,11 @@ namespace DotvvmAcademy.CourseFormat
 
         public async Task<IEnumerable<CodeTaskDiagnostic>> Validate(CodeTask codeTask, string code)
         {
+            // TODO: Avoid StackOverflowException in a more clean manner.
+            if (code.Length > 4096)
+            {
+                return new [] { new CodeTaskDiagnostic("Your code is too long.", -1, -1, CodeTaskDiagnosticSeverity.Error) };
+            }
             var absolutePath = SourcePath.Combine(SourcePath.GetParent(codeTask.Path), codeTask.Unit.GetDefault());
             var sources = (await Task.WhenAll(codeTask.Unit.GetDependencies()
                 .Select(p => SourcePath.Combine(SourcePath.GetParent(codeTask.Path), p))
