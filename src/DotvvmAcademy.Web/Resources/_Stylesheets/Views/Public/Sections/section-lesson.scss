@@ -2,6 +2,36 @@
 
 .section-lesson {
     background-color: $color-white;
+
+    > .container-large.with-flex {
+        @include res-max-tablet {
+            display: none;
+        }
+    }
+
+    > .mobile-message {
+        display: none;
+
+
+        @include res-max-tablet {
+            display: block;
+            padding: 0 2rem;
+            text-align: center;
+            box-sizing: border-box;
+
+            h3 {
+                margin-top: 5rem;
+                background-color: $color-secondary;
+                font-size: $font-size-xl;
+                padding: 1rem;
+                box-sizing: border-box;
+                color: $color-font;
+                font-weight: 100;
+                font-family: $font-text;
+                border: .1rem solid $color-border;
+            }
+        }
+    }
 }
 
 .lesson-footer-container {
@@ -10,16 +40,8 @@
     transition: $animate-all;
     width: 100%;
 
-    &.success {
-        background-color: $color-success;
-        border-color: $color-success;
-        transition: $animate-all;
-    }
-
-    &.failed {
-        background-color: $color-error;
-        border-color: $color-error;
-        transition: $animate-all;
+    @include res-max-tablet {
+        display: none;
     }
 
     > .container-small {
@@ -28,6 +50,8 @@
         flex-wrap: wrap;
         justify-content: space-between;
         align-items: center;
+
+
 
         > div {
             flex: 0 0 50%;
