@@ -6,36 +6,46 @@
     <UserSecretsId>7ac5f83c-f14d-4800-b2ec-e1fb18bbbc11</UserSecretsId>
     <ApplicationInsightsResourceId>/subscriptions/fa73b1a2-747d-469f-899c-bb14579121c1/resourcegroups/DotvvmAcademyGroup/providers/microsoft.insights/components/dotvvmacademynew</ApplicationInsightsResourceId>
     <ApplicationInsightsAnnotationResourceId>/subscriptions/fa73b1a2-747d-469f-899c-bb14579121c1/resourcegroups/DotvvmAcademyGroup/providers/microsoft.insights/components/dotvvmacademynew</ApplicationInsightsAnnotationResourceId>
+    <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
   </PropertyGroup>
+
   <ItemGroup>
     <Compile Remove="Course/**/*" />
     <None Remove="Course/**/*" />
     <Content Remove="Course/**/*" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Course/**/*" CopyToPublishDirectory="Always" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Content Remove="sandbox/**/*" />
+    <None Include="sandbox/**/*" CopyToOutputDirectory="Always" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="**/*.dothtml;**/*.dotmaster;**/*.dotcontrol" Exclude="obj/**/*;bin/**/*;Course/**/*" CopyToPublishDirectory="Always" />
   </ItemGroup>
+
   <ItemGroup>
-    <None Remove="Pages\Error\Error.dothtml" />
+    <None Remove="Pages\Test\Test.dothtml" />
   </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.6.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="DotVVM.AspNetCore" Version="2.1.0" />
   </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\DotvvmAcademy.CourseFormat\DotvvmAcademy.CourseFormat.csproj" />
   </ItemGroup>
+
   <ItemGroup>
     <EmbeddedResource Update="Resources\Localization\UIResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>UIResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services" />
-  </ItemGroup>
+
   <ItemGroup>
     <Compile Update="Resources\Localization\UIResources.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -43,4 +53,9 @@
       <DependentUpon>UIResources.resx</DependentUpon>
     </Compile>
   </ItemGroup>
+
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services" />
+  </ItemGroup>
+
 </Project>

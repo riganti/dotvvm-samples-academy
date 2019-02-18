@@ -10,7 +10,7 @@ namespace DotvvmAcademy.CourseFormat
     {
         public const string SourcePrefix = "Source:";
 #if DEBUG
-        public static readonly TimeSpan SourceExpiration = TimeSpan.FromSeconds(3);
+        public static readonly TimeSpan SourceExpiration = TimeSpan.FromMinutes(10);
 #else
         public static readonly TimeSpan SourceExpiration = TimeSpan.FromDays(1);
 #endif

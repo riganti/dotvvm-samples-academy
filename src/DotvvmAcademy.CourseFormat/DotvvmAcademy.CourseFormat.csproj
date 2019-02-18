@@ -18,5 +18,5 @@
     <ProjectReference Include="..\DotvvmAcademy.Validation.Dothtml\DotvvmAcademy.Validation.Dothtml.csproj" />
     <ProjectReference Include="..\DotvvmAcademy.Validation\DotvvmAcademy.Validation.csproj" />
   </ItemGroup>
-
+  
 </Project>

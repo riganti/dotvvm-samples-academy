@@ -255,3 +255,4 @@ monaco-editor
 **/wwwroot/scripts
 **/wwwroot/libs
 npm-debug.log.*
+sandbox

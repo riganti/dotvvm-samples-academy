@@ -9,9 +9,9 @@ namespace DotvvmAcademy.Web
         {
             WebHost.CreateDefaultBuilder(args)
                 .UseApplicationInsights()
-               .UseStartup<Startup>()
-               .Build()
-               .Run();
+                .UseStartup<Startup>()
+                .Build()
+                .Run();
         }
     }
 }
