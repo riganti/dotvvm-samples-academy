@@ -19,7 +19,7 @@ namespace DotvvmAcademy.Web.Hosting
         {
             (var languageMoniker, var lessonMoniker, var stepMoniker) = GetParameters(context);
             var step = await workspace.LoadStep(lessonMoniker, languageMoniker, stepMoniker);
-            var archive = await workspace.ContextLoad<Archive>(lessonMoniker, languageMoniker, step.SolutionArchivePath);
+            var archive = await workspace.Load<Archive>(step.ArchivePath);
             context.HttpContext.Response.ContentType = "application/zip";
             var contentDisposition = new ContentDisposition
             {

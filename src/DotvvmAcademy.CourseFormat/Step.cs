@@ -1,32 +1,40 @@
-﻿namespace DotvvmAcademy.CourseFormat
+﻿using System.Collections.Immutable;
+
+namespace DotvvmAcademy.CourseFormat
 {
     public class Step : Source
     {
-        public Step(string lessonMoniker, string variantMoniker, string stepMoniker, string text, string name)
+        public Step(string lessonMoniker, string variantMoniker, string stepMoniker)
             : base($"/{lessonMoniker}/{variantMoniker}/{stepMoniker}")
         {
             LessonMoniker = lessonMoniker;
             VariantMoniker = variantMoniker;
             StepMoniker = stepMoniker;
-            Text = text;
-            Name = name;
         }
-
-        public EmbeddedView EmbeddedView { get; set; }
 
         public string LessonMoniker { get; }
 
-        public string Name { get; }
-
-        public string SolutionArchivePath { get; set; }
+        public string VariantMoniker { get; }
 
         public string StepMoniker { get; }
 
-        public string Text { get; }
+        public string Text { get; set; }
 
-        public string CodeTaskPath { get; set; }
+        public string ArchivePath { get; internal set; }
 
-        public string VariantMoniker { get; }
+        public string Name { get; internal set; }
+
+        public string CodeTaskPath { get; internal set; }
+
+        public string CorrectPath { get; internal set; }
+
+        public string DefaultPath { get; internal set; }
+
+        public ImmutableArray<string> CodeTaskDependencies { get; internal set; }
+
+        public string EmbeddedViewPath { get; internal set; }
+
+        public ImmutableArray<string> EmbeddedViewDependencies { get; internal set; }
 
         public override long GetSize()
         {

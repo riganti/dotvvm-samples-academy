@@ -15,10 +15,6 @@ namespace DotvvmAcademy.CourseFormat
 
         public async Task<Archive> Get(string path)
         {
-            if (!await environment.Exists(path))
-            {
-                return null;
-            }
             var memoryStream = new MemoryStream();
             using (var zipArchive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
             {

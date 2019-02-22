@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-
-namespace DotvvmAcademy.CourseFormat
+﻿namespace DotvvmAcademy.CourseFormat
 {
     public class StepFrontMatter
     {
-        public string CodeTask { get; set; }
+        public CodeTaskOptions CodeTask { get; set; }
 
         public EmbeddedViewOptions EmbeddedView { get; set; }
 
@@ -12,9 +10,20 @@ namespace DotvvmAcademy.CourseFormat
 
         public string Title { get; set; }
 
+        public class CodeTaskOptions
+        {
+            public string Correct { get; set; }
+
+            public string Default { get; set; }
+
+            public string[] Dependencies { get; set; }
+
+            public string Path { get; set; }
+        }
+
         public class EmbeddedViewOptions
         {
-            public List<string> Dependencies { get; set; }
+            public string[] Dependencies { get; set; }
 
             public string Path { get; set; }
         }

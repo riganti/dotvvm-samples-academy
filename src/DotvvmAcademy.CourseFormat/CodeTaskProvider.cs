@@ -1,14 +1,19 @@
 ﻿using DotvvmAcademy.Meta;
-using DotvvmAcademy.Validation.Unit;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.Scripting;
 using System;
+using System.IO;
+using System.IO.MemoryMappedFiles;
+using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace DotvvmAcademy.CourseFormat
 {
     public class CodeTaskProvider : ISourceProvider<CodeTask>
     {
+        public const string MmfPrefix = nameof(CodeTask) + ":";
+
         private readonly ICourseEnvironment environment;
 
         public CodeTaskProvider(ICourseEnvironment environment)
@@ -18,33 +23,38 @@ namespace DotvvmAcademy.CourseFormat
 
         public async Task<CodeTask> Get(string path)
         {
-            if (!await environment.Exists(path))
-            {
-                return null;
-            }
-
             var scriptSource = await environment.Read(path);
             var csharpScript = CSharpScript.Create(
                 code: scriptSource,
                 options: GetScriptOptions(path));
-            csharpScript = csharpScript.ContinueWith("return Unit;");
-            try
+            var compilation = csharpScript.GetCompilation();
+            using (var tempStream = new MemoryStream())
             {
-                var state = await csharpScript.RunAsync();
-                if (state.ReturnValue == null)
+                var emitResult = compilation.Emit(tempStream);
+                if (!emitResult.Success)
                 {
-                    throw new InvalidOperationException($"Validation script at '{path}' doesn't initialize the Unit property.");
+                    var sb = new StringBuilder($"Compilation of a CodeTask at '{path}' failed with the following diagnostics:\n");
+                    sb.Append(string.Join(",\n", emitResult.Diagnostics));
+                    throw new InvalidOperationException(sb.ToString());
                 }
-                return new CodeTask(path, (IValidationUnit)state.ReturnValue);
-            }
-            catch (Exception e)
-            {
-                throw new CodeTaskException("An exception occured during validation script compilation.", e);
-            }
-            finally
-            {
-                // TODO: Compile the script without forcing the GC
-                GC.Collect();
+                var mapName = $"{MmfPrefix}{path}";
+                var mmf = MemoryMappedFile.CreateNew(
+                    mapName: mapName,
+                    capacity: tempStream.Length,
+                    access: MemoryMappedFileAccess.ReadWrite);
+                using (var mmfStream = mmf.CreateViewStream(0, 0, MemoryMappedFileAccess.ReadWrite))
+                {
+                    tempStream.Position = 0;
+                    await tempStream.CopyToAsync(mmfStream);
+                }
+                var entryPoint = compilation.GetEntryPoint(default);
+                return new CodeTask(
+                    path: path,
+                    assembly: mmf,
+                    size: tempStream.Length,
+                    mapName: mapName,
+                    entryTypeName: entryPoint.ContainingType.MetadataName,
+                    entryMethodName: entryPoint.MetadataName);
             }
         }
 
@@ -64,7 +74,6 @@ namespace DotvvmAcademy.CourseFormat
                     RoslynReference.FromName("Microsoft.CSharp"), // Roslyn #23573
                     RoslynReference.FromName("DotVVM.Framework"),
                     RoslynReference.FromName("DotVVM.Core"),
-                    RoslynReference.FromName("DotvvmAcademy.CourseFormat"),
                     RoslynReference.FromName("DotvvmAcademy.Validation"),
                     RoslynReference.FromName("DotvvmAcademy.Validation.CSharp"),
                     RoslynReference.FromName("DotvvmAcademy.Validation.Dothtml"),

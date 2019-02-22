@@ -22,7 +22,6 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton<ISourceProvider<Archive>, ArchiveProvider>();
             services.AddSingleton<CourseCache>();
             services.AddSingleton<CourseWorkspace>();
-            services.AddSingleton<CodeTaskValidator>();
             services.AddSingleton<IMarkdownRenderer, MarkdigRenderer>();
             services.AddSingleton<CSharpValidationService>();
             services.AddSingleton<DothtmlValidationService>();
