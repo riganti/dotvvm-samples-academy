@@ -1,6 +1,11 @@
 ﻿---
 Title: Repeater
-CodeTask: 20_repeater.dothtml.csx
+CodeTask:
+    Path: 20_repeater.dothtml.csx
+    Default: ToDo_10.dothtml
+    Correct: ToDo_20.dothtml
+    Dependencies:
+        - ToDoViewModel_20.cs
 ---
 
 # Repeater

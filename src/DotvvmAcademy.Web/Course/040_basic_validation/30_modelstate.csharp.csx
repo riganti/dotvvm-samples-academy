@@ -10,9 +10,6 @@ using DotvvmAcademy.Validation.CSharp.Unit;
 using DotvvmAcademy.Validation.Dothtml;
 using DotvvmAcademy.Validation.Unit;
 
-Unit.SetDefault("LogInViewModel_20.cs");
-Unit.SetCorrect("LogInViewModel_30.cs");
-
 Unit.GetType(typeof(ValidationErrorFactory))
     .GetMethods(nameof(ValidationErrorFactory.AddModelError))
     .Allow();

@@ -6,9 +6,6 @@ using DotvvmAcademy.Validation.CSharp;
 using DotvvmAcademy.Validation.CSharp.Unit;
 using DotvvmAcademy.Validation.Unit;
 
-Unit.SetDefault("ToDoViewModel_30.cs");
-Unit.SetCorrect("ToDoViewModel_40.cs");
-
 Unit.GetType(typeof(void))
     .Allow();
 

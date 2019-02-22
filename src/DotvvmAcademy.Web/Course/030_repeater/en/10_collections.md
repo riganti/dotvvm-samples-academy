@@ -1,6 +1,9 @@
 ﻿---
 Title: Collections
-CodeTask: 10_collections.csharp.csx
+CodeTask:
+    Path: 10_collections.csharp.csx
+    Default: ToDoViewModel_10.cs
+    Correct: ToDoViewModel_20.cs
 ---
 
 # Collections

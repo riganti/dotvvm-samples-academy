@@ -1,6 +1,11 @@
 ﻿---
 Title: Attributes
-CodeTask: 10_attributes.csharp.csx
+CodeTask:
+    Path: 10_attributes.csharp.csx
+    Default: LogInViewModel_10.cs
+    Correct: LogInViewModel_20.cs
+    Dependencies: 
+        - .solution/LogIn/AccountService.cs
 ---
 
 # Attributes

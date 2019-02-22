@@ -1,6 +1,10 @@
 ﻿---
 Title: Add & Remove
-CodeTask: 30_add_remove.csharp.csx
+CodeTask:
+    Path: 30_add_remove.csharp.csx
+    Default: ToDoViewModel_30.cs
+    Correct: ToDoViewModel_40.cs
+
 ---
 
 # Add & Remove

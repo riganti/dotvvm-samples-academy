@@ -1,6 +1,9 @@
 ﻿---
 Title: Buttons
-CodeTask: 40_buttons.dothtml.csx
+CodeTask:
+    Path: 40_buttons.dothtml.csx
+    Default: ToDo_20.dothtml
+    Correct: ToDo_30.dothtml
 ---
 
 # Buttons

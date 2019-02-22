@@ -11,10 +11,6 @@ using DotvvmAcademy.Validation.CSharp;
 
 public CSharpUnit Unit { get; set; } = new CSharpUnit();
 
-Unit.SetDefault("LogInViewModel_10.cs");
-Unit.SetCorrect("LogInViewModel_20.cs");
-Unit.AddDependency(".solution/LogIn/AccountService.cs");
-
 Unit.GetType(typeof(void))
     .Allow();
 

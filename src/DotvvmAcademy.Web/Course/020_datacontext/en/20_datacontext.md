@@ -1,6 +1,11 @@
 ﻿---
 Title: DataContext
-CodeTask: 20_datacontext.dothtml.csx
+CodeTask:
+    Path: 20_datacontext.dothtml.csx
+    Default: ProfileDetail_10.dothtml
+    Correct: ProfileDetail_20.dothtml
+    Dependencies:
+        - ProfileDetailViewModel_20.cs
 ---
 
 # DataContext

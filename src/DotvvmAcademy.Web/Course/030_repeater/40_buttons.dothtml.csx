@@ -4,9 +4,6 @@ using DotvvmAcademy.Validation.Dothtml;
 using DotvvmAcademy.Validation.Dothtml.Unit;
 using DotvvmAcademy.Validation.Unit;
 
-Unit.SetDefault("ToDo_20.dothtml");
-Unit.SetCorrect("ToDo_30.dothtml");
-
 Unit.GetControl("/html/body/dot:TextBox")
     .GetProperty("@Text")
     .RequireBinding(NewItemProperty);

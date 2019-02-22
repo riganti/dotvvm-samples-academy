@@ -5,11 +5,6 @@ using DotvvmAcademy.Validation.Unit;
 
 public DothtmlUnit Unit { get; set; } = new DothtmlUnit();
 
-Unit.SetDefault("LogIn_10.dothtml");
-Unit.SetCorrect("LogIn_20.dothtml");
-Unit.AddDependency("LogInViewModel_20.cs");
-Unit.AddDependency(".solution/LogIn/AccountService.cs");
-
 Unit.GetDirective("/@viewModel")
     .RequireTypeArgument(ViewModelName);
 

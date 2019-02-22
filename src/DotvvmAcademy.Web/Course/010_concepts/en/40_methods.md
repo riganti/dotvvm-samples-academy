@@ -1,6 +1,9 @@
 ﻿---
 Title: Methods
-CodeTask: 40_methods.csharp.csx
+CodeTask:
+    Path: 40_methods.csharp.csx
+    Default: CounterViewModel_30.cs
+    Correct: CounterViewModel_40.cs
 ---
 
 # Methods

@@ -1,6 +1,9 @@
 ﻿---
 Title: Life-cycle
-CodeTask: 50_lifecycle.csharp.csx
+CodeTask: 
+    Path: 50_lifecycle.csharp.csx
+    Default: ToDoViewModel_50.cs
+    Correct: ToDoViewModel_60.cs
 ---
 
 # Life-cycle

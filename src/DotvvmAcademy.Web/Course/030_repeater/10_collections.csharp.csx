@@ -7,9 +7,6 @@ using DotvvmAcademy.Validation.Unit;
 
 public CSharpUnit Unit { get; set; } = new CSharpUnit();
 
-Unit.SetDefault("ToDoViewModel_10.cs");
-Unit.SetCorrect("ToDoViewModel_20.cs");
-
 Unit.GetType<string>()
     .Allow();
 

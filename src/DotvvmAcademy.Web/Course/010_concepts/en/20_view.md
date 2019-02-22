@@ -1,6 +1,12 @@
 ﻿---
 Title: The View
-CodeTask: 20_view.dothtml.csx
+CodeTask:
+    Path: 20_view.dothtml.csx
+    Default: Counter_10.dothtml
+    Correct: Counter_20.dothtml
+    Dependencies:
+        - CounterViewModel_20.cs
+
 ---
 
 # The View

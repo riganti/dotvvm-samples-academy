@@ -8,9 +8,6 @@ using DotvvmAcademy.Validation.CSharp.Unit;
 using DotvvmAcademy.Validation.CSharp;
 using DotvvmAcademy.Validation.Dothtml;
 
-Unit.SetDefault("ToDoViewModel_50.cs");
-Unit.SetCorrect("ToDoViewModel_60.cs");
-
 var viewModelBase = Unit.GetType<DotvvmViewModelBase>()
     .Allow();
 viewModelBase.GetMethod("Load")

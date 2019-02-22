@@ -5,9 +5,6 @@ using DotvvmAcademy.Validation.CSharp.Unit;
 using DotvvmAcademy.Validation.Dothtml;
 using DotvvmAcademy.Validation.Unit;
 
-Unit.SetDefault("ProfileDetailViewModel_30.cs");
-Unit.SetCorrect("ProfileDetailViewModel_40.cs");
-
 Unit.GetType(typeof(void))
     .Allow();
 

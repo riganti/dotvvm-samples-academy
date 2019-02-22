@@ -1,6 +1,12 @@
 ﻿---
 Title: Validator
-CodeTask: 20_validator.dothtml.csx
+CodeTask:
+    Path: 20_validator.dothtml.csx
+    Default: LogIn_10.dothtml
+    Correct: LogIn_20.dothtml
+    Dependencies:
+        - LogInViewModel_20.cs
+        - .solution/LogIn/AccountService.cs
 ---
 
 # Validator

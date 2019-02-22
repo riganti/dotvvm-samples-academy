@@ -1,6 +1,9 @@
 ﻿---
 Title: The ViewModel
-CodeTask: 10_viewmodel.csharp.csx
+CodeTask:
+    Path: 10_viewmodel.csharp.csx
+    Default: CounterViewModel_10.cs
+    Correct: CounterViewModel_20.cs
 ---
 
 # The ViewModel

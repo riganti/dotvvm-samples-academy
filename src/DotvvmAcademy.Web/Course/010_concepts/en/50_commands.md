@@ -1,6 +1,11 @@
 ﻿---
 Title: Commands
-CodeTask: 50_commands.dothtml.csx
+CodeTask:
+    Path: 50_commands.dothtml.csx
+    Default: Counter_30.dothtml
+    Correct: Counter_40.dothtml
+    Dependencies: 
+        - CounterViewModel_40.cs
 ---
 
 # Commands

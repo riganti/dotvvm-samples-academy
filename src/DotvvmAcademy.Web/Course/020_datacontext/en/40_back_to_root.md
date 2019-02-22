@@ -1,6 +1,9 @@
 ﻿---
 Title: Back to Root
-CodeTask: 40_back_to_root.dothtml.csx
+CodeTask:
+    Path: 40_back_to_root.dothtml.csx
+    Default: ProfileDetail_20.dothtml
+    Correct: ProfileDetail_30.dothtml
 ---
 
 # Back to Root

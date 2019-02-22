@@ -1,6 +1,9 @@
 ---
 Title: ModelState
-CodeTask: 30_modelstate.csharp.csx
+CodeTask:
+    Path: 30_modelstate.csharp.csx
+    Default: LogInViewModel_20.cs
+    Correct: LogInViewModel_30.cs
 ---
 
 # ModelState

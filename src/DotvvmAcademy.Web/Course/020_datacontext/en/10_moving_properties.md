@@ -1,6 +1,9 @@
 ﻿---
 Title: Moving properties
-CodeTask: 10_moving_properties.csharp.csx
+CodeTask:
+    Path: 10_moving_properties.csharp.csx
+    Correct: ProfileDetailViewModel_10.cs
+    Default: ProfileDetailViewModel_20.cs
 ---
 
 # Moving properties

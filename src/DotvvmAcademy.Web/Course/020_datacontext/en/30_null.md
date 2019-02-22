@@ -1,6 +1,9 @@
 ---
 Title: Null DataContext
-CodeTask: 30_null_datacontext.csharp.csx
+CodeTask:
+    Path: 30_null_datacontext.csharp.csx
+    Default: ProfileDetailViewModel_30.cs
+    Correct: ProfileDetailViewModel_40.cs
 ---
 
 # Null DataContext

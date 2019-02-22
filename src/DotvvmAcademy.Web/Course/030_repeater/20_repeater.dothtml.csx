@@ -5,10 +5,6 @@ using DotvvmAcademy.Validation.Unit;
 
 public DothtmlUnit Unit { get; set; } = new DothtmlUnit();
 
-Unit.SetDefault("ToDo_10.dothtml");
-Unit.SetCorrect("ToDo_20.dothtml");
-Unit.AddDependency("ToDoViewModel_20.cs");
-
 Unit.GetDirective("/@viewModel")
     .RequireTypeArgument(ViewModelName);
 

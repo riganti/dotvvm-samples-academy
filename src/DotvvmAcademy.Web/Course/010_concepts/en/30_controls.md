@@ -1,6 +1,9 @@
 ﻿---
 Title: Controls
-CodeTask: 30_controls.dothtml.csx
+CodeTask:
+    Path: 30_controls.dothtml.csx
+    Default: Counter_20.dothtml
+    Correct: Counter_30.dothtml
 ---
 
 # Controls
