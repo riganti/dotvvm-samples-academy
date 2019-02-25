@@ -177,4 +177,25 @@ Vše ostatní vám vysvětlíme v několika jednoduchých lekcích.</value>
   <data name="Base_Incorrect_Solution" xml:space="preserve">
     <value>Nesprávně</value>
   </data>
+  <data name="Error_404Message" xml:space="preserve">
+    <value>Nemůžeme najít stránku, kterou hledáte.</value>
+  </data>
+  <data name="Error_404Title" xml:space="preserve">
+    <value>Stránka nenalezena</value>
+  </data>
+  <data name="Error_500Message" xml:space="preserve">
+    <value>Chyba je na naší straně. Zkuste to prosím později.</value>
+  </data>
+  <data name="Error_500Title" xml:space="preserve">
+    <value>Něco se pokazilo</value>
+  </data>
+  <data name="Error_666Message" xml:space="preserve">
+    <value>Prosím utvořte řadu a evakuujte tuto stránku.</value>
+  </data>
+  <data name="Error_666Title" xml:space="preserve">
+    <value>Probíhá invaze démonů</value>
+  </data>
+  <data name="Error_BackHome" xml:space="preserve">
+    <value>Zpět k lekcím</value>
+  </data>
 </root>

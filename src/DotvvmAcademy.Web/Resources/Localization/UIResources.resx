@@ -189,4 +189,25 @@ Watch &lt;strong&gt;DotVVM Coffee&lt;/strong&gt; videos!</value>
   <data name="Base_Incorrect_Solution" xml:space="preserve">
     <value>Incorrect</value>
   </data>
+  <data name="Error_404Message" xml:space="preserve">
+    <value>We can't find the page you're looking for.</value>
+  </data>
+  <data name="Error_404Title" xml:space="preserve">
+    <value>Not Found</value>
+  </data>
+  <data name="Error_500Message" xml:space="preserve">
+    <value>An error occured on our side. Please try again later.</value>
+  </data>
+  <data name="Error_500Title" xml:space="preserve">
+    <value>Internal Server Error</value>
+  </data>
+  <data name="Error_666Message" xml:space="preserve">
+    <value>Please evacuate the site in an orderly fashion.</value>
+  </data>
+  <data name="Error_666Title" xml:space="preserve">
+    <value>Demonic Invasion in Progress</value>
+  </data>
+  <data name="Error_BackHome" xml:space="preserve">
+    <value>Back to Lessons</value>
+  </data>
 </root>

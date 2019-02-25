@@ -235,6 +235,69 @@ namespace DotvvmAcademy.Web.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to We can&apos;t find the page you&apos;re looking for..
+        /// </summary>
+        public static string Error_404Message {
+            get {
+                return ResourceManager.GetString("Error_404Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not Found.
+        /// </summary>
+        public static string Error_404Title {
+            get {
+                return ResourceManager.GetString("Error_404Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error occured on our side. Please try again later..
+        /// </summary>
+        public static string Error_500Message {
+            get {
+                return ResourceManager.GetString("Error_500Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Internal Server Error.
+        /// </summary>
+        public static string Error_500Title {
+            get {
+                return ResourceManager.GetString("Error_500Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please evacuate the site in an orderly fashion..
+        /// </summary>
+        public static string Error_666Message {
+            get {
+                return ResourceManager.GetString("Error_666Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Demonic Invasion in Progress.
+        /// </summary>
+        public static string Error_666Title {
+            get {
+                return ResourceManager.GetString("Error_666Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Back to Lessons.
+        /// </summary>
+        public static string Error_BackHome {
+            get {
+                return ResourceManager.GetString("Error_BackHome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to en.
         /// </summary>
         public static string LangSwitcher_Class {

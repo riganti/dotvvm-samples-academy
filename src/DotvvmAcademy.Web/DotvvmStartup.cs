@@ -64,7 +64,7 @@ namespace DotvvmAcademy.Web
                 routeName: "Error",
                 url: "{Language}/error/{ErrorCode}",
                 virtualPath: "Pages/Error/Error.dothtml",
-                defaultValues: new { Language = "en" },
+                defaultValues: new { Language = "en", ErrorCode = 500 },
                 presenterFactory: LocalizablePresenter.BasedOnParameter("Language"));
             config.RouteTable.Add(
                 routeName: "Step",
