@@ -1,5 +1,5 @@
 ﻿using DotvvmAcademy.Validation;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -15,17 +15,36 @@ using System.Threading.Tasks;
 
 namespace DotvvmAcademy.CourseFormat
 {
-    public class CourseWorkspace
+    public class CourseWorkspace : IDisposable
     {
         public const int ValidationTimeout = 1000;
+#if DEBUG
+        public static readonly TimeSpan SourceExpiration = TimeSpan.FromSeconds(3);
+#else
+        public static readonly TimeSpan SourceExpiration = TimeSpan.FromDays(1);
+#endif
+        private readonly IMemoryCache cache = new MemoryCache(new MemoryCacheOptions());
+        private readonly ICourseEnvironment environment;
+        private readonly ImmutableDictionary<Type, object> sourceProviders;
 
-        private readonly CourseCache cache = new CourseCache();
-        private readonly IServiceProvider provider;
-
-        public CourseWorkspace(CourseCache cache, IServiceProvider provider)
+        public CourseWorkspace(ICourseEnvironment environment)
         {
-            this.cache = cache;
-            this.provider = provider;
+            this.environment = environment;
+            sourceProviders = ImmutableDictionary.CreateRange(new Dictionary<Type, object>
+            {
+                [typeof(Course)] = new CourseProvider(environment),
+                [typeof(Lesson)] = new LessonProvider(environment),
+                [typeof(LessonVariant)] = new LessonVariantProvider(environment),
+                [typeof(Step)] = new StepProvider(environment),
+                [typeof(CodeTask)] = new CodeTaskProvider(environment),
+                [typeof(CourseFile)] = new CourseFileProvider(environment),
+                [typeof(Archive)] = new ArchiveProvider(environment),
+            });
+        }
+
+        public void Dispose()
+        {
+            cache.Dispose();
         }
 
         public async Task<TSource> Load<TSource>(string sourcePath)
@@ -35,19 +54,27 @@ namespace DotvvmAcademy.CourseFormat
             {
                 throw new ArgumentException("Source path must be absolute.", nameof(sourcePath));
             }
-            if (cache.TryGetValue($"{CourseCache.SourcePrefix}{sourcePath}", out var existingSource))
+
+            var cacheKey = $"{typeof(TSource)}:{sourcePath}";
+            TSource source;
+            if (cache.TryGetValue(cacheKey, out source))
             {
-                return (TSource)existingSource;
-            }
-            var sourceProvider = provider.GetRequiredService<ISourceProvider<TSource>>();
-            var newSource = await sourceProvider.Get(sourcePath);
-            if (newSource == null)
-            {
-                return null;
+                return source;
             }
 
-            cache.AddSource(newSource);
-            return newSource;
+            var sourceProvider = (ISourceProvider<TSource>)sourceProviders[typeof(TSource)];
+            source = await sourceProvider.Get(sourcePath);
+            using (var entry = cache.CreateEntry(cacheKey))
+            {
+                entry.Value = source;
+                entry.SetAbsoluteExpiration(SourceExpiration);
+            }
+            return source;
+        }
+
+        public Task<string> Read(string path)
+        {
+            return environment.Read(path);
         }
 
         public async Task<IEnumerable<CodeTaskDiagnostic>> ValidateStep(
@@ -104,7 +131,6 @@ namespace DotvvmAcademy.CourseFormat
                             severity: deserializedDiagnostic.Severity.ToCodeTaskDiagnosticSeverity()));
                     }
                 }
-
             }
             catch (SerializationException)
             {
@@ -114,11 +140,6 @@ namespace DotvvmAcademy.CourseFormat
                 }
             }
             return diagnostics.ToImmutable();
-        }
-
-        public Task<string> Read(string path)
-        {
-            return provider.GetRequiredService<ICourseEnvironment>().Read(path);
         }
     }
 }

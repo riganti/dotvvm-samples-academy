@@ -8,12 +8,11 @@ namespace DotvvmAcademy.CourseFormat
     public class StepProvider : ISourceProvider<Step>
     {
         private readonly ICourseEnvironment environment;
-        private readonly IMarkdownRenderer renderer;
+        private readonly MarkdigRenderer renderer = new MarkdigRenderer();
 
-        public StepProvider(ICourseEnvironment environment, IMarkdownRenderer renderer)
+        public StepProvider(ICourseEnvironment environment)
         {
             this.environment = environment;
-            this.renderer = renderer;
         }
 
         public async Task<Step> Get(string path)

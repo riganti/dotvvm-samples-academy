@@ -61,7 +61,7 @@ namespace DotvvmAcademy.CourseFormat {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Validation of your code has been termited, because it took too long..
+        ///   Looks up a localized string similar to Validation of your code has been terminated, because it took too long..
         /// </summary>
         public static string ERR_ValidationTakesTooLong {
             get {

@@ -9,12 +9,11 @@ namespace DotvvmAcademy.CourseFormat
     public class LessonVariantProvider : ISourceProvider<LessonVariant>
     {
         private readonly ICourseEnvironment environment;
-        private readonly IMarkdownRenderer renderer;
+        private readonly MarkdigRenderer renderer = new MarkdigRenderer();
 
-        public LessonVariantProvider(ICourseEnvironment environment, IMarkdownRenderer renderer)
+        public LessonVariantProvider(ICourseEnvironment environment)
         {
             this.environment = environment;
-            this.renderer = renderer;
         }
 
         public async Task<LessonVariant> Get(string path)

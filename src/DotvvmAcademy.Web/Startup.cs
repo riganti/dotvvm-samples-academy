@@ -1,6 +1,8 @@
-﻿using DotvvmAcademy.Web.Hosting;
+﻿using DotvvmAcademy.CourseFormat;
+using DotvvmAcademy.Web.Hosting;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using System.IO;
 
 namespace DotvvmAcademy.Web
 {
@@ -15,7 +17,7 @@ namespace DotvvmAcademy.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDotVVM<DotvvmStartup>();
-            services.AddCourseFormat("./Course");
+            services.AddSingleton(new CourseWorkspace(new FileSystemEnvironment(new DirectoryInfo("./Course"))));
             services.AddSingleton<ArchivePresenter>();
             services.AddSingleton<EmbeddedViewBuilder>();
             services.AddSingleton<EmbeddedViewCompiler>();

@@ -7,7 +7,7 @@ using YamlDotNet.Serialization;
 
 namespace DotvvmAcademy.CourseFormat
 {
-    public class MarkdigRenderer : IMarkdownRenderer
+    public class MarkdigRenderer
     {
         private MarkdownPipeline pipeline = new MarkdownPipelineBuilder()
             .UsePipeTables()
