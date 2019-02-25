@@ -17,7 +17,7 @@ namespace DotvvmAcademy.CourseFormat
 {
     public class CourseWorkspace : IDisposable
     {
-        public const int ValidationTimeout = 1000;
+        public const int ValidationTimeout = 5000;
 #if DEBUG
         public static readonly TimeSpan SourceExpiration = TimeSpan.FromSeconds(3);
 #else
@@ -55,7 +55,7 @@ namespace DotvvmAcademy.CourseFormat
                 throw new ArgumentException("Source path must be absolute.", nameof(sourcePath));
             }
 
-            var cacheKey = $"{typeof(TSource)}:{sourcePath}";
+            var cacheKey = $"{typeof(TSource).Name}:{sourcePath}";
             TSource source;
             if (cache.TryGetValue(cacheKey, out source))
             {
@@ -68,6 +68,13 @@ namespace DotvvmAcademy.CourseFormat
             {
                 entry.Value = source;
                 entry.SetAbsoluteExpiration(SourceExpiration);
+                entry.RegisterPostEvictionCallback((key, value, reason, state) =>
+                {
+                    if(value is IDisposable disposable)
+                    {
+                        disposable.Dispose();
+                    }
+                });
             }
             return source;
         }
@@ -106,7 +113,7 @@ namespace DotvvmAcademy.CourseFormat
             bool killed = false;
             ThreadPool.QueueUserWorkItem((s) =>
             {
-                Thread.Sleep(4000);
+                Thread.Sleep(ValidationTimeout);
                 if (!process.HasExited)
                 {
                     process.Kill();
@@ -122,7 +129,7 @@ namespace DotvvmAcademy.CourseFormat
                 var deserializedDiagnostics = (LightDiagnostic[])formatter.Deserialize(process.StandardOutput.BaseStream);
                 foreach (var deserializedDiagnostic in deserializedDiagnostics)
                 {
-                    if (deserializedDiagnostic.Source.StartsWith("UserCode"))
+                    if (deserializedDiagnostic.Source == null || deserializedDiagnostic.Source.StartsWith("UserCode"))
                     {
                         diagnostics.Add(new CodeTaskDiagnostic(
                             message: deserializedDiagnostic.Message,

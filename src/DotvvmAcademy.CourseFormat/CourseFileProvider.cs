@@ -1,4 +1,8 @@
-﻿using System.IO.MemoryMappedFiles;
+﻿using System;
+using System.IO;
+using System.IO.MemoryMappedFiles;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace DotvvmAcademy.CourseFormat
@@ -15,15 +19,25 @@ namespace DotvvmAcademy.CourseFormat
 
         public async Task<CourseFile> Get(string path)
         {
-            using (var envStream = environment.OpenRead(path))
+            var text = await environment.Read(path);
+            using (var tempStream = new MemoryStream())
             {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(tempStream, text);
+                tempStream.Position = 0;
                 var mapName = $"{MmfPrefix}{path}";
-                var mmf = MemoryMappedFile.CreateNew(mapName, envStream.Length, MemoryMappedFileAccess.ReadWrite);
+                var mutex = new Mutex(true, $"Mutex-{mapName}", out var isMutexNew);
+                if (!isMutexNew)
+                {
+                    mutex.WaitOne();
+                }
+                var mmf = MemoryMappedFile.CreateNew(mapName, tempStream.Length, MemoryMappedFileAccess.ReadWrite);
                 using (var mmfStream = mmf.CreateViewStream(0, 0, MemoryMappedFileAccess.ReadWrite))
                 {
-                    await mmfStream.CopyToAsync(mmfStream);
+                    tempStream.CopyTo(mmfStream);
                 }
-                return new CourseFile(path, mmf, envStream.Length, mapName);
+                mutex.ReleaseMutex();
+                return new CourseFile(path, mmf, tempStream.Length, mapName, mutex);
             }
         }
     }

@@ -50,6 +50,7 @@ namespace DotvvmAcademy.CourseFormat.Sandbox
             var unit = (IValidationUnit)unitProperty.GetValue(submissionArray[1]);
 
             // load dependencies
+            var formatter = new BinaryFormatter();
             var sources = ImmutableArray.CreateBuilder<ISourceCode>();
             for (int i = 3; i < args.Length; i++)
             {
@@ -57,9 +58,8 @@ namespace DotvvmAcademy.CourseFormat.Sandbox
                 var dependencyName = args[i];
                 using (var dependencyFile = MemoryMappedFile.OpenExisting(dependencyName, MemoryMappedFileRights.Read))
                 using (var stream = dependencyFile.CreateViewStream(0, 0, MemoryMappedFileAccess.Read))
-                using (var streamReader = new StreamReader(stream))
                 {
-                    source = await streamReader.ReadToEndAsync();
+                    source = (string)formatter.Deserialize(stream);
                 }
                 if (dependencyName.EndsWith("cs"))
                 {
@@ -98,7 +98,6 @@ namespace DotvvmAcademy.CourseFormat.Sandbox
             var diagnostics = await validationService.Validate(unit.GetConstraints(), sources);
             var lightDiagnostics = diagnostics.Select(d => new LightDiagnostic(d))
                 .ToArray();
-            var formatter = new BinaryFormatter();
             using(var outStream = Console.OpenStandardOutput())
             {
                 formatter.Serialize(outStream, lightDiagnostics);

@@ -7,6 +7,7 @@ using DotvvmAcademy.Validation.Dothtml.ValidationTree;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -37,9 +38,9 @@ namespace DotvvmAcademy.Validation.Dothtml
                 context.SourceCodeStorage = new SourceCodeStorage(sources);
                 var reporter = scope.ServiceProvider.GetRequiredService<IValidationReporter>();
                 context.Compilation = GetCompilation(reporter, sources, id);
-                var assemblies = Assembly.GetEntryAssembly()
-                    .GetReferencedAssemblies()
-                    .Select(Assembly.Load)
+                var platform = Environment.OSVersion.Platform.ToString();
+                var assemblies = DependencyContext.Default.GetRuntimeAssemblyNames(platform)
+                    .Select(l => Assembly.Load(l.Name))
                     .ToImmutableArray();
                 context.Converter = new MetaConverter(context.Compilation, assemblies);
 

@@ -4,6 +4,8 @@ CodeTask:
     Path: 30_modelstate.csharp.csx
     Default: LogInViewModel_20.cs
     Correct: LogInViewModel_30.cs
+    Dependencies: 
+        - .solution/LogIn/AccountService.cs
 ---
 
 # ModelState

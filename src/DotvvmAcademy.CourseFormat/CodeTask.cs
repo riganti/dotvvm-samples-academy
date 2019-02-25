@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO.MemoryMappedFiles;
+using System.Threading;
 
 namespace DotvvmAcademy.CourseFormat
 {
@@ -7,7 +8,14 @@ namespace DotvvmAcademy.CourseFormat
     {
         private readonly long size;
 
-        public CodeTask(string path, MemoryMappedFile assembly, long size, string mapName, string entryTypeName, string entryMethodName)
+        public CodeTask(
+            string path,
+            MemoryMappedFile assembly,
+            long size,
+            string mapName,
+            string entryTypeName,
+            string entryMethodName,
+            Mutex mutex)
             : base(path)
         {
             Assembly = assembly;
@@ -15,6 +23,7 @@ namespace DotvvmAcademy.CourseFormat
             this.size = size;
             EntryTypeName = entryTypeName;
             EntryMethodName = entryMethodName;
+            Mutex = mutex;
         }
 
         public MemoryMappedFile Assembly { get; }
@@ -25,9 +34,13 @@ namespace DotvvmAcademy.CourseFormat
 
         public string MapName { get; }
 
+        public Mutex Mutex { get; set; }
+
         public void Dispose()
         {
+            Mutex.WaitOne();
             Assembly.Dispose();
+            Mutex.Dispose();
         }
 
         public override long GetSize()

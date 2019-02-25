@@ -7,6 +7,7 @@ using System.IO.MemoryMappedFiles;
 using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
+using System.Threading;
 
 namespace DotvvmAcademy.CourseFormat
 {
@@ -38,6 +39,7 @@ namespace DotvvmAcademy.CourseFormat
                     throw new InvalidOperationException(sb.ToString());
                 }
                 var mapName = $"{MmfPrefix}{path}";
+                var mutex = new Mutex(true, $"Mutex-{mapName}");
                 var mmf = MemoryMappedFile.CreateNew(
                     mapName: mapName,
                     capacity: tempStream.Length,
@@ -45,8 +47,9 @@ namespace DotvvmAcademy.CourseFormat
                 using (var mmfStream = mmf.CreateViewStream(0, 0, MemoryMappedFileAccess.ReadWrite))
                 {
                     tempStream.Position = 0;
-                    await tempStream.CopyToAsync(mmfStream);
+                    tempStream.CopyTo(mmfStream);
                 }
+                mutex.ReleaseMutex();
                 var entryPoint = compilation.GetEntryPoint(default);
                 return new CodeTask(
                     path: path,
@@ -54,7 +57,8 @@ namespace DotvvmAcademy.CourseFormat
                     size: tempStream.Length,
                     mapName: mapName,
                     entryTypeName: entryPoint.ContainingType.MetadataName,
-                    entryMethodName: entryPoint.MetadataName);
+                    entryMethodName: entryPoint.MetadataName,
+                    mutex: mutex);
             }
         }
 
