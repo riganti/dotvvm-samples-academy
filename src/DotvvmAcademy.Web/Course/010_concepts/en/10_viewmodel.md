@@ -1,13 +1,18 @@
 ﻿---
 Title: The ViewModel
-CodeTask: 10_viewmodel.csharp.csx
+CodeTask:
+    Path: 10_viewmodel.csharp.csx
+    Default: CounterViewModel_10.cs
+    Correct: CounterViewModel_20.cs
 ---
 
 # The ViewModel
 
-Hello and welcome to DotVVM Academy! _DotVVM_ is a web framework based on the _Model-View-ViewModel_ (MVVM) pattern.
+Hello and welcome to DotVVM Academy. Let's build a simple counter! It will allow users to increment and decrement a value in steps they define.
 
-_ViewModels_ are just plain old C# classes that contain the page's data and logic. They get sent between the application and its users.
+__DotVVM__ is a web framework based on the _Model-View-ViewModel_ (MVVM) pattern.
+
+__ViewModels__ are just plain old C# classes that contain the page's data and logic. They get sent between the application and its users.
 
 ---
 

@@ -5,9 +5,6 @@ using DotvvmAcademy.Validation.Unit;
 
 public CSharpUnit Unit { get; set; } = new CSharpUnit();
 
-Unit.SetDefault("Sample_10.cs");
-Unit.SetCorrect("Sample_20.cs");
-
 Unit.GetType<int>()
     .Allow();
 

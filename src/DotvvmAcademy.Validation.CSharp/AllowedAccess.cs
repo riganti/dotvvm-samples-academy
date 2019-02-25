@@ -41,6 +41,11 @@ namespace DotvvmAcademy.Validation.CSharp
         /// <summary>
         /// Symbol can be for 'public'.
         /// </summary>
-        Public = 1 << 5
+        Public = 1 << 5,
+
+        /// <summary>
+        /// All access modifiers are allowed.
+        /// </summary>
+        All = ~0
     }
 }

@@ -38,7 +38,12 @@ namespace DotvvmAcademy.Validation.CSharp.Constraints
                 {
                     var expectedParameter = converter.ToRoslyn(Parameters[i])
                         .OfType<ITypeSymbol>()
-                        .Single();
+                        .SingleOrDefault();
+                    if (expectedParameter == null)
+                    {
+                        return;
+                    }
+
                     if (!method.Parameters[i].Type.Equals(expectedParameter))
                     {
                         reporter.Report(

@@ -19,43 +19,41 @@ namespace DotvvmAcademy.CourseFormat
 
         public async Task<LessonVariant> Get(string path)
         {
-            // extract the monikers
+            // extract mandatory data from the environment
             var segments = SourcePath.GetSegments(path).ToArray();
             if (segments.Length != 2)
             {
                 throw new ArgumentException($"Source path '{path}' is not composed of 2 segments.");
             }
-            var lessonMoniker = segments[0].ToString();
-            var variantMoniker = segments[1].ToString();
+            var steps = (await environment.GetFiles(path))
+                .Where(f => f.EndsWith(".md") && f != CourseConstants.LessonFile)
+                .Select(f => f.Substring(0, f.Length - 3))
+                .ToImmutableArray();
+            if (steps.Length == 0)
+            {
+                throw new NotSupportedException($"Lesson at '{path}' contains no steps.");
+            }
+            var variant = new LessonVariant(
+                lessonMoniker: segments[0].ToString(),
+                variantMoniker: segments[1].ToString(),
+                steps: steps);
 
+            // extract data from lesson.md
             using (var stream = environment.OpenRead($"{path}/{CourseConstants.LessonFile}"))
             using (var reader = new StreamReader(stream))
             {
                 var fileText = await reader.ReadToEndAsync();
-                (var html, var frontMatter) = await renderer.Render<LessonFrontMatter>(fileText);
+                (var annotation, var frontMatter) = await renderer.Render<LessonFrontMatter>(fileText);
                 if (frontMatter == null)
                 {
-                    throw new NotSupportedException($"Lesson at '{path}' doesn't have a YAML Front Matter.");
+                    throw new InvalidOperationException($"LessonVariant at {path} doesn't have a YAML Front Matter.");
                 }
-
-                var steps = (await environment.GetFiles(path))
-                    .Where(f => f.EndsWith(".md") && f != CourseConstants.LessonFile)
-                    .Select(f => f.Substring(0, f.Length - 3))
-                    .ToImmutableArray();
-                if (steps.Length == 0)
-                {
-                    throw new NotSupportedException($"Lesson at '{path}' contains no steps.");
-                }
-
-                return new LessonVariant(
-                    lessonMoniker: lessonMoniker,
-                    variantMoniker: variantMoniker,
-                    steps: steps,
-                    name: frontMatter.Title,
-                    status: frontMatter.Status,
-                    imageUrl: frontMatter.Image,
-                    annotation: html);
+                variant.Annotation = annotation;
+                variant.ImageUrl = frontMatter.Image;
+                variant.Name = frontMatter.Title;
+                variant.Status = frontMatter.Status;
             }
+            return variant;
         }
     }
 }

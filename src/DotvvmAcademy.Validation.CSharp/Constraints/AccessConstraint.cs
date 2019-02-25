@@ -24,40 +24,13 @@ namespace DotvvmAcademy.Validation.CSharp.Constraints
                 .OfType<TSymbol>();
             foreach (var symbol in symbols)
             {
-                if (!AllowedAccess.HasFlag(GetAllowedAccess(symbol.DeclaredAccessibility)))
+                if (!AllowedAccess.HasFlag(symbol.DeclaredAccessibility.ToAllowedAccess()))
                 {
                     reporter.Report(
                         message: Resources.ERR_WrongAccessibility,
                         arguments: new object[] { symbol, AllowedAccess },
                         symbol: symbol);
                 }
-            }
-        }
-
-        private AllowedAccess GetAllowedAccess(Accessibility accessibility)
-        {
-            switch (accessibility)
-            {
-                case Accessibility.Private:
-                    return AllowedAccess.Private;
-
-                case Accessibility.ProtectedAndInternal:
-                    return AllowedAccess.ProtectedAndInternal;
-
-                case Accessibility.Protected:
-                    return AllowedAccess.Protected;
-
-                case Accessibility.Internal:
-                    return AllowedAccess.Internal;
-
-                case Accessibility.ProtectedOrInternal:
-                    return AllowedAccess.ProtectedOrInternal;
-
-                case Accessibility.Public:
-                    return AllowedAccess.Public;
-
-                default:
-                    return AllowedAccess.None;
             }
         }
     }

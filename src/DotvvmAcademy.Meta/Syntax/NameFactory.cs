@@ -45,7 +45,6 @@ namespace DotvvmAcademy.Meta.Syntax
 
         public static NameToken IdentifierToken(string identifier)
         {
-            Debug.Assert(!string.IsNullOrEmpty(identifier));
             return new NameToken(NameTokenKind.Identifier, identifier, 0, identifier.Length);
         }
 

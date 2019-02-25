@@ -6,9 +6,6 @@ using DotvvmAcademy.Validation.Unit;
 
 public CSharpUnit Unit { get; set; } = new CSharpUnit();
 
-Unit.SetDefault("ProfileDetailViewModel_10.cs");
-Unit.SetCorrect("ProfileDetailViewModel_20.cs");
-
 Unit.GetType<string>()
     .Allow();
 

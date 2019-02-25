@@ -1,20 +1,38 @@
-﻿using DotvvmAcademy.Validation.Unit;
+﻿using System;
+using System.IO.MemoryMappedFiles;
 
 namespace DotvvmAcademy.CourseFormat
 {
-    public class CodeTask : Source
+    public class CodeTask : Source, IDisposable
     {
-        public CodeTask(string path, IValidationUnit unit)
+        private readonly long size;
+
+        public CodeTask(string path, MemoryMappedFile assembly, long size, string mapName, string entryTypeName, string entryMethodName)
             : base(path)
         {
-            Unit = unit;
+            Assembly = assembly;
+            MapName = mapName;
+            this.size = size;
+            EntryTypeName = entryTypeName;
+            EntryMethodName = entryMethodName;
         }
 
-        public IValidationUnit Unit { get; }
+        public MemoryMappedFile Assembly { get; }
+
+        public string EntryMethodName { get; }
+
+        public string EntryTypeName { get; }
+
+        public string MapName { get; }
+
+        public void Dispose()
+        {
+            Assembly.Dispose();
+        }
 
         public override long GetSize()
         {
-            return 1;
+            return size;
         }
     }
 }

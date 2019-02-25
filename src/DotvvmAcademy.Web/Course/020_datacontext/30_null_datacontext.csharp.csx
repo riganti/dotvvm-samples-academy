@@ -2,10 +2,8 @@
 
 using DotvvmAcademy.Validation.CSharp;
 using DotvvmAcademy.Validation.CSharp.Unit;
+using DotvvmAcademy.Validation.Dothtml;
 using DotvvmAcademy.Validation.Unit;
-
-Unit.SetDefault("ProfileDetailViewModel_30.cs");
-Unit.SetCorrect("ProfileDetailViewModel_40.cs");
 
 Unit.GetType(typeof(void))
     .Allow();
@@ -20,19 +18,19 @@ viewModel.GetMethod(DeleteMethod)
     .RequireReturnType(typeof(void))
     .RequireParameterless();
 
-Unit.Run(context => {
-    var vm = context.InstantiateViewModel(ViewModelName);
+Unit.Run(c => {
+    var vm = ViewModel.Instantiate(c, ViewModelName);
     if (vm.Profile != null) {
-        context.Report(InitializedEarlyDiagnosticMessage);
+        c.Report(InitializedEarlyDiagnosticMessage);
         return;
     }
-    context.Invoke(vm, CreateMethod);
+    c.Invoke(vm, CreateMethod);
     if (vm.Profile == null) {
-        context.Report(NotInitializedDiagnosticMessage);
+        c.Report(NotInitializedDiagnosticMessage);
         return;
     }
-    context.Invoke(vm, DeleteMethod);
+    c.Invoke(vm, DeleteMethod);
     if (vm.Profile != null) {
-        context.Report(NotDeletedDiagnosticMessage);
+        c.Report(NotDeletedDiagnosticMessage);
     }
 })

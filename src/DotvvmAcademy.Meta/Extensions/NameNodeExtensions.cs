@@ -13,7 +13,7 @@
                     return constructed.UnboundTypeName.GetLogicalParent();
 
                 case SimpleNameNode simple:
-                    return null;
+                    return NameFactory.Simple("");
 
                 case MemberNameNode member:
                     return member.Type;
@@ -28,7 +28,7 @@
                     return qualified.Left;
 
                 default:
-                    return null;
+                    return NameFactory.Simple("");
             }
         }
 

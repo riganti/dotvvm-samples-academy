@@ -6,9 +6,6 @@ using DotvvmAcademy.Validation.Unit;
 using DotvvmAcademy.Validation.CSharp;
 using DotvvmAcademy.Validation.CSharp.Unit;
 
-Unit.SetDefault("CounterViewModel_30.cs");
-Unit.SetCorrect("CounterViewModel_40.cs");
-
 Unit.GetType(typeof(void))
     .Allow();
 

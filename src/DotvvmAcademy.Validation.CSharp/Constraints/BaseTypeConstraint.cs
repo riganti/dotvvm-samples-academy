@@ -21,7 +21,12 @@ namespace DotvvmAcademy.Validation.CSharp.Constraints
         {
             var baseType = converter.ToRoslyn(BaseType)
                 .OfType<ITypeSymbol>()
-                .Single();
+                .SingleOrDefault();
+            if (baseType == null)
+            {
+                return;
+            }
+
             var symbols = converter.ToRoslyn(Node)
                 .OfType<ITypeSymbol>();
             foreach (var symbol in symbols)

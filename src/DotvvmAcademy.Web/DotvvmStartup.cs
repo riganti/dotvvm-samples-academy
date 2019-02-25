@@ -51,6 +51,10 @@ namespace DotvvmAcademy.Web
         private void ConfigureRoutes(DotvvmConfiguration config, string applicationPath)
         {
             config.RouteTable.Add(
+                routeName: "Test",
+                url: "test",
+                virtualPath: "Pages/Test/Test.dothtml");
+            config.RouteTable.Add(
                 routeName: "Default",
                 url: "{Language}",
                 virtualPath: "Pages/Default/default.dothtml",
@@ -74,11 +78,10 @@ namespace DotvvmAcademy.Web
                 presenterType: typeof(EmbeddedViewPresenter));
             config.RouteTable.Add(
                 routeName: "Archive",
-                "archive/{Language}/{Lesson}/{Step}",
-                typeof(ArchivePresenter));
+                url: "archive/{Language}/{Lesson}/{Step}",
+                presenterType: typeof(ArchivePresenter));
             if (!config.Debug)
             {
-                Console.WriteLine("Not debug");
                 config.Runtime.GlobalFilters.Add(new ErrorRedirectingFilter());
             }
         }

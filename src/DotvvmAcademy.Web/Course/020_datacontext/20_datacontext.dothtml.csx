@@ -5,10 +5,6 @@ using DotvvmAcademy.Validation.Unit;
 
 public DothtmlUnit Unit { get; set; } = new DothtmlUnit();
 
-Unit.SetDefault("ProfileDetail_10.dothtml");
-Unit.SetCorrect("ProfileDetail_20.dothtml");
-Unit.AddDependency("ProfileDetailViewModel_20.cs");
-
 Unit.GetDirective("/@viewModel")
     .RequireTypeArgument(ViewModelName);
 

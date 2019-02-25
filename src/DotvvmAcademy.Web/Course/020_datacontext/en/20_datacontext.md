@@ -1,11 +1,16 @@
 ﻿---
 Title: DataContext
-CodeTask: 20_datacontext.dothtml.csx
+CodeTask:
+    Path: 20_datacontext.dothtml.csx
+    Default: ProfileDetail_10.dothtml
+    Correct: ProfileDetail_20.dothtml
+    Dependencies:
+        - ProfileDetailViewModel_20.cs
 ---
 
-# Explicit DataContext
+# DataContext
 
-Every control has a reference to its DataContext that it inherited from its parent. By default it's the ViewModel, but you can set it explicitly using a binding:
+Every control has a DataContext that it __inherited__ from its parent in its `DataContext` property. By default it's the whole ViewModel, but you can set it explicitly using a binding:
 
 ```dothtml
 <div DataContext="{value: Profile}">
@@ -16,4 +21,4 @@ Every control has a reference to its DataContext that it inherited from its pare
 ## Tasks
 
 - Value-bind the `DataContext` property of the `<div>` element to the `Profile` property.
-- Edit the bindings inside the `<div>` element to target their new DataContext.
+- Modify the bindings inside the `<div>` element to respect their new DataContext.

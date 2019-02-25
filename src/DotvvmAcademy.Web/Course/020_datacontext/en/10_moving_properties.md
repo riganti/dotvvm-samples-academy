@@ -1,13 +1,16 @@
 ﻿---
 Title: Moving properties
-CodeTask: 10_moving_properties.csharp.csx
+CodeTask:
+    Path: 10_moving_properties.csharp.csx
+    Correct: ProfileDetailViewModel_10.cs
+    Default: ProfileDetailViewModel_20.cs
 ---
 
 # Moving properties
 
-Hello and, again, welcome to DotVVM Academy! 
+Hello and, again, welcome to DotVVM Academy. Let's make something similar to a 'Edit profile' page! First we need to clean up this ViewModel.
 
-_DataContext_ or also _Binding Context_ is the target of every binding you make. You can use it to shorten your bindings and hide parts of the View.
+__DataContext__ or also __Binding Context__ is the target of bindings, the object whose members you bind to. You can change it to shorten your bindings and hide parts of the View.
 
 ---
 

@@ -3,7 +3,6 @@ using DotvvmAcademy.CourseFormat;
 using DotvvmAcademy.Meta;
 using DotvvmAcademy.Validation.Unit;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,18 +10,12 @@ namespace DotvvmAcademy.Web.Pages.Step
 {
     public class StepViewModel : SiteViewModel
     {
-        private readonly ICourseEnvironment environment;
-        private readonly CodeTaskValidator validator;
         private readonly CourseWorkspace workspace;
+        private CourseFormat.Step step;
 
-        public StepViewModel(
-            CourseWorkspace workspace,
-            ICourseEnvironment environment,
-            CodeTaskValidator validator)
+        public StepViewModel(CourseWorkspace workspace)
         {
             this.workspace = workspace;
-            this.environment = environment;
-            this.validator = validator;
         }
 
         public CodeTaskDetail CodeTask { get; set; }
@@ -30,6 +23,10 @@ namespace DotvvmAcademy.Web.Pages.Step
         [FromRoute("Lesson")]
         [Bind(Direction.ServerToClientFirstRequest)]
         public string LessonMoniker { get; set; }
+
+        [FromRoute("Step")]
+        [Bind(Direction.ServerToClientFirstRequest)]
+        public string StepMoniker { get; set; }
 
         [Bind(Direction.ServerToClientFirstRequest)]
         public string LessonName { get; set; }
@@ -39,10 +36,6 @@ namespace DotvvmAcademy.Web.Pages.Step
 
         [Bind(Direction.ServerToClientFirstRequest)]
         public IEnumerable<StepListDetail> Steps { get; set; }
-
-        [FromRoute("Step")]
-        [Bind(Direction.ServerToClientFirstRequest)]
-        public string StepMoniker { get; set; }
 
         public override async Task Load()
         {
@@ -55,10 +48,13 @@ namespace DotvvmAcademy.Web.Pages.Step
             // load step
             var variant = await workspace.LoadLessonVariant(LessonMoniker, LanguageMoniker);
             LessonName = variant.Name;
-            var stepTasks = variant.Steps.Select(async s => await workspace.LoadStep(LessonMoniker, LanguageMoniker, s));
-            var steps = await Task.WhenAll(stepTasks);
-            Steps = steps.Select(s => new StepListDetail { Moniker = s.StepMoniker, Name = s.Name });
-            var step = steps.Single(s => s.StepMoniker == StepMoniker);
+            var steps = await Task.WhenAll(variant.Steps.Select(s => workspace.LoadStep(LessonMoniker, LanguageMoniker, s)));
+            Steps = steps.Select(s => new StepListDetail
+            {
+                Moniker = s.StepMoniker,
+                Name = s.Name
+            });
+            step = await workspace.LoadStep(LessonMoniker, LanguageMoniker, StepMoniker);
             var index = variant.Steps.IndexOf(StepMoniker);
             Step = new StepDetail
             {
@@ -67,10 +63,10 @@ namespace DotvvmAcademy.Web.Pages.Step
                 PreviousStep = variant.Steps.ElementAtOrDefault(index - 1),
                 NextStep = variant.Steps.ElementAtOrDefault(index + 1),
                 HasCodeTask = step.CodeTaskPath != null,
-                HasEmbeddedView = step.EmbeddedView != null,
-                HasArchive = step.SolutionArchivePath != null
+                HasEmbeddedView = step.EmbeddedViewPath != null,
+                HasArchive = step.ArchivePath != null
             };
-            if (step.CodeTaskPath != null)
+            if (Step.HasCodeTask)
             {
                 if (!Context.IsPostBack)
                 {
@@ -88,18 +84,16 @@ namespace DotvvmAcademy.Web.Pages.Step
 
         public async Task Reset()
         {
-            var script = await workspace.ContextLoad<CodeTask>(LessonMoniker, LanguageMoniker, CodeTask.SourcePath);
             CodeTask = new CodeTaskDetail
             {
-                Code = await environment.ContextRead(LessonMoniker, LanguageMoniker, script.Unit.GetDefault()),
-                CodeLanguage = script.Unit.GetValidatedLanguage()
+                Code = await workspace.Read(step.DefaultPath),
+                CodeLanguage = SourcePath.GetValidatedLanguage(step.CodeTaskPath)
             };
         }
 
         public async Task ShowSolution()
         {
-            var script = await workspace.ContextLoad<CodeTask>(LessonMoniker, LanguageMoniker, CodeTask.SourcePath);
-            CodeTask.Code = await environment.ContextRead(LessonMoniker, LanguageMoniker, script.Unit.GetCorrect());
+            CodeTask.Code = await workspace.Read(step.CorrectPath);
         }
 
         public async Task Validate()
@@ -133,8 +127,7 @@ namespace DotvvmAcademy.Web.Pages.Step
 
             try
             {
-                var script = await workspace.ContextLoad<CodeTask>(LessonMoniker, LanguageMoniker, CodeTask.SourcePath);
-                var diagnostics = (await validator.Validate(script, CodeTask.Code))
+                var diagnostics = (await workspace.ValidateStep(step, CodeTask.Code))
                     .ToArray();
                 CodeTask.IsCodeCorrect = !diagnostics.Any(d => d.Severity == CodeTaskDiagnosticSeverity.Error);
                 CodeTask.Markers = diagnostics

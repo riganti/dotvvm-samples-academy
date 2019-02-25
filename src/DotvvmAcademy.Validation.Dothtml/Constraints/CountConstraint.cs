@@ -36,7 +36,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Constraints
                 {
                     reporter.Report(
                         message: Resources.ERR_WrongCount,
-                        arguments: new object[] { Count, node },
+                        arguments: new object[] { Count, Expression.GetControlName() },
                         node: node);
                 }
                 return;
@@ -46,8 +46,16 @@ namespace DotvvmAcademy.Validation.Dothtml.Constraints
             var parentExpression = Expression.GetLogicalParent();
             if (parentExpression != null)
             {
-                var parents = locator.Locate(parentExpression);
-                ReportParentedMissing(reporter, parents);
+                var parents = locator.Locate(parentExpression)
+                    .ToArray();
+                if (parents.Length == 0)
+                {
+                    ReportMissing(reporter);
+                }
+                else
+                {
+                    ReportParentedMissing(reporter, parents);
+                }
             }
             else
             {

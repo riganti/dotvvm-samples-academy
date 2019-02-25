@@ -98,7 +98,7 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
             this CSharpQuery<IPropertySymbol> query,
             AllowedAccess access = AllowedAccess.Public)
         {
-            return query.RequireAccessor("get", access);
+            return query.RequireAccessor(PropertyAccessorConstraint.AccessorKind.Get, access);
         }
 
         public static CSharpQuery<ITypeSymbol> RequireInterface<TInterface>(this CSharpQuery<ITypeSymbol> query)
@@ -237,7 +237,7 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
             this CSharpQuery<IPropertySymbol> query,
             AllowedAccess access = AllowedAccess.Public)
         {
-            return query.RequireAccessor("set", access);
+            return query.RequireAccessor(PropertyAccessorConstraint.AccessorKind.Set, access);
         }
 
         public static CSharpQuery<IFieldSymbol> RequireType<TType>(this CSharpQuery<IFieldSymbol> query)
@@ -267,14 +267,10 @@ namespace DotvvmAcademy.Validation.CSharp.Unit
 
         private static CSharpQuery<IPropertySymbol> RequireAccessor(
             this CSharpQuery<IPropertySymbol> query,
-            string accessorKind,
+            PropertyAccessorConstraint.AccessorKind kind,
             AllowedAccess access)
         {
-            var member = (MemberNameNode)query.Node;
-            var accessor = NameFactory.Member(member.Type, $"{accessorKind}_{member.Member.IdentifierToken.ToString()}");
-            query.Unit.AddConstraint(new CountConstraint<IMethodSymbol>(accessor, 1), accessor);
-            query.Unit.AddConstraint(new AccessConstraint<IMethodSymbol>(accessor, access), accessor);
-            return query;
+            return query.AddConstraint(new PropertyAccessorConstraint(query.Node, kind, access), query.Node, kind);
         }
     }
 }

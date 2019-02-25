@@ -53,7 +53,7 @@ namespace DotvvmAcademy.Validation.CSharp
                 var analyzers = scope.ServiceProvider.GetRequiredService<IEnumerable<DiagnosticAnalyzer>>();
                 await RunAnalyzers(reporter, compilation, analyzers);
                 if (reporter.GetDiagnostics()
-                    .Any(d => d.Source.IsValidated && d.Severity == ValidationSeverity.Error))
+                    .Any(d => d.Severity == ValidationSeverity.Error && (d.Source?.IsValidated ?? true)))
                 {
                     return GetValidationDiagnostics(reporter);
                 }
