@@ -12,7 +12,7 @@ code {
         width: 100%;
         background-color: $color-vs-dark;
         display: flex;
-        border-bottom: 1px solid $color-border;
+        border-bottom: 1px solid $color-vs-hover;
         flex-direction: row;
         justify-content: flex-end;
     }
@@ -22,12 +22,13 @@ code {
         width: 8rem;
         height: 3rem;
         display: block;
-        background-color: $color-secondary;
+        background-color: $color-vs-dark;
         border: none;
         transition: $animate-all;
+        border-left: 1px solid $color-vs-hover;
 
         &:hover, &:focus {
-            background-color: $color-hover;
+            background-color: $color-vs-hover;
             cursor: pointer;
             outline: none;
         }
@@ -40,7 +41,7 @@ code {
             display: block;
             content: "Copy";
             font-size: $font-size-s;
-            color: $color-font;
+            color: $color-vs-text;
             transition: $animate-all;
         }
     }
@@ -49,6 +50,7 @@ code {
         background-color: $color-vs-dark;
         flex: 0 0 55%;
         width: 55%;
+        overflow: hidden;
         max-width: 55%;
         align-self: flex-start;
 
@@ -81,7 +83,8 @@ code {
         flex-direction: row;
         flex-wrap: nowrap;
         justify-content: flex-end;
-        background-color: $color-white;
+        background-color: $color-vs-dark;
+        border-bottom: 1px solid $color-vs-hover;
     }
 
     &__button {
@@ -91,34 +94,31 @@ code {
         align-items: center;
         justify-content: center;
         width: 10rem;
-        background-color: $color-btn-success;
+        background-color: $color-vs-dark;
         border: none;
         padding: .5rem;
         transition: $animate-all;
+        border-left: 1px solid $color-vs-hover;
 
         svg {
             display: block;
             width: 1.3rem;
             height: 1.3rem;
             margin-left: .5rem;
+
+            path {
+                fill: $color-vs-text;
+            }
         }
 
         span {
-            color: $color-font;
+            color: $color-vs-text;
             font-size: $font-size-s;
         }
 
         &:hover {
-            background-color: $color-btn-success-hover;
+            background-color: $color-vs-hover;
             cursor: pointer;
-        }
-
-        &:last-child {
-            background-color: $color-secondary;
-
-            &:hover {
-                background-color: $color-hover;
-            }
         }
     }
 }

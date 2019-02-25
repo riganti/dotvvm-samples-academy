@@ -25,7 +25,7 @@
     "bundle:js": "npm run compile:ts && uglifyjs -o wwwroot/scripts/app.js -c -m -- wwwroot/scripts/app.js",
     "compile:scss": "node-sass --source-map=true Resources/_Stylesheets/style.scss wwwroot/css/style.css",
     "compile:ts": "tsc -p Resources/_Scripts/tsconfig.json",
-    "watch": "npm run watch:scss | npm run watch:ts",
+    "watch": "npm run watch:scss && npm run watch:ts",
     "watch:scss": "npm run compile:scss && npm run compile:scss -- -w",
     "watch:ts": "npm run compile:ts -- -w",
     "browser-sync": "browser-sync start --proxy localhost:1889 --files=\"wwwroot/css/*.css\" \"Resources/JS/*.js\" \"Views/**/*.dothtml\" \"Controls/**/*.dotcontrol\" \"Views/**/*.dotmaster\""
