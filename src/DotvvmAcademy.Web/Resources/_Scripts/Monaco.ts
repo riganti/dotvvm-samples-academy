@@ -21,6 +21,10 @@ function highlightSnippets() {
             throw new Error("Snippet must have a single class.");
         }
         let language = snippet.classList[0].substr(9, snippet.classList[0].length - 8);
+        // TODO: Add a Dothtml highlighter
+        if (language == "dothtml") {
+            language = "html";
+        }
         snippet.setAttribute("data-lang", language);
         monaco.editor.colorizeElement(<HTMLElement>snippet, { tabSize: 4 });
     }
