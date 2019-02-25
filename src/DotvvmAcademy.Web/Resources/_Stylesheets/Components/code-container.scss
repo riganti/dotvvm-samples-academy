@@ -5,6 +5,46 @@ code {
 }
 
 .code {
+
+    &__header {
+        flex: 0 0 100%;
+        max-width: 100%;
+        width: 100%;
+        background-color: $color-vs-dark;
+        display: flex;
+        border-bottom: 1px solid $color-border;
+        flex-direction: row;
+        justify-content: flex-end;
+    }
+
+    &__copy-button {
+        position: relative;
+        width: 8rem;
+        height: 3rem;
+        display: block;
+        background-color: $color-secondary;
+        border: none;
+        transition: $animate-all;
+
+        &:hover, &:focus {
+            background-color: $color-hover;
+            cursor: pointer;
+            outline: none;
+        }
+
+        &:after {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: block;
+            content: "Copy";
+            font-size: $font-size-s;
+            color: $color-font;
+            transition: $animate-all;
+        }
+    }
+
     &__bg {
         background-color: $color-vs-dark;
         flex: 0 0 55%;
