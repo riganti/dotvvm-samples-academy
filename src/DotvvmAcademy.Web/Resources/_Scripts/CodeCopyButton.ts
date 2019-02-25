@@ -20,7 +20,6 @@ if (IsLessonPageOpen) {
     }
 }
 
-
 function generateCodeHeader() {
     var pre = document.querySelectorAll('pre');
     for (var i = 0; i < pre.length; i++) {

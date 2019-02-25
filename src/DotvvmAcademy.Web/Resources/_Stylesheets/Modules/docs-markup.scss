@@ -89,7 +89,6 @@
     pre {
         background-color: $color-white;
         font-family: Consolas !important;
-        border: 1px solid #d3d6db;
         font-size: 12.8px;
         line-height: 19px;
         direction: ltr;
@@ -97,6 +96,7 @@
         overflow-x: auto;
         display: flex;
         flex-wrap: wrap;
+        overflow: hidden;
 
         > * {
             flex: 0 0 100%;

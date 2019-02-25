@@ -11,8 +11,8 @@ code {
         max-width: 100%;
         width: 100%;
         background-color: $color-vs-dark;
-        border-bottom: 1px solid $color-border;
         display: flex;
+        border-bottom: 1px solid $color-border;
         flex-direction: row;
         justify-content: flex-end;
     }
@@ -22,14 +22,12 @@ code {
         width: 8rem;
         height: 3rem;
         display: block;
-        background-color: lighten($color-vs-dark, 10%);
+        background-color: $color-secondary;
         border: none;
-        color: $color-white;
-        border-left: 1px solid $color-border;
         transition: $animate-all;
 
         &:hover, &:focus {
-            background-color: lighten($color-vs-dark, 20%);
+            background-color: $color-hover;
             cursor: pointer;
             outline: none;
         }
@@ -42,7 +40,7 @@ code {
             display: block;
             content: "Copy";
             font-size: $font-size-s;
-            color: $color-white;
+            color: $color-font;
             transition: $animate-all;
         }
     }
