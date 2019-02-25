@@ -18,6 +18,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Pages\Error\Error.dothtml" />
+    <None Remove="Resources\_Scripts\CodeCopyButton.ts" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.6.1" />
@@ -26,6 +27,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DotvvmAcademy.CourseFormat\DotvvmAcademy.CourseFormat.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Resources\_Scripts\CodeCopyButton.ts" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Resources\Localization\UIResources.resx">
