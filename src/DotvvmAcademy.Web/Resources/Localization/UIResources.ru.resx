@@ -201,4 +201,9 @@
   <data name="Btn_NextLesson" xml:space="preserve">
     <value>Другие уроки</value>
   </data>
+  <data name="App_Description" xml:space="preserve">
+    <value>Вам интересно, как начать работать в DotVVM?
+Все очень просто - достаточно знать HTML, C# и основы CSS.
+Мы все объясним в нескольких уроках.</value>
+  </data>
 </root>

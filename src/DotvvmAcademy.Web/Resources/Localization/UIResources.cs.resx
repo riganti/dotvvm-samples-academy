@@ -201,4 +201,9 @@ Vše ostatní vám vysvětlíme v několika jednoduchých lekcích.</value>
   <data name="Btn_Homepage" xml:space="preserve">
     <value>Domovská stránka</value>
   </data>
+  <data name="App_Description" xml:space="preserve">
+    <value>Zajímá vás, jak se v DotVVM vyvíjí webové aplikace?
+Je to jednoduché - stačí umět HTML, C# a základy CSS.
+Vše ostatní vám vysvětlíme v několika jednoduchých lekcích.</value>
+  </data>
 </root>

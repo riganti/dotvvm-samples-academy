@@ -213,4 +213,9 @@ Watch &lt;strong&gt;DotVVM Coffee&lt;/strong&gt; videos!</value>
   <data name="Btn_NextLesson" xml:space="preserve">
     <value>Next Lesson</value>
   </data>
+  <data name="App_Description" xml:space="preserve">
+    <value>Do you wonder how DotVVM works?
+It’s easy – all you need to know is HTML, C# and basics of CSS.
+We will explain everything to you in a few easy lessons.</value>
+  </data>
 </root>

@@ -5,7 +5,11 @@
     <div class="modal">
         <div class="modal__header">
             <h2 InnerText="{resource: UIResources.Dialog_Title}" />
-            <p InnerText="{resource: UIResources.Dialog_Text + LessonName + UIResources.Dialog_Text2}" />
+            <p>
+                {{resource: UIResources.Dialog_Text}}
+                <b InnerText="{value: LessonName}" />
+                {{resource: UIResources.Dialog_Text2}}
+            </p>
             <div class="modal__close" Events.Click="{staticCommand: IsFinishDialogVisible = false}"></div>
         </div>
         <div class="modal__content">

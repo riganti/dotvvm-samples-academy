@@ -4,4 +4,4 @@ Allow: /
 Allow: .js
 Allow: .css
 
-Sitemap: https://academy.dotvvm.com/wwwroot/sitemap.xml
+Sitemap: https://academy.dotvvm.com/sitemap.xml

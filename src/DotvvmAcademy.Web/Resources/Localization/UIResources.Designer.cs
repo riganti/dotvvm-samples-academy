@@ -61,6 +61,17 @@ namespace DotvvmAcademy.Web.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Do you wonder how DotVVM works?
+        ///It’s easy – all you need to know is HTML, C# and basics of CSS.
+        ///We will explain everything to you in a few easy lessons..
+        /// </summary>
+        public static string App_Description {
+            get {
+                return ResourceManager.GetString("App_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Choose a Lesson.
         /// </summary>
         public static string Base_ChooseLesson {

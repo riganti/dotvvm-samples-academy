@@ -3,6 +3,16 @@
 @import DotvvmAcademy.Web.Resources.Localization
 @import System.Linq
 
+<dot:Content ContentPlaceHolderID="MetaContent">
+    <title>DotVVM Academy</title>
+    <meta name="description" content="{resource: UIResources.App_Description}" />
+    <meta itemprop="description" content="{resource: UIResources.App_Description}" />
+    <meta property="og:title" content="DotVVM Academy" />
+    <meta property="og:description" content="{resource: UIResources.App_Description}" />
+    <meta name="twitter:title" content="DotVVM Academy" />
+    <meta name="twitter:description" content="{resource: UIResources.App_Description}" />
+</dot:Content>
+
 <dot:Content ContentPlaceHolderID="HeaderContent">
     <section class="main-header no-padding">
         <div class="container-large">

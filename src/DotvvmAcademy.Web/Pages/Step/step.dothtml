@@ -2,6 +2,16 @@
 @masterPage Pages/site.dotmaster
 @import DotvvmAcademy.Web.Resources.Localization
 
+<dot:Content ContentPlaceHolderID="MetaContent">
+    <title>{{resource: UIResources.Dialog_Text +  LessonName}}</title>
+    <meta name="description" content="{resource: "LessonDescription"}" />
+    <meta itemprop="description" content="{resource: "LessonDescription"}" />
+    <meta property="og:title" content="DotVVM Academy" />
+    <meta property="og:description" content="{resource: "LessonDescription"}" />
+    <meta name="twitter:title" content="DotVVM Academy" />
+    <meta name="twitter:description" content="{resource: "LessonDescription"}" />
+</dot:Content>
+
 <dot:Content ContentPlaceHolderID="MainContent">
     <section class="section-lesson">
         <div class="mobile-message">
@@ -97,5 +107,6 @@
         </div>
     </div>
 
-    <cc:FinishDialog></cc:FinishDialog>
+    <cc:FinishDialog>
+    </cc:FinishDialog>
 </dot:content>
