@@ -8,8 +8,16 @@ namespace DotvvmAcademy {
 
     export function setSuccess(element: Element) {
         element.classList.remove("with-loading");
+        element.classList.remove("failed");
         window.setTimeout(() => element.classList.add("success"), 50);
     }
+
+    export function setFailed(element: Element) {
+        element.classList.remove("with-loading")
+        element.classList.remove("success");
+        window.setTimeout(() => element.classList.add("failed"), 50);
+    }
+
 
     export function setWithTooltip(element: Element) {
         element.classList.remove("with-loading");
@@ -49,6 +57,7 @@ dotvvm.events.afterPostback.subscribe(args => {
             DotvvmAcademy.redirect();
         }, 1500);
     } else {
+        DotvvmAcademy.setFailed(args.sender);
         DotvvmAcademy.setWithTooltip(args.sender);
     }
 });

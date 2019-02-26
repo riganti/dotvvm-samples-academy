@@ -12,8 +12,8 @@
             <cc:SvgToHtml Source="images/Icons/medal.svg">
             </cc:SvgToHtml>
             <div class="modal__buttons">
-                <dot:RouteLink RouteName="Default" Text="Homepage" class="button secondary"></dot:RouteLink>
-                <dot:RouteLink RouteName="Default" Text="Next Lesson" class="button"></dot:RouteLink>
+                <dot:RouteLink RouteName="Default" Text="{resource: UIResources.Btn_Homepage}" class="button secondary"></dot:RouteLink>
+                <dot:RouteLink RouteName="Default" Text="{resource: UIResources.Btn_NextLesson}" class="button"></dot:RouteLink>
             </div>
         </div>
     </div>
