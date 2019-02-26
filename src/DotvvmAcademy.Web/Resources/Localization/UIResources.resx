@@ -163,7 +163,7 @@ Watch &lt;strong&gt;DotVVM Coffee&lt;/strong&gt; videos!</value>
     <value>Start lesson</value>
   </data>
   <data name="Btn_NextStep" xml:space="preserve">
-    <value>Next</value>
+    <value>Validate</value>
   </data>
   <data name="Btn_PreviousStep" xml:space="preserve">
     <value>Previous</value>
@@ -188,5 +188,14 @@ Watch &lt;strong&gt;DotVVM Coffee&lt;/strong&gt; videos!</value>
   </data>
   <data name="Base_Incorrect_Solution" xml:space="preserve">
     <value>Incorrect</value>
+  </data>
+  <data name="Btm_Reset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="Btm_GetSolution" xml:space="preserve">
+    <value>Get Solution</value>
+  </data>
+  <data name="Btn_Copy" xml:space="preserve">
+    <value>Copy</value>
   </data>
 </root>

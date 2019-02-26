@@ -181,11 +181,38 @@ namespace DotvvmAcademy.Web.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Get Solution.
+        /// </summary>
+        public static string Btm_GetSolution {
+            get {
+                return ResourceManager.GetString("Btm_GetSolution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset.
+        /// </summary>
+        public static string Btm_Reset {
+            get {
+                return ResourceManager.GetString("Btm_Reset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DotVVM Coffee.
         /// </summary>
         public static string Btn_Coffee {
             get {
                 return ResourceManager.GetString("Btn_Coffee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy.
+        /// </summary>
+        public static string Btn_Copy {
+            get {
+                return ResourceManager.GetString("Btn_Copy", resourceCulture);
             }
         }
         
@@ -199,7 +226,7 @@ namespace DotvvmAcademy.Web.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Next.
+        ///   Looks up a localized string similar to Validate.
         /// </summary>
         public static string Btn_NextStep {
             get {

@@ -7,7 +7,7 @@ namespace DotvvmAcademy.Web.Pages
     public abstract class SiteViewModel : DotvvmViewModelBase
     {
         public const string DefaultLanguageMoniker = "en";
-
+        public bool IsLandingPage { get; set; }
         [Bind(Direction.ServerToClientFirstRequest)]
         public LanguageOption Language { get; set; }
 

@@ -42,9 +42,10 @@
 </head>
 <body Class-step-body="{resource: Context.Route.RouteName == "Step"}">
     <header>
-        <nav class="container-large">
+        <nav class="container-large" Class-step-nav="{resource: Context.Route.RouteName == "Step"}">
             <dot:RouteLink RouteName="Default">
                 <cc:SvgToHtml Source="/images/Logos/logo-dotvvm.svg" />
+                <span>DOT<b>VVM</b></span>
                 &nbsp;<p>ACADEMY</p>
             </dot:RouteLink>
             <div>
