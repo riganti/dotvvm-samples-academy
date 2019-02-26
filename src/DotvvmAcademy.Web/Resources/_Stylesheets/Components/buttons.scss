@@ -199,6 +199,18 @@
             animation: DrawCheck 1s forwards;
         }
     }
+
+    &.secondary {
+        background-color: $color-primary;
+        color: $color-white;
+        border-color: $color-primary;
+
+        &:hover {
+            color: $color-white;
+            background-color: lighten($color-primary, 10%);
+            border-color: lighten($color-primary, 10%);
+        }
+    }
 }
 
 .buttons-container {

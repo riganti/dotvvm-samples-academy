@@ -14,6 +14,7 @@ namespace DotvvmAcademy.Web.Pages.Step
         private readonly ICourseEnvironment environment;
         private readonly CodeTaskValidator validator;
         private readonly CourseWorkspace workspace;
+        public bool IsFinishDialogVisible { get; set; }
 
         public StepViewModel(
             CourseWorkspace workspace,
@@ -143,7 +144,7 @@ namespace DotvvmAcademy.Web.Pages.Step
                     .OrderBy(m => m.Severity)
                     .ToList();
             }
-            catch(CodeTaskException)
+            catch (CodeTaskException)
             {
                 CodeTask.Markers.Clear();
                 CodeTask.Markers.Add(new MonacoMarker("An error occured during validation.", MonacoSeverity.Error, -1, -1, -1, -1));

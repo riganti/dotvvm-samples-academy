@@ -28,6 +28,7 @@ namespace DotvvmAcademy.Web
         {
             config.Markup.AddMarkupControl("cc", "LanguageSwitch", "Pages/LanguageSwitch.dotcontrol");
             config.Markup.AddMarkupControl("cc", "DiagnosticList", "Pages/Step/DiagnosticList.dotcontrol");
+            config.Markup.AddMarkupControl("cc", "FinishDialog", "Pages/Step/FinishDialog.dotcontrol");
             config.Markup.AddCodeControls("cc", typeof(SvgToHtml));
             config.Markup.AddCodeControls("cc", typeof(MonacoEditor));
         }

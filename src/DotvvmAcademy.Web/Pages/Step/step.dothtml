@@ -4,7 +4,6 @@
 
 <dot:Content ContentPlaceHolderID="MainContent">
     <section class="section-lesson">
-
         <div class="mobile-message">
             <h3>This application <b>is not</b> supported in mobile browsers or mobile web frameworks.</h3>
         </div>
@@ -88,13 +87,15 @@
                     <span InnerText="{resource: UIResources.Btn_NextStep}" />
                     <cc:SvgToHtml Source="/images/Icons/next.svg" />
                 </dot:Button>
-                <dot:RouteLink RouteName="Default"
-                               class="button finish"
-                               ButtonTagName="button"
-                               Param-Language="{value: LanguageMoniker}"
-                               Visible="{resource: Step.NextStep == null}"
-                               Text="{resource: UIResources.Btn_Finish}" />
+                <dot:Button Click="{staticCommand: IsFinishDialogVisible = true}"
+                            class="button finish"
+                            ButtonTagName="button"
+                            Param-Language="{value: LanguageMoniker}"
+                            Visible="{resource: Step.NextStep == null}"
+                            Text="{resource: UIResources.Btn_Finish}" />
             </div>
         </div>
     </div>
+
+    <cc:FinishDialog></cc:FinishDialog>
 </dot:content>

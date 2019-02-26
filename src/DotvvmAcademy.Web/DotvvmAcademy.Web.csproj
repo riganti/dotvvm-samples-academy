@@ -18,6 +18,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Pages\Error\Error.dothtml" />
+    <None Remove="Pages\Step\FinishDialog.dotcontrol" />
     <None Remove="Resources\_Scripts\CodeCopyButton.ts" />
   </ItemGroup>
   <ItemGroup>

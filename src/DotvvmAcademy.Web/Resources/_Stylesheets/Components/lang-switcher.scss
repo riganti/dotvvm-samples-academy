@@ -7,7 +7,6 @@
     justify-content: flex-start;
     align-items: center;
     background-color: $color-primary;
-    z-index: 10;
 
     &_list {
         position: absolute;
@@ -20,7 +19,6 @@
         border: 1px solid $color-transparent;
         background-color: $color-white;
         border-top: none;
-        z-index: 9;
 
         a {
             display: block;
@@ -47,6 +45,7 @@
             transition: $animate-all;
             transform: translateY(-.1rem);
             border-color: $color-vs-dark;
+            z-index: 10;
         }
     }
 }
@@ -67,7 +66,6 @@
         height: 100%;
         width: auto;
         position: relative;
-        z-index: 15;
     }
 
     p {
