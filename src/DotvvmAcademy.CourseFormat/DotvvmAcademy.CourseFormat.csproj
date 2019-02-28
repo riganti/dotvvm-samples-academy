@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>latest</LangVersion>
+    <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
   </PropertyGroup>
 
   <ItemGroup>
@@ -33,5 +34,25 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+
+  <Target BeforeTargets="BeforeBuild" Name="PublishSandbox">
+    <MSBuild Projects="../DotvvmAcademy.CourseFormat.Sandbox/DotvvmAcademy.CourseFormat.Sandbox.csproj"
+             Targets="Publish"
+             Properties="Configuration=$(Configuration);
+                         Platform=$(Platform);
+                         PublishDir=$(MSBuildProjectDirectory)/sandbox;"/>
+    <ItemGroup>
+      <Content Include="sandbox/**/*">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+      </Content>
+    </ItemGroup>
+  </Target>
+
+  <Target BeforeTargets="Clean" Name="CleanSandbox">
+    <MSBuild Projects="../DotvvmAcademy.CourseFormat.Sandbox/DotvvmAcademy.CourseFormat.Sandbox.csproj"
+             Targets="Clean"/>
+    <RemoveDir Directories="sandbox"/>
+  </Target>
   
 </Project>
