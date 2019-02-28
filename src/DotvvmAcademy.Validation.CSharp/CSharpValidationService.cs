@@ -71,10 +71,9 @@ namespace DotvvmAcademy.Validation.CSharp
 
         private Assembly GetAssembly(IValidationReporter reporter, Compilation compilation)
         {
-            using (var originalStream = new MemoryStream())
-            using (var rewrittenStream = new MemoryStream())
+            using (var memoryStream = new MemoryStream())
             {
-                var result = compilation.Emit(originalStream);
+                var result = compilation.Emit(memoryStream);
                 if (!result.Success)
                 {
                     foreach (var diagnostic in result.Diagnostics)
@@ -83,12 +82,10 @@ namespace DotvvmAcademy.Validation.CSharp
                     }
                     return null;
                 }
-
-                originalStream.Position = 0;
-                var rewriter = new AssemblyRewriter();
-                rewriter.Rewrite(originalStream, rewrittenStream);
-                rewrittenStream.Position = 0;
-                return AssemblyLoadContext.Default.LoadFromStream(rewrittenStream);
+                else
+                {
+                    return AssemblyLoadContext.Default.LoadFromStream(memoryStream);
+                }
             }
         }
 
