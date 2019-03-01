@@ -35,10 +35,5 @@ namespace DotvvmAcademy.CourseFormat
         public string EmbeddedViewPath { get; internal set; }
 
         public ImmutableArray<string> EmbeddedViewDependencies { get; internal set; }
-
-        public override long GetSize()
-        {
-            return Text?.Length + 1 ?? 1;
-        }
     }
 }

@@ -15,12 +15,12 @@ namespace DotvvmAcademy.CourseFormat
 
         public async Task<Archive> Get(string path)
         {
-            var memoryStream = new MemoryStream();
+            using(var memoryStream = new MemoryStream()) 
             using (var zipArchive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
             {
                 await AddRecursive(path, "", zipArchive);
+                return new Archive(path, memoryStream.ToArray());
             }
-            return new Archive(path, memoryStream);
         }
 
         private async Task AddRecursive(string basePath, string path, ZipArchive archive)

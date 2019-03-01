@@ -3,18 +3,13 @@ using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.Scripting;
 using System;
 using System.IO;
-using System.IO.MemoryMappedFiles;
 using System.Text;
 using System.Threading.Tasks;
-using System.Linq;
-using System.Threading;
 
 namespace DotvvmAcademy.CourseFormat
 {
     public class CodeTaskProvider : ISourceProvider<CodeTask>
     {
-        public const string MmfPrefix = nameof(CodeTask) + ":";
-
         private readonly ICourseEnvironment environment;
 
         public CodeTaskProvider(ICourseEnvironment environment)
@@ -29,36 +24,21 @@ namespace DotvvmAcademy.CourseFormat
                 code: scriptSource,
                 options: GetScriptOptions(path));
             var compilation = csharpScript.GetCompilation();
-            using (var tempStream = new MemoryStream())
+            using (var memoryStream = new MemoryStream())
             {
-                var emitResult = compilation.Emit(tempStream);
+                var emitResult = compilation.Emit(memoryStream);
                 if (!emitResult.Success)
                 {
                     var sb = new StringBuilder($"Compilation of a CodeTask at '{path}' failed with the following diagnostics:\n");
                     sb.Append(string.Join(",\n", emitResult.Diagnostics));
                     throw new InvalidOperationException(sb.ToString());
                 }
-                var mapName = $"{MmfPrefix}{path}";
-                var mutex = new Mutex(true, $"Mutex-{mapName}");
-                var mmf = MemoryMappedFile.CreateNew(
-                    mapName: mapName,
-                    capacity: tempStream.Length,
-                    access: MemoryMappedFileAccess.ReadWrite);
-                using (var mmfStream = mmf.CreateViewStream(0, 0, MemoryMappedFileAccess.ReadWrite))
-                {
-                    tempStream.Position = 0;
-                    tempStream.CopyTo(mmfStream);
-                }
-                mutex.ReleaseMutex();
                 var entryPoint = compilation.GetEntryPoint(default);
                 return new CodeTask(
                     path: path,
-                    assembly: mmf,
-                    size: tempStream.Length,
-                    mapName: mapName,
+                    assembly: memoryStream.ToArray(),
                     entryTypeName: entryPoint.ContainingType.MetadataName,
-                    entryMethodName: entryPoint.MetadataName,
-                    mutex: mutex);
+                    entryMethodName: entryPoint.MetadataName);
             }
         }
 

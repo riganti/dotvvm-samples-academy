@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.IO;
+using System.IO.MemoryMappedFiles;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
@@ -17,6 +18,7 @@ namespace DotvvmAcademy.CourseFormat
 {
     public class CourseWorkspace : IDisposable
     {
+        public const string SandboxPath = "./sandbox/DotvvmAcademy.CourseFormat.Sandbox.dll";
         public const int ValidationTimeout = 5000;
 #if DEBUG
         public static readonly TimeSpan SourceExpiration = TimeSpan.FromSeconds(3);
@@ -70,7 +72,7 @@ namespace DotvvmAcademy.CourseFormat
                 entry.SetAbsoluteExpiration(SourceExpiration);
                 entry.RegisterPostEvictionCallback((key, value, reason, state) =>
                 {
-                    if(value is IDisposable disposable)
+                    if (value is IDisposable disposable)
                     {
                         disposable.Dispose();
                     }
@@ -88,65 +90,100 @@ namespace DotvvmAcademy.CourseFormat
             Step step,
             string code)
         {
-            var codeTask = await Load<CodeTask>(step.CodeTaskPath);
-            var dependencies = await Task.WhenAll(step.CodeTaskDependencies.Select(d => Load<CourseFile>(d)));
+            var validationId = Guid.NewGuid();
+
             var directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            var args = new StringBuilder($"{directory}/sandbox/DotvvmAcademy.CourseFormat.Sandbox.dll");
-            args.Append(' ').Append(codeTask.MapName);
-            args.Append(' ').Append(codeTask.EntryTypeName);
-            args.Append(' ').Append(codeTask.EntryMethodName);
+            var args = new List<string>();
+            args.Add(Path.Combine(directory, SandboxPath));
+
+            MemoryMappedFile scriptAssemblyMap;
+            {
+                var codeTask = await Load<CodeTask>(step.CodeTaskPath);
+                var mapName = $"CodeTask/{validationId}";
+                scriptAssemblyMap = MemoryMappedFile.CreateNew(mapName, codeTask.Assembly.Length, MemoryMappedFileAccess.ReadWrite);
+                using(var mapStream = scriptAssemblyMap.CreateViewStream(0, 0, MemoryMappedFileAccess.ReadWrite))
+                {
+                    await mapStream.WriteAsync(codeTask.Assembly, 0, codeTask.Assembly.Length);
+                }
+                args.Add(mapName);
+                args.Add(codeTask.EntryTypeName);
+                args.Add(codeTask.EntryMethodName);
+            }
+
+            var dependencyMaps = new List<MemoryMappedFile>();
+            var dependencies = await Task.WhenAll(step.CodeTaskDependencies.Select(d => Load<CourseFile>(d)));
             foreach (var dependency in dependencies)
             {
-                args.Append(' ').Append(dependency.MapName);
+                var mapName = $"CourseFile/{validationId}/{dependency.Path}";
+                var map = MemoryMappedFile.CreateNew(mapName, dependency.Text.Length * sizeof(char), MemoryMappedFileAccess.ReadWrite);
+                using (var mapStream = map.CreateViewStream(0, 0, MemoryMappedFileAccess.ReadWrite))
+                using(var writer = new StreamWriter(mapStream))
+                {
+                    await writer.WriteAsync(dependency.Text);
+                }
+                dependencyMaps.Add(map);
+                args.Add(mapName);
             }
+
             var info = new ProcessStartInfo
             {
                 FileName = "dotnet",
-                Arguments = args.ToString(),
+                Arguments = string.Join(" ", args),
                 UseShellExecute = false,
                 CreateNoWindow = false,
                 RedirectStandardInput = true,
                 RedirectStandardOutput = true
             };
             var diagnostics = ImmutableArray.CreateBuilder<CodeTaskDiagnostic>();
-            var process = Process.Start(info);
-            bool killed = false;
-            ThreadPool.QueueUserWorkItem((s) =>
-            {
-                Thread.Sleep(ValidationTimeout);
-                if (!process.HasExited)
-                {
-                    process.Kill();
-                    diagnostics.Add(new CodeTaskDiagnostic(Resources.ERR_ValidationTakesTooLong, -1, -1, CodeTaskDiagnosticSeverity.Error));
-                    killed = true;
-                }
-            });
-            await process.StandardInput.WriteAsync(code);
-            process.StandardInput.Close();
             try
             {
-                var formatter = new BinaryFormatter();
-                var deserializedDiagnostics = (LightDiagnostic[])formatter.Deserialize(process.StandardOutput.BaseStream);
-                foreach (var deserializedDiagnostic in deserializedDiagnostics)
+                var process = Process.Start(info);
+                bool killed = false;
+                //ThreadPool.QueueUserWorkItem((s) =>
+                //{
+                //    Thread.Sleep(ValidationTimeout);
+                //    if (!process.HasExited)
+                //    {
+                //        killed = true;
+                //        diagnostics.Add(new CodeTaskDiagnostic(Resources.ERR_ValidationTakesTooLong, -1, -1, CodeTaskDiagnosticSeverity.Error));
+                //        process.Kill();
+                //    }
+                //});
+                await process.StandardInput.WriteAsync(code);
+                process.StandardInput.Close();
+                try
                 {
-                    if (deserializedDiagnostic.Source == null || deserializedDiagnostic.Source.StartsWith("UserCode"))
+                    var formatter = new BinaryFormatter();
+                    var deserializedDiagnostics = (LightDiagnostic[])formatter.Deserialize(process.StandardOutput.BaseStream);
+                    foreach (var deserializedDiagnostic in deserializedDiagnostics)
                     {
-                        diagnostics.Add(new CodeTaskDiagnostic(
-                            message: deserializedDiagnostic.Message,
-                            start: deserializedDiagnostic.Start,
-                            end: deserializedDiagnostic.End,
-                            severity: deserializedDiagnostic.Severity.ToCodeTaskDiagnosticSeverity()));
+                        if (deserializedDiagnostic.Source == null || deserializedDiagnostic.Source.StartsWith("UserCode"))
+                        {
+                            diagnostics.Add(new CodeTaskDiagnostic(
+                                message: deserializedDiagnostic.Message,
+                                start: deserializedDiagnostic.Start,
+                                end: deserializedDiagnostic.End,
+                                severity: deserializedDiagnostic.Severity.ToCodeTaskDiagnosticSeverity()));
+                        }
                     }
                 }
-            }
-            catch (SerializationException)
-            {
-                if (!killed)
+                catch (SerializationException)
                 {
-                    diagnostics.Add(new CodeTaskDiagnostic("Your code couldn't be validated.", -1, -1, CodeTaskDiagnosticSeverity.Error));
+                    if (!killed)
+                    {
+                        diagnostics.Add(new CodeTaskDiagnostic("Your code couldn't be validated.", -1, -1, CodeTaskDiagnosticSeverity.Error));
+                    }
+                }
+                return diagnostics.ToImmutable();
+            }
+            finally
+            {
+                scriptAssemblyMap.Dispose();
+                foreach(var dependencyMap in dependencyMaps)
+                {
+                    dependencyMap.Dispose();
                 }
             }
-            return diagnostics.ToImmutable();
         }
     }
 }

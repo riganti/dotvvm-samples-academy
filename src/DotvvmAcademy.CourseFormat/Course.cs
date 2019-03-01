@@ -11,10 +11,5 @@ namespace DotvvmAcademy.CourseFormat
         }
 
         public ImmutableArray<string> Lessons { get; }
-
-        public override long GetSize()
-        {
-            return 1;
-        }
     }
 }

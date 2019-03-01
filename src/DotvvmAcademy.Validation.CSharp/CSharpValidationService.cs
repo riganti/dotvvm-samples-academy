@@ -84,6 +84,7 @@ namespace DotvvmAcademy.Validation.CSharp
                 }
                 else
                 {
+                    memoryStream.Position = 0;
                     return AssemblyLoadContext.Default.LoadFromStream(memoryStream);
                 }
             }

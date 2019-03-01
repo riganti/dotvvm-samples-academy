@@ -1,51 +1,19 @@
-﻿using System;
-using System.IO.MemoryMappedFiles;
-using System.Threading;
-
-namespace DotvvmAcademy.CourseFormat
+﻿namespace DotvvmAcademy.CourseFormat
 {
-    public class CodeTask : Source, IDisposable
+    public class CodeTask : Source
     {
-        private readonly long size;
-
-        public CodeTask(
-            string path,
-            MemoryMappedFile assembly,
-            long size,
-            string mapName,
-            string entryTypeName,
-            string entryMethodName,
-            Mutex mutex)
+        public CodeTask(string path, byte[] assembly, string entryTypeName, string entryMethodName)
             : base(path)
         {
             Assembly = assembly;
-            MapName = mapName;
-            this.size = size;
             EntryTypeName = entryTypeName;
             EntryMethodName = entryMethodName;
-            Mutex = mutex;
         }
 
-        public MemoryMappedFile Assembly { get; }
+        public byte[] Assembly { get; }
 
         public string EntryMethodName { get; }
 
         public string EntryTypeName { get; }
-
-        public string MapName { get; }
-
-        public Mutex Mutex { get; set; }
-
-        public void Dispose()
-        {
-            Mutex.WaitOne();
-            Assembly.Dispose();
-            Mutex.Dispose();
-        }
-
-        public override long GetSize()
-        {
-            return size;
-        }
     }
 }

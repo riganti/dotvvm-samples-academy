@@ -13,10 +13,5 @@ namespace DotvvmAcademy.CourseFormat
         public string Moniker { get; }
 
         public ImmutableArray<string> Variants { get; }
-
-        public override long GetSize()
-        {
-            return 1;
-        }
     }
 }
