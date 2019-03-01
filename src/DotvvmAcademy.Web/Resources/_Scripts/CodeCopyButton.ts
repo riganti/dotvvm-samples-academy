@@ -3,7 +3,6 @@
 if (IsLessonPageOpen) {
     generateCodeHeader();
     generateCopyButton();
-
     let allCopyButtons = document.querySelectorAll(".code__copy-button");
 
     for (let CopyButton of Array.from(allCopyButtons)) {

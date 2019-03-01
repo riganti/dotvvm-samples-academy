@@ -1,7 +1,7 @@
 ﻿// External
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&subset=latin-ext');
 
-// Base 
+// Base
 @import "Base/default.scss";
 @import "Base/shared-classes.scss";
 
@@ -17,6 +17,7 @@
 @import "Components/section.scss";
 @import "Components/typography.scss";
 @import "Components/lessons-container.scss";
+@import "components/modal-dialog";
 @import "components/loading-animation";
 @import "Components/lang-switcher.scss";
 @import "Components/pager.scss";

@@ -1,9 +1,9 @@
 ﻿@import "../../../Base/global";
 
 .main-header {
-    background: -moz-linear-gradient(left, $color-primary 0%, $color-primary 65%, $color-white 65%, $color-white 100%);
-    background: -webkit-linear-gradient(left, $color-primary 0%,$color-primary 65%,$color-white 65%,$color-white 100%);
-    background: linear-gradient(to right, $color-primary 0%,$color-primary 65%,$color-white 65%,$color-white 100%);
+    background: -moz-linear-gradient(left, $color-primary 0%, $color-primary 75%, $color-white 75%, $color-white 100%);
+    background: -webkit-linear-gradient(left, $color-primary 0%,$color-primary 75%,$color-white 75%,$color-white 100%);
+    background: linear-gradient(to right, $color-primary 0%,$color-primary 75%,$color-white 75%,$color-white 100%);
 
     @include res-max-desktop-HD {
         background: -moz-linear-gradient(left, $color-primary 0%, $color-primary 80%, $color-white 80%, $color-white 100%);
@@ -31,12 +31,11 @@
         }
 
         > svg {
-            height: 150%;
+            height: 125%;
             position: absolute;
             top: 53%;
-            left: 70%;
+            left: 75%;
             transform: translate(-50%, -50%);
-
 
             @include res-max-desktop-HD {
                 height: 100%;

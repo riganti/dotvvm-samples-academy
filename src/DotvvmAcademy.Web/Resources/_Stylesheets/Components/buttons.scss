@@ -199,6 +199,48 @@
             animation: DrawCheck 1s forwards;
         }
     }
+
+    &.failed {
+        background-color: lighten($color-error, 20%);
+        border-color: lighten($color-error, 20%);
+
+        > svg {
+            display: none;
+        }
+
+        > span {
+            position: relative;
+            padding-right: 2rem;
+
+            &:before, &:after {
+                display: block;
+                position: absolute;
+                top: 50%;
+                right: 0;
+                transform: translate(25%, -50%) rotate(45deg);
+                width: 2rem;
+                height: .2rem;
+                background-color: $color-font;
+                content: "";
+            }
+
+            &:after {
+                transform: translate(25%, -50%) rotate(-45deg);
+            }
+        }
+    }
+
+    &.secondary {
+        background-color: $color-primary;
+        color: $color-white;
+        border-color: $color-primary;
+
+        &:hover {
+            color: $color-white;
+            background-color: lighten($color-primary, 10%);
+            border-color: lighten($color-primary, 10%);
+        }
+    }
 }
 
 .buttons-container {

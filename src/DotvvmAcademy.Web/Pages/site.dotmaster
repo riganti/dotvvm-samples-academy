@@ -7,16 +7,12 @@
       RenderSettings.Mode="Server">
 <head>
     <meta charset="utf-8" />
-    <title>DotVVM Academy</title>
     <meta name="author" content="Riganti s.r.o." />
-    <meta name="description=" content="" />
-    <meta name="keywords" content="Update" />
+
+    <meta name="keywords" content="DotVVM, MVVM Framework, DotVVM Course, DotVVM Academy, Learn DotVVM" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"
-          rel="stylesheet"
-          type="text/css" />
+
     <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16x16.png">
@@ -25,26 +21,27 @@
     <meta name="theme-color" content="#ffffff">
     <!-- Schema.org markup for Google+ -->
     <meta itemprop="name" content="DotVVM Academy" />
-    <meta itemprop="description" content="" />
-    <meta itemprop="image" content="" />
+    <meta itemprop="description" content="{resource: UIResources.App_Description}" />
+    <meta itemprop="image" content="/wwwroot/images/Meta/meta-facebook.png" />
     <!-- Open Graph data -->
     <meta property="og:title" content="DotVVM Academy" />
     <meta property="og:url" content="https://academy.dotvvm.com/" />
-    <meta property="og:image" content="" />
-    <meta property="og:description" content="" />
+    <meta property="og:image" content="/wwwroot/images/Meta/meta-facebook.png" />
+    <meta property="og:description" content="{resource: UIResources.App_Description}" />
     <!-- Twitter Card data -->
     <meta name="twitter:site" content="@dotvvm" />
     <meta name="twitter:title" content="DotVVM Academy" />
-    <meta name="twitter:description" content="" />
-    <meta name="twitter:image" content="" />
-
+    <meta name="twitter:description" content="{resource: UIResources.App_Description}" />
+    <meta name="twitter:image" content="/wwwroot/images/Meta/meta-twitter.png" />
+    <dot:ContentPlaceHolder ID="MetaContent" />
     <dot:RequiredResource Name="StyleCSS" />
 </head>
 <body Class-step-body="{resource: Context.Route.RouteName == "Step"}">
     <header>
-        <nav class="container-large">
+        <nav class="container-large" Class-step-nav="{resource: Context.Route.RouteName == "Step"}">
             <dot:RouteLink RouteName="Default">
                 <cc:SvgToHtml Source="/images/Logos/logo-dotvvm.svg" />
+                <span>DOT<b>VVM</b></span>
                 &nbsp;<p>ACADEMY</p>
             </dot:RouteLink>
             <div>

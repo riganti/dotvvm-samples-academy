@@ -1,0 +1,25 @@
+﻿@viewModel DotvvmAcademy.Web.Pages.Step.StepViewModel, DotvvmAcademy.Web
+@import DotvvmAcademy.Web.Resources.Localization
+
+<div Class-modal--visible="{value: IsFinishDialogVisible}" Visible="{value: IsFinishDialogVisible}" class="modal__overlay">
+    <div class="modal">
+        <div class="modal__header">
+            <h2 InnerText="{resource: UIResources.Dialog_Title}" />
+            <p>
+                {{resource: UIResources.Dialog_Text}}
+                <b InnerText="{value: LessonName}" />
+                {{resource: UIResources.Dialog_Text2}}
+            </p>
+            <div class="modal__close" Events.Click="{staticCommand: IsFinishDialogVisible = false}"></div>
+        </div>
+        <div class="modal__content">
+            <cc:SvgToHtml Source="images/Icons/medal.svg">
+            </cc:SvgToHtml>
+            <div class="modal__buttons">
+                <dot:RouteLink RouteName="Default" Text="{resource: UIResources.Btn_Homepage}" class="button secondary"></dot:RouteLink>
+                <dot:RouteLink RouteName="Default" Text="{resource: UIResources.Btn_NextLesson}" class="button"></dot:RouteLink>
+            </div>
+        </div>
+    </div>
+</div>
+

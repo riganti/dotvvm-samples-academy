@@ -8,7 +8,31 @@ nav {
     flex-wrap: nowrap;
     justify-content: space-between;
     align-items: center;
-    z-index: 999;
+
+    &.step-nav {
+        > a {
+            height: 4rem;
+
+            > span {
+                display: inline-block;
+                font-size: 2.4rem;
+                padding-right: .5rem;
+                font-weight: 900;
+
+                b {
+                    color: $color-dotvvm-blue;
+                }
+            }
+
+            p {
+                margin-bottom: 0;
+            }
+
+            svg {
+                display: none;
+            }
+        }
+    }
 
     > a {
         display: flex;
@@ -37,6 +61,10 @@ nav {
                 width: 13rem;
                 margin-right: .3rem;
             }
+        }
+
+        > span {
+            display: none;
         }
 
         p {
