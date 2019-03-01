@@ -1,25 +1,12 @@
-﻿using System;
-using System.IO;
-
-namespace DotvvmAcademy.CourseFormat
+﻿namespace DotvvmAcademy.CourseFormat
 {
-    public class Archive : Source, IDisposable
+    public class Archive : Source
     {
-        public Archive(string path, Stream stream) : base(path)
+        public Archive(string path, byte[] memory) : base(path)
         {
-            Stream = stream;
+            Memory = memory;
         }
 
-        public Stream Stream { get; }
-
-        public void Dispose()
-        {
-            Stream.Dispose();
-        }
-
-        public override long GetSize()
-        {
-            return Stream.Length;
-        }
+        public byte[] Memory { get; }
     }
 }

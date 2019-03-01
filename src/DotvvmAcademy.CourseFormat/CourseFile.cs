@@ -1,31 +1,12 @@
-﻿using System;
-using System.IO.MemoryMappedFiles;
-
-namespace DotvvmAcademy.CourseFormat
+﻿namespace DotvvmAcademy.CourseFormat
 {
-    public class CourseFile : Source, IDisposable
+    public class CourseFile : Source
     {
-        private readonly long size;
-
-        public CourseFile(string path, MemoryMappedFile file, long size, string mapName) : base(path)
+        public CourseFile(string path, string text) : base(path)
         {
-            File = file;
-            this.size = size;
-            MapName = mapName;
+            Text = text;
         }
 
-        public MemoryMappedFile File { get; }
-
-        public string MapName { get; }
-
-        public void Dispose()
-        {
-            File.Dispose();
-        }
-
-        public override long GetSize()
-        {
-            return size;
-        }
+        public string Text { get; }
     }
 }

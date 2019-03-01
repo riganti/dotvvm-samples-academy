@@ -12,7 +12,15 @@ namespace DotvvmAcademy.Validation
             End = validationDiagnostic.End;
             Severity = validationDiagnostic.Severity;
             Source = validationDiagnostic.Source?.FileName;
-            Message = string.Format(validationDiagnostic.Message, validationDiagnostic.Arguments.ToArray());
+            var arguments = validationDiagnostic.Arguments.ToArray();
+            if (arguments.Length > 0)
+            {
+                Message = string.Format(validationDiagnostic.Message, arguments);
+            }
+            else
+            {
+                Message = validationDiagnostic.Message;
+            }
         }
 
         public int End { get; set; }

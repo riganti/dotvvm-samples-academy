@@ -15,18 +15,9 @@
     <Content Remove="Course/**/*" />
     <Content Include="Course/**/*" CopyToPublishDirectory="Always" />
   </ItemGroup>
-  
-  <ItemGroup>
-    <Content Remove="sandbox/**/*" />
-    <None Include="sandbox/**/*" CopyToOutputDirectory="Always" />
-  </ItemGroup>
 
   <ItemGroup>
     <Content Include="**/*.dothtml;**/*.dotmaster;**/*.dotcontrol" Exclude="obj/**/*;bin/**/*;Course/**/*" CopyToPublishDirectory="Always" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="Pages\Test\Test.dothtml" />
   </ItemGroup>
 
   <ItemGroup>

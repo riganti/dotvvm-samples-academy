@@ -37,24 +37,30 @@ namespace DotvvmAcademy.Meta
 
         public IEnumerable<MemberInfo> ToReflection(NameNode node)
         {
-            return reflectionNameNodeVisitor.Visit(node);
+            // TODO: This Distinct call is a distinct hack
+            return reflectionNameNodeVisitor.Visit(node)
+                .Distinct();
         }
 
         public IEnumerable<MemberInfo> ToReflection(ISymbol symbol)
         {
-            return reflectionSymbolVisitor.Visit(symbol);
+            // TODO: This Distinct call is a distinct hack
+            return reflectionSymbolVisitor.Visit(symbol)
+                .Distinct();
         }
 
         public IEnumerable<ISymbol> ToRoslyn(NameNode node)
         {
-            // TODO: Why do I have to call Distinct()?
+            // TODO: This Distinct call is a distinct hack
             return roslynNameNodeVisitor.Visit(node)
                 .Distinct();
         }
 
         public IEnumerable<ISymbol> ToRoslyn(MemberInfo info)
         {
-            return roslynMemberInfoVisitor.Visit(info);
+            // TODO: This Distinct call is a distinct hack
+            return roslynMemberInfoVisitor.Visit(info)
+                .Distinct();
         }
     }
 }

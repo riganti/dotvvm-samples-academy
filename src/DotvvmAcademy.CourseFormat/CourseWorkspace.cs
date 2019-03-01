@@ -1,10 +1,11 @@
 ﻿using DotvvmAcademy.Validation;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.IO;
+using System.IO.MemoryMappedFiles;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
@@ -15,17 +16,37 @@ using System.Threading.Tasks;
 
 namespace DotvvmAcademy.CourseFormat
 {
-    public class CourseWorkspace
+    public class CourseWorkspace : IDisposable
     {
-        public const int ValidationTimeout = 1000;
+        public const string SandboxPath = "./sandbox/DotvvmAcademy.CourseFormat.Sandbox.dll";
+        public const int ValidationTimeout = 5000;
+#if DEBUG
+        public static readonly TimeSpan SourceExpiration = TimeSpan.FromSeconds(3);
+#else
+        public static readonly TimeSpan SourceExpiration = TimeSpan.FromDays(1);
+#endif
+        private readonly IMemoryCache cache = new MemoryCache(new MemoryCacheOptions());
+        private readonly ICourseEnvironment environment;
+        private readonly ImmutableDictionary<Type, object> sourceProviders;
 
-        private readonly CourseCache cache = new CourseCache();
-        private readonly IServiceProvider provider;
-
-        public CourseWorkspace(CourseCache cache, IServiceProvider provider)
+        public CourseWorkspace(ICourseEnvironment environment)
         {
-            this.cache = cache;
-            this.provider = provider;
+            this.environment = environment;
+            sourceProviders = ImmutableDictionary.CreateRange(new Dictionary<Type, object>
+            {
+                [typeof(Course)] = new CourseProvider(environment),
+                [typeof(Lesson)] = new LessonProvider(environment),
+                [typeof(LessonVariant)] = new LessonVariantProvider(environment),
+                [typeof(Step)] = new StepProvider(environment),
+                [typeof(CodeTask)] = new CodeTaskProvider(environment),
+                [typeof(CourseFile)] = new CourseFileProvider(environment),
+                [typeof(Archive)] = new ArchiveProvider(environment),
+            });
+        }
+
+        public void Dispose()
+        {
+            cache.Dispose();
         }
 
         public async Task<TSource> Load<TSource>(string sourcePath)
@@ -35,90 +56,134 @@ namespace DotvvmAcademy.CourseFormat
             {
                 throw new ArgumentException("Source path must be absolute.", nameof(sourcePath));
             }
-            if (cache.TryGetValue($"{CourseCache.SourcePrefix}{sourcePath}", out var existingSource))
+
+            var cacheKey = $"{typeof(TSource).Name}:{sourcePath}";
+            TSource source;
+            if (cache.TryGetValue(cacheKey, out source))
             {
-                return (TSource)existingSource;
-            }
-            var sourceProvider = provider.GetRequiredService<ISourceProvider<TSource>>();
-            var newSource = await sourceProvider.Get(sourcePath);
-            if (newSource == null)
-            {
-                return null;
+                return source;
             }
 
-            cache.AddSource(newSource);
-            return newSource;
+            var sourceProvider = (ISourceProvider<TSource>)sourceProviders[typeof(TSource)];
+            source = await sourceProvider.Get(sourcePath);
+            using (var entry = cache.CreateEntry(cacheKey))
+            {
+                entry.Value = source;
+                entry.SetAbsoluteExpiration(SourceExpiration);
+                entry.RegisterPostEvictionCallback((key, value, reason, state) =>
+                {
+                    if (value is IDisposable disposable)
+                    {
+                        disposable.Dispose();
+                    }
+                });
+            }
+            return source;
+        }
+
+        public Task<string> Read(string path)
+        {
+            return environment.Read(path);
         }
 
         public async Task<IEnumerable<CodeTaskDiagnostic>> ValidateStep(
             Step step,
             string code)
         {
-            var codeTask = await Load<CodeTask>(step.CodeTaskPath);
-            var dependencies = await Task.WhenAll(step.CodeTaskDependencies.Select(d => Load<CourseFile>(d)));
+            var validationId = Guid.NewGuid();
+
             var directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            var args = new StringBuilder($"{directory}/sandbox/DotvvmAcademy.CourseFormat.Sandbox.dll");
-            args.Append(' ').Append(codeTask.MapName);
-            args.Append(' ').Append(codeTask.EntryTypeName);
-            args.Append(' ').Append(codeTask.EntryMethodName);
+            var args = new List<string>();
+            args.Add(Path.Combine(directory, SandboxPath));
+
+            MemoryMappedFile scriptAssemblyMap;
+            {
+                var codeTask = await Load<CodeTask>(step.CodeTaskPath);
+                var mapName = $"CodeTask/{validationId}";
+                scriptAssemblyMap = MemoryMappedFile.CreateNew(mapName, codeTask.Assembly.Length, MemoryMappedFileAccess.ReadWrite);
+                using(var mapStream = scriptAssemblyMap.CreateViewStream(0, 0, MemoryMappedFileAccess.ReadWrite))
+                {
+                    await mapStream.WriteAsync(codeTask.Assembly, 0, codeTask.Assembly.Length);
+                }
+                args.Add(mapName);
+                args.Add(codeTask.EntryTypeName);
+                args.Add(codeTask.EntryMethodName);
+            }
+
+            var dependencyMaps = new List<MemoryMappedFile>();
+            var dependencies = await Task.WhenAll(step.CodeTaskDependencies.Select(d => Load<CourseFile>(d)));
             foreach (var dependency in dependencies)
             {
-                args.Append(' ').Append(dependency.MapName);
+                var mapName = $"CourseFile/{validationId}/{dependency.Path}";
+                var map = MemoryMappedFile.CreateNew(mapName, dependency.Text.Length * sizeof(char), MemoryMappedFileAccess.ReadWrite);
+                using (var mapStream = map.CreateViewStream(0, 0, MemoryMappedFileAccess.ReadWrite))
+                using(var writer = new StreamWriter(mapStream))
+                {
+                    await writer.WriteAsync(dependency.Text);
+                }
+                dependencyMaps.Add(map);
+                args.Add(mapName);
             }
+
             var info = new ProcessStartInfo
             {
                 FileName = "dotnet",
-                Arguments = args.ToString(),
+                Arguments = string.Join(" ", args),
                 UseShellExecute = false,
                 CreateNoWindow = false,
                 RedirectStandardInput = true,
                 RedirectStandardOutput = true
             };
             var diagnostics = ImmutableArray.CreateBuilder<CodeTaskDiagnostic>();
-            var process = Process.Start(info);
-            bool killed = false;
-            ThreadPool.QueueUserWorkItem((s) =>
-            {
-                Thread.Sleep(4000);
-                if (!process.HasExited)
-                {
-                    process.Kill();
-                    diagnostics.Add(new CodeTaskDiagnostic(Resources.ERR_ValidationTakesTooLong, -1, -1, CodeTaskDiagnosticSeverity.Error));
-                    killed = true;
-                }
-            });
-            await process.StandardInput.WriteAsync(code);
-            process.StandardInput.Close();
             try
             {
-                var formatter = new BinaryFormatter();
-                var deserializedDiagnostics = (LightDiagnostic[])formatter.Deserialize(process.StandardOutput.BaseStream);
-                foreach (var deserializedDiagnostic in deserializedDiagnostics)
+                var process = Process.Start(info);
+                bool killed = false;
+                //ThreadPool.QueueUserWorkItem((s) =>
+                //{
+                //    Thread.Sleep(ValidationTimeout);
+                //    if (!process.HasExited)
+                //    {
+                //        killed = true;
+                //        diagnostics.Add(new CodeTaskDiagnostic(Resources.ERR_ValidationTakesTooLong, -1, -1, CodeTaskDiagnosticSeverity.Error));
+                //        process.Kill();
+                //    }
+                //});
+                await process.StandardInput.WriteAsync(code);
+                process.StandardInput.Close();
+                try
                 {
-                    if (deserializedDiagnostic.Source.StartsWith("UserCode"))
+                    var formatter = new BinaryFormatter();
+                    var deserializedDiagnostics = (LightDiagnostic[])formatter.Deserialize(process.StandardOutput.BaseStream);
+                    foreach (var deserializedDiagnostic in deserializedDiagnostics)
                     {
-                        diagnostics.Add(new CodeTaskDiagnostic(
-                            message: deserializedDiagnostic.Message,
-                            start: deserializedDiagnostic.Start,
-                            end: deserializedDiagnostic.End,
-                            severity: deserializedDiagnostic.Severity.ToCodeTaskDiagnosticSeverity()));
+                        if (deserializedDiagnostic.Source == null || deserializedDiagnostic.Source.StartsWith("UserCode"))
+                        {
+                            diagnostics.Add(new CodeTaskDiagnostic(
+                                message: deserializedDiagnostic.Message,
+                                start: deserializedDiagnostic.Start,
+                                end: deserializedDiagnostic.End,
+                                severity: deserializedDiagnostic.Severity.ToCodeTaskDiagnosticSeverity()));
+                        }
                     }
                 }
-
-            }
-            catch (SerializationException)
-            {
-                if (!killed)
+                catch (SerializationException)
                 {
-                    diagnostics.Add(new CodeTaskDiagnostic("Your code couldn't be validated.", -1, -1, CodeTaskDiagnosticSeverity.Error));
+                    if (!killed)
+                    {
+                        diagnostics.Add(new CodeTaskDiagnostic("Your code couldn't be validated.", -1, -1, CodeTaskDiagnosticSeverity.Error));
+                    }
+                }
+                return diagnostics.ToImmutable();
+            }
+            finally
+            {
+                scriptAssemblyMap.Dispose();
+                foreach(var dependencyMap in dependencyMaps)
+                {
+                    dependencyMap.Dispose();
                 }
             }
-            return diagnostics.ToImmutable();
-        }
-
-        public Task<string> Read(string path)
-        {
-            return provider.GetRequiredService<ICourseEnvironment>().Read(path);
         }
     }
 }

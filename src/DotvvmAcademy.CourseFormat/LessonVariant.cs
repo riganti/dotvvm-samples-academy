@@ -28,10 +28,5 @@ namespace DotvvmAcademy.CourseFormat
         public string Name { get; internal set; }
 
         public LessonStatus Status { get; internal set; }
-
-        public override long GetSize()
-        {
-            return Annotation?.Length ?? 1;
-        }
     }
 }
