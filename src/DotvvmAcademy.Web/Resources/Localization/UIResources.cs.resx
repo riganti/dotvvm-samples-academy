@@ -177,10 +177,10 @@ Vše ostatní vám vysvětlíme v několika jednoduchých lekcích.</value>
   <data name="Base_Incorrect_Solution" xml:space="preserve">
     <value>Nesprávně</value>
   </data>
-  <data name="Btm_Reset" xml:space="preserve">
+  <data name="Btn_Reset" xml:space="preserve">
     <value>Resetovat</value>
   </data>
-  <data name="Btm_GetSolution" xml:space="preserve">
+  <data name="Btn_GetSolution" xml:space="preserve">
     <value>Zobrazit řešení</value>
   </data>
   <data name="Btn_Copy" xml:space="preserve">

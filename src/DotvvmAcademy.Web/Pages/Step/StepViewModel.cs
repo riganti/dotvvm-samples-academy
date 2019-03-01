@@ -20,6 +20,8 @@ namespace DotvvmAcademy.Web.Pages.Step
 
         public CodeTaskDetail CodeTask { get; set; }
 
+        public bool IsFinishDialogVisible { get; set; }
+
         [FromRoute("Lesson")]
         [Bind(Direction.ServerToClientFirstRequest)]
         public string LessonMoniker { get; set; }

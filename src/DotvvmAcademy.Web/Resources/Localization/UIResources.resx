@@ -189,10 +189,10 @@ Watch &lt;strong&gt;DotVVM Coffee&lt;/strong&gt; videos!</value>
   <data name="Base_Incorrect_Solution" xml:space="preserve">
     <value>Incorrect</value>
   </data>
-  <data name="Btm_Reset" xml:space="preserve">
+  <data name="Btn_Reset" xml:space="preserve">
     <value>Reset</value>
   </data>
-  <data name="Btm_GetSolution" xml:space="preserve">
+  <data name="Btn_GetSolution" xml:space="preserve">
     <value>Get Solution</value>
   </data>
   <data name="Btn_Copy" xml:space="preserve">

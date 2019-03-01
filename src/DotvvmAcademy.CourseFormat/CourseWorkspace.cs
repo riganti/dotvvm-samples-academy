@@ -10,8 +10,6 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace DotvvmAcademy.CourseFormat
@@ -101,7 +99,7 @@ namespace DotvvmAcademy.CourseFormat
                 var codeTask = await Load<CodeTask>(step.CodeTaskPath);
                 var mapName = $"CodeTask/{validationId}";
                 scriptAssemblyMap = MemoryMappedFile.CreateNew(mapName, codeTask.Assembly.Length, MemoryMappedFileAccess.ReadWrite);
-                using(var mapStream = scriptAssemblyMap.CreateViewStream(0, 0, MemoryMappedFileAccess.ReadWrite))
+                using (var mapStream = scriptAssemblyMap.CreateViewStream(0, 0, MemoryMappedFileAccess.ReadWrite))
                 {
                     await mapStream.WriteAsync(codeTask.Assembly, 0, codeTask.Assembly.Length);
                 }
@@ -117,7 +115,7 @@ namespace DotvvmAcademy.CourseFormat
                 var mapName = $"CourseFile/{validationId}/{dependency.Path}";
                 var map = MemoryMappedFile.CreateNew(mapName, dependency.Text.Length * sizeof(char), MemoryMappedFileAccess.ReadWrite);
                 using (var mapStream = map.CreateViewStream(0, 0, MemoryMappedFileAccess.ReadWrite))
-                using(var writer = new StreamWriter(mapStream))
+                using (var writer = new StreamWriter(mapStream))
                 {
                     await writer.WriteAsync(dependency.Text);
                 }
@@ -179,7 +177,7 @@ namespace DotvvmAcademy.CourseFormat
             finally
             {
                 scriptAssemblyMap.Dispose();
-                foreach(var dependencyMap in dependencyMaps)
+                foreach (var dependencyMap in dependencyMaps)
                 {
                     dependencyMap.Dispose();
                 }

@@ -28,14 +28,14 @@
                                 IncludeInPage="{resource: Step.HasCodeTask}"
                                 class="code__button"
                                 ButtonTagName="button">
-                        <span InnerText="{resource: UIResources.Btm_Reset}" />
+                        <span InnerText="{resource: UIResources.Btn_Reset}" />
                         <cc:SvgToHtml Source="/images/Icons/reset.svg" />
                     </dot:Button>
                     <dot:Button Click="{command: ShowSolution()}"
                                 IncludeInPage="{resource: Step.HasCodeTask}"
                                 class="code__button"
                                 ButtonTagName="button">
-                        <span InnerText="{resource: UIResources.Btm_GetSolution}" />
+                        <span InnerText="{resource: UIResources.Btn_GetSolution}" />
                         <cc:SvgToHtml Source="/images/Icons/bulb-solid.svg" />
                     </dot:Button>
                 </div>

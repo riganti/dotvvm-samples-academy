@@ -61,6 +61,17 @@ namespace DotvvmAcademy.Web.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Do you wonder how DotVVM works?
+        ///It’s easy – all you need to know is HTML, C# and basics of CSS.
+        ///We will explain everything to you in a few easy lessons..
+        /// </summary>
+        public static string App_Description {
+            get {
+                return ResourceManager.GetString("App_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Choose a Lesson.
         /// </summary>
         public static string Base_ChooseLesson {
@@ -190,6 +201,15 @@ namespace DotvvmAcademy.Web.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copy.
+        /// </summary>
+        public static string Btn_Copy {
+            get {
+                return ResourceManager.GetString("Btn_Copy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Finish.
         /// </summary>
         public static string Btn_Finish {
@@ -199,7 +219,34 @@ namespace DotvvmAcademy.Web.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Next.
+        ///   Looks up a localized string similar to Get Solution.
+        /// </summary>
+        public static string Btn_GetSolution {
+            get {
+                return ResourceManager.GetString("Btn_GetSolution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Homepage.
+        /// </summary>
+        public static string Btn_Homepage {
+            get {
+                return ResourceManager.GetString("Btn_Homepage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Next Lesson.
+        /// </summary>
+        public static string Btn_NextLesson {
+            get {
+                return ResourceManager.GetString("Btn_NextLesson", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Validate.
         /// </summary>
         public static string Btn_NextStep {
             get {
@@ -213,6 +260,15 @@ namespace DotvvmAcademy.Web.Resources.Localization {
         public static string Btn_PreviousStep {
             get {
                 return ResourceManager.GetString("Btn_PreviousStep", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset.
+        /// </summary>
+        public static string Btn_Reset {
+            get {
+                return ResourceManager.GetString("Btn_Reset", resourceCulture);
             }
         }
         
@@ -231,6 +287,33 @@ namespace DotvvmAcademy.Web.Resources.Localization {
         public static string Btn_StartLesson {
             get {
                 return ResourceManager.GetString("Btn_StartLesson", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lesson .
+        /// </summary>
+        public static string Dialog_Text {
+            get {
+                return ResourceManager.GetString("Dialog_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  has been successfully completed..
+        /// </summary>
+        public static string Dialog_Text2 {
+            get {
+                return ResourceManager.GetString("Dialog_Text2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Congratulations!.
+        /// </summary>
+        public static string Dialog_Title {
+            get {
+                return ResourceManager.GetString("Dialog_Title", resourceCulture);
             }
         }
         

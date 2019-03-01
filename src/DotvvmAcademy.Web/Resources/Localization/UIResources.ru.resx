@@ -171,10 +171,10 @@
   <data name="Btn_Finish" xml:space="preserve">
     <value>Конец</value>
   </data>
-  <data name="Btm_Reset" xml:space="preserve">
+  <data name="Btn_Reset" xml:space="preserve">
     <value>сброс</value>
   </data>
-  <data name="Btm_GetSolution" xml:space="preserve">
+  <data name="Btn_GetSolution" xml:space="preserve">
     <value>Получить решение</value>
   </data>
   <data name="Base_Incorrect_Solution" xml:space="preserve">
