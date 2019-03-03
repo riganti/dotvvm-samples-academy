@@ -10,19 +10,20 @@ CodeTask:
 
 # Commands
 
-__Commands__ are a kind of bindings used to invoke ViewModel's methods.
+The __Commands binding__ allows to call the ViewModel methods from the View.
 
-Unlike Value bindings, they make a request to the server and make necessary updates afterwards. Commands can be used in a control like the `Button`:
+Unlike the value bindings, the command bindings make a request to the server and perform the necessary updates afterwards. The commands can be used from many controls, the `Button` for example:
 
 ```dothtml
-<dot:Button Click="{command: Increment()}"
-            Text="Increment" />
+<dot:Button Click="{command: Add()}"
+            Text="Add" />
 ```
-Changes made by the `Increment` method are sent back to the user.
+
+The changes made by the `Add` method will be sent back to the browser and the page will be updated.
 
 ---
 
 ## Tasks
 
-- Add two `Button` controls to the `<body>` element.
-- Command-bind them to the `Increment` and `Decrement` methods we created earlier.
+- Add two `<dot:Button>` controls to the `<body>` element.
+- Use command binding to call the `Add` and `Subtract` methods you created earlier.
