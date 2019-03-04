@@ -2,16 +2,25 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build-all",
-            "group": "build",
+            "label": "build",
             "command": "dotnet",
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}",
-                "/property:GenerateFullPaths=true"
+                "${workspaceFolder}/src/DotvvmAcademy.Web/DotvvmAcademy.Web.csproj"
             ],
             "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "publish",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "${workspaceFolder}/src/DotvvmAcademy.Web/DotvvmAcademy.Web.csproj",
+                "-c",
+                "Release"
+            ]
         }
     ]
 }
