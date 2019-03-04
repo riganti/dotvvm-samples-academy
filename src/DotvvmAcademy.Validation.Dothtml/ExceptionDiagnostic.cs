@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace DotvvmAcademy.Validation.Dothtml
 {
-    public class DotvvmCompilationExceptionDiagnostic : IValidationDiagnostic
+    public class ExceptionDiagnostic : IValidationDiagnostic
     {
-        public DotvvmCompilationExceptionDiagnostic(DotvvmCompilationException exception, ISourceCode source)
+        public ExceptionDiagnostic(DotvvmCompilationException exception, ISourceCode source)
         {
             Exception = exception;
             Source = source;

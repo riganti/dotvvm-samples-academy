@@ -58,6 +58,7 @@ namespace DotvvmAcademy.CourseFormat.Sandbox
                 using (var reader = new StreamReader(mapStream))
                 {
                     text = await reader.ReadToEndAsync();
+                    text = text.TrimEnd('\0');
                 }
 
                 if (mapName.EndsWith(".cs"))

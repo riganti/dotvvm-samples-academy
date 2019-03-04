@@ -148,6 +148,13 @@ namespace DotvvmAcademy.Validation.Dothtml
                 // parse syntax
                 var tokenizer = new DothtmlTokenizer();
                 tokenizer.Tokenize(sourceCode.GetContent() ?? string.Empty);
+                foreach(var token in tokenizer.Tokens)
+                {
+                    if (token.HasError)
+                    {
+                        reporter.Report(token.Error, sourceCode);
+                    }
+                }
                 var parser = new DothtmlParser();
                 var dothtmlRoot = parser.Parse(tokenizer.Tokens);
 
