@@ -29,14 +29,14 @@
                                 class="code__button"
                                 ButtonTagName="button">
                         <span InnerText="{resource: UIResources.Btn_Reset}" />
-                        <cc:SvgToHtml Source="/images/Icons/reset.svg" />
+                        <img src="/images/Icons/reset.svg" />
                     </dot:Button>
                     <dot:Button Click="{command: ShowSolution()}"
                                 IncludeInPage="{resource: Step.HasCodeTask}"
                                 class="code__button"
                                 ButtonTagName="button">
                         <span InnerText="{resource: UIResources.Btn_GetSolution}" />
-                        <cc:SvgToHtml Source="/images/Icons/bulb-solid.svg" />
+                        <img src="/images/Icons/bulb-solid.svg" />
                     </dot:Button>
                 </div>
                 <cc:MonacoEditor Code="{value: CodeTask.Code}"
@@ -73,8 +73,7 @@
                                Param-Lesson="{value: LessonMoniker}"
                                Param-Step="{value: Step.PreviousStep ?? ""}"
                                Enabled="{value: Step.PreviousStep != null}">
-                    <cc:SvgToHtml Source="/images/Icons/prev.svg">
-                    </cc:SvgToHtml>
+                    <img src="/images/Icons/prev.svg" />
                     <span InnerText="{resource: UIResources.Btn_PreviousStep}" />
                 </dot:RouteLink>
 
@@ -95,7 +94,7 @@
                             ButtonTagName="button"
                             Tooltip="Validate and Continue">
                     <span InnerText="{resource: UIResources.Btn_NextStep}" />
-                    <cc:SvgToHtml Source="/images/Icons/next.svg" />
+                    <img src="/images/Icons/next.svg" />
                 </dot:Button>
                 <dot:Button Click="{staticCommand: IsFinishDialogVisible = true}"
                             class="button finish"

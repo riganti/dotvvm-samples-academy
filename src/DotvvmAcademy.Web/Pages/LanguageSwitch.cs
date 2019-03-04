@@ -6,7 +6,7 @@ namespace DotvvmAcademy.Web.Pages
 {
     public class LanguageSwitch : DotvvmMarkupControl
     {
-        public const string CurrentImageFormat = "images/Icons/Flag_{0}.svg";
+        public const string CurrentImageFormat = "/images/Icons/Flag_{0}.svg";
 
         public static readonly DotvvmProperty AvailableLanguagesProperty
             = DotvvmProperty.Register<IEnumerable<LanguageOption>, LanguageSwitch>(c => c.AvailableLanguages, null);

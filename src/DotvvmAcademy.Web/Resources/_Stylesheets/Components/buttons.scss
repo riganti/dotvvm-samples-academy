@@ -92,7 +92,7 @@
         flex-wrap: nowrap;
         flex-direction: row;
 
-        > svg {
+        > img {
             display: block;
             width: 2rem;
             height: 2rem;
@@ -103,7 +103,7 @@
             color: $color-font;
         }
 
-        &--left > svg {
+        &--left > img {
             margin-left: 0;
             margin-right: .5rem;
         }
@@ -113,7 +113,7 @@
         position: relative;
         min-height: 4rem;
 
-        span, svg {
+        span, img {
             display: none;
         }
 
@@ -164,7 +164,7 @@
         position: relative;
         min-height: 4rem;
 
-        span, svg {
+        span, img {
             display: none;
         }
 
@@ -204,7 +204,7 @@
         background-color: lighten($color-error, 20%);
         border-color: lighten($color-error, 20%);
 
-        > svg {
+        > img {
             display: none;
         }
 

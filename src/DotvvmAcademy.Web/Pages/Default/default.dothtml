@@ -30,7 +30,7 @@
                                Param-Language="{value: _root.LanguageMoniker}"
                                Param-Lesson="{value: FirstLesson.Moniker}"
                                Param-Step="{value: FirstLesson.FirstStep}" />
-                <cc:SvgToHtml Source="/images/Illustrations/header-image.svg" />
+                <img src="/images/Illustrations/header-image.svg" />
             </div>
         </div>
     </section>
@@ -45,7 +45,7 @@
                                Param-Lesson="{value: Moniker}"
                                Param-Step="{value: FirstStep}"
                                class="lessons-item">
-                    <cc:SvgToHtml Source="{resource: ImageUrl ?? "/images/Icons/ico-lesson-1.svg"}" />
+                    <img src="{resource: ImageUrl ?? "/images/Icons/ico-lesson-1.svg"}" />
                     <h2>{{resource: Name}}</h2>
                     <dot:HtmlLiteral Html="{resource: AnnotationHtml}" />
                     <span InnerText="{resource: UIResources.Btn_StartLesson}" class="button" />
@@ -55,7 +55,7 @@
     </section>
     <section class="section-coffee">
         <div>
-            <cc:SvgToHtml Source="/images/Illustrations/coffee-image.svg" />
+            <img src="/images/Illustrations/coffee-image.svg" />
         </div>
         <div>
             <dot:HtmlLiteral Html="{resource: UIResources.Base_CoffeeTitle}"

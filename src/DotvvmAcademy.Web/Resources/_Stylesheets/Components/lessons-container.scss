@@ -36,7 +36,7 @@
 
     &:hover {
 
-        > svg {
+        > img {
             transform: scale(1.2, 1.2);
         }
 
@@ -88,12 +88,12 @@
         width: 100%;
     }
 
-    &.finished > svg {
+    &.finished > img {
         width: 45%;
         min-width: 12rem;
     }
 
-    > svg {
+    > img {
         display: block;
         width: 50%;
         margin: 0 auto;

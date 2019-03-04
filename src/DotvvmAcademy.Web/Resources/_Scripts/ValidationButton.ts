@@ -1,63 +1,74 @@
 ﻿declare let dotvvm;
 
-namespace DotvvmAcademy {
-    export function setLoading(element: Element) {
-        element.classList.remove("with-tooltip");
-        element.classList.add("with-loading");
-    }
-
-    export function setSuccess(element: Element) {
-        element.classList.remove("with-loading");
-        element.classList.remove("failed");
-        window.setTimeout(() => element.classList.add("success"), 50);
-    }
-
-    export function setFailed(element: Element) {
-        element.classList.remove("with-loading")
-        element.classList.remove("success");
-        window.setTimeout(() => element.classList.add("failed"), 50);
-    }
-
-
-    export function setWithTooltip(element: Element) {
-        element.classList.remove("with-loading");
-        window.setTimeout(() => element.classList.add("with-tooltip"), 50);
-    }
-
-    export function redirect() {
-        let viewModel = dotvvm.viewModels.root.viewModel;
-        let language = viewModel.Language().Moniker();
-        let lessonMoniker = viewModel.LessonMoniker();
-        let nextStep = viewModel.Step().NextStep();
-        window.location.pathname = `/${language}/${lessonMoniker}/${nextStep}`;
-    }
-}
-
-dotvvm.events.beforePostback.subscribe(args => {
-    // ensure this is the right postback
-    let validationButton = document.querySelector("#validation-button");
-    if (validationButton != args.sender) {
-        return;
-    }
-
-    DotvvmAcademy.setLoading(validationButton);
+dotvvm.events.init.subscribe(_ => {
+    let buttonElement = document.querySelector("#validation-button");
+    new DotvvmAcademy.ValidationButton(buttonElement);
 })
 
+namespace DotvvmAcademy {
+    export class ValidationButton {
+        element: Element;
 
-dotvvm.events.afterPostback.subscribe(args => {
-    // ensure this is the right postback
-    let validationButton = document.querySelector("#validation-button");
-    if (validationButton != args.sender) {
-        return;
-    }
+        constructor(element: Element) {
+            this.element = element;
 
-    if (args.viewModel.CodeTask().IsCodeCorrect()) {
-        DotvvmAcademy.setSuccess(args.sender);
-        window.setTimeout(() => {
-            DotvvmAcademy.redirect();
-        }, 1500);
-    } else {
-        DotvvmAcademy.setFailed(args.sender);
-        DotvvmAcademy.setWithTooltip(args.sender);
+            dotvvm.events.beforePostback.subscribe(args => {
+                // ensure this is the right postback
+                if (this.element != args.sender) {
+                    return;
+                }
+
+                this.setLoading();
+            })
+
+
+            dotvvm.events.afterPostback.subscribe(args => {
+                // ensure this is the right postback
+                if (this.element != args.sender) {
+                    return;
+                }
+
+                if (args.viewModel.CodeTask().IsCodeCorrect()) {
+                    this.setSuccess();
+                    window.setTimeout(() => {
+                        this.redirect();
+                    }, 1500);
+                } else {
+                    this.setFailed();
+                    this.setWithTooltip();
+                }
+            });
+        }
+
+        setLoading() {
+            this.element.classList.remove("with-tooltip");
+            this.element.classList.add("with-loading");
+        }
+
+        setSuccess() {
+            this.element.classList.remove("with-loading");
+            this.element.classList.remove("failed");
+            window.setTimeout(() => this.element.classList.add("success"), 50);
+        }
+
+        setFailed() {
+            this.element.classList.remove("with-loading")
+            this.element.classList.remove("success");
+            window.setTimeout(() => this.element.classList.add("failed"), 50);
+        }
+
+
+        setWithTooltip() {
+            this.element.classList.remove("with-loading");
+            window.setTimeout(() => this.element.classList.add("with-tooltip"), 50);
+        }
+
+        redirect() {
+            let viewModel = dotvvm.viewModels.root.viewModel;
+            let language = viewModel.Language().Moniker();
+            let lessonMoniker = viewModel.LessonMoniker();
+            let nextStep = viewModel.Step().NextStep();
+            window.location.pathname = `/${language}/${lessonMoniker}/${nextStep}`;
+        }
     }
-});
+}
