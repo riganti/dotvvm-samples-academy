@@ -10,6 +10,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace DotvvmAcademy.CourseFormat
@@ -17,7 +18,7 @@ namespace DotvvmAcademy.CourseFormat
     public class CourseWorkspace : IDisposable
     {
         public const string SandboxPath = "./sandbox/DotvvmAcademy.CourseFormat.Sandbox.dll";
-        public const int ValidationTimeout = 5000;
+        public const int ValidationTimeout = 10000;
 #if DEBUG
         public static readonly TimeSpan SourceExpiration = TimeSpan.FromSeconds(3);
 #else
@@ -133,46 +134,42 @@ namespace DotvvmAcademy.CourseFormat
                 RedirectStandardOutput = true
             };
             var diagnostics = ImmutableArray.CreateBuilder<CodeTaskDiagnostic>();
+            bool killed = false;
             try
             {
                 var process = Process.Start(info);
-                bool killed = false;
-                //ThreadPool.QueueUserWorkItem((s) =>
-                //{
-                //    Thread.Sleep(ValidationTimeout);
-                //    if (!process.HasExited)
-                //    {
-                //        killed = true;
-                //        diagnostics.Add(new CodeTaskDiagnostic(Resources.ERR_ValidationTakesTooLong, -1, -1, CodeTaskDiagnosticSeverity.Error));
-                //        process.Kill();
-                //    }
-                //});
+                ThreadPool.QueueUserWorkItem((s) =>
+                {
+                    Thread.Sleep(ValidationTimeout);
+                    if (!process.HasExited)
+                    {
+                        killed = true;
+                        diagnostics.Add(new CodeTaskDiagnostic(Resources.ERR_ValidationTakesTooLong, -1, -1, CodeTaskDiagnosticSeverity.Error));
+                        process.Kill();
+                    }
+                });
                 await process.StandardInput.WriteAsync(code);
                 process.StandardInput.Close();
-                try
+                var formatter = new BinaryFormatter();
+                var deserializedDiagnostics = (LightDiagnostic[])formatter.Deserialize(process.StandardOutput.BaseStream);
+                foreach (var deserializedDiagnostic in deserializedDiagnostics)
                 {
-                    var formatter = new BinaryFormatter();
-                    var deserializedDiagnostics = (LightDiagnostic[])formatter.Deserialize(process.StandardOutput.BaseStream);
-                    foreach (var deserializedDiagnostic in deserializedDiagnostics)
+                    if (deserializedDiagnostic.Source == null || deserializedDiagnostic.Source.StartsWith("UserCode"))
                     {
-                        if (deserializedDiagnostic.Source == null || deserializedDiagnostic.Source.StartsWith("UserCode"))
-                        {
-                            diagnostics.Add(new CodeTaskDiagnostic(
-                                message: deserializedDiagnostic.Message,
-                                start: deserializedDiagnostic.Start,
-                                end: deserializedDiagnostic.End,
-                                severity: deserializedDiagnostic.Severity.ToCodeTaskDiagnosticSeverity()));
-                        }
+                        diagnostics.Add(new CodeTaskDiagnostic(
+                            message: deserializedDiagnostic.Message,
+                            start: deserializedDiagnostic.Start,
+                            end: deserializedDiagnostic.End,
+                            severity: deserializedDiagnostic.Severity.ToCodeTaskDiagnosticSeverity()));
                     }
                 }
-                catch (SerializationException)
+            }
+            catch (SerializationException)
+            {
+                if (!killed)
                 {
-                    if (!killed)
-                    {
-                        diagnostics.Add(new CodeTaskDiagnostic("Your code couldn't be validated.", -1, -1, CodeTaskDiagnosticSeverity.Error));
-                    }
+                    diagnostics.Add(new CodeTaskDiagnostic("Your code couldn't be validated.", -1, -1, CodeTaskDiagnosticSeverity.Error));
                 }
-                return diagnostics.ToImmutable();
             }
             finally
             {
@@ -182,6 +179,7 @@ namespace DotvvmAcademy.CourseFormat
                     dependencyMap.Dispose();
                 }
             }
+            return diagnostics.ToImmutable();
         }
     }
 }

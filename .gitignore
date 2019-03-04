@@ -256,3 +256,5 @@ monaco-editor
 **/wwwroot/libs
 npm-debug.log.*
 sandbox
+.vscode
+*.binlog

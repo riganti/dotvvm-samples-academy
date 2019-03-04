@@ -42,10 +42,9 @@
                          Platform=$(Platform);
                          PublishDir=$(MSBuildProjectDirectory)/sandbox;"/>
     <ItemGroup>
-      <Content Include="sandbox/**/*">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        <CopyToPublishDirectory>Always</CopyToPublishDirectory>
-      </Content>
+      <Content Include="sandbox/**/*" 
+               CopyToOutputDirectory="Always"
+               CopyToPublishDirectory="Always"/>
     </ItemGroup>
   </Target>
 
