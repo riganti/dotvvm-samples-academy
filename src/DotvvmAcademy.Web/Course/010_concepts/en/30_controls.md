@@ -8,13 +8,13 @@ CodeTask:
 
 # Controls
 
-DotVVM also add the concept of __Controls__, reusable components that can be added anywhere in the HTML. You can recognize them easily by the `<dot:` prefix.
+DotVVM also adds the concept of __Controls__, reusable components that can be added anywhere in the View. You can easily recognize them by the `<dot:` prefix.
 
 ```dothtml
 <dot:TextBox Text="{value: Difference}" />
 ```
 
-The `TextBox` control is essentially an `<input type="text">` element that supports data-bindings.
+The `TextBox` control is essentially an `<input type="text">` element that supports binding expressions.
 
 > Note: Technically, every standard HTML element is also a control in DotVVM, specifically _HtmlGenericControl_.
 
@@ -23,4 +23,4 @@ The `TextBox` control is essentially an `<input type="text">` element that suppo
 ## Tasks
 
 - Add a `<dot:TextBox>` control in the `<body>` element.
-- Use value binding to bind its `Text` to the `Difference` property.
+- Use a value binding to bind its `Text` attribute to the `Difference` property.
