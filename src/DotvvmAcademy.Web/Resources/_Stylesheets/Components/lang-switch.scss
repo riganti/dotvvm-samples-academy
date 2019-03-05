@@ -1,0 +1,64 @@
+﻿@import "../Base/_global.scss";
+
+.lang-switch {
+    position: relative;
+    z-index: 100;
+    width: 23rem;
+
+    &--open {
+        .lang-switch__list {
+            opacity: 1;
+            z-index: 100;
+        }
+    }
+
+    &__button {
+        width: 100%;
+        display: block;
+        background-color: $color-primary;
+        color: $color-white;
+        height: 3.5rem;
+        width: 3.5rem;
+        line-height: 3.5rem;
+        color: $color-white;
+        text-align: center;
+        font-family: $font-text;
+        text-transform: uppercase;
+        border: none;
+        font-size: $font-size-m;
+        padding: 0;
+
+        &:hover {
+            background-color: lighten($color-primary, 10%);
+            cursor: pointer;
+        }
+    }
+
+    &__list {
+        position: absolute;
+        display: block;
+        list-style: none;
+        right: 0;
+        top: 103%;
+        width: 8rem;
+        background-color: $color-white;
+        border: 1px solid $color-border;
+        padding-left: 0;
+        opacity: 0;
+        z-index: 100;
+        transition: $animate-all;
+
+        a {
+            display: block;
+            padding: .2rem .5rem;
+            text-decoration: none;
+            color: $color-primary;
+            background-color: $color-white;
+            text-transform: uppercase;
+
+            &:hover {
+                background-color: $color-vs-text;
+            }
+        }
+    }
+}
