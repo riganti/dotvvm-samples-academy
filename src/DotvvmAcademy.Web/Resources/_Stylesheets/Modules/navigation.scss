@@ -38,7 +38,11 @@ nav {
     > strong {
         font-size: $font-size-xl;
         font-weight: 300;
-        text-transform: uppercase
+        text-transform: uppercase;
+
+        @include res-max-tablet {
+            display: none;
+        }
     }
 
     > a {
@@ -54,9 +58,12 @@ nav {
         color: $color-primary;
         width: 23rem;
 
+        @include res-max-desktop-small {
+            width: auto;
+        }
+
         @include res-max-mobile {
             height: 7rem;
-            margin-left: -1.7rem;
         }
 
         img {
@@ -80,12 +87,6 @@ nav {
             color: $color-primary;
             font-size: 2.4rem;
             margin-bottom: .1rem;
-
-            @include res-max-mobile {
-                font-size: $font-size-l;
-                margin-bottom: .2rem;
-                margin-right: .3rem;
-            }
         }
     }
 

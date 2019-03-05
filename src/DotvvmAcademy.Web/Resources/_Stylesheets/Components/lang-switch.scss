@@ -5,6 +5,10 @@
     z-index: 100;
     width: 23rem;
 
+    @include res-max-desktop-small {
+        width: auto;
+    }
+
     &--open {
         .lang-switch__list {
             opacity: 1;
