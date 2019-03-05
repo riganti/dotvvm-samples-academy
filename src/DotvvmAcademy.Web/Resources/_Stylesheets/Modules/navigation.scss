@@ -10,6 +10,7 @@ nav {
     align-items: center;
 
     &.step-nav {
+
         > a {
             height: 4rem;
 
@@ -34,6 +35,12 @@ nav {
         }
     }
 
+    > strong {
+        font-size: $font-size-xl;
+        font-weight: 300;
+        text-transform: uppercase
+    }
+
     > a {
         display: flex;
         width: auto;
@@ -45,6 +52,7 @@ nav {
         align-items: flex-end;
         text-decoration: none;
         color: $color-primary;
+        width: 23rem;
 
         @include res-max-mobile {
             height: 7rem;

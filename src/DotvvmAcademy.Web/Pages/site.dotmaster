@@ -36,21 +36,21 @@
     <dot:ContentPlaceHolder ID="MetaContent" />
     <dot:RequiredResource Name="StyleCSS" />
 </head>
-<body Class-step-body="{resource: Context.Route.RouteName == "Step"}">
+<body Class-step-body="{resource: CurrentRoute == "Step"}">
     <header>
-        <nav class="container-large" Class-step-nav="{resource: Context.Route.RouteName == "Step"}">
+        <nav class="container-large" Class-step-nav="{resource: CurrentRoute == "Step"}">
             <dot:RouteLink RouteName="Default">
                 <img src="/images/Logos/logo-dotvvm.svg" />
                 <span>DOT<b>VVM</b></span>
                 &nbsp;<p>ACADEMY</p>
             </dot:RouteLink>
-            <div>
-                <%-- LanguageSwitch is visible always --%>
-                <cc:LanguageSwitch Class-lang-switcher="true"
-                                   AvailableLanguages="{value: Languages}"
-                                   RouteName="{resource: Context.Route.RouteName}"
-                                   CurrentLanguage="{resource: Language}" />
-            </div>
+
+            <dot:ContentPlaceHolder ID="NavContent" />
+
+            <cc:LanguageSwitch class="lang-switch"
+                               AvailableLanguages="{value: Languages}"
+                               RouteName="{resource: Context.Route.RouteName}"
+                               CurrentLanguage="{resource: Language}" />
         </nav>
         <dot:ContentPlaceHolder ID="HeaderContent" />
     </header>

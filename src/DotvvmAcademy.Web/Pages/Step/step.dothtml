@@ -12,6 +12,10 @@
     <meta name="twitter:description" content="{resource: "LessonDescription"}" />
 </dot:Content>
 
+<dot:Content ContentPlaceHolderID="NavContent">
+    <strong InnerText="{value: LessonName}" />
+</dot:Content>
+
 <dot:Content ContentPlaceHolderID="MainContent">
     <section class="section-lesson">
         <div class="mobile-message">

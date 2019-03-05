@@ -28,7 +28,7 @@
     color: $color-white;
     padding: 2rem 4rem;
     box-sizing: border-box;
-    padding-bottom: 14rem;
+    padding-bottom: 12rem;
     position: relative;
     margin-top: 3rem;
     text-decoration: none;
@@ -37,7 +37,7 @@
     &:hover {
 
         > img {
-            transform: scale(1.2, 1.2);
+            transform: scale(1.05, 1.05);
         }
 
         .button {
@@ -125,7 +125,7 @@
 
     .button {
         position: absolute;
-        bottom: 10rem;
+        bottom: 8rem;
         left: 50%;
         transform: translateX(-50%);
 
@@ -134,21 +134,16 @@
         }
     }
 
-    &:before, &:after {
+    &:after {
         content: '';
         position: absolute;
-        bottom: 0;
-        width: 50%;
-        height: 5rem;
-    }
-
-    &:before {
         left: 0;
-        background: linear-gradient(166deg, $color-transparent 0%, $color-transparent 50%, $color-white 51%, $color-white 100%);
-    }
-
-    &:after {
-        right: 0;
-        background: linear-gradient(13.5deg, $color-white 0%, $color-white 50%, $color-transparent 51%, $color-transparent 100%);
+        bottom: -1px;
+        width: 100%;
+        height: 5rem;
+        background-color: $color-white;
+        display: block;
+        -webkit-clip-path: polygon(50% 0, 0 100%, 100% 100%);
+        clip-path: polygon(50% 0, 0 100%, 100% 100%);
     }
 }

@@ -17,7 +17,7 @@ namespace DotvvmAcademy.Web.Pages
 
         [Bind(Direction.ServerToClientFirstRequest)]
         public List<LanguageOption> Languages { get; set; }
-
+        public string CurrentRoute => Context.Route.RouteName;
         public override Task Init()
         {
             if (string.IsNullOrEmpty(LanguageMoniker))

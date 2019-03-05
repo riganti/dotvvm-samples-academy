@@ -1,5 +1,9 @@
 ﻿@import "../../../Base/global";
 
+header {
+    max-height: 62vh;
+}
+
 .main-header {
     background: -moz-linear-gradient(left, $color-primary 0%, $color-primary 75%, $color-white 75%, $color-white 100%);
     background: -webkit-linear-gradient(left, $color-primary 0%,$color-primary 75%,$color-white 75%,$color-white 100%);
