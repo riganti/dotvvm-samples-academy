@@ -1,4 +1,5 @@
 ﻿using DotVVM.Framework.Compilation;
+using DotVVM.Framework.Compilation.Parser;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 using DotvvmAcademy.Validation.Dothtml;
 using DotvvmAcademy.Validation.Dothtml.ValidationTree;
@@ -66,7 +67,15 @@ namespace DotvvmAcademy.Validation
 
         public static void Report(this IValidationReporter reporter, DotvvmCompilationException exception, ISourceCode source)
         {
-            reporter.Report(new DotvvmCompilationExceptionDiagnostic(exception, source));
+            reporter.Report(new ExceptionDiagnostic(exception, source));
+        }
+
+        public static void Report(
+            this IValidationReporter reporter,
+            TokenError error, 
+            DothtmlSourceCode source)
+        {
+            reporter.Report(new TokenErrorDiagnostic(error, source, ValidationSeverity.Error));
         }
     }
 }
