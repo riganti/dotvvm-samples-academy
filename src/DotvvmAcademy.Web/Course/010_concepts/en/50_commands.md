@@ -26,4 +26,4 @@ Changes made by the `Add` method will be sent back to the browser and the page w
 ## Tasks
 
 - Add two `<dot:Button />` controls to the `<body>` element.
-- Use command bindings to call the `Add` and `Subtract` methods you created earlier with the added buttons.
+- Use command binding to call the `Add` and `Subtract` methods you created earlier with the added buttons.
