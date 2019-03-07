@@ -30,4 +30,4 @@ When the user loads the page, the value of the `Result` property will displayed 
 ## Tasks
 
 - Add a `<p>` element inside the `<body>`.
-- Use value binding to display value of the `Result` property inside of the `<p>` element.
+- Use a value binding to display value of the `Result` property inside of the `<p>` element.
