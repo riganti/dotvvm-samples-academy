@@ -22,5 +22,5 @@ The `TextBox` control is essentially an `<input type="text">` element that suppo
 
 ## Tasks
 
-- Add a `<dot:TextBox>` control in the `<body>` element.
-- Use a value binding to bind its `Text` attribute to the `Difference` property.
+- Add a `<dot:TextBox>` to the `<body>` element.
+- Use value binding to bind the `Difference` property to its `Text` attribute.

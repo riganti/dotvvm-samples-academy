@@ -23,14 +23,11 @@ You can see two enhancements to plain HTML:
 <p>{{value: Result}}</p>
 ```
 
-When the user loads the page, the value of the `Result` property will by printed out inside the `<p>` element. Whenever the value of the property in the ViewModel changes, the text in the page gets updated.
+When the user loads the page, the value of the `Result` property will displayed inside the `<p>` element. Whenever the value of the property in the ViewModel changes, the text in the page gets updated.
 
 ---
 
 ## Tasks
 
 - Add a `<p>` element inside the `<body>`.
-- Bind the content of the `<p>` element to the `Result` property of the ViewModel.
-
-
-
+- Use data binding to display value of the `Result` property inside of the `<p>` element.

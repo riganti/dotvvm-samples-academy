@@ -8,7 +8,7 @@ CodeTask:
 
 # Getting Started
 
-Hello and welcome to DotVVM Academy. In this lesson, you'll build a simple Counter application that will allow the users to add a step to or subtract it from the Counter value.
+Hello and welcome to DotVVM Academy. In this lesson, you'll build a simple Counter application that will allow the users to add or subtract a value repeatedly.
 
 > Programming in DotVVM requires basic knowledge of [HTML](https://www.sololearn.com/Course/HTML/) and [C#](https://www.sololearn.com/Course/CSharp/). If you haven't worked with these languages so far, spend some time learning the basic concepts to understand what's going on.
 
@@ -16,7 +16,7 @@ How DotVVM works?
 
 Every page in DotVVM consists of two files:
 
-* a __View__, which is based on the HTML syntax and tells DotVVM what the page will look like, and
+* a __View__, which is based on the HTML syntax and represents what the page will look like, and
 * a __ViewModel__, which is a C# class that represents the state of the page (e.g. values in the form fields) and handles user interactions (e.g. button clicks).
 
 The state of the page is defined by C# properties:
@@ -31,4 +31,4 @@ public int Result { get; set; }
 
 Let's start with the ViewModel. 
 
-- Add two `public int` properties named `Result` and `Difference` in the ViewModel.
+- Add two `public int` properties named `Result` and `Difference` to the ViewModel.
