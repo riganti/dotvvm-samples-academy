@@ -47,7 +47,7 @@
                                  Markers="{value: CodeTask.Markers}"
                                  Language="{resource: CodeTask.CodeLanguage}"
                                  class="code__container" />
-                <cc:DiagnosticList Diagnostics="{value: CodeTask.Markers}" Visible="{value: CodeTask.Markers.Count != 0}" />
+                <cc:DiagnosticList Diagnostics="{value: CodeTask.Markers}" />
             </div>
             <div IncludeInPage="{resource: Step.HasEmbeddedView}"
                  class="embedded-view">

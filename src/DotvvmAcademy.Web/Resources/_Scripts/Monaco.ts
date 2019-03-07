@@ -79,6 +79,9 @@ namespace DotvvmAcademy {
                 fontSize: 17
             });
             this.editor.onDidChangeModelContent(this.onEditorChange.bind(this));
+            window.addEventListener("resize", e => {
+                this.editor.layout();
+            });
         }
 
         onMarkersChanged() {
