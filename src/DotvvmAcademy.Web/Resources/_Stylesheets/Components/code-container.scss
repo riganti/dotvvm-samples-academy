@@ -52,7 +52,21 @@ code {
         width: 55%;
         overflow: hidden;
         max-width: 55%;
-        align-self: flex-start;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-content: space-between;
+
+        > div:last-of-type {
+            max-height: 25vh;
+            overflow: auto;
+        }
+
+        > * {
+            width: 100%;
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
 
         @include res-max-desktop-large {
             flex: 0 0 100%;
@@ -64,17 +78,13 @@ code {
     &__container {
         width: 100%;
         height: auto;
-        min-height: 60rem;
         border: none;
+        min-height: 40vh;
         background-color: $color-vs-dark;
+        align-self: flex-start;
 
         @include res-max-desktop-small {
             margin: 1rem auto;
-        }
-
-        + div {
-            max-height: 30rem;
-            overflow: auto;
         }
     }
 

@@ -8,10 +8,11 @@
               RenderSettings.Mode="Client">
     <Columns>
         <dot:GridViewTemplateColumn Width="3rem">
-            <img src="{value: "/images/Icons/diagnostic_" + Severity.ToString() + ".svg"}"/>
+            <img src="{value: "/images/Icons/diagnostic_" + Severity.ToString() + ".svg"}" />
         </dot:GridViewTemplateColumn>
         <dot:GridViewTextColumn HeaderText="Message"
-                                ValueBinding="{value: Message}"/>
+                                Width="20rem"
+                                ValueBinding="{value: Message}" />
         <dot:GridViewTextColumn HeaderText="Line"
                                 ValueBinding="{value: StartLineNumber}"
                                 Width="6rem" />
