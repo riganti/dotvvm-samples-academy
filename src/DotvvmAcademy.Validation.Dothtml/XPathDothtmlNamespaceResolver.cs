@@ -6,7 +6,7 @@ using System.Xml;
 
 namespace DotvvmAcademy.Validation.Dothtml
 {
-    internal class XPathDothtmlNamespaceResolver : IXmlNamespaceResolver
+    public class XPathDothtmlNamespaceResolver : IXmlNamespaceResolver
     {
         private readonly ValidationControlResolver controlResolver;
         private readonly NameTable nameTable;

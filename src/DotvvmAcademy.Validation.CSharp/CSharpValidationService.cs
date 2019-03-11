@@ -114,11 +114,6 @@ namespace DotvvmAcademy.Validation.CSharp
                     RoslynReference.FromName("DotVVM.Core")
                 },
                 options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
-            var diagnostics = compilation.GetDiagnostics();
-            foreach (var diagnostic in diagnostics)
-            {
-                reporter.Report(diagnostic);
-            }
             return compilation;
         }
 
@@ -154,7 +149,7 @@ namespace DotvvmAcademy.Validation.CSharp
                 reportSuppressedDiagnostics: true);
             var compilationWithAnalyzers = compilation
                 .WithAnalyzers(analyzers.ToImmutableArray(), analysisOptions);
-            var diagnostics = await compilationWithAnalyzers.GetAnalyzerDiagnosticsAsync();
+            var diagnostics = await compilationWithAnalyzers.GetAllDiagnosticsAsync();
             foreach (var diagnostic in diagnostics)
             {
                 reporter.Report(diagnostic);

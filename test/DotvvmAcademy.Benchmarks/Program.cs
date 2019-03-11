@@ -9,7 +9,7 @@ namespace DotvvmAcademy.Benchmarks
     {
         public static void Main(string[] args)
         {
-            var summary = BenchmarkRunner.Run<StepValidation>();
+            var summary = BenchmarkRunner.Run<StepValidation>(DefaultConfig.Instance.With(new EtwProfiler()));
         }
     }
 }

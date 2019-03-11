@@ -79,16 +79,13 @@ namespace DotvvmAcademy.CourseFormat.Sandbox
             var validatedSource = await Console.In.ReadToEndAsync();
 
             // pick validation service and validation source code type
-            IValidationService validationService;
             switch (unit)
             {
                 case CSharpUnit _:
-                    validationService = new CSharpValidationService();
                     sources.Add(new CSharpSourceCode(validatedSource, "UserCode.cs", true));
                     break;
 
                 case DothtmlUnit _:
-                    validationService = new DothtmlValidationService();
                     sources.Add(new DothtmlSourceCode(validatedSource, "UserCode.dothtml", true));
                     break;
 
@@ -97,6 +94,7 @@ namespace DotvvmAcademy.CourseFormat.Sandbox
             }
 
             // validate and write out diagnostics
+            var validationService = new ValidationService();
             var diagnostics = await validationService.Validate(unit.GetConstraints(), sources);
             var lightDiagnostics = diagnostics.Select(d => new LightDiagnostic(d))
                 .ToArray();

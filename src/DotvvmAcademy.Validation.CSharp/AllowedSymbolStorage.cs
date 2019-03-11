@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DotvvmAcademy.Validation.CSharp
 {
-    internal class AllowedSymbolStorage
+    public class AllowedSymbolStorage
     {
         public HashSet<ISymbol> AllowedSymbols { get; } = new HashSet<ISymbol>(new SymbolComparer());
 

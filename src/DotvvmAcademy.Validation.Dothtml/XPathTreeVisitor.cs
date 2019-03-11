@@ -10,7 +10,7 @@ using System.Xml.XPath;
 
 namespace DotvvmAcademy.Validation.Dothtml
 {
-    internal class XPathTreeVisitor
+    public class XPathTreeVisitor
     {
         private readonly XPathDothtmlNamespaceResolver namespaceResolver;
         private readonly NameTable nameTable;

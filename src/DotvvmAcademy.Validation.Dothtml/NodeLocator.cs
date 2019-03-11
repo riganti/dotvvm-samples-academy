@@ -6,7 +6,7 @@ using System.Xml.XPath;
 
 namespace DotvvmAcademy.Validation.Dothtml
 {
-    internal class NodeLocator
+    public class NodeLocator
     {
         private readonly XPathDothtmlNamespaceResolver namespaceResolver;
         private readonly NameTable nameTable;

@@ -5,7 +5,7 @@ using System.Xml.XPath;
 
 namespace DotvvmAcademy.Validation.Dothtml
 {
-    internal class XPathDothtmlNode
+    public class XPathDothtmlNode
     {
         public XPathDothtmlNode(ValidationTreeNode node, XPathNodeType type)
         {
