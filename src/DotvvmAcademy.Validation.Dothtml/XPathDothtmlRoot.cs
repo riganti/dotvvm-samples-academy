@@ -3,7 +3,7 @@ using System.Xml.XPath;
 
 namespace DotvvmAcademy.Validation.Dothtml
 {
-    internal class XPathDothtmlRoot : XPathDothtmlNode
+    public class XPathDothtmlRoot : XPathDothtmlNode
     {
         public XPathDothtmlRoot(ValidationTreeRoot root) : base(root, XPathNodeType.Root)
         {

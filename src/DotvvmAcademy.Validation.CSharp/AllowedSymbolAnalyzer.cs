@@ -6,7 +6,7 @@ using System.Collections.Immutable;
 namespace DotvvmAcademy.Validation.CSharp
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    internal class AllowedSymbolAnalyzer : DiagnosticAnalyzer
+    public class AllowedSymbolAnalyzer : DiagnosticAnalyzer
     {
         public static readonly DiagnosticDescriptor SymbolUsageForbidden = new DiagnosticDescriptor(
             id: nameof(SymbolUsageForbidden),

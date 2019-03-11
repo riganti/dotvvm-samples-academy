@@ -6,7 +6,7 @@ using System.Xml.XPath;
 namespace DotvvmAcademy.Validation.Dothtml
 {
     [DebuggerDisplay("{ToString()}")]
-    internal class XPathDothtmlNavigator : XPathNavigator
+    public class XPathDothtmlNavigator : XPathNavigator
     {
         public XPathDothtmlNavigator(NameTable nameTable, XPathDothtmlNode current)
         {

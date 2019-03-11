@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis;
 using System;
 using System.Linq;
 
-namespace DotvvmAcademy.Validation.CSharp.Unit
+namespace DotvvmAcademy.Validation.CSharp.Constraints
 {
     internal class CountConstraint<TResult>
         where TResult : ISymbol
