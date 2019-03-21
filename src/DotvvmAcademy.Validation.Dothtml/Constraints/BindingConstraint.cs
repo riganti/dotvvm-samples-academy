@@ -1,6 +1,7 @@
 ﻿using DotVVM.Framework.Binding.Expressions;
 using DotvvmAcademy.Validation.Dothtml.ValidationTree;
 using System;
+using System.Text;
 using System.Xml.XPath;
 
 namespace DotvvmAcademy.Validation.Dothtml.Constraints
@@ -11,10 +12,10 @@ namespace DotvvmAcademy.Validation.Dothtml.Constraints
         {
             Expression = expression;
             Value = value;
-            AllowedBinding = allowedBinding;
+            BindingKind = allowedBinding;
         }
 
-        public AllowedBinding AllowedBinding { get; }
+        public AllowedBinding BindingKind { get; }
 
         public XPathExpression Expression { get; }
 
@@ -25,28 +26,39 @@ namespace DotvvmAcademy.Validation.Dothtml.Constraints
             var nodes = locator.Locate<ValidationPropertySetter>(Expression);
             foreach (var setter in nodes)
             {
-                if (!(setter is ValidationPropertyBinding propertyBinding))
+                if (!(setter is ValidationPropertyBinding propertyBinding)
+                    || !BindingKind.HasFlag(GetAllowedBinding(propertyBinding.Binding.BindingType)))
                 {
                     reporter.Report(
-                        message: Resources.ERR_MandatoryBinding,
-                        arguments: new object[] { setter.Property.FullName },
-                        node: GetValidatedNode(setter));
-                }
-                else if (!AllowedBinding.HasFlag(GetAllowedBinding(propertyBinding.Binding.BindingType)))
-                {
-                    reporter.Report(
-                        message: Resources.ERR_WrongBindingKind,
-                        arguments: new object[] { AllowedBinding },
+                        message: Resources.ERR_WrongSetter,
+                        arguments: new object[] { GetSetterString() },
                         node: GetValidatedNode(setter));
                 }
                 else if (!propertyBinding.Binding.Value.Equals(Value))
                 {
                     reporter.Report(
                         message: Resources.ERR_WrongBindingValue,
-                        arguments: new object[] { setter.Property.FullName, Value },
+                        arguments: new object[] { setter.Property.Name, Value },
                         node: GetValidatedNode(setter));
                 }
             }
+        }
+
+        private string GetSetterString()
+        {
+            var sb = new StringBuilder();
+            foreach (Enum kind in Enum.GetValues(typeof(AllowedBinding)))
+            {
+                if (sb.Length > 0)
+                {
+                    sb.Append(Resources.Setter_Or);
+                }
+                if (BindingKind.HasFlag(kind))
+                {
+                    sb.Append(Resources.ResourceManager.GetString($"ERR_{kind}Binding"));
+                }
+            }
+            return sb.ToString();
         }
 
         private ValidationTreeNode GetValidatedNode(ValidationPropertySetter setter)

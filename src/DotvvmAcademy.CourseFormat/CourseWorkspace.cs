@@ -138,21 +138,24 @@ namespace DotvvmAcademy.CourseFormat
             try
             {
                 var process = Process.Start(info);
-                ThreadPool.QueueUserWorkItem((s) =>
-                {
-                    Thread.Sleep(ValidationTimeout);
-                    if (!process.HasExited)
-                    {
-                        killed = true;
-                        diagnostics.Add(new CodeTaskDiagnostic(Resources.ERR_ValidationTakesTooLong, -1, -1, CodeTaskDiagnosticSeverity.Error));
-                        process.Kill();
-                    }
-                });
+#pragma warning disable CS4014
+                //Task.Run(async () =>
+                //{
+                //    await Task.Delay(ValidationTimeout);
+                //    if (!process.HasExited)
+                //    {
+                //        killed = true;
+                //        diagnostics.Add(new CodeTaskDiagnostic(Resources.ERR_ValidationTakesTooLong, -1, -1, CodeTaskDiagnosticSeverity.Error));
+                //        process.Kill();
+                //    }
+                //});
+#pragma warning restore CS4014
                 await process.StandardInput.WriteAsync(code);
                 process.StandardInput.Close();
                 var formatter = new BinaryFormatter();
                 var deserializedDiagnostics = (LightDiagnostic[])formatter.Deserialize(process.StandardOutput.BaseStream);
-                foreach (var deserializedDiagnostic in deserializedDiagnostics)
+                // TODO: This Distinct call is a hack
+                foreach (var deserializedDiagnostic in deserializedDiagnostics.Distinct())
                 {
                     if (deserializedDiagnostic.Source == null || deserializedDiagnostic.Source.StartsWith("UserCode"))
                     {

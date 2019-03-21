@@ -18,7 +18,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
         public static DothtmlQuery<TResult> RequireCount<TResult>(this DothtmlQuery<TResult> query, int count)
             where TResult : ValidationTreeNode
         {
-            return query.AddConstraint(new CountConstraint<TResult>(query.Expression, count));
+            return query.AddConstraint(new CountConstraint(query.Expression, count));
         }
 
         public static DothtmlQuery<ValidationControl> RequireRawContent(

@@ -61,34 +61,7 @@ namespace DotvvmAcademy.Validation.Dothtml {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Property &apos;{0}&apos; must be set using a binding..
-        /// </summary>
-        public static string ERR_MandatoryBinding {
-            get {
-                return ResourceManager.GetString("ERR_MandatoryBinding", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Property &apos;{0}&apos; must be set using a hardcoded value..
-        /// </summary>
-        public static string ERR_MandatoryHardcodedValue {
-            get {
-                return ResourceManager.GetString("ERR_MandatoryHardcodedValue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Directive &apos;{0}&apos; must have a type as its argument..
-        /// </summary>
-        public static string ERR_MandatoryTypeDirective {
-            get {
-                return ResourceManager.GetString("ERR_MandatoryTypeDirective", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to A &apos;{0}&apos; control must be at &apos;{1}&apos;..
+        ///   Looks up a localized string similar to This control is missing a control of type &apos;{0}&apos;..
         /// </summary>
         public static string ERR_MissingControl {
             get {
@@ -97,16 +70,16 @@ namespace DotvvmAcademy.Validation.Dothtml {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This node must contain a &apos;{0}&apos; control..
+        ///   Looks up a localized string similar to The document is missing a control of type &apos;{0}&apos;..
         /// </summary>
-        public static string ERR_MissingControlLocal {
+        public static string ERR_MissingControlRoot {
             get {
-                return ResourceManager.GetString("ERR_MissingControlLocal", resourceCulture);
+                return ResourceManager.GetString("ERR_MissingControlRoot", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Directive &apos;{0}&apos; must be set..
+        ///   Looks up a localized string similar to The &apos;{0}&apos; directive must be set..
         /// </summary>
         public static string ERR_MissingDirective {
             get {
@@ -115,25 +88,25 @@ namespace DotvvmAcademy.Validation.Dothtml {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A &apos;{0}&apos; node must be at &apos;{1}&apos;..
+        ///   Looks up a localized string similar to This control is missing an HTML &apos;{0}&apos; element..
         /// </summary>
-        public static string ERR_MissingNode {
+        public static string ERR_MissingElement {
             get {
-                return ResourceManager.GetString("ERR_MissingNode", resourceCulture);
+                return ResourceManager.GetString("ERR_MissingElement", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This node must contain a &apos;{0}&apos; node..
+        ///   Looks up a localized string similar to The document is missing an HTML &apos;{0}&apos; element..
         /// </summary>
-        public static string ERR_MissingNodeLocal {
+        public static string ERR_MissingElementRoot {
             get {
-                return ResourceManager.GetString("ERR_MissingNodeLocal", resourceCulture);
+                return ResourceManager.GetString("ERR_MissingElementRoot", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The &apos;{0}&apos; property must be set at &apos;{1}&apos;..
+        ///   Looks up a localized string similar to This control must have its &apos;{0}&apos; property set..
         /// </summary>
         public static string ERR_MissingProperty {
             get {
@@ -142,29 +115,29 @@ namespace DotvvmAcademy.Validation.Dothtml {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This node must have its &apos;{0}&apos; property set..
-        /// </summary>
-        public static string ERR_MissingPropertyLocal {
-            get {
-                return ResourceManager.GetString("ERR_MissingPropertyLocal", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Binding must be of kind &apos;{0}&apos;..
-        /// </summary>
-        public static string ERR_WrongBindingKind {
-            get {
-                return ResourceManager.GetString("ERR_WrongBindingKind", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Property &apos;{0}&apos; must be bound to &apos;{1}&apos;..
+        ///   Looks up a localized string similar to This property must be bound using this expression: &apos;{0}&apos;..
         /// </summary>
         public static string ERR_WrongBindingValue {
             get {
                 return ResourceManager.GetString("ERR_WrongBindingValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This control must contain {0} controls of type &apos;{1}&apos;..
+        /// </summary>
+        public static string ERR_WrongControlCount {
+            get {
+                return ResourceManager.GetString("ERR_WrongControlCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The document must contain {0} controls of type &apos;{1}&apos;..
+        /// </summary>
+        public static string ERR_WrongControlCountRoot {
+            get {
+                return ResourceManager.GetString("ERR_WrongControlCountRoot", resourceCulture);
             }
         }
         
@@ -178,16 +151,25 @@ namespace DotvvmAcademy.Validation.Dothtml {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to There must be {0} &apos;{1}&apos; controls..
+        ///   Looks up a localized string similar to This control must contain {0} &apos;{1}&apos; elements..
         /// </summary>
-        public static string ERR_WrongCount {
+        public static string ERR_WrongElementCount {
             get {
-                return ResourceManager.GetString("ERR_WrongCount", resourceCulture);
+                return ResourceManager.GetString("ERR_WrongElementCount", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hardcoded value must be &apos;{0}&apos;..
+        ///   Looks up a localized string similar to The document must contain {0} &apos;{1}&apos; elements..
+        /// </summary>
+        public static string ERR_WrongElementCountRoot {
+            get {
+                return ResourceManager.GetString("ERR_WrongElementCountRoot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This property must be set to &apos;{0}&apos;..
         /// </summary>
         public static string ERR_WrongHardcodedValue {
             get {
@@ -196,7 +178,7 @@ namespace DotvvmAcademy.Validation.Dothtml {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Control&apos;s raw content must be &apos;{0}&apos;..
+        ///   Looks up a localized string similar to This control must contain: &apos;{0}&apos;..
         /// </summary>
         public static string ERR_WrongRawContent {
             get {
@@ -205,7 +187,7 @@ namespace DotvvmAcademy.Validation.Dothtml {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Control in its raw text form muse be &apos;{0}&apos;..
+        ///   Looks up a localized string similar to This control must be declared in this way: &apos;{0}&apos;..
         /// </summary>
         public static string ERR_WrongRawText {
             get {
@@ -214,11 +196,92 @@ namespace DotvvmAcademy.Validation.Dothtml {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Directive must reference type &apos;{0}&apos;..
+        ///   Looks up a localized string similar to This property must be set using {0}..
+        /// </summary>
+        public static string ERR_WrongSetter {
+            get {
+                return ResourceManager.GetString("ERR_WrongSetter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The &apos;{0}&apos; directive must reference type &apos;{1}&apos;..
         /// </summary>
         public static string ERR_WrongTypeDirectiveArgument {
             get {
                 return ResourceManager.GetString("ERR_WrongTypeDirectiveArgument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to a command binding.
+        /// </summary>
+        public static string Setter_CommandBinding {
+            get {
+                return ResourceManager.GetString("Setter_CommandBinding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to a control command binding.
+        /// </summary>
+        public static string Setter_ControlCommandBinding {
+            get {
+                return ResourceManager.GetString("Setter_ControlCommandBinding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to a control property binding.
+        /// </summary>
+        public static string Setter_ControlPropertyBinding {
+            get {
+                return ResourceManager.GetString("Setter_ControlPropertyBinding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to a hard-coded value.
+        /// </summary>
+        public static string Setter_HardcodedValue {
+            get {
+                return ResourceManager.GetString("Setter_HardcodedValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to , or.
+        /// </summary>
+        public static string Setter_Or {
+            get {
+                return ResourceManager.GetString("Setter_Or", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to a resource binding.
+        /// </summary>
+        public static string Setter_ResourceBinding {
+            get {
+                return ResourceManager.GetString("Setter_ResourceBinding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to a static command binding.
+        /// </summary>
+        public static string Setter_StaticCommandBinding {
+            get {
+                return ResourceManager.GetString("Setter_StaticCommandBinding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to a value binding.
+        /// </summary>
+        public static string Setter_ValueBinding {
+            get {
+                return ResourceManager.GetString("Setter_ValueBinding", resourceCulture);
             }
         }
     }

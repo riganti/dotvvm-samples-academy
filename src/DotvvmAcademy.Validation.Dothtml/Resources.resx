@@ -117,62 +117,79 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ERR_MandatoryBinding" xml:space="preserve">
-    <value>Property '{0}' must be set using a binding.</value>
+  <data name="ERR_WrongSetter" xml:space="preserve">
+    <value>This property must be set using {0}.</value>
   </data>
   <data name="ERR_WrongBindingValue" xml:space="preserve">
-    <value>Property '{0}' must be bound to '{1}'.</value>
-  </data>
-  <data name="ERR_WrongBindingKind" xml:space="preserve">
-    <value>Binding must be of kind '{0}'.</value>
-  </data>
-  <data name="ERR_WrongRawContent" xml:space="preserve">
-    <value>Control's raw content must be '{0}'.</value>
-  </data>
-  <data name="ERR_WrongRawText" xml:space="preserve">
-    <value>Control in its raw text form muse be '{0}'.</value>
-  </data>
-  <data name="ERR_MandatoryHardcodedValue" xml:space="preserve">
-    <value>Property '{0}' must be set using a hardcoded value.</value>
+    <value>This property must be bound using this expression: '{0}'.</value>
   </data>
   <data name="ERR_WrongHardcodedValue" xml:space="preserve">
-    <value>Hardcoded value must be '{0}'.</value>
+    <value>This property must be set to '{0}'.</value>
   </data>
   <data name="ERR_WrongControlType" xml:space="preserve">
     <value>Control must be of type '{0}'.</value>
   </data>
-  <data name="ERR_MandatoryTypeDirective" xml:space="preserve">
-    <value>Directive '{0}' must have a type as its argument.</value>
-  </data>
   <data name="ERR_WrongTypeDirectiveArgument" xml:space="preserve">
-    <value>Directive must reference type '{0}'.</value>
+    <value>The '{0}' directive must reference type '{1}'.</value>
   </data>
-  <data name="ERR_WrongCount" xml:space="preserve">
-    <value>There must be {0} '{1}' controls.</value>
+  <data name="ERR_WrongControlCount" xml:space="preserve">
+    <value>This control must contain {0} controls of type '{1}'.</value>
   </data>
   <data name="ERR_MissingDirective" xml:space="preserve">
-    <value>Directive '{0}' must be set.</value>
-    <comment>global</comment>
+    <value>The '{0}' directive must be set.</value>
   </data>
   <data name="ERR_MissingControl" xml:space="preserve">
-    <value>A '{0}' control must be at '{1}'.</value>
-    <comment>global</comment>
+    <value>This control is missing a control of type '{0}'.</value>
   </data>
   <data name="ERR_MissingProperty" xml:space="preserve">
-    <value>The '{0}' property must be set at '{1}'.</value>
-    <comment>global</comment>
+    <value>This control must have its '{0}' property set.</value>
   </data>
-  <data name="ERR_MissingNode" xml:space="preserve">
-    <value>A '{0}' node must be at '{1}'.</value>
-    <comment>global</comment>
+  <data name="ERR_MissingControlRoot" xml:space="preserve">
+    <value>The document is missing a control of type '{0}'.</value>
   </data>
-  <data name="ERR_MissingPropertyLocal" xml:space="preserve">
-    <value>This node must have its '{0}' property set.</value>
+  <data name="ERR_MissingElement" xml:space="preserve">
+    <value>This control is missing an HTML '{0}' element.</value>
   </data>
-  <data name="ERR_MissingControlLocal" xml:space="preserve">
-    <value>This node must contain a '{0}' control.</value>
+  <data name="ERR_MissingElementRoot" xml:space="preserve">
+    <value>The document is missing an HTML '{0}' element.</value>
   </data>
-  <data name="ERR_MissingNodeLocal" xml:space="preserve">
-    <value>This node must contain a '{0}' node.</value>
+  <data name="ERR_WrongElementCount" xml:space="preserve">
+    <value>This control must contain {0} '{1}' elements.</value>
+  </data>
+  <data name="Setter_CommandBinding" xml:space="preserve">
+    <value>a command binding</value>
+  </data>
+  <data name="Setter_ControlCommandBinding" xml:space="preserve">
+    <value>a control command binding</value>
+  </data>
+  <data name="Setter_ControlPropertyBinding" xml:space="preserve">
+    <value>a control property binding</value>
+  </data>
+  <data name="Setter_HardcodedValue" xml:space="preserve">
+    <value>a hard-coded value</value>
+  </data>
+  <data name="Setter_ResourceBinding" xml:space="preserve">
+    <value>a resource binding</value>
+  </data>
+  <data name="Setter_StaticCommandBinding" xml:space="preserve">
+    <value>a static command binding</value>
+  </data>
+  <data name="Setter_ValueBinding" xml:space="preserve">
+    <value>a value binding</value>
+  </data>
+  <data name="ERR_WrongControlCountRoot" xml:space="preserve">
+    <value>The document must contain {0} controls of type '{1}'.</value>
+  </data>
+  <data name="ERR_WrongElementCountRoot" xml:space="preserve">
+    <value>The document must contain {0} '{1}' elements.</value>
+  </data>
+  <data name="ERR_WrongRawContent" xml:space="preserve">
+    <value>This control must contain: '{0}'.</value>
+  </data>
+  <data name="ERR_WrongRawText" xml:space="preserve">
+    <value>This control must be declared in this way: '{0}'.</value>
+  </data>
+  <data name="Setter_Or" xml:space="preserve">
+    <value>, or</value>
   </data>
 </root>
