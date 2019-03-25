@@ -17,6 +17,7 @@
     },
     "DotvvmAcademy.Web": {
       "commandName": "Project",
+      "nativeDebugging": true,
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
