@@ -139,16 +139,16 @@ namespace DotvvmAcademy.CourseFormat
             {
                 var process = Process.Start(info);
 #pragma warning disable CS4014
-                //Task.Run(async () =>
-                //{
-                //    await Task.Delay(ValidationTimeout);
-                //    if (!process.HasExited)
-                //    {
-                //        killed = true;
-                //        diagnostics.Add(new CodeTaskDiagnostic(Resources.ERR_ValidationTakesTooLong, -1, -1, CodeTaskDiagnosticSeverity.Error));
-                //        process.Kill();
-                //    }
-                //});
+                Task.Run(async () =>
+                {
+                    await Task.Delay(ValidationTimeout);
+                    if (!process.HasExited)
+                    {
+                        killed = true;
+                        diagnostics.Add(new CodeTaskDiagnostic(Resources.ERR_ValidationTakesTooLong, -1, -1, CodeTaskDiagnosticSeverity.Error));
+                        process.Kill();
+                    }
+                });
 #pragma warning restore CS4014
                 await process.StandardInput.WriteAsync(code);
                 process.StandardInput.Close();

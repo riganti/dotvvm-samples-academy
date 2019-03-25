@@ -25,7 +25,7 @@ namespace DotvvmAcademy.CourseFormat.Sandbox
 
         public static async Task MainAsync(string[] args)
         {
-            Debugger.Launch();
+            // Debugger.Launch();
 
             // extract args
             if (args.Length < 3)
