@@ -1,39 +1,33 @@
-﻿using System.Collections.Immutable;
-
-namespace DotvvmAcademy.CourseFormat
+﻿namespace DotvvmAcademy.CourseFormat
 {
-    public class Step : Source
+    public class Step
     {
-        public Step(string lessonMoniker, string variantMoniker, string stepMoniker)
-            : base($"/{lessonMoniker}/{variantMoniker}/{stepMoniker}")
+        public Step(
+            string path,
+            string moniker,
+            string name,
+            CodeTask codeTask,
+            Archive archive,
+            EmbeddedView embeddedView)
         {
-            LessonMoniker = lessonMoniker;
-            VariantMoniker = variantMoniker;
-            StepMoniker = stepMoniker;
+            Path = path;
+            Moniker = moniker;
+            Name = name;
+            CodeTask = codeTask;
+            Archive = archive;
+            EmbeddedView = embeddedView;
         }
 
-        public string LessonMoniker { get; }
+        public string Path { get; }
 
-        public string VariantMoniker { get; }
+        public string Moniker { get; }
 
-        public string StepMoniker { get; }
+        public string Name { get; }
 
-        public string Text { get; set; }
+        public CodeTask CodeTask { get; }
 
-        public string ArchivePath { get; internal set; }
+        public Archive Archive { get; }
 
-        public string Name { get; internal set; }
-
-        public string CodeTaskPath { get; internal set; }
-
-        public string CorrectPath { get; internal set; }
-
-        public string DefaultPath { get; internal set; }
-
-        public ImmutableArray<string> CodeTaskDependencies { get; internal set; }
-
-        public string EmbeddedViewPath { get; internal set; }
-
-        public ImmutableArray<string> EmbeddedViewDependencies { get; internal set; }
+        public EmbeddedView EmbeddedView { get; }
     }
 }

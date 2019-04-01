@@ -1,19 +1,23 @@
-﻿namespace DotvvmAcademy.CourseFormat
+﻿using System.Collections.Immutable;
+
+namespace DotvvmAcademy.CourseFormat
 {
-    public class CodeTask : Source
+    public class CodeTask
     {
-        public CodeTask(string path, byte[] assembly, string entryTypeName, string entryMethodName)
-            : base(path)
+        public CodeTask(string path, string correctPath, string defaultPath, ImmutableArray<string> dependencies)
         {
-            Assembly = assembly;
-            EntryTypeName = entryTypeName;
-            EntryMethodName = entryMethodName;
+            Path = path;
+            CorrectPath = correctPath;
+            DefaultPath = defaultPath;
+            Dependencies = dependencies;
         }
 
-        public byte[] Assembly { get; }
+        public string Path { get; }
 
-        public string EntryMethodName { get; }
+        public string CorrectPath { get; }
 
-        public string EntryTypeName { get; }
+        public string DefaultPath { get; }
+
+        public ImmutableArray<string> Dependencies { get; }
     }
 }

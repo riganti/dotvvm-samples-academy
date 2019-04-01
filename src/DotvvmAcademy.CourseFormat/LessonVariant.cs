@@ -2,31 +2,38 @@
 
 namespace DotvvmAcademy.CourseFormat
 {
-    public class LessonVariant : Source
+    public class LessonVariant
     {
         public LessonVariant(
-            string lessonMoniker,
-            string variantMoniker,
-            ImmutableArray<string> steps)
-            : base($"/{lessonMoniker}/{variantMoniker}")
+            string path, 
+            string moniker, 
+            string annotationPath, 
+            string imageUrl,
+            string name,
+            LessonStatus status,
+            ImmutableDictionary<string, Step> steps)
         {
-            LessonMoniker = lessonMoniker;
-            VariantMoniker = variantMoniker;
+            Path = path;
+            Moniker = moniker;
+            AnnotationPath = annotationPath;
+            ImageUrl = imageUrl;
+            Name = name;
+            Status = status;
             Steps = steps;
         }
 
-        public string LessonMoniker { get; }
+        public string Path { get; }
 
-        public string VariantMoniker { get; }
+        public string Moniker { get; }
 
-        public ImmutableArray<string> Steps { get; }
+        public string AnnotationPath { get; }
 
-        public string Annotation { get; internal set; }
+        public string ImageUrl { get; }
 
-        public string ImageUrl { get; internal set; }
+        public string Name { get; }
 
-        public string Name { get; internal set; }
+        public LessonStatus Status { get; }
 
-        public LessonStatus Status { get; internal set; }
+        public ImmutableDictionary<string, Step> Steps { get; }
     }
 }
