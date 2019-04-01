@@ -32,19 +32,13 @@ namespace DotvvmAcademy.Validation.Dothtml.Constraints
             var nodes = locator.Locate<ValidationDirective>(Expression);
             foreach (var directive in nodes)
             {
-                if (!(directive is ValidationTypeDirective typeDirective))
-                {
-                    reporter.Report(
-                        message: Resources.ERR_MandatoryTypeDirective,
-                        arguments: new object[] { directive.Name },
-                        node: directive);
-                }
-                else if (!typeDirective.Type.TypeSymbol.Equals(type))
+                if (!(directive is ValidationTypeDirective typeDirective)
+                    || !typeDirective.Type.TypeSymbol.Equals(type))
                 {
                     reporter.Report(
                         message: Resources.ERR_WrongTypeDirectiveArgument,
                         arguments: new object[] { TypeArgument },
-                        node: typeDirective);
+                        node: directive);
                 }
             }
         }

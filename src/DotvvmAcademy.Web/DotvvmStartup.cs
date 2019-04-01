@@ -52,8 +52,9 @@ namespace DotvvmAcademy.Web
         {
             config.RouteTable.Add(
                 routeName: "Test",
-                url: "test",
-                virtualPath: "Pages/Test/Test.dothtml");
+                url: "test/{LessonMoniker}/{VariantMoniker}/{StepMoniker}",
+                virtualPath: "Pages/Test/Test.dothtml",
+                defaultValues: new { LessonMoniker = "010_concepts", VariantMoniker = "en", StepMoniker = "10_viewmodel" });
             config.RouteTable.Add(
                 routeName: "Default",
                 url: "{Language}",

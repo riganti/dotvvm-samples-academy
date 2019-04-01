@@ -18,10 +18,13 @@ namespace DotvvmAcademy.CourseFormat.Sandbox
 {
     public class Program
     {
-        public static async Task Main(string[] args)
+        public static void Main(string[] args)
         {
-            //Debugger.Launch();
+            MainAsync(args).GetAwaiter().GetResult();
+        }
 
+        public static async Task MainAsync(string[] args)
+        {
             // extract args
             if (args.Length < 3)
             {

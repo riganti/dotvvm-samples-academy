@@ -2,6 +2,7 @@
 using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 
 namespace DotvvmAcademy.Meta
@@ -9,10 +10,13 @@ namespace DotvvmAcademy.Meta
     internal class RoslynNameNodeVisitor : NameNodeVisitor<IEnumerable<ISymbol>>
     {
         private readonly Compilation compilation;
+        private readonly ImmutableArray<INamespaceSymbol> globalNamespaces;
 
         public RoslynNameNodeVisitor(Compilation compilation)
         {
             this.compilation = compilation;
+            globalNamespaces = compilation.GetGlobalNamespaces()
+                .ToImmutableArray();
         }
 
         public override IEnumerable<ISymbol> VisitArrayType(ArrayTypeNameNode node)
@@ -36,8 +40,7 @@ namespace DotvvmAcademy.Meta
 
         public override IEnumerable<ISymbol> VisitGeneric(GenericNameNode node)
         {
-            return compilation.GetGlobalNamespaces()
-                .SelectMany(n => VisitGeneric(node, n));
+            return globalNamespaces.SelectMany(n => VisitGeneric(node, n));
         }
 
         public IEnumerable<ISymbol> VisitGeneric(GenericNameNode node, INamespaceSymbol @namespace)
@@ -48,7 +51,7 @@ namespace DotvvmAcademy.Meta
 
         public override IEnumerable<ISymbol> VisitIdentifier(IdentifierNameNode node)
         {
-            return compilation.GetGlobalNamespaces()
+            return globalNamespaces
                 .SelectMany(n => VisitIdentifier(node, n));
         }
 

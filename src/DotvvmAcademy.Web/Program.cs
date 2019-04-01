@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace DotvvmAcademy.Web
 {
@@ -10,6 +11,10 @@ namespace DotvvmAcademy.Web
             WebHost.CreateDefaultBuilder(args)
                 .UseApplicationInsights()
                 .UseStartup<Startup>()
+                .ConfigureLogging(b =>
+                {
+                    b.AddEventSourceLogger();
+                })
                 .Build()
                 .Run();
         }

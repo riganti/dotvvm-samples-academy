@@ -23,8 +23,8 @@ namespace DotvvmAcademy.Validation.Dothtml.Constraints
                 if (!(setter is ValidationPropertyValue propertyValue))
                 {
                     reporter.Report(
-                        message: Resources.ERR_MandatoryHardcodedValue,
-                        arguments: new object[] { setter.Property.FullName },
+                        message: Resources.ERR_WrongSetter,
+                        arguments: new object[] { Resources.Setter_HardcodedValue },
                         node: setter);
                 }
                 else if (!propertyValue.Value.Equals(Value))

@@ -6,6 +6,10 @@
     <meta charset="utf-8">
 </head>
 <body>
-    <h1>{{value: Message}}</h1>
+    <dot:Repeater DataSource="{value: Diagnostics}">
+        <div>
+            {{value: Message}}
+        </div>
+    </dot:Repeater>
 </body>
 </html>

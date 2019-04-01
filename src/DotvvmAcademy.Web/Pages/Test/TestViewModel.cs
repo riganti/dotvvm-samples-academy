@@ -1,48 +1,36 @@
 ﻿using DotVVM.Framework.ViewModel;
-using System.Diagnostics;
-using System.IO;
-using System.IO.MemoryMappedFiles;
-using System.Reflection;
+using DotvvmAcademy.CourseFormat;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DotvvmAcademy.Web.Pages.Test
 {
     public class TestViewModel : DotvvmViewModelBase
     {
-        public string Message { get; set; }
+        private readonly CourseWorkspace workspace;
 
-        public override Task PreRender()
+        public TestViewModel(CourseWorkspace workspace)
         {
-            var file = MemoryMappedFile.CreateNew(
-                mapName: "academy",
-                capacity: 1024,
-                access: MemoryMappedFileAccess.ReadWrite,
-                options: MemoryMappedFileOptions.None,
-                inheritability: HandleInheritability.Inheritable);
-            using (file)
-            {
-                using (var stream = file.CreateViewStream(0, 0, MemoryMappedFileAccess.ReadWrite))
-                using (var writer = new StreamWriter(stream))
-                {
-                    writer.Write("Hello, Memory Mapped Files!");
-                }
-                var directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                var info = new ProcessStartInfo
-                {
-                    FileName = "dotnet",
-                    Arguments = $"{directory}/sandbox/DotvvmAcademy.CourseFormat.Sandbox.dll",
-                    UseShellExecute = false,
-                    CreateNoWindow = false
-                };
-                var process = Process.Start(info);
-                process.WaitForExit();
-                using (var stream = file.CreateViewStream(0, 0, MemoryMappedFileAccess.Read))
-                using (var reader = new StreamReader(stream))
-                {
-                    Message = reader.ReadToEnd();
-                }
-            }
-            return base.PreRender();
+            this.workspace = workspace;
+        }
+
+        public List<CodeTaskDiagnostic> Diagnostics { get; set; }
+
+        [FromRoute("LessonMoniker")]
+        public string LessonMoniker { get; set; }
+
+        [FromRoute("VariantMoniker")]
+        public string VariantMoniker { get; set; }
+
+        [FromRoute("StepMoniker")]
+        public string StepMoniker { get; set; }
+
+        public override async Task Load()
+        {
+            var step = await workspace.LoadStep(LessonMoniker, VariantMoniker, StepMoniker);
+            var diagnostics = await workspace.ValidateStep(step, "");
+            Diagnostics = diagnostics.ToList();
         }
     }
 }
