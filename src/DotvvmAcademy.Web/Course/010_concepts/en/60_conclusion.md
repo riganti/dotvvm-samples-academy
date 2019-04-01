@@ -9,15 +9,13 @@ Solution: .solution
 
 # Conclusion
 
-Congratulations! You learned the basic concepts of DotVVM!
+Congratulations! You have learned the basic concepts of DotVVM!
 
 ---
 
 ## Summary
 
-- DotVVM is an MVVM web framework.
-- Views are what the users interact with.
-- ViewModels contain data and logic for Views to use.
-- Dothtml is made (roughly) of Directives, Bindings, and Controls.
-
-> Note: Models are usually external services with their own logic and data (i.e. databases, payment gates, mailing clients, etc).
+- Every page in DotVVM consists of a View and a ViewModel. We are using the MVVM design pattern.
+- Views define what the users can see and interact with.
+- ViewModels keep the state of the page and handle user actions.
+- DotHTML extends plain HTML with directives, binding expressions and controls.

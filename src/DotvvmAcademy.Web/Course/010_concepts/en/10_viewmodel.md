@@ -1,21 +1,34 @@
 ﻿---
-Title: The ViewModel
+Title: Getting Started
 CodeTask:
     Path: 10_viewmodel.csharp.csx
     Default: CounterViewModel_10.cs
     Correct: CounterViewModel_20.cs
 ---
 
-# The ViewModel
+# Getting Started
 
-Hello and welcome to DotVVM Academy. Let's build a simple counter! It will allow users to increment and decrement a value in steps they define.
+Hello and welcome to DotVVM Academy. In this lesson, you'll build a simple Counter application that will allow the users to add or subtract a value repeatedly.
 
-__DotVVM__ is a web framework based on the _Model-View-ViewModel_ (MVVM) pattern.
+> Programming in DotVVM requires basic knowledge of [HTML](https://www.sololearn.com/Course/HTML/) and [C#](https://www.sololearn.com/Course/CSharp/). If you haven't worked with these languages so far, spend some time learning the basic concepts to understand what's going on.
 
-__ViewModels__ are just plain old C# classes that contain the page's data and logic. They get sent between the application and its users.
+How DotVVM works?
+
+Every page in DotVVM consists of two files:
+
+* a __View__, which is based on the HTML syntax and represents what the page will look like, and
+* a __ViewModel__, which is a C# class that represents the state of the page (e.g. values in the form fields) and handles user interactions (e.g. button clicks).
+
+The state of the page is defined by C# properties:
+
+```csharp
+public int Result { get; set; }
+```
 
 ---
 
 ## Tasks
 
-- Add public properties of type `int` called `Result` and `Difference`.
+Let's start with the ViewModel. 
+
+- Add two `public int` properties named `Result` and `Difference` to the ViewModel.

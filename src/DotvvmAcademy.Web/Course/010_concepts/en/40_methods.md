@@ -8,13 +8,13 @@ CodeTask:
 
 # Methods
 
-ViewModel's __methods__ can be invoked from the View. We'll use this to implement the increment / decrement functionality.
+The __methods__ in the ViewModel can be invoked from the View. We'll use them to implement the add / subtract functionality.
 
-> Note: A POST request is made every time a user invokes such a method.
+> Note: DotVVM will make an AJAX request to the server, where the method in the ViewModel will be executed and the changes made to the ViewModel will be applied to the page.
 
 ---
 
 ## Tasks
 
-- Inside the `Increment` method, __add assign__ `Difference` to `Result`.
-- Inside the `Decrement` method, __subtract assign__ `Difference` from `Result`.
+- Inside the `Add` method, add the value of `Difference` to the `Result` property.
+- Inside the `Subtract` method, subtract the value of `Difference` from the `Result` property.
