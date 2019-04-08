@@ -8,9 +8,9 @@
 <body>
     <p>{{value: Result}}</p>
     <dot:TextBox Text="{value: Difference}" />
-    <dot:Button Click="{command: Increment()}"
-                Text="Increment"/>
-    <dot:Button Click="{command: Decrement()}"
-                Text="Decrement"/>
+    <dot:Button Click="{command: Add()}"
+                Text="Add"/>
+    <dot:Button Click="{command: Subtract()}"
+                Text="Subtract"/>
 </body>
 </html>

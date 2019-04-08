@@ -13,5 +13,5 @@ void ValidateButton(int index, string command)
 
 body.GetControls("dot:Button")
     .RequireCount(2);
-ValidateButton(1, $"{IncrementName}()");
-ValidateButton(2, $"{DecrementName}()");
+ValidateButton(1, $"{AddName}()");
+ValidateButton(2, $"{SubtractName}()");

@@ -6,12 +6,12 @@
 
         public int Result { get; set; }
 
-        public void Increment()
+        public void Add()
         {
 
         }
 
-        public void Decrement()
+        public void Subtract()
         {
 
         }
