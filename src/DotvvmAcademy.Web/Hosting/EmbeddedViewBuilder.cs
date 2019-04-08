@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
+using System.Threading.Tasks;
 
 namespace DotvvmAcademy.Web.Hosting
 {
@@ -46,10 +47,11 @@ namespace DotvvmAcademy.Web.Hosting
             var languageMoniker = RequireMoniker(context, "Language");
             var lessonMoniker = RequireMoniker(context, "Lesson");
             var stepMoniker = RequireMoniker(context, "Step");
-            var step = workspace.LoadStep(lessonMoniker, languageMoniker, stepMoniker)
-                .GetAwaiter()
-                .GetResult();
-            if (step.EmbeddedViewPath == null)
+            var step = workspace.CurrentCourse.GetLesson(lessonMoniker)
+                .GetVariant(languageMoniker)
+                .GetStep(stepMoniker);
+            var embeddedView = step.EmbeddedView;
+            if (embeddedView == null)
             {
                 throw new InvalidOperationException($"Step {step.Path} does not contain an EmbeddedView.");
             }
@@ -57,7 +59,7 @@ namespace DotvvmAcademy.Web.Hosting
             // compile or get the cached viewModel and view assembly
             Assembly viewModelAssembly;
             Assembly viewAssembly;
-            string controlBuilderName = $"{Path.GetFileNameWithoutExtension(step.EmbeddedViewPath)}EmbeddedViewControlBuilder";
+            string controlBuilderName = $"{Path.GetFileNameWithoutExtension(embeddedView.Path)}EmbeddedViewControlBuilder";
             if (assemblies.TryGetValue(step.Path, out var pair))
             {
                 viewModelAssembly = pair.viewModel;
@@ -68,9 +70,9 @@ namespace DotvvmAcademy.Web.Hosting
                 var id = Guid.NewGuid();
 
                 // compile and emit the viewModel assembly
-                var dependencies = step.EmbeddedViewDependencies.Select(d => workspace.Read(d)
+                var dependencies = Task.WhenAll(embeddedView.Dependencies.Select(d => workspace.GetFileContents(d)))
                     .GetAwaiter()
-                    .GetResult());
+                    .GetResult();
                 var viewModelCompilation = CSharpCompilation.Create(
                     assemblyName: $"EmbeddedViewModel_{step.Name}_{id}",
                     syntaxTrees: dependencies.Select(d => CSharpSyntaxTree.ParseText(d)),
@@ -100,14 +102,14 @@ namespace DotvvmAcademy.Web.Hosting
                 viewModelAssembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(viewModelAssemblyPath);
 
                 // compile and emit the view assembly
-                var viewSource = workspace.Read(step.EmbeddedViewPath)
+                var viewSource = workspace.GetFileContents(embeddedView.Path)
                     .GetAwaiter()
                     .GetResult();
                 treeBuilder.AdditionalAssembly = viewModelAssembly;
                 var viewCompilation = viewCompiler.CreateCompilation($"EmbeddedView_{step.Name}_{id}");
                 (var descriptor, var factory) = viewCompiler.CompileView(
                     sourceCode: viewSource,
-                    fileName: step.EmbeddedViewPath,
+                    fileName: embeddedView.Path,
                     compilation: viewCompilation,
                     namespaceName: "DotvvmAcademy.Course",
                     className: controlBuilderName);

@@ -5,7 +5,8 @@ EmbeddedView:
     Dependencies:
         - .solution/LogIn/ViewModels/LogInViewModel.cs
         - .solution/LogIn/AccountService.cs
-Solution: .solution
+Archive:
+    Path: .solution
 ---
 
 # Conclusion

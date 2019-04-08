@@ -18,15 +18,18 @@ namespace DotvvmAcademy.Web.Hosting
         public async Task ProcessRequest(IDotvvmRequestContext context)
         {
             (var languageMoniker, var lessonMoniker, var stepMoniker) = GetParameters(context);
-            var step = await workspace.LoadStep(lessonMoniker, languageMoniker, stepMoniker);
-            var archive = await workspace.Load<Archive>(step.ArchivePath);
+            var archive = workspace.CurrentCourse.GetLesson(lessonMoniker)
+                .GetVariant(languageMoniker)
+                .GetStep(stepMoniker)
+                .Archive;
+            var bytes = await workspace.GetArchiveBytes(archive);
             context.HttpContext.Response.ContentType = "application/zip";
             var contentDisposition = new ContentDisposition
             {
-                FileName = $"{lessonMoniker}.zip"
+                FileName = $"{archive.Name}.zip"
             };
             context.HttpContext.Response.Headers["Content-Disposition"] = contentDisposition.ToString();
-            context.HttpContext.Response.Body.Write(archive.Memory);
+            context.HttpContext.Response.Body.Write(bytes);
         }
 
         private (string languageMoniker, string lessonMoniker, string stepMoniker) GetParameters(IDotvvmRequestContext context)

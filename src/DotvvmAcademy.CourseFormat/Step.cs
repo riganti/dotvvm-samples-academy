@@ -5,6 +5,8 @@
         public Step(
             string path,
             string moniker,
+            string variantMoniker,
+            string lessonMoniker,
             string name,
             CodeTask codeTask,
             Archive archive,
@@ -12,6 +14,8 @@
         {
             Path = path;
             Moniker = moniker;
+            VariantMoniker = variantMoniker;
+            LessonMoniker = lessonMoniker;
             Name = name;
             CodeTask = codeTask;
             Archive = archive;
@@ -21,6 +25,10 @@
         public string Path { get; }
 
         public string Moniker { get; }
+
+        public string VariantMoniker { get; }
+
+        public string LessonMoniker { get; }
 
         public string Name { get; }
 

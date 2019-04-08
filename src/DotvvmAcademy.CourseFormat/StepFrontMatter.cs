@@ -6,9 +6,18 @@
 
         public EmbeddedViewOptions EmbeddedView { get; set; }
 
-        public string Solution { get; set; }
+        public ArchiveOptions Archive { get; set; }
+
+        public string Moniker { get; set; }
 
         public string Title { get; set; }
+
+        public class ArchiveOptions
+        {
+            public string Path { get; set; }
+
+            public string Name { get; set; }
+        }
 
         public class CodeTaskOptions
         {

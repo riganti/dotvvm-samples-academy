@@ -4,7 +4,8 @@ EmbeddedView:
     Path: .solution/ToDoList/Views/ToDo.dothtml
     Dependencies:
         - .solution/ToDoList/ViewModels/ToDoViewModel.cs
-Solution: .solution
+Archive:
+    Path: .solution
 ---
 
 # Conclusion

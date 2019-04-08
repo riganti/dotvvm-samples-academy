@@ -8,16 +8,20 @@ namespace DotvvmAcademy.Web
 {
     public class Startup
     {
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, CourseWorkspace workspace)
         {
             app.UseStaticFiles();
             app.UseDotVVM<DotvvmStartup>();
+
+            workspace.LoadCourse("./Course")
+                .GetAwaiter()
+                .GetResult();
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDotVVM<DotvvmStartup>();
-            services.AddSingleton(new CourseWorkspace(new FileSystemEnvironment(new DirectoryInfo("./Course"))));
+            services.AddSingleton<CourseWorkspace>();
             services.AddSingleton<ArchivePresenter>();
             services.AddSingleton<EmbeddedViewBuilder>();
             services.AddSingleton<EmbeddedViewCompiler>();
