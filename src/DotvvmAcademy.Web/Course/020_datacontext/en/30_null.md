@@ -1,5 +1,6 @@
 ---
 Title: Null DataContext
+Moniker: null-datacontext
 CodeTask:
     Path: 30_null_datacontext.csharp.csx
     Default: ProfileDetailViewModel_30.cs

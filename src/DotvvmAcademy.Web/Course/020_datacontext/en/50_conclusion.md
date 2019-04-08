@@ -1,5 +1,6 @@
 ﻿---
 Title: Conclusion
+Moniker: conclusion
 EmbeddedView:
     Path: .solution/ProfileDetail/Views/ProfileDetail.dothtml
     Dependencies:

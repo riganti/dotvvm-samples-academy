@@ -1,5 +1,6 @@
 ﻿---
 Title: Moving properties
+Moniker: moving-properties
 CodeTask:
     Path: 10_moving_properties.csharp.csx
     Correct: ProfileDetailViewModel_10.cs

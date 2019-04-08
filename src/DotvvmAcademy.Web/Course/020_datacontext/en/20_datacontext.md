@@ -1,5 +1,6 @@
 ﻿---
 Title: DataContext
+Moniker: datacontext
 CodeTask:
     Path: 20_datacontext.dothtml.csx
     Default: ProfileDetail_10.dothtml
