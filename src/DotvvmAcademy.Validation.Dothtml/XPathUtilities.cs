@@ -69,21 +69,18 @@ namespace DotvvmAcademy.Validation.Dothtml
             {
                 return segment;
             }
-            else if (segment[0] == '/')
+            int start = 0;
+            if (segment[0] == '/')
             {
-                if (segment.Length > 2 && segment[1] == '@')
-                {
-                    return segment.Substring(2);
-                }
-                else
-                {
-                    return segment.Substring(1);
-                }
+                start++;
             }
-            else
+            if (segment.Length > 2 && segment[1] == '@')
             {
-                return segment;
+                start++;
             }
+            int indexStart = segment.IndexOf('[');
+            int end = indexStart == -1 ? segment.Length - 1 : indexStart - 1;
+            return segment.Substring(start, end - start + 1);
         }
     }
 }

@@ -42,31 +42,31 @@ namespace DotvvmAcademy.Web.Pages.Step
         public override async Task Load()
         {
             // get available languages
-            var lesson = await workspace.LoadLesson(LessonMoniker);
-            Languages = lesson.Variants.Where(v => v != LanguageMoniker)
-                .Select(LanguageOption.Create)
+            var lesson = workspace.CurrentCourse.GetLesson(LessonMoniker);
+            Languages = lesson.Variants.Where(v => v.Moniker != LanguageMoniker)
+                .Select(v => LanguageOption.Create(v.Moniker))
                 .ToList();
 
             // load step
-            var variant = await workspace.LoadLessonVariant(LessonMoniker, LanguageMoniker);
+            var variant = lesson.GetVariant(LanguageMoniker);
             LessonName = variant.Name;
-            var steps = await Task.WhenAll(variant.Steps.Select(s => workspace.LoadStep(LessonMoniker, LanguageMoniker, s)));
-            Steps = steps.Select(s => new StepListDetail
+            Steps = variant.Steps.Select(s => new StepListDetail
             {
-                Moniker = s.StepMoniker,
+                Moniker = s.Moniker,
                 Name = s.Name
             });
-            step = await workspace.LoadStep(LessonMoniker, LanguageMoniker, StepMoniker);
-            var index = variant.Steps.IndexOf(StepMoniker);
+            step = variant.GetStep(StepMoniker);
+            var index = variant.Steps.IndexOf(step);
+            var text = await workspace.GetStepText(step);
             Step = new StepDetail
             {
-                Html = step.Text,
+                Html = text,
                 Name = step.Name,
-                PreviousStep = variant.Steps.ElementAtOrDefault(index - 1),
-                NextStep = variant.Steps.ElementAtOrDefault(index + 1),
-                HasCodeTask = step.CodeTaskPath != null,
-                HasEmbeddedView = step.EmbeddedViewPath != null,
-                HasArchive = step.ArchivePath != null
+                PreviousStep = variant.Steps.ElementAtOrDefault(index - 1)?.Moniker,
+                NextStep = variant.Steps.ElementAtOrDefault(index + 1)?.Moniker,
+                HasCodeTask = step.CodeTask != null,
+                HasEmbeddedView = step.EmbeddedView != null,
+                HasArchive = step.Archive != null
             };
             if (Step.HasCodeTask)
             {
@@ -74,7 +74,7 @@ namespace DotvvmAcademy.Web.Pages.Step
                 {
                     CodeTask = new CodeTaskDetail();
                 }
-                CodeTask.SourcePath = step.CodeTaskPath;
+                CodeTask.SourcePath = step.CodeTask.Path;
                 if (!Context.IsPostBack)
                 {
                     await Reset();
@@ -88,14 +88,14 @@ namespace DotvvmAcademy.Web.Pages.Step
         {
             CodeTask = new CodeTaskDetail
             {
-                Code = await workspace.Read(step.DefaultPath),
-                CodeLanguage = SourcePath.GetValidatedLanguage(step.CodeTaskPath)
+                Code = await workspace.GetFileContents(step.CodeTask.DefaultPath),
+                CodeLanguage = step.CodeTask.CodeLanguage
             };
         }
 
         public async Task ShowSolution()
         {
-            CodeTask.Code = await workspace.Read(step.CorrectPath);
+            CodeTask.Code = await workspace.GetFileContents(step.CodeTask.DefaultPath);
         }
 
         public async Task Validate()
@@ -129,7 +129,7 @@ namespace DotvvmAcademy.Web.Pages.Step
 
             try
             {
-                var diagnostics = (await workspace.ValidateStep(step, CodeTask.Code))
+                var diagnostics = (await workspace.ValidateCodeTask(step.CodeTask, CodeTask.Code))
                     .ToArray();
                 CodeTask.IsCodeCorrect = !diagnostics.Any(d => d.Severity == CodeTaskDiagnosticSeverity.Error);
                 CodeTask.Markers = diagnostics

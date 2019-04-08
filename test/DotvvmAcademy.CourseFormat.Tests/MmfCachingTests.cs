@@ -53,14 +53,16 @@ namespace DotvvmAcademy.CourseFormat.Tests
             GetSource();
         }
 
-        private class TestSource : Source, IDisposable
+        private class TestSource : IDisposable
         {
-            public TestSource(string path, MemoryMappedFile file, Mutex mutex) : base(path)
+            public TestSource(string path, MemoryMappedFile file, Mutex mutex)
             {
+                Path = path;
                 File = file;
                 Mutex = mutex;
             }
 
+            public string Path { get; }
             public MemoryMappedFile File { get; }
 
             public Mutex Mutex { get; }

@@ -1,12 +1,15 @@
 ﻿namespace DotvvmAcademy.CourseFormat
 {
-    public class Archive : Source
+    public class Archive
     {
-        public Archive(string path, byte[] memory) : base(path)
+        public Archive(string path, string name)
         {
-            Memory = memory;
+            Path = path;
+            Name = name;
         }
 
-        public byte[] Memory { get; }
+        public string Path { get; }
+
+        public string Name { get; }
     }
 }

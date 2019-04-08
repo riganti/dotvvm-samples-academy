@@ -23,7 +23,7 @@ namespace DotvvmAcademy.Web.Pages.Default
         public LessonDetail FirstLesson { get; set; }
 
         [Bind(Direction.ServerToClientFirstRequest)]
-        public List<LessonDetail> Lessons { get; set; }
+        public List<LessonDetail> Lessons { get; set; } = new List<LessonDetail>();
 
         public override async Task Load()
         {
@@ -32,29 +32,25 @@ namespace DotvvmAcademy.Web.Pages.Default
                 .Select(LanguageOption.Create)
                 .ToList();
 
-            var course = await workspace.LoadCourse();
-            var lessonTasks = course.Lessons.Select(l => workspace.LoadLesson(l));
-            var lessons = await Task.WhenAll(lessonTasks);
-            var variantTasks = lessons.Where(l => l.Variants.Contains(LanguageMoniker))
-                .Select(l => workspace.LoadLessonVariant(l.Moniker, LanguageMoniker));
-            var variants = await Task.WhenAll(variantTasks);
+            var variants = workspace.CurrentCourse.Lessons
+                .SelectMany(l => l.Variants)
+                .Where(v => v.Moniker == LanguageMoniker);
             if (environment.IsProduction())
             {
-                variants = variants.Where(v => v.Status == LessonStatus.Released)
-                    .ToArray();
+                variants = variants.Where(v => v.Status == LessonStatus.Released);
             }
-            Lessons = variants.Select(v =>
+            foreach(var variant in variants)
             {
-                return new LessonDetail
+                var annotation = await workspace.GetLessonVariantAnnotation(variant);
+                Lessons.Add(new LessonDetail
                 {
-                    FirstStep = v.Steps.FirstOrDefault(),
-                    AnnotationHtml = v.Annotation,
-                    ImageUrl = v.ImageUrl,
-                    Moniker = v.LessonMoniker,
-                    Name = v.Name
-                };
-            })
-            .ToList();
+                    FirstStep = variant.Steps.FirstOrDefault()?.Moniker,
+                    AnnotationHtml = annotation,
+                    ImageUrl = variant.ImageUrl,
+                    Moniker = variant.LessonMoniker,
+                    Name = variant.Name
+                });
+            }
             FirstLesson = Lessons.FirstOrDefault();
             await base.Load();
         }

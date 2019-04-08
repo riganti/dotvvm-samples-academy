@@ -1,17 +1,28 @@
-﻿using DotvvmAcademy.Validation;
+﻿using DotvvmAcademy.Meta;
+using DotvvmAcademy.Validation;
+using Markdig;
+using Markdig.Extensions.Yaml;
+using Markdig.Renderers;
+using Microsoft.CodeAnalysis.CSharp.Scripting;
+using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
 using System.IO.MemoryMappedFiles;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using YamlDotNet.Core;
+using YamlDotNet.Serialization;
 
 namespace DotvvmAcademy.CourseFormat
 {
@@ -19,75 +30,248 @@ namespace DotvvmAcademy.CourseFormat
     {
         public const string SandboxPath = "./sandbox/DotvvmAcademy.CourseFormat.Sandbox.dll";
         public const int ValidationTimeout = 10000;
+        public const string LessonFile = "lesson.md";
+        public const string VariantFile = "variant.md";
+        public const string CSharpLanguage = "csharp";
+        public const string DothtmlLanguage = "dothtml";
 #if DEBUG
-        public static readonly TimeSpan SourceExpiration = TimeSpan.FromSeconds(3);
+        public static readonly TimeSpan CacheEntryExpiration = TimeSpan.FromSeconds(3);
 #else
-        public static readonly TimeSpan SourceExpiration = TimeSpan.FromDays(1);
+        public static readonly TimeSpan CacheEntryExpiration = TimeSpan.FromDays(1);
 #endif
         private readonly IMemoryCache cache = new MemoryCache(new MemoryCacheOptions());
-        private readonly ICourseEnvironment environment;
-        private readonly ImmutableDictionary<Type, object> sourceProviders;
+        private readonly MarkdownPipeline markdigPipeline = new MarkdownPipelineBuilder()
+            .UsePipeTables()
+            .UseEmphasisExtras()
+            .UseYamlFrontMatter()
+            .UseFigures()
+            .Build();
+        private readonly IDeserializer yamlDeserializer = new DeserializerBuilder().Build();
 
-        public CourseWorkspace(ICourseEnvironment environment)
-        {
-            this.environment = environment;
-            sourceProviders = ImmutableDictionary.CreateRange(new Dictionary<Type, object>
-            {
-                [typeof(Course)] = new CourseProvider(environment),
-                [typeof(Lesson)] = new LessonProvider(environment),
-                [typeof(LessonVariant)] = new LessonVariantProvider(environment),
-                [typeof(Step)] = new StepProvider(environment),
-                [typeof(CodeTask)] = new CodeTaskProvider(environment),
-                [typeof(CourseFile)] = new CourseFileProvider(environment),
-                [typeof(Archive)] = new ArchiveProvider(environment),
-            });
-        }
+        public Course CurrentCourse { get; set; }
 
         public void Dispose()
         {
             cache.Dispose();
         }
 
-        public async Task<TSource> Load<TSource>(string sourcePath)
-            where TSource : Source
+        public async Task LoadCourse(string directoryPath)
         {
-            if (!SourcePath.IsAbsolute(sourcePath))
+            var directory = new DirectoryInfo(directoryPath);
+            if (!directory.Exists)
             {
-                throw new ArgumentException("Source path must be absolute.", nameof(sourcePath));
+                throw new ArgumentException("Course directory does not exist.", nameof(directoryPath));
             }
 
-            var cacheKey = $"{typeof(TSource).Name}:{sourcePath}";
-            TSource source;
-            if (cache.TryGetValue(cacheKey, out source))
+            var lessonDirectories = directory.GetDirectories()
+                .Where(d => !d.Name.StartsWith("."));
+            var lessonBuilder = ImmutableArray.CreateBuilder<Lesson>();
+            foreach (var lessonDirectory in lessonDirectories)
             {
-                return source;
-            }
-
-            var sourceProvider = (ISourceProvider<TSource>)sourceProviders[typeof(TSource)];
-            source = await sourceProvider.Get(sourcePath);
-            using (var entry = cache.CreateEntry(cacheKey))
-            {
-                entry.Value = source;
-                entry.SetAbsoluteExpiration(SourceExpiration);
-                entry.RegisterPostEvictionCallback((key, value, reason, state) =>
+                var lessonFile = lessonDirectory.GetFiles(LessonFile)
+                    .SingleOrDefault();
+                if (lessonFile == default)
                 {
-                    if (value is IDisposable disposable)
+                    throw new InvalidOperationException($"Lesson at \"{lessonDirectory}\" does not contain a lesson file.");
+                }
+                var lessonFrontMatter = await ParseFrontMatter<LessonFrontMatter>(lessonFile.FullName);
+                var lessonMoniker = lessonFrontMatter.Moniker ?? lessonDirectory.Name;
+                var variantDirectories = lessonDirectory.GetDirectories()
+                    .Where(d => !d.Name.StartsWith("."));
+                var variantBuilder = ImmutableArray.CreateBuilder<LessonVariant>();
+                foreach (var variantDirectory in variantDirectories)
+                {
+                    var variantFile = variantDirectory.GetFiles(VariantFile)
+                        .SingleOrDefault();
+                    if (variantFile == default)
                     {
-                        disposable.Dispose();
+                        throw new InvalidOperationException($"Lesson variant at \"{variantDirectory}\" does not contain a variant file.");
                     }
-                });
+                    var variantFrontMatter = await ParseFrontMatter<LessonVariantFrontMatter>(variantFile.FullName);
+                    var variantMoniker = variantFrontMatter.Moniker ?? variantDirectory.Name;
+                    var stepFiles = variantDirectory.GetFiles("*.md")
+                        .Where(f => f.Name != VariantFile);
+                    var stepBuilder = ImmutableArray.CreateBuilder<Step>();
+                    foreach (var stepFile in stepFiles)
+                    {
+                        var stepFrontMatter = await ParseFrontMatter<StepFrontMatter>(stepFile.FullName);
+                        var stepMoniker = stepFrontMatter.Moniker ?? stepFile.Name;
+                        Archive archive = null;
+                        if (stepFrontMatter.Archive != null)
+                        {
+                            archive = new Archive(
+                                GetAbsolutePath(directoryPath, stepFile.FullName, stepFrontMatter.Archive.Path),
+                                stepFrontMatter.Archive.Name ?? lessonMoniker);
+                        }
+                        CodeTask codeTask = null;
+                        if (stepFrontMatter.CodeTask != null)
+                        {
+                            var match = Regex.Match(stepFrontMatter.CodeTask.Path, @"\w+\.(\w+)\.csx");
+                            var codeLanguage = match.Groups.Count == 2 ? match.Groups[1].Value : null;
+                            codeTask = new CodeTask(
+                                GetAbsolutePath(directoryPath, stepFile.FullName, stepFrontMatter.CodeTask.Path),
+                                GetAbsolutePath(directoryPath, stepFile.FullName, stepFrontMatter.CodeTask.Correct),
+                                GetAbsolutePath(directoryPath, stepFile.FullName, stepFrontMatter.CodeTask.Default),
+                                ResolveDependencies(directoryPath, stepFile.FullName, stepFrontMatter.CodeTask.Dependencies),
+                                codeLanguage);
+                        }
+                        EmbeddedView embeddedView = null;
+                        if (stepFrontMatter.EmbeddedView != null)
+                        {
+                            embeddedView = new EmbeddedView(
+                                GetAbsolutePath(directoryPath, stepFile.FullName, stepFrontMatter.EmbeddedView.Path),
+                                ResolveDependencies(directoryPath, stepFile.FullName, stepFrontMatter.EmbeddedView.Dependencies));
+                        }
+                        var step = new Step(
+                            stepFile.FullName,
+                            stepMoniker,
+                            variantMoniker,
+                            lessonMoniker,
+                            stepFrontMatter.Title,
+                            codeTask,
+                            archive,
+                            embeddedView);
+                        stepBuilder.Add(step);
+                    }
+                    var variant = new LessonVariant(
+                        variantDirectory.FullName,
+                        variantMoniker,
+                        lessonMoniker,
+                        variantFile.FullName,
+                        variantFrontMatter.Image,
+                        variantFrontMatter.Title,
+                        variantFrontMatter.Status,
+                        stepBuilder);
+                    variantBuilder.Add(variant);
+                }
+                var lesson = new Lesson(
+                    lessonDirectory.FullName,
+                    lessonMoniker,
+                    variantBuilder);
+                lessonBuilder.Add(lesson);
             }
-            return source;
+            CurrentCourse = new Course(directory.FullName, lessonBuilder);
         }
 
-        public Task<string> Read(string path)
+        public async Task<string> GetLessonVariantAnnotation(LessonVariant variant)
         {
-            return environment.Read(path);
+            var key = $"LessonVariantAnnotation|{variant.AnnotationPath}";
+            if (!cache.TryGetValue(key, out string annotation))
+            {
+                annotation = RenderMarkdown(await ReadFile(variant.AnnotationPath));
+                Cache(key, annotation);
+            }
+            return annotation;
         }
 
-        public async Task<IEnumerable<CodeTaskDiagnostic>> ValidateStep(
-            Step step,
-            string code)
+        public async Task<string> GetStepText(Step step)
+        {
+            var key = $"StepText|{step.Path}";
+            if (!cache.TryGetValue(key, out string text))
+            {
+                text = RenderMarkdown(await ReadFile(step.Path));
+                Cache(key, text);
+            }
+            return text;
+        }
+
+        public async Task<byte[]> GetArchiveBytes(Archive archive)
+        {
+            var key = $"ArchiveBytes|{archive.Path}";
+            if (cache.TryGetValue(key, out byte[] bytes))
+            {
+                return bytes;
+            }
+            async Task AddRecursive(string directory, ZipArchive zip)
+            {
+                var info = new DirectoryInfo(Path.Combine(archive.Path, directory));
+                foreach (var file in info.GetFiles())
+                {
+                    var entry = zip.CreateEntry(Path.Combine(directory, file.Name));
+                    using (var inputStream = file.OpenRead())
+                    using (var outputStream = entry.Open())
+                    {
+                        await inputStream.CopyToAsync(outputStream);
+                    }
+                }
+                foreach (var subdirectory in info.GetDirectories())
+                {
+                    await AddRecursive($"{directory}{subdirectory.Name}/", zip);
+                }
+            }
+
+            using (var memoryStream = new MemoryStream())
+            using (var zipArchive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
+            {
+                await AddRecursive("", zipArchive);
+                bytes = memoryStream.ToArray();
+            }
+            Cache(key, bytes);
+            return bytes;
+        }
+
+        public async Task<string> GetFileContents(string filePath)
+        {
+            if (!File.Exists(filePath))
+            {
+                throw new InvalidOperationException("File doesn't exist.");
+            }
+            var key = $"FileContents|{filePath}";
+            if (cache.TryGetValue(key, out string content))
+            {
+                return content;
+            }
+
+            content = await ReadFile(filePath);
+            Cache(key, content);
+            return content;
+        }
+
+        public async Task<ValidationScript> GetValidationScript(string scriptPath)
+        {
+            var scriptText = await GetFileContents(scriptPath);
+            var scriptOptions = ScriptOptions.Default
+                .AddReferences(
+                    RoslynReference.FromName("netstandard"),
+                    RoslynReference.FromName("System.Private.CoreLib"),
+                    RoslynReference.FromName("System.Runtime"),
+                    RoslynReference.FromName("System.Collections"),
+                    RoslynReference.FromName("System.Reflection"),
+                    RoslynReference.FromName("System.ComponentModel.Annotations"),
+                    RoslynReference.FromName("System.ComponentModel.DataAnnotations"),
+                    RoslynReference.FromName("System.Linq"),
+                    RoslynReference.FromName("System.Linq.Expressions"), // Roslyn #23573
+                    RoslynReference.FromName("Microsoft.CSharp"), // Roslyn #23573
+                    RoslynReference.FromName("DotVVM.Framework"),
+                    RoslynReference.FromName("DotVVM.Core"),
+                    RoslynReference.FromName("DotvvmAcademy.Validation"),
+                    RoslynReference.FromName("DotvvmAcademy.Validation.CSharp"),
+                    RoslynReference.FromName("DotvvmAcademy.Validation.Dothtml"),
+                    RoslynReference.FromName("DotvvmAcademy.Meta"))
+                .WithFilePath(scriptPath)
+                .WithSourceResolver(new CourseSourceReferenceResolver(CurrentCourse.Path));
+            var script = CSharpScript.Create(
+                code: scriptText,
+                options: scriptOptions);
+            var compilation = script.GetCompilation();
+            using (var memoryStream = new MemoryStream())
+            {
+                var emitResult = compilation.Emit(memoryStream);
+                if (!emitResult.Success)
+                {
+                    var sb = new StringBuilder($"Compilation of a CodeTask at '{scriptPath}' failed with the following diagnostics:\n");
+                    sb.Append(string.Join(",\n", emitResult.Diagnostics));
+                    throw new InvalidOperationException(sb.ToString());
+                }
+                var entryPoint = compilation.GetEntryPoint(default);
+                return new ValidationScript(
+                    entryType: entryPoint.ContainingType.MetadataName,
+                    entryMethod: entryPoint.MetadataName,
+                    bytes: memoryStream.ToArray());
+            }
+        }
+
+        public async Task<IEnumerable<CodeTaskDiagnostic>> ValidateCodeTask(CodeTask codeTask, string code)
         {
             var validationId = Guid.NewGuid();
 
@@ -95,30 +279,31 @@ namespace DotvvmAcademy.CourseFormat
             var args = new List<string>();
             args.Add(Path.Combine(directory, SandboxPath));
 
+            var script = await GetValidationScript(codeTask.Path);
             MemoryMappedFile scriptAssemblyMap;
             {
-                var codeTask = await Load<CodeTask>(step.CodeTaskPath);
-                var mapName = $"CodeTask/{validationId}";
-                scriptAssemblyMap = MemoryMappedFile.CreateNew(mapName, codeTask.Assembly.Length, MemoryMappedFileAccess.ReadWrite);
+                var mapName = $"CodeTask:{validationId}";
+                scriptAssemblyMap = MemoryMappedFile.CreateNew(mapName, script.Bytes.Length, MemoryMappedFileAccess.ReadWrite);
                 using (var mapStream = scriptAssemblyMap.CreateViewStream(0, 0, MemoryMappedFileAccess.ReadWrite))
                 {
-                    await mapStream.WriteAsync(codeTask.Assembly, 0, codeTask.Assembly.Length);
+                    await mapStream.WriteAsync(script.Bytes, 0, script.Bytes.Length);
                 }
                 args.Add(mapName);
-                args.Add(codeTask.EntryTypeName);
-                args.Add(codeTask.EntryMethodName);
+                args.Add(script.EntryType);
+                args.Add(script.EntryMethod);
             }
 
             var dependencyMaps = new List<MemoryMappedFile>();
-            var dependencies = await Task.WhenAll(step.CodeTaskDependencies.Select(d => Load<CourseFile>(d)));
-            foreach (var dependency in dependencies)
+            var dependencies = await Task.WhenAll(codeTask.Dependencies.Select(d => GetFileContents(d)));
+            for (int i = 0; i < codeTask.Dependencies.Length; i++)
             {
-                var mapName = $"CourseFile/{validationId}/{dependency.Path}";
-                var map = MemoryMappedFile.CreateNew(mapName, dependency.Text.Length * sizeof(char), MemoryMappedFileAccess.ReadWrite);
+                var dependencyName = codeTask.Dependencies[i];
+                var mapName = $"CourseFile:{validationId}/{Path.GetFileName(dependencyName)}";
+                var map = MemoryMappedFile.CreateNew(mapName, dependencies[i].Length * sizeof(char), MemoryMappedFileAccess.ReadWrite);
                 using (var mapStream = map.CreateViewStream(0, 0, MemoryMappedFileAccess.ReadWrite))
                 using (var writer = new StreamWriter(mapStream))
                 {
-                    await writer.WriteAsync(dependency.Text);
+                    await writer.WriteAsync(dependencies[i]);
                 }
                 dependencyMaps.Add(map);
                 args.Add(mapName);
@@ -183,6 +368,92 @@ namespace DotvvmAcademy.CourseFormat
                 }
             }
             return diagnostics.ToImmutable();
+        }
+
+        internal static string GetAbsolutePath(string root, string origin, string path)
+        {
+            if (path == null)
+            {
+                return null;
+            }
+
+            if (Path.IsPathRooted(path))
+            {
+                return path;
+            }
+            var stop = Path.GetDirectoryName(root);
+            while (origin != stop)
+            {
+                var absolutePath = Path.Combine(origin, path);
+                if (File.Exists(absolutePath) || Directory.Exists(absolutePath))
+                {
+                    return absolutePath;
+                }
+                origin = Path.GetDirectoryName(origin);
+
+            }
+            throw new InvalidOperationException($"Path \"{path}\" could not be resolved.");
+        }
+
+        private void Cache(string key, object value)
+        {
+            using (var entry = cache.CreateEntry(key))
+            {
+                entry.SetAbsoluteExpiration(CacheEntryExpiration);
+                entry.Value = value;
+            }
+        }
+
+        private string RenderMarkdown(string markdown)
+        {
+            var document = Markdown.Parse(markdown, markdigPipeline);
+            using (var stringWriter = new StringWriter())
+            {
+                var renderer = new HtmlRenderer(stringWriter);
+                markdigPipeline.Setup(renderer);
+                renderer.Render(document);
+                return stringWriter.ToString();
+            }
+        }
+
+        private async Task<string> ReadFile(string filePath)
+        {
+            using (var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.None, 4096, true))
+            using (var reader = new StreamReader(stream))
+            {
+                return await reader.ReadToEndAsync();
+            }
+        }
+
+        private async Task<TFrontMatter> ParseFrontMatter<TFrontMatter>(string filePath)
+            where TFrontMatter : new()
+        {
+            var document = Markdown.Parse(await ReadFile(filePath), markdigPipeline);
+            if (document.Count == 0 || !(document[0] is YamlFrontMatterBlock markdownBlock))
+            {
+                throw new ArgumentException($"Step at \"{filePath}\" does not contain a YAML Front Matter.");
+            }
+            try
+            {
+                return yamlDeserializer.Deserialize<TFrontMatter>(markdownBlock.Lines.ToString());
+            }
+            catch(YamlException exception)
+            {
+                throw new InvalidOperationException($"An exception occured while parsing the front matter of \"{filePath}\".", exception);
+            }
+        }
+
+        private static ImmutableArray<string> ResolveDependencies(string root, string origin, IEnumerable<string> dependencies)
+        {
+            if (dependencies == null)
+            {
+                return ImmutableArray.Create<string>();
+            }
+            else
+            {
+                return dependencies.Select(d => GetAbsolutePath(root, origin, d))
+                    .ToImmutableArray();
+            }
         }
     }
 }

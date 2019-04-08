@@ -1,6 +1,7 @@
 ---
 Title: Markdown
-CodeTask: 10_markdown.csharp.csx
+CodeTask: 
+    Path: 10_markdown.csharp.csx
 ---
 
 # Markdown

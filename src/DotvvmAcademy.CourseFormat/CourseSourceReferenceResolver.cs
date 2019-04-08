@@ -6,11 +6,11 @@ namespace DotvvmAcademy.CourseFormat
 {
     public class CourseSourceReferenceResolver : SourceReferenceResolver
     {
-        private readonly ICourseEnvironment environment;
+        private readonly string root;
 
-        public CourseSourceReferenceResolver(ICourseEnvironment environment)
+        public CourseSourceReferenceResolver(string root)
         {
-            this.environment = environment;
+            this.root = root;
         }
 
         public override bool Equals(object other)
@@ -30,13 +30,12 @@ namespace DotvvmAcademy.CourseFormat
 
         public override Stream OpenRead(string resolvedPath)
         {
-            return environment.OpenRead(resolvedPath);
+            return new FileInfo(resolvedPath).OpenRead();
         }
 
         public override string ResolveReference(string path, string baseFilePath)
         {
-            var parent = SourcePath.GetParent(baseFilePath);
-            return SourcePath.Normalize(SourcePath.Combine(parent, path));
+            return CourseWorkspace.GetAbsolutePath(root, baseFilePath, path);
         }
     }
 }

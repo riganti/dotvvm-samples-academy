@@ -4,7 +4,8 @@ EmbeddedView:
     Path: .solution/Counter/Views/Counter.dothtml
     Dependencies:
         - .solution/Counter/ViewModels/CounterViewModel.cs
-Solution: .solution
+Archive: 
+    Path: .solution
 ---
 
 # Conclusion

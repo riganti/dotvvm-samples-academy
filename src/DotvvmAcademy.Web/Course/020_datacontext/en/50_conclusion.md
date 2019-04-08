@@ -5,7 +5,8 @@ EmbeddedView:
     Dependencies:
         - .solution/ProfileDetail/ViewModels/ProfileDetailViewModel.cs
         - .solution/ProfileDetail/ViewModels/Profile.cs
-Solution: .solution
+Archive: 
+    Path: .solution
 ---
 
 # Conclusion

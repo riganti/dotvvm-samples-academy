@@ -1,32 +1,56 @@
-﻿using System.Collections.Immutable;
+﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 
 namespace DotvvmAcademy.CourseFormat
 {
-    public class LessonVariant : Source
+    public class LessonVariant
     {
+        private readonly ImmutableDictionary<string, Step> associativeSteps;
+
         public LessonVariant(
+            string path,
+            string moniker,
             string lessonMoniker,
-            string variantMoniker,
-            ImmutableArray<string> steps)
-            : base($"/{lessonMoniker}/{variantMoniker}")
+            string annotationPath,
+            string imageUrl,
+            string name,
+            LessonStatus status,
+            IEnumerable<Step> steps)
         {
+            Path = path;
+            Moniker = moniker;
             LessonMoniker = lessonMoniker;
-            VariantMoniker = variantMoniker;
-            Steps = steps;
+            AnnotationPath = annotationPath;
+            ImageUrl = imageUrl;
+            Name = name;
+            Status = status;
+            Steps = steps.ToImmutableArray();
+            associativeSteps = steps.ToImmutableDictionary(s => s.Moniker);
         }
+
+        public string Path { get; }
+
+        public string Moniker { get; }
 
         public string LessonMoniker { get; }
 
-        public string VariantMoniker { get; }
+        public string AnnotationPath { get; }
 
-        public ImmutableArray<string> Steps { get; }
+        public string ImageUrl { get; }
 
-        public string Annotation { get; internal set; }
+        public string Name { get; }
 
-        public string ImageUrl { get; internal set; }
+        public LessonStatus Status { get; }
 
-        public string Name { get; internal set; }
+        public ImmutableArray<Step> Steps { get; }
 
-        public LessonStatus Status { get; internal set; }
+        public Step GetStep(string moniker)
+        {
+            if (associativeSteps.TryGetValue(moniker, out var step))
+            {
+                return step;
+            }
+            return null;
+        }
     }
 }
