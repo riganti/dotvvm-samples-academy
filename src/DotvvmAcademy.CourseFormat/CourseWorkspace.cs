@@ -182,30 +182,28 @@ namespace DotvvmAcademy.CourseFormat
             {
                 return bytes;
             }
-            var baseUri = new Uri(archive.Path);
-
-            async Task AddRecursive(DirectoryInfo directory, ZipArchive zip)
+            async Task AddRecursive(string directory, ZipArchive zip)
             {
-                foreach (var file in directory.GetFiles())
+                var info = new DirectoryInfo(Path.Combine(archive.Path, directory));
+                foreach (var file in info.GetFiles())
                 {
-                    var uri = new Uri(file.FullName);
-                    var entry = zip.CreateEntry(uri.MakeRelativeUri(baseUri).ToString());
+                    var entry = zip.CreateEntry(Path.Combine(directory, file.Name));
                     using (var inputStream = file.OpenRead())
                     using (var outputStream = entry.Open())
                     {
                         await inputStream.CopyToAsync(outputStream);
                     }
                 }
-                foreach (var subdirectory in directory.GetDirectories())
+                foreach (var subdirectory in info.GetDirectories())
                 {
-                    await AddRecursive(subdirectory, zip);
+                    await AddRecursive($"{directory}{subdirectory.Name}/", zip);
                 }
             }
 
             using (var memoryStream = new MemoryStream())
             using (var zipArchive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
             {
-                await AddRecursive(new DirectoryInfo(archive.Path), zipArchive);
+                await AddRecursive("", zipArchive);
                 bytes = memoryStream.ToArray();
             }
             Cache(key, bytes);
