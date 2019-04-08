@@ -1,5 +1,6 @@
 ﻿---
 Title: Add & Remove
+Moniker: add-remove
 CodeTask:
     Path: 30_add_remove.csharp.csx
     Default: ToDoViewModel_30.cs

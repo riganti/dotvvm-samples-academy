@@ -1,5 +1,6 @@
 ﻿---
 Title: Life-cycle
+Moniker: life-cycle
 CodeTask: 
     Path: 50_lifecycle.csharp.csx
     Default: ToDoViewModel_50.cs

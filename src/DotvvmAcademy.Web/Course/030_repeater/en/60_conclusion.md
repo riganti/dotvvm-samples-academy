@@ -1,5 +1,6 @@
 ﻿---
 Title: Conclusion
+Moniker: conclusion
 EmbeddedView:
     Path: .solution/ToDoList/Views/ToDo.dothtml
     Dependencies:

@@ -1,5 +1,6 @@
 ﻿---
 Title: Repeater
+Moniker: repeater
 CodeTask:
     Path: 20_repeater.dothtml.csx
     Default: ToDo_10.dothtml

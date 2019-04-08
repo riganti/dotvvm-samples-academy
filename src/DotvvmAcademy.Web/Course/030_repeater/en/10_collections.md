@@ -1,5 +1,6 @@
 ﻿---
 Title: Collections
+Moniker: collections
 CodeTask:
     Path: 10_collections.csharp.csx
     Default: ToDoViewModel_10.cs

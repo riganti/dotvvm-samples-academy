@@ -1,5 +1,6 @@
 ﻿---
 Title: Buttons
+Moniker: buttons
 CodeTask:
     Path: 40_buttons.dothtml.csx
     Default: ToDo_20.dothtml
