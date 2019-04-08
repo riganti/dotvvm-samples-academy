@@ -227,31 +227,6 @@ namespace DotvvmAcademy.CourseFormat
             return content;
         }
 
-        private static string GetAbsolutePath(string root, string origin, string path)
-        {
-            if (path == null)
-            {
-                return null;
-            }
-
-            if (Path.IsPathRooted(path))
-            {
-                return path;
-            }
-            var stop = Path.GetDirectoryName(root);
-            while(origin != stop)
-            {
-                var absolutePath = Path.Combine(origin, path);
-                if (File.Exists(absolutePath) || Directory.Exists(absolutePath))
-                {
-                    return absolutePath;
-                }
-                origin = Path.GetDirectoryName(origin);
-
-            }
-            throw new InvalidOperationException($"Path \"{path}\" could not be resolved.");
-        }
-
         public async Task<ValidationScript> GetValidationScript(string scriptPath)
         {
             var scriptText = await GetFileContents(scriptPath);
@@ -273,7 +248,8 @@ namespace DotvvmAcademy.CourseFormat
                     RoslynReference.FromName("DotvvmAcademy.Validation.CSharp"),
                     RoslynReference.FromName("DotvvmAcademy.Validation.Dothtml"),
                     RoslynReference.FromName("DotvvmAcademy.Meta"))
-                .WithFilePath(scriptPath);
+                .WithFilePath(scriptPath)
+                .WithSourceResolver(new CourseSourceReferenceResolver(CurrentCourse.Path));
             var script = CSharpScript.Create(
                 code: scriptText,
                 options: scriptOptions);
@@ -322,7 +298,7 @@ namespace DotvvmAcademy.CourseFormat
             for (int i = 0; i < codeTask.Dependencies.Length; i++)
             {
                 var dependencyName = codeTask.Dependencies[i];
-                var mapName = $"CourseFile:{validationId}/{dependencyName}";
+                var mapName = $"CourseFile:{validationId}/{Path.GetFileName(dependencyName)}";
                 var map = MemoryMappedFile.CreateNew(mapName, dependencies[i].Length * sizeof(char), MemoryMappedFileAccess.ReadWrite);
                 using (var mapStream = map.CreateViewStream(0, 0, MemoryMappedFileAccess.ReadWrite))
                 using (var writer = new StreamWriter(mapStream))
@@ -392,6 +368,31 @@ namespace DotvvmAcademy.CourseFormat
                 }
             }
             return diagnostics.ToImmutable();
+        }
+
+        internal static string GetAbsolutePath(string root, string origin, string path)
+        {
+            if (path == null)
+            {
+                return null;
+            }
+
+            if (Path.IsPathRooted(path))
+            {
+                return path;
+            }
+            var stop = Path.GetDirectoryName(root);
+            while (origin != stop)
+            {
+                var absolutePath = Path.Combine(origin, path);
+                if (File.Exists(absolutePath) || Directory.Exists(absolutePath))
+                {
+                    return absolutePath;
+                }
+                origin = Path.GetDirectoryName(origin);
+
+            }
+            throw new InvalidOperationException($"Path \"{path}\" could not be resolved.");
         }
 
         private void Cache(string key, object value)

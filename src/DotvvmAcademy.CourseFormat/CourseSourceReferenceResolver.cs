@@ -6,6 +6,13 @@ namespace DotvvmAcademy.CourseFormat
 {
     public class CourseSourceReferenceResolver : SourceReferenceResolver
     {
+        private readonly string root;
+
+        public CourseSourceReferenceResolver(string root)
+        {
+            this.root = root;
+        }
+
         public override bool Equals(object other)
         {
             throw new NotSupportedException();
@@ -28,8 +35,7 @@ namespace DotvvmAcademy.CourseFormat
 
         public override string ResolveReference(string path, string baseFilePath)
         {
-            var parent = Path.GetDirectoryName(baseFilePath);
-            return Path.Combine(parent, path);
+            return CourseWorkspace.GetAbsolutePath(root, baseFilePath, path);
         }
     }
 }
