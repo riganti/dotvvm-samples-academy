@@ -30,6 +30,7 @@ namespace DotvvmAcademy.CourseFormat
     {
         public const string SandboxPath = "./sandbox/DotvvmAcademy.CourseFormat.Sandbox.dll";
         public const int ValidationTimeout = 10000;
+        public const string LessonFile = "lesson.md";
         public const string VariantFile = "variant.md";
         public const string CSharpLanguage = "csharp";
         public const string DothtmlLanguage = "dothtml";
@@ -67,7 +68,14 @@ namespace DotvvmAcademy.CourseFormat
             var lessonBuilder = ImmutableArray.CreateBuilder<Lesson>();
             foreach (var lessonDirectory in lessonDirectories)
             {
-                var lessonMoniker = lessonDirectory.Name;
+                var lessonFile = lessonDirectory.GetFiles(LessonFile)
+                    .SingleOrDefault();
+                if (lessonFile == default)
+                {
+                    throw new InvalidOperationException($"Lesson at \"{lessonDirectory}\" does not contain a lesson file.");
+                }
+                var lessonFrontMatter = await ParseFrontMatter<LessonFrontMatter>(lessonFile.FullName);
+                var lessonMoniker = lessonFrontMatter.Moniker ?? lessonDirectory.Name;
                 var variantDirectories = lessonDirectory.GetDirectories()
                     .Where(d => !d.Name.StartsWith("."));
                 var variantBuilder = ImmutableArray.CreateBuilder<LessonVariant>();
@@ -77,9 +85,9 @@ namespace DotvvmAcademy.CourseFormat
                         .SingleOrDefault();
                     if (variantFile == default)
                     {
-                        throw new InvalidOperationException($"Lesson variant at \"{variantDirectory}\" does not contain a lesson file.");
+                        throw new InvalidOperationException($"Lesson variant at \"{variantDirectory}\" does not contain a variant file.");
                     }
-                    var variantFrontMatter = await ParseFrontMatter<LessonFrontMatter>(variantFile.FullName);
+                    var variantFrontMatter = await ParseFrontMatter<LessonVariantFrontMatter>(variantFile.FullName);
                     var variantMoniker = variantFrontMatter.Moniker ?? variantDirectory.Name;
                     var stepFiles = variantDirectory.GetFiles("*.md")
                         .Where(f => f.Name != VariantFile);
@@ -138,7 +146,7 @@ namespace DotvvmAcademy.CourseFormat
                 }
                 var lesson = new Lesson(
                     lessonDirectory.FullName,
-                    lessonDirectory.Name,
+                    lessonMoniker,
                     variantBuilder);
                 lessonBuilder.Add(lesson);
             }
