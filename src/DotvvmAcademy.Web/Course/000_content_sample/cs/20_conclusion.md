@@ -1,5 +1,6 @@
 ---
 Title: Závěr
+Moniker: conclusion
 ---
 
 # Závěr

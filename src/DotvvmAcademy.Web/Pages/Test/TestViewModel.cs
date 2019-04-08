@@ -28,8 +28,11 @@ namespace DotvvmAcademy.Web.Pages.Test
 
         public override async Task Load()
         {
-            var step = await workspace.LoadStep(LessonMoniker, VariantMoniker, StepMoniker);
-            var diagnostics = await workspace.ValidateStep(step, "");
+            var codeTask = workspace.CurrentCourse.GetLesson(LessonMoniker)
+                .GetVariant(VariantMoniker)
+                .GetStep(StepMoniker)
+                .CodeTask;
+            var diagnostics = await workspace.ValidateCodeTask(codeTask, "");
             Diagnostics = diagnostics.ToList();
         }
     }

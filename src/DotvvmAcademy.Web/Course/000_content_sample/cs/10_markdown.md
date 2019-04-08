@@ -1,12 +1,15 @@
 ---
 Title: Markdown
+Moniker: markdown
 CodeTask: 
     Path: 10_markdown.csharp.csx
+    Default: Sample_10.cs
+    Correct: Sample_20.cs
 ---
 
 # Markdown
 
-Vítejte! Toto je Příkladová lekce určená pro testovací účely. Toto je odstavec a měl by tak být formátovat. Pokud vypadá divně nebo není dobře čitelný, něco je tu zatraceně špatně. V odstavci se mohou vyskytovat reference na symboly např. `Property` nebo `<dot:Button>`. Některá slova mohou být napsána __tučně__ nebo _kurzívou_.
+Vítejte! Toto je Příkladová lekce určená pro testovací účely. Toto je odstavec a měl by tak být formátován. Pokud vypadá divně nebo není dobře čitelný, něco je tu zatraceně špatně. V odstavci se mohou vyskytovat reference na symboly např. `Property` nebo `<dot:Button>`. Některá slova mohou být napsána __tučně__ nebo _kurzívou_.
 
 ```csharp
 using System;

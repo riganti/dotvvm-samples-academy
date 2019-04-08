@@ -1,5 +1,6 @@
 ---
 Title: Markdown
+Moniker: markdown
 CodeTask: 
     Path: 10_markdown.csharp.csx
     Default: Sample_10.cs
