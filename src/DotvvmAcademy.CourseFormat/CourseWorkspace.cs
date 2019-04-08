@@ -30,7 +30,7 @@ namespace DotvvmAcademy.CourseFormat
     {
         public const string SandboxPath = "./sandbox/DotvvmAcademy.CourseFormat.Sandbox.dll";
         public const int ValidationTimeout = 10000;
-        public const string LessonFile = "lesson.md";
+        public const string VariantFile = "variant.md";
         public const string CSharpLanguage = "csharp";
         public const string DothtmlLanguage = "dothtml";
 #if DEBUG
@@ -73,16 +73,16 @@ namespace DotvvmAcademy.CourseFormat
                 var variantBuilder = ImmutableArray.CreateBuilder<LessonVariant>();
                 foreach (var variantDirectory in variantDirectories)
                 {
-                    var lessonFile = variantDirectory.GetFiles(LessonFile)
+                    var variantFile = variantDirectory.GetFiles(VariantFile)
                         .SingleOrDefault();
-                    if (lessonFile == default)
+                    if (variantFile == default)
                     {
                         throw new InvalidOperationException($"Lesson variant at \"{variantDirectory}\" does not contain a lesson file.");
                     }
-                    var variantFrontMatter = await ParseFrontMatter<LessonFrontMatter>(lessonFile.FullName);
+                    var variantFrontMatter = await ParseFrontMatter<LessonFrontMatter>(variantFile.FullName);
                     var variantMoniker = variantFrontMatter.Moniker ?? variantDirectory.Name;
                     var stepFiles = variantDirectory.GetFiles("*.md")
-                        .Where(f => f.Name != LessonFile);
+                        .Where(f => f.Name != VariantFile);
                     var stepBuilder = ImmutableArray.CreateBuilder<Step>();
                     foreach (var stepFile in stepFiles)
                     {
@@ -129,7 +129,7 @@ namespace DotvvmAcademy.CourseFormat
                         variantDirectory.FullName,
                         variantMoniker,
                         lessonMoniker,
-                        lessonFile.FullName,
+                        variantFile.FullName,
                         variantFrontMatter.Image,
                         variantFrontMatter.Title,
                         variantFrontMatter.Status,
