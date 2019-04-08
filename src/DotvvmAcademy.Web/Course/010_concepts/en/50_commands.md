@@ -1,5 +1,6 @@
 ﻿---
 Title: Commands
+Moniker: commands
 CodeTask:
     Path: 50_commands.dothtml.csx
     Default: Counter_30.dothtml

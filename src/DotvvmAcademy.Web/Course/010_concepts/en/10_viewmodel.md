@@ -1,5 +1,6 @@
 ﻿---
 Title: Getting Started
+Moniker: getting-started
 CodeTask:
     Path: 10_viewmodel.csharp.csx
     Default: CounterViewModel_10.cs

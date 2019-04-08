@@ -1,5 +1,6 @@
 ﻿---
 Title: Controls
+Moniker: controls
 CodeTask:
     Path: 30_controls.dothtml.csx
     Default: Counter_20.dothtml

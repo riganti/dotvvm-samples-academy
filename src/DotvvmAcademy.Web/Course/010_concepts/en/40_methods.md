@@ -1,5 +1,6 @@
 ﻿---
 Title: Methods
+Moniker: methods
 CodeTask:
     Path: 40_methods.csharp.csx
     Default: CounterViewModel_30.cs

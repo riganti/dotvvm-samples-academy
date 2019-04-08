@@ -1,5 +1,6 @@
 ﻿---
 Title: The View
+Moniker: view
 CodeTask:
     Path: 20_view.dothtml.csx
     Default: Counter_10.dothtml

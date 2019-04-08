@@ -1,5 +1,6 @@
 ﻿---
 Title: Conclusion
+Moniker: conclusion
 EmbeddedView:
     Path: .solution/Counter/Views/Counter.dothtml
     Dependencies:
