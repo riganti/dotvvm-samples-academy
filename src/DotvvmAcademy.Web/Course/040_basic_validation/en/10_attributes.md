@@ -1,5 +1,6 @@
 ﻿---
 Title: Attributes
+Moniker: attributes
 CodeTask:
     Path: 10_attributes.csharp.csx
     Default: LogInViewModel_10.cs

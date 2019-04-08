@@ -1,5 +1,6 @@
 ﻿---
 Title: Validator
+Moniker: validator
 CodeTask:
     Path: 20_validator.dothtml.csx
     Default: LogIn_10.dothtml

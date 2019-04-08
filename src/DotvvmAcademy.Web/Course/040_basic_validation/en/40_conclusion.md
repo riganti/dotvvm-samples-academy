@@ -1,5 +1,6 @@
 ---
 Title: Conclusion
+Moniker: conclusion
 EmbeddedView:
     Path: .solution/LogIn/Views/LogIn.dothtml
     Dependencies:
