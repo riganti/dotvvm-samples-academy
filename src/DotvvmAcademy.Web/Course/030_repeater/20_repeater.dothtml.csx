@@ -11,9 +11,8 @@ Unit.GetDirective("/@viewModel")
 var repeater = Unit.GetControl("/html/body/dot:Repeater");
 {
     repeater.GetProperty("@DataSource")
-        .RequireBinding(ItemsProperty);
-
-    repeater.GetControl("p/dot:Literal")
-        .GetProperty("@Text")
-        .RequireBinding("_this");
+        .RequireBinding(ItemsProperty)
+        .GetControl("p/dot:Literal")
+            .GetProperty("@Text")
+            .RequireBinding("_this");
 }
