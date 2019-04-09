@@ -3,7 +3,7 @@
 @import DotvvmAcademy.Web.Resources.Localization
 
 <dot:Content ContentPlaceHolderID="MetaContent">
-    <title>{{resource: UIResources.Dialog_Text +  LessonName}}</title>
+    <title>{{resource: LessonName + ": " + Step.Name}}</title>
     <meta name="description" content="{resource: "LessonDescription"}" />
     <meta itemprop="description" content="{resource: "LessonDescription"}" />
     <meta property="og:title" content="DotVVM Academy" />
