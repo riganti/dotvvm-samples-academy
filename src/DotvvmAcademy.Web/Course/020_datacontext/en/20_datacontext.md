@@ -11,15 +11,17 @@ CodeTask:
 
 # DataContext
 
-Every control has a DataContext that it __inherited__ from its parent in its `DataContext` property. By default it's the whole ViewModel, but you can set it explicitly using a binding:
+By default the `DataContext` property of all controls is set to the ViewModel itself. You can set a different `DataContext` to any control and it will also be applied to all children of the control.
 
 ```dothtml
 <div DataContext="{value: Profile}">
+    <dot:TextBox Text="{value: FirstName}"/>
+</div>
 ```
 
 ---
 
 ## Tasks
 
-- Value-bind the `DataContext` property of the `<div>` element to the `Profile` property.
-- Modify the bindings inside the `<div>` element to respect their new DataContext.
+- Value-bind the `DataContext` property of the `<div>` element to the `Profile` property of the ViewModel.
+- Modify the binding expressions inside the `<div>` element to respect their new `DataContext`.
