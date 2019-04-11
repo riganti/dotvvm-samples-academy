@@ -70,7 +70,7 @@ namespace DotvvmAcademy.Validation.Dothtml {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The document is missing a control of type &apos;{0}&apos;..
+        ///   Looks up a localized string similar to The document root is missing a control of type &apos;{0}&apos;..
         /// </summary>
         public static string ERR_MissingControlRoot {
             get {
@@ -97,7 +97,7 @@ namespace DotvvmAcademy.Validation.Dothtml {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The document is missing an HTML &apos;{0}&apos; element..
+        ///   Looks up a localized string similar to The document root is missing an HTML &apos;{0}&apos; element..
         /// </summary>
         public static string ERR_MissingElementRoot {
             get {
@@ -115,7 +115,7 @@ namespace DotvvmAcademy.Validation.Dothtml {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This property must be bound using this expression: &apos;{0}&apos;..
+        ///   Looks up a localized string similar to This property must be bound to: &apos;{0}&apos;..
         /// </summary>
         public static string ERR_WrongBindingValue {
             get {
@@ -133,7 +133,7 @@ namespace DotvvmAcademy.Validation.Dothtml {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The document must contain {0} controls of type &apos;{1}&apos;..
+        ///   Looks up a localized string similar to The document root must contain {0} controls of type &apos;{1}&apos;..
         /// </summary>
         public static string ERR_WrongControlCountRoot {
             get {
@@ -160,7 +160,7 @@ namespace DotvvmAcademy.Validation.Dothtml {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The document must contain {0} &apos;{1}&apos; elements..
+        ///   Looks up a localized string similar to The document root must contain {0} &apos;{1}&apos; elements..
         /// </summary>
         public static string ERR_WrongElementCountRoot {
             get {
