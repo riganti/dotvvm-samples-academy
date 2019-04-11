@@ -38,7 +38,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Constraints
                 {
                     reporter.Report(
                         message: Resources.ERR_WrongBindingValue,
-                        arguments: new object[] { setter.Property.Name, Value },
+                        arguments: new object[] { Value },
                         node: GetValidatedNode(setter));
                 }
             }
