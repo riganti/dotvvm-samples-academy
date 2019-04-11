@@ -18,7 +18,7 @@ Even inside a Binding Context that is deep within the hierarchy, you can access 
             Text="Create" />
 ```
 
-> There is a number of other [binding pseudo-variables](https://www.dotvvm.com/docs/tutorials/basics-binding-context/latest) such as `_parent`, `_collection`, `_index`, etc.
+> There is a number of other [binding pseudo-variables](https://www.dotvvm.com/docs/tutorials/basics-binding-context/latest) such as `_parent`, `_collection` or `_this`.
 
 ---
 
