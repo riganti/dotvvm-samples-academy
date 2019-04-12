@@ -9,12 +9,12 @@ CodeTask:
 
 # Collections
 
-Hello. DataContext can change implicitly in controls like _Repeaters_. We'll illustrate that by making a To-Do list.
+Binding Context can change implicitly in controls like `Repeater`. We'll illustrate that by making a To-Do list.
 
 ---
 
 ## Tasks
 
-- Add a property of type `List<string>` called `Items` to the ViewModel.
+- Add a property of type `List<string>` called `Items` to the ViewModel and initialize it.
 
-> Note: A ViewModel can contain any sort of collection that can be deserialized. That means arrays, `Lists`, `HashSets` and `Dictionaries` are okay, while `IEnumerables`, `ILists` and `IDictionaries` are not.
+> Note: A ViewModel can contain any concrete collection type like `List`, `HashSet`, and `Dictionary`. Using collection interfaces like `IEnumerable`, `IList`, and `IDictionary` is not recommended.

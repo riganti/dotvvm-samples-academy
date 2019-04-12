@@ -6,4 +6,9 @@ namespace DotvvmAcademy.Course.ToDoList
     {
 
     }
+
+    public class ToDoItem
+    {
+        public int Text { get; set; }
+    }
 }

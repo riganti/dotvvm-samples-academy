@@ -7,6 +7,8 @@ CodeTask:
     Correct: ToDoViewModel_60.cs
 ---
 
+TODO: REMOVE THIS.
+
 # Life-cycle
 
 ViewModels inheriting from `DotvvmViewModelBase` can hook into its life-cycle. We'll override the `Load` method and initialize the `Items` collection only if it is `null`.

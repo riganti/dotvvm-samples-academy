@@ -17,6 +17,5 @@ Congratulations! You've got yourself a functional To-Do list.
 
 ## Summary
 
-- `Repeater` is dothtml's equivalent of a `foreach` loop.
-- DataContext changes implicitly to an item inside the item template.
-- Some property values get sent over from the user, these must be initialized carefully.
+- `Repeater` is the DotHTML equivalent of a `foreach` loop.
+- Binding Context changes implicitly to the current item inside the item template.
