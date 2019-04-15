@@ -11,7 +11,7 @@ CodeTask:
 
 # Repeater
 
-The `Repeater` control renders a collection of items from `DataSource` property using a template:
+The `Repeater` control renders a collection of items from its `DataSource` property using a template:
 
 ```dothtml
 <dot:Repeater DataSource="{value: Items}">
@@ -27,6 +27,6 @@ A `<p>` element will be rendered for every item in the `Items` collection. Insid
 
 Let's display the To-Do items.
 
-- Add a `Repeater` in the `<body>` element with `DataSource` bound to `Items`.
-- Render a `<p>` element for every item in the `Items` collection.
-- Bind paragraph content the `Text` property.
+- Inside the `<body>` element, add a `Repeater` with `DataSource` bound to `Items`.
+- Display a `<p>` element for every item in the `Items` collection.
+- Bind the paragraph content to the `Text` property.

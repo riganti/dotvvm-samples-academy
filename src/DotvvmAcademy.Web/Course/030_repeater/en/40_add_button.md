@@ -2,7 +2,7 @@
 Title: Add Button
 Moniker: add-button
 CodeTask:
-    Path: 40_buttons.dothtml.csx
+    Path: 40_add_button.dothtml.csx
     Default: ToDo_20.dothtml
     Correct: ToDo_30.dothtml
 ---

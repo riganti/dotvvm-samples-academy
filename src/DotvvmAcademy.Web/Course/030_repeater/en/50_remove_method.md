@@ -1,6 +1,10 @@
 ---
 Title: Remove Method
 Moniker: remove-method
+CodeTask:
+    Path: 50_remove_method.csharp.csx
+    Default: ToDoViewModel_50.cs
+    Correct: ToDoViewModel_60.cs
 ---
 
 # Remove Method

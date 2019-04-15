@@ -1,29 +1,26 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using DotVVM.Framework.ViewModel;
 
 namespace DotvvmAcademy.Course.ToDoList
 {
-    public class ToDoViewModel : DotvvmViewModelBase
+    public class ToDoItem
     {
-        public string NewItem { get; set; }
+        public string Text { get; set; }
+    }
 
-        public List<string> Items { get; set; }
+    public class ToDoViewModel
+    {
+        public List<ToDoItem> Items { get; set; } = new List<ToDoItem>();
+
+        public string NewItem { get; set; }
 
         public void Add()
         {
-            Items.Add(NewItem);
+            Items.Add(new ToDoItem {Text = NewItem});
         }
 
-        public void Remove(string item)
-        {
-            Items.Remove(item);
-        }
-
-        public override Task Load()
+        public void Remove(ToDoItem item)
         {
 
-            return base.Load();
         }
     }
 }

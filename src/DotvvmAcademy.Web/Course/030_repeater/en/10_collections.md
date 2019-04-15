@@ -15,6 +15,6 @@ Binding Context can change implicitly in controls like `Repeater`. We'll illustr
 
 ## Tasks
 
-- Add a property of type `List<string>` called `Items` to the ViewModel and initialize it.
+- Add a property of type `List<ToDoItem>` called `Items` to the ViewModel and initialize it.
 
 > Note: A ViewModel can contain any concrete collection type like `List`, `HashSet`, and `Dictionary`. Using collection interfaces like `IEnumerable`, `IList`, and `IDictionary` is not recommended.
