@@ -100,7 +100,7 @@ namespace DotvvmAcademy.CourseFormat
                         if (stepFrontMatter.Archive != null)
                         {
                             archive = new Archive(
-                                GetAbsolutePath(directoryPath, stepFile.FullName, stepFrontMatter.Archive.Path),
+                                GetAbsolutePath(directory.FullName, stepFile.FullName, stepFrontMatter.Archive.Path),
                                 stepFrontMatter.Archive.Name ?? lessonMoniker);
                         }
                         CodeTask codeTask = null;
@@ -109,18 +109,18 @@ namespace DotvvmAcademy.CourseFormat
                             var match = Regex.Match(stepFrontMatter.CodeTask.Path, @"\w+\.(\w+)\.csx");
                             var codeLanguage = match.Groups.Count == 2 ? match.Groups[1].Value : null;
                             codeTask = new CodeTask(
-                                GetAbsolutePath(directoryPath, stepFile.FullName, stepFrontMatter.CodeTask.Path),
-                                GetAbsolutePath(directoryPath, stepFile.FullName, stepFrontMatter.CodeTask.Correct),
-                                GetAbsolutePath(directoryPath, stepFile.FullName, stepFrontMatter.CodeTask.Default),
-                                ResolveDependencies(directoryPath, stepFile.FullName, stepFrontMatter.CodeTask.Dependencies),
+                                GetAbsolutePath(directory.FullName, stepFile.FullName, stepFrontMatter.CodeTask.Path),
+                                GetAbsolutePath(directory.FullName, stepFile.FullName, stepFrontMatter.CodeTask.Correct),
+                                GetAbsolutePath(directory.FullName, stepFile.FullName, stepFrontMatter.CodeTask.Default),
+                                ResolveDependencies(directory.FullName, stepFile.FullName, stepFrontMatter.CodeTask.Dependencies),
                                 codeLanguage);
                         }
                         EmbeddedView embeddedView = null;
                         if (stepFrontMatter.EmbeddedView != null)
                         {
                             embeddedView = new EmbeddedView(
-                                GetAbsolutePath(directoryPath, stepFile.FullName, stepFrontMatter.EmbeddedView.Path),
-                                ResolveDependencies(directoryPath, stepFile.FullName, stepFrontMatter.EmbeddedView.Dependencies));
+                                GetAbsolutePath(directory.FullName, stepFile.FullName, stepFrontMatter.EmbeddedView.Path),
+                                ResolveDependencies(directory.FullName, stepFile.FullName, stepFrontMatter.EmbeddedView.Dependencies));
                         }
                         var step = new Step(
                             stepFile.FullName,
@@ -382,7 +382,7 @@ namespace DotvvmAcademy.CourseFormat
                 return path;
             }
             var stop = Path.GetDirectoryName(root);
-            while (origin != stop)
+            while (origin != stop || origin == null)
             {
                 var absolutePath = Path.Combine(origin, path);
                 if (File.Exists(absolutePath) || Directory.Exists(absolutePath))

@@ -95,7 +95,7 @@ namespace DotvvmAcademy.Web.Pages.Step
 
         public async Task ShowSolution()
         {
-            CodeTask.Code = await workspace.GetFileContents(step.CodeTask.DefaultPath);
+            CodeTask.Code = await workspace.GetFileContents(step.CodeTask.CorrectPath);
         }
 
         public async Task Validate()
