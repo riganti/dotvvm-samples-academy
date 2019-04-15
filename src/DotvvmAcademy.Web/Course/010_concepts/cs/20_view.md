@@ -16,8 +16,8 @@ __Views__ jsou rozhraním, které uživatelé vidí a se kterým interagují. V 
 
 Dvěma nejzřejmějšími změnami oproti čistému HTML jsou:
 
-- Řádek začínající `@viewModel` - tento řádek je tzv. __ViewModel Directive__. Říká DotVVM, který ViewModel k tomuto View patří.
-- __Value Bindings__ - výrazy, které provazují konkrétní properties z ViewModelu se specifickými místy ve View:
+- Řádek začínající `@viewModel` - tento řádek je tzv. __ViewModel Directive__. Říká DotVVM, který viewmodel k tomuto view patří.
+- __Value bindings__ - výrazy, které provazují konkrétní properties z viewmodelu se specifickými místy ve view:
 
 ```dothtml
 <p>{{value: Result}}</p>
@@ -30,4 +30,4 @@ Když uživatel načte stránku s tímto příkladem, hodnota property `Result` 
 ## Úkoly
 
 - Do elementu `<body>` přidejte element `<p>`.
-- Za pomoci __Value Binding__ výrazu zobrazte hodnotu `Result` property z ViewModelu uvnitř nově přidaného `<p>` elementu.
+- Za pomoci __value binding__ výrazu zobrazte hodnotu `Result` property z viewmodelu uvnitř nově přidaného `<p>` elementu.

@@ -9,7 +9,7 @@ CodeTask:
 
 # Komponenty
 
-Komponenty (Controls) jsou znovupoužitelné části View. Dají se poznat podle prefixu `<dot:`.
+Komponenty (controls) jsou znovupoužitelné části views. Dají se poznat podle prefixu `<dot:`.
 
 ```dothtml
 <dot:TextBox Text="{value: Difference}" />
@@ -24,4 +24,4 @@ Komponenty (Controls) jsou znovupoužitelné části View. Dají se poznat podle
 ## Úkoly
 
 - Přidejte do `<body>` komponentu `<dot:TextBox>`.
-- Pomocí Value bindingu svažte property `Difference` s atributem `Text` právě přidané komponenty `TextBox`.
+- Pomocí value binding výrazu provažte property `Difference` s atributem `Text` právě přidané komponenty `TextBox`.

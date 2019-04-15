@@ -11,7 +11,7 @@ CodeTask:
 
 # Commands
 
-__Command bindings__ umožňují volání metod ViewModelu z View.
+__Command bindings__ umožňují volání metod viewmodelu z view.
 
 Commands se dají použít z mnoha komponent, např. z tlačítkové komponenty `Button`:
 
@@ -27,4 +27,4 @@ Změny, které volání metody `Add` způsobí se odešlou zpět prohlížeči a
 ## Úkoly
 
 - Přidejte do `<body>` dvě komponenty `<dot:Button />`.
-- Použijte Command binding při volání metod `Add` a `Subtract`, když uživatel klikne na příslušné tlačítko.
+- Použijte command binding při volání metod `Add` a `Subtract`, když uživatel klikne na příslušné tlačítko.

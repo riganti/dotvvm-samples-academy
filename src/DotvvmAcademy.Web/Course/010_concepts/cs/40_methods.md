@@ -9,7 +9,7 @@ CodeTask:
 
 # Metody
 
-Metody ViewModelu se dají volat z View. Implemetujeme pomocí nich funkcionalitu přičítání a odčítání hodnoty v počítadle.
+Metody viewmodelu se dají volat z view. Pomocí nich budeme implementovat funkcionalitu přičítání a odčítání hodnoty v počítadle.
 
 > Poznámka: DotVVM posílá pří volání metody AJAXový požadavek, při kterém se požadovaná metoda spustí na serveru a změny se odešlou zpět uživateli.
 

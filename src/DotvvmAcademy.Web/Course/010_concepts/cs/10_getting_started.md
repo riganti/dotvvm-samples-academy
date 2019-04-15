@@ -30,6 +30,6 @@ public int Result { get; set; }
 
 ## Úkoly
 
-Začneme s ViewModelem.
+Začneme s viewmodelem.
 
-- Přidejte do ViewModelu dvě `public` property typu `int` jmenující se `Result` a `Difference`.
+- Přidejte do viewmodelu dvě `public` property typu `int` jmenující se `Result` a `Difference`.
