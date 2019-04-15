@@ -121,7 +121,7 @@
     <value>This property must be set using {0}.</value>
   </data>
   <data name="ERR_WrongBindingValue" xml:space="preserve">
-    <value>This property must be bound using this expression: '{0}'.</value>
+    <value>This property must be bound to: '{0}'.</value>
   </data>
   <data name="ERR_WrongHardcodedValue" xml:space="preserve">
     <value>This property must be set to '{0}'.</value>
@@ -145,13 +145,13 @@
     <value>This control must have its '{0}' property set.</value>
   </data>
   <data name="ERR_MissingControlRoot" xml:space="preserve">
-    <value>The document is missing a control of type '{0}'.</value>
+    <value>The document root is missing a control of type '{0}'.</value>
   </data>
   <data name="ERR_MissingElement" xml:space="preserve">
     <value>This control is missing an HTML '{0}' element.</value>
   </data>
   <data name="ERR_MissingElementRoot" xml:space="preserve">
-    <value>The document is missing an HTML '{0}' element.</value>
+    <value>The document root is missing an HTML '{0}' element.</value>
   </data>
   <data name="ERR_WrongElementCount" xml:space="preserve">
     <value>This control must contain {0} '{1}' elements.</value>
@@ -178,10 +178,10 @@
     <value>a value binding</value>
   </data>
   <data name="ERR_WrongControlCountRoot" xml:space="preserve">
-    <value>The document must contain {0} controls of type '{1}'.</value>
+    <value>The document root must contain {0} controls of type '{1}'.</value>
   </data>
   <data name="ERR_WrongElementCountRoot" xml:space="preserve">
-    <value>The document must contain {0} '{1}' elements.</value>
+    <value>The document root must contain {0} '{1}' elements.</value>
   </data>
   <data name="ERR_WrongRawContent" xml:space="preserve">
     <value>This control must contain: '{0}'.</value>
