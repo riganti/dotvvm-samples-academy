@@ -1,3 +1,7 @@
+---
+Title: Remove Method
+Moniker: remove-method
+---
 
 # Remove Method
 

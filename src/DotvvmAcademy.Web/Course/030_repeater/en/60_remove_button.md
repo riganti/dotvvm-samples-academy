@@ -1,3 +1,8 @@
+---
+Title: Remove Button
+Moniker: remove-button
+---
+
 # Remove Button
 
 Finally, we need a "Remove" button for every item.
