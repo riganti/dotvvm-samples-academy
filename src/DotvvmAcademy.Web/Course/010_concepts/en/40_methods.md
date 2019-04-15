@@ -9,9 +9,9 @@ CodeTask:
 
 # Methods
 
-The __methods__ in the ViewModel can be invoked from the View. We'll use them to implement the add / subtract functionality.
+The __methods__ in the viewmodel can be invoked from the view. We'll use them to implement the add / subtract functionality.
 
-> Note: DotVVM will make an AJAX request to the server, where the method in the ViewModel will be executed and the changes made to the ViewModel will be applied to the page.
+> Note: DotVVM will make an AJAX request to the server, where the method in the viewmodel will be executed and the changes made to the viewmodel will be applied to the page.
 
 ---
 

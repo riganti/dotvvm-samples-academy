@@ -9,7 +9,7 @@ CodeTask:
 
 # Controls
 
-DotVVM also adds the concept of __Controls__, reusable components that can be added anywhere in the View. You can easily recognize them by the `<dot:` prefix.
+DotVVM also adds the concept of __controls__, reusable components that can be added anywhere in the view. You can easily recognize them by the `<dot:` prefix.
 
 ```dothtml
 <dot:TextBox Text="{value: Difference}" />
@@ -24,4 +24,4 @@ The `TextBox` control is essentially an `<input type="text">` element that suppo
 ## Tasks
 
 - Add a `<dot:TextBox>` to the `<body>` element.
-- Use a value binding to bind the `Difference` property to the `Text` attribute of the TextBox.
+- Use a value binding to bind the `Difference` property to the `Text` attribute of the `TextBox`.

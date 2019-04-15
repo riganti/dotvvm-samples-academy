@@ -17,10 +17,10 @@ How DotVVM works?
 
 Every page in DotVVM consists of two files:
 
-* a __View__, which is based on the HTML syntax and represents what the page will look like, and
-* a __ViewModel__, which is a C# class that represents the state of the page (e.g. values in the form fields) and handles user interactions (e.g. button clicks).
+* a __view__, which is based on the HTML syntax and describes what the page will look like, and
+* a __viewmodel__, which is a C# class that describes the state of the page (e.g. values in the form fields) and handles user interactions (e.g. button clicks).
 
-The state of the page is defined by C# properties:
+The state of the page is defined by C# properties in the viewmodel:
 
 ```csharp
 public int Result { get; set; }
@@ -30,6 +30,6 @@ public int Result { get; set; }
 
 ## Tasks
 
-Let's start with the ViewModel. 
+Let's start with the viewmodel. 
 
-- Add two `public int` properties named `Result` and `Difference` to the ViewModel.
+- Add two `public int` properties named `Result` and `Difference` to the viewmodel.
