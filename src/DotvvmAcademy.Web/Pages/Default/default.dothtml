@@ -30,7 +30,7 @@
                                Param-Language="{value: _root.LanguageMoniker}"
                                Param-Lesson="{value: FirstLesson.Moniker}"
                                Param-Step="{value: FirstLesson.FirstStep}" />
-                <img src="/images/Illustrations/header-image.svg" />
+                <img src="~/images/Illustrations/header-image.svg" />
             </div>
         </div>
     </section>
@@ -55,7 +55,7 @@
     </section>
     <section class="section-coffee">
         <div>
-            <img src="/images/Illustrations/coffee-image.svg" />
+            <img src="~/images/Illustrations/coffee-image.svg" />
         </div>
         <div>
             <dot:HtmlLiteral Html="{resource: UIResources.Base_CoffeeTitle}"

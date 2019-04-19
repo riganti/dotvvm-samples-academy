@@ -40,7 +40,7 @@
     <header>
         <nav class="container-large" Class-step-nav="{resource: CurrentRoute == "Step"}">
             <dot:RouteLink RouteName="Default">
-                <img src="/images/Logos/logo-dotvvm.svg" />
+                <img src="~/images/Logos/logo-dotvvm.svg" />
                 <span>DOT<b>VVM</b></span>
                 &nbsp;<p>ACADEMY</p>
             </dot:RouteLink>
