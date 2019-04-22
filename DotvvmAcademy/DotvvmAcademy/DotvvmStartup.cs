@@ -2,10 +2,11 @@ using DotVVM.Framework.Compilation;
 using DotVVM.Framework.Configuration;
 using DotVVM.Framework.Hosting;
 using DotVVM.Framework.ResourceManagement;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DotvvmAcademy
 {
-    public class DotvvmStartup : IDotvvmStartup
+    public class DotvvmStartup : IDotvvmStartup, IDotvvmServiceConfigurator
     {
         // For more information about this class, visit https://dotvvm.com/docs/tutorials/basics-project-structure
         public void Configure(DotvvmConfiguration config, string applicationPath)
@@ -15,6 +16,11 @@ namespace DotvvmAcademy
             ConfigureRoutes(config, applicationPath);
             ConfigureControls(config, applicationPath);
             ConfigureResources(config, applicationPath);
+        }
+
+        public void ConfigureServices(IDotvvmServiceCollection options)
+        {
+            options.AddDefaultTempStorages("temp");
         }
 
         private void ConfigureControls(DotvvmConfiguration config, string applicationPath)
@@ -39,7 +45,7 @@ namespace DotvvmAcademy
                 Dependencies = new[] { "dotvvm", "ace" }
             });
 
-            config.Resources.Register("bootstrap-css", new StylesheetResource(new FileResourceLocation("~/wwwroot/Styles/bootstrap.min.css")));
+            config.Resources.Register("bootstrap-css", new StylesheetResource(new FileResourceLocation("~/wwwroot/Styles/bootstrap.css")));
 
             config.Resources.Register("site-css", new StylesheetResource(new FileResourceLocation("~/wwwroot/Styles/site.css"))
             {

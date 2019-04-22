@@ -55,10 +55,7 @@ namespace DotvvmAcademy
             services.AddAuthorization();
             services.AddWebEncoders();
 
-            services.AddDotVVM(options =>
-            {
-                options.AddDefaultTempStorages("temp");
-            });
+            services.AddDotVVM<DotvvmStartup>();
 
             services.AddSingleton(p => new LessonsCache(hostingEnvironment));
         }
