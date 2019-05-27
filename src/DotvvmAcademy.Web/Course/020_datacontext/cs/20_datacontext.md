@@ -11,7 +11,7 @@ CodeTask:
 
 # DataContext
 
-Defaultně je `DataContext` property všech komponent nastaveny na samotný viewmodel. Můžete nastavit jiný `DataContext` jakémukoliv komponentu a ten poté bude platit i pro všechny potomky komponenty.
+Defaultně jsou `DataContext` property všech komponent nastaveny na samotný viewmodel. Můžete nastavit jiný `DataContext` jakémukoliv komponentu, který bude platit i pro všechny potomky komponentu.
 
 ```dothtml
 <div DataContext="{value: Profile}">
@@ -23,5 +23,5 @@ Defaultně je `DataContext` property všech komponent nastaveny na samotný view
 
 ## Tasks
 
-- Propojte `DataContext` vlastnost elementu `<div>` s vlastností `Profile` z viewmodelu.
+- Propojte `DataContext` propertu elementu `<div>` s propertou `Profile` z viewmodelu.
 - Nastavte binding expression uvnitř elementu `<div>` tak, aby respektovala nový `DataContext`.

@@ -18,7 +18,7 @@ I v rámci Binding Contextu, který je hluboko v hierarchii, můžete přistoupi
             Text="Create" />
 ```
 
-> Existuje celá řada [vazebných pseudo-proměnných](https://www.dotvvm.com/docs/tutorials/basics-binding-context/latest) jako je `_parent`, `_collection` nebo `_this`.
+> Existuje celá řada [binding pseudo-proměnných](https://www.dotvvm.com/docs/tutorials/basics-binding-context/latest) jako je `_parent`, `_collection` nebo `_this`.
 
 ---
 

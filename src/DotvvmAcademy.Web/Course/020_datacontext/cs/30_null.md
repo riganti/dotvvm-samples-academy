@@ -17,5 +17,5 @@ Ještě jsme neinicalizovali propertu `Profile` a proto je její hodnota `null`.
 
 Pojďme napsat kód abychom inicializovali propertu `Profile` na vyžádání.
 
-- Uvnitř metody `Load` inicializujte propertu `Profile` na novou instanci `Profile`.
+- V metodě `Load` inicializujte propertu `Profile` na novou instanci `Profile`.
 - V metodě `Unload` nastavte propertu `Profile` na `null`.

@@ -9,15 +9,15 @@ CodeTask:
 
 # Přesouvání vlastností
 
-Vítejte zpět v DotVVM Academy. Pojďme udělat 'Edit profile' stránku! Nejdříve potřebujeme pročistit ViewModel.
+Vítejte zpět v DotVVM Academy. Pojďme udělat 'Edit profile' stránku! Nejdříve potřebujeme pročistit viewmodel.
 
-__Binding Context__ (`DataContext` property) je cíl vazeb, je to objekt jehož členy jsou použity ve výrazu. You can change the Binding Context to shorten your bindings and also hide specific parts of the View.
+__Binding Context__ (`DataContext` properta) je cíl vazeb, je to objekt, jehož členy jsou použity ve výrazu. Můžete změnit Binding Context k tomu, aby se zkrátily bindingy a také změnit určité části view.
 
-Often it is convenient to have more complex objects in the ViewModel. Clever use of Binding Context can help to better structure the View.
+Občas je vhodné mít komplexnější objekty uvnitř viewmodelu. Chytré použití binding contextu může pomoci lépe strukturovat view.
 
 ---
 
 ## Tasks
 
 - Přesuňte `FirstName` a `LastName` property do třídy `Profile`.
-- Vytvořte property typu `Profile` ve viewmodelu. Pojmenujte ji `Profile`.
+- Vytvořte propertu typu `Profile` ve viewmodelu. Pojmenujte ji `Profile`.

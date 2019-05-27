@@ -18,7 +18,7 @@ Dobrá práce! Nyní již víte co je `DataContext`!
 
 ## Summary
 
-- Binding Context je výchozím cílem provázání.
+- Binding Context je výchozím cílem bindingu.
 - Každá kontrolka má uvnitř sebe svou vlastní `DataContext` propertu.
 - Defaultně kontrolky získávají jejich `DataContext` od jejich rodičovských kontrolek.
 - `DataContext` v kořenu dokumentu je jeho viewmodel.
