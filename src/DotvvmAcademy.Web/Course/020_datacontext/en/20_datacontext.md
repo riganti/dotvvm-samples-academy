@@ -13,6 +13,8 @@ CodeTask:
 
 By default the `DataContext` property of all controls is set to the ViewModel itself. You can set a different `DataContext` to any control and it will also be applied to all children of the control.
 
+As you can see, the data-binding expression references the `FirstName` property which can be found in the `Profile` object, not in the ViewModel itself.
+
 ```dothtml
 <div DataContext="{value: Profile}">
     <dot:TextBox Text="{value: FirstName}"/>

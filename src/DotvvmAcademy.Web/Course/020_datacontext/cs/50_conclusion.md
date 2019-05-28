@@ -12,14 +12,14 @@ Archive:
 
 # Závěr
 
-Dobrá práce! Nyní již víte co je `DataContext`!
+Dobrá práce! Nyní již víte, jak funguje `DataContext`.
 
 ---
 
 ## Summary
 
-- Binding Context je výchozím cílem bindingu.
-- Každá kontrolka má uvnitř sebe svou vlastní `DataContext` propertu.
-- Defaultně kontrolky získávají jejich `DataContext` od jejich rodičovských kontrolek.
-- `DataContext` v kořenu dokumentu je jeho viewmodel.
-- Pokud je `DataContext` kontrolky nastaven na `null`, kontrolka se nevykreslí.
+- Binding context je místo, vůči kterému se vyhodnocují výrazy data-bindingu.
+- Každá komponenta má vlastnost `DataContext`.
+- Komponenty přebírají `DataContext` z nadřazených komponenta.
+- `DataContext` celé stránky je celý ViewModelu.
+- Pokud je `DataContext` komponenty nastaven na `null`, tato komponenta se skryje.

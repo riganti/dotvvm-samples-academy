@@ -9,20 +9,20 @@ CodeTask:
 
 # Zpět do Root
 
-Potřebujeme tlačítka k zavolání `Load` a `Unload` metody.
+Do stránky potřebujeme přidat tlačítka, která zavolají metodu `Load` a `Unload`.
 
-I v rámci Binding Contextu, který je hluboko v hierarchii, můžete přistoupit k viewmodelu za použití `_root` pseudo-proměnné:
+I v rámci binding contextu, který je zanořen hluboko v hierarchii ViewModelu, můžete přistoupit k rodičovskému ViewModelu za použití speciální proměnné `_root`:
 
 ```dothtml
-<dot:Button Click="{command: _root.Create()}"
-            Text="Create" />
+<dot:Button Click="{command: _root.Unload()}"
+            Text="Unload" />
 ```
 
-> Existuje celá řada [binding pseudo-proměnných](https://www.dotvvm.com/docs/tutorials/basics-binding-context/latest) jako je `_parent`, `_collection` nebo `_this`.
+> Existuje celá řada [speciálních proměnných](https://www.dotvvm.com/docs/tutorials/basics-binding-context/latest) jako jsou `_parent`, `_collection` nebo `_this`.
 
 ---
 
 ## Úkoly
 
-- Přidejte komponentu `<dot:Button>` _mimo_ `<div>` a command-provázání její `Click` property s metodou `Load`.
-- Přidejte komponentu `<dot:Button>` , který zavolá metodu `Unload` _uvnitř_ `<div>` elementu.
+- Přidejte komponentu `<dot:Button>` _mimo_ element `<div>` a do její vlastnosti `Click` nabindujte metodu `Load`.
+- Přidejte komponentu `<dot:Button>` _dovnitř_ elementu `<div>`, které při kliknutí zavolá metodu `Unload`. Nezapomeňte použít `_root` - metoda `Unload` není definována v objektu `Profile`, ale ve ViewModelu.

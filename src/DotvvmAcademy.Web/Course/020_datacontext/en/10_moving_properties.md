@@ -9,11 +9,15 @@ CodeTask:
 
 # Moving Properties
 
-Hello and, again, welcome to DotVVM Academy. Let's make an 'Edit profile' page! First we need to clean up this ViewModel.
+Hello and, again, welcome to DotVVM Academy. In this lesson, we'll make a simple 'Edit profile' page!
 
-__Binding Context__ (the `DataContext` property) is the target of bindings, the object whose members are used in the expression. You can change the Binding Context to shorten your bindings and also hide specific parts of the View.
+When you create complex pages, it is convenient to have complex objects in the ViewModel. In order to keep the data-binding expression simple, you can change the __Binding Context__ for a specific part of the View. 
 
-Often it is convenient to have more complex objects in the ViewModel. Clever use of Binding Context can help to better structure the View.
+__Binding Context__ (configured using the `DataContext` property) works as the target of bindings - the object whose members are used in the expression. 
+
+Clever use of Binding Context can help to better structure the View, make the binding expressions shorter and also show or hide specific parts of the View.
+
+Let's start with moving the properties containing the user information into a separate class.
 
 ---
 

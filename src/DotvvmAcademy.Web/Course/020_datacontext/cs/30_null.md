@@ -9,13 +9,15 @@ CodeTask:
 
 # Null DataContext
 
-Ještě jsme neinicalizovali propertu `Profile` a proto je její hodnota `null`. Právě proto nebude celý `<div>` a jeho obsah vykreslen. Tuto funkci můžeme použít k tomu, abychom skryli určité části stránky.
+Vlastnost `Profile` jsme ještě neinicializovali, a proto je její hodnota `null`. 
+
+Z tohoto důvodu DotVVM celý `<div>` skryje a nebude vyhodnocovat výrazy uvnitř. Tento trik můžeme použít k tomu, abychom určité části stránky skryli.
 
 ---
 
 ## Úkoly
 
-Pojďme napsat kód abychom inicializovali propertu `Profile` na vyžádání.
+Pojďme napsat kód, který zinicializuje vlastnost `Profile`.
 
-- V metodě `Load` inicializujte propertu `Profile` na novou instanci `Profile`.
-- V metodě `Unload` nastavte propertu `Profile` na `null`.
+- V metodě `Load` do vlastnosti `Profile` přiřaďte novou instanci třídy `Profile`.
+- V metodě `Unload` nastavte vlastnost `Profile` na `null`.

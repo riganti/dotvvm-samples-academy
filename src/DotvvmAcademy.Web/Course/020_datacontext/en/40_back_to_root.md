@@ -25,4 +25,4 @@ Even inside a Binding Context that is deep within the hierarchy, you can access 
 ## Tasks
 
 - Add a `<dot:Button>` _outside_ the `<div>` and command-bind its `Click` property to the `Load` method.
-- Add a `<dot:Button>` that invokes the `Unload` method _inside_ the `<div>` element.
+- Add a `<dot:Button>` that invokes the `Unload` method _inside_ the `<div>` element. Don't forget to use `_root` - the `Unload` method is declared in the ViewModel, not in the `Profile` class.
