@@ -17,8 +17,6 @@ DotVVM also adds the concept of __controls__, reusable components that can be ad
 
 The `TextBox` control is essentially an `<input type="text">` element that supports binding expressions.
 
-> Note: Technically, every standard HTML element is also a control in DotVVM, specifically _HtmlGenericControl_.
-
 ---
 
 ## Tasks

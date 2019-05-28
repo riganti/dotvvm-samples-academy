@@ -17,10 +17,10 @@ Jak DotVVM funguje?
 
 Každá stránka v DotVVM se skládá ze dvou souborů:
 
-- __View__ (někdy česky Pohled) obsahuje vzhled stránky. Strukturou je založen na obyčejných HTML dokumentech.
-- __ViewModel__ je stavem stránky (obsahuje např. data z formulářů) a zpracovatelem interakce s uživatelem (definuje např. co se stane při kliknutí na tlačítko).
+- __View__ definuje vzhled stránky. Strukturou je založen na formátu HTML, ale obsahuje pár věcí navíc.
+- __ViewModel__ ukládá stav stránky (obsahuje např. data z formulářů) a zpracovává interakce s uživatelem (definuje např. co se stane při kliknutí na tlačítko).
 
-Stav stránky je obsažen v C# properties.
+Stav stránky ve ViewModelu reprezentujeme pomocí public vlastností.
 
 ```csharp
 public int Result { get; set; }
@@ -30,6 +30,6 @@ public int Result { get; set; }
 
 ## Úkoly
 
-Začneme s viewmodelem.
+Začneme s ViewModelem.
 
-- Přidejte do viewmodelu dvě `public` property typu `int` jmenující se `Result` a `Difference`.
+- Přidejte do ViewModelu dvě `public` vlastnosti typu `int` s názvy `Result` a `Difference`.

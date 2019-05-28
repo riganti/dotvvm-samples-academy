@@ -11,13 +11,13 @@ Archive:
 
 # Závěr
 
-Gratulujeme! Nyní ovládate základní koncepty DotVVM!
+Gratulujeme! Seznámili jste se se základními koncepty DotVVM!
 
 ---
 
 ## Shrnutí
 
-- Každá DotVMM stránka se skládá z view a viewmodelu. Používáme vzor MVVM.
-- Views definují, co budou uživatelé moci na stránce vidět a s jak s ní budou interagovat.
+- Každá DotVMM stránka se skládá z View a ViewModelu. Používáme návrhový vzor MVVM.
+- View definuje, co budou uživatelé moci na stránce vidět a s jak s ní budou interagovat.
 - ViewModely udržují stav stránky a řeší požadavky uživatelů
-- DotHTML rozšiřuje běžné HTML o directives, binding výrazy a komponenty.
+- DotHTML rozšiřuje běžné HTML o direktivy, binding výrazy a komponenty.

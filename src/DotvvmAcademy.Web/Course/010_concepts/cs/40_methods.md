@@ -9,13 +9,20 @@ CodeTask:
 
 # Metody
 
-Metody viewmodelu se dají volat z view. Pomocí nich budeme implementovat funkcionalitu přičítání a odčítání hodnoty v počítadle.
+Metody ViewModelu se dají volat z View. Pomocí nich budeme implementovat funkcionalitu přičítání a odčítání hodnoty v našem počítadle.
 
-> Poznámka: DotVVM posílá pří volání metody AJAXový požadavek, při kterém se požadovaná metoda spustí na serveru a změny se odešlou zpět uživateli.
+```csharp
+public void Add() 
+{
+    Result = ...
+}
+```
+
+> Poznámka: DotVVM posílá pří volání metody AJAX POST požadavek, při kterém se požadovaná metoda spustí na serveru a změny se odešlou zpět uživateli.
 
 ---
 
 ## Úkoly
 
-- Napište metodu `Add` takovou, že přičte hodnotu `Difference` k `Result` a výsledek uloží do `Result`.
-- Napište metodu `Subtract`, která analogicky hodnotu `Difference` od `Result` odečte.
+- Přidejte metodu `Add`, která přičte hodnotu `Difference` k `Result` a výsledek uloží do `Result`.
+- Přidejte metodu `Subtract`, která analogicky hodnotu `Difference` od `Result` odečte.

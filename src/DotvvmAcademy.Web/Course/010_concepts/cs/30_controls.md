@@ -9,19 +9,17 @@ CodeTask:
 
 # Komponenty
 
-Komponenty (controls) jsou znovupoužitelné části views. Dají se poznat podle prefixu `<dot:`.
+Dalším z rozšířním jazyka HTML v DotVVM jsou komponenty (controls). Dají se poznat podle prefixu, např. `<dot:`.
 
 ```dothtml
 <dot:TextBox Text="{value: Difference}" />
 ```
 
-`TextBox` je ve své podstatě element `<input type="text">`, který dovede pracovat s binding výrazy.
-
-> Poznámka: Technicky je každý standardní HTML element zároveň komponentou v DotVVM, konkrétně komponentou _HtmlGenericControl_.
+`TextBox` je ve své podstatě element `<input type="text">`, který dovede pracovat s data-binding výrazy.
 
 ---
 
 ## Úkoly
 
 - Přidejte do `<body>` komponentu `<dot:TextBox>`.
-- Pomocí value binding výrazu provažte property `Difference` s atributem `Text` právě přidané komponenty `TextBox`.
+- Vytvořte data-binding její vlastnosti `Text` na vlastnosti `Difference` ve ViewModelu.

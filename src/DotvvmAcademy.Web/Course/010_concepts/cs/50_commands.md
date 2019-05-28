@@ -11,16 +11,16 @@ CodeTask:
 
 # Commands
 
-__Command bindings__ umožňují volání metod viewmodelu z view.
+__Command bindingy__ umožňují volání metod ViewModelu z View.
 
-Commands se dají použít z mnoha komponent, např. z tlačítkové komponenty `Button`:
+Commandy se dají použít z mnoha komponent, např. z komponenty `Button` reprezentující tlačítko:
 
 ```dothtml
 <dot:Button Click="{command: Add()}"
             Text="Add" />
 ```
 
-Změny, které volání metody `Add` způsobí se odešlou zpět prohlížeči a aplikují se na příslušná místa na stránce.
+Změny, které volání metody `Add` způsobí, se odešlou zpět do prohlížeče a příslušná místa na stránce se aktualizují.
 
 ---
 
