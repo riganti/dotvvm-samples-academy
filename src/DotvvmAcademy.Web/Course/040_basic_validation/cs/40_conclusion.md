@@ -12,16 +12,16 @@ Archive:
 
 # Závěr
 
-Dobrá práce! Vyzkoušejte interaktivní ukátku, abyste viděli validaci v akci.
+Skvělá práce! Můžete si vyzkoušet interaktivní ukázku, abyste validaci viděli v akci.
 
-> Poznámka: Jediné validní údaje jsou "john@example.com" a "CorrectHorseBatteryStaple".
+> Poznámka: Jako přihlašovací údaje použijte `john@example.com` a `CorrectHorseBatteryStaple`.
 
 ---
 
-## Schrnutí
+## Shrnutí
 
 - `DataAnnotation` atributy jsou nejjednodušší formou validace.
-- Kontrolka `Validator` může být použita k ukazování validačních zpráv.
-- Můžete vytvořit vlastní errory uvnitř commandů za použití `AddModelError` metody.
+- Komponenta `Validator` může být použita k zobrazení validačních chyb.
+- Další validační chyby můžete přidávat uvnitř commandů za použití metody `AddModelError`.
 
-> Poznámka: Esitují i jiné validační koncepty jako [IValidatableObject](https://www.dotvvm.com/docs/tutorials/basics-validation/latest), [ValidationSummary](https://www.dotvvm.com/docs/tutorials/basics-validator-controls/latest) kontrolka, a [Validation.Target](https://www.dotvvm.com/docs/tutorials/basics-validation-target/latest) připojená properta. Ty jsou nad rámec této lekce.
+> Poznámka: Existují i další validační mechanismy jako [IValidatableObject](https://www.dotvvm.com/docs/tutorials/basics-validation/latest), komponenta [ValidationSummary](https://www.dotvvm.com/docs/tutorials/basics-validator-controls/latest) nebo vlastnost [Validation.Target](https://www.dotvvm.com/docs/tutorials/basics-validation-target/latest), ty jsou však nad rámec této lekce.

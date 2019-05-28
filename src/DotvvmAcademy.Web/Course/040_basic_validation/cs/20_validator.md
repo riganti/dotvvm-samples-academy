@@ -12,7 +12,7 @@ CodeTask:
 
 # Validator
 
-Uvnitř view můžeme použít kontrolku `Validator` k tomu aby ukázala validační zprávy z atributů:
+Uvnitř View lze použít komponentu `Validator`. V případě, že je zadaná vlastnost nevalidní, komponenta zobrazí chybovou hlášku:
 
 ```dothtml
 <dot:Validator Value="{value: Email}"
@@ -23,6 +23,6 @@ Uvnitř view můžeme použít kontrolku `Validator` k tomu aby ukázala valida�
 
 ## Úkoly
 
-- Přidejte kontrolku `Validator` vedle každého `TextBox`.
-- Nastavte `ShowErrorMessageText` na `true`.
-- Propojte jejich propertu `Value` ke stejným propertám jako mají jejich přilehlé `TextBox` a jejich property `Text`.
+- Přidejte vedle každé komponenty `TextBox` komponentu `Validator`.
+- Nastavte vlastnost `ShowErrorMessageText` na `true`.
+- Nastavte vlastnost `Value` na stejnou vlastnost ViewModelu, na kterou se odkazuje příslušný `TextBox`.

@@ -11,13 +11,13 @@ CodeTask:
 
 # Attributes
 
-V této lekci budeme validovat login formulář.
+V této lekci se naučíme používat validaci na jednoduchém příkladu přihlašovací stránky.
 
-__Attributes__ z `System.ComponentModel.DataAnnotations` namespace poskytují nejjednodušší způsob validace uživatelského vstupu v DotVVM.
+Validace v DotVVM využívá standardní atributy z namespace `System.ComponentModel.DataAnnotations`.
 
 ---
 
 ## Úkoly
 
-- Přidejte atribut `[Required]` k propertám `Email` a `Password`.
-- Přidejte atribut `[EmailAddress]` k propertě `Email`.
+- Přidejte atribut `[Required]` nad vlastnosti `Email` a `Password`.
+- Přidejte atribut `[EmailAddress]` nad vlastnost `Email`.

@@ -11,20 +11,23 @@ CodeTask:
 
 # ModelState
 
-Validace je provedena předtím, než se zavolá jakýkoliv command. Můžete také vytvořit vlastní validační errory uvnitř commandu za použití `AddModelError` metody:
+DotVVM spouští validaci před tím, než se zavolá jakýkoliv command. 
+
+Ne všechny validace je možné jednoduše udělat pomocí validačních atributů. Pomocí metody `AddModelError` můžete uvnitř commandu přidávat vlastní validační chyby, které budou pak zobrazeny uživateli stejným způsobem:
 
 ```csharp
 this.AddModelError(vm => vm.ValidatedProperty, "An error.");
 Context.FailOnInvalidModelState();
 ```
 
-Lambda výraz identifikuje propertu, která je v neplatném stavu. Volání `FailOnInvalidModelState` přeruší probíhající dotaz, pokud se objeví nějaké errory. Tyto errory se zobrazí uživateli.
+Lambda výraz identifikuje vlastnost, ke které chybová hláška patří. Volání `FailOnInvalidModelState` přeruší vykonávání commandu, pokud je ve stránce jakákoliv validační chyba. Všechny chyby se v tomto případě zobrazí uživateli.
 
 ---
 
 ## Úkoly
 
-- Uvnitř metody `LogIn`:
-    - Zavolání `accountService.LogIn(Email, Password)`. Tato metoda navrací `bool`.
-    - Pokud předchozí zavolání vrátí `false`, reportujte validační error použitím `this.AddModelError`.
-    - Použijte `vm => vm.Email` jako identifikátor validované property.
+Uvnitř metody `LogIn` proveďte následující:
+
+- Zavolejte `accountService.LogIn(Email, Password)`. Tato metoda zkontroluje, zdali je e-mail a heslo správné, a vrací `true` nebo `false`.
+- Pokud předchozí volání vrátí `false`, přidejte validační chybu pomocí `this.AddModelError`.
+- Jako identifikátor validované vlastnosti použijte `vm => vm.Email`.

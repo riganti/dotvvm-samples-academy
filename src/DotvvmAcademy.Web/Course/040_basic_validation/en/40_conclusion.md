@@ -14,7 +14,7 @@ Archive:
 
 Good work! Try the interactive sample to see validation in action.
 
-> Note: The only valid credentials are "john@example.com" and "CorrectHorseBatteryStaple".
+> Note: The only valid credentials are `john@example.com` and `CorrectHorseBatteryStaple`.
 
 ---
 
