@@ -9,11 +9,11 @@ CodeTask:
 
 # Tlačítko Add
 
-Pojďme vytvořit uživatelské rozhraní pro přidávání prvků.
+Nyní vytvořme uživatelské rozhraní pro přidávání úkolů.
 
 ---
 
 ## Úkoly
 
-- Přidejte `TextBox` do `<body>` a propojte ho s `NewItem`.
-- Přidejte `Button` do `<body>` a propojte ho s `Add`.
+- Přidejte do stránky komponentu `TextBox` a propojte jeho vlastnost `Text` s vlastností `NewItem`.
+- Přidejte do stránky tlačítko `Button` po kliknutí na něj zavolejte metodu `Add`.

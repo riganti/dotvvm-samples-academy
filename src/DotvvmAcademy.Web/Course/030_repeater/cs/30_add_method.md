@@ -10,9 +10,7 @@ CodeTask:
 
 # Metoda Add
 
-Chceme míz možnost přidávat a odebírat prvky z kolekce.
-
-V dalším kroce přidáme `TextBox` a `Button`, abychom umožnili uživateli přidat nový prvek seznamu.
+V dalším kroku budeme přidávat komponenty `TextBox` a `Button`, abychom uživateli umožnili přidat nový úkol.
 
 ```dothtml
 <dot:TextBox Text="{value: NewItem}" />
@@ -20,13 +18,12 @@ V dalším kroce přidáme `TextBox` a `Button`, abychom umožnili uživateli p�
             Text="Add Item" />
 ```
 
-Nejdříve však musíme udělat něco jiného.
+Nejdříve však musíme nachystat metodu `Add`, která do kolekce `Items` nový úkol přidá.
 
 ---
 
 ## Úkoly
 
-Pojďme napsat logiku přidávání jako první.
-
-- Přidejte propertu typu `string` pojmenovanou `NewItem` do viewmodelu.
-- Uvnitř metody `Add` vytvořte nový objekt `ToDoItem` a inicializujte jeho propertu `Text` na `NewItem`. Poté přidejte instanci do `Items`.
+- Přidejte do ViewModelu vlastnost typu `string` pojmenovanou `NewItem`.
+- Uvnitř metody `Add` vytvořte nový objekt `ToDoItem` a nastavte jeho vlastnost `Text` na hodnotu z vlastnosti `NewItem`. 
+- Poté tento objekt přidejte do kolekce `Items`.

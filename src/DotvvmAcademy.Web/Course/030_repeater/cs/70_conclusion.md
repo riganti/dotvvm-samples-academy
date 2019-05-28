@@ -15,7 +15,7 @@ Gratulujeme! Úspěšně jste vytvořili seznam úkolů.
 
 ---
 
-## Schrnutí
+## Shrnutí
 
-- `Repeater` je DotHTML ekvivalent `foreach` smyčky.
-- Binding Context se implicitně mění na aktuální položku uvnitř šablony pro prvek.
+- `Repeater` je DotHTML ekvivalent `foreach` smyčky - slouží k vykreslení kolekce položek.
+- Binding context uvnitř komponenty `Repeater` se implicitně nastavuje na aktuální položku kolekce.

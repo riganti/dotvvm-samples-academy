@@ -9,13 +9,14 @@ CodeTask:
 
 # Tlačítko Remove
 
-Na konec potřebujeme pro každou položku tlačítko "Remove".
+Na konec potřebujeme pro každý úkol přidat tlačítko "Smazat".
 
-Vzhledem k tomu, že metoda `Remove` nepatří do `ToDoItem`, potřebujeme přistupovat k Binding Contextu `_root`. Budeme také potřebovat předat aktuální prvek jako parameter příkazu. Můžeme použíz `_this`, abychom odkazovali na aktuální položku.
+Vzhledem k tomu, že metoda `Remove` není definována ve třídě `ToDoItem`, ale ve ViewModelu, potřebujeme přistupovat k binding contextu `_root`. 
+Budeme jí ale také potřebovat předat aktuální prvek jako parameter. K tomu slouží speciální proměnná `_this`, která obsahuje aktuální binding context - to je naše položka, kterou chceme smazat.
 
 ---
 
 ## Tasks
 
-- Přidejte `Button` do `Repeater` šablony.
-- Toto tlačítko musí volat `Remove` v `_root` s `_this` jako parametr.
+- Přidejte do šablony uvnitř komponenty `Repeater` tlačítko `Button`.
+- Po kliknutí na tlačítko zavolejte metodu `Remove` a předejte jí `_this` jako parametr. Nezapomeňte, že metoda je definována ve ViewModelu a je tedy třeba použít `_root`.

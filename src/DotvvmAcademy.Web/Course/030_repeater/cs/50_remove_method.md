@@ -9,9 +9,9 @@ CodeTask:
 
 # Metoda Remove
 
-Umožníme uživateli odebrat jakýkoliv prvek z kolekce.
+Nyní bychom rádi umožnili uživateli úkoly ze seznamu odebírat.
 
-Metoda `Remove` potřebuje vědět který prvek má odebrat z kolekce. Můžeme ho předat jako parametr funkce.
+Metoda `Remove` potřebuje vědět, který prvek z kolekce má odebrat. Můžeme jí ho předat jako parametr.
 
 ```dothtml
 <dot:Button Click="{command: _root.Remove(_this)}"
@@ -22,4 +22,4 @@ Metoda `Remove` potřebuje vědět který prvek má odebrat z kolekce. Můžeme 
 
 ## Úkoly
 
-- Uvnitř metody `Remove` vymažte parametr `item` z `Items`.
+- Uvnitř metody `Remove` vymažte parametr `item` z kolekce `Items`.

@@ -9,12 +9,12 @@ CodeTask:
 
 # Kolekce
 
-Binding Context se může implicitně měnit v kontrolkách jako je `Repeater`. To si ukážeme vytvořením seznamu úkolů.
+Binding context se může měnit uvnitř některých komponent, jako třeba `Repeater`. Tuto komponentu si představíme během vytváření jednoduchého seznamu úkolů.
 
 ---
 
 ## Úkoly
 
-- Přidejte propertu typu `List<ToDoItem>` pojmenovanou `Items` do viewmodelu a inicializujte ji.
+- Přidejte vlastnost typu `List<ToDoItem>` pojmenovanou `Items` do ViewModelu a inicializujte ji na nový prázdný seznam.
 
-> Poznámka: Viewmodel může obsahovat jakoukoliv kolekci konkrétního typu jako například `List`, `HashSet`, a `Dictionary`. Nedoporučujeme používat rozhraní kolekcí jako například `IEnumerable`, `IList`, and `IDictionary`.
+> Poznámka: ViewModel může obsahovat jakoukoliv kolekci konkrétního typu jako například `List`, `HashSet`, a `Dictionary`. Nedoporučujeme používat rozhraní kolekcí jako například `IEnumerable`, `IList`, and `IDictionary`.
