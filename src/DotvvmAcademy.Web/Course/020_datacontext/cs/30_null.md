@@ -9,9 +9,9 @@ CodeTask:
 
 # Null DataContext
 
-Vlastnost `Profile` jsme ještě neinicializovali, a proto je její hodnota `null`. 
+Vlastnost `Profile` jsme ještě neinicializovali, a proto je její hodnota `null`.
 
-Z tohoto důvodu DotVVM celý `<div>` skryje a nebude vyhodnocovat výrazy uvnitř. Tento trik můžeme použít k tomu, abychom určité části stránky skryli.
+Z tohoto důvodu DotVVM celý `<div>` skryje a nebude vyhodnocovat výrazy uvnitř. Tento trik můžeme použít k tomu, abychom určité části stránky nezobrazili uživateli.
 
 ---
 

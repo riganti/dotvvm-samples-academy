@@ -11,9 +11,9 @@ CodeTask:
 
 # DataContext
 
-Ve výchozím nastavení ukazuje vlastnost `DataContext` všech komponent nastaveny na celý ViewModel. Kterémukoliv elementu nebo komponentě můžete ale `DataContext` změnit, čímž docílíte změny binding contextu. 
+Ve výchozím nastavení obsahuje vlastnost `DataContext` každé komponenty referenci na celý ViewModel. Kterémukoliv elementu nebo komponentě můžete ale `DataContext` změnit, čímž docílíte změny binding contextu. 
 
-Jak je vidět na ukázkovém příkladu, data-binding se ozkazuje na vlastnost `FirstName`, která je definována v objektu `Profile` a ne přímo ve ViewModelu.
+Jak je vidět na ukázkovém příkladu, data-binding se odkazuje na vlastnost `FirstName`, která je definována v objektu `Profile` a ne přímo ve ViewModelu.
 
 ```dothtml
 <div DataContext="{value: Profile}">
@@ -26,4 +26,4 @@ Jak je vidět na ukázkovém příkladu, data-binding se ozkazuje na vlastnost `
 ## Tasks
 
 - Propojte vlastnost `DataContext` elementu `<div>` s vlastností `Profile` z ViewModelu.
-- Upravte data-binding uvnitř elementu `<div>` tak, aby respektovaly nový binding context.
+- Upravte bindingy uvnitř elementu `<div>` tak, aby respektovaly nový binding context.

@@ -9,13 +9,13 @@ CodeTask:
 
 # Přesouvání vlastností
 
-Vítejte zpět v DotVVM Academy. V této lekci vytvoříme jednoduchou stránku 'Můj profil'!
+Vítejte zpět v DotVVM Academy. V této lekci vytvoříme jednoduchou stránku "Můj profil"!
 
 U složitějších stránek se často stává, že ve ViewModelu najdeme vnořené objekty. Aby naše data-bindingy byly krátké a přehledné, můžeme na určité části View změnit tzv. __binding context__.
 
 Binding context (nastavovaný pomocí vlastnosti `DataContext`) je místo ve ViewModelu, k němuž se vztahují výrazy v data-bindingu. 
 
-Chytrá práce s binding contextem lze využít k tomu, aby se data-bindingy zkrátily a zpřehlednily, a také pomocí něj můžeme zobrazovat či skrývat učité části View.
+Chytrou prací s binding contextem lze dosáhnout toho, aby se data-bindingy zkrátily a zpřehlednily, a také pomocí něj můžeme zobrazovat či skrývat určité části View.
 
 Začněme tím, že údaje o uživateli dáme do vlastního objektu, a ten pak umístíme do ViewModelu.
 

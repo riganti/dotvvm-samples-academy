@@ -16,10 +16,10 @@ Dobrá práce! Nyní již víte, jak funguje `DataContext`.
 
 ---
 
-## Summary
+## Shrnutí
 
-- Binding context je místo, vůči kterému se vyhodnocují výrazy data-bindingu.
+- Binding context je objekt, vůči kterému se vyhodnocují výrazy data-bindingu.
 - Každá komponenta má vlastnost `DataContext`.
-- Komponenty přebírají `DataContext` z nadřazených komponenta.
-- `DataContext` celé stránky je celý ViewModelu.
+- Komponenty přebírají `DataContext` z nadřazených komponent.
+- Kořenový `DataContext` je celý ViewModel.
 - Pokud je `DataContext` komponenty nastaven na `null`, tato komponenta se skryje.

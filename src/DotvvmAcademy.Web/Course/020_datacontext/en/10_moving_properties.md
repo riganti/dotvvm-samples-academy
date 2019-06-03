@@ -9,7 +9,7 @@ CodeTask:
 
 # Moving Properties
 
-Hello and, again, welcome to DotVVM Academy. In this lesson, we'll make a simple 'Edit profile' page!
+Hello and, again, welcome to DotVVM Academy. In this lesson, we'll make a simple "Edit profile" page!
 
 When you create complex pages, it is convenient to have complex objects in the ViewModel. In order to keep the data-binding expression simple, you can change the __Binding Context__ for a specific part of the View. 
 
