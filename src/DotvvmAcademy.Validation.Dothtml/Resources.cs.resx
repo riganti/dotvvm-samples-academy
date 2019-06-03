@@ -118,78 +118,78 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ERR_WrongSetter" xml:space="preserve">
-    <value>This property must be set using {0}.</value>
-  </data>
-  <data name="ERR_WrongBindingValue" xml:space="preserve">
-    <value>This property must be bound to: '{0}'.</value>
-  </data>
-  <data name="ERR_WrongHardcodedValue" xml:space="preserve">
-    <value>This property must be set to '{0}'.</value>
-  </data>
-  <data name="ERR_WrongControlType" xml:space="preserve">
-    <value>This control must be of type '{0}'.</value>
-  </data>
-  <data name="ERR_WrongTypeDirectiveArgument" xml:space="preserve">
-    <value>The '{0}' directive must reference type '{1}'.</value>
-  </data>
-  <data name="ERR_WrongControlCount" xml:space="preserve">
-    <value>This control must contain {0} controls of type '{1}'.</value>
-  </data>
-  <data name="ERR_MissingDirective" xml:space="preserve">
-    <value>The '{0}' directive must be set.</value>
-  </data>
-  <data name="ERR_MissingControl" xml:space="preserve">
-    <value>This control is missing a control of type '{0}'.</value>
-  </data>
-  <data name="ERR_MissingProperty" xml:space="preserve">
-    <value>This control must have its '{0}' property set.</value>
-  </data>
-  <data name="ERR_MissingControlRoot" xml:space="preserve">
-    <value>The document root is missing a control of type '{0}'.</value>
-  </data>
-  <data name="ERR_MissingElement" xml:space="preserve">
-    <value>This control is missing an HTML '{0}' element.</value>
-  </data>
-  <data name="ERR_MissingElementRoot" xml:space="preserve">
-    <value>The document root is missing an HTML '{0}' element.</value>
-  </data>
-  <data name="ERR_WrongElementCount" xml:space="preserve">
-    <value>This control must contain {0} '{1}' elements.</value>
+    <value>Tato vlastnost musí být nastavena pomocí {0}.</value>
   </data>
   <data name="Setter_CommandBinding" xml:space="preserve">
-    <value>a command binding</value>
+    <value>command bindingu</value>
   </data>
   <data name="Setter_ControlCommandBinding" xml:space="preserve">
-    <value>a control command binding</value>
+    <value>control command bindingu</value>
   </data>
   <data name="Setter_ControlPropertyBinding" xml:space="preserve">
-    <value>a control property binding</value>
+    <value>control property bindingu</value>
   </data>
   <data name="Setter_HardcodedValue" xml:space="preserve">
-    <value>a hard-coded value</value>
+    <value>konstantní hodnoty</value>
   </data>
   <data name="Setter_ResourceBinding" xml:space="preserve">
-    <value>a resource binding</value>
+    <value>resource bindingu</value>
   </data>
   <data name="Setter_StaticCommandBinding" xml:space="preserve">
-    <value>a static command binding</value>
+    <value>static command bindingu</value>
   </data>
   <data name="Setter_ValueBinding" xml:space="preserve">
-    <value>a value binding</value>
+    <value>value bindingu</value>
+  </data>
+  <data name="ERR_WrongBindingValue" xml:space="preserve">
+    <value>Tato vlastnost musí být bindovaná k: '{0}'.</value>
+  </data>
+  <data name="ERR_WrongHardcodedValue" xml:space="preserve">
+    <value>Tato vlastnost musí být nastavena na '{0}'.</value>
+  </data>
+  <data name="ERR_WrongControlType" xml:space="preserve">
+    <value>Tato komponenta musí být typu '{0}'.</value>
+  </data>
+  <data name="ERR_WrongTypeDirectiveArgument" xml:space="preserve">
+    <value>Directiva '{0}' musí referencovat typ '{1}'.</value>
+  </data>
+  <data name="ERR_WrongControlCount" xml:space="preserve">
+    <value>Tato komponenta musí obsahovat {0} komponent typu '{1}'.</value>
+  </data>
+  <data name="ERR_MissingDirective" xml:space="preserve">
+    <value>Directiva '{0}' musí být nastavena.</value>
+  </data>
+  <data name="ERR_MissingControl" xml:space="preserve">
+    <value>Tato komponenta musí obsahovat komponentu typu '{0}'.</value>
+  </data>
+  <data name="ERR_MissingProperty" xml:space="preserve">
+    <value>Tato komponenta musí mít nastavenu vlastnost '{0}'.</value>
+  </data>
+  <data name="ERR_MissingControlRoot" xml:space="preserve">
+    <value>Na stránce musí být komponenta typu '{0}'.</value>
+  </data>
+  <data name="ERR_MissingElement" xml:space="preserve">
+    <value>Tato komponenta musí obsahovat HTML element '{0}'.</value>
+  </data>
+  <data name="ERR_MissingElementRoot" xml:space="preserve">
+    <value>Na stránce musí být HTML element '{0}'.</value>
+  </data>
+  <data name="ERR_WrongElementCount" xml:space="preserve">
+    <value>Tato komponenta musí obsahovat {0} elementů '{1}'.</value>
   </data>
   <data name="ERR_WrongControlCountRoot" xml:space="preserve">
-    <value>The document root must contain {0} controls of type '{1}'.</value>
+    <value>Na stránce musí být {0} komponent typu '{1}'.</value>
   </data>
   <data name="ERR_WrongElementCountRoot" xml:space="preserve">
-    <value>The document root must contain {0} '{1}' elements.</value>
+    <value>Na stránce musí být {0} HTML elementů '{1}'.</value>
   </data>
   <data name="ERR_WrongRawContent" xml:space="preserve">
-    <value>This control must contain: '{0}'.</value>
+    <value>Tato komponenta musí obsahovat: '{0}'.</value>
   </data>
   <data name="ERR_WrongRawText" xml:space="preserve">
-    <value>This control must be declared in this way: '{0}'.</value>
+    <value>Tato komponenta musí být deklarována takto: '{0}'.</value>
   </data>
   <data name="Setter_Or" xml:space="preserve">
-    <value>, or</value>
+    <value>, nebo</value>
   </data>
 </root>

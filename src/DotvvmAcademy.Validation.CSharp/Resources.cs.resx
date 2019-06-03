@@ -117,79 +117,97 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ERR_WrongSetter" xml:space="preserve">
-    <value>This property must be set using {0}.</value>
+  <data name="ERR_ForbiddenAttribute" xml:space="preserve">
+    <value>Symbol '{0}' nesmí mít atribut '{1}'.</value>
   </data>
-  <data name="ERR_WrongBindingValue" xml:space="preserve">
-    <value>This property must be bound to: '{0}'.</value>
+  <data name="ERR_MissingAttribute" xml:space="preserve">
+    <value>Symbol '{0}' musí mít atribut '{1}'.</value>
   </data>
-  <data name="ERR_WrongHardcodedValue" xml:space="preserve">
-    <value>This property must be set to '{0}'.</value>
+  <data name="ERR_MissingEvent" xml:space="preserve">
+    <value>Event '{0}' musí existovat.</value>
   </data>
-  <data name="ERR_WrongControlType" xml:space="preserve">
-    <value>This control must be of type '{0}'.</value>
+  <data name="ERR_MissingField" xml:space="preserve">
+    <value>Pole '{0}' musí existovat.</value>
   </data>
-  <data name="ERR_WrongTypeDirectiveArgument" xml:space="preserve">
-    <value>The '{0}' directive must reference type '{1}'.</value>
+  <data name="ERR_MissingGetter" xml:space="preserve">
+    <value>Vlastnost '{0}' musí mít getter přístupný na úrovni '{1}'.</value>
   </data>
-  <data name="ERR_WrongControlCount" xml:space="preserve">
-    <value>This control must contain {0} controls of type '{1}'.</value>
+  <data name="ERR_MissingInterfaceImplementation" xml:space="preserve">
+    <value>Typ '{0}' musí implementovat rozhraní '{1}'.</value>
   </data>
-  <data name="ERR_MissingDirective" xml:space="preserve">
-    <value>The '{0}' directive must be set.</value>
+  <data name="ERR_MissingMethod" xml:space="preserve">
+    <value>Metoda '{0}' musí existovat.</value>
   </data>
-  <data name="ERR_MissingControl" xml:space="preserve">
-    <value>This control is missing a control of type '{0}'.</value>
+  <data name="ERR_MissingNamespaceType" xml:space="preserve">
+    <value>Namespace '{0}' musí obsahovat typ '{1}'.</value>
+  </data>
+  <data name="ERR_MissingNestedType" xml:space="preserve">
+    <value>Typ '{0}' musí obsahovat vnořený typ '{1}'.</value>
   </data>
   <data name="ERR_MissingProperty" xml:space="preserve">
-    <value>This control must have its '{0}' property set.</value>
+    <value>Vlastnost '{0}' musí existovat.</value>
   </data>
-  <data name="ERR_MissingControlRoot" xml:space="preserve">
-    <value>The document root is missing a control of type '{0}'.</value>
+  <data name="ERR_MissingReadonly" xml:space="preserve">
+    <value>Pole '{0}' musí být read-only.</value>
   </data>
-  <data name="ERR_MissingElement" xml:space="preserve">
-    <value>This control is missing an HTML '{0}' element.</value>
+  <data name="ERR_MissingSetter" xml:space="preserve">
+    <value>Vlastnost '{0}' musí mít setter přístupný na úrovni '{1}'.</value>
   </data>
-  <data name="ERR_MissingElementRoot" xml:space="preserve">
-    <value>The document root is missing an HTML '{0}' element.</value>
+  <data name="ERR_MissingSymbol" xml:space="preserve">
+    <value>Symbol '{0}' musí existovat.</value>
   </data>
-  <data name="ERR_WrongElementCount" xml:space="preserve">
-    <value>This control must contain {0} '{1}' elements.</value>
+  <data name="ERR_MissingSymbolMember" xml:space="preserve">
+    <value>Symbol '{0}' musí obsahovat člen '{1}'.</value>
   </data>
-  <data name="Setter_CommandBinding" xml:space="preserve">
-    <value>a command binding</value>
+  <data name="ERR_MissingType" xml:space="preserve">
+    <value>Typ '{0}' musí existovat.</value>
   </data>
-  <data name="Setter_ControlCommandBinding" xml:space="preserve">
-    <value>a control command binding</value>
+  <data name="ERR_MissingTypeEvent" xml:space="preserve">
+    <value>Typ '{0}' musí obsahovat event '{1}'.</value>
   </data>
-  <data name="Setter_ControlPropertyBinding" xml:space="preserve">
-    <value>a control property binding</value>
+  <data name="ERR_MissingTypeField" xml:space="preserve">
+    <value>Typ '{0}' musí obsahovat pole '{1}'.</value>
   </data>
-  <data name="Setter_HardcodedValue" xml:space="preserve">
-    <value>a hard-coded value</value>
+  <data name="ERR_MissingTypeMethod" xml:space="preserve">
+    <value>Typ '{0}' musí obsahovat metodu '{1}'.</value>
   </data>
-  <data name="Setter_ResourceBinding" xml:space="preserve">
-    <value>a resource binding</value>
+  <data name="ERR_MissingTypeProperty" xml:space="preserve">
+    <value>Typ '{0}' musí obsahovat vlastnost '{1}'.</value>
   </data>
-  <data name="Setter_StaticCommandBinding" xml:space="preserve">
-    <value>a static command binding</value>
+  <data name="ERR_MultipleAttributes" xml:space="preserve">
+    <value>Symbol '{0}' musí mít pouze jeden atribut '{1}'.</value>
   </data>
-  <data name="Setter_ValueBinding" xml:space="preserve">
-    <value>a value binding</value>
+  <data name="ERR_NoConversion" xml:space="preserve">
+    <value>Typ '{0}' musí být zkonvertovatelný na '{1}'.</value>
   </data>
-  <data name="ERR_WrongControlCountRoot" xml:space="preserve">
-    <value>The document root must contain {0} controls of type '{1}'.</value>
+  <data name="ERR_WrongAccessibility" xml:space="preserve">
+    <value>Symbol '{0}' musí být přístupný na urovni '{1}'.</value>
   </data>
-  <data name="ERR_WrongElementCountRoot" xml:space="preserve">
-    <value>The document root must contain {0} '{1}' elements.</value>
+  <data name="ERR_WrongAttributePropertyValue" xml:space="preserve">
+    <value>Vlastnost '{0}' tohoto atributu musí být nastavena na '{1}'.</value>
   </data>
-  <data name="ERR_WrongRawContent" xml:space="preserve">
-    <value>This control must contain: '{0}'.</value>
+  <data name="ERR_WrongBaseType" xml:space="preserve">
+    <value>Typ '{0}' musí dědit z typu '{1}'.</value>
   </data>
-  <data name="ERR_WrongRawText" xml:space="preserve">
-    <value>This control must be declared in this way: '{0}'.</value>
+  <data name="ERR_WrongCount" xml:space="preserve">
+    <value>Musí existovat '{0}' výskytů symbolu '{1}'.</value>
   </data>
-  <data name="Setter_Or" xml:space="preserve">
-    <value>, or</value>
+  <data name="ERR_WrongFieldType" xml:space="preserve">
+    <value>Pole '{0}' must být typu '{1}'.</value>
+  </data>
+  <data name="ERR_WrongParameterType" xml:space="preserve">
+    <value>Parametr musí být typu '{0}'.</value>
+  </data>
+  <data name="ERR_WrongParemeterCount" xml:space="preserve">
+    <value>Metoda '{0}' musí mít '{1}' parametrů.</value>
+  </data>
+  <data name="ERR_WrongPropertyType" xml:space="preserve">
+    <value>Vlastnost '{0}' musíbýt typu '{1}'.</value>
+  </data>
+  <data name="ERR_WrongReturnType" xml:space="preserve">
+    <value>Metoda '{0}' musí vracet objekt typu '{1}'.</value>
+  </data>
+  <data name="ERR_WrongTypeKind" xml:space="preserve">
+    <value>Typ '{0}' musí být '{1}'.</value>
   </data>
 </root>

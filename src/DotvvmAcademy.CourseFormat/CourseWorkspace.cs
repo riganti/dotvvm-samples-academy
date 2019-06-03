@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.IO.Compression;
 using System.IO.MemoryMappedFiles;
@@ -292,6 +293,7 @@ namespace DotvvmAcademy.CourseFormat
                 args.Add(script.EntryType);
                 args.Add(script.EntryMethod);
             }
+            args.Add(CultureInfo.CurrentCulture.Name);
 
             var dependencyMaps = new List<MemoryMappedFile>();
             var dependencies = await Task.WhenAll(codeTask.Dependencies.Select(d => GetFileContents(d)));

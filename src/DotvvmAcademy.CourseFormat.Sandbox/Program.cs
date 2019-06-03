@@ -7,6 +7,7 @@ using DotvvmAcademy.Validation.Unit;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.IO.MemoryMappedFiles;
 using System.Linq;
@@ -28,11 +29,15 @@ namespace DotvvmAcademy.CourseFormat.Sandbox
             // extract args
             if (args.Length < 3)
             {
-                throw new InvalidOperationException("The sandbox needs to be run with at least 3 arguments: " +
+                throw new InvalidOperationException("The sandbox needs to be run with at least 4 arguments: " +
                     "name of the memory mapped file with the script assembly, " +
                     "name of the entry type inside the script assembly, " +
-                    "name of the entry method inside the entry type.");
+                    "name of the entry method inside the entry type, " +
+                    "id of the current language.");
             }
+
+            CultureInfo.CurrentCulture = new CultureInfo(args[3]);
+            CultureInfo.CurrentUICulture = new CultureInfo(args[3]);
 
             // load Unit
             IValidationUnit unit;
@@ -50,7 +55,7 @@ namespace DotvvmAcademy.CourseFormat.Sandbox
 
             // load dependencies
             var sources = new List<ISourceCode>();
-            for (int i = 3; i < args.Length; i++)
+            for (int i = 4; i < args.Length; i++)
             {
                 var mapName = args[i];
 

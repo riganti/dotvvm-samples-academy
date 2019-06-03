@@ -142,7 +142,7 @@ namespace DotvvmAcademy.Validation.Dothtml {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Control must be of type &apos;{0}&apos;..
+        ///   Looks up a localized string similar to This control must be of type &apos;{0}&apos;..
         /// </summary>
         public static string ERR_WrongControlType {
             get {
