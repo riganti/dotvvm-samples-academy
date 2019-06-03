@@ -11,7 +11,7 @@ CodeTask:
 
 # Repeater
 
-Komponenta `Repeater` se používá k vykreslení kolekce položek (například náš seznam úkolů). Kolekce se nabinduje do vlastnosti `DataSource`. To, jak budou jednotlivé položky vypadat, určí šablona, kterou je možné uvést dovnitř komponenty:
+Komponenta `Repeater` se používá k vykreslení kolekce položek (například náš seznam úkolů). Kolekce se nabinduje na vlastnost `DataSource`. To, jak budou jednotlivé položky vypadat, určí šablona, kterou je možné uvést uvnitř komponenty:
 
 ```dothtml
 <dot:Repeater DataSource="{value: Items}">
@@ -27,6 +27,6 @@ Pro každý prvek kolekce `Items` bude vykreslen element `<p>`. Binding context 
 
 Pojďme vykreslit kolekci úkolů:
 
-- Dovnitř elementu `<body>` přidejte `Repeater` a jeho vlastnost `DataSource` nastavte na kolekci `Items`.
+- Dovnitř elementu `<body>` přidejte `Repeater` a jeho vlastnost `DataSource` nabindujte na kolekci `Items`.
 - Vykreslete element `<p>` pro každý prvek v kolekci `Items`.
-- Dovnitř odstavce vypište vlastnost `Text`.
+- Uvnitř odstavce vypište vlastnost `Text`.

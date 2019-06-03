@@ -9,10 +9,10 @@ CodeTask:
 
 # Tlačítko Remove
 
-Na konec potřebujeme pro každý úkol přidat tlačítko "Smazat".
+Nakonec potřebujeme pro každý úkol přidat tlačítko "Smazat".
 
-Vzhledem k tomu, že metoda `Remove` není definována ve třídě `ToDoItem`, ale ve ViewModelu, potřebujeme přistupovat k binding contextu `_root`. 
-Budeme jí ale také potřebovat předat aktuální prvek jako parameter. K tomu slouží speciální proměnná `_this`, která obsahuje aktuální binding context - to je naše položka, kterou chceme smazat.
+Vzhledem k tomu, že metoda `Remove` není definována ve třídě `ToDoItem`, ale ve ViewModelu, potřebujeme použít speciální proměnnou `_root`. 
+Budeme ji ale také potřebovat předat aktuální prvek jako parameter. K tomu slouží speciální proměnná `_this`, která obsahuje aktuální binding context - to je naše položka, kterou chceme smazat.
 
 ---
 
