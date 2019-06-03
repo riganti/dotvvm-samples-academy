@@ -1,5 +1,5 @@
 ﻿---
-Title: Attributes
+Title: Atributy
 Moniker: attributes
 CodeTask:
     Path: 10_attributes.csharp.csx
@@ -9,7 +9,7 @@ CodeTask:
         - .solution/LogIn/AccountService.cs
 ---
 
-# Attributes
+# Atributy
 
 V této lekci se naučíme používat validaci na jednoduchém příkladu přihlašovací stránky.
 
