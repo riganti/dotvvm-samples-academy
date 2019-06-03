@@ -12,8 +12,8 @@ var repeater = Unit.GetControl("/html/body/dot:Repeater");
 {
     repeater.GetProperty("@DataSource")
         .RequireBinding(ItemsProperty);
-
-    repeater.GetControl("p/dot:Literal")
-        .GetProperty("@Text")
-        .RequireBinding("_this");
+    repeater.GetProperty("@ItemTemplate")
+        .GetControl("p/dot:Literal")
+            .GetProperty("@Text")
+            .RequireBinding("Text");
 }

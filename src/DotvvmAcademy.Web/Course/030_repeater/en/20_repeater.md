@@ -1,5 +1,6 @@
 ﻿---
 Title: Repeater
+Moniker: repeater
 CodeTask:
     Path: 20_repeater.dothtml.csx
     Default: ToDo_10.dothtml
@@ -10,20 +11,22 @@ CodeTask:
 
 # Repeater
 
-Repeater is a control that renders a collection of items inside its `DataSource` property using an item template:
+The `Repeater` control renders a collection of items from its `DataSource` property using a template:
 
 ```dothtml
 <dot:Repeater DataSource="{value: Items}">
-    <p>{{value: _this}}</p>
+    <p>{{value: Text}}</p>
 </dot:Repeater>
 ```
 
-A `<p>` element will be rendered for every item in `Items`. DataContext changes inside the Item template to the item object itself. We can refer to the item using the `_this` pseudo-variable.
+A `<p>` element will be rendered for every item in the `Items` collection. Inside the `Repeater`, the Binding Context changes to the item object itself.
 
 ---
 
 ## Tasks
 
-- Add a `Repeater` to the `<body>` element with `DataSource` bound to `Items`.
-- Render a `<p>` element for every item in the `Items` collection.
-- Bind the item to the element using `_this`.
+Let's display the To-Do items.
+
+- Inside the `<body>` element, add a `Repeater` with `DataSource` bound to `Items`.
+- Display a `<p>` element for every item in the `Items` collection.
+- Bind the paragraph content to the `Text` property.

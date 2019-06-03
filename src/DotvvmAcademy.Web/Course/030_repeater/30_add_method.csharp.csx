@@ -9,7 +9,7 @@ using DotvvmAcademy.Validation.Unit;
 Unit.GetType(typeof(void))
     .Allow();
 
-var listType = Unit.GetType<List<string>>()
+var listType = Unit.GetType(ItemsListType)
     .Allow();
 {
     listType.GetMethod("Add")
@@ -28,23 +28,14 @@ viewModel.GetProperty(NewItemProperty)
 viewModel.GetMethod(AddMethod)
     .RequireReturnType(typeof(void));
 
-viewModel.GetMethod(RemoveMethod)
-    .RequireReturnType(typeof(void))
-    .RequireParameters<string>();
-
 Unit.Run(c =>
 {
     var item = $"Test_{Guid.NewGuid()}";
     var vm = c.Instantiate(ViewModelName);
-    vm.Items = new List<string>();
     vm.NewItem = item;
     vm.Add();
-    if (vm.Items.Count != 1 || vm.Items[0] != item)
+    if (vm.Items.Count != 1 || vm.Items[0].Text != item)
     {
-        c.Report(BrokenAddDiagnosticMessage);
-    }
-    vm.Remove(item);
-    if (vm.Items.Count != 0) {
-        c.Report(BrokenRemoveDiagnosticMessage);
+        c.Report(ERR_BrokenAdd);
     }
 });

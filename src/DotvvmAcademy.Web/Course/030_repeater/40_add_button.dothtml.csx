@@ -11,7 +11,3 @@ Unit.GetControl("/html/body/dot:TextBox")
 Unit.GetControl("/html/body/dot:Button")
     .GetProperty("@Click")
     .RequireBinding($"{AddMethod}()", AllowedBinding.Command);
-
-repeater.GetControl("@ItemTemplate/dot:Button")
-    .GetProperty("@Click")
-    .RequireBinding($"_root.{RemoveMethod}(_this)", AllowedBinding.Command);
