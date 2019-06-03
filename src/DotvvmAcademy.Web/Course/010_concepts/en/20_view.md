@@ -1,5 +1,6 @@
 ﻿---
 Title: The View
+Moniker: view
 CodeTask:
     Path: 20_view.dothtml.csx
     Default: Counter_10.dothtml
@@ -11,19 +12,19 @@ CodeTask:
 
 # The View
 
-__Views__ are everything users can see and interact with. In DotVVM, Views are written in __DotHTML__, a flavour of _HTML_.
+__Views__ are everything users can see and interact with. In DotVVM, views are written in __DotHTML__, a flavour of _HTML_.
 
-You can see two enhancements to plain HTML:
+You can see two obvious differences from plain HTML:
 
-* The line starting with `@viewModel` is the __ViewModel Directive__. It tells DotVVM which ViewModel belongs to the page.
+- the line starting with `@viewModel` is the __ViewModel Directive__. It tells DotVVM which ViewModel belongs to the page, and
 
-* __Value Binding__ expressions bind ViewModel properties to specific places in the View:
+- __value binding__ expressions that bind ViewModel properties to specific places in the View:
 
 ```dothtml
 <p>{{value: Result}}</p>
 ```
 
-When the user loads the page, the value of the `Result` property will displayed inside the `<p>` element. Whenever the value of the property in the ViewModel changes, the text in the page gets updated.
+When the user loads the page, the value of the `Result` property will displayed inside the `<p>` element. Whenever the value of the property in the viewmodel changes, the text in the page gets updated.
 
 ---
 

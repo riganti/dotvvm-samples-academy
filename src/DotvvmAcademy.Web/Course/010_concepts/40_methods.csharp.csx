@@ -27,10 +27,10 @@ void ValidateMethod(string name, Func<int, int, int> operation)
         c.Invoke(vm, name);
         if (vm.Result != result)
         {
-            c.Report(string.Format(MethodDiagnosticMessage, name, vm.Difference, vm.Result));
+            c.Report(string.Format(MethodDiagnosticMessage, name));
         }
     });
 }
 
-ValidateMethod(IncrementName, (l, r) => l + r);
-ValidateMethod(DecrementName, (l, r) => l - r);
+ValidateMethod(AddName, (l, r) => l + r);
+ValidateMethod(SubtractName, (l, r) => l - r);

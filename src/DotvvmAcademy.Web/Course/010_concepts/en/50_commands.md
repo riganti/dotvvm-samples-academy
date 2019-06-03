@@ -1,5 +1,6 @@
 ﻿---
 Title: Commands
+Moniker: commands
 CodeTask:
     Path: 50_commands.dothtml.csx
     Default: Counter_30.dothtml
@@ -10,9 +11,9 @@ CodeTask:
 
 # Commands
 
-The __Command Binding__ can be used to call the ViewModel methods from the View.
+The __Command Binding__ can be used to call viewmodel methods from the view.
 
-Unlike value bindings, command bindings make a request to the server and perform the necessary updates afterwards. Commands can be used from many controls. Here you can see how it would be used in the `Button` control:
+Commands can be used from many controls. Here you can see how it would be used in the `Button` control:
 
 ```dothtml
 <dot:Button Click="{command: Add()}"
@@ -26,4 +27,4 @@ Changes made by the `Add` method will be sent back to the browser and the page w
 ## Tasks
 
 - Add two `<dot:Button />` controls to the `<body>` element.
-- Use command bindings to call the `Add` and `Subtract` methods you created earlier by clicking on the buttons.
+- Use Command Bindings to call the `Add` and `Subtract` methods you created earlier by clicking on the buttons.
