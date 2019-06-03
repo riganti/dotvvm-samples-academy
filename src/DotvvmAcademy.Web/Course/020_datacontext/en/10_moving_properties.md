@@ -1,20 +1,27 @@
 ﻿---
-Title: Moving properties
+Title: Moving Properties
+Moniker: moving-properties
 CodeTask:
     Path: 10_moving_properties.csharp.csx
-    Correct: ProfileDetailViewModel_10.cs
-    Default: ProfileDetailViewModel_20.cs
+    Default: ProfileDetailViewModel_10.cs
+    Correct: ProfileDetailViewModel_20.cs
 ---
 
-# Moving properties
+# Moving Properties
 
-Hello and, again, welcome to DotVVM Academy. Let's make something similar to a 'Edit profile' page! First we need to clean up this ViewModel.
+Hello and, again, welcome to DotVVM Academy. In this lesson, we'll make a simple "Edit profile" page!
 
-__DataContext__ or also __Binding Context__ is the target of bindings, the object whose members you bind to. You can change it to shorten your bindings and hide parts of the View.
+When you create complex pages, it is convenient to have complex objects in the ViewModel. In order to keep the data-binding expression simple, you can change the __Binding Context__ for a specific part of the View. 
+
+__Binding Context__ (configured using the `DataContext` property) works as the target of bindings - the object whose members are used in the expression. 
+
+Clever use of Binding Context can help to better structure the View, make the binding expressions shorter and also show or hide specific parts of the View.
+
+Let's start with moving the properties containing the user information into a separate class.
 
 ---
 
 ## Tasks
 
 - Move the `FirstName` and `LastName` property to the `Profile` class.
-- Create a property of type `Profile` also called `Profile` in the ViewModel.
+- Create a property of type `Profile` in the ViewModel. Name it `Profile`.

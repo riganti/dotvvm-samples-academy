@@ -7,8 +7,8 @@ public const string CreateMethod = "Load";
 public const string DeleteMethod = "Unload";
 
 public const string InitializedEarlyDiagnosticMessage 
-    = "The Profile property must not be initialized before the Load method is called.";
+    = "Vlastnost Profile nesmí být inicializována dříve než je zavolána metoda Loa.";
 public const string NotInitializedDiagnosticMessage 
-    = "The Profile property must be initialized in the Load method.";
+    = "Vlastnost Profile musí být inicializována v metodě Load.";
 public const string NotDeletedDiagnosticMessage 
-    = "The Profile property must be set to null after the Unload method is called.";
+    = "Vlastnost Profile musí být v metodě Unload nastavena na null.";

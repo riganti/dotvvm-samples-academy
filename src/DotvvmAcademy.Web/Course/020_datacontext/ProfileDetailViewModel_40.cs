@@ -11,12 +11,12 @@
     {
         public Profile Profile { get; set; }
 
-        public void Create()
+        public void Load()
         {
             Profile = new Profile();
         }
 
-        public void Delete()
+        public void Unload()
         {
             Profile = null;
         }

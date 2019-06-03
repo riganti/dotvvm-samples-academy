@@ -4,10 +4,10 @@ using DotvvmAcademy.Validation.Dothtml;
 using DotvvmAcademy.Validation.Dothtml.Unit;
 using DotvvmAcademy.Validation.Unit;
 
-div.GetControl("dot:Button[1]")
+Unit.GetControl("/html/body/dot:Button")
     .GetProperty("@Click")
-    .RequireBinding("_root.Create()", AllowedBinding.Command);
+        .RequireBinding("Create()", AllowedBinding.Command);
 
-div.GetControl("dot:Button[2]")
+div.GetControl("dot:Button")
     .GetProperty("@Click")
-    .RequireBinding("_root.Delete()", AllowedBinding.Command);
+        .RequireBinding("_root.Delete()", AllowedBinding.Command);

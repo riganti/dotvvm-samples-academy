@@ -1,5 +1,6 @@
 ﻿---
 Title: Conclusion
+Moniker: conclusion
 EmbeddedView:
     Path: .solution/ProfileDetail/Views/ProfileDetail.dothtml
     Dependencies:
@@ -11,13 +12,14 @@ Archive:
 
 # Conclusion
 
-Good job! Now you know what DataContext is!
+Good job! Now you know what `DataContext` is!
 
 ---
 
 ## Summary
 
-- DataContext is the default target of bindings.
-- Every control has a `DataContext` property.
-- Controls by default inherit their `DataContext` from their parent.
-- If the DataContext is `null`, the element doesn't get rendered.
+- Binding Context is the default target of bindings.
+- Every control has it inside its `DataContext` property.
+- By default, controls inherit their `DataContext` from their parent.
+- The `DataContext` of the document root is the ViewModel.
+- If a `DataContext` of a control is set `null`, the control doesn't get rendered.
