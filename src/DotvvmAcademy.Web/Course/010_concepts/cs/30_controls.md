@@ -9,7 +9,7 @@ CodeTask:
 
 # Komponenty
 
-Dalším z rozšířním jazyka HTML v DotVVM jsou komponenty (controls). Dají se poznat podle prefixu, např. `<dot:`.
+Dalším z rozšířením jazyka HTML v DotVVM jsou komponenty (controls). Dají se poznat podle prefixu, např. `<dot:`.
 
 ```dothtml
 <dot:TextBox Text="{value: Difference}" />
