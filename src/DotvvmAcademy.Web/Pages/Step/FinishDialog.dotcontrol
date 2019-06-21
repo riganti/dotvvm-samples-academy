@@ -4,11 +4,11 @@
 <div Class-modal--visible="{value: IsFinishDialogVisible}" Visible="{value: IsFinishDialogVisible}" class="modal__overlay">
     <div class="modal">
         <div class="modal__header">
-            <h2 InnerText="{resource: UIResources.Dialog_Title}" />
+            <h2 InnerText="{resource: UIResources.FinishDialog_Title}" />
             <p>
-                {{resource: UIResources.Dialog_Text}}
+                {{resource: UIResources.FinishDialog_DescriptionStart}}
                 <b InnerText="{value: LessonName}" />
-                {{resource: UIResources.Dialog_Text2}}
+                {{resource: UIResources.FinishDialog_DescriptionEnd}}
             </p>
             <div class="modal__close" Events.Click="{staticCommand: IsFinishDialogVisible = false}"></div>
         </div>

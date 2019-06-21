@@ -336,33 +336,6 @@ namespace DotvvmAcademy.Web.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lesson .
-        /// </summary>
-        public static string Dialog_Text {
-            get {
-                return ResourceManager.GetString("Dialog_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to  has been successfully completed..
-        /// </summary>
-        public static string Dialog_Text2 {
-            get {
-                return ResourceManager.GetString("Dialog_Text2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Congratulations!.
-        /// </summary>
-        public static string Dialog_Title {
-            get {
-                return ResourceManager.GetString("Dialog_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to We can&apos;t find the page you&apos;re looking for..
         /// </summary>
         public static string Error_404Message {
@@ -422,6 +395,33 @@ namespace DotvvmAcademy.Web.Resources.Localization {
         public static string Error_BackHome {
             get {
                 return ResourceManager.GetString("Error_BackHome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  has been successfully completed..
+        /// </summary>
+        public static string FinishDialog_DescriptionEnd {
+            get {
+                return ResourceManager.GetString("FinishDialog_DescriptionEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lesson .
+        /// </summary>
+        public static string FinishDialog_DescriptionStart {
+            get {
+                return ResourceManager.GetString("FinishDialog_DescriptionStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Congratulations!.
+        /// </summary>
+        public static string FinishDialog_Title {
+            get {
+                return ResourceManager.GetString("FinishDialog_Title", resourceCulture);
             }
         }
         
