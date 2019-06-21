@@ -1,13 +1,14 @@
 {
   "profiles": {
-    "DotvvmAcademy.Web": {
+    "Kestrel": {
       "commandName": "Project",
       "nativeDebugging": true,
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:1890/"
+      "applicationUrl": "http://0.0.0.0:1890/",
+      "launchUrl": "http://localhost:1890"
     }
   }
 }
