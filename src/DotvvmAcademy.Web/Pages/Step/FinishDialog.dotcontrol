@@ -16,7 +16,6 @@
             <img src="~/images/Icons/medal.svg"/>
             <div class="modal__buttons">
                 <dot:RouteLink RouteName="Default" Text="{resource: UIResources.Btn_Homepage}" class="button secondary"></dot:RouteLink>
-                <dot:RouteLink RouteName="Default" Text="{resource: UIResources.Btn_NextLesson}" class="button"></dot:RouteLink>
             </div>
         </div>
     </div>
