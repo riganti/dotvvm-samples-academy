@@ -2,7 +2,6 @@
 using DotVVM.Framework.Hosting;
 using DotVVM.Framework.ResourceManagement;
 using DotvvmAcademy.Web.Hosting;
-using DotvvmAcademy.Web.Pages;
 using DotvvmAcademy.Web.Pages.Error;
 using DotvvmAcademy.Web.Pages.Step;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,49 +11,53 @@ namespace DotvvmAcademy.Web
 {
     public class DotvvmStartup : IDotvvmStartup, IDotvvmServiceConfigurator
     {
+        public const string EnglishCulture = "en";
+        public const string CzechCulture = "cs";
+        public const string RussianCulture = "ru";
+        public const string DefaultCulture = EnglishCulture;
+
+        public static string[] EnabledCultures = {
+            EnglishCulture,
+            CzechCulture,
+            //RussianCulture // TODO: Uncomment when the translations are ready
+        };
+
         public void Configure(DotvvmConfiguration config, string applicationPath)
         {
-            ConfigureRoutes(config, applicationPath);
-            ConfigureControls(config, applicationPath);
-            ConfigureResources(config, applicationPath);
-        }
+            // cause god knows what sort of culture is set on the machine
+            config.DefaultCulture = EnglishCulture;
 
-        public void ConfigureServices(IDotvvmServiceCollection options)
-        {
-            options.AddDefaultTempStorages("temp");
-        }
+            // in debug I want to see the exception pages rather that the unspecific error pages
+            if (!config.Debug)
+            {
+                config.Runtime.GlobalFilters.Add(new ErrorRedirectingFilter());
+            }
 
-        private void ConfigureControls(DotvvmConfiguration config, string applicationPath)
-        {
-            config.Markup.AddMarkupControl("cc", "LanguageSwitch", "Pages/LanguageSwitch.dotcontrol");
-            config.Markup.AddMarkupControl("cc", "DiagnosticList", "Pages/Step/DiagnosticList.dotcontrol");
-            config.Markup.AddMarkupControl("cc", "FinishDialog", "Pages/Step/FinishDialog.dotcontrol");
+            config.Markup.AddMarkupControl("cc",
+                "LanguageSwitch", 
+                "Pages/LanguageSwitch.dotcontrol");
+            config.Markup.AddMarkupControl("cc",
+                "DiagnosticList",
+                "Pages/Step/DiagnosticList.dotcontrol");
+            config.Markup.AddMarkupControl("cc",
+                "FinishDialog",
+                "Pages/Step/FinishDialog.dotcontrol");
             config.Markup.AddCodeControls("cc", typeof(MonacoEditor));
-        }
 
-        private void ConfigureResources(DotvvmConfiguration config, string applicationPath)
-        {
-            config.Resources.Register(
-                name: "MonacoLoader",
-                resource: new ScriptResource(new FileResourceLocation("~/wwwroot/libs/monaco-editor/min/vs/loader.js")));
-            config.Resources.Register(
-                name: "AppJS",
-                resource: new ScriptResource(new FileResourceLocation("~/wwwroot/scripts/app.js"))
-                {
-                    Dependencies = new[] { "MonacoLoader" }
-                });
-            config.Resources.Register(
-                name: "StyleCSS",
-                resource: new StylesheetResource(new FileResourceLocation("~/wwwroot/css/style.css")));
-        }
+            if (config.Debug)
+            {
+                config.RouteTable.Add(
+                    routeName: "Test",
+                    url: "test/{LessonMoniker}/{VariantMoniker}/{StepMoniker}",
+                    virtualPath: "Pages/Test/Test.dothtml",
+                    defaultValues: new
+                    {
+                        LessonMoniker = "010_concepts",
+                        VariantMoniker = "en",
+                        StepMoniker = "10_viewmodel"
+                    });
+            }
 
-        private void ConfigureRoutes(DotvvmConfiguration config, string applicationPath)
-        {
-            config.RouteTable.Add(
-                routeName: "Test",
-                url: "test/{LessonMoniker}/{VariantMoniker}/{StepMoniker}",
-                virtualPath: "Pages/Test/Test.dothtml",
-                defaultValues: new { LessonMoniker = "010_concepts", VariantMoniker = "en", StepMoniker = "10_viewmodel" });
             config.RouteTable.Add(
                 routeName: "Default",
                 url: "{Language}",
@@ -81,10 +84,24 @@ namespace DotvvmAcademy.Web
                 routeName: "Archive",
                 url: "archive/{Language}/{Lesson}/{Step}",
                 presenterType: typeof(ArchivePresenter));
-            if (!config.Debug)
-            {
-                config.Runtime.GlobalFilters.Add(new ErrorRedirectingFilter());
-            }
+
+            config.Resources.Register(
+                name: "MonacoLoader",
+                resource: new ScriptResource(new FileResourceLocation("~/wwwroot/libs/monaco-editor/min/vs/loader.js")));
+            config.Resources.Register(
+                name: "AppJS",
+                resource: new ScriptResource(new FileResourceLocation("~/wwwroot/scripts/app.js"))
+                {
+                    Dependencies = new[] { "MonacoLoader" }
+                });
+            config.Resources.Register(
+                name: "StyleCSS",
+                resource: new StylesheetResource(new FileResourceLocation("~/wwwroot/css/style.css")));
+        }
+
+        public void ConfigureServices(IDotvvmServiceCollection options)
+        {
+            options.AddDefaultTempStorages("temp");
         }
     }
 }
