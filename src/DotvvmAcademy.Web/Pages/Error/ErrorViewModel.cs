@@ -19,7 +19,7 @@ namespace DotvvmAcademy.Web.Pages.Error
 
         public override Task Load()
         {
-            Languages = UILanguage.AvailableLanguages.Select(LanguageOption.Create)
+            Languages = DotvvmStartup.EnabledCultures.Select(LanguageOption.Create)
                 .ToList();
 
             ErrorTitle = UIResources.ResourceManager.GetString($"Error_{ErrorCode}Title");

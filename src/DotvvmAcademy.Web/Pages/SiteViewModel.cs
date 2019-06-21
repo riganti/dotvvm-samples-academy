@@ -6,8 +6,8 @@ namespace DotvvmAcademy.Web.Pages
 {
     public abstract class SiteViewModel : DotvvmViewModelBase
     {
-        public const string DefaultLanguageMoniker = "en";
         public bool IsLandingPage { get; set; }
+
         [Bind(Direction.ServerToClientFirstRequest)]
         public LanguageOption Language { get; set; }
 
@@ -17,12 +17,14 @@ namespace DotvvmAcademy.Web.Pages
 
         [Bind(Direction.ServerToClientFirstRequest)]
         public List<LanguageOption> Languages { get; set; }
+
         public string CurrentRoute => Context.Route.RouteName;
+
         public override Task Init()
         {
             if (string.IsNullOrEmpty(LanguageMoniker))
             {
-                LanguageMoniker = DefaultLanguageMoniker;
+                LanguageMoniker = DotvvmStartup.DefaultCulture;
             }
             Language = LanguageOption.Create(LanguageMoniker);
             return base.Init();

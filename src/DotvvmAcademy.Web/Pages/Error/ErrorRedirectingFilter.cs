@@ -35,9 +35,9 @@ namespace DotvvmAcademy.Web.Pages.Error
 
         private void Redirect(IDotvvmRequestContext context)
         {
-            var language = UILanguage.DefaultLanguage;
+            var language = DotvvmStartup.DefaultCulture;
             if (context.Parameters.ContainsKey("Language")
-                && UILanguage.AvailableLanguages.Contains(context.Parameters["Language"]))
+                && DotvvmStartup.EnabledCultures.Contains(context.Parameters["Language"]))
             {
                 language = (string)context.Parameters["Language"];
             }

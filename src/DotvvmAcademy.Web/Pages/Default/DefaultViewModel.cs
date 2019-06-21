@@ -27,7 +27,7 @@ namespace DotvvmAcademy.Web.Pages.Default
 
         public override async Task Load()
         {
-            Languages = UILanguage.AvailableLanguages
+            Languages = DotvvmStartup.EnabledCultures
                 .Where(l => l != LanguageMoniker)
                 .Select(LanguageOption.Create)
                 .ToList();
