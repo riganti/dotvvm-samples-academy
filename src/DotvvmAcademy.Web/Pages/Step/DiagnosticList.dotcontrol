@@ -1,6 +1,7 @@
 ﻿@viewModel System.Object, mscorlib
 @baseType DotvvmAcademy.Web.Pages.Step.DiagnosticList, DotvvmAcademy.Web
 @import DotvvmAcademy.Web.Pages.Step
+@import DotvvmAcademy.Web.Resources.Localization
 
 <dot:GridView DataSource="{value: _control.Diagnostics}"
               ShowHeaderWhenNoData="true"
@@ -10,14 +11,14 @@
         <dot:GridViewTemplateColumn Width="3rem">
             <img src="{value: "/images/Icons/diagnostic_" + Severity.ToString() + ".svg"}" />
         </dot:GridViewTemplateColumn>
-        <dot:GridViewTextColumn HeaderText="Message"
+        <dot:GridViewTextColumn HeaderText="{resource: UIResources.DiagnosticList_MessageHeader}"
                                 Width="20rem"
                                 ValueBinding="{value: Message}" />
         <dot:GridViewTextColumn HeaderText="Line"
-                                ValueBinding="{value: StartLineNumber}"
+                                ValueBinding="{resource: UIResources.DiagnosticList_LineHeader}"
                                 Width="6rem" />
         <dot:GridViewTextColumn HeaderText="Column"
-                                ValueBinding="{value: StartColumn}"
+                                ValueBinding="{value: UIResources.DiagnosticList_ColumnHeader}"
                                 Width="6rem" />
     </Columns>
 </dot:GridView>

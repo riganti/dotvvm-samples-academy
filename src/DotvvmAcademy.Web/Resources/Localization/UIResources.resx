@@ -245,4 +245,13 @@ We will explain everything to you in a few easy lessons.</value>
   <data name="Btn_NextStepTooltip" xml:space="preserve">
     <value>Validate and Continue</value>
   </data>
+  <data name="DiagnosticList_MessageHeader" xml:space="preserve">
+    <value>Messsage</value>
+  </data>
+  <data name="DiagnosticList_LineHeader" xml:space="preserve">
+    <value>Line</value>
+  </data>
+  <data name="DiagnosticList_ColumnHeader" xml:space="preserve">
+    <value>Column</value>
+  </data>
 </root>

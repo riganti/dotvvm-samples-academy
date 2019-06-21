@@ -233,4 +233,13 @@ Vše ostatní vám vysvětlíme v několika jednoduchých lekcích.</value>
   <data name="Btn_NextStepTooltip" xml:space="preserve">
     <value>Zkontrolovat a pokračovat dále</value>
   </data>
+  <data name="DiagnosticList_MessageHeader" xml:space="preserve">
+    <value>Popis</value>
+  </data>
+  <data name="DiagnosticList_LineHeader" xml:space="preserve">
+    <value>Řádek</value>
+  </data>
+  <data name="DiagnosticList_ColumnHeader" xml:space="preserve">
+    <value>Sloupec</value>
+  </data>
 </root>

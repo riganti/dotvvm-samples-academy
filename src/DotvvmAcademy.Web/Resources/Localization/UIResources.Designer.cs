@@ -309,6 +309,33 @@ namespace DotvvmAcademy.Web.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Column.
+        /// </summary>
+        public static string DiagnosticList_ColumnHeader {
+            get {
+                return ResourceManager.GetString("DiagnosticList_ColumnHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Line.
+        /// </summary>
+        public static string DiagnosticList_LineHeader {
+            get {
+                return ResourceManager.GetString("DiagnosticList_LineHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Messsage.
+        /// </summary>
+        public static string DiagnosticList_MessageHeader {
+            get {
+                return ResourceManager.GetString("DiagnosticList_MessageHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lesson .
         /// </summary>
         public static string Dialog_Text {
