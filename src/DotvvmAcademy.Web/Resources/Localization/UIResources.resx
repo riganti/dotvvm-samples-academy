@@ -239,4 +239,10 @@ We will explain everything to you in a few easy lessons.</value>
   <data name="Error_BackHome" xml:space="preserve">
     <value>Back to Lessons</value>
   </data>
+  <data name="Btn_DownloadSolution" xml:space="preserve">
+    <value>Download Solution</value>
+  </data>
+  <data name="Btn_NextStepTooltip" xml:space="preserve">
+    <value>Validate and Continue</value>
+  </data>
 </root>

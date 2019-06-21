@@ -227,4 +227,10 @@ Vše ostatní vám vysvětlíme v několika jednoduchých lekcích.</value>
   <data name="Error_BackHome" xml:space="preserve">
     <value>Zpět k lekcím</value>
   </data>
+  <data name="Btn_DownloadSolution" xml:space="preserve">
+    <value>Stáhnout Solution</value>
+  </data>
+  <data name="Btn_NextStepTooltip" xml:space="preserve">
+    <value>Zkontrolovat a pokračovat dále</value>
+  </data>
 </root>

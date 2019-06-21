@@ -61,7 +61,7 @@
                                Param-Language="{value: LanguageMoniker}"
                                Param-Lesson="{value: LessonMoniker}"
                                Param-Step="{value: StepMoniker}"
-                               Text="Download Solution"
+                               Text="{resource: UIResources.Btn_DownloadSolution}"
                                class="button" />
             </div>
         </div>
@@ -98,7 +98,7 @@
                             class="button with-icon with-tooltip"
                             Visible="{value: Step.NextStep != null}"
                             ButtonTagName="button"
-                            Tooltip="Validate and Continue">
+                            Tooltip="{resource: UIResources.Btn_NextStepTooltip}">
                     <span InnerText="{resource: UIResources.Btn_NextStep}" />
                     <img src="~/images/Icons/next.svg" />
                 </dot:Button>

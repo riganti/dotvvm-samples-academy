@@ -210,6 +210,15 @@ namespace DotvvmAcademy.Web.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Download Solution.
+        /// </summary>
+        public static string Btn_DownloadSolution {
+            get {
+                return ResourceManager.GetString("Btn_DownloadSolution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Finish.
         /// </summary>
         public static string Btn_Finish {
@@ -251,6 +260,15 @@ namespace DotvvmAcademy.Web.Resources.Localization {
         public static string Btn_NextStep {
             get {
                 return ResourceManager.GetString("Btn_NextStep", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Validate and Continue.
+        /// </summary>
+        public static string Btn_NextStepTooltip {
+            get {
+                return ResourceManager.GetString("Btn_NextStepTooltip", resourceCulture);
             }
         }
         
