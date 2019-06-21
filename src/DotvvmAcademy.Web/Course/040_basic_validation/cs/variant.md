@@ -1,5 +1,5 @@
 ﻿---
-Title: Basic validation
+Title: Základní validace
 Image: /images/Icons/ico-lesson-4.svg
 Status: Released
 ---
