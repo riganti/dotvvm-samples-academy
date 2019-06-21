@@ -4,12 +4,12 @@
 
 <dot:Content ContentPlaceHolderID="MetaContent">
     <title>{{resource: LessonName + ": " + Step.Name}}</title>
-    <meta name="description" content="{resource: "LessonDescription"}" />
-    <meta itemprop="description" content="{resource: "LessonDescription"}" />
+    <meta name="description" content="{resource: LessonDescription}" />
+    <meta itemprop="description" content="{resource: LessonDescription}" />
     <meta property="og:title" content="DotVVM Academy" />
-    <meta property="og:description" content="{resource: "LessonDescription"}" />
+    <meta property="og:description" content="{resource: LessonDescription}" />
     <meta name="twitter:title" content="DotVVM Academy" />
-    <meta name="twitter:description" content="{resource: "LessonDescription"}" />
+    <meta name="twitter:description" content="{resource: LessonDescription}" />
 </dot:Content>
 
 <dot:Content ContentPlaceHolderID="NavContent">

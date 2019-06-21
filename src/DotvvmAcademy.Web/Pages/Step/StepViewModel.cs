@@ -22,6 +22,9 @@ namespace DotvvmAcademy.Web.Pages.Step
 
         public bool IsFinishDialogVisible { get; set; }
 
+        [Bind(Direction.None)]
+        public string LessonDescription { get; set; }
+
         [FromRoute("Lesson")]
         [Bind(Direction.ServerToClientFirstRequest)]
         public string LessonMoniker { get; set; }
@@ -49,6 +52,7 @@ namespace DotvvmAcademy.Web.Pages.Step
 
             // load step
             var variant = lesson.GetVariant(LanguageMoniker);
+            LessonDescription = await workspace.GetLessonVariantAnnotation(variant);
             LessonName = variant.Name;
             Steps = variant.Steps.Select(s => new StepListDetail
             {
