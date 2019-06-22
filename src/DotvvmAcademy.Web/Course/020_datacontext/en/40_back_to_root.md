@@ -14,8 +14,8 @@ We need buttons to call the `Load` and `Unload` methods.
 Even inside a Binding Context that is deep within the hierarchy, you can access the ViewModel using the `_root` pseudo-variable:
 
 ```dothtml
-<dot:Button Click="{command: _root.Create()}"
-            Text="Create" />
+<dot:Button Click="{command: _root.Unload()}"
+            Text="Unload" />
 ```
 
 > There is a number of other [binding pseudo-variables](https://www.dotvvm.com/docs/tutorials/basics-binding-context/latest) such as `_parent`, `_collection` or `_this`.

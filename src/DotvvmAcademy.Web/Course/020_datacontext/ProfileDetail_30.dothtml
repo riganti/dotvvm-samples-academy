@@ -6,16 +6,16 @@
     <meta charset="utf-8"/>
 </head>
 <body>
-    <dot:Button Click="{command: Create()}"
-                Text="Create"/>
+    <dot:Button Click="{command: Load()}"
+                Text="Load"/>
     <div DataContext="{value: Profile}">
         <span>First Name: </span>
         <dot:TextBox Text="{value: FirstName}"/>
 
         <span>Last Name: </span>
         <dot:TextBox Text="{value: LastName}"/>
-        <dot:Button Click="{command: _root.Delete()}"
-                    Text="Delete"/>
+        <dot:Button Click="{command: _root.Unload()}"
+                    Text="Unload"/>
     </div>
 </body>
 </html>

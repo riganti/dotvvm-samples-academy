@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
-using Microsoft.Extensions.Logging;
 
 namespace DotvvmAcademy.Course.ProfileDetail
 {
@@ -15,9 +13,6 @@ namespace DotvvmAcademy.Course.ProfileDetail
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDataProtection();
-            services.AddAuthorization();
-            services.AddWebEncoders();
             services.AddDotVVM();
         }
     }
