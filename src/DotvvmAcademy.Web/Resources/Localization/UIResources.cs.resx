@@ -184,7 +184,7 @@ Vše ostatní vám vysvětlíme v několika jednoduchých lekcích.</value>
     <value>Zobrazit řešení</value>
   </data>
   <data name="Btn_Copy" xml:space="preserve">
-    <value>Kopírovat</value>
+    <value>Zkopírovat</value>
   </data>
   <data name="FinishDialog_Title" xml:space="preserve">
     <value>Gratulujeme!</value>
@@ -241,5 +241,11 @@ Vše ostatní vám vysvětlíme v několika jednoduchých lekcích.</value>
   </data>
   <data name="DiagnosticList_ColumnHeader" xml:space="preserve">
     <value>Sloupec</value>
+  </data>
+  <data name="Base_MobileNotSupported" xml:space="preserve">
+    <value>Tato aplikace nepodporuje mobilní prohlížeče.</value>
+  </data>
+  <data name="Btn_CopyTooltip" xml:space="preserve">
+    <value>Zkopírovat do schránky</value>
   </data>
 </root>

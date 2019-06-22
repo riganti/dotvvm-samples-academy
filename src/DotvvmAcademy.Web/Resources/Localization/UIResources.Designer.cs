@@ -174,6 +174,15 @@ namespace DotvvmAcademy.Web.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This application is not supported on mobile browsers..
+        /// </summary>
+        public static string Base_MobileNotSupported {
+            get {
+                return ResourceManager.GetString("Base_MobileNotSupported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Samples.
         /// </summary>
         public static string Base_Samples {
@@ -206,6 +215,15 @@ namespace DotvvmAcademy.Web.Resources.Localization {
         public static string Btn_Copy {
             get {
                 return ResourceManager.GetString("Btn_Copy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy to Clipboard.
+        /// </summary>
+        public static string Btn_CopyTooltip {
+            get {
+                return ResourceManager.GetString("Btn_CopyTooltip", resourceCulture);
             }
         }
         

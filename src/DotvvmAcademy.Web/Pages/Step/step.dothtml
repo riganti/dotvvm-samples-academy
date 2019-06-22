@@ -19,7 +19,15 @@
 <dot:Content ContentPlaceHolderID="MainContent">
     <section class="section-lesson">
         <div class="mobile-message">
-            <h3>This application <b>is not</b> supported in mobile browsers or mobile web frameworks.</h3>
+            <h3>{{resource: UIResources.Base_MobileNotSupported}}</h3>
+        </div>
+        <div class="code__header-template">
+            <div class="code__header">
+                <button class="code__copy-button"
+                        title="{resource: UIResources.Btn_CopyTooltip}">
+                    <span>{{resource: UIResources.Btn_Copy}}</span>
+                </button>
+            </div>
         </div>
         <div class="container-large with-flex">
             <dot:HtmlLiteral Html="{resource: Step.Html}"

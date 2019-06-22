@@ -254,4 +254,10 @@ We will explain everything to you in a few easy lessons.</value>
   <data name="DiagnosticList_ColumnHeader" xml:space="preserve">
     <value>Column</value>
   </data>
+  <data name="Base_MobileNotSupported" xml:space="preserve">
+    <value>This application is not supported on mobile browsers.</value>
+  </data>
+  <data name="Btn_CopyTooltip" xml:space="preserve">
+    <value>Copy to Clipboard</value>
+  </data>
 </root>
