@@ -8,16 +8,16 @@
 <body>
     <div>
         <dot:TextBox Text="{value: Email}" />
-        <dot:Validator Value="{value: Email}" 
-                       ShowErrorMessageText="true"/>
+        <dot:Validator Value="{value: Email}"
+                       ShowErrorMessageText="true" />
     </div>
     <div>
         <dot:TextBox Text="{value: Password}" />
-        <dot:Validator Value="{value: Password}" 
-                       ShowErrorMessageText="true"/>
+        <dot:Validator Value="{value: Password}"
+                       ShowErrorMessageText="true" />
     </div>
 
     <dot:Button Click="{command: LogIn()}"
-                Text="Log in"/>
+                Text="Log in" />
 </body>
 </html>

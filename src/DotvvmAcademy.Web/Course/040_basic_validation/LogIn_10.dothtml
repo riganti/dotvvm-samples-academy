@@ -1,4 +1,4 @@
-@viewModel DotvvmAcademy.Course.LogIn.LogInViewModel
+﻿@viewModel DotvvmAcademy.Course.LogIn.LogInViewModel
 
 <!doctype html>
 <html>

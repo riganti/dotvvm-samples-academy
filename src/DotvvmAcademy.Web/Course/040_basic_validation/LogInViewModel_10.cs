@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using DotVVM.Framework.ViewModel;
 using DotVVM.Framework.ViewModel.Validation;
