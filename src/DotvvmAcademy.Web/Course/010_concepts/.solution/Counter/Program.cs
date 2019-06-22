@@ -12,12 +12,9 @@ namespace DotvvmAcademy.Course.Counter
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
+            WebHost.CreateDefaultBuilder<Startup>(args)
+                .Build()
+                .Run();
         }
-
-        public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .Build();
     }
 }
