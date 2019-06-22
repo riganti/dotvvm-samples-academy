@@ -1,4 +1,4 @@
-@viewModel DotvvmAcademy.Course.ToDoList.ToDoViewModel
+﻿@viewModel DotvvmAcademy.Course.ToDoList.ToDoViewModel
 
 <!doctype html>
 <html>
@@ -7,7 +7,7 @@
 </head>
 <body>
     <dot:Repeater DataSource="{value: Items}">
-        <p>{{value: _this}}</p>
+        <p>{{value: Text}}</p>
         <dot:Button Click="{command: _root.Remove(_this)}"
                     Text="Remove Item" />
     </dot:Repeater>
