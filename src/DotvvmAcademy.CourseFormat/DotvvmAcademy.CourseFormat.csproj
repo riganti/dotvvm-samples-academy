@@ -4,6 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>latest</LangVersion>
     <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
+    <BuildInParallel>false</BuildInParallel>
   </PropertyGroup>
 
   <ItemGroup>
@@ -38,6 +39,7 @@
   <Target BeforeTargets="BeforeBuild" Name="PublishSandbox">
     <MSBuild Projects="../DotvvmAcademy.CourseFormat.Sandbox/DotvvmAcademy.CourseFormat.Sandbox.csproj"
              Targets="Publish"
+             BuildInParallel="false"
              Properties="Configuration=$(Configuration);
                          Platform=$(Platform);
                          PublishDir=$(MSBuildProjectDirectory)/sandbox;"/>
