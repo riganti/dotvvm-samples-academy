@@ -36,15 +36,22 @@
   </ItemGroup>
 
   <Target BeforeTargets="BeforeBuild" Name="PublishSandbox">
-    <MSBuild Projects="../DotvvmAcademy.CourseFormat.Sandbox/DotvvmAcademy.CourseFormat.Sandbox.csproj" Targets="Publish" Properties="Configuration=$(Configuration);&#xD;&#xA;                         Platform=$(Platform);&#xD;&#xA;                         PublishDir=$(MSBuildProjectDirectory)/sandbox;" />
+    <MSBuild Projects="../DotvvmAcademy.CourseFormat.Sandbox/DotvvmAcademy.CourseFormat.Sandbox.csproj"
+             Targets="Publish"
+             Properties="Configuration=$(Configuration);
+                         Platform=$(Platform);
+                         PublishDir=$(MSBuildProjectDirectory)/sandbox;"/>
     <ItemGroup>
-      <Content Include="sandbox/**/*" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always" />
+      <Content Include="sandbox/**/*"
+               CopyToOutputDirectory="Always"
+               CopyToPublishDirectory="Always"/>
     </ItemGroup>
   </Target>
 
   <Target BeforeTargets="Clean" Name="CleanSandbox">
-    <MSBuild Projects="../DotvvmAcademy.CourseFormat.Sandbox/DotvvmAcademy.CourseFormat.Sandbox.csproj" Targets="Clean" />
-    <RemoveDir Directories="sandbox" />
+    <MSBuild Projects="../DotvvmAcademy.CourseFormat.Sandbox/DotvvmAcademy.CourseFormat.Sandbox.csproj"
+             Targets="Clean"/>
+    <RemoveDir Directories="sandbox"/>
   </Target>
   
 </Project>
