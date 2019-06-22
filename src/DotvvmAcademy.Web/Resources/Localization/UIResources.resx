@@ -246,7 +246,7 @@ We will explain everything to you in a few easy lessons.</value>
     <value>Validate and Continue</value>
   </data>
   <data name="DiagnosticList_MessageHeader" xml:space="preserve">
-    <value>Messsage</value>
+    <value>Message</value>
   </data>
   <data name="DiagnosticList_LineHeader" xml:space="preserve">
     <value>Line</value>

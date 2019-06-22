@@ -363,7 +363,7 @@ namespace DotvvmAcademy.Web.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Messsage.
+        ///   Looks up a localized string similar to Message.
         /// </summary>
         public static string DiagnosticList_MessageHeader {
             get {
