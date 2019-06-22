@@ -24,5 +24,5 @@ I v rámci binding contextu, který je zanořen hluboko v hierarchii ViewModelu,
 
 ## Úkoly
 
-- Přidejte komponentu `<dot:Button>` _mimo_ element `<div>` a do její vlastnosti `Click` nabindujte metodu `Load`.
-- Přidejte komponentu `<dot:Button>` _dovnitř_ elementu `<div>`, které při kliknutí zavolá metodu `Unload`. Nezapomeňte použít `_root` - metoda `Unload` není definována v objektu `Profile`, ale ve ViewModelu.
+- Přidejte komponentu `<dot:Button>` _mimo_ element `<div>` a do její vlastnosti `Click` nabindujte metodu `Create`.
+- Přidejte komponentu `<dot:Button>` _dovnitř_ elementu `<div>`, které při kliknutí zavolá metodu `Delete`. Nezapomeňte použít `_root` - metoda `Delete` není definována v objektu `Profile`, ale ve ViewModelu.
