@@ -127,6 +127,15 @@ namespace DotvvmAcademy.Web.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Interactive sample.
+        /// </summary>
+        public static string Base_InteractiveSample {
+            get {
+                return ResourceManager.GetString("Base_InteractiveSample", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to česky.
         /// </summary>
         public static string Base_Language_cs {
@@ -323,6 +332,15 @@ namespace DotvvmAcademy.Web.Resources.Localization {
         public static string Btn_StartLesson {
             get {
                 return ResourceManager.GetString("Btn_StartLesson", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Success.
+        /// </summary>
+        public static string Btn_Success {
+            get {
+                return ResourceManager.GetString("Btn_Success", resourceCulture);
             }
         }
         

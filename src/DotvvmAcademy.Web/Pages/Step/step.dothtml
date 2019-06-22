@@ -61,7 +61,7 @@
             </div>
             <div IncludeInPage="{resource: Step.HasEmbeddedView}"
                  class="embedded-view">
-                <h2 class="embedded-view__header" InnerText="{resource: "Interactive sample: " + LessonName}" />
+                <h2 class="embedded-view__header" InnerText="{resource: UIResources.Base_InteractiveSample + ": " + LessonName}" />
                 <iframe class="embedded-view__content" src="{resource: "/embeddedView/" + LanguageMoniker + "/" + LessonMoniker + "/" + StepMoniker}" />
             </div>
             <div IncludeInPage="{resource: Step.HasArchive}">
@@ -107,7 +107,8 @@
                             Visible="{value: Step.NextStep != null}"
                             ButtonTagName="button"
                             Tooltip="{resource: UIResources.Btn_NextStepTooltip}">
-                    <span InnerText="{resource: UIResources.Btn_NextStep}" />
+                    <span class="default" InnerText="{resource: UIResources.Btn_NextStep}" />
+                    <span class="success" InnerText="{resource: UIResources.Btn_Success}" />
                     <img src="~/images/Icons/next.svg" />
                 </dot:Button>
                 <dot:Button Click="{staticCommand: IsFinishDialogVisible = true}"

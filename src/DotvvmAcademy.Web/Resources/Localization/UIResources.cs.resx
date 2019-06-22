@@ -248,4 +248,10 @@ Vše ostatní vám vysvětlíme v několika jednoduchých lekcích.</value>
   <data name="Btn_CopyTooltip" xml:space="preserve">
     <value>Zkopírovat do schránky</value>
   </data>
+  <data name="Base_InteractiveSample" xml:space="preserve">
+    <value>Zkuste</value>
+  </data>
+  <data name="Btn_Success" xml:space="preserve">
+    <value>Úspěch</value>
+  </data>
 </root>

@@ -260,4 +260,10 @@ We will explain everything to you in a few easy lessons.</value>
   <data name="Btn_CopyTooltip" xml:space="preserve">
     <value>Copy to Clipboard</value>
   </data>
+  <data name="Base_InteractiveSample" xml:space="preserve">
+    <value>Interactive sample</value>
+  </data>
+  <data name="Btn_Success" xml:space="preserve">
+    <value>Success</value>
+  </data>
 </root>

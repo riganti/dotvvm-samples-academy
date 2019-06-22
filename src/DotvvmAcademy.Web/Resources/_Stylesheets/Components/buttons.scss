@@ -16,6 +16,10 @@
     font-family: $font-text;
     font-size: $font-size-m;
 
+    span.success {
+        display: none;
+    }
+
     &:hover, &:focus {
         text-decoration: none;
         background-color: $color-hover;
@@ -164,7 +168,7 @@
         position: relative;
         min-height: 4rem;
 
-        span, img {
+        span.default, img {
             display: none;
         }
 
@@ -173,14 +177,13 @@
             border-color: darken($color-btn-success, 10%);
         }
 
-        &:before {
+        span.success {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-70%, -50%);
             color: $color-font;
             font-size: $font-size-m;
-            content: "Success";
             display: block;
         }
 
