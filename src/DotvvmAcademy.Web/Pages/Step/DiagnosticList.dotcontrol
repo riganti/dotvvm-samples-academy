@@ -14,11 +14,11 @@
         <dot:GridViewTextColumn HeaderText="{resource: UIResources.DiagnosticList_MessageHeader}"
                                 Width="20rem"
                                 ValueBinding="{value: Message}" />
-        <dot:GridViewTextColumn HeaderText="Line"
-                                ValueBinding="{resource: UIResources.DiagnosticList_LineHeader}"
+        <dot:GridViewTextColumn HeaderText="{resource: UIResources.DiagnosticList_LineHeader}"
+                                ValueBinding="{value: StartLineNumber}"
                                 Width="6rem" />
-        <dot:GridViewTextColumn HeaderText="Column"
-                                ValueBinding="{value: UIResources.DiagnosticList_ColumnHeader}"
+        <dot:GridViewTextColumn HeaderText="{resource: UIResources.DiagnosticList_ColumnHeader}"
+                                ValueBinding="{value: StartColumn}"
                                 Width="6rem" />
     </Columns>
 </dot:GridView>

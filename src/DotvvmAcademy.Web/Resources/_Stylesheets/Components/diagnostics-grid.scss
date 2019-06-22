@@ -3,16 +3,18 @@
 .diagnostics-grid {
     width: 100%;
     background-color: $color-vs-dark;
-    
+
     thead {
         th {
             text-align: left;
             padding: .5rem 0;
             padding-left: .5rem;
-            border-left: $outline-width solid $color-vs-hover;
+            border-style: solid;
+            border-color: $color-vs-hover;
+            border-width: $outline-width 0 $outline-width $outline-width;
 
             &:first-child {
-                border: none;
+                border-left: none;
             }
 
             span {
