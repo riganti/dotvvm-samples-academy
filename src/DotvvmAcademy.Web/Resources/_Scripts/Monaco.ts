@@ -84,7 +84,10 @@ namespace DotvvmAcademy {
         }
 
         resize() {
-            this.editor.layout({ width: this.element.clientWidth, height: this.element.clientHeight });
+            this.editor.layout({
+                width: this.element.parentElement.clientWidth,
+                height: this.element.parentElement.clientHeight
+            });
         }
 
         onMarkersChanged() {

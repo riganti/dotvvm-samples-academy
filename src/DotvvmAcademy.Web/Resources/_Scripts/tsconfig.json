@@ -6,7 +6,7 @@
     "noEmitOnError": true,
     "noImplicitReturns": true,
     "removeComments": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "target": "es5"
   },
   "compileOnSave": false,
