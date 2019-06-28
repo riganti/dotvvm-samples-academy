@@ -6,8 +6,8 @@ using DotvvmAcademy.Validation.Unit;
 
 Unit.GetControl("/html/body/dot:Button")
     .GetProperty("@Click")
-        .RequireBinding("Create()", AllowedBinding.Command);
+        .RequireBinding("Load()", AllowedBinding.Command);
 
 div.GetControl("dot:Button")
     .GetProperty("@Click")
-        .RequireBinding("_root.Delete()", AllowedBinding.Command);
+        .RequireBinding("_root.Unload()", AllowedBinding.Command);
