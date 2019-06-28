@@ -1,0 +1,163 @@
+﻿@import "../Base/_global.scss";
+
+code {
+    font-size: 1.7rem;
+}
+
+.code {
+
+    &__header-template {
+        display: none;
+    }
+
+    &__header {
+        flex: 0 0 100%;
+        max-width: 100%;
+        width: 100%;
+        background-color: $color-vs-dark;
+        display: flex;
+        border-bottom: 1px solid $color-vs-hover;
+        flex-direction: row;
+        justify-content: flex-end;
+    }
+
+    &__copy-button {
+        position: relative;
+        width: 9rem;
+        height: 4rem;
+        display: block;
+        background-color: $color-vs-dark;
+        border: none;
+        transition: $animate-all;
+        border-left: 1px solid $color-vs-hover;
+
+        &:hover, &:focus {
+            background-color: $color-vs-hover;
+            cursor: pointer;
+            outline: none;
+        }
+
+        > span {
+            font-size: $font-size-m;
+            color: $color-vs-text;
+            transition: $animate-all;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: block;
+        }
+    }
+
+    &__bg {
+        background-color: $color-vs-dark;
+        flex: 0 0 55%;
+        width: 55%;
+        overflow: hidden;
+        max-width: 55%;
+        min-height: 70vh;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-content: space-between;
+
+        > div:first-of-type {
+            flex: 1 0 auto;
+        }
+
+        > div:last-of-type {
+            flex: 0 1 20rem;
+            overflow: auto;
+        }
+
+        > * {
+            width: 100%;
+            flex: 0 0 auto;
+            max-width: 100%;
+        }
+
+        @include res-max-desktop-large {
+            flex: 0 0 100%;
+            width: 100%;
+            max-width: 100%;
+        }
+    }
+
+    &__container {
+        width: 100%;
+        border: none;
+        background-color: $color-vs-dark;
+        align-self: flex-start;
+
+        @include res-max-desktop-small {
+            margin: 1rem auto;
+        }
+    }
+
+    &__top-bar {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: flex-end;
+        background-color: $color-vs-dark;
+        border-bottom: 1px solid $color-vs-hover;
+    }
+
+    &__button {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: center;
+        min-width: 12rem;
+        width: auto;
+        background-color: $color-vs-dark;
+        border: none;
+        padding: 0 1rem;
+        height: 4rem;
+        transition: $animate-all;
+        border-left: 1px solid $color-vs-hover;
+
+        img {
+            display: block;
+            width: 1.6rem;
+            height: 1.6rem;
+            margin-left: .5rem;
+        }
+
+        &:focus {
+            outline: none;
+        }
+
+        span {
+            color: $color-vs-text;
+            font-size: $font-size-m;
+        }
+
+        &:hover {
+            background-color: $color-vs-hover;
+            cursor: pointer;
+        }
+
+        &:last-child {
+            background-color: $color-secondary;
+
+            img {
+                width: 2rem;
+                height: 2rem;
+            }
+
+            span {
+                color: $color-font;
+            }
+
+            &:hover {
+                background-color: $color-hover;
+
+                span {
+                    color: $color-font;
+                }
+            }
+        }
+    }
+}

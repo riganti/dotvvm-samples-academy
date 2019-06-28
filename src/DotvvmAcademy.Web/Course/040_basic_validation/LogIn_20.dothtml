@@ -1,0 +1,23 @@
+﻿@viewModel DotvvmAcademy.Course.LogIn.LogInViewModel
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <div>
+        <dot:TextBox Text="{value: Email}" />
+        <dot:Validator Value="{value: Email}" 
+                       ShowErrorMessageText="true"/>
+    </div>
+    <div>
+        <dot:TextBox Text="{value: Password}" />
+        <dot:Validator Value="{value: Password}" 
+                       ShowErrorMessageText="true"/>
+    </div>
+
+    <dot:Button Click="{command: LogIn()}"
+                Text="Log in"/>
+</body>
+</html>

@@ -1,0 +1,108 @@
+﻿@import "../../../Base/global";
+
+.section-lesson {
+    background-color: $color-white;
+
+    > .container-large.with-flex {
+        @include res-max-tablet {
+            display: none;
+        }
+    }
+
+    > .mobile-message {
+        display: none;
+
+
+        @include res-max-tablet {
+            display: block;
+            padding: 0 2rem;
+            text-align: center;
+            box-sizing: border-box;
+
+            h3 {
+                margin-top: 5rem;
+                background-color: $color-secondary;
+                font-size: $font-size-xl;
+                padding: 1rem;
+                box-sizing: border-box;
+                color: $color-font;
+                font-weight: 100;
+                font-family: $font-text;
+                border: .1rem solid $color-border;
+            }
+        }
+    }
+}
+
+.lesson-footer-container {
+    background-color: $color-transparent;
+    padding: 1rem 0;
+    transition: $animate-all;
+    width: 100%;
+
+    @include res-max-tablet {
+        display: none;
+    }
+
+    > .container-small {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+
+
+
+        > div {
+            flex: 0 0 50%;
+            max-width: 50%;
+            width: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+
+            @include res-max-desktop-large {
+                justify-content: center;
+                flex: 0 0 100%;
+                max-width: none;
+                width: 100%;
+            }
+
+            .button {
+                margin-right: 1rem;
+
+                &:first-child {
+                    display: block;
+                }
+            }
+        }
+
+        > div.ico-container {
+            justify-content: flex-start;
+
+            @include res-max-desktop-large {
+                justify-content: center;
+                margin-bottom: 2rem;
+            }
+
+            .error-ico img path {
+                fill: $color-error !important;
+            }
+
+            img {
+                height: 8rem;
+                margin-right: 2rem;
+
+                @include res-max-desktop-large {
+                    height: 4rem;
+                    margin-right: 1rem;
+                }
+            }
+
+            span {
+                color: $color-white;
+                font-size: $font-size-l;
+            }
+        }
+    }
+}

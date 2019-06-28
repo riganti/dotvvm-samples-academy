@@ -1,0 +1,13 @@
+@viewModel DotvvmAcademy.Course.ToDoList.ToDoViewModel
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <dot:Repeater DataSource="{value: Items}">
+        <p>{{value: Text}}</p>
+    </dot:Repeater>
+</body>
+</html>

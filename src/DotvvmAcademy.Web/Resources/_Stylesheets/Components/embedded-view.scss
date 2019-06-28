@@ -1,0 +1,37 @@
+﻿@import "../Base/_global.scss";
+
+.embedded-view {
+    flex: 0 0 calc(55% - 2px);
+    width: calc(55% - 2px);
+    max-width: calc(55% - 2px);
+
+    &__header {
+        background-color: $color-primary;
+        color: $color-white;
+        display: block;
+        font-size: $font-size-l;
+        margin: 0;
+        padding: .5rem 1rem;
+        font-weight: 300;
+        box-sizing: border-box;
+    }
+
+    &__content {
+        display: block;
+        width: calc(100% - 2px);
+        border: 1px solid $color-border;
+        border-top: none;
+        background-color: $color-white;
+        height: auto;
+    }
+
+    + div {
+        margin-top: 2rem;
+    }
+
+    @include res-max-desktop-large {
+        flex: 0 0 100%;
+        width: 100%;
+        max-width: 100%;
+    }
+}

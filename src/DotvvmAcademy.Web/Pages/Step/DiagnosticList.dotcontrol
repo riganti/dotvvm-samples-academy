@@ -1,0 +1,24 @@
+﻿@viewModel System.Object, mscorlib
+@baseType DotvvmAcademy.Web.Pages.Step.DiagnosticList, DotvvmAcademy.Web
+@import DotvvmAcademy.Web.Pages.Step
+@import DotvvmAcademy.Web.Resources.Localization
+
+<dot:GridView DataSource="{value: _control.Diagnostics}"
+              ShowHeaderWhenNoData="true"
+              class="diagnostics-grid"
+              RenderSettings.Mode="Client">
+    <Columns>
+        <dot:GridViewTemplateColumn Width="3rem">
+            <img src="{value: "/images/Icons/diagnostic_" + Severity.ToString() + ".svg"}" />
+        </dot:GridViewTemplateColumn>
+        <dot:GridViewTextColumn HeaderText="{resource: UIResources.DiagnosticList_MessageHeader}"
+                                Width="20rem"
+                                ValueBinding="{value: Message}" />
+        <dot:GridViewTextColumn HeaderText="{resource: UIResources.DiagnosticList_LineHeader}"
+                                ValueBinding="{value: StartLineNumber}"
+                                Width="6rem" />
+        <dot:GridViewTextColumn HeaderText="{resource: UIResources.DiagnosticList_ColumnHeader}"
+                                ValueBinding="{value: StartColumn}"
+                                Width="6rem" />
+    </Columns>
+</dot:GridView>

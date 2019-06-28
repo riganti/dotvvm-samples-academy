@@ -1,0 +1,269 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Base_MainTitle" xml:space="preserve">
+    <value>Learn DotVVM&lt;br&gt; in &lt;b&gt;few&lt;/b&gt; minutes</value>
+  </data>
+  <data name="Base_MainDescription" xml:space="preserve">
+    <value>Do you wonder how DotVVM works?&lt;br&gt;
+It’s easy – all you need to know is &lt;strong&gt;HTML&lt;/strong&gt;, &lt;strong&gt;C#&lt;/strong&gt; and basics of &lt;strong&gt;CSS&lt;/strong&gt;.&lt;br&gt;
+We will explain everything to you in a few easy lessons.</value>
+  </data>
+  <data name="Base_Documentation" xml:space="preserve">
+    <value>Documentation</value>
+  </data>
+  <data name="Base_Samples" xml:space="preserve">
+    <value>Samples</value>
+  </data>
+  <data name="Base_Tutorials" xml:space="preserve">
+    <value>Tutorials</value>
+  </data>
+  <data name="Base_ChooseLesson" xml:space="preserve">
+    <value>Choose a Lesson</value>
+  </data>
+  <data name="Base_CoffeeTitle" xml:space="preserve">
+    <value>Have a few minutes?&lt;br&gt;
+Watch &lt;strong&gt;DotVVM Coffee&lt;/strong&gt; videos!</value>
+  </data>
+  <data name="Btn_Coffee" xml:space="preserve">
+    <value>DotVVM Coffee</value>
+  </data>
+  <data name="Btn_StartCourse" xml:space="preserve">
+    <value>Run DotVVM Academy</value>
+  </data>
+  <data name="LangSwitcher_Class" xml:space="preserve">
+    <value>en</value>
+  </data>
+  <data name="LangSwitcher_Img" xml:space="preserve">
+    <value>images/Icons/Flag_US.svg</value>
+  </data>
+  <data name="LangSwitcher_Title" xml:space="preserve">
+    <value>Change language</value>
+  </data>
+  <data name="Base_CoffeeDescription" xml:space="preserve">
+    <value>A series of short videos that show various features and controls of DotVVM.</value>
+  </data>
+  <data name="Btn_StartLesson" xml:space="preserve">
+    <value>Start lesson</value>
+  </data>
+  <data name="Btn_NextStep" xml:space="preserve">
+    <value>Validate</value>
+  </data>
+  <data name="Btn_PreviousStep" xml:space="preserve">
+    <value>Previous</value>
+  </data>
+  <data name="Btn_Finish" xml:space="preserve">
+    <value>Finish</value>
+  </data>
+  <data name="Base_Language_en" xml:space="preserve">
+    <value>English</value>
+    <comment>Used in LanguageSwitch</comment>
+  </data>
+  <data name="Base_Language_cs" xml:space="preserve">
+    <value>česky</value>
+    <comment>Used in LanguageSwitch</comment>
+  </data>
+  <data name="Base_Language_ru" xml:space="preserve">
+    <value>русский</value>
+    <comment>Used in LangaageSwitch</comment>
+  </data>
+  <data name="Base_Correct_Solution" xml:space="preserve">
+    <value>Correct</value>
+  </data>
+  <data name="Base_Incorrect_Solution" xml:space="preserve">
+    <value>Incorrect</value>
+  </data>
+  <data name="Btn_Reset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="Btn_GetSolution" xml:space="preserve">
+    <value>Get Solution</value>
+  </data>
+  <data name="Btn_Copy" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="FinishDialog_Title" xml:space="preserve">
+    <value>Congratulations!</value>
+  </data>
+  <data name="FinishDialog_DescriptionStart" xml:space="preserve">
+    <value>Lesson </value>
+  </data>
+  <data name="FinishDialog_DescriptionEnd" xml:space="preserve">
+    <value> has been successfully completed.</value>
+  </data>
+  <data name="Btn_Homepage" xml:space="preserve">
+    <value>Homepage</value>
+  </data>
+  <data name="Btn_NextLesson" xml:space="preserve">
+    <value>Next Lesson</value>
+  </data>
+  <data name="App_Description" xml:space="preserve">
+    <value>Do you wonder how DotVVM works?
+It’s easy – all you need to know is HTML, C# and basics of CSS.
+We will explain everything to you in a few easy lessons.</value>
+  </data>
+  <data name="Error_404Message" xml:space="preserve">
+    <value>We can't find the page you're looking for.</value>
+  </data>
+  <data name="Error_404Title" xml:space="preserve">
+    <value>Not Found</value>
+  </data>
+  <data name="Error_500Message" xml:space="preserve">
+    <value>An error occured on our side. Please try again later.</value>
+  </data>
+  <data name="Error_500Title" xml:space="preserve">
+    <value>Internal Server Error</value>
+  </data>
+  <data name="Error_666Message" xml:space="preserve">
+    <value>Please evacuate the site in an orderly fashion.</value>
+  </data>
+  <data name="Error_666Title" xml:space="preserve">
+    <value>Demonic Invasion in Progress</value>
+  </data>
+  <data name="Error_BackHome" xml:space="preserve">
+    <value>Back to Lessons</value>
+  </data>
+  <data name="Btn_DownloadSolution" xml:space="preserve">
+    <value>Download Solution</value>
+  </data>
+  <data name="Btn_NextStepTooltip" xml:space="preserve">
+    <value>Validate and Continue</value>
+  </data>
+  <data name="DiagnosticList_MessageHeader" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="DiagnosticList_LineHeader" xml:space="preserve">
+    <value>Line</value>
+  </data>
+  <data name="DiagnosticList_ColumnHeader" xml:space="preserve">
+    <value>Column</value>
+  </data>
+  <data name="Base_MobileNotSupported" xml:space="preserve">
+    <value>This application is not supported on mobile browsers.</value>
+  </data>
+  <data name="Btn_CopyTooltip" xml:space="preserve">
+    <value>Copy to Clipboard</value>
+  </data>
+  <data name="Base_InteractiveSample" xml:space="preserve">
+    <value>Interactive sample</value>
+  </data>
+  <data name="Btn_Success" xml:space="preserve">
+    <value>Success</value>
+  </data>
+</root>

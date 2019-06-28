@@ -1,0 +1,18 @@
+﻿@viewModel DotvvmAcademy.Web.Pages.Error.ErrorViewModel
+@masterPage Pages/site.dotmaster
+@import DotvvmAcademy.Web.Resources.Localization
+
+<dot:Content ContentPlaceHolderID="MainContent">
+    <div class="error__container">
+        <h1>{{resource:"Error " + ErrorCode}}</h1>
+        <strong>
+            {{resource: ErrorTitle}}
+        </strong>
+        <p>
+            {{resource: ErrorMessage}}
+        </p>
+        <dot:RouteLink class="button"
+                       RouteName="Default"
+                       Text="{{resource: UIResources.Error_BackHome}}"/>
+    </div>
+</dot:Content>

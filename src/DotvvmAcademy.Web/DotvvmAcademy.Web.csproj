@@ -1,0 +1,53 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TypeScriptToolsVersion>3.4</TypeScriptToolsVersion>
+    <LangVersion>latest</LangVersion>
+    <UserSecretsId>7ac5f83c-f14d-4800-b2ec-e1fb18bbbc11</UserSecretsId>
+    <ApplicationInsightsResourceId>/subscriptions/fa73b1a2-747d-469f-899c-bb14579121c1/resourcegroups/DotvvmAcademyGroup/providers/microsoft.insights/components/dotvvmacademynew</ApplicationInsightsResourceId>
+    <ApplicationInsightsAnnotationResourceId>/subscriptions/fa73b1a2-747d-469f-899c-bb14579121c1/resourcegroups/DotvvmAcademyGroup/providers/microsoft.insights/components/dotvvmacademynew</ApplicationInsightsAnnotationResourceId>
+    <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Course/**/*" />
+    <None Remove="Course/**/*" />
+    <Content Remove="Course/**/*" />
+    <Content Include="Course/**/*" CopyToPublishDirectory="Always" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="**/*.dothtml;**/*.dotmaster;**/*.dotcontrol" Exclude="obj/**/*;bin/**/*;Course/**/*" CopyToPublishDirectory="Always" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.7.1" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="DotVVM.AspNetCore" Version="2.3.0" />
+    <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.0.48" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DotvvmAcademy.CourseFormat\DotvvmAcademy.CourseFormat.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\Localization\UIResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>UIResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources\Localization\UIResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>UIResources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services" />
+  </ItemGroup>
+
+</Project>

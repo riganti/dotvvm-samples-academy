@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "Kestrel": {
+      "commandName": "Project",
+      "nativeDebugging": true,
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://0.0.0.0:1890/",
+      "launchUrl": "http://localhost:1890"
+    }
+  }
+}

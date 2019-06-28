@@ -1,0 +1,52 @@
+﻿@import "../../../Base/global";
+
+.error {
+    &__container {
+        max-width: $width-tablet;
+        text-align: center;
+        margin: 0 auto;
+        width: 100%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+
+        > h1 {
+            margin: 0;
+            text-align: center;
+            color: $color-dotvvm-blue;
+            margin-bottom: 1.5rem;
+            font-size: 5rem;
+            font-weight: 900;
+
+            @include res-max-tablet {
+                font-size: $font-size-xl;
+            }
+        }
+
+        > strong {
+            font-size: $font-size-xl;
+            margin-bottom: 1rem;
+            display: block;
+            color: $color-font;
+            text-align: center;
+
+            @include res-max-tablet {
+                font-size: $font-size-l;
+            }
+        }
+
+        > p {
+            text-align: center;
+            display: block;
+            margin-bottom: 2rem;
+            color: $color-font;
+            font-size: $font-size-m;
+        }
+
+        .button {
+            margin: 0 auto;
+        }
+    }
+}

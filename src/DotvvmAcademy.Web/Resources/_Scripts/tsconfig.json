@@ -1,0 +1,18 @@
+﻿{
+  "compilerOptions": {
+    "outFile": "../../wwwroot/scripts/app.js",
+    "lib": [ "dom", "es5", "es2015.core", "es2015.promise" ],
+    "strictNullChecks": false,
+    "noEmitOnError": true,
+    "noImplicitReturns": true,
+    "removeComments": true,
+    "sourceMap": false,
+    "target": "es5"
+  },
+  "compileOnSave": false,
+  "include": [
+    "**/*",
+    "../../node_modules/monaco-editor/monaco.d.ts",
+    "../../node_modules/@types/**/*.d.ts", "../Localization/UILanguage.cs"
+  ]
+}

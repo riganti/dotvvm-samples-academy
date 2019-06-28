@@ -48,7 +48,6 @@ artifacts/
 *_p.c
 *_i.h
 *.ilk
-*.meta
 *.obj
 *.pch
 *.pdb
@@ -251,5 +250,10 @@ paket-files/
 .idea/
 *.sln.iml
 
-# Visual Studio Code
-.vscode/
+monaco-editor
+**/wwwroot/css
+**/wwwroot/scripts
+**/wwwroot/libs
+npm-debug.log.*
+sandbox/
+*.binlog

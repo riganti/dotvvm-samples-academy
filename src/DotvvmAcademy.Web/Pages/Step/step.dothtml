@@ -1,0 +1,126 @@
+@viewModel DotvvmAcademy.Web.Pages.Step.StepViewModel
+@masterPage Pages/site.dotmaster
+@import DotvvmAcademy.Web.Resources.Localization
+
+<dot:Content ContentPlaceHolderID="MetaContent">
+    <title>{{resource: LessonName + ": " + Step.Name}}</title>
+    <meta name="description" content="{resource: LessonDescription}" />
+    <meta itemprop="description" content="{resource: LessonDescription}" />
+    <meta property="og:title" content="DotVVM Academy" />
+    <meta property="og:description" content="{resource: LessonDescription}" />
+    <meta name="twitter:title" content="DotVVM Academy" />
+    <meta name="twitter:description" content="{resource: LessonDescription}" />
+</dot:Content>
+
+<dot:Content ContentPlaceHolderID="NavContent">
+    <strong InnerText="{value: LessonName}" />
+</dot:Content>
+
+<dot:Content ContentPlaceHolderID="MainContent">
+    <section class="section-lesson">
+        <div class="mobile-message">
+            <h3>{{resource: UIResources.Base_MobileNotSupported}}</h3>
+        </div>
+        <div class="code__header-template">
+            <div class="code__header">
+                <button class="code__copy-button"
+                        title="{resource: UIResources.Btn_CopyTooltip}">
+                    <span>{{resource: UIResources.Btn_Copy}}</span>
+                </button>
+            </div>
+        </div>
+        <div class="container-large with-flex">
+            <dot:HtmlLiteral Html="{resource: Step.Html}"
+                             Class-no-flex="{resource: !Step.HasCodeTask && !Step.HasEmbeddedView}"
+                             class="step-info-box" />
+            <div IncludeInPage="{resource: Step.HasCodeTask}"
+                 class="code__bg">
+                <div>
+                    <div class="code__top-bar">
+                        <dot:Button Click="{command: Reset()}"
+                                    IncludeInPage="{resource: Step.HasCodeTask}"
+                                    class="code__button"
+                                    ButtonTagName="button">
+                            <span InnerText="{resource: UIResources.Btn_Reset}" />
+                            <img src="~/images/Icons/reset.svg" />
+                        </dot:Button>
+                        <dot:Button Click="{command: ShowSolution()}"
+                                    IncludeInPage="{resource: Step.HasCodeTask}"
+                                    class="code__button"
+                                    ButtonTagName="button">
+                            <span InnerText="{resource: UIResources.Btn_GetSolution}" />
+                            <img src="~/images/Icons/bulb-solid.svg" />
+                        </dot:Button>
+                    </div>
+                    <cc:MonacoEditor Code="{value: CodeTask.Code}"
+                                     Markers="{value: CodeTask.Markers}"
+                                     Language="{resource: CodeTask.CodeLanguage}"
+                                     class="code__container" />
+                </div>
+                <cc:DiagnosticList Diagnostics="{value: CodeTask.Markers}" />
+            </div>
+            <div IncludeInPage="{resource: Step.HasEmbeddedView}"
+                 class="embedded-view">
+                <h2 class="embedded-view__header" InnerText="{resource: UIResources.Base_InteractiveSample + ": " + LessonName}" />
+                <iframe class="embedded-view__content" src="{resource: "/embeddedView/" + LanguageMoniker + "/" + LessonMoniker + "/" + StepMoniker}" />
+            </div>
+            <div IncludeInPage="{resource: Step.HasArchive}">
+                <dot:RouteLink RouteName="Archive"
+                               Param-Language="{value: LanguageMoniker}"
+                               Param-Lesson="{value: LessonMoniker}"
+                               Param-Step="{value: StepMoniker}"
+                               Text="{resource: UIResources.Btn_DownloadSolution}"
+                               class="button" />
+            </div>
+        </div>
+    </section>
+</dot:Content>
+
+<dot:content ContentPlaceHolderID="FooterContent">
+    <div class="lesson-footer-container">
+        <div class="container-large with-flex">
+            <div class="pager">
+                <dot:RouteLink RouteName="Step"
+                               ButtonTagName="button"
+                               class="button with-icon with-icon--left"
+                               Param-Language="{value: LanguageMoniker}"
+                               Param-Lesson="{value: LessonMoniker}"
+                               Param-Step="{value: Step.PreviousStep ?? ""}"
+                               Enabled="{value: Step.PreviousStep != null}">
+                    <img src="~/images/Icons/prev.svg" />
+                    <span InnerText="{resource: UIResources.Btn_PreviousStep}" />
+                </dot:RouteLink>
+
+                <dot:Repeater DataSource="{value: Steps}">
+                    <dot:RouteLink RouteName="Step"
+                                   class="pager__item"
+                                   Class-active="{value: _root.StepMoniker == Moniker}"
+                                   Param-Language="{value: _root.LanguageMoniker}"
+                                   Param-Lesson="{value: _root.LessonMoniker}"
+                                   Param-Step="{value: Moniker}"
+                                   Tooltip="{value: Name}" />
+                </dot:Repeater>
+
+                <dot:Button ID="validation-button"
+                            Click="{command: Validate()}"
+                            class="button with-icon with-tooltip"
+                            Visible="{value: Step.NextStep != null}"
+                            ButtonTagName="button"
+                            Tooltip="{resource: UIResources.Btn_NextStepTooltip}">
+                    <span class="default" InnerText="{resource: UIResources.Btn_NextStep}" />
+                    <span class="success" InnerText="{resource: UIResources.Btn_Success}" />
+                    <img src="~/images/Icons/next.svg" />
+                </dot:Button>
+                <dot:Button Click="{staticCommand: IsFinishDialogVisible = true}"
+                            class="button finish"
+                            ButtonTagName="button"
+                            Param-Language="{value: LanguageMoniker}"
+                            Visible="{resource: Step.NextStep == null}"
+                            Text="{resource: UIResources.Btn_Finish}" />
+            </div>
+        </div>
+    </div>
+
+    <cc:FinishDialog>
+    </cc:FinishDialog>
+</dot:content>

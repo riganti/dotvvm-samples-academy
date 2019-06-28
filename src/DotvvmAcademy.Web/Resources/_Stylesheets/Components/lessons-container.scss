@@ -1,0 +1,149 @@
+﻿@import "../Base/_global.scss";
+
+.lessons-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    h1 {
+        font-size: 40px;
+        margin-bottom: 0;
+        margin-top: 10px;
+        font-weight: 100;
+        color: $color-black;
+    }
+
+    @include res-max-tablet {
+        justify-content: center;
+    }
+}
+
+.lessons-item {
+    flex: 0 0 24%;
+    max-width: 24%;
+    width: 24%;
+    background-color: $color-primary;
+    text-align: center;
+    color: $color-white;
+    padding: 2rem 4rem;
+    box-sizing: border-box;
+    padding-bottom: 12rem;
+    position: relative;
+    margin-top: 3rem;
+    text-decoration: none;
+    transition: $animate-all;
+
+    &:hover {
+
+        > img {
+            transform: scale(1.05, 1.05);
+        }
+
+        .button {
+            background-color: $color-hover;
+        }
+    }
+
+    &:first-child, &:nth-child(2), &:nth-child(3), &:nth-child(4) {
+        margin-top: 0;
+    }
+
+    @include res-max-desktop-HD {
+        padding: 2rem;
+        padding-bottom: 14rem;
+    }
+
+    @include res-max-desktop-large {
+        flex: 0 0 49%;
+        max-width: 49%;
+        width: 49%;
+
+        &:first-child, &:nth-child(2) {
+            margin-top: 0;
+        }
+
+        &:nth-child(3), &:nth-child(4) {
+            margin-top: 3rem;
+        }
+    }
+
+    @include res-max-tablet {
+        flex: 0 0 65%;
+        max-width: 65%;
+        width: 65%;
+
+        &:first-child {
+            margin-bottom: 0;
+        }
+
+        &:nth-child(2), &:nth-child(3), &:last-child {
+            margin-top: 3rem;
+        }
+    }
+
+    @include res-max-mobile {
+        flex: 0 0 100%;
+        max-width: 100%;
+        width: 100%;
+    }
+
+    &.finished > img {
+        width: 45%;
+        min-width: 12rem;
+    }
+
+    > img {
+        display: block;
+        width: 50%;
+        margin: 0 auto;
+        margin-bottom: 1rem;
+        min-width: 15rem;
+        transform: scale(1, 1);
+        transition: $animate-all;
+    }
+
+    h2 {
+        margin-bottom: 1rem;
+    }
+
+    p {
+        display: block;
+        min-height: 3.5rem;
+        margin-bottom: 1.5rem;
+        font-size: $font-size-m;
+
+        a {
+            font-size: $font-size-xs;
+            color: $color-secondary;
+
+            &:hover {
+                color: darken($color-secondary, 10%);
+            }
+        }
+    }
+
+    .button {
+        position: absolute;
+        bottom: 8rem;
+        left: 50%;
+        transform: translateX(-50%);
+
+        @include res-max-desktop-large {
+            bottom: 8rem;
+        }
+    }
+
+    &:after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -1px;
+        width: 100%;
+        height: 5rem;
+        background-color: $color-white;
+        display: block;
+        -webkit-clip-path: polygon(50% 0, 0 100%, 100% 100%);
+        clip-path: polygon(50% 0, 0 100%, 100% 100%);
+    }
+}

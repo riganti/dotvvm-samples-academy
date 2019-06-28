@@ -1,0 +1,49 @@
+﻿@import "../Base/_global.scss";
+
+.diagnostics-grid {
+    width: 100%;
+    background-color: $color-vs-dark;
+
+    thead {
+        th {
+            text-align: left;
+            padding: .5rem 0;
+            padding-left: .5rem;
+            border-style: solid;
+            border-color: $color-vs-hover;
+            border-width: $outline-width 0 $outline-width $outline-width;
+
+            &:first-child {
+                border-left: none;
+            }
+
+            span {
+                color: $color-vs-text;
+            }
+        }
+    }
+
+    tbody {
+        tr:hover {
+            background-color: $color-vs-hover;
+        }
+
+        td {
+            padding: .5rem 0;
+            text-align: left;
+
+            span {
+                text-align: left;
+                color: $color-vs-text;
+                padding-left: .5rem;
+            }
+
+            > img {
+                display: block;
+                width: 1.5rem;
+                height: 1.5rem;
+                margin: 0 auto;
+            }
+        }
+    }
+}

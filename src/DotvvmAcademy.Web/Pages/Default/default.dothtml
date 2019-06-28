@@ -1,0 +1,83 @@
+﻿@viewModel DotvvmAcademy.Web.Pages.Default.DefaultViewModel
+@masterPage Pages/site.dotmaster
+@import DotvvmAcademy.Web.Resources.Localization
+@import System.Linq
+
+<dot:Content ContentPlaceHolderID="MetaContent">
+    <title>DotVVM Academy</title>
+    <meta name="description" content="{resource: UIResources.App_Description}" />
+    <meta itemprop="description" content="{resource: UIResources.App_Description}" />
+    <meta property="og:title" content="DotVVM Academy" />
+    <meta property="og:description" content="{resource: UIResources.App_Description}" />
+    <meta name="twitter:title" content="DotVVM Academy" />
+    <meta name="twitter:description" content="{resource: UIResources.App_Description}" />
+</dot:Content>
+
+<dot:Content ContentPlaceHolderID="HeaderContent">
+    <section class="main-header no-padding">
+        <div class="container-large">
+            <div>
+                <dot:HtmlLiteral Html="{resource: UIResources.Base_MainTitle}"
+                                 RenderWrapperTag="true"
+                                 WrapperTagName="h1" />
+                <dot:HtmlLiteral Html="{resource: UIResources.Base_MainDescription}"
+                                 RenderWrapperTag="true"
+                                 WrapperTagName="p" />
+                <dot:RouteLink RouteName="Step"
+                               class="button"
+                               IncludeInPage="{resource: FirstLesson != null}"
+                               Text="{resource: UIResources.Btn_StartCourse}"
+                               Param-Language="{value: _root.LanguageMoniker}"
+                               Param-Lesson="{value: FirstLesson.Moniker}"
+                               Param-Step="{value: FirstLesson.FirstStep}" />
+                <img src="~/images/Illustrations/header-image.svg" />
+            </div>
+        </div>
+    </section>
+</dot:Content>
+
+<dot:Content ContentPlaceHolderID="MainContent">
+    <section class="section-lections no-padding-top">
+        <div class="container-large">
+            <dot:Repeater DataSource="{value: Lessons}" class="lessons-container">
+                <dot:RouteLink RouteName="Step"
+                               Param-Language="{value: _root.LanguageMoniker}"
+                               Param-Lesson="{value: Moniker}"
+                               Param-Step="{value: FirstStep}"
+                               class="lessons-item">
+                    <img src="{resource: ImageUrl ?? "/images/Icons/ico-lesson-1.svg"}" />
+                    <h2>{{resource: Name}}</h2>
+                    <dot:HtmlLiteral Html="{resource: AnnotationHtml}" />
+                    <span InnerText="{resource: UIResources.Btn_StartLesson}" class="button" />
+                </dot:RouteLink>
+            </dot:Repeater>
+        </div>
+    </section>
+    <section class="section-coffee">
+        <div>
+            <img src="~/images/Illustrations/coffee-image.svg" />
+        </div>
+        <div>
+            <dot:HtmlLiteral Html="{resource: UIResources.Base_CoffeeTitle}"
+                             RenderWrapperTag="true"
+                             WrapperTagName="h2" />
+            <dot:HtmlLiteral Html="{resource: UIResources.Base_CoffeeDescription}"
+                             RenderWrapperTag="true"
+                             WrapperTagName="p" />
+            <a href="https://goo.gl/PDrdpZ" target="_blank" class="button">
+                {{resource: UIResources.Btn_Coffee}}
+            </a>
+        </div>
+    </section>
+</dot:Content>
+
+<dot:Content ContentPlaceHolderID="FooterContent">
+    <div class="main-link">
+        <a target="_blank" href="https://www.dotvvm.com/">www.dotvvm.com</a>
+    </div>
+    <div class="footer-links">
+        <a target="_blank" href="https://www.dotvvm.com/docs/latest">{{resource: UIResources.Base_Documentation}}</a>
+        <a target="_blank" href="https://www.dotvvm.com/docs/tutorials/introduction/latest">{{resource: UIResources.Base_Tutorials}}</a>
+        <a target="_blank" href="https://www.dotvvm.com/docs/samples/latest">{{resource: UIResources.Base_Samples}}</a>
+    </div>
+</dot:Content>

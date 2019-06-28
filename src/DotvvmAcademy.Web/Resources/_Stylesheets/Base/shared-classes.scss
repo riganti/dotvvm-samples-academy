@@ -1,0 +1,101 @@
+﻿@import "mixins";
+
+// IMPORTANT: Never include this file in other *.scss files
+
+.element-to-middle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.text-strong {
+    font-weight: bold;
+}
+
+.text-to-center {
+    text-align: center !important;
+}
+
+.text-to-left {
+    text-align: left !important;
+}
+
+.text-to-right {
+    text-align: right !important;
+}
+
+.text-justify {
+    text-align: justify !important;
+}
+
+.nav-item-center {
+    white-space: nowrap;
+
+    @include res-min-tablet {
+        display: inline-block;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+.nav-item-right {
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    right: 2rem;
+    transform: translate(0, -50%);
+
+    @include res-max-tablet {
+        position: relative;
+        top: unset;
+        right: unset;
+        transform: translate(0, 0);
+        margin-bottom: 2rem;
+    }
+}
+
+.nav-item-left {
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    left: 2rem;
+    transform: translate(0, -50%);
+
+    @include res-max-tablet {
+        position: relative;
+        top: unset;
+        right: unset;
+        transform: translate(0, 0);
+        margin-bottom: 2rem;
+    }
+}
+
+.clean-button {
+    padding: 0;
+    margin: 0;
+    height: auto;
+    display: inline-block !important;
+    float: none !important;
+}
+
+.validation-summary {
+    padding: 0;
+    margin: 0;
+    background-color: lighten($color-error, 50%);
+    color: $color-error;
+    padding: .5rem;
+    box-sizing: border-box;
+    padding-left: 2.5rem;
+
+    > li {
+        margin-bottom: .5rem;
+        color: $color-error;
+
+        &:last-of-type {
+            margin-bottom: 0;
+        }
+    }
+}

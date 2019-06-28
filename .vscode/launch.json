@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch Web",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/src/DotvvmAcademy.Web/bin/Debug/netcoreapp2.2/DotvvmAcademy.Web.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/DotvvmAcademy.Web",
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "internalConsoleOptions": "openOnSessionStart"
+        }
+    ]
+}
