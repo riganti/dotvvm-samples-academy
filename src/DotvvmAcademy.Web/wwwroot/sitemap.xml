@@ -1,12 +1,297 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
 
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-  <url>
-    <loc>http://www.example.com/</loc>
-    <lastmod>2017-11-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>1</priority>
-  </url>
+<url>
+  <loc>https://academy.dotvvm.com/</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/cs</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/en/concepts/getting-started</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/en/datacontext/moving-properties</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/en/repeater/collections</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/en/basic-validation/attributes</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/en</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/cs/concepts/getting-started</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/cs/datacontext/moving-properties</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/cs/repeater/collections</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/cs/basic-validation/attributes</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/en/error/500</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/en/concepts/view</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/en/concepts/controls</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/en/concepts/methods</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/en/concepts/commands</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/en/concepts/conclusion</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/en/datacontext/datacontext</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/en/datacontext/null-datacontext</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/en/datacontext/back-to-root</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/en/datacontext/conclusion</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/en/repeater/repeater</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/en/repeater/add-method</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/en/repeater/add-button</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/en/repeater/remove-method</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/en/repeater/remove-button</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/en/repeater/conclusion</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/en/basic-validation/validator</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/en/basic-validation/modelstate</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/en/basic-validation/conclusion</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/cs/concepts/view</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/cs/concepts/controls</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/cs/concepts/methods</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/cs/concepts/commands</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/cs/concepts/conclusion</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/cs/datacontext/datacontext</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/cs/datacontext/null-datacontext</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/cs/datacontext/back-to-root</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/cs/datacontext/conclusion</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/cs/repeater/repeater</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/cs/repeater/add-method</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/cs/repeater/add-button</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/cs/repeater/remove-method</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/cs/repeater/remove-button</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/cs/repeater/conclusion</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/cs/basic-validation/validator</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/cs/basic-validation/modelstate</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/cs/basic-validation/conclusion</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/cs/error/500</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/embeddedView/en/concepts/conclusion</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/embeddedView/en/datacontext/conclusion</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/embeddedView/en/repeater/conclusion</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/embeddedView/en/basic-validation/conclusion</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/embeddedView/cs/concepts/conclusion</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.41</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/embeddedView/cs/datacontext/conclusion</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.41</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/embeddedView/cs/repeater/conclusion</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.41</priority>
+</url>
+<url>
+  <loc>https://academy.dotvvm.com/embeddedView/cs/basic-validation/conclusion</loc>
+  <lastmod>2020-05-28T06:09:09+00:00</lastmod>
+  <priority>0.41</priority>
+</url>
+
 
 </urlset>
