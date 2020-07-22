@@ -257,3 +257,4 @@ monaco-editor
 npm-debug.log.*
 sandbox/
 *.binlog
+.vscode/
