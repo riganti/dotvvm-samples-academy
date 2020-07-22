@@ -29,7 +29,7 @@ namespace DotvvmAcademy.Web.Hosting
                 FileName = $"{archive.Name}.zip"
             };
             context.HttpContext.Response.Headers["Content-Disposition"] = contentDisposition.ToString();
-            context.HttpContext.Response.Body.Write(bytes);
+            await context.HttpContext.Response.Body.WriteAsync(bytes);
         }
 
         private (string languageMoniker, string lessonMoniker, string stepMoniker) GetParameters(IDotvvmRequestContext context)

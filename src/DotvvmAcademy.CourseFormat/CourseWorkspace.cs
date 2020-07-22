@@ -202,12 +202,12 @@ namespace DotvvmAcademy.CourseFormat
                 }
             }
 
-            using (var memoryStream = new MemoryStream())
+            using var memoryStream = new MemoryStream();
             using (var zipArchive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
             {
                 await AddRecursive("", zipArchive);
-                bytes = memoryStream.ToArray();
             }
+            bytes = memoryStream.ToArray();
             Cache(key, bytes);
             return bytes;
         }
