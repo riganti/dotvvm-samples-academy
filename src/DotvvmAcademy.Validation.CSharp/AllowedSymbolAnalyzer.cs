@@ -28,6 +28,9 @@ namespace DotvvmAcademy.Validation.CSharp
 
         public override void Initialize(AnalysisContext context)
         {
+            context.EnableConcurrentExecution();
+            context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.Analyze
+                | GeneratedCodeAnalysisFlags.ReportDiagnostics);
             context.RegisterSyntaxNodeAction(ValidateNode, RoslynPresets.Identifiers);
         }
 

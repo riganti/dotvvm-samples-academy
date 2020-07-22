@@ -65,7 +65,8 @@ namespace DotvvmAcademy.CourseFormat
             }
 
             var lessonDirectories = directory.GetDirectories()
-                .Where(d => !d.Name.StartsWith("."));
+                .Where(d => !d.Name.StartsWith("."))
+                .OrderBy(d => d.Name);
             var lessonBuilder = ImmutableArray.CreateBuilder<Lesson>();
             foreach (var lessonDirectory in lessonDirectories)
             {
@@ -78,7 +79,8 @@ namespace DotvvmAcademy.CourseFormat
                 var lessonFrontMatter = await ParseFrontMatter<LessonFrontMatter>(lessonFile.FullName);
                 var lessonMoniker = lessonFrontMatter.Moniker ?? lessonDirectory.Name;
                 var variantDirectories = lessonDirectory.GetDirectories()
-                    .Where(d => !d.Name.StartsWith("."));
+                    .Where(d => !d.Name.StartsWith("."))
+                    .OrderBy(d => d.Name);
                 var variantBuilder = ImmutableArray.CreateBuilder<LessonVariant>();
                 foreach (var variantDirectory in variantDirectories)
                 {
@@ -91,7 +93,8 @@ namespace DotvvmAcademy.CourseFormat
                     var variantFrontMatter = await ParseFrontMatter<LessonVariantFrontMatter>(variantFile.FullName);
                     var variantMoniker = variantFrontMatter.Moniker ?? variantDirectory.Name;
                     var stepFiles = variantDirectory.GetFiles("*.md")
-                        .Where(f => f.Name != VariantFile);
+                        .Where(f => f.Name != VariantFile)
+                        .OrderBy(f => f.Name);
                     var stepBuilder = ImmutableArray.CreateBuilder<Step>();
                     foreach (var stepFile in stepFiles)
                     {
@@ -189,11 +192,9 @@ namespace DotvvmAcademy.CourseFormat
                 foreach (var file in info.GetFiles())
                 {
                     var entry = zip.CreateEntry(Path.Combine(directory, file.Name));
-                    using (var inputStream = file.OpenRead())
-                    using (var outputStream = entry.Open())
-                    {
-                        await inputStream.CopyToAsync(outputStream);
-                    }
+                    using var inputStream = file.OpenRead();
+                    using var outputStream = entry.Open();
+                    await inputStream.CopyToAsync(outputStream);
                 }
                 foreach (var subdirectory in info.GetDirectories())
                 {
@@ -255,21 +256,19 @@ namespace DotvvmAcademy.CourseFormat
                 code: scriptText,
                 options: scriptOptions);
             var compilation = script.GetCompilation();
-            using (var memoryStream = new MemoryStream())
+            using var memoryStream = new MemoryStream();
+            var emitResult = compilation.Emit(memoryStream);
+            if (!emitResult.Success)
             {
-                var emitResult = compilation.Emit(memoryStream);
-                if (!emitResult.Success)
-                {
-                    var sb = new StringBuilder($"Compilation of a CodeTask at '{scriptPath}' failed with the following diagnostics:\n");
-                    sb.Append(string.Join(",\n", emitResult.Diagnostics));
-                    throw new InvalidOperationException(sb.ToString());
-                }
-                var entryPoint = compilation.GetEntryPoint(default);
-                return new ValidationScript(
-                    entryType: entryPoint.ContainingType.MetadataName,
-                    entryMethod: entryPoint.MetadataName,
-                    bytes: memoryStream.ToArray());
+                var sb = new StringBuilder($"Compilation of a CodeTask at '{scriptPath}' failed with the following diagnostics:\n");
+                sb.Append(string.Join(",\n", emitResult.Diagnostics));
+                throw new InvalidOperationException(sb.ToString());
             }
+            var entryPoint = compilation.GetEntryPoint(default);
+            return new ValidationScript(
+                entryType: entryPoint.ContainingType.MetadataName,
+                entryMethod: entryPoint.MetadataName,
+                bytes: memoryStream.ToArray());
         }
 
         public async Task<IEnumerable<CodeTaskDiagnostic>> ValidateCodeTask(CodeTask codeTask, string code)
@@ -277,8 +276,10 @@ namespace DotvvmAcademy.CourseFormat
             var validationId = Guid.NewGuid();
 
             var directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            var args = new List<string>();
-            args.Add(Path.Combine(directory, SandboxPath));
+            var args = new List<string>
+            {
+                Path.Combine(directory, SandboxPath)
+            };
 
             var script = await GetValidationScript(codeTask.Path);
             MemoryMappedFile scriptAssemblyMap;
@@ -399,32 +400,26 @@ namespace DotvvmAcademy.CourseFormat
 
         private void Cache(string key, object value)
         {
-            using (var entry = cache.CreateEntry(key))
-            {
-                entry.SetAbsoluteExpiration(CacheEntryExpiration);
-                entry.Value = value;
-            }
+            using var entry = cache.CreateEntry(key);
+            entry.SetAbsoluteExpiration(CacheEntryExpiration);
+            entry.Value = value;
         }
 
         private string RenderMarkdown(string markdown)
         {
             var document = Markdown.Parse(markdown, markdigPipeline);
-            using (var stringWriter = new StringWriter())
-            {
-                var renderer = new HtmlRenderer(stringWriter);
-                markdigPipeline.Setup(renderer);
-                renderer.Render(document);
-                return stringWriter.ToString();
-            }
+            using var stringWriter = new StringWriter();
+            var renderer = new HtmlRenderer(stringWriter);
+            markdigPipeline.Setup(renderer);
+            renderer.Render(document);
+            return stringWriter.ToString();
         }
 
         private async Task<string> ReadFile(string filePath)
         {
-            using (var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.None, 4096, true))
-            using (var reader = new StreamReader(stream))
-            {
-                return await reader.ReadToEndAsync();
-            }
+            using var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.None, 4096, true);
+            using var reader = new StreamReader(stream);
+            return await reader.ReadToEndAsync();
         }
 
         private async Task<TFrontMatter> ParseFrontMatter<TFrontMatter>(string filePath)

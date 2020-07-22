@@ -31,7 +31,7 @@ namespace DotvvmAcademy.Validation.CSharp.Constraints
                 .OfType<IFieldSymbol>();
             foreach (var field in symbols)
             {
-                if (!field.Type.Equals(type))
+                if (!SymbolEqualityComparer.Default.Equals(field.Type, type))
                 {
                     reporter.Report(
                         message: Resources.ERR_WrongFieldType,
