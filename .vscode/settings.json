@@ -1,4 +1,0 @@
-{
-    "appService.deploySubpath": "src\\DotvvmAcademy.Web\\bin\\Release\\netcoreapp2.2\\publish",
-    "appService.preDeployTask": "publish"
-}
