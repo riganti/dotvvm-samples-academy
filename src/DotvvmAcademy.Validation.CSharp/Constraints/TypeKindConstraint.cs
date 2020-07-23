@@ -35,26 +35,15 @@ namespace DotvvmAcademy.Validation.CSharp.Constraints
 
         private AllowedTypeKind GetAllowedTypeKind(TypeKind typeKind)
         {
-            switch (typeKind)
+            return typeKind switch
             {
-                case TypeKind.Class:
-                    return AllowedTypeKind.Class;
-
-                case TypeKind.Delegate:
-                    return AllowedTypeKind.Delegate;
-
-                case TypeKind.Enum:
-                    return AllowedTypeKind.Enum;
-
-                case TypeKind.Interface:
-                    return AllowedTypeKind.Interface;
-
-                case TypeKind.Struct:
-                    return AllowedTypeKind.Struct;
-
-                default:
-                    return AllowedTypeKind.None;
-            }
+                TypeKind.Class => AllowedTypeKind.Class,
+                TypeKind.Delegate => AllowedTypeKind.Delegate,
+                TypeKind.Enum => AllowedTypeKind.Enum,
+                TypeKind.Interface => AllowedTypeKind.Interface,
+                TypeKind.Struct => AllowedTypeKind.Struct,
+                _ => AllowedTypeKind.None,
+            };
         }
     }
 }

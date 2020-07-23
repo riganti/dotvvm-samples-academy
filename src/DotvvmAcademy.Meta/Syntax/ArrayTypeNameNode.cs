@@ -53,12 +53,7 @@ namespace DotvvmAcademy.Meta.Syntax
 
         public override int GetHashCode()
         {
-            var hashCode = -767638305;
-            hashCode = hashCode * -1521134295 + EqualityComparer<NameToken>.Default.GetHashCode(CloseBracketToken);
-            hashCode = hashCode * -1521134295 + EqualityComparer<ImmutableArray<NameToken>>.Default.GetHashCode(CommaTokens);
-            hashCode = hashCode * -1521134295 + EqualityComparer<NameNode>.Default.GetHashCode(ElementType);
-            hashCode = hashCode * -1521134295 + EqualityComparer<NameToken>.Default.GetHashCode(OpenBracketToken);
-            return hashCode;
+            return HashCode.Combine(CloseBracketToken, CommaTokens, ElementType, OpenBracketToken);
         }
 
         public override string ToString()
@@ -66,7 +61,7 @@ namespace DotvvmAcademy.Meta.Syntax
             var sb = new StringBuilder();
             sb.Append(ElementType);
             sb.Append('[');
-            foreach (var comma in CommaTokens)
+            for (int i = 0; i < CommaTokens.Length; i++)
             {
                 sb.Append(',');
             }

@@ -6,29 +6,16 @@ namespace Microsoft.CodeAnalysis
     {
         public static AllowedAccess ToAllowedAccess(this Accessibility accessibility)
         {
-            switch (accessibility)
+            return accessibility switch
             {
-                case Accessibility.Private:
-                    return AllowedAccess.Private;
-
-                case Accessibility.ProtectedAndInternal:
-                    return AllowedAccess.ProtectedAndInternal;
-
-                case Accessibility.Protected:
-                    return AllowedAccess.Protected;
-
-                case Accessibility.Internal:
-                    return AllowedAccess.Internal;
-
-                case Accessibility.ProtectedOrInternal:
-                    return AllowedAccess.ProtectedOrInternal;
-
-                case Accessibility.Public:
-                    return AllowedAccess.Public;
-
-                default:
-                    return AllowedAccess.None;
-            }
+                Accessibility.Private => AllowedAccess.Private,
+                Accessibility.ProtectedAndInternal => AllowedAccess.ProtectedAndInternal,
+                Accessibility.Protected => AllowedAccess.Protected,
+                Accessibility.Internal => AllowedAccess.Internal,
+                Accessibility.ProtectedOrInternal => AllowedAccess.ProtectedOrInternal,
+                Accessibility.Public => AllowedAccess.Public,
+                _ => AllowedAccess.None,
+            };
         }
     }
 }

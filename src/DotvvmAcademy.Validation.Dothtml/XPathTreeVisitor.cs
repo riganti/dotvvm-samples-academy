@@ -54,17 +54,11 @@ namespace DotvvmAcademy.Validation.Dothtml
 
         private string GetPropertyName(IPropertyDescriptor property)
         {
-            string name;
-            switch (property)
+            string name = property switch
             {
-                case ValidationAttachedProperty attachedProperty:
-                    name = $"{attachedProperty.DeclaringType.Name}.{property.Name}";
-                    break;
-
-                default:
-                    name = property.Name;
-                    break;
-            }
+                ValidationAttachedProperty attachedProperty => $"{attachedProperty.DeclaringType.Name}.{property.Name}",
+                _ => property.Name,
+            };
             return nameTable.GetOrAdd(name);
         }
 
@@ -154,27 +148,16 @@ namespace DotvvmAcademy.Validation.Dothtml
 
         private XPathDothtmlNode VisitProperty(ValidationPropertySetter property)
         {
-            switch (property)
+            return property switch
             {
-                case ValidationPropertyBinding binding:
-                    return VisitPropertyBinding(binding);
-
-                case ValidationPropertyControl control:
-                    return VisitPropertyControl(control);
-
-                case ValidationPropertyControlCollection controlCollection:
-                    return VisitPropertyControlCollection(controlCollection);
-
-                case ValidationPropertyTemplate template:
-                    return VisitPropertyTemplate(template);
-
-                case ValidationPropertyValue value:
-                    return VisitPropertyValue(value);
-
-                default:
-                    throw new ArgumentException($"Property setter of type '{property.GetType().Name}' " +
-                        $"is not supported");
-            }
+                ValidationPropertyBinding binding => VisitPropertyBinding(binding),
+                ValidationPropertyControl control => VisitPropertyControl(control),
+                ValidationPropertyControlCollection controlCollection => VisitPropertyControlCollection(controlCollection),
+                ValidationPropertyTemplate template => VisitPropertyTemplate(template),
+                ValidationPropertyValue value => VisitPropertyValue(value),
+                _ => throw new ArgumentException($"Property setter of type '{property.GetType().Name}' " +
+                    $"is not supported"),
+            };
         }
 
         private XPathDothtmlNode VisitPropertyBinding(ValidationPropertyBinding propertyBinding)
@@ -253,7 +236,6 @@ namespace DotvvmAcademy.Validation.Dothtml
 
         private XPathDothtmlNode VisitPropertyValue(ValidationPropertyValue propertyValue)
         {
-            var syntax = (DothtmlAttributeNode)propertyValue.DothtmlNode;
             return new XPathDothtmlNode(propertyValue, XPathNodeType.Attribute)
             {
                 LocalName = GetPropertyName(propertyValue.Property),

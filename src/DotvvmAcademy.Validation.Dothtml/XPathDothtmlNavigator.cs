@@ -103,9 +103,15 @@ namespace DotvvmAcademy.Validation.Dothtml
             return true;
         }
 
-        public override bool MoveToFirstNamespace(XPathNamespaceScope namespaceScope) => false;
+        public override bool MoveToFirstNamespace(XPathNamespaceScope namespaceScope)
+        {
+            return false;
+        }
 
-        public override bool MoveToId(string id) => false;
+        public override bool MoveToId(string id)
+        {
+            return false;
+        }
 
         public override bool MoveToNext()
         {
@@ -127,7 +133,10 @@ namespace DotvvmAcademy.Validation.Dothtml
             return true;
         }
 
-        public override bool MoveToNextNamespace(XPathNamespaceScope namespaceScope) => false;
+        public override bool MoveToNextNamespace(XPathNamespaceScope namespaceScope)
+        {
+            return false;
+        }
 
         public override bool MoveToParent()
         {

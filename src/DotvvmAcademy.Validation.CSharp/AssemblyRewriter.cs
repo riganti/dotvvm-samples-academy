@@ -35,7 +35,7 @@ namespace DotvvmAcademy.Validation.CSharp
             var id = Guid.NewGuid();
 
             // create the SafeguardContainer class
-            var containerNamespace = $"{nameof(AssemblyRewriter)}.{id.ToString("N")}";
+            var containerNamespace = $"{nameof(AssemblyRewriter)}.{id:N}";
             var containerClass = new TypeDefinition(
                 @namespace: containerNamespace,
                 name: ContainerClassName,
@@ -145,7 +145,7 @@ namespace DotvvmAcademy.Validation.CSharp
                 il.InsertBefore(instruction, checkCall);
                 if (instruction.OpCode == OpCodes.Brfalse_S)
                 {
-                    instruction.Operand = instructions[instructions.Length - 1];
+                    instruction.Operand = instructions[^1];
                 }
                 for (int j = 0; j < instructions.Length; j++)
                 {

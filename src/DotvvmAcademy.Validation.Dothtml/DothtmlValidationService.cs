@@ -29,40 +29,38 @@ namespace DotvvmAcademy.Validation.Dothtml
 
         public Task<IEnumerable<IValidationDiagnostic>> Validate(IEnumerable<IConstraint> constraints, IEnumerable<ISourceCode> sources)
         {
-            using (var scope = globalProvider.CreateScope())
+            using var scope = globalProvider.CreateScope();
+            var id = Guid.NewGuid();
+
+            // prepare services
+            var context = scope.ServiceProvider.GetRequiredService<Context>();
+            context.SourceCodeStorage = new SourceCodeStorage(sources);
+            var reporter = scope.ServiceProvider.GetRequiredService<IValidationReporter>();
+            context.Compilation = GetCompilation(reporter, sources, id);
+            var platform = Environment.OSVersion.Platform.ToString();
+            var assemblies = DependencyContext.Default.GetRuntimeAssemblyNames(platform)
+                .Select(l => Assembly.Load(l.Name))
+                .ToImmutableArray();
+            context.Converter = new MetaConverter(context.Compilation, assemblies);
+
+            // compile tree
+            var sourceCode = sources.OfType<DothtmlSourceCode>().Single();
+            var validationTree = GetValidationTree(
+                reporter,
+                scope.ServiceProvider.GetRequiredService<ValidationTreeResolver>(),
+                scope.ServiceProvider.GetRequiredService<ErrorAggregatingVisitor>(),
+                sourceCode);
+            if (validationTree == null)
             {
-                var id = Guid.NewGuid();
-
-                // prepare services
-                var context = scope.ServiceProvider.GetRequiredService<Context>();
-                context.SourceCodeStorage = new SourceCodeStorage(sources);
-                var reporter = scope.ServiceProvider.GetRequiredService<IValidationReporter>();
-                context.Compilation = GetCompilation(reporter, sources, id);
-                var platform = Environment.OSVersion.Platform.ToString();
-                var assemblies = DependencyContext.Default.GetRuntimeAssemblyNames(platform)
-                    .Select(l => Assembly.Load(l.Name))
-                    .ToImmutableArray();
-                context.Converter = new MetaConverter(context.Compilation, assemblies);
-
-                // compile tree
-                var sourceCode = sources.OfType<DothtmlSourceCode>().Single();
-                var validationTree = GetValidationTree(
-                    reporter,
-                    scope.ServiceProvider.GetRequiredService<ValidationTreeResolver>(),
-                    scope.ServiceProvider.GetRequiredService<ErrorAggregatingVisitor>(),
-                    sourceCode);
-                if (validationTree == null)
-                {
-                    return Task.FromResult<IEnumerable<IValidationDiagnostic>>(GetValidationDiagnostics(reporter));
-                }
-                context.Tree = GetXPathTree(scope.ServiceProvider.GetRequiredService<XPathTreeVisitor>(), validationTree);
-
-                foreach (var constraint in constraints)
-                {
-                    constraint.Validate(scope.ServiceProvider);
-                }
                 return Task.FromResult<IEnumerable<IValidationDiagnostic>>(GetValidationDiagnostics(reporter));
             }
+            context.Tree = GetXPathTree(scope.ServiceProvider.GetRequiredService<XPathTreeVisitor>(), validationTree);
+
+            foreach (var constraint in constraints)
+            {
+                constraint.Validate(scope.ServiceProvider);
+            }
+            return Task.FromResult<IEnumerable<IValidationDiagnostic>>(GetValidationDiagnostics(reporter));
         }
 
         private CSharpCompilation GetCompilation(IValidationReporter reporter, IEnumerable<ISourceCode> sources, Guid id)

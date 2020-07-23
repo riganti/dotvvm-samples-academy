@@ -47,11 +47,7 @@ namespace DotvvmAcademy.Meta.Syntax
 
         public override int GetHashCode()
         {
-            var hashCode = -181700454;
-            hashCode = hashCode * -1521134295 + EqualityComparer<NameToken>.Default.GetHashCode(DotToken);
-            hashCode = hashCode * -1521134295 + EqualityComparer<NameNode>.Default.GetHashCode(Left);
-            hashCode = hashCode * -1521134295 + EqualityComparer<SimpleNameNode>.Default.GetHashCode(Right);
-            return hashCode;
+            return HashCode.Combine(DotToken, Left, Right);
         }
 
         public override string ToString()

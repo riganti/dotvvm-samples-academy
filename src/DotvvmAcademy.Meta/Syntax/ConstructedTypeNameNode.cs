@@ -57,13 +57,7 @@ namespace DotvvmAcademy.Meta.Syntax
 
         public override int GetHashCode()
         {
-            var hashCode = -1125981776;
-            hashCode = hashCode * -1521134295 + EqualityComparer<NameNode>.Default.GetHashCode(UnboundTypeName);
-            hashCode = hashCode * -1521134295 + EqualityComparer<ImmutableArray<NameNode>>.Default.GetHashCode(Arguments);
-            hashCode = hashCode * -1521134295 + EqualityComparer<ImmutableArray<NameToken>>.Default.GetHashCode(CommaTokens);
-            hashCode = hashCode * -1521134295 + EqualityComparer<NameToken>.Default.GetHashCode(OpenBracketToken);
-            hashCode = hashCode * -1521134295 + EqualityComparer<NameToken>.Default.GetHashCode(CloseBracketToken);
-            return hashCode;
+            return HashCode.Combine(UnboundTypeName, Arguments, CommaTokens, OpenBracketToken, CloseBracketToken);
         }
 
         public override string ToString()

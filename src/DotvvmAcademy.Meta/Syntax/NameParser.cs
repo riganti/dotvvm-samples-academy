@@ -7,7 +7,7 @@ namespace DotvvmAcademy.Meta.Syntax
     internal class NameParser
     {
         private readonly List<NameToken> tokens = new List<NameToken>();
-        private List<NameDiagnostic> diagnostics = new List<NameDiagnostic>();
+        private readonly List<NameDiagnostic> diagnostics = new List<NameDiagnostic>();
         private int position;
 
         public NameParser(NameLexer lexer)

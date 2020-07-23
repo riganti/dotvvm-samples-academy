@@ -37,7 +37,7 @@ namespace DotvvmAcademy.Validation.CSharp.Constraints
                 if (accessor == null || !AllowedAccess.HasFlag(accessor.DeclaredAccessibility.ToAllowedAccess()))
                 {
                     reporter.Report(
-                        message: GetDiagnosticMessage(property),
+                        message: GetDiagnosticMessage(),
                         arguments: new object[] { property, AllowedAccess },
                         symbol: (ISymbol)accessor ?? property);
                 }
@@ -54,7 +54,7 @@ namespace DotvvmAcademy.Validation.CSharp.Constraints
             };
         }
 
-        private string GetDiagnosticMessage(IPropertySymbol property)
+        private string GetDiagnosticMessage()
         {
             return Kind switch
             {

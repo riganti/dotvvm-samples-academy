@@ -30,67 +30,63 @@ namespace DotvvmAcademy.Validation.CSharp
                 throw new ArgumentException("Only CSharpSourceCode objects are supported.", nameof(sources));
             }
 
-            using (var scope = globalProvider.CreateScope())
+            using var scope = globalProvider.CreateScope();
+            var id = Guid.NewGuid();
+
+            // compile user code and prepare MetaConverter
+            var context = scope.ServiceProvider.GetRequiredService<Context>();
+            context.SourceCodeStorage = new SourceCodeStorage(sources);
+            var reporter = scope.ServiceProvider.GetRequiredService<IValidationReporter>();
+            var compilation = GetCompilation(sources, id);
+            var assemblies = Assembly.GetEntryAssembly()
+                .GetReferencedAssemblies()
+                .Select(Assembly.Load)
+                .ToImmutableArray();
+            context.Converter = new MetaConverter(compilation, assemblies);
+
+            // constraints, static analysis
+            foreach (var constraint in constraints)
             {
-                var id = Guid.NewGuid();
-
-                // compile user code and prepare MetaConverter
-                var context = scope.ServiceProvider.GetRequiredService<Context>();
-                context.SourceCodeStorage = new SourceCodeStorage(sources);
-                var reporter = scope.ServiceProvider.GetRequiredService<IValidationReporter>();
-                var compilation = GetCompilation(reporter, sources, id);
-                var assemblies = Assembly.GetEntryAssembly()
-                    .GetReferencedAssemblies()
-                    .Select(Assembly.Load)
-                    .ToImmutableArray();
-                context.Converter = new MetaConverter(compilation, assemblies);
-
-                // constraints, static analysis
-                foreach (var constraint in constraints)
-                {
-                    constraint.Validate(scope.ServiceProvider);
-                }
-                var analyzers = scope.ServiceProvider.GetRequiredService<IEnumerable<DiagnosticAnalyzer>>();
-                await RunAnalyzers(reporter, compilation, analyzers);
-                if (reporter.GetDiagnostics()
-                    .Any(d => d.Severity == ValidationSeverity.Error && (d.Source?.IsValidated ?? true)))
-                {
-                    return GetValidationDiagnostics(reporter);
-                }
-
-                // dynamic analysis
-                var userAssembly = GetAssembly(reporter, compilation);
-                assemblies = assemblies.Add(userAssembly);
-                context.Converter = new MetaConverter(compilation, assemblies);
-                var dynamicContext = scope.ServiceProvider.GetRequiredService<CSharpDynamicContext>();
-                var dynamicActionStorage = scope.ServiceProvider.GetRequiredService<DynamicActionStorage>();
-                RunDynamicActions(reporter, dynamicContext, dynamicActionStorage);
+                constraint.Validate(scope.ServiceProvider);
+            }
+            var analyzers = scope.ServiceProvider.GetRequiredService<IEnumerable<DiagnosticAnalyzer>>();
+            await RunAnalyzers(reporter, compilation, analyzers);
+            if (reporter.GetDiagnostics()
+                .Any(d => d.Severity == ValidationSeverity.Error && (d.Source?.IsValidated ?? true)))
+            {
                 return GetValidationDiagnostics(reporter);
             }
+
+            // dynamic analysis
+            var userAssembly = GetAssembly(reporter, compilation);
+            assemblies = assemblies.Add(userAssembly);
+            context.Converter = new MetaConverter(compilation, assemblies);
+            var dynamicContext = scope.ServiceProvider.GetRequiredService<CSharpDynamicContext>();
+            var dynamicActionStorage = scope.ServiceProvider.GetRequiredService<DynamicActionStorage>();
+            RunDynamicActions(reporter, dynamicContext, dynamicActionStorage);
+            return GetValidationDiagnostics(reporter);
         }
 
         private Assembly GetAssembly(IValidationReporter reporter, Compilation compilation)
         {
-            using (var memoryStream = new MemoryStream())
+            using var memoryStream = new MemoryStream();
+            var result = compilation.Emit(memoryStream);
+            if (!result.Success)
             {
-                var result = compilation.Emit(memoryStream);
-                if (!result.Success)
+                foreach (var diagnostic in result.Diagnostics)
                 {
-                    foreach (var diagnostic in result.Diagnostics)
-                    {
-                        reporter.Report(diagnostic);
-                    }
-                    return null;
+                    reporter.Report(diagnostic);
                 }
-                else
-                {
-                    memoryStream.Position = 0;
-                    return AssemblyLoadContext.Default.LoadFromStream(memoryStream);
-                }
+                return null;
+            }
+            else
+            {
+                memoryStream.Position = 0;
+                return AssemblyLoadContext.Default.LoadFromStream(memoryStream);
             }
         }
 
-        private CSharpCompilation GetCompilation(IValidationReporter reporter, IEnumerable<ISourceCode> sources, Guid id)
+        private CSharpCompilation GetCompilation(IEnumerable<ISourceCode> sources, Guid id)
         {
             var trees = sources.OfType<CSharpSourceCode>()
                 .Select(s => CSharpSyntaxTree.ParseText(

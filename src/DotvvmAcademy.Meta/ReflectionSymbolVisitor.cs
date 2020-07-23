@@ -100,7 +100,7 @@ namespace DotvvmAcademy.Meta
         {
             // symbol must be a top-level type
             // type arguments are not supported
-            string GetNamespaceName(INamespaceSymbol @namespace)
+            static string GetNamespaceName(INamespaceSymbol @namespace)
             {
                 if (@namespace.ContainingNamespace.IsGlobalNamespace)
                 {

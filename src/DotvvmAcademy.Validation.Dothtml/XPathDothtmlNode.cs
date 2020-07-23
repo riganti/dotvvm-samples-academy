@@ -39,9 +39,15 @@ namespace DotvvmAcademy.Validation.Dothtml
 
         public object Value { get; set; }
 
-        public void SetAttributes(ImmutableArray<XPathDothtmlNode>.Builder builder) => Attributes = SetupNodeArray(builder);
+        public void SetAttributes(ImmutableArray<XPathDothtmlNode>.Builder builder)
+        {
+            Attributes = SetupNodeArray(builder);
+        }
 
-        public void SetChildren(ImmutableArray<XPathDothtmlNode>.Builder builder) => Children = SetupNodeArray(builder);
+        public void SetChildren(ImmutableArray<XPathDothtmlNode>.Builder builder)
+        {
+            Children = SetupNodeArray(builder);
+        }
 
         private ImmutableArray<XPathDothtmlNode> SetupNodeArray(ImmutableArray<XPathDothtmlNode>.Builder builder)
         {

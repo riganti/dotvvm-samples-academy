@@ -11,23 +11,16 @@ namespace DotvvmAcademy.Meta
     {
         public virtual TResult Visit(MemberInfo info)
         {
-            switch(info)
+            return info switch
             {
-                case EventInfo eventInfo:
-                    return VisitEvent(eventInfo);
-                case FieldInfo fieldInfo:
-                    return VisitField(fieldInfo);
-                case PropertyInfo propertyInfo:
-                    return VisitProperty(propertyInfo);
-                case ConstructorInfo constructorInfo:
-                    return VisitConstructor(constructorInfo);
-                case MethodInfo methodInfo:
-                    return VisitMethod(methodInfo);
-                case Type type:
-                    return VisitType(type);
-                default:
-                    throw new InvalidOperationException($"\"{info.GetType()}\" is not a supported MemberInfo.");
-            }
+                EventInfo eventInfo => VisitEvent(eventInfo),
+                FieldInfo fieldInfo => VisitField(fieldInfo),
+                PropertyInfo propertyInfo => VisitProperty(propertyInfo),
+                ConstructorInfo constructorInfo => VisitConstructor(constructorInfo),
+                MethodInfo methodInfo => VisitMethod(methodInfo),
+                Type type => VisitType(type),
+                _ => throw new InvalidOperationException($"\"{info.GetType()}\" is not a supported MemberInfo."),
+            };
         }
 
         public virtual TResult DefaultVisit(MemberInfo info)

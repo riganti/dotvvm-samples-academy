@@ -7,23 +7,14 @@ namespace Microsoft.CodeAnalysis
     {
         public static ValidationSeverity ToValidationSeverity(this DiagnosticSeverity severity)
         {
-            switch (severity)
+            return severity switch
             {
-                case DiagnosticSeverity.Error:
-                    return ValidationSeverity.Error;
-
-                case DiagnosticSeverity.Info:
-                    return ValidationSeverity.Info;
-
-                case DiagnosticSeverity.Warning:
-                    return ValidationSeverity.Warning;
-
-                case DiagnosticSeverity.Hidden:
-                    return ValidationSeverity.Hint;
-
-                default:
-                    throw new NotSupportedException($"DiagnosticSeverity '{severity}' is not supported.");
-            }
+                DiagnosticSeverity.Error => ValidationSeverity.Error,
+                DiagnosticSeverity.Info => ValidationSeverity.Info,
+                DiagnosticSeverity.Warning => ValidationSeverity.Warning,
+                DiagnosticSeverity.Hidden => ValidationSeverity.Hint,
+                _ => throw new NotSupportedException($"DiagnosticSeverity '{severity}' is not supported."),
+            };
         }
     }
 }

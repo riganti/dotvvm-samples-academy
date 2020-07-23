@@ -39,7 +39,7 @@ namespace DotvvmAcademy.Meta.Syntax
 
         public override bool Equals(object obj)
         {
-            return obj is NameToken && Equals((NameToken)obj);
+            return obj is NameToken token && Equals(token);
         }
 
         public bool Equals(NameToken other)
@@ -53,18 +53,12 @@ namespace DotvvmAcademy.Meta.Syntax
 
         public override int GetHashCode()
         {
-            var hashCode = 1682781979;
-            hashCode = hashCode * -1521134295 + IsMissing.GetHashCode();
-            hashCode = hashCode * -1521134295 + End.GetHashCode();
-            hashCode = hashCode * -1521134295 + Kind.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Source);
-            hashCode = hashCode * -1521134295 + Start.GetHashCode();
-            return hashCode;
+            return HashCode.Combine(IsMissing, End, Kind, Source, Start);
         }
 
         public override string ToString()
         {
-            return Source.Substring(Start, End - Start);
+            return Source[Start..End];
         }
 
         private string GetDebuggerDisplay()

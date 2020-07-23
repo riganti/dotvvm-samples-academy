@@ -86,17 +86,13 @@ namespace DotvvmAcademy.Meta
         {
             var namespaces = Visit(node.Left)
                 .OfType<INamespaceSymbol>();
-            switch (node.Right)
+            return node.Right switch
             {
-                case IdentifierNameNode identifier:
-                    return namespaces.SelectMany(n => VisitIdentifier(identifier, n));
-
-                case GenericNameNode generic:
-                    return namespaces.SelectMany(n => VisitGeneric(generic, n));
-
-                default:
-                    throw new NotSupportedException($"{nameof(SimpleNameNode)} type '{node.Right.GetType()}' is not supported.");
-            }
+                IdentifierNameNode identifier => namespaces.SelectMany(n => VisitIdentifier(identifier, n)),
+                GenericNameNode generic => namespaces.SelectMany(n => VisitGeneric(generic, n)),
+                _ => throw new NotSupportedException($"{nameof(SimpleNameNode)} type '{node.Right.GetType()}' "
+                    + "is not supported."),
+            };
         }
     }
 }

@@ -42,7 +42,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
         {
             var sb = new StringBuilder();
             sb.Append(query.Expression.Expression);
-            if (sb[sb.Length - 1] != '/')
+            if (sb[^1] != '/')
             {
                 sb.Append('/');
             }
