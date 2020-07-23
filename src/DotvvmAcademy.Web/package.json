@@ -5,7 +5,7 @@
   "devDependencies": {
     "@types/knockout": "^3.4.63",
     "autoprefixer": "^9.8.0",
-    "browser-sync": "^2.26.7",
+    "browser-sync": "^2.26.10",
     "clean-css-cli": "^4.3.0",
     "monaco-editor": "^0.15.6",
     "node-sass": "^4.14.1",
