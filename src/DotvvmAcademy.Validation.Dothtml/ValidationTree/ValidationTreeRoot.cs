@@ -10,7 +10,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
     [DebuggerDisplay("TreeRoot")]
     public class ValidationTreeRoot : ValidationContentNode, IAbstractTreeRoot
     {
-        private Dictionary<string, List<IAbstractDirective>> directivesDictionary;
+        private readonly Dictionary<string, List<IAbstractDirective>> directivesDictionary;
 
         public ValidationTreeRoot(
             DothtmlRootNode node,

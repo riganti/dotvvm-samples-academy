@@ -38,10 +38,10 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         {
             switch (property)
             {
-                case ValidationProperty validationProperty:
-                case ValidationAttachedProperty attachedProperty:
-                case ValidationVirtualProperty virtualProperty:
-                case ValidationGroupedProperty groupedProperty:
+                case ValidationProperty _:
+                case ValidationAttachedProperty _:
+                case ValidationVirtualProperty _:
+                case ValidationGroupedProperty _:
                     return property;
 
                 case GroupedDotvvmProperty groupedDotvvmProperty:
@@ -85,8 +85,8 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         {
             switch (group)
             {
-                case ValidationPropertyGroup validationGroup:
-                case ValidationCollectionPropertyGroup collectionGroup:
+                case ValidationPropertyGroup _:
+                case ValidationCollectionPropertyGroup _:
                     return group;
 
                 case DotvvmPropertyGroup dotvvmGroup:

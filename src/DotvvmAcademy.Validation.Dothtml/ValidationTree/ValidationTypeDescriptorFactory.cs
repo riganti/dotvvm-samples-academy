@@ -45,14 +45,14 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         public ValidationTypeDescriptor Create(BindingParserNode name)
         {
-            if (name is MemberAccessBindingParserNode)
+            if (name is MemberAccessBindingParserNode member)
             {
-                return Create((MemberAccessBindingParserNode)name);
+                return Create(member);
             }
             else if (name is AssemblyQualifiedNameBindingParserNode qualifiedName
-                && qualifiedName.TypeName is MemberAccessBindingParserNode)
+                && qualifiedName.TypeName is MemberAccessBindingParserNode nestedMember)
             {
-                return Create((MemberAccessBindingParserNode)qualifiedName.TypeName);
+                return Create(nestedMember);
             }
 
             return Create(name.ToDisplayString());
