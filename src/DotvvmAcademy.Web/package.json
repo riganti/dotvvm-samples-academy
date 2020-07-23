@@ -7,11 +7,11 @@
     "autoprefixer": "^9.8.0",
     "browser-sync": "^2.26.10",
     "clean-css-cli": "^4.3.0",
-    "monaco-editor": "^0.15.6",
+    "monaco-editor": "^0.20.0",
     "node-sass": "^4.14.1",
     "postcss-cli": "^7.1.1",
     "postcss-value-parser": "^4.1.0",
-    "typescript": "^2.9.2",
+    "typescript": "^3.9.7",
     "uglify-js": "^3.9.4",
     "watch": "^1.0.2"
   },
