@@ -282,16 +282,19 @@ namespace DotvvmAcademy.CourseFormat
             };
 
             var script = await GetValidationScript(codeTask.Path);
+            FileStream scriptAssemblyFileStream;
             MemoryMappedFile scriptAssemblyMap;
             {
                 var mapName = $"CodeTask_{validationId}";
                 var mapPath = Path.Combine(Path.GetTempPath(), mapName);
+                scriptAssemblyFileStream = new FileStream(mapPath, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite);
                 scriptAssemblyMap = MemoryMappedFile.CreateFromFile(
-                    path: mapPath,
-                    mode: FileMode.Create,
+                    fileStream: scriptAssemblyFileStream,
                     mapName: null,
                     capacity: script.Bytes.Length,
-                    access: MemoryMappedFileAccess.ReadWrite);
+                    access: MemoryMappedFileAccess.ReadWrite,
+                    inheritability: HandleInheritability.None, // sandbox creates its own
+                    leaveOpen: true);
                 using var mapStream = scriptAssemblyMap.CreateViewStream(
                     offset: 0,
                     size: 0,
@@ -356,6 +359,7 @@ namespace DotvvmAcademy.CourseFormat
             }
             finally
             {
+                scriptAssemblyFileStream.Dispose();
                 scriptAssemblyMap.Dispose();
             }
             return diagnostics.ToImmutable();

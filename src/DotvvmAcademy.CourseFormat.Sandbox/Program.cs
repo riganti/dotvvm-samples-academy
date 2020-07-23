@@ -26,9 +26,18 @@ namespace DotvvmAcademy.CourseFormat.Sandbox
             string entryTypeName,
             string entryTypeMethod)
         {
-            using var scriptMap = MemoryMappedFile.CreateFromFile(
+            using var fileStream = new FileStream(
                 path: mapPath,
-                mode: FileMode.Open);
+                mode: FileMode.Open,
+                access: FileAccess.Read,
+                share: FileShare.ReadWrite); // wtf
+            using var scriptMap = MemoryMappedFile.CreateFromFile(
+                fileStream: fileStream,
+                mapName: null,
+                capacity: 0,
+                access: MemoryMappedFileAccess.Read,
+                inheritability: HandleInheritability.None,
+                leaveOpen: true);
             using var mapStream = scriptMap.CreateViewStream(0, 0, MemoryMappedFileAccess.Read);
             var scriptAssembly = AssemblyLoadContext.Default.LoadFromStream(mapStream);
             var submissionType = scriptAssembly.GetType(entryTypeName);

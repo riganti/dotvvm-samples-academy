@@ -8,6 +8,7 @@ namespace DotvvmAcademy.Validation.CSharp
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class AllowedSymbolAnalyzer : DiagnosticAnalyzer
     {
+#pragma warning disable RS2008
         public static readonly DiagnosticDescriptor SymbolUsageForbidden = new DiagnosticDescriptor(
             id: nameof(SymbolUsageForbidden),
             title: "Symbol Usage Forbidden",
@@ -15,6 +16,7 @@ namespace DotvvmAcademy.Validation.CSharp
             category: nameof(DotvvmAcademy),
             defaultSeverity: DiagnosticSeverity.Error,
             isEnabledByDefault: true);
+#pragma warning restore RS2008
 
         private readonly AllowedSymbolStorage storage;
 
