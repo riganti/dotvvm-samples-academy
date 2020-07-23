@@ -43,7 +43,8 @@ public class Test
                 {
                     RoslynReference.FromName("System.Private.CoreLib"),
                     RoslynReference.FromName("netstandard"),
-                    RoslynReference.FromName("System.Linq.Expressions")
+                    RoslynReference.FromName("System.Linq.Expressions"),
+                    RoslynReference.FromName("System.Runtime"),
                 },
                 new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
             using var originalStream = new MemoryStream();
