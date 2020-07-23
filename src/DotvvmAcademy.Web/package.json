@@ -3,8 +3,8 @@
   "name": "dotvvmacademy.app",
   "private": true,
   "devDependencies": {
-    "@types/knockout": "^3.4.63",
-    "autoprefixer": "^9.8.0",
+    "@types/knockout": "^3.4.67",
+    "autoprefixer": "^9.8.5",
     "browser-sync": "^2.26.10",
     "clean-css-cli": "^4.3.0",
     "monaco-editor": "^0.20.0",
@@ -12,7 +12,7 @@
     "postcss-cli": "^7.1.1",
     "postcss-value-parser": "^4.1.0",
     "typescript": "^3.9.7",
-    "uglify-js": "^3.9.4",
+    "uglify-js": "^3.10.0",
     "watch": "^1.0.2"
   },
   "scripts": {
