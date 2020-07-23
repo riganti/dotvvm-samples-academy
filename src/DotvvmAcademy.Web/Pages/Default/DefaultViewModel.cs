@@ -2,6 +2,7 @@ using DotVVM.Framework.ViewModel;
 using DotvvmAcademy.CourseFormat;
 using DotvvmAcademy.Web.Resources.Localization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,9 +12,9 @@ namespace DotvvmAcademy.Web.Pages.Default
     public class DefaultViewModel : SiteViewModel
     {
         private readonly CourseWorkspace workspace;
-        private readonly IHostingEnvironment environment;
+        private readonly IWebHostEnvironment environment;
 
-        public DefaultViewModel(CourseWorkspace workspace, IHostingEnvironment environment)
+        public DefaultViewModel(CourseWorkspace workspace, IWebHostEnvironment environment)
         {
             this.workspace = workspace;
             this.environment = environment;

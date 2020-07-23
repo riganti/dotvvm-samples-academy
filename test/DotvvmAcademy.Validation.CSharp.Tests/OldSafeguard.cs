@@ -5,7 +5,7 @@ namespace DotvvmAcademy.Validation.CSharp
 {
     public class OldSafeguard
     {
-        private Lazy<Stopwatch> stopwatch = new Lazy<Stopwatch>(() => Stopwatch.StartNew());
+        private readonly Lazy<Stopwatch> stopwatch = new Lazy<Stopwatch>(() => Stopwatch.StartNew());
 
         public OldSafeguard(int timeLimit = 1)
         {

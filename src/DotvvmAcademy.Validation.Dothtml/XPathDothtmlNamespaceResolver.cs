@@ -8,14 +8,10 @@ namespace DotvvmAcademy.Validation.Dothtml
 {
     public class XPathDothtmlNamespaceResolver : IXmlNamespaceResolver
     {
-        private readonly ValidationControlResolver controlResolver;
-        private readonly NameTable nameTable;
         private readonly ImmutableDictionary<string, string> namespaces;
 
         public XPathDothtmlNamespaceResolver(ValidationControlResolver controlResolver, NameTable nameTable)
         {
-            this.controlResolver = controlResolver;
-            this.nameTable = nameTable;
             namespaces = controlResolver
                 .GetRegisteredNamespaces()
                 .ToImmutableDictionary(

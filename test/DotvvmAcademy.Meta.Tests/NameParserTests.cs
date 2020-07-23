@@ -10,7 +10,7 @@ namespace DotvvmAcademy.Meta.Tests
         {
             var lexer = new NameLexer("System.Collections.Generic.List`1[string]::ToString");
             var parser = new NameParser(lexer);
-            var name = parser.Parse();
+            parser.Parse();
         }
 
         [Fact]
@@ -18,7 +18,7 @@ namespace DotvvmAcademy.Meta.Tests
         {
             var lexer = new NameLexer("System.Int32::.ctor");
             var parser = new NameParser(lexer);
-            var name = parser.Parse();
+            parser.Parse();
         }
 
         [Fact]

@@ -40,7 +40,7 @@ namespace DotvvmAcademy.Validation.Dothtml
         public static XPathKind GetKind(string xpath)
         {
             var segments = xpath.Split('/');
-            var lastSegment = segments[segments.Length - 1];
+            var lastSegment = segments[^1];
             if (lastSegment.StartsWith("@"))
             {
                 if (segments.Length == 1)

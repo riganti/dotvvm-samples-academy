@@ -2,6 +2,7 @@
 using DotVVM.Framework.Runtime.Filters;
 using DotvvmAcademy.Web.Resources.Localization;
 using Microsoft.ApplicationInsights;
+using Microsoft.ApplicationInsights.Extensibility;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,7 +11,12 @@ namespace DotvvmAcademy.Web.Pages.Error
 {
     public class ErrorRedirectingFilter : ExceptionFilterAttribute
     {
-        private readonly TelemetryClient telemetryClient = new TelemetryClient();
+        private readonly TelemetryClient telemetryClient;
+
+        public ErrorRedirectingFilter(TelemetryConfiguration config)
+        {
+            telemetryClient = new TelemetryClient(config);
+        }
 
         protected override Task OnCommandExceptionAsync(IDotvvmRequestContext context, ActionInfo actionInfo, Exception ex)
         {

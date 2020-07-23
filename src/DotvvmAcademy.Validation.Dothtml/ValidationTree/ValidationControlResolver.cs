@@ -22,18 +22,14 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         private readonly ConcurrentDictionary<string, INamespaceSymbol> namespaces
             = new ConcurrentDictionary<string, INamespaceSymbol>();
 
-        private readonly ValidationControlTypeFactory typeFactory;
-
         public ValidationControlResolver(
             Compilation compilation,
             ValidationTypeDescriptorFactory descriptorFactory,
-            ValidationControlTypeFactory typeFactory,
             ValidationControlMetadataFactory metadataFactory,
             ValidationPropertyFactory propertyFactory)
         {
             this.compilation = compilation;
             this.descriptorFactory = descriptorFactory;
-            this.typeFactory = typeFactory;
             this.metadataFactory = metadataFactory;
             this.propertyFactory = propertyFactory;
         }

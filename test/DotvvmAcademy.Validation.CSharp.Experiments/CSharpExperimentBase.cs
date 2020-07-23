@@ -22,20 +22,16 @@ namespace DotvvmAcademy.Validation.CSharp.Experiments
 
         public Assembly GetAssembly(CSharpCompilation compilation)
         {
-            using (var stream = new MemoryStream())
-            {
-                Compile(compilation, stream);
-                return AssemblyLoadContext.Default.LoadFromStream(stream);
-            }
+            using var stream = new MemoryStream();
+            Compile(compilation, stream);
+            return AssemblyLoadContext.Default.LoadFromStream(stream);
         }
 
         public AssemblyDefinition GetAssemblyDefinition(CSharpCompilation compilation)
         {
-            using (var stream = new MemoryStream())
-            {
-                Compile(compilation, stream);
-                return AssemblyDefinition.ReadAssembly(stream);
-            }
+            using var stream = new MemoryStream();
+            Compile(compilation, stream);
+            return AssemblyDefinition.ReadAssembly(stream);
         }
 
         public CSharpCompilation GetCompilation(string sample, string name = "Tests", CSharpCompilationOptions options = null)

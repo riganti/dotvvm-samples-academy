@@ -9,7 +9,6 @@ namespace DotvvmAcademy.Web
         public static void Main(string[] args)
         {
             WebHost.CreateDefaultBuilder(args)
-                .UseApplicationInsights()
                 .UseStartup<Startup>()
                 .ConfigureLogging(b =>
                 {

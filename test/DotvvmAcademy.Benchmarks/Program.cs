@@ -9,7 +9,12 @@ namespace DotvvmAcademy.Benchmarks
     {
         public static void Main(string[] args)
         {
-            var summary = BenchmarkRunner.Run<StepValidation>(DefaultConfig.Instance.With(new EtwProfiler()));
+            if (args is null)
+            {
+                throw new ArgumentNullException(nameof(args));
+            }
+
+            BenchmarkRunner.Run<StepValidation>(DefaultConfig.Instance.AddDiagnoser(new EtwProfiler()));
         }
     }
 }

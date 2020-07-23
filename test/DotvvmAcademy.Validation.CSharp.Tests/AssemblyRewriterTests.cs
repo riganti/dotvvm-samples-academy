@@ -46,21 +46,19 @@ public class Test
                     RoslynReference.FromName("System.Linq.Expressions")
                 },
                 new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
-            using (var originalStream = new MemoryStream())
-            using (var rewrittenStream = new MemoryStream())
-            {
-                var result = compilation.Emit(originalStream);
-                Assert.True(result.Success);
-                originalStream.Position = 0;
-                var rewriter = new AssemblyRewriter();
-                rewriter.Rewrite(originalStream, rewrittenStream);
-                rewrittenStream.Position = 0;
-                var test = AssemblyLoadContext.Default.LoadFromStream(rewrittenStream);
-                var type = test.GetType("Test");
-                var instance = Activator.CreateInstance(type);
-                type.GetMethod("Two")
-                    .Invoke(instance, null);
-            }
+            using var originalStream = new MemoryStream();
+            using var rewrittenStream = new MemoryStream();
+            var result = compilation.Emit(originalStream);
+            Assert.True(result.Success);
+            originalStream.Position = 0;
+            var rewriter = new AssemblyRewriter();
+            rewriter.Rewrite(originalStream, rewrittenStream);
+            rewrittenStream.Position = 0;
+            var test = AssemblyLoadContext.Default.LoadFromStream(rewrittenStream);
+            var type = test.GetType("Test");
+            var instance = Activator.CreateInstance(type);
+            type.GetMethod("Two")
+                .Invoke(instance, null);
         }
     }
 }

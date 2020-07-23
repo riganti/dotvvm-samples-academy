@@ -7,7 +7,7 @@ namespace DotvvmAcademy.Validation.CSharp.Experiments
 {
     public class NameAggregationRoslynVisitor : SymbolVisitor
     {
-        private SymbolDisplayFormat format;
+        private readonly SymbolDisplayFormat format;
 
         public NameAggregationRoslynVisitor()
         {
@@ -26,7 +26,6 @@ namespace DotvvmAcademy.Validation.CSharp.Experiments
                     SymbolDisplayMiscellaneousOptions.ExpandNullable
                 };
             var formatType = typeof(SymbolDisplayFormat);
-            var optionsType = formatType.Assembly.GetType("Microsoft.CodeAnalysis.SymbolDisplayCompilerInternalOptions");
             var constructor = formatType.GetConstructors(BindingFlags.NonPublic | BindingFlags.Instance).Single();
             format = (SymbolDisplayFormat)constructor.Invoke(arguments);
         }

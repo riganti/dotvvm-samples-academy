@@ -26,6 +26,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             PropertyType = propertyType;
             DeclaringType = declaringType;
             MarkupOptions = markupOptions;
+            DataContextChangeAttributes = dataContextChangeAttributes;
             DataContextManipulationAttribute = dataContextManipulationAttribute;
 
             Name = PropertySymbol.MetadataName;

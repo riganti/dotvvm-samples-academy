@@ -22,11 +22,7 @@ namespace DotvvmAcademy.Validation.Dothtml
             var response = new ValidationHttpResponse(httpContext, new ValidationHeaderCollection());
             httpContext.Request = request;
             httpContext.Response = response;
-            var requestContext = new DotvvmRequestContext
-            {
-                Configuration = configuration,
-                HttpContext = httpContext
-            };
+            var requestContext = new DotvvmRequestContext(httpContext, configuration, null);
             viewModel.Context = requestContext;
             requestContext.ModelState.ValidationTarget = viewModel;
             return viewModel;

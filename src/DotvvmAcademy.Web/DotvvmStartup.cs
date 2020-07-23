@@ -4,6 +4,7 @@ using DotVVM.Framework.ResourceManagement;
 using DotvvmAcademy.Web.Hosting;
 using DotvvmAcademy.Web.Pages.Error;
 using DotvvmAcademy.Web.Pages.Step;
+using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
@@ -30,7 +31,8 @@ namespace DotvvmAcademy.Web
             // in debug I want to see the exception pages rather that the unspecific error pages
             if (!config.Debug)
             {
-                config.Runtime.GlobalFilters.Add(new ErrorRedirectingFilter());
+                var telemetryConfig = config.ServiceProvider.GetRequiredService<TelemetryConfiguration>();
+                config.Runtime.GlobalFilters.Add(new ErrorRedirectingFilter(telemetryConfig));
             }
 
             config.Markup.AddMarkupControl("cc",

@@ -33,7 +33,7 @@ namespace DotvvmAcademy.Validation.CSharp
         private FieldDefinition InjectSafeguardField(Guid rewriteId, ModuleDefinition module)
         {
             // Create SafeContainer{Guid} class
-            var containingClassName = $"{ContainingClassPrefix}{rewriteId.ToString("N")}";
+            var containingClassName = $"{ContainingClassPrefix}{rewriteId:N}";
             var typeAttributes = TypeAttributes.Class | TypeAttributes.Abstract | TypeAttributes.Sealed;
             var containingClass = new TypeDefinition(RewriterNamespace, containingClassName,
                 typeAttributes, module.ImportReference(typeof(object)));

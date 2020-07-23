@@ -140,11 +140,8 @@ namespace DotvvmAcademy.CourseFormat.Sandbox
                     var resolver = scope.ServiceProvider.GetRequiredService<ValidationTreeResolver>();
                     validationTree = (ValidationTreeRoot)resolver.ResolveTree(dothtmlRoot, dothtmlSource.FileName);
                     validationTree.FileName = dothtmlSource.FileName;
-                    var visitor = new ErrorAggregatingVisitor(reporter);
-                    foreach (var diagnostic in visitor.Visit(validationTree))
-                    {
-                        reporter.Report(diagnostic);
-                    }
+                    var visitor = new ErrorAggregatingWalker(reporter);
+                    visitor.Visit(validationTree);
                 }
                 catch (DotvvmCompilationException exception)
                 {

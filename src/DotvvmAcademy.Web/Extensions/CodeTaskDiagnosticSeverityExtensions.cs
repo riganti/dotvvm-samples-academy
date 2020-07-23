@@ -7,23 +7,14 @@ namespace DotvvmAcademy.CourseFormat
     {
         public static MonacoSeverity ToMonacoSeverity(this CodeTaskDiagnosticSeverity severity)
         {
-            switch (severity)
+            return severity switch
             {
-                case CodeTaskDiagnosticSeverity.Error:
-                    return MonacoSeverity.Error;
-
-                case CodeTaskDiagnosticSeverity.Warning:
-                    return MonacoSeverity.Warning;
-
-                case CodeTaskDiagnosticSeverity.Info:
-                    return MonacoSeverity.Info;
-
-                case CodeTaskDiagnosticSeverity.Hint:
-                    return MonacoSeverity.Hint;
-
-                default:
-                    throw new NotSupportedException($"{nameof(CodeTaskDiagnosticSeverity)} '{severity}' is not supported.");
-            }
+                CodeTaskDiagnosticSeverity.Error => MonacoSeverity.Error,
+                CodeTaskDiagnosticSeverity.Warning => MonacoSeverity.Warning,
+                CodeTaskDiagnosticSeverity.Info => MonacoSeverity.Info,
+                CodeTaskDiagnosticSeverity.Hint => MonacoSeverity.Hint,
+                _ => throw new NotSupportedException($"{nameof(CodeTaskDiagnosticSeverity)} '{severity}' is not supported."),
+            };
         }
     }
 }

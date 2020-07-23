@@ -36,21 +36,17 @@ namespace DotvvmAcademy.Validation.CSharp.Experiments
         {
             var assembly = typeof(SymbolFullNameExperiments).Assembly;
             var stream = assembly.GetManifestResourceStream(SampleResourceName);
-            using (var sr = new StreamReader(stream))
-            {
-                Sample = sr.ReadToEnd();
-            }
+            using var sr = new StreamReader(stream);
+            Sample = sr.ReadToEnd();
         }
 
         private void SerializeFullNames(List<string> fullNames, string fileName)
         {
             var directory = Directory.GetCurrentDirectory();
-            using (var writer = new StreamWriter(Path.Combine(directory, fileName)))
+            using var writer = new StreamWriter(Path.Combine(directory, fileName));
+            foreach (var fullName in fullNames)
             {
-                foreach (var fullName in fullNames)
-                {
-                    writer.WriteLine(fullName);
-                }
+                writer.WriteLine(fullName);
             }
         }
     }

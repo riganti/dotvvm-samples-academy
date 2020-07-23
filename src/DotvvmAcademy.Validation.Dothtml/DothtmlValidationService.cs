@@ -48,7 +48,7 @@ namespace DotvvmAcademy.Validation.Dothtml
             var validationTree = GetValidationTree(
                 reporter,
                 scope.ServiceProvider.GetRequiredService<ValidationTreeResolver>(),
-                scope.ServiceProvider.GetRequiredService<ErrorAggregatingVisitor>(),
+                scope.ServiceProvider.GetRequiredService<ErrorAggregatingWalker>(),
                 sourceCode);
             if (validationTree == null)
             {
@@ -121,7 +121,7 @@ namespace DotvvmAcademy.Validation.Dothtml
             c.AddScoped<DothtmlTokenizer>();
             c.AddScoped<DothtmlParser>();
             c.AddScoped<XPathTreeVisitor>();
-            c.AddScoped<ErrorAggregatingVisitor>();
+            c.AddScoped<ErrorAggregatingWalker>();
             c.AddScoped<XPathDothtmlNamespaceResolver>();
             c.AddScoped<NameTable>();
             return c.BuildServiceProvider();
@@ -137,7 +137,7 @@ namespace DotvvmAcademy.Validation.Dothtml
         private ValidationTreeRoot GetValidationTree(
             IValidationReporter reporter,
             ValidationTreeResolver resolver,
-            ErrorAggregatingVisitor visitor,
+            ErrorAggregatingWalker visitor,
             DothtmlSourceCode sourceCode)
         {
             try
@@ -159,10 +159,7 @@ namespace DotvvmAcademy.Validation.Dothtml
                 // parse semantics
                 var root = (ValidationTreeRoot)resolver.ResolveTree(dothtmlRoot, sourceCode.FileName);
                 root.FileName = sourceCode.FileName;
-                foreach (var diagnostic in visitor.Visit(root))
-                {
-                    reporter.Report(diagnostic);
-                }
+                visitor.Visit(root);
                 return root;
             }
             catch(DotvvmCompilationException exception)

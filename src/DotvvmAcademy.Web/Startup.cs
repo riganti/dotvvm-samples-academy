@@ -20,6 +20,7 @@ namespace DotvvmAcademy.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddApplicationInsightsTelemetry();
             services.AddDotVVM<DotvvmStartup>();
             services.AddSingleton<CourseWorkspace>();
             services.AddSingleton<ArchivePresenter>();

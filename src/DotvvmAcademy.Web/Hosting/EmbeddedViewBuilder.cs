@@ -26,7 +26,7 @@ namespace DotvvmAcademy.Web.Hosting
 
         private readonly CourseWorkspace workspace;
 
-        private ConcurrentDictionary<string, (Assembly viewModel, Assembly view)> assemblies
+        private readonly ConcurrentDictionary<string, (Assembly viewModel, Assembly view)> assemblies
             = new ConcurrentDictionary<string, (Assembly viewModel, Assembly view)>();
 
         public EmbeddedViewBuilder(
