@@ -1,11 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace DotvvmAcademy.Validation
 {
-    [Serializable]
-    public struct LightDiagnostic
+    public class LightDiagnostic : IEquatable<LightDiagnostic>
     {
+        public LightDiagnostic()
+        {
+            End = -1;
+            Start = -1;
+            Message = "A Diagnostic creation error has occurred.";
+            Severity = ValidationSeverity.Error;
+            Source = string.Empty;
+        }
+
         public LightDiagnostic(IValidationDiagnostic validationDiagnostic)
         {
             Start = validationDiagnostic.Start;
@@ -32,5 +41,43 @@ namespace DotvvmAcademy.Validation
         public string Source { get; set; }
 
         public int Start { get; set; }
+
+        public static bool operator ==(LightDiagnostic left, LightDiagnostic right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(LightDiagnostic left, LightDiagnostic right)
+        {
+            return !left.Equals(right);
+        }
+
+        public bool Equals(LightDiagnostic other)
+        {
+            return Start.Equals(other.Start)
+                && End.Equals(other.End)
+                && Message.Equals(other.Message)
+                && Severity.Equals(other.Severity)
+                && Source.Equals(other.Source);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is LightDiagnostic light)
+            {
+                return Equals(light);
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(End, Message, Severity, Source, Start);
+        }
+
+        public override string ToString()
+        {
+            return $"{Source}({Start},{End}): {Severity}: {Message}";
+        }
     }
 }

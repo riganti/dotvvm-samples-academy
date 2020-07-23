@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <LangVersion>latest</LangVersion>
     <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
     <BuildInParallel>false</BuildInParallel>
@@ -12,6 +12,7 @@
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="3.6.0" />
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="2.2.0" />
     <PackageReference Include="System.Collections.Immutable" Version="1.5.0" />
+    <PackageReference Include="System.Text.Json" Version="4.7.2" />
     <PackageReference Include="YamlDotNet" Version="6.1.1" />
   </ItemGroup>
 
@@ -37,23 +38,15 @@
   </ItemGroup>
 
   <Target BeforeTargets="BeforeBuild" Name="PublishSandbox">
-    <MSBuild Projects="../DotvvmAcademy.CourseFormat.Sandbox/DotvvmAcademy.CourseFormat.Sandbox.csproj"
-             Targets="Publish"
-             BuildInParallel="false"
-             Properties="Configuration=$(Configuration);
-                         Platform=$(Platform);
-                         PublishDir=$(MSBuildProjectDirectory)/sandbox;"/>
+    <MSBuild Projects="../DotvvmAcademy.CourseFormat.Sandbox/DotvvmAcademy.CourseFormat.Sandbox.csproj" Targets="Publish" BuildInParallel="false" Properties="Configuration=$(Configuration);&#xA;                         Platform=$(Platform);&#xA;                         PublishDir=$(MSBuildProjectDirectory)/sandbox;" />
     <ItemGroup>
-      <Content Include="sandbox/**/*"
-               CopyToOutputDirectory="Always"
-               CopyToPublishDirectory="Always"/>
+      <Content Include="sandbox/**/*" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always" />
     </ItemGroup>
   </Target>
 
   <Target BeforeTargets="Clean" Name="CleanSandbox">
-    <MSBuild Projects="../DotvvmAcademy.CourseFormat.Sandbox/DotvvmAcademy.CourseFormat.Sandbox.csproj"
-             Targets="Clean"/>
-    <RemoveDir Directories="sandbox"/>
+    <MSBuild Projects="../DotvvmAcademy.CourseFormat.Sandbox/DotvvmAcademy.CourseFormat.Sandbox.csproj" Targets="Clean" />
+    <RemoveDir Directories="sandbox" />
   </Target>
   
 </Project>

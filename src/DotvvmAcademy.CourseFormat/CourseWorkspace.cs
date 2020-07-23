@@ -16,11 +16,9 @@ using System.IO.Compression;
 using System.IO.MemoryMappedFiles;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using YamlDotNet.Core;
 using YamlDotNet.Serialization;
@@ -271,7 +269,9 @@ namespace DotvvmAcademy.CourseFormat
                 bytes: memoryStream.ToArray());
         }
 
-        public async Task<IEnumerable<CodeTaskDiagnostic>> ValidateCodeTask(CodeTask codeTask, string code)
+        public async Task<IEnumerable<CodeTaskDiagnostic>> ValidateCodeTask(
+            CodeTask codeTask,
+            string code)
         {
             var validationId = Guid.NewGuid();
 
@@ -284,33 +284,25 @@ namespace DotvvmAcademy.CourseFormat
             var script = await GetValidationScript(codeTask.Path);
             MemoryMappedFile scriptAssemblyMap;
             {
-                var mapName = $"CodeTask:{validationId}";
-                scriptAssemblyMap = MemoryMappedFile.CreateNew(mapName, script.Bytes.Length, MemoryMappedFileAccess.ReadWrite);
-                using (var mapStream = scriptAssemblyMap.CreateViewStream(0, 0, MemoryMappedFileAccess.ReadWrite))
-                {
-                    await mapStream.WriteAsync(script.Bytes, 0, script.Bytes.Length);
-                }
-                args.Add(mapName);
+                var mapName = $"CodeTask_{validationId}";
+                var mapPath = Path.Combine(Path.GetTempPath(), mapName);
+                scriptAssemblyMap = MemoryMappedFile.CreateFromFile(
+                    path: mapPath,
+                    mode: FileMode.Create,
+                    mapName: null,
+                    capacity: script.Bytes.Length,
+                    access: MemoryMappedFileAccess.ReadWrite);
+                using var mapStream = scriptAssemblyMap.CreateViewStream(
+                    offset: 0,
+                    size: 0,
+                    access: MemoryMappedFileAccess.ReadWrite);
+                await mapStream.WriteAsync(script.Bytes, 0, script.Bytes.Length);
+                args.Add(mapPath);
                 args.Add(script.EntryType);
                 args.Add(script.EntryMethod);
             }
             args.Add(CultureInfo.CurrentCulture.Name);
-
-            var dependencyMaps = new List<MemoryMappedFile>();
-            var dependencies = await Task.WhenAll(codeTask.Dependencies.Select(d => GetFileContents(d)));
-            for (int i = 0; i < codeTask.Dependencies.Length; i++)
-            {
-                var dependencyName = codeTask.Dependencies[i];
-                var mapName = $"CourseFile:{validationId}/{Path.GetFileName(dependencyName)}";
-                var map = MemoryMappedFile.CreateNew(mapName, dependencies[i].Length * sizeof(char), MemoryMappedFileAccess.ReadWrite);
-                using (var mapStream = map.CreateViewStream(0, 0, MemoryMappedFileAccess.ReadWrite))
-                using (var writer = new StreamWriter(mapStream))
-                {
-                    await writer.WriteAsync(dependencies[i]);
-                }
-                dependencyMaps.Add(map);
-                args.Add(mapName);
-            }
+            args.AddRange(codeTask.Dependencies);
 
             var info = new ProcessStartInfo
             {
@@ -340,35 +332,31 @@ namespace DotvvmAcademy.CourseFormat
 #pragma warning restore CS4014
                 await process.StandardInput.WriteAsync(code);
                 process.StandardInput.Close();
-                var formatter = new BinaryFormatter();
-                var deserializedDiagnostics = (LightDiagnostic[])formatter.Deserialize(process.StandardOutput.BaseStream);
+                var lightDiagnostics = await JsonSerializer.DeserializeAsync<LightDiagnostic[]>(
+                    process.StandardOutput.BaseStream);
                 // TODO: This Distinct call is a hack
-                foreach (var deserializedDiagnostic in deserializedDiagnostics.Distinct())
+                foreach (var lightDiagnostic in lightDiagnostics.Distinct())
                 {
-                    if (deserializedDiagnostic.Source == null || deserializedDiagnostic.Source.StartsWith("UserCode"))
+                    if (lightDiagnostic.Source == null || lightDiagnostic.Source.StartsWith("UserCode"))
                     {
                         diagnostics.Add(new CodeTaskDiagnostic(
-                            message: deserializedDiagnostic.Message,
-                            start: deserializedDiagnostic.Start,
-                            end: deserializedDiagnostic.End,
-                            severity: deserializedDiagnostic.Severity.ToCodeTaskDiagnosticSeverity()));
+                            message: lightDiagnostic.Message,
+                            start: lightDiagnostic.Start,
+                            end: lightDiagnostic.End,
+                            severity: lightDiagnostic.Severity.ToCodeTaskDiagnosticSeverity()));
                     }
                 }
             }
-            catch (SerializationException)
+            catch (JsonException)
             {
                 if (!killed)
                 {
-                    diagnostics.Add(new CodeTaskDiagnostic("Your code couldn't be validated.", -1, -1, CodeTaskDiagnosticSeverity.Error));
+                    diagnostics.Add(new CodeTaskDiagnostic("Your code could not be validated.", -1, -1, CodeTaskDiagnosticSeverity.Error));
                 }
             }
             finally
             {
                 scriptAssemblyMap.Dispose();
-                foreach (var dependencyMap in dependencyMaps)
-                {
-                    dependencyMap.Dispose();
-                }
             }
             return diagnostics.ToImmutable();
         }
