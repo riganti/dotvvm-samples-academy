@@ -46,28 +46,22 @@ namespace DotvvmAcademy.Validation.CSharp.Constraints
 
         private IMethodSymbol GetAccessor(IPropertySymbol property)
         {
-            switch (Kind)
+            return Kind switch
             {
-                case AccessorKind.Get:
-                    return property.GetMethod;
-                case AccessorKind.Set:
-                    return property.SetMethod;
-                default:
-                    throw new InvalidOperationException("AccessorKind is invalid.");
-            }
+                AccessorKind.Get => property.GetMethod,
+                AccessorKind.Set => property.SetMethod,
+                _ => throw new InvalidOperationException("AccessorKind is invalid."),
+            };
         }
 
         private string GetDiagnosticMessage(IPropertySymbol property)
         {
-            switch (Kind)
+            return Kind switch
             {
-                case AccessorKind.Get:
-                    return Resources.ERR_MissingGetter;
-                case AccessorKind.Set:
-                    return Resources.ERR_MissingSetter;
-                default:
-                    throw new InvalidOperationException("AccessorKind is invalid.");
-            }
+                AccessorKind.Get => Resources.ERR_MissingGetter,
+                AccessorKind.Set => Resources.ERR_MissingSetter,
+                _ => throw new InvalidOperationException("AccessorKind is invalid."),
+            };
         }
     }
 }

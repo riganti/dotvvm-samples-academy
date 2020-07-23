@@ -31,7 +31,7 @@ namespace DotvvmAcademy.Validation.CSharp.Constraints
                 .OfType<ITypeSymbol>();
             foreach (var symbol in symbols)
             {
-                if (!symbol.BaseType.Equals(baseType))
+                if (!SymbolEqualityComparer.Default.Equals(symbol.BaseType, baseType))
                 {
                     reporter.Report(
                         message: Resources.ERR_WrongBaseType,

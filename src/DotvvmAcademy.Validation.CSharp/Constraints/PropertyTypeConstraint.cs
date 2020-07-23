@@ -31,7 +31,7 @@ namespace DotvvmAcademy.Validation.CSharp.Constraints
                 .OfType<IPropertySymbol>();
             foreach (var property in symbols)
             {
-                if (!property.Type.Equals(type))
+                if (!SymbolEqualityComparer.Default.Equals(property.Type, type))
                 {
                     reporter.Report(
                         message: Resources.ERR_WrongPropertyType,

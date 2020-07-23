@@ -328,13 +328,15 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
                     var hasOneArgument = i.TypeArguments.Length == 1;
                     if (isIEnumerable && hasOneArgument && i.TypeArguments[0] is INamedTypeSymbol pairArgument)
                     {
-                        var isKeyValuePair = pairArgument.ConstructedFrom.Equals(keyValuePair);
+                        var isKeyValuePair = SymbolEqualityComparer.Default
+                            .Equals(pairArgument.ConstructedFrom, keyValuePair);
                         if (isKeyValuePair)
                         {
                             var hasTwoArguments = pairArgument.TypeArguments.Length == 2;
                             if (hasTwoArguments)
                             {
-                                var firstIsString = pairArgument.TypeArguments[0].Equals(@string);
+                                var firstIsString = SymbolEqualityComparer.Default
+                                    .Equals(pairArgument.TypeArguments[0], @string);
                                 return firstIsString;
                             }
                         }

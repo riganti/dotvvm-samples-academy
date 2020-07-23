@@ -31,7 +31,7 @@ namespace DotvvmAcademy.Validation.CSharp.Constraints
                 .OfType<IMethodSymbol>();
             foreach (var method in symbols)
             {
-                if (!method.ReturnType.Equals(type))
+                if (!SymbolEqualityComparer.Default.Equals(method.ReturnType, type))
                 {
                     reporter.Report(
                         message: Resources.ERR_WrongReturnType,

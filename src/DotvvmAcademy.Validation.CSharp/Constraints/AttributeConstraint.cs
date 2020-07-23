@@ -34,7 +34,7 @@ namespace DotvvmAcademy.Validation.CSharp.Constraints
             foreach (var symbol in symbols)
             {
                 var attributes = symbol.GetAttributes()
-                    .Where(a => a.AttributeClass.Equals(attributeClass))
+                    .Where(a => SymbolEqualityComparer.Default.Equals(a.AttributeClass, attributeClass))
                     .ToArray();
                 if (attributes.Length == 0)
                 {

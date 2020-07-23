@@ -44,7 +44,7 @@ namespace DotvvmAcademy.Validation.CSharp.Constraints
                         return;
                     }
 
-                    if (!method.Parameters[i].Type.Equals(expectedParameter))
+                    if (!SymbolEqualityComparer.Default.Equals(method.Parameters[i].Type, expectedParameter))
                     {
                         reporter.Report(
                             message: Resources.ERR_WrongParameterType,

@@ -69,7 +69,7 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         public bool IsEqualTo(ITypeDescriptor typeDescriptor)
         {
             var other = factory.Convert(typeDescriptor);
-            return TypeSymbol.Equals(other.TypeSymbol);
+            return SymbolEqualityComparer.Default.Equals(TypeSymbol, other.TypeSymbol);
         }
 
         public bool IsEqualTo(Type type)
@@ -108,7 +108,8 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
                 return factory.Create(arrayType.ElementType);
             }
             var iEnumerableSymbol = compilation.GetTypeByMetadataName(WellKnownTypes.IEnumerable);
-            if (TypeSymbol is INamedTypeSymbol namedType && namedType.ConstructedFrom.Equals(iEnumerableSymbol))
+            if (TypeSymbol is INamedTypeSymbol namedType
+                && SymbolEqualityComparer.Default.Equals(namedType.ConstructedFrom, iEnumerableSymbol))
             {
                 return factory.Create(namedType.TypeArguments.First());
             }

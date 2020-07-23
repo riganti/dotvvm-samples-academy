@@ -32,7 +32,7 @@ namespace DotvvmAcademy.Validation.CSharp.Constraints
             {
                 foreach (var attribute in symbol.GetAttributes())
                 {
-                    if (attribute.AttributeClass.Equals(attributeClass))
+                    if (SymbolEqualityComparer.Default.Equals(attribute.AttributeClass, attributeClass))
                     {
                         reporter.Report(
                             message: Resources.ERR_ForbiddenAttribute,

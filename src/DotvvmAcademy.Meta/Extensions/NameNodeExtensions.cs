@@ -4,62 +4,32 @@
     {
         public static NameNode GetLogicalParent(this NameNode node)
         {
-            switch (node)
+            return node switch
             {
-                case ArrayTypeNameNode array:
-                    return array.ElementType.GetLogicalParent();
-
-                case ConstructedTypeNameNode constructed:
-                    return constructed.UnboundTypeName.GetLogicalParent();
-
-                case SimpleNameNode simple:
-                    return NameFactory.Simple("");
-
-                case MemberNameNode member:
-                    return member.Type;
-
-                case NestedTypeNameNode nested:
-                    return nested.Left;
-
-                case PointerTypeNameNode pointer:
-                    return pointer.ElementType.GetLogicalParent();
-
-                case QualifiedNameNode qualified:
-                    return qualified.Left;
-
-                default:
-                    return NameFactory.Simple("");
-            }
+                ArrayTypeNameNode array => array.ElementType.GetLogicalParent(),
+                ConstructedTypeNameNode constructed => constructed.UnboundTypeName.GetLogicalParent(),
+                SimpleNameNode _ => NameFactory.Simple(""),
+                MemberNameNode member => member.Type,
+                NestedTypeNameNode nested => nested.Left,
+                PointerTypeNameNode pointer => pointer.ElementType.GetLogicalParent(),
+                QualifiedNameNode qualified => qualified.Left,
+                _ => NameFactory.Simple(""),
+            };
         }
 
         public static string GetShortName(this NameNode node)
         {
-            switch (node)
+            return node switch
             {
-                case ArrayTypeNameNode array:
-                    return array.ElementType.GetShortName();
-
-                case ConstructedTypeNameNode constructed:
-                    return constructed.UnboundTypeName.GetShortName();
-
-                case SimpleNameNode simple:
-                    return simple.IdentifierToken.ToString();
-
-                case MemberNameNode member:
-                    return member.Member.IdentifierToken.ToString();
-
-                case NestedTypeNameNode nested:
-                    return nested.Right.IdentifierToken.ToString();
-
-                case PointerTypeNameNode pointer:
-                    return pointer.ElementType.GetShortName();
-
-                case QualifiedNameNode qualified:
-                    return qualified.Right.IdentifierToken.ToString();
-
-                default:
-                    return node.ToString();
-            }
+                ArrayTypeNameNode array => array.ElementType.GetShortName(),
+                ConstructedTypeNameNode constructed => constructed.UnboundTypeName.GetShortName(),
+                SimpleNameNode simple => simple.IdentifierToken.ToString(),
+                MemberNameNode member => member.Member.IdentifierToken.ToString(),
+                NestedTypeNameNode nested => nested.Right.IdentifierToken.ToString(),
+                PointerTypeNameNode pointer => pointer.ElementType.GetShortName(),
+                QualifiedNameNode qualified => qualified.Right.IdentifierToken.ToString(),
+                _ => node.ToString(),
+            };
         }
     }
 }

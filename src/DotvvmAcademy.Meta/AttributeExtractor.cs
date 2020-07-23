@@ -26,7 +26,7 @@ namespace DotvvmAcademy.Meta
         {
             var attributeClass = (INamedTypeSymbol)converter.ToRoslyn(attributeType).Single();
             return symbol.GetAttributes()
-                .Where(t => t.AttributeClass.Equals(attributeClass))
+                .Where(t => SymbolEqualityComparer.Default.Equals(t.AttributeClass, attributeClass))
                 .Select(a => Instantiate(attributeType, a));
         }
 
@@ -34,13 +34,14 @@ namespace DotvvmAcademy.Meta
         {
             var attributeClass = (INamedTypeSymbol)converter.ToRoslyn(attributeType).Single();
             return symbol.GetAttributes()
-                .Where(a => a.AttributeClass.Equals(attributeClass));
+                .Where(a => SymbolEqualityComparer.Default.Equals(a.AttributeClass, attributeClass));
         }
 
         public bool HasAttribute(Type attributeType, ISymbol symbol)
         {
             var attributeClass = (INamedTypeSymbol)converter.ToRoslyn(attributeType).Single();
-            return symbol.GetAttributes().Any(a => a.AttributeClass.Equals(attributeClass));
+            return symbol.GetAttributes().Any(a => SymbolEqualityComparer.Default
+                .Equals(a.AttributeClass, attributeClass));
         }
 
         protected Attribute Instantiate(Type attributeType, AttributeData attributeData)

@@ -33,7 +33,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Constraints
             foreach (var directive in nodes)
             {
                 if (!(directive is ValidationTypeDirective typeDirective)
-                    || !typeDirective.Type.TypeSymbol.Equals(type))
+                    || !SymbolEqualityComparer.Default.Equals(typeDirective.Type.TypeSymbol, type))
                 {
                     reporter.Report(
                         message: Resources.ERR_WrongTypeDirectiveArgument,

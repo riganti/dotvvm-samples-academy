@@ -99,7 +99,7 @@ namespace DotvvmAcademy.CourseFormat
             {
                 if (path[i] == DirectorySeparator)
                 {
-                    yield return memory.Slice(start, i - start);
+                    yield return memory[start..i];
                     start = i + 1;
                 }
             }

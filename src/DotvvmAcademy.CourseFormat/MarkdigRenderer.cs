@@ -9,7 +9,7 @@ namespace DotvvmAcademy.CourseFormat
 {
     public class MarkdigRenderer
     {
-        private MarkdownPipeline pipeline = new MarkdownPipelineBuilder()
+        private readonly MarkdownPipeline pipeline = new MarkdownPipelineBuilder()
             .UsePipeTables()
             .UseEmphasisExtras()
             .UseYamlFrontMatter()
@@ -19,13 +19,11 @@ namespace DotvvmAcademy.CourseFormat
         public Task<string> Render(string source)
         {
             var document = Markdown.Parse(source, pipeline);
-            using (var writer = new StringWriter())
-            {
-                var renderer = new HtmlRenderer(writer);
-                pipeline.Setup(renderer);
-                renderer.Render(document);
-                return Task.FromResult(writer.ToString());
-            }
+            using var writer = new StringWriter();
+            var renderer = new HtmlRenderer(writer);
+            pipeline.Setup(renderer);
+            renderer.Render(document);
+            return Task.FromResult(writer.ToString());
         }
 
         public Task<(string html, TFrontMatter frontMatter)> Render<TFrontMatter>(string source)
@@ -38,14 +36,12 @@ namespace DotvvmAcademy.CourseFormat
                     .Build();
                 frontMatter = deserializer.Deserialize<TFrontMatter>(frontMatterBlock.Lines.ToString());
             }
-            using (var writer = new StringWriter())
-            {
-                var renderer = new HtmlRenderer(writer);
-                pipeline.Setup(renderer);
-                renderer.Render(document);
-                var html = writer.ToString();
-                return Task.FromResult((html, frontMatter));
-            }
+            using var writer = new StringWriter();
+            var renderer = new HtmlRenderer(writer);
+            pipeline.Setup(renderer);
+            renderer.Render(document);
+            var html = writer.ToString();
+            return Task.FromResult((html, frontMatter));
         }
     }
 }

@@ -32,7 +32,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Constraints
             var nodes = locator.Locate<ValidationControl>(Expression);
             foreach (var control in nodes)
             {
-                if (!control.Metadata.Type.TypeSymbol.Equals(type))
+                if (!SymbolEqualityComparer.Default.Equals(control.Metadata.Type.TypeSymbol, type))
                 {
                     reporter.Report(
                         message: Resources.ERR_WrongControlType,
