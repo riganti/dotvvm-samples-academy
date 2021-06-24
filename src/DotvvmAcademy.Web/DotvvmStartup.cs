@@ -36,7 +36,7 @@ namespace DotvvmAcademy.Web
             }
 
             config.Markup.AddMarkupControl("cc",
-                "LanguageSwitch", 
+                "LanguageSwitch",
                 "Pages/LanguageSwitch.dotcontrol");
             config.Markup.AddMarkupControl("cc",
                 "DiagnosticList",
