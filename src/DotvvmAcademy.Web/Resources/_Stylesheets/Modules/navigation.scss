@@ -2,6 +2,7 @@
 
 
 * nav.nav {
+    --nav-height: 5.5rem;
     position: fixed;
     top: 0;
     left: 0;
@@ -40,6 +41,49 @@
 }
 
 .nav {
+
+    .button {
+        --btn-background: #3175b9;
+        --btn-border-color: var(--btn-background);
+        --btn-color: #ffffff;
+        --btn-badding: 0.8rem 1.6rem;
+        --btn-min-width: 16rem;
+        --btn-max-width: 24rem;
+        --btn-font-size: large;
+        --box-shadow-alpha: .15;
+        --icon-size: 1.6rm;
+        display: inline-flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: center;
+        min-width: var(--btn-min-width);
+        max-width: var(--btn-max-width);
+        padding: var(--btn-badding);
+        background-color: var(--btn-background);
+        border-radius: .5rem;
+        font-size: var(--btn-font-size);
+        font-weight: 500;
+        color: var(--btn-color);
+        text-decoration: none;
+        transition: box-shadow .25s,background-color .25s,border-color .25s;
+        cursor: pointer;
+        box-shadow: 2px 2px 4px 0 rgba(0,0,0,var(--box-shadow-alpha));
+        border: .2rem solid var(--btn-border-color);
+
+        &--primary {
+            --btn-background: #27be89;
+
+            &--primary:hover {
+                --btn-background: #24b280;
+            }
+        }
+
+        &--small {
+            --btn-min-width: 12rem;
+            --btn-padding: 0.4rem 0.8rem;
+            --btn-font-size: medium;
+        }
+    }
 
     &__logo {
         position: relative;
@@ -163,7 +207,7 @@
             font-size: medium;
             font-weight: 600;
             line-height: var(--nav-height);
-            color: $color-secondary;
+            color: $color-dotvvm-secondary;
             text-decoration: none;
             white-space: nowrap;
             cursor: pointer;
@@ -213,7 +257,7 @@
             min-width: var(--icon-size);
             height: var(--icon-size);
             margin-left: $gap--m;
-            fill: $color-primary;
+            fill: $color-dotvvm-primary;
 
             @include res-max-tablet {
                 --icon-size: #{$gap--xl};
@@ -231,11 +275,11 @@
         }
 
         &--active a:not(.button) {
-            color: $color-primary;
+            color: $color-dotvvm-primary;
             text-decoration: underline;
 
             @include res-max-tablet {
-                color: $color-secondary;
+                color: $color-dotvvm-secondary;
                 text-decoration: none;
             }
 

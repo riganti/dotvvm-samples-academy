@@ -28,7 +28,7 @@
         display: block;
         width: 100%;
         height: .2rem;
-        background: $color-secondary;
+        background: $color-dotvvm-secondary;
         transition: transform $trans-time, opacity $trans-time;
 
         &:nth-child(1) {

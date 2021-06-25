@@ -1,11 +1,14 @@
 ﻿// To get all mixins in other *.scss file use: @import "/Base/global";
 
+$color-dotvvm-primary: #3175b9;
+$color-dotvvm-secondary: #424242;
+
 $color-white: #fff;
 $color-black: #000;
 $color-transparent: rgba(0,0,0,0);
 $color-primary: #3c3d3b;
-$color-secondary: #ffd94f;
-/*$color-secondary: hsl(0, 0, 26%);*/
+$color-secondary: #27be89;
+$color-secondary-hover: #24b280;
 $color-error: #d91313;
 $color-font: $color-black;
 $color-outline: lighten($color-primary, 20%);

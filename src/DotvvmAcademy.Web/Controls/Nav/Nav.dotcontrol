@@ -8,8 +8,8 @@
     </a>
 
     <div class="nav__menu" ID="navMenu">
-        <ul class="nav__left" <%--itemscope--%> itemtype="http://www.schema.org/SiteNavigationElement">
-            <li class="nav__item nav__item--row-1" <%--Class-nav__item--active="{value: CurrentRoute == "Products"}"--%>>
+        <ul class="nav__left">
+            <li class="nav__item nav__item--row-1">
                 <a href="https://www.dotvvm.com/products" target="_blank" aria-label="products" rel="noopener">
                     <div class="nav__item-icon">
                         <cc:Icon IconName="products" />
@@ -17,7 +17,7 @@
                     Products
                 </a>
             </li>
-            <li class="nav__item nav__item--row-3" <%--Class-nav__item--active="{value: CurrentRoute == "Build"}"--%>>
+            <li class="nav__item nav__item--row-3">
                 <a href="https://www.dotvvm.com/build" target="_blank" aria-label="build" rel="noopener">
                     <div class="nav__item-icon">
                         <cc:Icon IconName="build" />
@@ -25,7 +25,7 @@
                     Build
                 </a>
             </li>
-            <li class="nav__item nav__item--row-3" <%--Class-nav__item--active="{value: CurrentRoute == "Modernize"}"--%>>
+            <li class="nav__item nav__item--row-3">
                 <a href="https://www.dotvvm.com/modernize" target="_blank" aria-label="modernize" rel="noopener">
                     <div class="nav__item-icon">
                         <cc:Icon IconName="nav-modernize" />
@@ -34,7 +34,7 @@
                 </a>
             </li>
             <h4>Use Cases</h4>
-            <li class="nav__item nav__item--row-5" itemprop="name">
+            <li class="nav__item nav__item--row-5">
                 <a href="https://www.dotvvm.com/docs" target="_blank" aria-label="docs" rel="noopener">
                     <div class="nav__item-icon">
                         <cc:Icon IconName="docs" />
@@ -42,7 +42,7 @@
                     Docs
                 </a>
             </li>
-            <li class="nav__item nav__item--row-5" itemprop="name" <%--Class-nav__item--active="{value: CurrentRoute == "Samples"}"--%>>
+            <li class="nav__item nav__item--row-5">
                 <a href="https://www.dotvvm.com/samples" target="_blank" aria-label="samples" rel="noopener">
                     <div class="nav__item-icon">
                         <cc:Icon IconName="play" />
@@ -50,7 +50,7 @@
                     Samples
                 </a>
             </li>
-            <li class="nav__item nav__item--row-5" itemprop="name">
+            <li class="nav__item nav__item--active nav__item--row-5" itemprop="name">
                 <a href="https://academy.dotvvm.com/" rel="noopener" aria-label="academy" rel="noopener">
                     <div class="nav__item-icon">
                         <cc:Icon IconName="academy" />
@@ -59,7 +59,7 @@
                 </a>
             </li>
             <h4>Learn</h4>
-            <li class="nav__item nav__item--row-3" <%--Class-nav__item--active="{value: CurrentRoute == "Blog" || CurrentRoute == "BlogArticle"}"--%> itemprop="name">
+            <li class="nav__item nav__item--row-3">
                 <a href="https://www.dotvvm.com/blog" target="_blank" aria-label="blog" rel="noopener">
                     <div class="nav__item-icon">
                         <cc:Icon IconName="blog" />
@@ -70,7 +70,7 @@
             <li class="nav__item nav__item--row-1 nav__item--mobile" <%--Class-nav__item--active="{value: CurrentRoute == "OrderBasket"}"--%>>
                 <!--<a href="https://www.dotvvm.com/order/cart target="_blank" aria-label="cart" rel="noopener">
                 <div class="nav__item-icon">-->
-                <cc:Icon IconName="cart" />
+                <cc:Icon IconName="basket" />
                 <!--</div>
                     Cart
                 </a>-->
@@ -102,13 +102,13 @@
             <li class="nav__item" <%--Class-nav__item--active="{value: CurrentRoute == "OrderBasket"}"--%>>
                 <a RouteName="OrderBasket">
                     Cart
-                    <cc:Icon IconName="cart" />
+                    <cc:Icon IconName="basket" />
                 </a>
             </li>
             <dot:AuthenticatedView RenderWrapperTag="false">
                 <NotAuthenticatedTemplate>
                     <li class="nav__item">
-                        <a RouteName="Login" Text="Sign In" />
+                        <a href="https://www.dotvvm.com/login" target="_blank" aria-label="login" rel="noopener">Sign In</a>
                     </li>
                 </NotAuthenticatedTemplate>
                 <AuthenticatedTemplate>
@@ -122,7 +122,7 @@
             </dot:AuthenticatedView>
 
             <li class="nav__item nav__item--with-button">
-                <a RouteName="GetDotvvm" class="button button--primary button--small" Text="Get DotVVM" />
+                <a href="https://www.dotvvm.com/get-dotvvm" target="_blank" aria-label="Get DotVVM" rel="noopener" class="button button--primary button--small">Get DotVVM</a>
             </li>
         </ul>
     </div>

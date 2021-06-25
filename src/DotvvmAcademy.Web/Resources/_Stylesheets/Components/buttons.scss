@@ -1,20 +1,35 @@
 ﻿@import "../Base/_global.scss";
 
 .button {
-    display: inline-block;
+    --btn-background: #27be89;
+    --btn-border-color: var(--btn-background);
+    --btn-color: #ffffff;
+    --btn-badding: 0.8rem 1.6rem;
+    --btn-min-width: 16rem;
+    --btn-max-width: 24rem;
+    --btn-font-size: large;
+    --box-shadow-alpha: .15;
+    --icon-size: 1.6rm;
+    display: inline-flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--btn-min-width);
+    max-width: var(--btn-max-width);
+    padding: var(--btn-badding);
+    background-color: var(--btn-background);
+    border-radius: .5rem;
+    font-size: var(--btn-font-size);
+    font-weight: 500;
+    color: var(--btn-color);
     text-decoration: none;
-    background-color: $color-secondary;
-    color: $color-primary;
-    padding: .8rem 1.6rem;
-    border: .1rem solid $color-secondary;
+    transition: box-shadow .25s,background-color .25s,border-color .25s;
     cursor: pointer;
-    font-weight: 600;
-    text-decoration: none;
-    min-width: 15rem;
-    transition: $animate-all;
-    text-align: center;
-    font-family: $font-text;
-    font-size: $font-size-m;
+    box-shadow: 2px 2px 4px 0 rgba(0,0,0,var(--box-shadow-alpha));
+    border: .2rem solid var(--btn-border-color);
+
+
+
 
     span.success {
         display: none;
@@ -22,7 +37,7 @@
 
     &:hover, &:focus {
         text-decoration: none;
-        background-color: $color-hover;
+        background-color: $color-secondary-hover;
         transition: $animate-all;
         outline: none;
     }
