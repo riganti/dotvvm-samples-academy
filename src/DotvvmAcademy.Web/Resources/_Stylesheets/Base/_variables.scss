@@ -25,12 +25,14 @@ $color-dotvvm-blue: #3773c2;
 $color-vs-dark: #1e1e1e;
 $color-vs-hover: #3f3f46;
 $color-vs-text: #d4d4d4;
+$color-grey--light: #e8e8e8;
 
 // Font family
 $font-header-h1: 'Open Sans', sans-serif;
 $font-subheader-h2: 'Open Sans', sans-serif;
 $font-subheader-h3: 'Open Sans', sans-serif;
 $font-text: 'Open Sans', sans-serif;
+$font-family-default: Segoe UI, Arial, Helvetica, sans-serif;
 
 // Font sizes
 $font-size-xs: 1.2rem;
@@ -46,8 +48,27 @@ $transition-time: .3s;
 $animate-all: all ease-in-out $transition-time;
 
 // All devices width for responsivity
+$width-mobile-s: 320px;
 $width-mobile: 580px;
 $width-tablet: 768px;
 $width-desktop: 980px;
 $width-desktop-large: 1200px;
 $width-desktop-HD: 1440px;
+
+//gaps
+$gap--m: .8rem;
+$gap--xs: ($gap--m / 4);
+$gap--s: ($gap--m / 2);
+$gap--l: ($gap--m * 2);
+$gap--xl: ($gap--m * 3);
+$gap--xxl: ($gap--m * 4);
+$gap--xxxl: ($gap--m * 5);
+
+//Others
+$trans-time: .25s;
+$animate-all: all $trans-time ease-in-out;
+$border-width: .1rem;
+$border-width--l: $gap--xs;
+$border-radius: $gap--s;
+$border-color: #27be89;
+$box-shadow-alpha: .15;

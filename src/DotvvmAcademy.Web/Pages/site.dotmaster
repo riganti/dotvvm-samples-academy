@@ -50,7 +50,8 @@
 </head>
 <body Class-step-body="{resource: CurrentRoute == "Step"}">
     <nav>
-        test
+        <p>nav</p>
+        <cc:Nav />
     </nav>
 
     <header>
@@ -65,7 +66,7 @@
     </footer>
 
     <footer IncludeInPage="{resource: CurrentRoute == "Default"}">
-        <strong>TODO</strong>
+        <strong style="height:50px; display:block; background-color:red;">TODO</strong>
     </footer>
 
     <dot:RequiredResource Name="AppJS" />

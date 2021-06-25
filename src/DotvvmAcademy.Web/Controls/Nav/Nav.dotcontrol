@@ -1,0 +1,136 @@
+﻿@viewModel System.Object, mscorlib
+@noWrapperTag
+
+<nav class="nav">
+
+    <a href="https://www.dotvvm.com/" aria-label="homepage" rel="noopener">
+        <%--<cc:DotvvmSticker />--%>
+    </a>
+
+    <div class="nav__menu" ID="navMenu">
+        <ul class="nav__left" <%--itemscope--%> itemtype="http://www.schema.org/SiteNavigationElement">
+            <li class="nav__item nav__item--row-1" <%--Class-nav__item--active="{value: CurrentRoute == "Products"}"--%>>
+                <a href="https://www.dotvvm.com/products" target="_blank" RouteName="Products" itemprop="url">
+                    <div class="nav__item-icon">
+                        <%--<cc:Icon Name="products" />--%>
+                    </div>
+                    Products
+                </a>
+            </li>
+            <li class="nav__item nav__item--row-3" <%--Class-nav__item--active="{value: CurrentRoute == "Build"}"--%>>
+                <a RouteName="Build" itemprop="url">
+                    <div class="nav__item-icon">
+                        <%-- <cc:Icon Name="build" />--%>
+                    </div>
+                    Build
+                </a>
+            </li>
+            <li class="nav__item nav__item--row-3" <%--Class-nav__item--active="{value: CurrentRoute == "Modernize"}"--%>>
+                <a RouteName="Modernize" itemprop="url">
+                    <div class="nav__item-icon">
+                        <%-- <cc:Icon Name="nav-modernize" />--%>
+                    </div>
+                    Modernize
+                </a>
+            </li>
+            <h4>Use Cases</h4>
+            <li class="nav__item nav__item--row-5" itemprop="name">
+                <a href="~/docs" rel="noopener" itemprop="url">
+                    <div class="nav__item-icon">
+                        <%--<cc:Icon Name="docs" />--%>
+                    </div>
+                    Docs
+                </a>
+            </li>
+            <li class="nav__item nav__item--row-5" itemprop="name" <%--Class-nav__item--active="{value: CurrentRoute == "Samples"}"--%>>
+                <a RouteName="Samples" itemprop="url">
+                    <div class="nav__item-icon">
+                        <%--      <cc:Icon Name="play" />--%>
+                    </div>
+                    Samples
+                </a>
+            </li>
+            <li class="nav__item nav__item--row-5" itemprop="name">
+                <a href="https://academy.dotvvm.com/" rel="noopener" target="_blank" itemprop="url">
+                    <div class="nav__item-icon">
+                        <%-- <cc:Icon Name="academy" />--%>
+                    </div>
+                    Academy
+                </a>
+            </li>
+            <h4>Learn</h4>
+            <li class="nav__item nav__item--row-3" <%--Class-nav__item--active="{value: CurrentRoute == "Blog" || CurrentRoute == "BlogArticle"}"--%> itemprop="name">
+                <a RouteName="Blog" Text="Blog" itemprop="url">
+                    <div class="nav__item-icon">
+                        <%-- <cc:Icon Name="blog" />--%>
+                    </div>
+                    Blog
+                </a>
+            </li>
+            <li class="nav__item nav__item--row-1 nav__item--mobile" <%--Class-nav__item--active="{value: CurrentRoute == "OrderBasket"}"--%>>
+                <a RouteName="OrderBasket">
+                    <div class="nav__item-icon">
+                        <%--<cc:Icon Name="cart" />--%>
+                    </div>
+                    Cart
+                </a>
+            </li>
+            <dot:AuthenticatedView RenderWrapperTag="false">
+                <AuthenticatedTemplate>
+                    <li class="nav__item nav__item--row-1 nav__item--mobile" <%--Class-nav__item--active="{value: CurrentRoute == "CustomerProfile"}"--%>>
+                        <a RouteName="CustomerProfile">
+                            <div class="nav__item-icon">
+                                <%--<cc:Icon Name="profile" />--%>
+                            </div>
+                            Profile
+                        </a>
+                    </li>
+                </AuthenticatedTemplate>
+            </dot:AuthenticatedView>
+            <li class="nav__mobile-buttons">
+                <dot:AuthenticatedView RenderWrapperTag="false">
+                    <NotAuthenticatedTemplate>
+                        <a RouteName="Login" Text="Sign In" class="button button--primary" />
+                    </NotAuthenticatedTemplate>
+                    <AuthenticatedTemplate>
+                        <dot:Button <%--Click="{command: SignOut()}"--%> Validation.Enabled="false" Text="Sign out" class="button button--secondary" />
+                    </AuthenticatedTemplate>
+                </dot:AuthenticatedView>
+            </li>
+        </ul>
+        <ul class="nav__right">
+            <li class="nav__item" <%--Class-nav__item--active="{value: CurrentRoute == "OrderBasket"}"--%>>
+                <a RouteName="OrderBasket">
+                    Cart
+                    <%--<cc:Icon Name="cart" />--%>
+                </a>
+            </li>
+            <dot:AuthenticatedView RenderWrapperTag="false">
+                <NotAuthenticatedTemplate>
+                    <li class="nav__item">
+                        <a RouteName="Login" Text="Sign In" />
+                    </li>
+                </NotAuthenticatedTemplate>
+                <AuthenticatedTemplate>
+                    <li class="nav__item" <%--Class-nav__item--active="{value: CurrentRoute == "CustomerProfile"}"--%>>
+                        <a RouteName="CustomerProfile" Text="Profile" />
+                    </li>
+                    <li class="nav__item">
+                        <dot:Button <%--Click="{command: SignOut()}"--%> Validation.Enabled="false" Text="Sign out" />
+                    </li>
+                </AuthenticatedTemplate>
+            </dot:AuthenticatedView>
+
+            <li class="nav__item nav__item--with-button">
+                <a RouteName="GetDotvvm" class="button button--primary button--small" Text="Get DotVVM" />
+            </li>
+        </ul>
+    </div>
+
+    <button class="nav__burger" aria-label="Open menu button" title="Open menu button" ID="showNav">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+</nav>
