@@ -1,0 +1,7 @@
+﻿@viewModel System.Object, mscorlib
+@baseType DotvvmAcademy.Web.Controls.Icons.Icon, DotvvmAcademy.Web
+@noWrapperTag
+
+<svg class="{value: "icon icon--" + _control.IconName}" RenderSettings.Mode="Server">
+    <use xlink:href="{value: "#icon-" + _control.IconName}" />
+</svg>

@@ -22,6 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Controls\Icons\Icon.dotcontrol" />
+    <None Remove="Controls\Icons\IconSet.dotcontrol" />
     <None Remove="Controls\Nav\DotvvmSticker.dotcontrol" />
     <None Remove="Controls\Nav\Nav.dotcontrol" />
   </ItemGroup>

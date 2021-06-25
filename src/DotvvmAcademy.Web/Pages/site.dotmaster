@@ -49,10 +49,8 @@
     <dot:RequiredResource Name="StyleCSS" />
 </head>
 <body Class-step-body="{resource: CurrentRoute == "Step"}">
-    <nav>
-        <p>nav</p>
-        <cc:Nav />
-    </nav>
+    <cc:IconSet />
+    <cc:Nav />
 
     <header>
         <dot:ContentPlaceHolder ID="HeaderContent" />
