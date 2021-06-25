@@ -45,6 +45,9 @@ namespace DotvvmAcademy.Web
                 "FinishDialog",
                 "Pages/Step/FinishDialog.dotcontrol");
             config.Markup.AddCodeControls("cc", typeof(MonacoEditor));
+            config.Markup.AddMarkupControl("cc",
+                "Nav",
+                "Controls/Nav/Nav.dotcontrol");
 
             if (config.Debug)
             {
