@@ -48,6 +48,9 @@ namespace DotvvmAcademy.Web
             config.Markup.AddMarkupControl("cc",
                 "Nav",
                 "Controls/Nav/Nav.dotcontrol");
+            config.Markup.AddMarkupControl("cc",
+               "DotvvmSticker",
+               "Controls/Nav/DotvvmSticker.dotcontrol");
 
             if (config.Debug)
             {

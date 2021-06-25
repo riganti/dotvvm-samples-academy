@@ -3,8 +3,8 @@
 
 <nav class="nav">
 
-    <a href="https://www.dotvvm.com/" aria-label="homepage" rel="noopener">
-        <%--<cc:DotvvmSticker />--%>
+    <a href="https://www.dotvvm.com/" class="nav__logo" aria-label="homepage" rel="noopener">
+        <cc:DotvvmSticker />
     </a>
 
     <div class="nav__menu" ID="navMenu">
