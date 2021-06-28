@@ -6,22 +6,44 @@
     --title-color: #214778;
     --subtitle-color: #434343;
     --bg-position-x: 120%;
-    background-image: url(/images/Illustrations/header-dotvvm.svg), linear-gradient(to left,#f1f6fe 0,#f1f6fe 100%);
+    --image-transform-x: -100%;
+    overflow: hidden;
+    background-image: linear-gradient(to right, #f1f6fe 0%, #f1f6fe 85%, #c8e0ff 85%, #c8e0ff 100%);
     background-repeat: no-repeat;
-    background-position: var(--bg-position-x) center;
-    background-size: contain;
+    position: relative;
+    max-width: 100vw;
+
+
+    @include res-max-desktop-hd {
+        --image-transform-x: -70%;
+    }
+
+
+    @include res-max-desktop-large {
+        --image-transform-x: -55%;
+    }
 
     @include res-max-desktop-small {
         margin-bottom: 3rem;
+        --image-transform-x: -65%;
     }
 
     @include res-max-tablet {
-        background-image: none;
-        background-color: #f1f6fe;
+        background-image: linear-gradient(to right, #f1f6fe 0%, #f1f6fe 100%);
     }
 
+    > img {
+        position: absolute;
+        height: 100%;
+        display: block;
+        top: 50%;
+        left: 100%;
+        transform: translate(var(--image-transform-x), -50%);
 
-
+        @include res-max-tablet {
+            display: none;
+        }
+    }
 
 
     > div > div {
@@ -67,33 +89,17 @@
 
         p {
             padding-bottom: 2.5rem;
-            font-size: $font-size-m;
+            font-size: $font-size-xl;
+            line-height: 1.7;
             color: var(--subtitle-color);
+
+            @include res-max-laptop-s {
+                font-size: 1.8rem;
+            }
+
+            @include res-max-tablet {
+                font-size: 1.6rem;
+            }
         }
-    }
-}
-
-@media only screen and (max-width: 1300px) {
-    .main-header {
-        background-position: 180% center;
-    }
-}
-
-@media only screen and (max-width: 1120px) {
-    .main-header {
-        background-position: 250% center;
-    }
-}
-
-@media only screen and (max-width: 1024px) {
-    .main-header {
-        background-position: 350% center;
-    }
-}
-
-@media only screen and (max-width: 950px) {
-    .main-header {
-        background-position: 52rem center;
-        background-color: #f1f6fe;
     }
 }

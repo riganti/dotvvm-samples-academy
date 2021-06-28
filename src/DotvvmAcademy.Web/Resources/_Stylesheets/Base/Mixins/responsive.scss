@@ -55,8 +55,14 @@
     }
 }
 
-@mixin res-max-desktop-HD {
-    @media only screen and (max-width: $width-desktop-HD) {
+@mixin res-max-desktop-hd {
+    @media only screen and (max-width: $width-desktop-hd) {
+        @content;
+    }
+}
+
+@mixin res-max-desktop-full-hd {
+    @media only screen and (max-width: $width-desktop-full-hd) {
         @content;
     }
 }
@@ -104,8 +110,14 @@
     }
 }
 
-@mixin res-min-desktop-HD {
-    @media only screen and (min-width: ($width-desktop-HD + 1px)) {
+@mixin res-min-desktop-hd {
+    @media only screen and (min-width: ($width-desktop-hd + 1px)) {
+        @content;
+    }
+}
+
+@mixin res-min-desktop-full-hd {
+    @media only screen and (min-width: ($width-desktop-full-hd + 1px)) {
         @content;
     }
 }
@@ -129,8 +141,14 @@
     }
 }
 
-@mixin res-min-desktop-large-max-desktop-HD {
-    @media only screen and (min-width: ($width-desktop-large + 1px)) and (max-width: $width-desktop-HD) {
+@mixin res-min-desktop-large-max-desktop-hd {
+    @media only screen and (min-width: ($width-desktop-large + 1px)) and (max-width: $width-desktop-hd) {
+        @content;
+    }
+}
+
+@mixin res-min-desktop-hd-max-desktop-full-hd {
+    @media only screen and (min-width: ($width-desktop-hd + 1px)) and (max-width: $width-desktop-full-hd) {
         @content;
     }
 }

@@ -15,7 +15,8 @@
 
 <dot:Content ContentPlaceHolderID="HeaderContent">
     <section class="main-header no-padding">
-        <div class="container-large">
+        <img src="~/images/Illustrations/header-image.svg" alt="header-image" />
+        <div class="container">
             <div>
                 <dot:HtmlLiteral Html="{resource: UIResources.Base_MainTitle}"
                                  RenderWrapperTag="true"
@@ -37,7 +38,7 @@
 
 <dot:Content ContentPlaceHolderID="MainContent">
     <section class="section-lections no-padding-top">
-        <div class="container-large">
+        <div class="container">
             <dot:Repeater DataSource="{value: Lessons}" class="lessons-container">
                 <dot:RouteLink RouteName="Step"
                                Param-Language="{value: _root.LanguageMoniker}"
