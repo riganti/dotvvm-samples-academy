@@ -63,8 +63,8 @@
         <dot:ContentPlaceHolder ID="FooterContent" />
     </footer>
 
-    <footer IncludeInPage="{resource: CurrentRoute == "Default"}">
-        <strong style="height:50px; display:block; background-color:red;">TODO</strong>
+    <footer class="footer" IncludeInPage="{resource: CurrentRoute == "Default"}">
+        <cc:Footer />
     </footer>
 
     <dot:RequiredResource Name="AppJS" />

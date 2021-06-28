@@ -57,6 +57,9 @@ namespace DotvvmAcademy.Web
             config.Markup.AddMarkupControl("cc",
                "IconSet",
                "Controls/Icons/IconSet.dotcontrol");
+            config.Markup.AddMarkupControl("cc",
+               "Footer",
+               "Controls/Footer/Footer.dotcontrol");
 
             if (config.Debug)
             {

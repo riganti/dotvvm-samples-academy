@@ -1,0 +1,109 @@
+﻿@viewModel System.Object, mscorlib
+@noWrapperTag
+
+
+<div class="footer__container">
+    <div class="footer__left">
+        <img src="/images/logos/dotvvm-logo-no-tree-white.svg" alt="DotVVM logo" intrinsicsize="240 x 46.05" loading="lazy" />
+        <p>
+            DotVVM open source framework<br>
+            is supported by the <a href="https://dotnetfoundation.org/" class="link link--white" target="_blank" rel="noreferer" aria-label=".NET Foundation link">.NET Foundation</a>.
+        </p>
+        <div class="inline-grid inline-grid--col-2">
+            <a href="https://www.dotvvm.com/privacy-policy" class="link link--white" rel="noopener" aria-label="Privacy Policy">Privacy Policy</a>
+            <a href="https://www.dotvvm.com/terms-of-service" rel="noopener" class="link link--white" aria-label="Terms of Service">Terms of Service</a>
+        </div>
+    </div>
+    <div class="footer__middle">
+        <div>
+            <h5>
+                <a href="https://www.dotvvm.com/support" class="link link--white" rel="noopener" aria-label="Support">Support</a>
+            </h5>
+            <ul>
+                <li>
+                    <a href="https://www.dotvvm.com/support/contact-us" class="link link--white" rel="noopener" aria-label="Contact">Contact</a>
+                </li>
+                <li>
+                    <a href="https://www.dotvvm.com/consultations" class="link link--white" rel="noopener" aria-label="Book your consultation">Book an online meeting</a>
+                </li>
+                <li>
+                    <a href="https://www.dotvvm.com/get-dotvvm" class="link link--white" rel="noopener" aria-label="Get DotVVM">Get DotVVM</a>
+                </li>
+                <li>
+                    <a href="https://www.dotvvm.com/faq" class="link link--white" rel="noopener" aria-label="FAQ">FAQ</a>
+                </li>
+                <li>
+                    <a href="https://github.com/riganti/dotvvm"
+                       class="link link--white"
+                       rel="noopener"
+                       target="_blank"
+                       aria-label="GitHub link"
+                       InnerText="GitHub" />
+                </li>
+                <li>
+                    <a href="https://stackoverflow.com/users/login?ssrc=anon_ask&returnurl=https%3a%2f%2fstackoverflow.com%2fquestions%2fask%3ftags%3ddotvvm"
+                       class="link link--white"
+                       rel="noopener"
+                       target="_blank"
+                       aria-label="Gitter link"
+                       InnerText="StackOverflow" />
+                </li>
+                <li>
+                    <a href="https://gitter.im/riganti/dotvvmt"
+                       class="link link--white"
+                       rel="noopener"
+                       target="_blank"
+                       aria-label="Gitter link" InnerText="Gitter" />
+                </li>
+            </ul>
+        </div>
+        <div>
+            <h5>
+                <a href="https://www.dotvvm.com/" class="link link--white" rel="noopener" aria-label="DotVVM Home page">Home</a>
+            </h5>
+            <ul>
+                <li>
+                    <a href="https://www.dotvvm.com/products" class="link link--white" rel="noopener" aria-label="Products">Products</a>
+                </li>
+                <li>
+                    <a href="https://www.dotvvm.com/build" class="link link--white" rel="noopener" aria-label="Build">Build</a>
+                </li>
+                <li>
+                    <a href="https://www.dotvvm.com/modernize" class="link link--white" rel="noopener" aria-label="Modernize">Modernize</a>
+                </li>
+                <li>
+                    <a href="/" class="link link--white" rel="noopener" aria-label="Docs">Docs</a>
+                </li>
+                <li>
+                    <a href="https://www.dotvvm.com/samples" class="link link--white" rel="noopener" aria-label="Samples">Samples</a>
+                </li>
+                <li>
+                    <a href="https://academy.dotvvm.com/" target="_blank" class="link link--white" rel="noopener" aria-label="Academy">Academy</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer__right">
+        <h5 InnerText="Follow us on social media" />
+        <div class="social-container">
+            <a href="https://www.facebook.com/dotvvm" target="_blank" rel="noopener" aria-label="Facebook link">
+                <cc:Icon IconName="facebook-c" />
+            </a>
+            <a href="https://twitter.com/dotvvm" target="_blank" rel="noopener" aria-label="Twitter link">
+                <cc:Icon IconName="twitter-c" />
+            </a>
+            <a href="https://www.linkedin.com/company/dotvvm/" target="_blank" rel="noopener" aria-label="LinkedIn link">
+                <cc:Icon IconName="linkedin-c" />
+            </a>
+            <a href="https://www.youtube.com/channel/UCQZl8LNoe9kvE5FcjDyHlgQ" target="_blank" rel="noopener" aria-label="YouTube link">
+                <cc:Icon IconName="youtube-c" />
+            </a>
+        </div>
+    </div>
+</div>
+<div class="footer__bottom">
+    <small>
+        © {{resource: System.DateTime.Now.Year}}&nbsp;<a class="link link--white" href="https://www.riganti.cz/en" target="_blank" rel="noopener">RIGANTI s.r.o</a>
+        All Rights Reserved.
+    </small>
+</div>
