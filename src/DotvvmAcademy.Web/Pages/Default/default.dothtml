@@ -30,7 +30,7 @@
                                Param-Language="{value: _root.LanguageMoniker}"
                                Param-Lesson="{value: FirstLesson.Moniker}"
                                Param-Step="{value: FirstLesson.FirstStep}" />
-                <img src="~/images/Illustrations/header-image.svg" />
+                <%--<img src="~/images/Illustrations/header-dotvvm.svg" />--%>
             </div>
         </div>
     </section>

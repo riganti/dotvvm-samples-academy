@@ -1,66 +1,37 @@
 ﻿@import "../../../Base/global";
 
 
+
 .main-header {
-    background: -moz-linear-gradient(left, $color-primary 0%, $color-primary 75%, $color-white 75%, $color-white 100%);
-    background: -webkit-linear-gradient(left, $color-primary 0%,$color-primary 75%,$color-white 75%,$color-white 100%);
-    background: linear-gradient(to right, $color-primary 0%,$color-primary 75%,$color-white 75%,$color-white 100%);
-
-    @include res-max-desktop-HD {
-        background: -moz-linear-gradient(left, $color-primary 0%, $color-primary 80%, $color-white 80%, $color-white 100%);
-        background: -webkit-linear-gradient(left, $color-primary 0%,$color-primary 80%,$color-white 80%,$color-white 100%);
-        background: linear-gradient(to right, $color-primary 0%,$color-primary 80%,$color-white 80%,$color-white 100%);
-    }
-
-    @include res-max-desktop-large {
-        background: $color-primary;
-    }
+    --title-color: #214778;
+    --subtitle-color: #434343;
+    --bg-position-x: 120%;
+    background-image: url(/images/Illustrations/header-dotvvm.svg), linear-gradient(to left,#f1f6fe 0,#f1f6fe 100%);
+    background-repeat: no-repeat;
+    background-position: var(--bg-position-x) center;
+    background-size: contain;
 
     @include res-max-desktop-small {
-        background: rgba(78, 78, 77, 0.90);
         margin-bottom: 3rem;
     }
+
+    @include res-max-tablet {
+        background-image: none;
+        background-color: #f1f6fe;
+    }
+
+
+
+
 
     > div > div {
         padding: 5rem 0;
         position: relative;
         color: $color-white;
 
-        @include res-max-desktop-small {
+        @include res-max-tablet {
             text-align: center;
             padding: 3rem 0;
-        }
-
-        > img {
-            height: 125%;
-            position: absolute;
-            top: 53%;
-            left: 75%;
-            transform: translate(-50%, -50%);
-
-            @include res-max-desktop-HD {
-                height: 100%;
-                position: absolute;
-                top: 0;
-                left: 75%;
-                transform: translateX(-50%);
-                transition: $animate-all;
-            }
-
-            @include res-max-desktop-large {
-                left: 85%;
-            }
-
-            @include res-max-desktop-small {
-                left: 45%;
-                z-index: -1;
-            }
-
-
-            @include res-max-mobile {
-                left: 40%;
-                max-width: 32rem;
-            }
         }
 
         > h1 {
@@ -70,6 +41,7 @@
             font-weight: 300;
             position: relative;
             padding-bottom: 5rem;
+            color: var(--title-color);
 
             @include res-max-mobile {
                 font-size: $font-size-xl;
@@ -84,9 +56,9 @@
                 width: 5rem;
                 height: .2rem;
                 transform: translateY(-50%);
-                background-color: $color-white;
+                background-color: var(--title-color);
 
-                @include res-max-desktop-small {
+                @include res-max-tablet {
                     left: 50%;
                     transform: translate(-50%, -50%);
                 }
@@ -96,6 +68,32 @@
         p {
             padding-bottom: 2.5rem;
             font-size: $font-size-m;
+            color: var(--subtitle-color);
         }
+    }
+}
+
+@media only screen and (max-width: 1300px) {
+    .main-header {
+        background-position: 180% center;
+    }
+}
+
+@media only screen and (max-width: 1120px) {
+    .main-header {
+        background-position: 250% center;
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    .main-header {
+        background-position: 350% center;
+    }
+}
+
+@media only screen and (max-width: 950px) {
+    .main-header {
+        background-position: 52rem center;
+        background-color: #f1f6fe;
     }
 }

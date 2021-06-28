@@ -23,11 +23,15 @@ time, mark, audio, video {
     vertical-align: baseline;
 }
 
+:root {
+    --nav-height: 5.5rem;
+}
+
 html {
     font-size: 62.5%;
     height: 100%;
 
-    .code-container{
+    .code-container {
         font-size: 100% !important;
     }
 }
@@ -42,6 +46,7 @@ body {
     width: 100%;
     min-height: 100%;
     overflow-x: hidden;
+    padding-top: var(--nav-height);
 
     header {
         flex: 0 0 auto;
@@ -91,7 +96,7 @@ body {
 }
 
 ol, ul {
-   padding-left: 2rem;
+    padding-left: 2rem;
 }
 
 table {
