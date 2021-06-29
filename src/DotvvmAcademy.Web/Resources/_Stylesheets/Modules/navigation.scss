@@ -207,7 +207,7 @@
             font-size: medium;
             font-weight: 600;
             line-height: var(--nav-height);
-            color: $color-dotvvm-secondary;
+            color: $color-primary;
             text-decoration: none;
             white-space: nowrap;
             cursor: pointer;
@@ -279,7 +279,7 @@
             text-decoration: underline;
 
             @include res-max-tablet {
-                color: $color-dotvvm-secondary;
+                color: $color-primary;
                 text-decoration: none;
             }
 

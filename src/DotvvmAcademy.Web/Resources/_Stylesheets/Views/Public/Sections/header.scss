@@ -3,8 +3,8 @@
 
 
 .main-header {
-    --title-color: #214778;
-    --subtitle-color: #434343;
+    --title-color: #{$color-dotvvm-title};
+    --subtitle-color: #{$color-primary};
     --bg-position-x: 120%;
     --image-transform-x: -100%;
     overflow: hidden;

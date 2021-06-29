@@ -78,7 +78,7 @@
                     <a href="https://www.dotvvm.com/samples" class="link link--white" rel="noopener" aria-label="Samples">Samples</a>
                 </li>
                 <li>
-                    <a href="https://academy.dotvvm.com/" target="_blank" class="link link--white" rel="noopener" aria-label="Academy">Academy</a>
+                    <a href="https://academy.dotvvm.com/" class="link link--white" rel="noopener" aria-label="Academy">Academy</a>
                 </li>
             </ul>
         </div>
