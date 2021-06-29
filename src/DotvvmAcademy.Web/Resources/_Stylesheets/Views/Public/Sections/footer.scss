@@ -3,7 +3,7 @@
 
 .footer {
     padding-top: var(--footer-padding);
-    background-color: #434343;
+    background-color: $color-primary;
     --footer-padding: 5rem;
     --content-gap: #{$gap--l};
     --col-template: 26.4rem auto 26.4rem;

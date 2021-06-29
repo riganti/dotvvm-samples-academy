@@ -56,7 +56,8 @@
             padding: 3rem 0;
         }
 
-        > h1 {
+        > h1, .h1 {
+            display: block;
             text-transform: uppercase;
             font-size: 5rem;
             line-height: 5rem.2rem;
@@ -75,8 +76,8 @@
                 content: '';
                 top: calc(100% - 2.5rem);
                 left: 0;
-                width: 5rem;
-                height: .2rem;
+                width: 10rem;
+                height: .4rem;
                 transform: translateY(-50%);
                 background-color: var(--title-color);
 

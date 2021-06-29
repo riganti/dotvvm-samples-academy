@@ -18,9 +18,10 @@
         <img src="~/images/Illustrations/header-image.svg" alt="header-image" />
         <div class="container">
             <div>
-                <dot:HtmlLiteral Html="{resource: UIResources.Base_MainTitle}"
+                <dot:HtmlLiteral class="h1"
+                                 Html="{resource: UIResources.Base_MainTitle}"
                                  RenderWrapperTag="true"
-                                 WrapperTagName="h1" />
+                                 WrapperTagName="strong" />
                 <dot:HtmlLiteral Html="{resource: UIResources.Base_MainDescription}"
                                  RenderWrapperTag="true"
                                  WrapperTagName="p" />

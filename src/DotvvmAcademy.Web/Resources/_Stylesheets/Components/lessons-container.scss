@@ -20,22 +20,26 @@
 }
 
 .lessons-item {
+    --title-color: #{$color-dotvvm-title};
+    --alpha: 0;
     flex: 0 0 24%;
     max-width: 24%;
     width: 24%;
     text-align: center;
     color: $color-primary;
-    padding: 2rem 4rem;
+    padding: 4rem 4rem;
     box-sizing: border-box;
-    padding-bottom: 12rem;
+    padding-bottom: 10rem;
     position: relative;
     margin-top: 3rem;
     text-decoration: none;
     transition: $animate-all;
     border-radius: .5rem;
     border: .1rem solid #ccc;
+    box-shadow: 0 0 5px 0 rgba(0,0,0,var(--alpha));
 
     &:hover {
+        --alpha: .3;
 
         > img {
             transform: scale(1.05, 1.05);
@@ -52,7 +56,7 @@
 
     @include res-max-desktop-hd {
         padding: 2rem;
-        padding-bottom: 14rem;
+        padding-bottom: 11rem;
     }
 
     @include res-max-desktop-large {
@@ -106,6 +110,7 @@
 
     h2 {
         margin-bottom: 1rem;
+        color: var(--title-color);
     }
 
     p {
@@ -126,12 +131,12 @@
 
     .button {
         position: absolute;
-        bottom: 8rem;
+        bottom: 5rem;
         left: 50%;
         transform: translateX(-50%);
 
         @include res-max-desktop-large {
-            bottom: 8rem;
+            bottom: 5rem;
         }
     }
 }

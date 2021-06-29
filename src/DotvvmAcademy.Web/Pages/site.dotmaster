@@ -49,9 +49,9 @@
     <dot:RequiredResource Name="StyleCSS" />
 </head>
 <body Class-step-body="{resource: CurrentRoute == "Step"}">
+    <h1>DotVVM Academy</h1>
     <cc:IconSet />
     <cc:Nav />
-
     <header>
         <dot:ContentPlaceHolder ID="HeaderContent" />
     </header>

@@ -1,6 +1,6 @@
 ﻿@import "../Base/_global.scss";
 
-h1 {
+h1, .h1 {
     font-size: $font-size-xxl;
     font-family: $font-header-h1;
     font-weight: 300;
@@ -21,5 +21,12 @@ body > div:not(&:last-of-type) {
     p, span, a {
         font-size: $font-size-m;
         font-family: $font-text;
+    }
+}
+
+body {
+    > h1 {
+        opacity: 0;
+        position: absolute;
     }
 }
