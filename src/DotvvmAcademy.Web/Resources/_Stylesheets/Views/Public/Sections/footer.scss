@@ -169,6 +169,7 @@
 }
 
 .social-container {
+    --anim-type: 0.25s;
     display: inline-grid;
     align-items: center;
     grid-column-gap: $gap--m;
@@ -181,7 +182,7 @@
         height: 4rem;
         opacity: 1;
         border-radius: 50%;
-        transition: opacity var(--anim-type) .25s, box-shadow var(--anim-type) .25s;
+        transition: opacity var(--anim-type), box-shadow var(--anim-type);
         --box-shadow-alpha: .3;
         box-shadow: 2px 2px 4px 0 rgba(0,0,0,var(--box-shadow-alpha));
 

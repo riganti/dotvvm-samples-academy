@@ -1,9 +1,9 @@
 ﻿@import "../Base/_global.scss";
 
 .button {
-    --btn-background: #27be89;
+    --btn-background: #{$color-secondary};
     --btn-border-color: var(--btn-background);
-    --btn-color: #ffffff;
+    --btn-color: #{$color-white};
     --btn-badding: 0.8rem 1.6rem;
     --btn-min-width: 16rem;
     --btn-max-width: 24rem;

@@ -2,6 +2,7 @@
 
 @import "Mixins/grid-flex.scss";
 @import "Mixins/responsive.scss";
+@import "Mixins/_padding.scss";
 
 @mixin set-outline() {
     outline: none;
