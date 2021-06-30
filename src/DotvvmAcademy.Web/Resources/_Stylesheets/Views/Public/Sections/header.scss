@@ -3,12 +3,14 @@
 
 
 .main-header {
+    --bg-img-linear-right: #c8e0ff;
+    --bg-img-linear-left: #f1f6fe;
     --title-color: #{$color-dotvvm-title};
     --subtitle-color: #{$color-primary};
     --bg-position-x: 120%;
     --image-transform-x: -100%;
     overflow: hidden;
-    background-image: linear-gradient(to right, #f1f6fe 0%, #f1f6fe 85%, #c8e0ff 85%, #c8e0ff 100%);
+    background-image: linear-gradient(to right, var(--bg-img-linear-left) 0%, var(--bg-img-linear-left) 85%, var(--bg-img-linear-right) 85%, var(--bg-img-linear-right) 100%);
     background-repeat: no-repeat;
     position: relative;
     max-width: 100vw;
@@ -29,7 +31,7 @@
     }
 
     @include res-max-tablet {
-        background-image: linear-gradient(to right, #f1f6fe 0%, #f1f6fe 100%);
+        background-image: linear-gradient(to right, var(--bg-img-linear-left) 0%, var(--bg-img-linear-left) 100%);
     }
 
     > img {
@@ -95,11 +97,11 @@
             color: var(--subtitle-color);
 
             @include res-max-laptop-s {
-                font-size: 1.8rem;
+                font-size: $font-size-l;
             }
 
             @include res-max-tablet {
-                font-size: 1.6rem;
+                font-size: $font-size-m;
             }
         }
     }
