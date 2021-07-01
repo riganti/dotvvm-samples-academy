@@ -1,6 +1,6 @@
 ﻿let langSwitch = document.querySelector(".lang-switch");
-let langSwitchButon = document.querySelector(".lang-switch__button");
-let langSwitchList = document.querySelector(".lang-switch__list");
+let langSwitchButon = document.querySelector(".lang-switch__button") as HTMLButtonElement;
+let langSwitchList = document.querySelector(".lang-switch__list") as HTMLDivElement;
 
 langSwitchButon.addEventListener("click", function () {
     langSwitch.classList.toggle("lang-switch--open");

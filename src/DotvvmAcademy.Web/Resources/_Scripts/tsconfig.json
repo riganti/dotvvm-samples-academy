@@ -13,7 +13,6 @@
   "include": [
     "**/*",
     "../../node_modules/monaco-editor/monaco.d.ts",
-    "../../node_modules/@types/**/*.d.ts",
     "../Localization/UILanguage.cs"
   ]
 }
