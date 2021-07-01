@@ -99,3 +99,15 @@
         }
     }
 }
+
+.position {
+    &--relative {
+        position: relative;
+    }
+}
+
+.justify-content {
+    &--start {
+        justify-content: start;
+    }
+}

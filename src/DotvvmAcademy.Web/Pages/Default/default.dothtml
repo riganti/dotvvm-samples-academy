@@ -15,7 +15,7 @@
 
 <dot:Content ContentPlaceHolderID="HeaderContent">
     <section class="main-header no-padding">
-        <img src="~/images/Illustrations/header-image.svg" alt="header-image" />
+        <img src="~/images/Illustrations/header-image_02.svg" alt="header-image" />
         <div class="container">
             <div>
                 <dot:HtmlLiteral class="h1"

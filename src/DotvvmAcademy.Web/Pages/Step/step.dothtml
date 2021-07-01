@@ -12,8 +12,11 @@
     <meta name="twitter:description" content="{resource: LessonDescription}" />
 </dot:Content>
 
+<%--TODO: odstranit NavContent--%>
 <dot:Content ContentPlaceHolderID="NavContent">
-    <strong InnerText="{value: LessonName}" />
+    <div class="container-large justify-content--start position--relative">
+        <strong class="title-lesson" InnerText="{value: LessonName}" />
+    </div>
 </dot:Content>
 
 <dot:Content ContentPlaceHolderID="MainContent">
@@ -76,7 +79,7 @@
     </section>
 </dot:Content>
 
-<dot:content ContentPlaceHolderID="FooterContent">
+<dot:Content ContentPlaceHolderID="FooterContent">
     <div class="lesson-footer-container">
         <div class="container-large with-flex">
             <div class="pager">
@@ -123,4 +126,4 @@
 
     <cc:FinishDialog>
     </cc:FinishDialog>
-</dot:content>
+</dot:Content>
