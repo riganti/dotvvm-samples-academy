@@ -50,6 +50,10 @@ body {
         height: .4rem;
         transform: translateY(-50%);
         background-color: var(--title-color);
+
+        @include res-max-desktop-small {
+            left: 2rem;
+        }
     }
 
     &--wrapper {
