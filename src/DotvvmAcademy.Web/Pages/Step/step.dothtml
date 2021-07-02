@@ -12,8 +12,7 @@
     <meta name="twitter:description" content="{resource: LessonDescription}" />
 </dot:Content>
 
-<%--TODO: odstranit NavContent--%>
-<dot:Content ContentPlaceHolderID="NavContent">
+<dot:Content ContentPlaceHolderID="HeaderContent">
     <div class="container-large justify-content--start position--relative">
         <strong class="title-lesson" InnerText="{value: LessonName}" />
     </div>

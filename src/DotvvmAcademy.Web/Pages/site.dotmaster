@@ -53,9 +53,6 @@
     <cc:IconSet />
     <cc:Nav />
 
-    <%--TODO: odstranit NavContent--%>
-    <dot:ContentPlaceHolder ID="NavContent" />
-
     <header>
         <dot:ContentPlaceHolder ID="HeaderContent" />
     </header>

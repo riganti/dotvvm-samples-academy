@@ -95,13 +95,8 @@ body {
             width: 100%;
             flex: none;
             height: 8rem;
-            background-color: white;
+            background-color: #f1f6fe;
             box-shadow: 0px 0px 8px 0 rgba(0, 0, 0, var(--box-shadow-alpha));
-            background-image: url(/images/Logos/body_bg.svg);
-            background-repeat: no-repeat;
-            background-position: center 15rem;
-            background-attachment: fixed;
-            background-size: 70%;
 
             @include res-max-desktop-small {
                 position: relative;
