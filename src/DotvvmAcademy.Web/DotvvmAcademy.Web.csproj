@@ -27,6 +27,7 @@
     <None Remove="Controls\Icons\IconSet.dotcontrol" />
     <None Remove="Controls\Nav\DotvvmSticker.dotcontrol" />
     <None Remove="Controls\Nav\Nav.dotcontrol" />
+    <None Remove="Resources\_Scripts\Navigation.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -64,6 +65,10 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\scripts\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="Resources\_Scripts\Navigation.ts" />
   </ItemGroup>
 
 </Project>

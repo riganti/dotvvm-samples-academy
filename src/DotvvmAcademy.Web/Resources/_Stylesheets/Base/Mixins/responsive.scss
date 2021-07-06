@@ -20,7 +20,7 @@
 }
 
 @mixin res-max-mobile-l {
-    @media only screen and (min-width: ($width-mobile-l + 1px)) {
+    @media only screen and (max-width: ($width-mobile-l + 1px)) {
         @content;
     }
 }

@@ -41,15 +41,15 @@
 .nav {
 
     .button {
-        --btn-background: #3175b9;
+        --btn-background: #{$color-secondary};
         --btn-border-color: var(--btn-background);
         --btn-color: #ffffff;
-        --btn-badding: 0.8rem 1.6rem;
+        --btn-badding: #{$gap--m} #{$gap--l};
         --btn-min-width: 16rem;
         --btn-max-width: 24rem;
         --btn-font-size: large;
         --box-shadow-alpha: .15;
-        --icon-size: 1.6rm;
+        --icon-size: #{$gap--l};
         display: inline-flex;
         flex-wrap: nowrap;
         align-items: center;
@@ -65,20 +65,21 @@
         text-decoration: none;
         transition: box-shadow .25s,background-color .25s,border-color .25s;
         cursor: pointer;
-        box-shadow: 2px 2px 4px 0 rgba(0,0,0,var(--box-shadow-alpha));
+        box-shadow: $gap--xs $gap--xs $gap--s 0 rgba(0,0,0,var(--box-shadow-alpha));
         border: .2rem solid var(--btn-border-color);
 
+
         &--primary {
-            --btn-background: #27be89;
+            --btn-background: #{$color-secondary};
 
             &--primary:hover {
-                --btn-background: #24b280;
+                --btn-background: #{$color-secondary-hover};
             }
         }
 
         &--small {
             --btn-min-width: 12rem;
-            --btn-padding: 0.4rem 0.8rem;
+            --btn-padding: #{$gap--s} #{$gap--m};
             --btn-font-size: medium;
         }
     }
@@ -175,7 +176,7 @@
             display: flex;
             align-items: center;
             height: var(--nav-height);
-            padding-right: 0;
+            padding-right: $gap--xl;
 
             @include res-max-desktop-small {
                 display: none;
@@ -238,7 +239,7 @@
                 position: relative;
                 width: 6rem;
                 height: 6rem;
-                background-color: $color-secondary;
+                background-color: $color-primary;
                 border-radius: 50%;
 
                 @include res-max-mobile-s {
@@ -333,7 +334,7 @@
                 background: linear-gradient(to right, $color-grey--light 0%, $color-white 100%);
                 font-size: x-large;
                 font-weight: 600;
-                color: $color-secondary;
+                color: $color-primary;
                 grid-column-end: span 3;
             }
 

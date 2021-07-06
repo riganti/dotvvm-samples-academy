@@ -5,30 +5,26 @@
     margin: 0 auto;
     box-sizing: border-box;
 
-    @include res-max-desktop-small {
+    @include res-max-desktop-hd {
         min-width: 100%;
-        padding: 0 2rem;
+        padding: 0 5rem;
     }
 
-    &-small {
-        width: 50%;
-        margin: 0 auto;
-        box-sizing: border-box;
+    @include res-max-desktop-large {
+        padding: 0 $gap--xxxl;
+    }
 
-        @include res-max-desktop-small {
-            min-width: 100%;
-            padding: 0 2rem;
-        }
+    @include res-max-desktop-small {
+        padding: 0 $gap--l;
     }
 
     &-large {
         width: 85%;
         margin: 0 auto;
-        box-sizing: border-box;
 
         @include res-max-desktop-small {
             min-width: 100%;
-            padding: 0 2rem;
+            padding: 0 $gap--l;
         }
 
         &.with-flex {

@@ -1,4 +1,4 @@
-﻿@viewModel System.Object, mscorlib
+﻿@viewModel DotvvmAcademy.Web.Pages.SiteViewModel
 @noWrapperTag
 
 <nav class="nav">
@@ -7,10 +7,10 @@
         <cc:DotvvmSticker />
     </a>
 
-    <div class="nav__menu" ID="navMenu">
+    <div class="nav__menu" html:id="navMenu">
         <ul class="nav__left">
             <li class="nav__item nav__item--row-1">
-                <a href="https://www.dotvvm.com/products" target="_blank" aria-label="products" rel="noopener">
+                <a href="https://www.dotvvm.com/products" aria-label="products" rel="noopener">
                     <div class="nav__item-icon">
                         <cc:Icon IconName="products" />
                     </div>
@@ -18,7 +18,7 @@
                 </a>
             </li>
             <li class="nav__item nav__item--row-3">
-                <a href="https://www.dotvvm.com/build" target="_blank" aria-label="build" rel="noopener">
+                <a href="https://www.dotvvm.com/build" aria-label="build" rel="noopener">
                     <div class="nav__item-icon">
                         <cc:Icon IconName="build" />
                     </div>
@@ -26,7 +26,7 @@
                 </a>
             </li>
             <li class="nav__item nav__item--row-3">
-                <a href="https://www.dotvvm.com/modernize" target="_blank" aria-label="modernize" rel="noopener">
+                <a href="https://www.dotvvm.com/modernize" aria-label="modernize" rel="noopener">
                     <div class="nav__item-icon">
                         <cc:Icon IconName="nav-modernize" />
                     </div>
@@ -35,7 +35,7 @@
             </li>
             <h4>Use Cases</h4>
             <li class="nav__item nav__item--row-5">
-                <a href="https://www.dotvvm.com/docs" target="_blank" aria-label="docs" rel="noopener">
+                <a href="https://www.dotvvm.com/docs" aria-label="docs" rel="noopener">
                     <div class="nav__item-icon">
                         <cc:Icon IconName="docs" />
                     </div>
@@ -43,7 +43,7 @@
                 </a>
             </li>
             <li class="nav__item nav__item--row-5">
-                <a href="https://www.dotvvm.com/samples" target="_blank" aria-label="samples" rel="noopener">
+                <a href="https://www.dotvvm.com/samples" aria-label="samples" rel="noopener">
                     <div class="nav__item-icon">
                         <cc:Icon IconName="play" />
                     </div>
@@ -60,7 +60,7 @@
             </li>
             <h4>Learn</h4>
             <li class="nav__item nav__item--row-3">
-                <a href="https://www.dotvvm.com/blog" target="_blank" aria-label="blog" rel="noopener">
+                <a href="https://www.dotvvm.com/blog" aria-label="blog" rel="noopener">
                     <div class="nav__item-icon">
                         <cc:Icon IconName="blog" />
                     </div>
@@ -68,66 +68,41 @@
                 </a>
             </li>
             <li class="nav__item nav__item--row-1 nav__item--mobile">
-                <a href="https://www.dotvvm.com/order/cart" target="_blank" aria-label="cart" rel="noopener">
+                <a href="https://www.dotvvm.com/order/cart" aria-label="cart" rel="noopener">
                     <div class="nav__item-icon">
                         <cc:Icon IconName="basket" />
                     </div>
                     Cart
                 </a>
             </li>
-            <dot:AuthenticatedView RenderWrapperTag="false">
-                <AuthenticatedTemplate>
-                    <li class="nav__item nav__item--row-1 nav__item--mobile">
-                        <a href="https://www.dotvvm.com/login" target="_blank" aria-label="login" rel="noopener">
-                            <div class="nav__item-icon">
-                                <cc:Icon IconName="profile" />
-                            </div>
-                            Profile
-                        </a>
-                    </li>
-                </AuthenticatedTemplate>
-            </dot:AuthenticatedView>
-            <li class="nav__mobile-buttons">
-                <dot:AuthenticatedView RenderWrapperTag="false">
-                    <NotAuthenticatedTemplate>
-                        <a href="https://www.dotvvm.com/login" target="_blank" aria-label="login" rel="noopener" class="button button--primary">Sign In</a>
-                    </NotAuthenticatedTemplate>
-                    <AuthenticatedTemplate>
-                        <dot:Button <%--Click="{command: SignOut()}"--%> Validation.Enabled="false" Text="Sign out" class="button button--secondary" />
-                    </AuthenticatedTemplate>
-                </dot:AuthenticatedView>
-            </li>
+            <div class="nav__mobile-buttons">
+                <a href="https://www.dotvvm.com/login" class="button button--small button--primary" rel="noopener" aria-label="Sign In">
+                    Sign In
+                </a>
+            </div>
         </ul>
         <ul class="nav__right">
             <li class="nav__item">
-                <a RouteName="OrderBasket">
+                <a RouteName="https://www.dotvvm.com/order/cart" aria-label="cart" rel="noopener">
                     Cart
                     <cc:Icon IconName="basket" />
                 </a>
             </li>
-            <dot:AuthenticatedView RenderWrapperTag="false">
-                <NotAuthenticatedTemplate>
-                    <li class="nav__item">
-                        <a href="https://www.dotvvm.com/login" target="_blank" aria-label="login" rel="noopener">Sign In</a>
-                    </li>
-                </NotAuthenticatedTemplate>
-                <AuthenticatedTemplate>
-                    <li class="nav__item">
-                        <a RouteName="CustomerProfile" Text="Profile" />
-                    </li>
-                    <li class="nav__item">
-                        <dot:Button <%--Click="{command: SignOut()}"--%> Validation.Enabled="false" Text="Sign out" />
-                    </li>
-                </AuthenticatedTemplate>
-            </dot:AuthenticatedView>
+            <li class="nav__item">
+                <a href="https://www.dotvvm.com/login" aria-label="login" rel="noopener">Sign In</a>
+            </li>
 
             <li class="nav__item nav__item--with-button">
-                <a href="https://www.dotvvm.com/get-dotvvm" target="_blank" aria-label="Get DotVVM" rel="noopener" class="button button--primary button--small">Get DotVVM</a>
+                <a href="https://www.dotvvm.com/get-dotvvm" aria-label="Get DotVVM" rel="noopener" class="button button--primary button--small">Get DotVVM</a>
             </li>
+            <cc:LanguageSwitch Class-lang-switch="true"
+                               AvailableLanguages="{value: Languages}"
+                               RouteName="{resource: Context.Route.RouteName}"
+                               CurrentLanguage="{resource: Language}" />
         </ul>
     </div>
 
-    <button class="nav__burger" aria-label="Open menu button" title="Open menu button" ID="showNav">
+    <button class="nav__burger" aria-label="Open menu button" title="Open menu button" html:id="showNav">
         <span></span>
         <span></span>
         <span></span>

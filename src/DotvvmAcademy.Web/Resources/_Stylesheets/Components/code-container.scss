@@ -152,11 +152,7 @@ code {
             }
 
             &:hover {
-                background-color: $color-hover;
-
-                span {
-                    color: $color-font;
-                }
+                background-color: $color-secondary-hover;
             }
         }
     }

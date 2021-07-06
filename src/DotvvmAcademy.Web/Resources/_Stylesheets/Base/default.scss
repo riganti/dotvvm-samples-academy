@@ -73,6 +73,10 @@ body {
         flex: 0 0 auto;
     }
 
+    &.scroll-disabled {
+        overflow: hidden;
+    }
+
     &.step-body {
         background: $color-white;
 
