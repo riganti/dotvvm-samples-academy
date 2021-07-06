@@ -73,7 +73,11 @@ body {
 
     &.step-body {
         header {
-            /*border-bottom: 1px solid $color-border;*/
+            max-height: 15rem;
+
+            @include res-max-desktop-small {
+                display: none;
+            }
         }
 
         main {
