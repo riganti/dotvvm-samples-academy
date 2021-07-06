@@ -32,30 +32,8 @@ body {
 }
 
 .title-lesson {
-    --title-color: #{$color-dotvvm-title};
-    display: block;
-    font-size: 4.6rem;
-    font-weight: 300;
-    text-transform: uppercase;
-    text-align: left;
     color: var(--title-color);
-    @include pad-set(6rem,$bottom: 3rem);
-
-    &::before {
-        position: absolute;
-        content: '';
-        top: calc(100% - 1rem);
-        left: 0;
-        width: 10rem;
-        height: .4rem;
-        transform: translateY(-50%);
-        background-color: var(--title-color);
-
-        @include res-max-desktop-small {
-            left: 2rem;
-        }
-    }
-
-    &--wrapper {
-    }
+    display: block;
+    font-size: large;
+    text-transform: uppercase;
 }

@@ -1,10 +1,8 @@
 ﻿@import "../../../Base/global";
 
-
-
 .main-header {
-    --bg-img-linear-right: #c8e0ff;
-    --bg-img-linear-left: #f1f6fe;
+    --bg-img-linear-right: #{$color-header};
+    --bg-img-linear-left: #{$color-bg};
     --title-color: #{$color-dotvvm-title};
     --subtitle-color: #{$color-primary};
     --bg-position-x: 120%;

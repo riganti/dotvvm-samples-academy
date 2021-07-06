@@ -25,6 +25,8 @@ time, mark, audio, video {
 
 :root {
     --nav-height: 5.5rem;
+    --box-shadow-alpha: .16;
+    --title-color: #{$color-dotvvm-title};
 }
 
 html {
@@ -72,8 +74,17 @@ body {
     }
 
     &.step-body {
+        background: $color-white;
+
         header {
-            max-height: 15rem;
+            position: fixed;
+            left: 0;
+            right: 0;
+            background-color: $color-header;
+            top: var(--nav-height);
+            text-align: center;
+            padding: .8rem;
+            z-index: 999;
 
             @include res-max-desktop-small {
                 display: none;
@@ -81,7 +92,7 @@ body {
         }
 
         main {
-            padding-bottom: 8rem;
+            padding: 4rem 0 8rem 0;
 
             @include res-max-desktop-small {
                 position: relative;
@@ -99,7 +110,7 @@ body {
             width: 100%;
             flex: none;
             height: 8rem;
-            background-color: #f1f6fe;
+            background-color: $color-bg;
             box-shadow: 0px 0px 8px 0 rgba(0, 0, 0, var(--box-shadow-alpha));
 
             @include res-max-desktop-small {

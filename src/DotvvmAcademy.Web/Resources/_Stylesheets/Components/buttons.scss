@@ -28,9 +28,6 @@
     box-shadow: 2px 2px 4px 0 rgba(0,0,0,var(--box-shadow-alpha));
     border: .2rem solid var(--btn-border-color);
 
-
-
-
     span.success {
         display: none;
     }
@@ -141,8 +138,8 @@
             top: 50%;
             left: 50%;
             border: 2px solid $color-transparent;
-            border-top-color: $color-vs-dark;
-            border-left-color: $color-vs-dark;
+            border-top-color: $color-white;
+            border-left-color: $color-white;
             width: 1.6rem;
             height: 1.6rem;
             border-radius: 100%;
@@ -155,8 +152,8 @@
         &:after {
             border-top-color: $color-transparent;
             border-left-color: $color-transparent;
-            border-bottom-color: $color-vs-hover;
-            border-right-color: $color-vs-hover;
+            border-bottom-color: $color-white;
+            border-right-color: $color-white;
             width: 2.2rem;
             height: 2.2rem;
             transform: translate(-50%, -50%) rotate(0);
@@ -164,22 +161,7 @@
         }
     }
 
-    &.finish {
-        background-color: $color-btn-success;
-        border-color: $color-btn-success;
-        color: $color-font;
-
-        &:hover, &.active {
-            background-color: darken($color-btn-success, 10%);
-            border-color: darken($color-btn-success, 10%);
-            color: $color-font;
-        }
-    }
-
     &.success {
-        background-color: $color-btn-success;
-        border-color: $color-btn-success;
-        color: $color-font;
         position: relative;
         min-height: 4rem;
 
@@ -187,17 +169,11 @@
             display: none;
         }
 
-        &:hover, &.active {
-            background-color: darken($color-btn-success, 10%);
-            border-color: darken($color-btn-success, 10%);
-        }
-
         span.success {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-70%, -50%);
-            color: $color-font;
             font-size: $font-size-m;
             display: block;
         }
@@ -212,8 +188,8 @@
             height: 0;
             width: 0;
             content: "";
-            border-left: .2px solid $color-black;
-            border-bottom: .2px solid $color-black;
+            border-left: .2px solid $color-white;
+            border-bottom: .2px solid $color-white;
             animation: DrawCheck 1s forwards;
         }
     }

@@ -13,9 +13,7 @@
 </dot:Content>
 
 <dot:Content ContentPlaceHolderID="HeaderContent">
-    <div class="container-large justify-content--start position--relative">
-        <strong class="title-lesson" InnerText="{value: LessonName}" />
-    </div>
+    <strong class="title-lesson" InnerText="{value: LessonName}" />
 </dot:Content>
 
 <dot:Content ContentPlaceHolderID="MainContent">

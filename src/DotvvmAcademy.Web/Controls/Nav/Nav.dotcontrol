@@ -51,12 +51,12 @@
                 </a>
             </li>
             <li class="nav__item nav__item--active nav__item--row-5" itemprop="name">
-                <a href="https://academy.dotvvm.com/" rel="noopener" aria-label="academy" rel="noopener">
+                <dot:RouteLink RouteName="Default">
                     <div class="nav__item-icon">
                         <cc:Icon IconName="academy" />
                     </div>
                     Academy
-                </a>
+                </dot:RouteLink>
             </li>
             <h4>Learn</h4>
             <li class="nav__item nav__item--row-3">
