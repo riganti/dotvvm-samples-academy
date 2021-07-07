@@ -55,9 +55,9 @@ body {
     padding-top: var(--nav-height);
     background: url(/images/Logos/body_bg.svg);
     background-repeat: no-repeat;
-    background-position: center 30rem;
+    background-position: center top;
     background-attachment: fixed;
-    background-size: 80%;
+    background-size: cover;
 
     header {
         flex: 0 0 auto;
