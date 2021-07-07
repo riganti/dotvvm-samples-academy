@@ -238,7 +238,7 @@
                 position: relative;
                 width: 6rem;
                 height: 6rem;
-                background-color: $color-secondary;
+                background-color: $color-primary;
                 border-radius: 50%;
 
                 @include res-max-mobile-s {
@@ -282,7 +282,7 @@
             }
 
             > div {
-                background-color: $color-primary;
+                background-color: $color-dotvvm-blue;
             }
         }
     }
@@ -333,7 +333,7 @@
                 background: linear-gradient(to right, $color-grey--light 0%, $color-white 100%);
                 font-size: x-large;
                 font-weight: 600;
-                color: $color-secondary;
+                color: $color-dotvvm-blue;
                 grid-column-end: span 3;
             }
 
