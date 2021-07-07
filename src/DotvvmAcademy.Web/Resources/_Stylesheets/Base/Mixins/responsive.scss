@@ -1,7 +1,7 @@
 ﻿@import "../_variables.scss";
 
-// IMPORTANT: Never include this file in other *.scss files 
-// Use @import: "mixins" 
+// IMPORTANT: Never include this file in other *.scss files
+// Use @import: "mixins"
 
 // Here are all Mixins for responsivity
 // I prefer to use only this ones:
@@ -12,7 +12,19 @@
 //    res-min-desktop-large --> for all large desktop devices
 // This will cover all devices
 
-// From 0px to - Max 
+// From 0px to - Max
+@mixin res-max-mobile-s {
+    @media only screen and (max-width: $width-mobile-s) {
+        @content;
+    }
+}
+
+@mixin res-max-mobile-l {
+    @media only screen and (max-width: ($width-mobile-l + 1px)) {
+        @content;
+    }
+}
+
 @mixin res-max-mobile {
     @media only screen and (max-width: $width-mobile) {
         @content;
@@ -37,13 +49,37 @@
     }
 }
 
-@mixin res-max-desktop-HD {
-    @media only screen and (max-width: $width-desktop-HD) {
+@mixin res-max-laptop-s {
+    @media only screen and (max-width: $width-laptop-s) {
         @content;
     }
 }
 
-// From Min to - all (Max is not set) 
+@mixin res-max-desktop-hd {
+    @media only screen and (max-width: $width-desktop-hd) {
+        @content;
+    }
+}
+
+@mixin res-max-desktop-full-hd {
+    @media only screen and (max-width: $width-desktop-full-hd) {
+        @content;
+    }
+}
+
+// From Min to - all (Max is not set)
+@mixin res-min-mobile-s {
+    @media only screen and (min-width: ($width-mobile-s) + 1px) {
+        @content;
+    }
+}
+
+@mixin res-min-mobile-l {
+    @media only screen and (min-width: ($width-mobile-l + 1px)) {
+        @content;
+    }
+}
+
 @mixin res-min-mobile {
     @media only screen and (min-width: ($width-mobile + 1px)) {
         @content;
@@ -68,8 +104,20 @@
     }
 }
 
-@mixin res-min-desktop-HD {
-    @media only screen and (min-width: ($width-desktop-HD + 1px)) {
+@mixin res-mim-laptop-s {
+    @media only screen and (max-width: $width-laptop-s) {
+        @content;
+    }
+}
+
+@mixin res-min-desktop-hd {
+    @media only screen and (min-width: ($width-desktop-hd + 1px)) {
+        @content;
+    }
+}
+
+@mixin res-min-desktop-full-hd {
+    @media only screen and (min-width: ($width-desktop-full-hd + 1px)) {
         @content;
     }
 }
@@ -93,20 +141,21 @@
     }
 }
 
-@mixin res-min-desktop-large-max-desktop-HD {
-    @media only screen and (min-width: ($width-desktop-large + 1px)) and (max-width: $width-desktop-HD) {
+@mixin res-min-desktop-large-max-desktop-hd {
+    @media only screen and (min-width: ($width-desktop-large + 1px)) and (max-width: $width-desktop-hd) {
+        @content;
+    }
+}
+
+@mixin res-min-desktop-hd-max-desktop-full-hd {
+    @media only screen and (min-width: ($width-desktop-hd + 1px)) and (max-width: $width-desktop-full-hd) {
         @content;
     }
 }
 
 // Mixin for Retina displays
 @mixin res-retina {
-    @media only screen and (-webkit-min-device-pixel-ratio: 2), 
-        only screen and (min--moz-device-pixel-ratio: 2), 
-        only screen and (-o-min-device-pixel-ratio: 2/1), 
-        only screen and (min-device-pixel-ratio: 2), 
-        only screen and (min-resolution: 192dpi), 
-        only screen and (min-resolution: 2dppx) {
+    @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
         @content;
     }
 }

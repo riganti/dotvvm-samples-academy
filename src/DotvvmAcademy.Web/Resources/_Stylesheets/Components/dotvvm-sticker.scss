@@ -1,0 +1,18 @@
+﻿@import "../Base/_global.scss";
+
+.dotvvm-sticker {
+    font-size: 1em;
+    font-weight: 800;
+
+    > span:first-of-type {
+        color: $color-primary;
+    }
+
+    > span:last-of-type {
+        color: $color-dotvvm-primary;
+    }
+
+    > * {
+        font-size: 1em;
+    }
+}

@@ -2,7 +2,7 @@
 @baseType DotvvmAcademy.Web.Pages.LanguageSwitch, DotvvmAcademy.Web
 @import DotvvmAcademy.Web.Resources.Localization
 
-<div InnerText="{resource: _control.CurrentLanguage.Moniker}" class="lang-switch__button"></div>
+<button InnerText="{resource: _control.CurrentLanguage.Moniker}" class="lang-switch__button" />
 
 <dot:Repeater DataSource="{value: _control.AvailableLanguages}"
               WrapperTagName="ul"

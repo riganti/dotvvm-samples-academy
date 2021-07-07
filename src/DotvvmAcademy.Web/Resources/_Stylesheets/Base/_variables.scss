@@ -1,15 +1,18 @@
 ﻿// To get all mixins in other *.scss file use: @import "/Base/global";
 
+$color-dotvvm-primary: #3175b9;
+$color-dotvvm-title: #214778;
 $color-white: #fff;
 $color-black: #000;
 $color-transparent: rgba(0,0,0,0);
-$color-primary: #3c3d3b;
-$color-secondary: #ffd94f;
+$color-primary: #424242;
+$color-secondary: #27be89;
+$color-secondary-hover: #24b280;
+
 $color-error: #d91313;
 $color-font: $color-black;
 $color-outline: lighten($color-primary, 20%);
 $color-background: #fcfcfc;
-$color-navigation: #f6f2f2;
 $color-border: #aeaeae;
 $color-hover: darken($color-secondary, 15%);
 $color-bg: #f2f2f2;
@@ -25,12 +28,15 @@ $color-dotvvm-blue: #3773c2;
 $color-vs-dark: #1e1e1e;
 $color-vs-hover: #3f3f46;
 $color-vs-text: #d4d4d4;
-
+$color-grey--light: #e8e8e8;
+$color-bg: #f1f6fe;
+$color-header: #c8e0ff;
 // Font family
 $font-header-h1: 'Open Sans', sans-serif;
 $font-subheader-h2: 'Open Sans', sans-serif;
 $font-subheader-h3: 'Open Sans', sans-serif;
 $font-text: 'Open Sans', sans-serif;
+$font-family-default: Segoe UI, Arial, Helvetica, sans-serif;
 
 // Font sizes
 $font-size-xs: 1.2rem;
@@ -45,9 +51,32 @@ $outline-width: .1rem;
 $transition-time: .3s;
 $animate-all: all ease-in-out $transition-time;
 
+
 // All devices width for responsivity
+$width-mobile-s: 320px;
+$width-mobile-l: 425px;
 $width-mobile: 580px;
 $width-tablet: 768px;
 $width-desktop: 980px;
+$width-laptop-s: 1024px;
 $width-desktop-large: 1200px;
-$width-desktop-HD: 1440px;
+$width-desktop-hd: 1440px;
+$width-desktop-full-hd: 1920px;
+
+//gaps
+$gap--m: .8rem;
+$gap--xs: ($gap--m / 4);
+$gap--s: ($gap--m / 2);
+$gap--l: ($gap--m * 2);
+$gap--xl: ($gap--m * 3);
+$gap--xxl: ($gap--m * 4);
+$gap--xxxl: ($gap--m * 5);
+
+//Others
+$trans-time: .25s;
+$animate-all: all $trans-time ease-in-out;
+$border-width: .1rem;
+$border-width--l: $gap--xs;
+$border-radius: $gap--s;
+$border-color: #27be89;
+$box-shadow-alpha: .15;

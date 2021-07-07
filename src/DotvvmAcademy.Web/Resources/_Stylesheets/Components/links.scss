@@ -1,0 +1,36 @@
+﻿@import "../Base/_global.scss";
+
+.link {
+    display: inline-flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: large;
+    color: var(--link-color);
+    text-align: left;
+    text-decoration: none;
+    text-decoration: underline;
+    transition: color .25s;
+    --link-color: #{$color-white};
+
+    &:hover {
+        --link-color: #{$color-white};
+    }
+
+    > .icon {
+        margin-left: $gap--m;
+        fill: var(--link-color);
+    }
+
+    &--white {
+        --link-color: #{$color-white};
+
+        &:hover {
+            --link-color: #{$color-white};
+        }
+    }
+}
+
+* .link {
+    font-size: 1em;
+}

@@ -15,11 +15,13 @@
 
 <dot:Content ContentPlaceHolderID="HeaderContent">
     <section class="main-header no-padding">
-        <div class="container-large">
+        <img src="~/images/Illustrations/header-image_02.svg" alt="header-image" />
+        <div class="container">
             <div>
-                <dot:HtmlLiteral Html="{resource: UIResources.Base_MainTitle}"
+                <dot:HtmlLiteral class="h1"
+                                 Html="{resource: UIResources.Base_MainTitle}"
                                  RenderWrapperTag="true"
-                                 WrapperTagName="h1" />
+                                 WrapperTagName="strong" />
                 <dot:HtmlLiteral Html="{resource: UIResources.Base_MainDescription}"
                                  RenderWrapperTag="true"
                                  WrapperTagName="p" />
@@ -30,7 +32,6 @@
                                Param-Language="{value: _root.LanguageMoniker}"
                                Param-Lesson="{value: FirstLesson.Moniker}"
                                Param-Step="{value: FirstLesson.FirstStep}" />
-                <img src="~/images/Illustrations/header-image.svg" />
             </div>
         </div>
     </section>
@@ -38,7 +39,7 @@
 
 <dot:Content ContentPlaceHolderID="MainContent">
     <section class="section-lections no-padding-top">
-        <div class="container-large">
+        <div class="container">
             <dot:Repeater DataSource="{value: Lessons}" class="lessons-container">
                 <dot:RouteLink RouteName="Step"
                                Param-Language="{value: _root.LanguageMoniker}"
@@ -69,15 +70,4 @@
             </a>
         </div>
     </section>
-</dot:Content>
-
-<dot:Content ContentPlaceHolderID="FooterContent">
-    <div class="main-link">
-        <a target="_blank" href="https://www.dotvvm.com/">www.dotvvm.com</a>
-    </div>
-    <div class="footer-links">
-        <a target="_blank" href="https://www.dotvvm.com/docs/latest">{{resource: UIResources.Base_Documentation}}</a>
-        <a target="_blank" href="https://www.dotvvm.com/docs/tutorials/introduction/latest">{{resource: UIResources.Base_Tutorials}}</a>
-        <a target="_blank" href="https://www.dotvvm.com/docs/samples/latest">{{resource: UIResources.Base_Samples}}</a>
-    </div>
 </dot:Content>

@@ -1,40 +1,42 @@
 ﻿@import "../Base/_global.scss";
 
 .lang-switch {
+    --pop-up-opacity: 0;
+    --btn-color: #{$font-text};
+    --list-z-index: -100;
     position: relative;
-    z-index: 100;
-    width: 23rem;
 
     @include res-max-desktop-small {
         width: auto;
     }
 
-    &--open {
-        .lang-switch__list {
-            opacity: 1;
-            z-index: 100;
-        }
+    &:focus-within {
+        --btn-color: #{$color-dotvvm-blue};
+        --pop-up-opacity: 1;
+        --list-z-index: 100;
     }
 
     &__button {
+        background: $color-transparent;
         width: 100%;
         display: block;
-        background-color: $color-primary;
         color: $color-white;
-        height: 3.5rem;
-        width: 3.5rem;
-        line-height: 3.5rem;
-        color: $color-white;
+        height: $gap--xxl;
+        width: $gap--xxl;
+        line-height: $gap--xxl;
+        color: var(--btn-color);
+        font-family: $font-family-default;
         text-align: center;
         font-family: $font-text;
         text-transform: uppercase;
         border: none;
         font-size: $font-size-m;
         padding: 0;
+        cursor: pointer;
+        font-weight: 600;
 
         &:hover {
-            background-color: lighten($color-primary, 10%);
-            cursor: pointer;
+            --btn-color: #{$color-dotvvm-blue};
         }
     }
 
@@ -42,19 +44,20 @@
         position: absolute;
         display: block;
         list-style: none;
-        right: 0;
-        top: 103%;
+        left: 50%;
+        top: calc(100% + #{$gap--s});
         width: 8rem;
         background-color: $color-white;
         border: 1px solid $color-border;
+        transform: translateX(-50%);
         padding-left: 0;
-        opacity: 0;
-        z-index: 100;
-        transition: $animate-all;
+        opacity: var(--pop-up-opacity);
+        transition: opacity $trans-time;
+        z-index: var(--list-z-index);
 
         a {
             display: block;
-            padding: .2rem .5rem;
+            padding: $gap--xs $gap--s;
             text-decoration: none;
             color: $color-primary;
             background-color: $color-white;

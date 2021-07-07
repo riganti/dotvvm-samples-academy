@@ -1,10 +1,26 @@
 ﻿@import "../Base/_global.scss";
 
 .lessons-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    --col-count: 4;
+    --item-max-width: 1fr;
+    display: grid;
+    grid-template-columns: repeat(var(--col-count), minmax($gap--l, var(--item-max-width)));
+    gap: $gap--xl;
+    margin-top: $gap--xxl;
+
+    @include res-max-laptop-s {
+        --col-count: 2;
+    }
+
+    @include res-max-tablet {
+        --item-max-width: #{$width-mobile-l};
+    }
+
+    @include res-max-mobile-l {
+        --item-max-width: 1fr;
+        --col-count: 1;
+    }
+
 
     h1 {
         font-size: 40px;
@@ -13,79 +29,38 @@
         font-weight: 100;
         color: $color-black;
     }
-
-    @include res-max-tablet {
-        justify-content: center;
-    }
 }
 
 .lessons-item {
-    flex: 0 0 24%;
-    max-width: 24%;
-    width: 24%;
-    background-color: $color-primary;
+    --alpha: 0;
     text-align: center;
-    color: $color-white;
-    padding: 2rem 4rem;
+    color: $color-primary;
+    background-color: $color-white;
+    padding: $gap--xxxl;
     box-sizing: border-box;
-    padding-bottom: 12rem;
+    padding-bottom: 10rem;
     position: relative;
-    margin-top: 3rem;
     text-decoration: none;
     transition: $animate-all;
+    border-radius: .5rem;
+    border: .1rem solid #ccc;
+    box-shadow: 0 0 5px 0 rgba(0,0,0,var(--alpha));
 
     &:hover {
+        --alpha: .3;
 
         > img {
             transform: scale(1.05, 1.05);
         }
 
         .button {
-            background-color: $color-hover;
+            background-color: $color-secondary-hover;
         }
     }
 
-    &:first-child, &:nth-child(2), &:nth-child(3), &:nth-child(4) {
-        margin-top: 0;
-    }
-
-    @include res-max-desktop-HD {
-        padding: 2rem;
-        padding-bottom: 14rem;
-    }
-
-    @include res-max-desktop-large {
-        flex: 0 0 49%;
-        max-width: 49%;
-        width: 49%;
-
-        &:first-child, &:nth-child(2) {
-            margin-top: 0;
-        }
-
-        &:nth-child(3), &:nth-child(4) {
-            margin-top: 3rem;
-        }
-    }
-
-    @include res-max-tablet {
-        flex: 0 0 65%;
-        max-width: 65%;
-        width: 65%;
-
-        &:first-child {
-            margin-bottom: 0;
-        }
-
-        &:nth-child(2), &:nth-child(3), &:last-child {
-            margin-top: 3rem;
-        }
-    }
-
-    @include res-max-mobile {
-        flex: 0 0 100%;
-        max-width: 100%;
-        width: 100%;
+    @include res-max-desktop-hd {
+        padding: $gap--xl;
+        padding-bottom: 11rem;
     }
 
     &.finished > img {
@@ -97,20 +72,21 @@
         display: block;
         width: 50%;
         margin: 0 auto;
-        margin-bottom: 1rem;
+        margin-bottom: $gap--m;
         min-width: 15rem;
         transform: scale(1, 1);
         transition: $animate-all;
     }
 
     h2 {
-        margin-bottom: 1rem;
+        margin-bottom: $gap--m;
+        color: var(--title-color);
     }
 
     p {
         display: block;
         min-height: 3.5rem;
-        margin-bottom: 1.5rem;
+        margin-bottom: $gap--l;
         font-size: $font-size-m;
 
         a {
@@ -125,25 +101,12 @@
 
     .button {
         position: absolute;
-        bottom: 8rem;
+        bottom: 5rem;
         left: 50%;
         transform: translateX(-50%);
 
         @include res-max-desktop-large {
-            bottom: 8rem;
+            bottom: 5rem;
         }
-    }
-
-    &:after {
-        content: '';
-        position: absolute;
-        left: 0;
-        bottom: -1px;
-        width: 100%;
-        height: 5rem;
-        background-color: $color-white;
-        display: block;
-        -webkit-clip-path: polygon(50% 0, 0 100%, 100% 100%);
-        clip-path: polygon(50% 0, 0 100%, 100% 100%);
     }
 }

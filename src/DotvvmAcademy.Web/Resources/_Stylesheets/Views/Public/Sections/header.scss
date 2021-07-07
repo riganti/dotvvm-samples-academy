@@ -1,75 +1,70 @@
 ﻿@import "../../../Base/global";
 
-
 .main-header {
-    background: -moz-linear-gradient(left, $color-primary 0%, $color-primary 75%, $color-white 75%, $color-white 100%);
-    background: -webkit-linear-gradient(left, $color-primary 0%,$color-primary 75%,$color-white 75%,$color-white 100%);
-    background: linear-gradient(to right, $color-primary 0%,$color-primary 75%,$color-white 75%,$color-white 100%);
+    --bg-img-linear-right: #{$color-header};
+    --bg-img-linear-left: #{$color-bg};
+    --title-color: #{$color-dotvvm-title};
+    --subtitle-color: #{$color-primary};
+    --bg-position-x: 120%;
+    --image-transform-x: -100%;
+    overflow: hidden;
+    background-image: linear-gradient(to right, var(--bg-img-linear-left) 0%, var(--bg-img-linear-left) 85%, var(--bg-img-linear-right) 85%, var(--bg-img-linear-right) 100%);
+    background-repeat: no-repeat;
+    position: relative;
+    max-width: 100vw;
 
-    @include res-max-desktop-HD {
-        background: -moz-linear-gradient(left, $color-primary 0%, $color-primary 80%, $color-white 80%, $color-white 100%);
-        background: -webkit-linear-gradient(left, $color-primary 0%,$color-primary 80%,$color-white 80%,$color-white 100%);
-        background: linear-gradient(to right, $color-primary 0%,$color-primary 80%,$color-white 80%,$color-white 100%);
+
+    @include res-max-desktop-hd {
+        --image-transform-x: -70%;
     }
 
+
     @include res-max-desktop-large {
-        background: $color-primary;
+        --image-transform-x: -55%;
     }
 
     @include res-max-desktop-small {
-        background: rgba(78, 78, 77, 0.90);
         margin-bottom: 3rem;
+        --image-transform-x: -65%;
     }
+
+    @include res-max-tablet {
+        background-image: linear-gradient(to right, var(--bg-img-linear-left) 0%, var(--bg-img-linear-left) 100%);
+    }
+
+    > img {
+        position: absolute;
+        height: 100%;
+        display: block;
+        top: 50%;
+        left: 100%;
+        transform: translate(var(--image-transform-x), -50%);
+
+        @include res-max-tablet {
+            display: none;
+        }
+    }
+
 
     > div > div {
         padding: 5rem 0;
         position: relative;
         color: $color-white;
 
-        @include res-max-desktop-small {
+        @include res-max-tablet {
             text-align: center;
             padding: 3rem 0;
         }
 
-        > img {
-            height: 125%;
-            position: absolute;
-            top: 53%;
-            left: 75%;
-            transform: translate(-50%, -50%);
-
-            @include res-max-desktop-HD {
-                height: 100%;
-                position: absolute;
-                top: 0;
-                left: 75%;
-                transform: translateX(-50%);
-                transition: $animate-all;
-            }
-
-            @include res-max-desktop-large {
-                left: 85%;
-            }
-
-            @include res-max-desktop-small {
-                left: 45%;
-                z-index: -1;
-            }
-
-
-            @include res-max-mobile {
-                left: 40%;
-                max-width: 32rem;
-            }
-        }
-
-        > h1 {
+        > h1, .h1 {
+            display: block;
             text-transform: uppercase;
             font-size: 5rem;
             line-height: 5rem.2rem;
             font-weight: 300;
             position: relative;
             padding-bottom: 5rem;
+            color: var(--title-color);
 
             @include res-max-mobile {
                 font-size: $font-size-xl;
@@ -81,12 +76,12 @@
                 content: '';
                 top: calc(100% - 2.5rem);
                 left: 0;
-                width: 5rem;
-                height: .2rem;
+                width: 10rem;
+                height: .4rem;
                 transform: translateY(-50%);
-                background-color: $color-white;
+                background-color: var(--title-color);
 
-                @include res-max-desktop-small {
+                @include res-max-tablet {
                     left: 50%;
                     transform: translate(-50%, -50%);
                 }
@@ -95,7 +90,17 @@
 
         p {
             padding-bottom: 2.5rem;
-            font-size: $font-size-m;
+            font-size: $font-size-xl;
+            line-height: 1.7;
+            color: var(--subtitle-color);
+
+            @include res-max-laptop-s {
+                font-size: $font-size-l;
+            }
+
+            @include res-max-tablet {
+                font-size: $font-size-m;
+            }
         }
     }
 }

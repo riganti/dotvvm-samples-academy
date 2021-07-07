@@ -13,9 +13,9 @@
             <div class="modal__close" Events.Click="{staticCommand: IsFinishDialogVisible = false}"></div>
         </div>
         <div class="modal__content">
-            <img src="~/images/Icons/medal.svg"/>
+            <img src="~/images/Icons/medal.svg" />
             <div class="modal__buttons">
-                <dot:RouteLink RouteName="Default" Text="{resource: UIResources.Btn_Homepage}" class="button secondary"></dot:RouteLink>
+                <dot:RouteLink RouteName="Default" Text="{resource: UIResources.Btn_Homepage}" class="button"></dot:RouteLink>
             </div>
         </div>
     </div>

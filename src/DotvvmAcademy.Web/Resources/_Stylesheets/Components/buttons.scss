@@ -1,20 +1,32 @@
 ﻿@import "../Base/_global.scss";
 
 .button {
-    display: inline-block;
+    --btn-background: #{$color-secondary};
+    --btn-border-color: var(--btn-background);
+    --btn-color: #{$color-white};
+    --btn-badding: 0.8rem 1.6rem;
+    --btn-min-width: 16rem;
+    --btn-max-width: 24rem;
+    --btn-font-size: large;
+    --box-shadow-alpha: .15;
+    --icon-size: 1.6rm;
+    display: inline-flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--btn-min-width);
+    max-width: var(--btn-max-width);
+    padding: var(--btn-badding);
+    background-color: var(--btn-background);
+    border-radius: .5rem;
+    font-size: var(--btn-font-size);
+    font-weight: 500;
+    color: var(--btn-color);
     text-decoration: none;
-    background-color: $color-secondary;
-    color: $color-primary;
-    padding: .8rem 1.6rem;
-    border: .1rem solid $color-secondary;
+    transition: box-shadow .25s,background-color .25s,border-color .25s;
     cursor: pointer;
-    font-weight: 600;
-    text-decoration: none;
-    min-width: 15rem;
-    transition: $animate-all;
-    text-align: center;
-    font-family: $font-text;
-    font-size: $font-size-m;
+    box-shadow: 2px 2px 4px 0 rgba(0,0,0,var(--box-shadow-alpha));
+    border: .2rem solid var(--btn-border-color);
 
     span.success {
         display: none;
@@ -22,7 +34,7 @@
 
     &:hover, &:focus {
         text-decoration: none;
-        background-color: $color-hover;
+        background-color: $color-secondary-hover;
         transition: $animate-all;
         outline: none;
     }
@@ -104,7 +116,7 @@
         }
 
         span {
-            color: $color-font;
+            color: $color-white;
         }
 
         &--left > img {
@@ -126,8 +138,8 @@
             top: 50%;
             left: 50%;
             border: 2px solid $color-transparent;
-            border-top-color: $color-vs-dark;
-            border-left-color: $color-vs-dark;
+            border-top-color: $color-white;
+            border-left-color: $color-white;
             width: 1.6rem;
             height: 1.6rem;
             border-radius: 100%;
@@ -140,8 +152,8 @@
         &:after {
             border-top-color: $color-transparent;
             border-left-color: $color-transparent;
-            border-bottom-color: $color-vs-hover;
-            border-right-color: $color-vs-hover;
+            border-bottom-color: $color-white;
+            border-right-color: $color-white;
             width: 2.2rem;
             height: 2.2rem;
             transform: translate(-50%, -50%) rotate(0);
@@ -149,22 +161,7 @@
         }
     }
 
-    &.finish {
-        background-color: $color-btn-success;
-        border-color: $color-btn-success;
-        color: $color-font;
-
-        &:hover, &.active {
-            background-color: darken($color-btn-success, 10%);
-            border-color: darken($color-btn-success, 10%);
-            color: $color-font;
-        }
-    }
-
     &.success {
-        background-color: $color-btn-success;
-        border-color: $color-btn-success;
-        color: $color-font;
         position: relative;
         min-height: 4rem;
 
@@ -172,17 +169,11 @@
             display: none;
         }
 
-        &:hover, &.active {
-            background-color: darken($color-btn-success, 10%);
-            border-color: darken($color-btn-success, 10%);
-        }
-
         span.success {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-70%, -50%);
-            color: $color-font;
             font-size: $font-size-m;
             display: block;
         }
@@ -197,8 +188,8 @@
             height: 0;
             width: 0;
             content: "";
-            border-left: .2px solid $color-black;
-            border-bottom: .2px solid $color-black;
+            border-left: .2px solid $color-white;
+            border-bottom: .2px solid $color-white;
             animation: DrawCheck 1s forwards;
         }
     }
@@ -223,7 +214,7 @@
                 transform: translate(25%, -50%) rotate(45deg);
                 width: 2rem;
                 height: .2rem;
-                background-color: $color-font;
+                background-color: $color-white;
                 content: "";
             }
 

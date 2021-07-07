@@ -49,29 +49,25 @@
     <dot:RequiredResource Name="StyleCSS" />
 </head>
 <body Class-step-body="{resource: CurrentRoute == "Step"}">
+    <h1>DotVVM Academy</h1>
+    <cc:IconSet />
+    <cc:Nav />
+
     <header>
-        <nav class="container-large" Class-step-nav="{resource: CurrentRoute == "Step"}">
-            <dot:RouteLink RouteName="Default">
-                <img src="~/images/Logos/logo-dotvvm.svg" />
-                <span>DOT<b>VVM</b></span>
-                &nbsp;<p>ACADEMY</p>
-            </dot:RouteLink>
-
-            <dot:ContentPlaceHolder ID="NavContent" />
-
-            <cc:LanguageSwitch class="lang-switch"
-                               AvailableLanguages="{value: Languages}"
-                               RouteName="{resource: Context.Route.RouteName}"
-                               CurrentLanguage="{resource: Language}" />
-        </nav>
         <dot:ContentPlaceHolder ID="HeaderContent" />
     </header>
     <main>
         <dot:ContentPlaceHolder ID="MainContent" />
     </main>
-    <footer>
+
+    <footer IncludeInPage="{resource: CurrentRoute != "Default"}">
         <dot:ContentPlaceHolder ID="FooterContent" />
     </footer>
+
+    <footer class="footer" IncludeInPage="{resource: CurrentRoute == "Default"}">
+        <cc:Footer />
+    </footer>
+
     <dot:RequiredResource Name="AppJS" />
 
 </body>

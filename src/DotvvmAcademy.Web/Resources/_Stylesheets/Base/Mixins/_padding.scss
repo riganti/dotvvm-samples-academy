@@ -1,0 +1,33 @@
+﻿
+@mixin pad-set-all($gap) {
+    padding: $gap;
+}
+
+@mixin pad-set-x($gap) {
+    padding-right: $gap;
+    padding-left: $gap;
+}
+
+@mixin pad-set-y($gap) {
+    padding-top: $gap;
+    padding-bottom: $gap;
+}
+
+@mixin pad-set($top: 0, $right: 0, $bottom: 0, $left: 0) {
+
+    @if $top != 0 {
+        padding-top: $top;
+    }
+
+    @if $right != 0 {
+        padding-right: $right;
+    }
+
+    @if $bottom != 0 {
+        padding-bottom: $bottom;
+    }
+
+    @if $left != 0 {
+        padding-left: $left;
+    }
+}

@@ -23,12 +23,22 @@ time, mark, audio, video {
     vertical-align: baseline;
 }
 
+:root {
+    --nav-height: 5.5rem;
+    --box-shadow-alpha: .16;
+    --title-color: #{$color-dotvvm-title};
+}
+
 html {
     font-size: 62.5%;
     height: 100%;
 
-    .code-container{
+    .code-container {
         font-size: 100% !important;
+    }
+
+    * {
+        box-sizing: border-box;
     }
 }
 
@@ -42,6 +52,12 @@ body {
     width: 100%;
     min-height: 100%;
     overflow-x: hidden;
+    padding-top: var(--nav-height);
+    background: url(/images/Logos/body_bg.svg);
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-attachment: fixed;
+    background-size: cover;
 
     header {
         flex: 0 0 auto;
@@ -57,13 +73,30 @@ body {
         flex: 0 0 auto;
     }
 
+    &.scroll-disabled {
+        overflow: hidden;
+    }
+
     &.step-body {
+        background: $color-white;
+
         header {
-            border-bottom: 1px solid $color-border;
+            position: fixed;
+            left: 0;
+            right: 0;
+            background-color: $color-header;
+            top: var(--nav-height);
+            text-align: center;
+            padding: .8rem;
+            z-index: 999;
+
+            @include res-max-desktop-small {
+                display: none;
+            }
         }
 
         main {
-            padding-bottom: 8rem;
+            padding: 4rem 0 8rem 0;
 
             @include res-max-desktop-small {
                 position: relative;
@@ -72,6 +105,7 @@ body {
         }
 
         footer {
+            --box-shadow-alpha: .16;
             display: flex;
             align-items: center;
             position: fixed;
@@ -80,6 +114,8 @@ body {
             width: 100%;
             flex: none;
             height: 8rem;
+            background-color: $color-bg;
+            box-shadow: 0px 0px 8px 0 rgba(0, 0, 0, var(--box-shadow-alpha));
 
             @include res-max-desktop-small {
                 position: relative;
@@ -91,7 +127,7 @@ body {
 }
 
 ol, ul {
-   padding-left: 2rem;
+    padding-left: 2rem;
 }
 
 table {

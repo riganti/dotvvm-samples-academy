@@ -36,7 +36,7 @@ namespace DotvvmAcademy.Web
             }
 
             config.Markup.AddMarkupControl("cc",
-                "LanguageSwitch", 
+                "LanguageSwitch",
                 "Pages/LanguageSwitch.dotcontrol");
             config.Markup.AddMarkupControl("cc",
                 "DiagnosticList",
@@ -45,6 +45,21 @@ namespace DotvvmAcademy.Web
                 "FinishDialog",
                 "Pages/Step/FinishDialog.dotcontrol");
             config.Markup.AddCodeControls("cc", typeof(MonacoEditor));
+            config.Markup.AddMarkupControl("cc",
+                "Nav",
+                "Controls/Nav/Nav.dotcontrol");
+            config.Markup.AddMarkupControl("cc",
+               "DotvvmSticker",
+               "Controls/Nav/DotvvmSticker.dotcontrol");
+            config.Markup.AddMarkupControl("cc",
+               "Icon",
+               "Controls/Icons/Icon.dotcontrol");
+            config.Markup.AddMarkupControl("cc",
+               "IconSet",
+               "Controls/Icons/IconSet.dotcontrol");
+            config.Markup.AddMarkupControl("cc",
+               "Footer",
+               "Controls/Footer/Footer.dotcontrol");
 
             if (config.Debug)
             {

@@ -1,0 +1,111 @@
+﻿@viewModel DotvvmAcademy.Web.Pages.SiteViewModel
+@noWrapperTag
+
+<nav class="nav">
+
+    <a href="https://www.dotvvm.com/" class="nav__logo" aria-label="homepage" rel="noopener">
+        <cc:DotvvmSticker />
+    </a>
+
+    <div class="nav__menu" html:id="navMenu">
+        <ul class="nav__left">
+            <li class="nav__item nav__item--row-1">
+                <a href="https://www.dotvvm.com/products" aria-label="products" rel="noopener">
+                    <div class="nav__item-icon">
+                        <cc:Icon IconName="products" />
+                    </div>
+                    Products
+                </a>
+            </li>
+            <li class="nav__item nav__item--row-3">
+                <a href="https://www.dotvvm.com/build" aria-label="build" rel="noopener">
+                    <div class="nav__item-icon">
+                        <cc:Icon IconName="build" />
+                    </div>
+                    Build
+                </a>
+            </li>
+            <li class="nav__item nav__item--row-3">
+                <a href="https://www.dotvvm.com/modernize" aria-label="modernize" rel="noopener">
+                    <div class="nav__item-icon">
+                        <cc:Icon IconName="nav-modernize" />
+                    </div>
+                    Modernize
+                </a>
+            </li>
+            <h4>Use Cases</h4>
+            <li class="nav__item nav__item--row-5">
+                <a href="https://www.dotvvm.com/docs" aria-label="docs" rel="noopener">
+                    <div class="nav__item-icon">
+                        <cc:Icon IconName="docs" />
+                    </div>
+                    Docs
+                </a>
+            </li>
+            <li class="nav__item nav__item--row-5">
+                <a href="https://www.dotvvm.com/samples" aria-label="samples" rel="noopener">
+                    <div class="nav__item-icon">
+                        <cc:Icon IconName="play" />
+                    </div>
+                    Samples
+                </a>
+            </li>
+            <li class="nav__item nav__item--active nav__item--row-5" itemprop="name">
+                <dot:RouteLink RouteName="Default">
+                    <div class="nav__item-icon">
+                        <cc:Icon IconName="academy" />
+                    </div>
+                    Academy
+                </dot:RouteLink>
+            </li>
+            <h4>Learn</h4>
+            <li class="nav__item nav__item--row-3">
+                <a href="https://www.dotvvm.com/blog" aria-label="blog" rel="noopener">
+                    <div class="nav__item-icon">
+                        <cc:Icon IconName="blog" />
+                    </div>
+                    Blog
+                </a>
+            </li>
+            <li class="nav__item nav__item--row-1 nav__item--mobile">
+                <a href="https://www.dotvvm.com/order/cart" aria-label="cart" rel="noopener">
+                    <div class="nav__item-icon">
+                        <cc:Icon IconName="basket" />
+                    </div>
+                    Cart
+                </a>
+            </li>
+            <div class="nav__mobile-buttons">
+                <a href="https://www.dotvvm.com/login" class="button button--small button--primary" rel="noopener" aria-label="Sign In">
+                    Sign In
+                </a>
+            </div>
+        </ul>
+        <ul class="nav__right">
+            <li class="nav__item">
+                <a RouteName="https://www.dotvvm.com/order/cart" aria-label="cart" rel="noopener">
+                    Cart
+                    <cc:Icon IconName="basket" />
+                </a>
+            </li>
+            <li class="nav__item">
+                <a href="https://www.dotvvm.com/login" aria-label="login" rel="noopener">Sign In</a>
+            </li>
+
+            <li class="nav__item nav__item--with-button">
+                <a href="https://www.dotvvm.com/get-dotvvm" aria-label="Get DotVVM" rel="noopener" class="button button--primary button--small">Get DotVVM</a>
+            </li>
+            <cc:LanguageSwitch Class-lang-switch="true"
+                               AvailableLanguages="{value: Languages}"
+                               RouteName="{resource: Context.Route.RouteName}"
+                               CurrentLanguage="{resource: Language}" />
+        </ul>
+    </div>
+
+    <button class="nav__burger" aria-label="Open menu button" title="Open menu button" html:id="showNav">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+</nav>

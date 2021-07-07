@@ -12,8 +12,8 @@
     <meta name="twitter:description" content="{resource: LessonDescription}" />
 </dot:Content>
 
-<dot:Content ContentPlaceHolderID="NavContent">
-    <strong InnerText="{value: LessonName}" />
+<dot:Content ContentPlaceHolderID="HeaderContent">
+    <strong class="title-lesson" InnerText="{value: LessonName}" />
 </dot:Content>
 
 <dot:Content ContentPlaceHolderID="MainContent">
@@ -76,7 +76,7 @@
     </section>
 </dot:Content>
 
-<dot:content ContentPlaceHolderID="FooterContent">
+<dot:Content ContentPlaceHolderID="FooterContent">
     <div class="lesson-footer-container">
         <div class="container-large with-flex">
             <div class="pager">
@@ -123,4 +123,4 @@
 
     <cc:FinishDialog>
     </cc:FinishDialog>
-</dot:content>
+</dot:Content>
