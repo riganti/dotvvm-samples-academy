@@ -6,7 +6,6 @@
     display: grid;
     grid-template-columns: repeat(var(--col-count), minmax($gap--l, var(--item-max-width)));
     gap: $gap--xl;
-    margin-top: $gap--xxl;
 
     @include res-max-laptop-s {
         --col-count: 2;
