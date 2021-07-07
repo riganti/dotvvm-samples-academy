@@ -41,15 +41,15 @@
 .nav {
 
     .button {
-        --btn-background: #{$color-secondary};
+        --btn-background: #3175b9;
         --btn-border-color: var(--btn-background);
         --btn-color: #ffffff;
-        --btn-badding: #{$gap--m} #{$gap--l};
+        --btn-badding: 0.8rem 1.6rem;
         --btn-min-width: 16rem;
         --btn-max-width: 24rem;
         --btn-font-size: large;
         --box-shadow-alpha: .15;
-        --icon-size: #{$gap--l};
+        --icon-size: 1.6rm;
         display: inline-flex;
         flex-wrap: nowrap;
         align-items: center;
@@ -65,21 +65,20 @@
         text-decoration: none;
         transition: box-shadow .25s,background-color .25s,border-color .25s;
         cursor: pointer;
-        box-shadow: $gap--xs $gap--xs $gap--s 0 rgba(0,0,0,var(--box-shadow-alpha));
+        box-shadow: 2px 2px 4px 0 rgba(0,0,0,var(--box-shadow-alpha));
         border: .2rem solid var(--btn-border-color);
 
-
         &--primary {
-            --btn-background: #{$color-secondary};
+            --btn-background: #27be89;
 
             &--primary:hover {
-                --btn-background: #{$color-secondary-hover};
+                --btn-background: #24b280;
             }
         }
 
         &--small {
             --btn-min-width: 12rem;
-            --btn-padding: #{$gap--s} #{$gap--m};
+            --btn-padding: 0.4rem 0.8rem;
             --btn-font-size: medium;
         }
     }
@@ -239,7 +238,7 @@
                 position: relative;
                 width: 6rem;
                 height: 6rem;
-                background-color: $color-primary;
+                background-color: $color-secondary;
                 border-radius: 50%;
 
                 @include res-max-mobile-s {
@@ -334,7 +333,7 @@
                 background: linear-gradient(to right, $color-grey--light 0%, $color-white 100%);
                 font-size: x-large;
                 font-weight: 600;
-                color: $color-primary;
+                color: $color-secondary;
                 grid-column-end: span 3;
             }
 

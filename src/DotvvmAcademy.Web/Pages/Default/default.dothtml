@@ -15,7 +15,7 @@
 
 <dot:Content ContentPlaceHolderID="HeaderContent">
     <section class="main-header no-padding">
-        <img src="~/images/Illustrations/header-image_02.svg" alt="header-image" />
+        <img src="~/images/Illustrations/header-bg.svg" alt="header-image" />
         <div class="container">
             <div>
                 <dot:HtmlLiteral class="h1"
@@ -38,7 +38,7 @@
 </dot:Content>
 
 <dot:Content ContentPlaceHolderID="MainContent">
-    <section class="section-lections no-padding-top">
+    <section class="section-lections">
         <div class="container">
             <dot:Repeater DataSource="{value: Lessons}" class="lessons-container">
                 <dot:RouteLink RouteName="Step"
