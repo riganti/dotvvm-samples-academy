@@ -1,4 +1,7 @@
-﻿using DotVVM.Framework.Compilation.ControlTree;
+﻿#nullable enable
+
+using DotVVM.Framework.Compilation;
+using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -8,18 +11,21 @@ using System.Linq;
 namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 {
     [DebuggerDisplay("TreeRoot")]
-    public class ValidationTreeRoot : ValidationContentNode, IAbstractTreeRoot
+    public class ValidationTreeRoot : ValidationControl, IAbstractTreeRoot
     {
+        public const string DefaultFileName = "Unnamed";
         private readonly Dictionary<string, List<IAbstractDirective>> directivesDictionary;
 
         public ValidationTreeRoot(
             DothtmlRootNode node,
             ValidationControlMetadata metadata,
             IDataContextStack dataContext,
-            ImmutableArray<ValidationDirective> directives)
+            ImmutableArray<ValidationDirective> directives,
+            IAbstractControlBuilderDescriptor? masterPage)
             : base(node, metadata, dataContext)
         {
             Directives = directives;
+            MasterPage = masterPage;
             directivesDictionary = directives.GroupBy(d => d.Name).ToDictionary(g => g.Key, g => g.Cast<IAbstractDirective>().ToList());
         }
 
@@ -27,7 +33,9 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
 
         Dictionary<string, List<IAbstractDirective>> IAbstractTreeRoot.Directives => directivesDictionary;
 
-        public string FileName { get; set; }
+        public string? FileName { get; set; } = DefaultFileName;
+
+        public IAbstractControlBuilderDescriptor? MasterPage { get; }
 
         protected override ValidationTreeRoot GetTreeRoot()
         {

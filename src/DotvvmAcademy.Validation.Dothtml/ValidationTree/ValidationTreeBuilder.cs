@@ -132,7 +132,8 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             IControlResolverMetadata metadata,
             DothtmlRootNode node,
             IDataContextStack dataContext,
-            IReadOnlyDictionary<string, IReadOnlyList<IAbstractDirective>> directives)
+            IReadOnlyDictionary<string, IReadOnlyList<IAbstractDirective>> directives,
+            IAbstractControlBuilderDescriptor? masterPage)
         {
             var immutableDirectives = directives
                 .SelectMany(p => p.Value)
@@ -142,7 +143,8 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
                 node: node,
                 metadata: (ValidationControlMetadata)metadata,
                 dataContext: dataContext,
-                directives: immutableDirectives);
+                directives: immutableDirectives,
+                masterPage: masterPage);
             return root;
         }
 
@@ -151,6 +153,14 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
             BindingParserNode nameSyntax)
         {
             return new ValidationViewModelDirective(directive, nameSyntax, descriptorFactory.Create(nameSyntax));
+        }
+
+        public IAbstractDirective BuildViewModuleDirective(
+            DothtmlDirectiveNode directiveNode,
+            string modulePath,
+            string resourceName)
+        {
+            return new ValidationViewModuleDirective(directiveNode, modulePath, resourceName);
         }
     }
 }

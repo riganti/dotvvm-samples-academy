@@ -1,6 +1,7 @@
 ﻿using DotVVM.Framework.Compilation;
 using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
+using DotVVM.Framework.ResourceManagement;
 using DotVVM.Framework.Utils;
 using DotvvmAcademy.Meta;
 using Microsoft.CodeAnalysis;
@@ -17,18 +18,22 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
         private readonly ValidationTypeDescriptorFactory descriptorFactory;
         private readonly ValidationControlTypeFactory typeFactory;
         private readonly MetaConverter converter;
+        private readonly IControlBuilderFactory controlBuilderFactory;
 
         public ValidationTreeResolver(
             ValidationControlResolver controlResolver,
             ValidationTreeBuilder treeBuilder,
+            DotvvmResourceRepository resourceRepo,
             ValidationTypeDescriptorFactory descriptorFactory,
             ValidationControlTypeFactory typeFactory,
-            MetaConverter converter)
-            : base(controlResolver, treeBuilder)
+            MetaConverter converter,
+            IControlBuilderFactory controlBuilderFactory)
+            : base(controlResolver, treeBuilder, resourceRepo)
         {
             this.descriptorFactory = descriptorFactory;
             this.typeFactory = typeFactory;
             this.converter = converter;
+            this.controlBuilderFactory = controlBuilderFactory;
         }
 
         protected override IAbstractBinding CompileBinding(
@@ -69,6 +74,22 @@ namespace DotvvmAcademy.Validation.Dothtml.ValidationTree
                 parent: (parentDataContextStack as ValidationDataContextStack),
                 namespaceImports: imports?.ToImmutableArray() ?? default,
                 extensionParameters: extensionParameters?.ToImmutableArray() ?? default);
+        }
+
+        protected override IAbstractControlBuilderDescriptor? ResolveMasterPage(
+            string currentFile,
+            IAbstractDirective masterPageDirective)
+        {
+            try
+            {
+                return controlBuilderFactory.GetControlBuilder(masterPageDirective.Value).descriptor;
+            }
+            catch (Exception e)
+            {
+                // The resolver should not just crash on an invalid directive
+                masterPageDirective.DothtmlNode!.AddError(e.Message);
+                return null;
+            }
         }
     }
 }
