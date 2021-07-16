@@ -37,16 +37,16 @@
     </EmbeddedResource>
   </ItemGroup>
 
-  <Target BeforeTargets="BeforeBuild" Name="PublishSandbox">
-    <MSBuild Projects="../DotvvmAcademy.CourseFormat.Sandbox/DotvvmAcademy.CourseFormat.Sandbox.csproj" Targets="Publish" BuildInParallel="false" Properties="Configuration=$(Configuration);&#xA;                         Platform=$(Platform);&#xA;                         PublishDir=$(MSBuildProjectDirectory)/sandbox;" />
-    <ItemGroup>
-      <Content Include="sandbox/**/*" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always" />
-    </ItemGroup>
+  <Target Name="BuildSandbox" BeforeTargets="BeforeBuild">
+    <MSBuild Projects="../DotvvmAcademy.CourseFormat.Sandbox/DotvvmAcademy.CourseFormat.Sandbox.csproj" Targets="Restore;Build;Publish" BuildInParallel="false" Properties="Configuration=$(Configuration);PublishDir=$(ProjectDir)$(OutputPath)sandbox\" />
   </Target>
 
-  <Target BeforeTargets="Clean" Name="CleanSandbox">
-    <MSBuild Projects="../DotvvmAcademy.CourseFormat.Sandbox/DotvvmAcademy.CourseFormat.Sandbox.csproj" Targets="Clean" />
-    <RemoveDir Directories="sandbox" />
+  <Target Name="AddSandboxToPublish" BeforeTargets="Publish;Pack">
+    <ItemGroup>
+      <SandboxFile Include="$(OutputPath)\sandbox\**" />
+    </ItemGroup>
+    <Message Text="$(PublishDir)" Importance="High" />
+    <Copy SourceFiles="@(SandboxFile)" DestinationFolder="$(PublishDir)\sandbox\%(RecursiveDir)" />
   </Target>
   
 </Project>
