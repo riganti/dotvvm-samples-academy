@@ -13,8 +13,8 @@ namespace DotvvmAcademy.Web.Hosting
             EmbeddedViewTreeResolver controlTreeResolver,
             IBindingCompiler bindingCompiler,
             Func<ControlUsageValidationVisitor> controlValidatorFactory,
-            DotvvmMarkupConfiguration markupConfiguration)
-            : base(config, controlTreeResolver, bindingCompiler, controlValidatorFactory, markupConfiguration)
+            CompiledAssemblyCache compiledAssemblyCache)
+            : base(config, controlTreeResolver, bindingCompiler, controlValidatorFactory, compiledAssemblyCache)
         {
         }
     }

@@ -16,10 +16,17 @@ namespace DotvvmAcademy.Web.Hosting
     public class EmbeddedViewTreeBuilder : IAbstractTreeBuilder
     {
         private readonly IAbstractTreeBuilder builder;
+        private readonly CompiledAssemblyCache compiledAssemblyCache;
+        private readonly ExtensionMethodsCache extensionMethodsCache;
 
-        public EmbeddedViewTreeBuilder(IAbstractTreeBuilder builder)
+        public EmbeddedViewTreeBuilder(
+            IAbstractTreeBuilder builder,
+            CompiledAssemblyCache compiledAssemblyCache,
+            ExtensionMethodsCache extensionMethodsCache)
         {
             this.builder = builder;
+            this.compiledAssemblyCache = compiledAssemblyCache;
+            this.extensionMethodsCache = extensionMethodsCache;
         }
 
         public Assembly AdditionalAssembly { get; set; }
@@ -90,9 +97,9 @@ namespace DotvvmAcademy.Web.Hosting
             return builder.BuildServiceInjectDirective(node, nameSyntax, typeSyntax);
         }
 
-        public IAbstractTreeRoot BuildTreeRoot(IControlTreeResolver controlTreeResolver, IControlResolverMetadata metadata, DothtmlRootNode node, IDataContextStack dataContext, IReadOnlyDictionary<string, IReadOnlyList<IAbstractDirective>> directives)
+        public IAbstractTreeRoot BuildTreeRoot(IControlTreeResolver controlTreeResolver, IControlResolverMetadata metadata, DothtmlRootNode node, IDataContextStack dataContext, IReadOnlyDictionary<string, IReadOnlyList<IAbstractDirective>> directives, IAbstractControlBuilderDescriptor? masterPage)
         {
-            return builder.BuildTreeRoot(controlTreeResolver, metadata, node, dataContext, directives);
+            return builder.BuildTreeRoot(controlTreeResolver, metadata, node, dataContext, directives, masterPage);
         }
 
         public IAbstractViewModelDirective BuildViewModelDirective(DothtmlDirectiveNode directive, BindingParserNode nameSyntax)
@@ -101,41 +108,48 @@ namespace DotvvmAcademy.Web.Hosting
             return new ResolvedViewModelDirective(nameSyntax, type) { DothtmlNode = directive };
         }
 
+        public IAbstractDirective BuildViewModuleDirective(DothtmlDirectiveNode directiveNode, string modulePath, string resourceName)
+        {
+            return builder.BuildViewModuleDirective(directiveNode, modulePath, resourceName);
+        }
+
         private TypeRegistry CreateRegistry()
         {
             return new TypeRegistry(
+                compiledAssemblyCache,
                 ImmutableDictionary.Create<string, Expression>()
-               .Add("object", TypeRegistry.CreateStatic(typeof(Object)))
-               .Add("bool", TypeRegistry.CreateStatic(typeof(Boolean)))
-               .Add("byte", TypeRegistry.CreateStatic(typeof(Byte)))
-               .Add("char", TypeRegistry.CreateStatic(typeof(Char)))
-               .Add("short", TypeRegistry.CreateStatic(typeof(Int16)))
-               .Add("int", TypeRegistry.CreateStatic(typeof(Int32)))
-               .Add("long", TypeRegistry.CreateStatic(typeof(Int64)))
-               .Add("ushort", TypeRegistry.CreateStatic(typeof(UInt16)))
-               .Add("uint", TypeRegistry.CreateStatic(typeof(UInt32)))
-               .Add("ulong", TypeRegistry.CreateStatic(typeof(UInt64)))
-               .Add("decimal", TypeRegistry.CreateStatic(typeof(Decimal)))
-               .Add("double", TypeRegistry.CreateStatic(typeof(Double)))
-               .Add("float", TypeRegistry.CreateStatic(typeof(Single)))
-               .Add("string", TypeRegistry.CreateStatic(typeof(String)))
-               .Add("Object", TypeRegistry.CreateStatic(typeof(Object)))
-               .Add("Boolean", TypeRegistry.CreateStatic(typeof(Boolean)))
-               .Add("Byte", TypeRegistry.CreateStatic(typeof(Byte)))
-               .Add("Char", TypeRegistry.CreateStatic(typeof(Char)))
-               .Add("Int16", TypeRegistry.CreateStatic(typeof(Int16)))
-               .Add("Int32", TypeRegistry.CreateStatic(typeof(Int32)))
-               .Add("Int64", TypeRegistry.CreateStatic(typeof(Int64)))
-               .Add("UInt16", TypeRegistry.CreateStatic(typeof(UInt16)))
-               .Add("UInt32", TypeRegistry.CreateStatic(typeof(UInt32)))
-               .Add("UInt64", TypeRegistry.CreateStatic(typeof(UInt64)))
-               .Add("Decimal", TypeRegistry.CreateStatic(typeof(Decimal)))
-               .Add("Double", TypeRegistry.CreateStatic(typeof(Double)))
-               .Add("Single", TypeRegistry.CreateStatic(typeof(Single)))
-               .Add("String", TypeRegistry.CreateStatic(typeof(String))),
+                .Add("object", TypeRegistry.CreateStatic(typeof(Object)))
+                .Add("bool", TypeRegistry.CreateStatic(typeof(Boolean)))
+                .Add("byte", TypeRegistry.CreateStatic(typeof(Byte)))
+                .Add("char", TypeRegistry.CreateStatic(typeof(Char)))
+                .Add("short", TypeRegistry.CreateStatic(typeof(Int16)))
+                .Add("int", TypeRegistry.CreateStatic(typeof(Int32)))
+                .Add("long", TypeRegistry.CreateStatic(typeof(Int64)))
+                .Add("ushort", TypeRegistry.CreateStatic(typeof(UInt16)))
+                .Add("uint", TypeRegistry.CreateStatic(typeof(UInt32)))
+                .Add("ulong", TypeRegistry.CreateStatic(typeof(UInt64)))
+                .Add("decimal", TypeRegistry.CreateStatic(typeof(Decimal)))
+                .Add("double", TypeRegistry.CreateStatic(typeof(Double)))
+                .Add("float", TypeRegistry.CreateStatic(typeof(Single)))
+                .Add("string", TypeRegistry.CreateStatic(typeof(String)))
+                .Add("Object", TypeRegistry.CreateStatic(typeof(Object)))
+                .Add("Boolean", TypeRegistry.CreateStatic(typeof(Boolean)))
+                .Add("Byte", TypeRegistry.CreateStatic(typeof(Byte)))
+                .Add("Char", TypeRegistry.CreateStatic(typeof(Char)))
+                .Add("Int16", TypeRegistry.CreateStatic(typeof(Int16)))
+                .Add("Int32", TypeRegistry.CreateStatic(typeof(Int32)))
+                .Add("Int64", TypeRegistry.CreateStatic(typeof(Int64)))
+                .Add("UInt16", TypeRegistry.CreateStatic(typeof(UInt16)))
+                .Add("UInt32", TypeRegistry.CreateStatic(typeof(UInt32)))
+                .Add("UInt64", TypeRegistry.CreateStatic(typeof(UInt64)))
+                .Add("Decimal", TypeRegistry.CreateStatic(typeof(Decimal)))
+                .Add("Double", TypeRegistry.CreateStatic(typeof(Double)))
+                .Add("Single", TypeRegistry.CreateStatic(typeof(Single)))
+                .Add("String", TypeRegistry.CreateStatic(typeof(String))),
            ImmutableList<Func<string, Expression>>.Empty
-               .Add(type => TypeRegistry.CreateStatic(ReflectionUtils.FindType(type)))
-               .Add(type => TypeRegistry.CreateStatic(AdditionalAssembly.GetType(type))));
+                .Add(type => TypeRegistry.CreateStatic(compiledAssemblyCache.FindType(type)))
+                .Add(type => TypeRegistry.CreateStatic(compiledAssemblyCache.FindType("System." + type)))
+                .Add(type => TypeRegistry.CreateStatic(AdditionalAssembly.GetType(type))));
         }
 
         private Expression ParseDirectiveExpression(DothtmlDirectiveNode directive, BindingParserNode expressionSyntax)
@@ -147,7 +161,7 @@ namespace DotvvmAcademy.Web.Hosting
                 expressionSyntax = assemblyQualifiedName.TypeName;
             }
 
-            var visitor = new ExpressionBuildingVisitor(registry)
+            var visitor = new ExpressionBuildingVisitor(registry, new MemberExpressionFactory(extensionMethodsCache))
             {
                 ResolveOnlyTypeName = true,
                 Scope = null
