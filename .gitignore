@@ -23,6 +23,10 @@
 !*.xml
 !*.webmanifest
 !*.md
+!*.dothtml
+!*.dotmaster
+!*.dotcontrol
+!*.resx
 
 # images & other blobs
 !*.png
