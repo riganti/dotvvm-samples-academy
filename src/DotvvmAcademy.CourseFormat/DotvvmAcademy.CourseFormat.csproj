@@ -1,4 +1,5 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project>
+  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
@@ -38,15 +39,35 @@
   </ItemGroup>
 
   <Target Name="BuildSandbox" BeforeTargets="BeforeBuild">
-    <MSBuild Projects="../DotvvmAcademy.CourseFormat.Sandbox/DotvvmAcademy.CourseFormat.Sandbox.csproj" Targets="Restore;Build;Publish" BuildInParallel="false" Properties="Configuration=$(Configuration);PublishDir=$(ProjectDir)$(OutputPath)sandbox\" />
+    <PropertyGroup>
+      <SandboxDir>$(IntermediateOutputPath)sandbox\</SandboxDir>
+    </PropertyGroup>
+
+    <MSBuild Projects="../DotvvmAcademy.CourseFormat.Sandbox/DotvvmAcademy.CourseFormat.Sandbox.csproj" Targets="Restore;Build;Publish" BuildInParallel="false" Properties="Configuration=$(Configuration);PublishDir=$(ProjectDir)$(SandboxDir)" />
   </Target>
 
-  <Target Name="AddSandboxToPublish" BeforeTargets="Publish;Pack">
+  <!-- see https://github.com/dotnet/sdk/issues/1558 -->
+  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+
+  <PropertyGroup>
+    <AssignTargetPathsDependsOn>
+      $(AssignTargetPathsDependsOn);
+      AddSandboxToContent;
+    </AssignTargetPathsDependsOn>
+  </PropertyGroup>
+
+  <Target Name="AddSandboxToContent">
     <ItemGroup>
-      <SandboxFile Include="$(OutputPath)\sandbox\**" />
+      <SandboxFile Include="$(SandboxDir)**" CopyToOutputDirectory="Always" />
     </ItemGroup>
-    <Message Text="$(PublishDir)" Importance="High" />
-    <Copy SourceFiles="@(SandboxFile)" DestinationFolder="$(PublishDir)\sandbox\%(RecursiveDir)" />
+
+    <!-- see https://stackoverflow.com/questions/2010655/itemgroup-with-custom-metadata-regarding-files -->
+    <!-- and https://github.com/dotnet/msbuild/pull/6237 -->
+    <CreateItem
+      Include="@(SandboxFile)"
+      AdditionalMetadata="TargetPath=sandbox\%(RecursiveDir)%(Filename)%(Extension)">
+        <Output TaskParameter="Include" ItemName="Content"/>
+    </CreateItem>
   </Target>
-  
+
 </Project>
