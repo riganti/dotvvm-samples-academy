@@ -1,4 +1,4 @@
-﻿@viewModel DotvvmAcademy.Course.Counter.CounterViewModel
+@viewModel DotvvmAcademy.Course.Counter.CounterViewModel
 
 <!DOCTYPE html>
 <html>

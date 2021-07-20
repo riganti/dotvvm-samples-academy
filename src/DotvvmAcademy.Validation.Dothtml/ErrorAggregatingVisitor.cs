@@ -15,7 +15,7 @@ namespace DotvvmAcademy.Validation.Dothtml
         public override void DefaultVisit(IResolvedTreeNode resolvedNode)
         {
             base.DefaultVisit(resolvedNode);
-            if (resolvedNode is not IAbstractTreeNode node)
+            if (resolvedNode is not IAbstractTreeNode node || node.DothtmlNode is null)
             {
                 return;
             }

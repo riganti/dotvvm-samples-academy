@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable enable
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -38,7 +40,7 @@ namespace DotvvmAcademy.Validation
 
         public ValidationSeverity Severity { get; set; }
 
-        public string Source { get; set; }
+        public string? Source { get; set; }
 
         public int Start { get; set; }
 
@@ -52,24 +54,6 @@ namespace DotvvmAcademy.Validation
             return !left.Equals(right);
         }
 
-        public bool Equals(LightDiagnostic other)
-        {
-            return Start.Equals(other.Start)
-                && End.Equals(other.End)
-                && Message.Equals(other.Message)
-                && Severity.Equals(other.Severity)
-                && Source.Equals(other.Source);
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (obj is LightDiagnostic light)
-            {
-                return Equals(light);
-            }
-            return false;
-        }
-
         public override int GetHashCode()
         {
             return HashCode.Combine(End, Message, Severity, Source, Start);
@@ -78,6 +62,21 @@ namespace DotvvmAcademy.Validation
         public override string ToString()
         {
             return $"{Source}({Start},{End}): {Severity}: {Message}";
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is LightDiagnostic diagnostic &&
+                   Equals(diagnostic);
+        }
+
+        public bool Equals(LightDiagnostic other)
+        {
+            return End == other.End &&
+                   Message == other.Message &&
+                   Severity == other.Severity &&
+                   Source == other.Source &&
+                   Start == other.Start;
         }
     }
 }

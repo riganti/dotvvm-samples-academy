@@ -156,7 +156,7 @@
   <data name="ERR_WrongControlCount" xml:space="preserve">
     <value>Tato komponenta musí obsahovat {0} komponent typu '{1}'.</value>
   </data>
-  <data name="ERR_MissingDirective" xml:space="preserve">
+  <data name="ERR_MissingPropertyRoot" xml:space="preserve">
     <value>Directiva '{0}' musí být nastavena.</value>
   </data>
   <data name="ERR_MissingControl" xml:space="preserve">

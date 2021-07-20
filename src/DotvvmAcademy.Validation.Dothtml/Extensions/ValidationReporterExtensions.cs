@@ -27,12 +27,6 @@ namespace DotvvmAcademy.Validation
             IAbstractTreeNode node,
             ValidationSeverity severity = default)
         {
-            if (node is IAbstractTreeNode)
-            {
-                reporter.Report(message, severity);
-                return;
-            }
-
             var sourceCode = reporter.SourceCodeStorage.GetSourceCode(node.TreeRoot);
             reporter.Report(new ResolverDothtmlDiagnostic(message, arguments, node, sourceCode, severity));
         }

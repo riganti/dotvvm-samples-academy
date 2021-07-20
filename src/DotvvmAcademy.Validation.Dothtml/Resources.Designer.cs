@@ -81,9 +81,9 @@ namespace DotvvmAcademy.Validation.Dothtml {
         /// <summary>
         ///   Looks up a localized string similar to The &apos;{0}&apos; directive must be set..
         /// </summary>
-        public static string ERR_MissingDirective {
+        public static string ERR_MissingPropertyRoot {
             get {
-                return ResourceManager.GetString("ERR_MissingDirective", resourceCulture);
+                return ResourceManager.GetString("ERR_MissingPropertyRoot", resourceCulture);
             }
         }
         

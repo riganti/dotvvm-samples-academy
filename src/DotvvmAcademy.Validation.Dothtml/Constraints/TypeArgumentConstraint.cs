@@ -1,5 +1,6 @@
 ﻿using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Compilation.ControlTree.Resolved;
+using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 using DotvvmAcademy.Meta;
 using DotvvmAcademy.Meta.Syntax;
 using Microsoft.CodeAnalysis;
@@ -33,11 +34,13 @@ namespace DotvvmAcademy.Validation.Dothtml.Constraints
             foreach (var directive in nodes)
             {
                 if (!(directive is IAbstractTypeSpecificationDirective typeDirective)
+                    || typeDirective.ResolvedType is null
                     || !typeDirective.ResolvedType.IsEqualTo(new ResolvedTypeDescriptor(type)))
                 {
+                    var directiveName = ((DothtmlDirectiveNode)directive.DothtmlNode).Name;
                     reporter.Report(
                         message: Resources.ERR_WrongTypeDirectiveArgument,
-                        arguments: new object[] { TypeArgument },
+                        arguments: new object[] { directiveName, TypeArgument },
                         node: directive);
                 }
             }

@@ -6,6 +6,11 @@ namespace DotvvmAcademy.Validation
     {
         public GlobalValidationDiagnostic(string message, IEnumerable<object> arguments, ValidationSeverity severity)
         {
+            if (string.IsNullOrEmpty(message))
+            {
+                throw new System.ArgumentException($"'{nameof(message)}' cannot be null or empty.", nameof(message));
+            }
+
             Message = message;
             Arguments = arguments;
             Severity = severity;

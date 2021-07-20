@@ -188,8 +188,8 @@ Options:
 
             // validate
             var validationService = new ValidationService();
-            Diagnostics.AddRange((await validationService.Validate(unit.GetConstraints(), sources))
-                .Select(d => new LightDiagnostic(d)));
+            var validationDiagnostics = await validationService.Validate(unit.GetConstraints(), sources);
+            Diagnostics.AddRange(validationDiagnostics.Select(d => new LightDiagnostic(d)));
             WriteDiagnostics();
             return 0;
         }
