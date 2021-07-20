@@ -44,36 +44,37 @@ namespace DotvvmAcademy.CourseFormat.Sandbox
 
         public ValidationService()
         {
-            services = new ServiceCollection()
-                .AddScoped<Context>()
-                .AddTransient(p => p.GetService<Context>().Converter)
-                .AddTransient(p => p.GetService<Context>().SourceCodeStorage)
-                .AddTransient(p => p.GetService<Context>().Compilation)
-                .AddTransient(p => p.GetService<Context>().Tree)
-                .AddScoped<AllowedSymbolStorage>()
-                .AddScoped<DynamicActionStorage>()
-                .AddScoped<DiagnosticAnalyzer, AllowedSymbolAnalyzer>()
-                .AddScoped<IValidationReporter, ValidationReporter>()
-                .AddScoped<CSharpDynamicContext>()
-                .AddScoped<IAttributeExtractor, AttributeExtractor>()
-                .AddScoped<ITypedConstantExtractor, TypedConstantExtractor>()
-                .AddScoped<NodeLocator>()
-                .AddScoped<ValidationTypeDescriptorFactory>()
-                .AddScoped<ValidationControlTypeFactory>()
-                .AddScoped<ValidationControlMetadataFactory>()
-                .AddScoped<ValidationPropertyFactory>()
-                .AddScoped(p =>
-                {
-                    var controlResolver = ActivatorUtilities.CreateInstance<ValidationControlResolver>(p);
-                    controlResolver.RegisterNamespace("dot", "DotVVM.Framework.Controls", "DotVVM.Framework");
-                    return controlResolver;
-                })
-                .AddScoped<ValidationTreeResolver>()
-                .AddScoped<ValidationTreeBuilder>()
-                .AddScoped<XPathTreeVisitor>()
-                .AddScoped<XPathDothtmlNamespaceResolver>()
-                .AddScoped<NameTable>()
-                .BuildServiceProvider();
+            var services = new ServiceCollection();
+            DotvvmServiceCollectionExtensions.RegisterDotVVMServices(services);
+            services.AddScoped<Context>();
+            services.AddTransient(p => p.GetService<Context>().Converter);
+            services.AddTransient(p => p.GetService<Context>().SourceCodeStorage);
+            services.AddTransient(p => p.GetService<Context>().Compilation);
+            services.AddTransient(p => p.GetService<Context>().Tree);
+            services.AddScoped<AllowedSymbolStorage>();
+            services.AddScoped<DynamicActionStorage>();
+            services.AddScoped<DiagnosticAnalyzer, AllowedSymbolAnalyzer>();
+            services.AddScoped<IValidationReporter, ValidationReporter>();
+            services.AddScoped<CSharpDynamicContext>();
+            services.AddScoped<IAttributeExtractor, AttributeExtractor>();
+            services.AddScoped<ITypedConstantExtractor, TypedConstantExtractor>();
+            services.AddScoped<NodeLocator>();
+            services.AddScoped<ValidationTypeDescriptorFactory>();
+            services.AddScoped<ValidationControlTypeFactory>();
+            services.AddScoped<ValidationControlMetadataFactory>();
+            services.AddScoped<ValidationPropertyFactory>();
+            services.AddScoped(p =>
+            {
+                var controlResolver = ActivatorUtilities.CreateInstance<ValidationControlResolver>(p);
+                controlResolver.RegisterNamespace("dot", "DotVVM.Framework.Controls", "DotVVM.Framework");
+                return controlResolver;
+            });
+            services.AddScoped<ValidationTreeResolver>();
+            services.AddScoped<ValidationTreeBuilder>();
+            services.AddScoped<XPathTreeVisitor>();
+            services.AddScoped<XPathDothtmlNamespaceResolver>();
+            services.AddScoped<NameTable>();
+            this.services = services.BuildServiceProvider();
         }
 
         public async Task<IEnumerable<IValidationDiagnostic>> Validate(
