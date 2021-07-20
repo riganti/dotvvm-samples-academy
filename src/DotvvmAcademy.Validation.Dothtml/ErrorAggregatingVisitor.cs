@@ -1,18 +1,25 @@
-﻿using DotvvmAcademy.Validation.Dothtml.ValidationTree;
+﻿using DotVVM.Framework.Compilation.ControlTree;
+using DotVVM.Framework.Compilation.ControlTree.Resolved;
 
 namespace DotvvmAcademy.Validation.Dothtml
 {
-    public class ErrorAggregatingWalker : DothtmlTreeWalker
+    public class ErrorAggregatingVisitor : ResolvedControlTreeVisitor
     {
         private readonly IValidationReporter reporter;
 
-        public ErrorAggregatingWalker(IValidationReporter reporter)
+        public ErrorAggregatingVisitor(IValidationReporter reporter)
         {
             this.reporter = reporter;
         }
 
-        public override void DefaultVisit(ValidationTreeNode node)
+        public override void DefaultVisit(IResolvedTreeNode resolvedNode)
         {
+            base.DefaultVisit(resolvedNode);
+            if (resolvedNode is not IAbstractTreeNode node)
+            {
+                return;
+            }
+
             foreach (var error in node.DothtmlNode.NodeErrors)
             {
                 reporter.Report(

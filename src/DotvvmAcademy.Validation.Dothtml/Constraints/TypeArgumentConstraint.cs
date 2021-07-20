@@ -1,7 +1,9 @@
-﻿using DotvvmAcademy.Meta;
+﻿using DotVVM.Framework.Compilation.ControlTree;
+using DotVVM.Framework.Compilation.ControlTree.Resolved;
+using DotvvmAcademy.Meta;
 using DotvvmAcademy.Meta.Syntax;
-using DotvvmAcademy.Validation.Dothtml.ValidationTree;
 using Microsoft.CodeAnalysis;
+using System;
 using System.Linq;
 using System.Xml.XPath;
 
@@ -21,19 +23,17 @@ namespace DotvvmAcademy.Validation.Dothtml.Constraints
 
         public void Validate(IValidationReporter reporter, NodeLocator locator, MetaConverter converter)
         {
-            var type = converter.ToRoslyn(TypeArgument)
-                .OfType<ITypeSymbol>()
-                .SingleOrDefault();
+            var type = converter.ToReflectionSingle(TypeArgument) as Type;
             if (type == null)
             {
                 return;
             }
 
-            var nodes = locator.Locate<ValidationDirective>(Expression);
+            var nodes = locator.Locate<IAbstractDirective>(Expression);
             foreach (var directive in nodes)
             {
-                if (!(directive is ValidationTypeDirective typeDirective)
-                    || !SymbolEqualityComparer.Default.Equals(typeDirective.Type.TypeSymbol, type))
+                if (!(directive is IAbstractTypeSpecificationDirective typeDirective)
+                    || !typeDirective.ResolvedType.IsEqualTo(new ResolvedTypeDescriptor(type)))
                 {
                     reporter.Report(
                         message: Resources.ERR_WrongTypeDirectiveArgument,

@@ -1,8 +1,8 @@
 ﻿using DotVVM.Framework.Compilation;
+using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Compilation.Parser;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 using DotvvmAcademy.Validation.Dothtml;
-using DotvvmAcademy.Validation.Dothtml.ValidationTree;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,7 @@ namespace DotvvmAcademy.Validation
         public static void Report(
             this IValidationReporter reporter,
             string message,
-            ValidationTreeNode node,
+            IAbstractTreeNode node,
             ValidationSeverity severity = default)
         {
             reporter.Report(message, Enumerable.Empty<object>(), node, severity);
@@ -24,10 +24,10 @@ namespace DotvvmAcademy.Validation
             this IValidationReporter reporter,
             string message,
             IEnumerable<object> arguments,
-            ValidationTreeNode node,
+            IAbstractTreeNode node,
             ValidationSeverity severity = default)
         {
-            if (node is ValidationTreeRoot)
+            if (node is IAbstractTreeNode)
             {
                 reporter.Report(message, severity);
                 return;

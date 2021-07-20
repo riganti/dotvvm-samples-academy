@@ -1,11 +1,12 @@
 ﻿using DotVVM.Framework.Compilation;
+using DotVVM.Framework.Compilation.ControlTree;
+using DotVVM.Framework.Compilation.ControlTree.Resolved;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Tokenizer;
 using DotvvmAcademy.Meta;
 using DotvvmAcademy.Validation;
 using DotvvmAcademy.Validation.CSharp;
 using DotvvmAcademy.Validation.Dothtml;
-using DotvvmAcademy.Validation.Dothtml.ValidationTree;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
@@ -59,18 +60,6 @@ namespace DotvvmAcademy.CourseFormat.Sandbox
             services.AddScoped<IAttributeExtractor, AttributeExtractor>();
             services.AddScoped<ITypedConstantExtractor, TypedConstantExtractor>();
             services.AddScoped<NodeLocator>();
-            services.AddScoped<ValidationTypeDescriptorFactory>();
-            services.AddScoped<ValidationControlTypeFactory>();
-            services.AddScoped<ValidationControlMetadataFactory>();
-            services.AddScoped<ValidationPropertyFactory>();
-            services.AddScoped(p =>
-            {
-                var controlResolver = ActivatorUtilities.CreateInstance<ValidationControlResolver>(p);
-                controlResolver.RegisterNamespace("dot", "DotVVM.Framework.Controls", "DotVVM.Framework");
-                return controlResolver;
-            });
-            services.AddScoped<ValidationTreeResolver>();
-            services.AddScoped<ValidationTreeBuilder>();
             services.AddScoped<XPathTreeVisitor>();
             services.AddScoped<XPathDothtmlNamespaceResolver>();
             services.AddScoped<NameTable>();
@@ -118,7 +107,7 @@ namespace DotvvmAcademy.CourseFormat.Sandbox
             // parse potential dothtml source
             var dothtmlSource = sources.OfType<DothtmlSourceCode>()
                 .SingleOrDefault();
-            ValidationTreeRoot validationTree = null;
+            ResolvedTreeRoot resolvedTree = null;
             if (dothtmlSource != null)
             {
                 try
@@ -138,11 +127,11 @@ namespace DotvvmAcademy.CourseFormat.Sandbox
                     var dothtmlRoot = parser.Parse(tokenizer.Tokens);
 
                     // parse semantics
-                    var resolver = scope.ServiceProvider.GetRequiredService<ValidationTreeResolver>();
-                    validationTree = (ValidationTreeRoot)resolver.ResolveTree(dothtmlRoot, dothtmlSource.FileName);
-                    validationTree.FileName = dothtmlSource.FileName;
-                    var visitor = new ErrorAggregatingWalker(reporter);
-                    visitor.Visit(validationTree);
+                    var resolver = scope.ServiceProvider.GetRequiredService<DefaultControlTreeResolver>();
+                    resolvedTree = (ResolvedTreeRoot)resolver.ResolveTree(dothtmlRoot, dothtmlSource.FileName);
+                    resolvedTree.FileName = dothtmlSource.FileName;
+                    var visitor = new ErrorAggregatingVisitor(reporter);
+                    resolvedTree.Accept(visitor);
                 }
                 catch (DotvvmCompilationException exception)
                 {
@@ -150,14 +139,14 @@ namespace DotvvmAcademy.CourseFormat.Sandbox
                 }
 
                 // cancel validation if validation couldn't be created
-                if (validationTree == null)
+                if (resolvedTree == null)
                 {
                     return Report();
                 }
 
                 // wrap the validation tree in the XPath tree
                 var xpathVisitor = scope.ServiceProvider.GetRequiredService<XPathTreeVisitor>();
-                context.Tree = xpathVisitor.Visit(validationTree);
+                context.Tree = xpathVisitor.Visit(resolvedTree);
             }
 
             // generate static errors and prepare data for other validation steps

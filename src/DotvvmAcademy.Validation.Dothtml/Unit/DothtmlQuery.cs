@@ -1,10 +1,10 @@
-﻿using DotvvmAcademy.Validation.Dothtml.ValidationTree;
-using System.Xml.XPath;
+﻿using System.Xml.XPath;
+using DotVVM.Framework.Compilation.ControlTree;
 
 namespace DotvvmAcademy.Validation.Dothtml.Unit
 {
     public class DothtmlQuery<TResult>
-        where TResult : ValidationTreeNode
+        where TResult : IAbstractTreeNode
     {
         public DothtmlQuery(DothtmlUnit unit, XPathExpression expression)
         {

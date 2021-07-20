@@ -1,10 +1,11 @@
 ﻿using DotVVM.Framework.Compilation.ControlTree;
+using DotVVM.Framework.Compilation.ControlTree.Resolved;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 using DotVVM.Framework.Controls;
 using DotVVM.Framework.Controls.Infrastructure;
-using DotvvmAcademy.Validation.Dothtml.ValidationTree;
 using System;
 using System.Collections.Immutable;
+using System.Linq;
 using System.Xml;
 using System.Xml.XPath;
 
@@ -22,10 +23,10 @@ namespace DotvvmAcademy.Validation.Dothtml
             this.namespaceResolver = namespaceResolver;
         }
 
-        public XPathDothtmlRoot Visit(ValidationTreeRoot tree)
+        public XPathDothtmlRoot Visit(IAbstractTreeRoot tree)
         {
             root = new XPathDothtmlRoot(tree);
-            if (!tree.Content.IsDefaultOrEmpty)
+            if (tree.Content?.Count() != 0)
             {
                 var children = ImmutableArray.CreateBuilder<XPathDothtmlNode>();
                 foreach (var child in tree.Content)
@@ -39,12 +40,15 @@ namespace DotvvmAcademy.Validation.Dothtml
                 root.SetChildren(children);
             }
 
-            if (!tree.Directives.IsDefaultOrEmpty)
+            if (tree.Directives?.Count() != 0)
             {
                 var attributes = ImmutableArray.CreateBuilder<XPathDothtmlNode>();
-                foreach (var directive in tree.Directives)
+                foreach (var directiveGroup in tree.Directives)
                 {
-                    attributes.Add(VisitDirective(directive));
+                    foreach (var directive in directiveGroup.Value)
+                    {
+                        attributes.Add(VisitDirective(directive));
+                    }
                 }
                 root.SetAttributes(attributes);
             }
@@ -54,26 +58,21 @@ namespace DotvvmAcademy.Validation.Dothtml
 
         private string GetPropertyName(IPropertyDescriptor property)
         {
-            string name = property switch
-            {
-                ValidationAttachedProperty attachedProperty => $"{attachedProperty.DeclaringType.Name}.{property.Name}",
-                _ => property.Name,
-            };
-            return nameTable.GetOrAdd(name);
+            return nameTable.GetOrAdd(property.Name);
         }
 
-        private XPathDothtmlNode VisitControl(ValidationControl control)
+        private XPathDothtmlNode VisitControl(IAbstractControl control)
         {
             XPathDothtmlNode node;
-            if (control.Metadata.Type.IsEqualTo(typeof(RawLiteral)))
+            if (control.Metadata.Type.IsEqualTo(new ResolvedTypeDescriptor(typeof(RawLiteral))))
             {
                 return VisitRawLiteral(control);
             }
-            else if (control.Metadata.Type.IsEqualTo(typeof(Literal)))
+            else if (control.Metadata.Type.IsEqualTo(new ResolvedTypeDescriptor(typeof(Literal))))
             {
                 node = VisitLiteral(control);
             }
-            else if (control.Metadata.Type.IsEqualTo(typeof(HtmlGenericControl)))
+            else if (control.Metadata.Type.IsEqualTo(new ResolvedTypeDescriptor(typeof(HtmlGenericControl))))
             {
                 node = VisitHtmlGenericControl(control);
             }
@@ -87,7 +86,7 @@ namespace DotvvmAcademy.Validation.Dothtml
                 };
             }
 
-            if (!control.Content.IsDefaultOrEmpty)
+            if (control.Content?.Count() != 0)
             {
                 var children = ImmutableArray.CreateBuilder<XPathDothtmlNode>();
                 foreach (var child in control.Content)
@@ -101,12 +100,15 @@ namespace DotvvmAcademy.Validation.Dothtml
                 node.SetChildren(children);
             }
 
-            if (!control.PropertySetters.IsDefaultOrEmpty)
+            if (control.PropertyNames?.Count() != 0)
             {
                 var attributes = ImmutableArray.CreateBuilder<XPathDothtmlNode>();
-                foreach (var property in control.PropertySetters)
+                foreach (var propertyName in control.PropertyNames)
                 {
-                    attributes.Add(VisitProperty(property));
+                    if (control.TryGetProperty(propertyName, out var property))
+                    {
+                        attributes.Add(VisitProperty(property));
+                    }
                 }
                 node.SetAttributes(attributes);
             }
@@ -114,7 +116,7 @@ namespace DotvvmAcademy.Validation.Dothtml
             return node;
         }
 
-        private XPathDothtmlNode VisitDirective(ValidationDirective directive)
+        private XPathDothtmlNode VisitDirective(IAbstractDirective directive)
         {
             var syntax = (DothtmlDirectiveNode)directive.DothtmlNode;
             return new XPathDothtmlNode(directive, XPathNodeType.Attribute)
@@ -124,7 +126,7 @@ namespace DotvvmAcademy.Validation.Dothtml
             };
         }
 
-        private XPathDothtmlNode VisitHtmlGenericControl(ValidationControl control)
+        private XPathDothtmlNode VisitHtmlGenericControl(IAbstractControl control)
         {
             var elementNode = (DothtmlElementNode)control.DothtmlNode;
             return new XPathDothtmlNode(control, XPathNodeType.Element)
@@ -133,7 +135,7 @@ namespace DotvvmAcademy.Validation.Dothtml
             };
         }
 
-        private XPathDothtmlNode VisitLiteral(ValidationControl control)
+        private XPathDothtmlNode VisitLiteral(IAbstractControl control)
         {
             var localName = nameTable.GetOrAdd(control.Metadata.Type.Name);
             var @namespace = nameTable.GetOrAdd(control.Metadata.Type.Namespace);
@@ -146,21 +148,21 @@ namespace DotvvmAcademy.Validation.Dothtml
             };
         }
 
-        private XPathDothtmlNode VisitProperty(ValidationPropertySetter property)
+        private XPathDothtmlNode VisitProperty(IAbstractPropertySetter property)
         {
             return property switch
             {
-                ValidationPropertyBinding binding => VisitPropertyBinding(binding),
-                ValidationPropertyControl control => VisitPropertyControl(control),
-                ValidationPropertyControlCollection controlCollection => VisitPropertyControlCollection(controlCollection),
-                ValidationPropertyTemplate template => VisitPropertyTemplate(template),
-                ValidationPropertyValue value => VisitPropertyValue(value),
+                IAbstractPropertyBinding binding => VisitPropertyBinding(binding),
+                IAbstractPropertyControl control => VisitPropertyControl(control),
+                IAbstractPropertyControlCollection controlCollection => VisitPropertyControlCollection(controlCollection),
+                IAbstractPropertyTemplate template => VisitPropertyTemplate(template),
+                IAbstractPropertyValue value => VisitPropertyValue(value),
                 _ => throw new ArgumentException($"Property setter of type '{property.GetType().Name}' " +
                     $"is not supported"),
             };
         }
 
-        private XPathDothtmlNode VisitPropertyBinding(ValidationPropertyBinding propertyBinding)
+        private XPathDothtmlNode VisitPropertyBinding(IAbstractPropertyBinding propertyBinding)
         {
             return new XPathDothtmlNode(propertyBinding, XPathNodeType.Attribute)
             {
@@ -169,7 +171,7 @@ namespace DotvvmAcademy.Validation.Dothtml
             };
         }
 
-        private XPathDothtmlNode VisitPropertyControl(ValidationPropertyControl propertyControl)
+        private XPathDothtmlNode VisitPropertyControl(IAbstractPropertyControl propertyControl)
         {
             var node = new XPathDothtmlNode(propertyControl, XPathNodeType.Attribute)
             {
@@ -186,13 +188,13 @@ namespace DotvvmAcademy.Validation.Dothtml
             return node;
         }
 
-        private XPathDothtmlNode VisitPropertyControlCollection(ValidationPropertyControlCollection propertyCollection)
+        private XPathDothtmlNode VisitPropertyControlCollection(IAbstractPropertyControlCollection propertyCollection)
         {
             var node = new XPathDothtmlNode(propertyCollection, XPathNodeType.Attribute)
             {
                 LocalName = GetPropertyName(propertyCollection.Property),
             };
-            if (!propertyCollection.Controls.IsDefaultOrEmpty)
+            if (propertyCollection.Controls?.Count() != 0)
             {
                 var children = ImmutableArray.CreateBuilder<XPathDothtmlNode>();
                 foreach (var child in propertyCollection.Controls)
@@ -210,13 +212,13 @@ namespace DotvvmAcademy.Validation.Dothtml
             return node;
         }
 
-        private XPathDothtmlNode VisitPropertyTemplate(ValidationPropertyTemplate propertyTemplate)
+        private XPathDothtmlNode VisitPropertyTemplate(IAbstractPropertyTemplate propertyTemplate)
         {
             var node = new XPathDothtmlNode(propertyTemplate, XPathNodeType.Attribute)
             {
                 LocalName = GetPropertyName(propertyTemplate.Property),
             };
-            if (!propertyTemplate.Content.IsDefaultOrEmpty)
+            if (propertyTemplate.Content?.Count() != 0)
             {
                 var children = ImmutableArray.CreateBuilder<XPathDothtmlNode>();
                 foreach (var child in propertyTemplate.Content)
@@ -234,7 +236,7 @@ namespace DotvvmAcademy.Validation.Dothtml
             return node;
         }
 
-        private XPathDothtmlNode VisitPropertyValue(ValidationPropertyValue propertyValue)
+        private XPathDothtmlNode VisitPropertyValue(IAbstractPropertyValue propertyValue)
         {
             return new XPathDothtmlNode(propertyValue, XPathNodeType.Attribute)
             {
@@ -243,7 +245,7 @@ namespace DotvvmAcademy.Validation.Dothtml
             };
         }
 
-        private XPathDothtmlNode VisitRawLiteral(ValidationControl control)
+        private XPathDothtmlNode VisitRawLiteral(IAbstractControl control)
         {
             if (control.ConstructorParameters == null
                 || control.ConstructorParameters.Length != 3

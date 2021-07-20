@@ -1,5 +1,5 @@
-﻿using DotvvmAcademy.Validation.Dothtml.ValidationTree;
-using System.Xml.XPath;
+﻿using System.Xml.XPath;
+using DotVVM.Framework.Compilation.ControlTree;
 
 namespace DotvvmAcademy.Validation.Dothtml.Constraints
 {
@@ -17,10 +17,10 @@ namespace DotvvmAcademy.Validation.Dothtml.Constraints
 
         public void Validate(IValidationReporter reporter, NodeLocator locator)
         {
-            var nodes = locator.Locate<ValidationPropertySetter>(Expression);
+            var nodes = locator.Locate<IAbstractPropertySetter>(Expression);
             foreach (var setter in nodes)
             {
-                if (!(setter is ValidationPropertyValue propertyValue))
+                if (!(setter is IAbstractPropertyValue propertyValue))
                 {
                     reporter.Report(
                         message: Resources.ERR_WrongSetter,

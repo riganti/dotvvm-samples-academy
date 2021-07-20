@@ -1,14 +1,14 @@
-﻿using DotvvmAcademy.Meta;
+﻿using DotVVM.Framework.Compilation.ControlTree;
+using DotvvmAcademy.Meta;
 using DotvvmAcademy.Meta.Syntax;
 using DotvvmAcademy.Validation.Dothtml.Constraints;
-using DotvvmAcademy.Validation.Dothtml.ValidationTree;
 
 namespace DotvvmAcademy.Validation.Dothtml.Unit
 {
     public static class DothtmlQueryExtensions_Constraints
     {
-        public static DothtmlQuery<ValidationPropertySetter> RequireBinding(
-            this DothtmlQuery<ValidationPropertySetter> query,
+        public static DothtmlQuery<IAbstractPropertySetter> RequireBinding(
+            this DothtmlQuery<IAbstractPropertySetter> query,
             string value,
             AllowedBinding kind = AllowedBinding.Value)
         {
@@ -16,41 +16,41 @@ namespace DotvvmAcademy.Validation.Dothtml.Unit
         }
 
         public static DothtmlQuery<TResult> RequireCount<TResult>(this DothtmlQuery<TResult> query, int count)
-            where TResult : ValidationTreeNode
+            where TResult : IAbstractTreeNode
         {
             return query.AddConstraint(new CountConstraint(query.Expression, count));
         }
 
-        public static DothtmlQuery<ValidationControl> RequireRawContent(
-            this DothtmlQuery<ValidationControl> query,
+        public static DothtmlQuery<IAbstractControl> RequireRawContent(
+            this DothtmlQuery<IAbstractControl> query,
             string expectedContent,
             bool isCaseSensitive = false)
         {
             return query.AddConstraint(new RawContentConstraint(query.Expression, expectedContent, isCaseSensitive));
         }
 
-        public static DothtmlQuery<ValidationControl> RequireRawText(
-            this DothtmlQuery<ValidationControl> query,
+        public static DothtmlQuery<IAbstractControl> RequireRawText(
+            this DothtmlQuery<IAbstractControl> query,
             string expected,
             bool isCaseSensitive = false)
         {
             return query.AddConstraint(new RawTextConstraint(query.Expression, expected, isCaseSensitive));
         }
 
-        public static DothtmlQuery<ValidationControl> RequireType<TControl>(this DothtmlQuery<ValidationControl> query)
+        public static DothtmlQuery<IAbstractControl> RequireType<TControl>(this DothtmlQuery<IAbstractControl> query)
         {
             return query.AddConstraint(new ControlTypeConstraint(query.Expression, MetaConvert.ToMeta(typeof(TControl))));
         }
 
-        public static DothtmlQuery<ValidationDirective> RequireTypeArgument(
-            this DothtmlQuery<ValidationDirective> query,
+        public static DothtmlQuery<IAbstractDirective> RequireTypeArgument(
+            this DothtmlQuery<IAbstractDirective> query,
             string typeFullName)
         {
             return query.AddConstraint(new TypeArgumentConstraint(query.Expression, NameNode.Parse(typeFullName)));
         }
 
-        public static DothtmlQuery<ValidationPropertySetter> RequireValue(
-            this DothtmlQuery<ValidationPropertySetter> query,
+        public static DothtmlQuery<IAbstractPropertySetter> RequireValue(
+            this DothtmlQuery<IAbstractPropertySetter> query,
             object value)
         {
             return query.AddConstraint(new HardcodedValueConstraint(query.Expression, value));
