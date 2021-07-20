@@ -227,48 +227,6 @@ namespace DotvvmAcademy.CourseFormat
             return content;
         }
 
-        public async Task<ValidationScript> GetValidationScript(string scriptPath)
-        {
-            var scriptText = await GetFileContents(scriptPath);
-            var scriptOptions = ScriptOptions.Default
-                .AddReferences(
-                    RoslynReference.FromName("netstandard"),
-                    RoslynReference.FromName("System.Private.CoreLib"),
-                    RoslynReference.FromName("System.Runtime"),
-                    RoslynReference.FromName("System.Collections"),
-                    RoslynReference.FromName("System.Reflection"),
-                    RoslynReference.FromName("System.ComponentModel.Annotations"),
-                    RoslynReference.FromName("System.ComponentModel.DataAnnotations"),
-                    RoslynReference.FromName("System.Linq"),
-                    RoslynReference.FromName("System.Linq.Expressions"), // Roslyn #23573
-                    RoslynReference.FromName("Microsoft.CSharp"), // Roslyn #23573
-                    RoslynReference.FromName("DotVVM.Framework"),
-                    RoslynReference.FromName("DotVVM.Core"),
-                    RoslynReference.FromName("DotvvmAcademy.Validation"),
-                    RoslynReference.FromName("DotvvmAcademy.Validation.CSharp"),
-                    RoslynReference.FromName("DotvvmAcademy.Validation.Dothtml"),
-                    RoslynReference.FromName("DotvvmAcademy.Meta"))
-                .WithFilePath(scriptPath)
-                .WithSourceResolver(new CourseSourceReferenceResolver(CurrentCourse.Path));
-            var script = CSharpScript.Create(
-                code: scriptText,
-                options: scriptOptions);
-            var compilation = script.GetCompilation();
-            using var memoryStream = new MemoryStream();
-            var emitResult = compilation.Emit(memoryStream);
-            if (!emitResult.Success)
-            {
-                var sb = new StringBuilder($"Compilation of a CodeTask at '{scriptPath}' failed with the following diagnostics:\n");
-                sb.Append(string.Join(",\n", emitResult.Diagnostics));
-                throw new InvalidOperationException(sb.ToString());
-            }
-            var entryPoint = compilation.GetEntryPoint(default);
-            return new ValidationScript(
-                entryType: entryPoint.ContainingType.MetadataName,
-                entryMethod: entryPoint.MetadataName,
-                bytes: memoryStream.ToArray());
-        }
-
         public async Task<IEnumerable<CodeTaskDiagnostic>> ValidateCodeTask(
             CodeTask codeTask,
             string code)
@@ -278,33 +236,10 @@ namespace DotvvmAcademy.CourseFormat
             var directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             var args = new List<string>
             {
-                Path.Combine(directory, SandboxPath)
+                Path.Combine(directory, SandboxPath),
+                codeTask.Path,
+                CultureInfo.CurrentCulture.Name
             };
-
-            var script = await GetValidationScript(codeTask.Path);
-            FileStream scriptAssemblyFileStream;
-            MemoryMappedFile scriptAssemblyMap;
-            {
-                var mapName = $"CodeTask_{validationId}";
-                var mapPath = Path.Combine(Path.GetTempPath(), mapName);
-                scriptAssemblyFileStream = new FileStream(mapPath, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite);
-                scriptAssemblyMap = MemoryMappedFile.CreateFromFile(
-                    fileStream: scriptAssemblyFileStream,
-                    mapName: null,
-                    capacity: script.Bytes.Length,
-                    access: MemoryMappedFileAccess.ReadWrite,
-                    inheritability: HandleInheritability.None, // sandbox creates its own
-                    leaveOpen: true);
-                using var mapStream = scriptAssemblyMap.CreateViewStream(
-                    offset: 0,
-                    size: 0,
-                    access: MemoryMappedFileAccess.ReadWrite);
-                await mapStream.WriteAsync(script.Bytes, 0, script.Bytes.Length);
-                args.Add(mapPath);
-                args.Add(script.EntryType);
-                args.Add(script.EntryMethod);
-            }
-            args.Add(CultureInfo.CurrentCulture.Name);
             args.AddRange(codeTask.Dependencies);
 
             var info = new ProcessStartInfo
@@ -333,7 +268,7 @@ namespace DotvvmAcademy.CourseFormat
                     }
                 });
 #pragma warning restore CS4014
-                await process.StandardInput.WriteAsync(code);
+                process.StandardInput.Write(code);
                 process.StandardInput.Close();
                 var lightDiagnostics = await JsonSerializer.DeserializeAsync<LightDiagnostic[]>(
                     process.StandardOutput.BaseStream);
@@ -356,11 +291,6 @@ namespace DotvvmAcademy.CourseFormat
                 {
                     diagnostics.Add(new CodeTaskDiagnostic("Your code could not be validated.", -1, -1, CodeTaskDiagnosticSeverity.Error));
                 }
-            }
-            finally
-            {
-                scriptAssemblyFileStream.Dispose();
-                scriptAssemblyMap.Dispose();
             }
             return diagnostics.ToImmutable();
         }
