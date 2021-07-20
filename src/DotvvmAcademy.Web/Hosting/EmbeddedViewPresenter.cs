@@ -8,6 +8,7 @@ namespace DotvvmAcademy.Web.Hosting
 {
     public class EmbeddedViewPresenter : DotvvmPresenter
     {
+#pragma warning disable CS0618
         public EmbeddedViewPresenter(
             DotvvmConfiguration configuration,
             EmbeddedViewBuilder viewBuilder,
@@ -28,5 +29,6 @@ namespace DotvvmAcademy.Web.Hosting
                   staticCommandServiceLoader)
         {
         }
+#pragma warning restore
     }
 }
