@@ -1,4 +1,4 @@
-﻿using DotvvmAcademy.Validation.Dothtml.ValidationTree;
+﻿using DotVVM.Framework.Compilation.ControlTree;
 using System;
 using System.Linq;
 using System.Xml.XPath;
@@ -22,7 +22,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Constraints
 
         public void Validate(IValidationReporter reporter, NodeLocator locator)
         {
-            var nodes = locator.Locate<ValidationControl>(Expression);
+            var nodes = locator.Locate<IAbstractControl>(Expression);
             foreach (var control in nodes)
             {
                 var innerTokens = control.Content.SelectMany(c => c.DothtmlNode.Tokens);

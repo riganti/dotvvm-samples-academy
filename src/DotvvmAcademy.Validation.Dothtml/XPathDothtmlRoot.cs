@@ -1,11 +1,11 @@
-﻿using DotvvmAcademy.Validation.Dothtml.ValidationTree;
-using System.Xml.XPath;
+﻿using System.Xml.XPath;
+using DotVVM.Framework.Compilation.ControlTree;
 
 namespace DotvvmAcademy.Validation.Dothtml
 {
     public class XPathDothtmlRoot : XPathDothtmlNode
     {
-        public XPathDothtmlRoot(ValidationTreeRoot root) : base(root, XPathNodeType.Root)
+        public XPathDothtmlRoot(IAbstractTreeRoot root) : base(root, XPathNodeType.Root)
         {
             Root = this;
         }

@@ -1,5 +1,5 @@
 ﻿using DotVVM.Framework.Binding.Expressions;
-using DotvvmAcademy.Validation.Dothtml.ValidationTree;
+using DotVVM.Framework.Compilation.ControlTree;
 using System;
 using System.Text;
 using System.Xml.XPath;
@@ -23,10 +23,10 @@ namespace DotvvmAcademy.Validation.Dothtml.Constraints
 
         public void Validate(IValidationReporter reporter, NodeLocator locator)
         {
-            var nodes = locator.Locate<ValidationPropertySetter>(Expression);
+            var nodes = locator.Locate<IAbstractPropertySetter>(Expression);
             foreach (var setter in nodes)
             {
-                if (!(setter is ValidationPropertyBinding propertyBinding)
+                if (!(setter is IAbstractPropertyBinding propertyBinding)
                     || !BindingKind.HasFlag(GetAllowedBinding(propertyBinding.Binding.BindingType)))
                 {
                     reporter.Report(
@@ -61,7 +61,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Constraints
             return sb.ToString();
         }
 
-        private ValidationTreeNode GetValidatedNode(ValidationPropertySetter setter)
+        private IAbstractTreeNode GetValidatedNode(IAbstractPropertySetter setter)
         {
             return setter.Property.FullName == "DotVVM.Framework.Controls.Literal.Text" ? setter.Parent : setter;
         }

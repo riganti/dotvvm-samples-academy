@@ -1,7 +1,7 @@
-﻿using DotvvmAcademy.Validation.Dothtml.ValidationTree;
-using System;
+﻿using System;
 using System.Linq;
 using System.Xml.XPath;
+using DotVVM.Framework.Compilation.ControlTree;
 
 namespace DotvvmAcademy.Validation.Dothtml.Constraints
 {
@@ -22,7 +22,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Constraints
 
         public void Validate(IValidationReporter reporter, NodeLocator locator)
         {
-            var nodes = locator.Locate<ValidationControl>(Expression);
+            var nodes = locator.Locate<IAbstractControl>(Expression);
             foreach (var control in nodes)
             {
                 var actualContent = string.Concat(control.DothtmlNode.Tokens.Select(t => t.Text)).Trim();

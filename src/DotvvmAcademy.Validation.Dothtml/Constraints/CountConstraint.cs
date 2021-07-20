@@ -1,9 +1,9 @@
-﻿using DotvvmAcademy.Validation.Dothtml.ValidationTree;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.XPath;
+using DotVVM.Framework.Compilation.ControlTree;
 
 namespace DotvvmAcademy.Validation.Dothtml.Constraints
 {
@@ -42,7 +42,7 @@ namespace DotvvmAcademy.Validation.Dothtml.Constraints
                 else
                 {
                     var parentPath = Expression.GetLogicalParent();
-                    var parent = locator.LocateSingle<ValidationControl>(parentPath);
+                    var parent = locator.LocateSingle<IAbstractControl>(parentPath);
                     var message = Resources.ResourceManager.GetString($"ERR_Wrong{kind}Count");
                     reporter.Report(message, new[] { name }, parent);
                 }

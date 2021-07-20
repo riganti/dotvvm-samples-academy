@@ -1,8 +1,9 @@
-﻿using DotvvmAcademy.Validation.Dothtml.ValidationTree;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Xml;
+using DotVVM.Framework.Compilation.ControlTree;
+using DotVVM.Framework.Configuration;
 
 namespace DotvvmAcademy.Validation.Dothtml
 {
@@ -10,13 +11,12 @@ namespace DotvvmAcademy.Validation.Dothtml
     {
         private readonly ImmutableDictionary<string, string> namespaces;
 
-        public XPathDothtmlNamespaceResolver(ValidationControlResolver controlResolver, NameTable nameTable)
+        public XPathDothtmlNamespaceResolver(DotvvmMarkupConfiguration markup, NameTable nameTable)
         {
-            namespaces = controlResolver
-                .GetRegisteredNamespaces()
+            namespaces = markup.Controls
                 .ToImmutableDictionary(
-                    keySelector: p => nameTable.GetOrAdd(p.Key),
-                    elementSelector: p => nameTable.GetOrAdd(p.Value.ToDisplayString()));
+                    keySelector: p => nameTable.GetOrAdd(p.TagPrefix),
+                    elementSelector: p => nameTable.GetOrAdd(p.Namespace));
         }
 
         public IDictionary<string, string> GetNamespacesInScope(XmlNamespaceScope scope)

@@ -1,8 +1,8 @@
-﻿using DotvvmAcademy.Validation.Dothtml.ValidationTree;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Xml;
 using System.Xml.XPath;
+using DotVVM.Framework.Compilation.ControlTree;
 
 namespace DotvvmAcademy.Validation.Dothtml
 {
@@ -19,13 +19,13 @@ namespace DotvvmAcademy.Validation.Dothtml
             this.tree = tree;
         }
 
-        public IEnumerable<ValidationTreeNode> Locate(XPathExpression expression)
+        public IEnumerable<IAbstractTreeNode> Locate(XPathExpression expression)
         {
             expression.SetContext(namespaceResolver);
             var navigator = new XPathDothtmlNavigator(nameTable, tree);
             var result = (XPathNodeIterator)navigator.Evaluate(expression);
 
-            var builder = ImmutableArray.CreateBuilder<ValidationTreeNode>();
+            var builder = ImmutableArray.CreateBuilder<IAbstractTreeNode>();
             while (result.MoveNext())
             {
                 var current = (XPathDothtmlNavigator)result.Current;
