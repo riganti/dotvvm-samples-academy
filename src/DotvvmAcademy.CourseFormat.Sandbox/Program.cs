@@ -1,9 +1,15 @@
-﻿using DotvvmAcademy.Validation;
+﻿#nullable enable
+
+using DotvvmAcademy.Meta;
+using DotvvmAcademy.Validation;
 using DotvvmAcademy.Validation.CSharp;
 using DotvvmAcademy.Validation.CSharp.Unit;
 using DotvvmAcademy.Validation.Dothtml;
 using DotvvmAcademy.Validation.Dothtml.Unit;
 using DotvvmAcademy.Validation.Unit;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Scripting;
+using Microsoft.CodeAnalysis.Scripting;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -19,39 +25,79 @@ using System.Threading.Tasks;
 
 namespace DotvvmAcademy.CourseFormat.Sandbox
 {
-    public class Program
+    public static class Program
     {
-        public static async Task<IValidationUnit> GetValidationUnit(
-            string mapPath,
-            string entryTypeName,
-            string entryTypeMethod)
+        public const string DebuggerBreakOption = "--debugger-break";
+        public const string HelpOption = "--help";
+        public static List<LightDiagnostic> Diagnostics = new List<LightDiagnostic>();
+
+        public static async Task<IValidationUnit?> GetValidationUnit(string scriptPath)
         {
-            using var fileStream = new FileStream(
-                path: mapPath,
-                mode: FileMode.Open,
-                access: FileAccess.Read,
-                share: FileShare.ReadWrite); // wtf
-            using var scriptMap = MemoryMappedFile.CreateFromFile(
-                fileStream: fileStream,
-                mapName: null,
-                capacity: 0,
-                access: MemoryMappedFileAccess.Read,
-                inheritability: HandleInheritability.None,
-                leaveOpen: true);
-            using var mapStream = scriptMap.CreateViewStream(0, 0, MemoryMappedFileAccess.Read);
-            var scriptAssembly = AssemblyLoadContext.Default.LoadFromStream(mapStream);
-            var submissionType = scriptAssembly.GetType(entryTypeName);
-            var factoryMethod = submissionType.GetMethod(entryTypeMethod);
-            var unitProperty = submissionType.GetProperty("Unit");
+            var scriptText = File.ReadAllText(scriptPath);
+            var baseDir = new FileInfo(scriptPath).DirectoryName!;
+            var scriptOptions = ScriptOptions.Default
+                .AddReferences(
+                    RoslynReference.FromName("netstandard"),
+                    RoslynReference.FromName("System.Private.CoreLib"),
+                    RoslynReference.FromName("System.Runtime"),
+                    RoslynReference.FromName("System.Collections"),
+                    RoslynReference.FromName("System.Reflection"),
+                    RoslynReference.FromName("System.ComponentModel.Annotations"),
+                    RoslynReference.FromName("System.ComponentModel.DataAnnotations"),
+                    RoslynReference.FromName("System.Linq"),
+                    RoslynReference.FromName("System.Linq.Expressions"), // Roslyn #23573
+                    RoslynReference.FromName("Microsoft.CSharp"), // Roslyn #23573
+                    RoslynReference.FromName("DotVVM.Framework"),
+                    RoslynReference.FromName("DotVVM.Core"),
+                    RoslynReference.FromName("DotvvmAcademy.Validation"),
+                    RoslynReference.FromName("DotvvmAcademy.Validation.CSharp"),
+                    RoslynReference.FromName("DotvvmAcademy.Validation.Dothtml"),
+                    RoslynReference.FromName("DotvvmAcademy.Meta"))
+                .WithFilePath(scriptPath)
+            .WithSourceResolver(new SourceFileResolver(ImmutableArray.Create(baseDir), baseDir));
+            var script = CSharpScript.Create(
+                code: scriptText,
+                options: scriptOptions);
+            var compilation = script.GetCompilation();
+            using var memoryStream = new MemoryStream();
+            var emitResult = compilation.Emit(memoryStream);
+            if (!emitResult.Success)
+            {
+                foreach (var diagnostic in emitResult.Diagnostics)
+                {
+                    Diagnostics.Add(new LightDiagnostic
+                    {
+                        Start = diagnostic.Location.SourceSpan.Start,
+                        End = diagnostic.Location.SourceSpan.End,
+                        Severity = diagnostic.Severity.ToValidationSeverity(),
+                        Message = diagnostic.GetMessage(),
+                        Source = Path.GetFileName(scriptPath),
+                    });
+                }
+                return null;
+            }
+            var entryPoint = compilation.GetEntryPoint(default);
+            if (entryPoint is null)
+            {
+                return null;
+            }
+
+            var entryTypeName = entryPoint.ContainingType.MetadataName;
+            var entryTypeMethod = entryPoint.MetadataName;
+            memoryStream.Position = 0;
+            var scriptAssembly = AssemblyLoadContext.Default.LoadFromStream(memoryStream);
+            var submissionType = scriptAssembly.GetType(entryTypeName)!;
+            var factoryMethod = submissionType.GetMethod(entryTypeMethod)!;
+            var unitProperty = submissionType.GetProperty("Unit")!;
             var submissionArray = new object[2]; // global object and Submission#0
-            await (Task<object>)factoryMethod.Invoke(null, new object[] { submissionArray });
-            return (IValidationUnit)unitProperty.GetValue(submissionArray[1]);
+            await (Task<object>)factoryMethod.Invoke(null, new object[] { submissionArray })!;
+            return (IValidationUnit)unitProperty.GetValue(submissionArray[1])!;
         }
 
         public static async Task<ImmutableArray<ISourceCode>> GetDependencies(IEnumerable<string> paths)
         {
             var builder = ImmutableArray.CreateBuilder<ISourceCode>();
-            foreach(var path in paths)
+            foreach (var path in paths)
             {
                 var text = await File.ReadAllTextAsync(path);
                 var extension = Path.GetExtension(path);
@@ -66,31 +112,71 @@ namespace DotvvmAcademy.CourseFormat.Sandbox
             return builder.ToImmutable();
         }
 
-        public static async Task WriteDiagnostics(IEnumerable<IValidationDiagnostic> diagnostics)
+        public static void WriteDiagnostics()
         {
             using var outStream = Console.OpenStandardOutput();
-            var lightDiagnostics = diagnostics.Select(d => new LightDiagnostic(d)).ToArray();
-            await JsonSerializer.SerializeAsync(outStream, lightDiagnostics);
+            JsonSerializer.Serialize(new Utf8JsonWriter(outStream), Diagnostics);
         }
 
-        public static async Task Main(string[] args)
+        private static string GetHelpText()
         {
-            if (args.Length < 3)
+            var executableName = Path.GetFileNameWithoutExtension(Environment.GetCommandLineArgs()[0]);
+            return
+$@"Usage: {executableName} [OPTION...] <SCRIPT_PATH> <CULTURE_ID> [DEPENDENCY...]
+
+Options:
+  {DebuggerBreakOption}  Wait for a debugger to attach.
+  {HelpOption}            Show this help text.
+";
+        }
+
+        public static async Task<int> Main(string[] args)
+        {
+            bool shouldBreak = false;
+            int i = 0;
+            bool isParsingOptions = true;
+            while (isParsingOptions)
             {
-                throw new InvalidOperationException("The sandbox needs to be run with at least 4 arguments: " +
-                    "name of the memory mapped file with the script assembly, " +
-                    "name of the entry type inside the script assembly, " +
-                    "name of the entry method inside the entry type, " +
-                    "id of the current language.");
+                switch (args[i])
+                {
+                    case HelpOption:
+                        Console.Write(GetHelpText());
+                        return 0;
+                    case DebuggerBreakOption:
+                        shouldBreak = true;
+                        break;
+                    default:
+                        isParsingOptions = false;
+                        break;
+                }
+                i++;
+            }
+            --i;
+
+            if (args.Length - i < 2)
+            {
+                Console.Error.Write(GetHelpText());
+                return 1;
             }
 
-            Debugger.Break();
-            
-            // load all the stuff
-            var unit = await GetValidationUnit(args[0], args[1], args[2]);
-            CultureInfo.CurrentCulture = new CultureInfo(args[3]);
-            CultureInfo.CurrentUICulture = new CultureInfo(args[3]);
-            var dependencies = await GetDependencies(args.Skip(4));
+            var scriptPath = args[i];
+            var cultureId = args[++i];
+
+            if (shouldBreak)
+            {
+                Debugger.Break();
+            }
+
+            var unit = await GetValidationUnit(scriptPath);
+            if (unit is null)
+            {
+                WriteDiagnostics();
+                return 1;
+            }
+
+            CultureInfo.CurrentCulture = new CultureInfo(cultureId);
+            CultureInfo.CurrentUICulture = new CultureInfo(cultureId);
+            var dependencies = await GetDependencies(args.Skip(i + 1));
             var validatedText = await Console.In.ReadToEndAsync();
             ISourceCode validatedSource = unit switch
             {
@@ -102,8 +188,10 @@ namespace DotvvmAcademy.CourseFormat.Sandbox
 
             // validate
             var validationService = new ValidationService();
-            var diagnostics = await validationService.Validate(unit.GetConstraints(), sources);
-            await WriteDiagnostics(diagnostics);
+            Diagnostics.AddRange((await validationService.Validate(unit.GetConstraints(), sources))
+                .Select(d => new LightDiagnostic(d)));
+            WriteDiagnostics();
+            return 0;
         }
     }
 }
