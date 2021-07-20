@@ -3,6 +3,7 @@ using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Compilation.ControlTree.Resolved;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Tokenizer;
+using DotVVM.Framework.Security;
 using DotvvmAcademy.Meta;
 using DotvvmAcademy.Validation;
 using DotvvmAcademy.Validation.CSharp;
@@ -47,6 +48,7 @@ namespace DotvvmAcademy.CourseFormat.Sandbox
         {
             var services = new ServiceCollection();
             DotvvmServiceCollectionExtensions.RegisterDotVVMServices(services);
+            services.AddSingleton<IViewModelProtector, FakeViewModelProtector>();
             services.AddScoped<Context>();
             services.AddTransient(p => p.GetService<Context>().Converter);
             services.AddTransient(p => p.GetService<Context>().SourceCodeStorage);
@@ -67,7 +69,7 @@ namespace DotvvmAcademy.CourseFormat.Sandbox
         }
 
         public async Task<IEnumerable<IValidationDiagnostic>> Validate(
-            IEnumerable<IConstraint> constraints, 
+            IEnumerable<IConstraint> constraints,
             IEnumerable<ISourceCode> sources)
         {
             // Admittedly, this method is very very long. It is, however, good enough for the time being.
@@ -102,6 +104,23 @@ namespace DotvvmAcademy.CourseFormat.Sandbox
             // load dependencies and create the MetaConverter
             var assemblies = Dependencies.Select(Assembly.Load)
                 .ToImmutableArray();
+
+            // add the C# compilation as an Assembly as well
+            using (var memoryStream = new MemoryStream())
+            {
+                var emitResult = context.Compilation.Emit(memoryStream);
+                if (!emitResult.Success)
+                {
+                    foreach (var diagnostic in emitResult.Diagnostics)
+                    {
+                        reporter.Report(diagnostic);
+                    }
+                    return Report();
+                }
+                memoryStream.Position = 0;
+                assemblies = assemblies.Add(AssemblyLoadContext.Default.LoadFromStream(memoryStream));
+            }
+
             context.Converter = new MetaConverter(context.Compilation, assemblies);
 
             // parse potential dothtml source
@@ -127,7 +146,7 @@ namespace DotvvmAcademy.CourseFormat.Sandbox
                     var dothtmlRoot = parser.Parse(tokenizer.Tokens);
 
                     // parse semantics
-                    var resolver = scope.ServiceProvider.GetRequiredService<DefaultControlTreeResolver>();
+                    var resolver = scope.ServiceProvider.GetRequiredService<IControlTreeResolver>();
                     resolvedTree = (ResolvedTreeRoot)resolver.ResolveTree(dothtmlRoot, dothtmlSource.FileName);
                     resolvedTree.FileName = dothtmlSource.FileName;
                     var visitor = new ErrorAggregatingVisitor(reporter);
