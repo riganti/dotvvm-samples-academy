@@ -97,7 +97,7 @@ namespace DotvvmAcademy.Web.Hosting
             return builder.BuildServiceInjectDirective(node, nameSyntax, typeSyntax);
         }
 
-        public IAbstractTreeRoot BuildTreeRoot(IControlTreeResolver controlTreeResolver, IControlResolverMetadata metadata, DothtmlRootNode node, IDataContextStack dataContext, IReadOnlyDictionary<string, IReadOnlyList<IAbstractDirective>> directives, IAbstractControlBuilderDescriptor? masterPage)
+        public IAbstractTreeRoot BuildTreeRoot(IControlTreeResolver controlTreeResolver, IControlResolverMetadata metadata, DothtmlRootNode node, IDataContextStack dataContext, IReadOnlyDictionary<string, IReadOnlyList<IAbstractDirective>> directives, IAbstractControlBuilderDescriptor masterPage)
         {
             return builder.BuildTreeRoot(controlTreeResolver, metadata, node, dataContext, directives, masterPage);
         }
