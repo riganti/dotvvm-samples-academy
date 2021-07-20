@@ -3,6 +3,7 @@ using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Compilation.ControlTree.Resolved;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Tokenizer;
+using DotVVM.Framework.Configuration;
 using DotVVM.Framework.Security;
 using DotvvmAcademy.Meta;
 using DotvvmAcademy.Validation;
@@ -12,7 +13,9 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyModel;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
@@ -66,6 +69,10 @@ namespace DotvvmAcademy.CourseFormat.Sandbox
             services.AddScoped<XPathDothtmlNamespaceResolver>();
             services.AddScoped<NameTable>();
             this.services = services.BuildServiceProvider();
+
+            var experimentalType = typeof(DotvvmExperimentalFeaturesConfiguration);
+            this.services.GetRequiredService<DotvvmConfiguration>()
+                .ExperimentalFeatures.ExplicitAssemblyLoading.Enable();
         }
 
         public async Task<IEnumerable<IValidationDiagnostic>> Validate(
@@ -118,7 +125,16 @@ namespace DotvvmAcademy.CourseFormat.Sandbox
                     return Report();
                 }
                 memoryStream.Position = 0;
-                assemblies = assemblies.Add(AssemblyLoadContext.Default.LoadFromStream(memoryStream));
+                var additionalAssembly = AssemblyLoadContext.Default.LoadFromStream(memoryStream);
+                assemblies = assemblies.Add(additionalAssembly);
+                var cache = scope.ServiceProvider.GetRequiredService<CompiledAssemblyCache>();
+
+                // TODO: Add a reasonable way to add an assembly to the cache.
+                var cacheField = typeof(CompiledAssemblyCache).GetField(
+                    "cachedAssemblies",
+                    BindingFlags.Instance | BindingFlags.NonPublic);
+                var actualCache = (ConcurrentDictionary<string, Assembly>)cacheField.GetValue(cache);
+                actualCache.TryAdd(additionalAssembly.FullName, additionalAssembly);
             }
 
             context.Converter = new MetaConverter(context.Compilation, assemblies);
