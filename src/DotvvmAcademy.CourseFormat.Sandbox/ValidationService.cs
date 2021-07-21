@@ -1,4 +1,6 @@
-﻿using DotVVM.Framework.Compilation;
+﻿#nullable enable
+
+using DotVVM.Framework.Compilation;
 using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Compilation.ControlTree.Resolved;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
@@ -52,11 +54,11 @@ namespace DotvvmAcademy.CourseFormat.Sandbox
             var services = new ServiceCollection();
             DotvvmServiceCollectionExtensions.RegisterDotVVMServices(services);
             services.AddSingleton<IViewModelProtector, FakeViewModelProtector>();
-            services.AddScoped<Context>();
-            services.AddTransient(p => p.GetService<Context>().Converter);
-            services.AddTransient(p => p.GetService<Context>().SourceCodeStorage);
-            services.AddTransient(p => p.GetService<Context>().Compilation);
-            services.AddTransient(p => p.GetService<Context>().Tree);
+            services.AddScoped<ValidationRun>();
+            services.AddTransient(p => p.GetRequiredService<ValidationRun>().Converter!);
+            services.AddTransient(p => p.GetRequiredService<ValidationRun>().SourceCodeStorage);
+            services.AddTransient(p => p.GetRequiredService<ValidationRun>().Tree!);
+            services.AddTransient(p => p.GetRequiredService<ValidationRun>().Compilation!);
             services.AddScoped<AllowedSymbolStorage>();
             services.AddScoped<DynamicActionStorage>();
             services.AddScoped<DiagnosticAnalyzer, AllowedSymbolAnalyzer>();
@@ -70,6 +72,7 @@ namespace DotvvmAcademy.CourseFormat.Sandbox
             services.AddScoped<NameTable>();
             this.services = services.BuildServiceProvider();
 
+            // this allows the CompiledAssemblyHack down below
             var experimentalType = typeof(DotvvmExperimentalFeaturesConfiguration);
             this.services.GetRequiredService<DotvvmConfiguration>()
                 .ExperimentalFeatures.ExplicitAssemblyLoading.Enable();
@@ -79,155 +82,47 @@ namespace DotvvmAcademy.CourseFormat.Sandbox
             IEnumerable<IConstraint> constraints,
             IEnumerable<ISourceCode> sources)
         {
-            // Admittedly, this method is very very long. It is, however, good enough for the time being.
-
             using var scope = services.CreateScope();
-            // create a unique name for this validation
-            var id = Guid.NewGuid();
-
-            // initialize a storage of source codes available from anywhere
-            var context = scope.ServiceProvider.GetRequiredService<Context>();
-            context.SourceCodeStorage = new SourceCodeStorage(sources);
-
-            // create the reporter and its helper function
+            var run = scope.ServiceProvider.GetRequiredService<ValidationRun>();
+            run.Services = scope.ServiceProvider;
+            run.SourceCodeStorage = new SourceCodeStorage(sources);
             var reporter = scope.ServiceProvider.GetRequiredService<IValidationReporter>();
-            IEnumerable<IValidationDiagnostic> Report()
+
+            // compile C# sources
             {
-                return reporter.GetDiagnostics()
-                    .Where(d => d.Source == null || d.Source.IsValidated);
+                var result = await CompileCSharpSources(run);
+                run.Compilation = result.compilation;
+                if (result.assembly is null)
+                {
+                    // compilation failed, so don't bother validating further
+                    return reporter.GetDiagnostics();
+                }
+
+                var assemblies = Dependencies.Select(Assembly.Load)
+                    .Append(result.assembly)
+                    .ToImmutableArray();
+                run.Converter = new MetaConverter(result.compilation, assemblies);
             }
 
-            // create a compilation
-            var trees = sources.OfType<CSharpSourceCode>()
-                .Select(s => CSharpSyntaxTree.ParseText(
-                    text: s.GetContent(),
-                    path: s.FileName));
-            context.Compilation = CSharpCompilation.Create(
-                assemblyName: $"ValidatedUserCode.{id}",
-                syntaxTrees: trees,
-                references: Dependencies.Select(RoslynReference.FromName),
-                options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
-
-            // load dependencies and create the MetaConverter
-            var assemblies = Dependencies.Select(Assembly.Load)
-                .ToImmutableArray();
-
-            // add the C# compilation as an Assembly as well
-            using (var memoryStream = new MemoryStream())
+            // compile the dothtml source (if there is one)
+            run.Tree = CompileDothtmlSource(run);
+            if (run.Tree is null)
             {
-                var emitResult = context.Compilation.Emit(memoryStream);
-                if (!emitResult.Success)
-                {
-                    foreach (var diagnostic in emitResult.Diagnostics)
-                    {
-                        reporter.Report(diagnostic);
-                    }
-                    return Report();
-                }
-                memoryStream.Position = 0;
-                var additionalAssembly = AssemblyLoadContext.Default.LoadFromStream(memoryStream);
-                assemblies = assemblies.Add(additionalAssembly);
-                var cache = scope.ServiceProvider.GetRequiredService<CompiledAssemblyCache>();
-
-                // TODO: Add a reasonable way to add an assembly to the cache.
-                var cacheField = typeof(CompiledAssemblyCache).GetField(
-                    "cachedAssemblies",
-                    BindingFlags.Instance | BindingFlags.NonPublic);
-                var actualCache = (ConcurrentDictionary<string, Assembly>)cacheField.GetValue(cache);
-                actualCache.TryAdd(additionalAssembly.FullName, additionalAssembly);
+                return reporter.GetDiagnostics();
             }
 
-            context.Converter = new MetaConverter(context.Compilation, assemblies);
-
-            // parse potential dothtml source
-            var dothtmlSource = sources.OfType<DothtmlSourceCode>()
-                .SingleOrDefault();
-            ResolvedTreeRoot resolvedTree = null;
-            if (dothtmlSource != null)
-            {
-                try
-                {
-                    // parse syntax
-                    // TODO: Figure out how to handle master pages.
-                    var tokenizer = new DothtmlTokenizer();
-                    tokenizer.Tokenize(dothtmlSource.GetContent() ?? string.Empty);
-                    foreach (var token in tokenizer.Tokens)
-                    {
-                        if (token.HasError)
-                        {
-                            reporter.Report(token.Error, dothtmlSource);
-                        }
-                    }
-                    var parser = new DothtmlParser();
-                    var dothtmlRoot = parser.Parse(tokenizer.Tokens);
-
-                    // parse semantics
-                    var resolver = scope.ServiceProvider.GetRequiredService<IControlTreeResolver>();
-                    resolvedTree = (ResolvedTreeRoot)resolver.ResolveTree(dothtmlRoot, dothtmlSource.FileName);
-                    resolvedTree.FileName = dothtmlSource.FileName;
-                    var visitor = new ErrorAggregatingVisitor(reporter);
-                    resolvedTree.Accept(visitor);
-                }
-                catch (DotvvmCompilationException exception)
-                {
-                    reporter.Report(exception, dothtmlSource);
-                }
-
-                // cancel validation if validation couldn't be created
-                if (resolvedTree == null)
-                {
-                    return Report();
-                }
-
-                // wrap the validation tree in the XPath tree
-                var xpathVisitor = scope.ServiceProvider.GetRequiredService<XPathTreeVisitor>();
-                context.Tree = xpathVisitor.Visit(resolvedTree);
-            }
-
-            // generate static errors and prepare data for other validation steps
+            // check static constraints
             foreach (var constraint in constraints)
             {
                 constraint.Validate(scope.ServiceProvider);
             }
 
-            // run roslyn analyzers concurrently and collect diagnostics
-            var analyzers = scope.ServiceProvider.GetRequiredService<IEnumerable<DiagnosticAnalyzer>>()
-                .ToImmutableArray();
-            var analysisOptions = new CompilationWithAnalyzersOptions(
-                options: null,
-                onAnalyzerException: (e, a, d) => reporter.Report(d),
-                concurrentAnalysis: true,
-                logAnalyzerExecutionTime: false,
-                reportSuppressedDiagnostics: true);
-            var compilationWithAnalyzers = context.Compilation.WithAnalyzers(analyzers, analysisOptions);
-            var roslynDiagnostics = await compilationWithAnalyzers.GetAllDiagnosticsAsync();
-            foreach (var roslynDiagnostic in roslynDiagnostics)
-            {
-                reporter.Report(roslynDiagnostic);
-            }
-
             // DO NOT proceed to dynamic analysis if there are errors
-            var hasErrors = reporter.GetDiagnostics()
-                .Any(d => d.Severity == ValidationSeverity.Error && (d.Source?.IsValidated ?? true));
+            var hasErrors = reporter.GetDiagnostics().Any(d => d.Severity == ValidationSeverity.Error);
             if (hasErrors)
             {
-                return Report();
+                return reporter.GetDiagnostics();
             }
-
-            // load user's code
-            Assembly userCodeAssembly;
-            using (var memoryStream = new MemoryStream())
-            {
-                var result = context.Compilation.Emit(memoryStream);
-                if (!result.Success)
-                {
-                    throw new InvalidOperationException("Emitting failed despite there being no diagnostics.");
-                }
-                memoryStream.Position = 0;
-                userCodeAssembly = AssemblyLoadContext.Default.LoadFromStream(memoryStream);
-            }
-            assemblies = assemblies.Add(userCodeAssembly);
-            context.Converter = new MetaConverter(context.Compilation, assemblies);
 
             // run dynamic analysis
             var dynamicContext = scope.ServiceProvider.GetRequiredService<CSharpDynamicContext>();
@@ -245,19 +140,116 @@ namespace DotvvmAcademy.CourseFormat.Sandbox
                 }
             }
 
-            // finally return whatever diagnostics were found
-            return Report();
+            return reporter.GetDiagnostics();
         }
 
-        private class Context
+        private async Task<(Compilation compilation, Assembly? assembly)> CompileCSharpSources(ValidationRun run)
         {
-            public Compilation Compilation { get; set; }
+            var reporter = run.Services.GetRequiredService<IValidationReporter>();
 
-            public MetaConverter Converter { get; set; }
+            var trees = run.SourceCodeStorage.Sources.Values.OfType<CSharpSourceCode>()
+                .Select(s => CSharpSyntaxTree.ParseText(
+                    text: s.GetContent(),
+                    path: s.FileName));
+            var compilation = CSharpCompilation.Create(
+                assemblyName: $"ValidatedUserCode.{run.Id}",
+                syntaxTrees: trees,
+                references: Dependencies.Select(RoslynReference.FromName),
+                options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+
+            // run roslyn analyzers concurrently and collect diagnostics
+            var analyzers = run.Services.GetRequiredService<IEnumerable<DiagnosticAnalyzer>>()
+                .ToImmutableArray();
+            var analysisOptions = new CompilationWithAnalyzersOptions(
+                options: new AnalyzerOptions(default),
+                onAnalyzerException: (e, a, d) => reporter.Report(d),
+                concurrentAnalysis: true,
+                logAnalyzerExecutionTime: false,
+                reportSuppressedDiagnostics: true);
+            var compilationWithAnalyzers = compilation.WithAnalyzers(analyzers, analysisOptions);
+            var roslynDiagnostics = await compilationWithAnalyzers.GetAllDiagnosticsAsync();
+            foreach (var roslynDiagnostic in roslynDiagnostics)
+            {
+                reporter.Report(roslynDiagnostic);
+            }
+
+            // add the C# compilation as an Assembly as well
+            using var memoryStream = new MemoryStream();
+            var emitResult = compilation.Emit(memoryStream);
+            if (!emitResult.Success)
+            {
+                return (compilation, null);
+            }
+            memoryStream.Position = 0;
+            var additionalAssembly = AssemblyLoadContext.Default.LoadFromStream(memoryStream);
+            var cache = run.Services.GetRequiredService<CompiledAssemblyCache>();
+
+            // TODO: Add a reasonable way to add an assembly to the cache.
+            var cacheField = typeof(CompiledAssemblyCache).GetField(
+                "cachedAssemblies",
+                BindingFlags.Instance | BindingFlags.NonPublic)!;
+            var actualCache = (ConcurrentDictionary<string, Assembly>)cacheField.GetValue(cache)!;
+            actualCache.TryAdd(additionalAssembly.FullName!, additionalAssembly);
+            return (compilation, additionalAssembly);
+        }
+
+        private XPathDothtmlRoot? CompileDothtmlSource(ValidationRun run)
+        {
+            var dothtmlSource = run.SourceCodeStorage!.Sources.Values.OfType<DothtmlSourceCode>().SingleOrDefault();
+            if (dothtmlSource is null)
+            {
+                return null;
+            }
+
+            var reporter = run.Services.GetRequiredService<IValidationReporter>();
+
+            try
+            {
+                // TODO: Figure out how to handle master pages.
+                var tokenizer = new DothtmlTokenizer();
+                tokenizer.Tokenize(dothtmlSource.GetContent() ?? string.Empty);
+                foreach (var token in tokenizer.Tokens)
+                {
+                    if (token.HasError)
+                    {
+                        reporter.Report(token.Error, dothtmlSource);
+                    }
+                }
+                var parser = new DothtmlParser();
+                var dothtmlRoot = parser.Parse(tokenizer.Tokens);
+
+                var resolver = run.Services.GetRequiredService<IControlTreeResolver>();
+                var resolvedTree = (ResolvedTreeRoot)resolver.ResolveTree(dothtmlRoot, dothtmlSource.FileName);
+                resolvedTree.FileName = dothtmlSource.FileName;
+                var visitor = new ErrorAggregatingVisitor(reporter);
+                resolvedTree.Accept(visitor);
+
+                var xpathVisitor = run.Services.GetRequiredService<XPathTreeVisitor>();
+                return xpathVisitor.Visit(resolvedTree);
+            }
+            catch (DotvvmCompilationException exception)
+            {
+                reporter.Report(exception, dothtmlSource);
+            }
+
+            return null;
+        }
+
+        private class ValidationRun
+        {
+            public Guid Id { get; } = Guid.NewGuid();
+
+            public IServiceProvider Services { get; set; }
+                = new ServiceCollection().BuildServiceProvider();
 
             public SourceCodeStorage SourceCodeStorage { get; set; }
+                = new SourceCodeStorage(Enumerable.Empty<ISourceCode>());
 
-            public XPathDothtmlRoot Tree { get; set; }
+            public MetaConverter? Converter { get; set; }
+
+            public Compilation? Compilation { get;set; }
+
+            public XPathDothtmlRoot? Tree { get; set; }
         }
     }
 }
