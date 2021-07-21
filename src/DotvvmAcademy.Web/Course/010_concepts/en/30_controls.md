@@ -5,6 +5,8 @@ CodeTask:
     Path: 30_controls.dothtml.csx
     Default: Counter_20.dothtml
     Correct: Counter_30.dothtml
+    Dependencies:
+        - CounterViewModel_20.cs
 ---
 
 # Controls

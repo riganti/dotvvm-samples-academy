@@ -90,7 +90,7 @@ namespace DotvvmAcademy.CourseFormat.Sandbox
 
             // compile C# sources
             {
-                var result = await CompileCSharpSources(run);
+                var result = CompileCSharpSources(run);
                 run.Compilation = result.compilation;
                 if (result.assembly is null)
                 {
@@ -106,16 +106,15 @@ namespace DotvvmAcademy.CourseFormat.Sandbox
 
             // compile the dothtml source (if there is one)
             run.Tree = CompileDothtmlSource(run);
-            if (run.Tree is null)
-            {
-                return reporter.GetDiagnostics();
-            }
 
             // check static constraints
             foreach (var constraint in constraints)
             {
                 constraint.Validate(scope.ServiceProvider);
             }
+
+            // NB: since constraints modify analyzer-related data, analyzers must be run after the static constraints
+            await AnalyzeCompilation(run);
 
             // DO NOT proceed to dynamic analysis if there are errors
             var hasErrors = reporter.GetDiagnostics().Any(d => d.Severity == ValidationSeverity.Error);
@@ -143,7 +142,7 @@ namespace DotvvmAcademy.CourseFormat.Sandbox
             return reporter.GetDiagnostics();
         }
 
-        private async Task<(Compilation compilation, Assembly? assembly)> CompileCSharpSources(ValidationRun run)
+        private (Compilation compilation, Assembly? assembly) CompileCSharpSources(ValidationRun run)
         {
             var reporter = run.Services.GetRequiredService<IValidationReporter>();
 
@@ -156,6 +155,35 @@ namespace DotvvmAcademy.CourseFormat.Sandbox
                 syntaxTrees: trees,
                 references: Dependencies.Select(RoslynReference.FromName),
                 options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+
+            // add the C# compilation as an Assembly as well
+            using var memoryStream = new MemoryStream();
+            var emitResult = compilation.Emit(memoryStream);
+            if (!emitResult.Success)
+            {
+                foreach (var roslynDiagnostic in emitResult.Diagnostics)
+                {
+                    reporter.Report(roslynDiagnostic);
+                }
+                return (compilation, null);
+            }
+            memoryStream.Position = 0;
+            var additionalAssembly = AssemblyLoadContext.Default.LoadFromStream(memoryStream);
+            var cache = run.Services.GetRequiredService<CompiledAssemblyCache>();
+
+            // TODO: Add a reasonable way to add an assembly to the cache.
+            var cacheField = typeof(CompiledAssemblyCache).GetField(
+                "cachedAssemblies",
+                BindingFlags.Instance | BindingFlags.NonPublic)!;
+            var actualCache = (ConcurrentDictionary<string, Assembly>)cacheField.GetValue(cache)!;
+            actualCache.TryAdd(additionalAssembly.FullName!, additionalAssembly);
+            return (compilation, additionalAssembly);
+        }
+
+        private async Task AnalyzeCompilation(ValidationRun run)
+        {
+            var reporter = run.Services.GetRequiredService<IValidationReporter>();
+            var compilation = run.Services.GetRequiredService<Compilation>();
 
             // run roslyn analyzers concurrently and collect diagnostics
             var analyzers = run.Services.GetRequiredService<IEnumerable<DiagnosticAnalyzer>>()
@@ -172,25 +200,6 @@ namespace DotvvmAcademy.CourseFormat.Sandbox
             {
                 reporter.Report(roslynDiagnostic);
             }
-
-            // add the C# compilation as an Assembly as well
-            using var memoryStream = new MemoryStream();
-            var emitResult = compilation.Emit(memoryStream);
-            if (!emitResult.Success)
-            {
-                return (compilation, null);
-            }
-            memoryStream.Position = 0;
-            var additionalAssembly = AssemblyLoadContext.Default.LoadFromStream(memoryStream);
-            var cache = run.Services.GetRequiredService<CompiledAssemblyCache>();
-
-            // TODO: Add a reasonable way to add an assembly to the cache.
-            var cacheField = typeof(CompiledAssemblyCache).GetField(
-                "cachedAssemblies",
-                BindingFlags.Instance | BindingFlags.NonPublic)!;
-            var actualCache = (ConcurrentDictionary<string, Assembly>)cacheField.GetValue(cache)!;
-            actualCache.TryAdd(additionalAssembly.FullName!, additionalAssembly);
-            return (compilation, additionalAssembly);
         }
 
         private XPathDothtmlRoot? CompileDothtmlSource(ValidationRun run)
@@ -247,7 +256,7 @@ namespace DotvvmAcademy.CourseFormat.Sandbox
 
             public MetaConverter? Converter { get; set; }
 
-            public Compilation? Compilation { get;set; }
+            public Compilation? Compilation { get; set; }
 
             public XPathDothtmlRoot? Tree { get; set; }
         }
