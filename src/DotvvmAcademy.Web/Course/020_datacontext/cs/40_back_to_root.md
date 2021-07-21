@@ -5,6 +5,8 @@ CodeTask:
     Path: 40_back_to_root.dothtml.csx
     Default: ProfileDetail_20.dothtml
     Correct: ProfileDetail_30.dothtml
+    Dependencies:
+        - ProfileDetailViewModel_40.cs
 ---
 
 # Zpět ke kořenům
