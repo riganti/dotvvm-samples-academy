@@ -17,6 +17,9 @@ Unit.GetType(typeof(void))
 Unit.GetType<string>()
     .Allow();
 
+Unit.GetType<bool>()
+    .Allow();
+
 var emailAddress = Unit.GetType<EmailAddressAttribute>()
     .Allow();
 {

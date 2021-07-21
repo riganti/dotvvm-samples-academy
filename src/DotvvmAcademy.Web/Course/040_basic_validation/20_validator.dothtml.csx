@@ -18,10 +18,10 @@ void ValidateDiv(string xpath, string property)
 
         var validator = div1.GetControl("dot:Validator");
         {
-            validator.GetProperty("@Validator.Value")
+            validator.GetProperty("@Value")
                 .RequireBinding(property);
 
-            validator.GetProperty("@Validator.ShowErrorMessageText")
+            validator.GetProperty("@ShowErrorMessageText")
                 .RequireValue(true);
         }
     }
