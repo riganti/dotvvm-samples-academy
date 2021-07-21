@@ -5,6 +5,8 @@ CodeTask:
     Path: 40_add_button.dothtml.csx
     Default: ToDo_20.dothtml
     Correct: ToDo_30.dothtml
+    Dependencies:
+        - ToDoViewModel_40.cs
 ---
 
 # Add Button

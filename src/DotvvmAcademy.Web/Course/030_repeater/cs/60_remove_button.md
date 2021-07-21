@@ -5,6 +5,8 @@ CodeTask:
     Path: 60_remove_button.dothtml.csx
     Default: ToDo_30.dothtml
     Correct: ToDo_40.dothtml
+    Dependencies:
+        - ToDoViewModel_60.cs
 ---
 
 # Tlačítko Remove
