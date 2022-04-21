@@ -1,4 +1,5 @@
 ﻿using DotVVM.Framework.Compilation;
+using DotVVM.Framework.Compilation.ViewCompiler;
 using DotVVM.Framework.Controls.Infrastructure;
 using DotVVM.Framework.Hosting;
 using DotVVM.Framework.Runtime;
@@ -26,8 +27,8 @@ namespace DotvvmAcademy.Web.Hosting
 
         private readonly CourseWorkspace workspace;
 
-        private readonly ConcurrentDictionary<string, (Assembly viewModel, Assembly view)> assemblies
-            = new ConcurrentDictionary<string, (Assembly viewModel, Assembly view)>();
+        private readonly ConcurrentDictionary<string, (Assembly viewModel, IControlBuilder view)> assemblies
+            = new();
 
         public EmbeddedViewBuilder(
             CourseWorkspace workspace,
@@ -58,12 +59,12 @@ namespace DotvvmAcademy.Web.Hosting
 
             // compile or get the cached viewModel and view assembly
             Assembly viewModelAssembly;
-            Assembly viewAssembly;
+            IControlBuilder viewBuilder;
             string controlBuilderName = $"{Path.GetFileNameWithoutExtension(embeddedView.Path)}EmbeddedViewControlBuilder";
             if (assemblies.TryGetValue(step.Path, out var pair))
             {
                 viewModelAssembly = pair.viewModel;
-                viewAssembly = pair.view;
+                viewBuilder = pair.view;
             }
             else
             {
@@ -106,33 +107,35 @@ namespace DotvvmAcademy.Web.Hosting
                     .GetAwaiter()
                     .GetResult();
                 treeBuilder.AdditionalAssembly = viewModelAssembly;
-                var viewCompilation = viewCompiler.CreateCompilation($"EmbeddedView_{step.Name}_{id}");
-                (var descriptor, var factory) = viewCompiler.CompileView(
-                    sourceCode: viewSource,
-                    fileName: embeddedView.Path,
-                    compilation: viewCompilation,
-                    namespaceName: "DotvvmAcademy.Course",
-                    className: controlBuilderName);
-                viewCompilation = factory();
-                using (var stream = new MemoryStream())
-                {
-                    var result = viewCompilation.Emit(stream);
-                    if (!result.Success)
-                    {
-                        throw new InvalidOperationException("The View assembly coult be emitter to memory.");
-                    }
-                    stream.Position = 0;
-                    viewAssembly = AssemblyLoadContext.Default.LoadFromStream(stream);
-                }
-
-                // cache the newly compiled assemblies
-                pair = (viewModelAssembly, viewAssembly);
+                var (_, builderFactory) = viewCompiler.CompileView(viewSource, embeddedView.Path);
+                viewBuilder = builderFactory();
+                pair = (viewModelAssembly, viewBuilder);
                 assemblies.AddOrUpdate(step.Path, pair, (k, v) => pair);
+                //var viewCompilation = viewCompiler.CreateCompilation($"EmbeddedView_{step.Name}_{id}");
+                //(var descriptor, var factory) = viewCompiler.CompileView(
+                //    sourceCode: viewSource,
+                //    fileName: embeddedView.Path,
+                //    compilation: viewCompilation,
+                //    namespaceName: "DotvvmAcademy.Course",
+                //    className: controlBuilderName);
+                //viewCompilation = factory();
+                //using (var stream = new MemoryStream())
+                //{
+                //    var result = viewCompilation.Emit(stream);
+                //    if (!result.Success)
+                //    {
+                //        throw new InvalidOperationException("The View assembly coult be emitter to memory.");
+                //    }
+                //    stream.Position = 0;
+                //    viewAssembly = AssemblyLoadContext.Default.LoadFromStream(stream);
+                //}
+
+                //// cache the newly compiled assemblies
+                //pair = (viewModelAssembly, viewAssembly);
+                //assemblies.AddOrUpdate(step.Path, pair, (k, v) => pair);
             }
 
-            // locate the control builder and build the control tree
-            var builder = (IControlBuilder)viewAssembly.CreateInstance($"DotvvmAcademy.Course.{controlBuilderName}");
-            return (DotvvmView)builder.BuildControl(builderFactory, context.Services);
+            return (DotvvmView)viewBuilder.BuildControl(builderFactory, context.Services);
         }
 
         private string RequireMoniker(IDotvvmRequestContext request, string monikerName)

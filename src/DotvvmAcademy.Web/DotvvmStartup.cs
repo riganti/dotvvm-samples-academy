@@ -97,6 +97,7 @@ namespace DotvvmAcademy.Web
                 routeName: "EmbeddedView",
                 url: "embeddedView/{Language}/{Lesson}/{Step}",
                 presenterType: typeof(EmbeddedViewPresenter));
+            config.Security.FrameOptionsSameOrigin.EnableForRoutes("EmbeddedView");
             config.RouteTable.Add(
                 routeName: "Archive",
                 url: "archive/{Language}/{Lesson}/{Step}",

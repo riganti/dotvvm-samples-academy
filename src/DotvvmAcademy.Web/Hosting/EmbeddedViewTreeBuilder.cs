@@ -4,6 +4,7 @@ using DotVVM.Framework.Compilation.ControlTree;
 using DotVVM.Framework.Compilation.ControlTree.Resolved;
 using DotVVM.Framework.Compilation.Parser.Binding.Parser;
 using DotVVM.Framework.Compilation.Parser.Dothtml.Parser;
+using DotVVM.Framework.Compilation.ViewCompiler;
 using DotVVM.Framework.Utils;
 using System;
 using System.Collections.Generic;
@@ -146,7 +147,7 @@ namespace DotvvmAcademy.Web.Hosting
                 .Add("Double", TypeRegistry.CreateStatic(typeof(Double)))
                 .Add("Single", TypeRegistry.CreateStatic(typeof(Single)))
                 .Add("String", TypeRegistry.CreateStatic(typeof(String))),
-           ImmutableList<Func<string, Expression>>.Empty
+            ImmutableArray.Create<Func<string, Expression>>()
                 .Add(type => TypeRegistry.CreateStatic(compiledAssemblyCache.FindType(type)))
                 .Add(type => TypeRegistry.CreateStatic(compiledAssemblyCache.FindType("System." + type)))
                 .Add(type => TypeRegistry.CreateStatic(AdditionalAssembly.GetType(type))));

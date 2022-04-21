@@ -24,7 +24,8 @@ namespace DotvvmAcademy.Validation.Dothtml
             httpContext.Response = response;
             var requestContext = new DotvvmRequestContext(httpContext, configuration, null);
             viewModel.Context = requestContext;
-            requestContext.ModelState.ValidationTarget = viewModel;
+            // TODO: ValidationTarget no longer has public setter, is it a problem?
+            //requestContext.ModelState.ValidationTarget = viewModel;
             return viewModel;
         }
     }
