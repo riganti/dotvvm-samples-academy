@@ -145,7 +145,7 @@ namespace DotvvmAcademy.Web.Pages.Step
             catch(CodeTaskException)
             {
                 CodeTask.Markers.Clear();
-                CodeTask.Markers.Add(new MonacoMarker("An error occured during validation.", MonacoSeverity.Error, -1, -1, -1, -1));
+                CodeTask.Markers.Add(new MonacoMarker("An error occurred during validation.", MonacoSeverity.Error, -1, -1, -1, -1));
             }
         }
     }
