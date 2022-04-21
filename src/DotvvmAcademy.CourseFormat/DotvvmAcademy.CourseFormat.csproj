@@ -9,11 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Markdig" Version="0.25.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="3.10.0" />
-    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="5.0.0" />
-    <PackageReference Include="System.Collections.Immutable" Version="5.0.0" />
-    <PackageReference Include="System.Text.Json" Version="5.0.2" />
+    <PackageReference Include="Markdig" Version="0.28.1" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="4.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.1" />
+    <PackageReference Include="System.Collections.Immutable" Version="6.0.0" />
+    <PackageReference Include="System.Text.Json" Version="6.0.2" />
     <PackageReference Include="YamlDotNet" Version="11.2.1" />
   </ItemGroup>
 
@@ -63,10 +63,8 @@
 
     <!-- see https://stackoverflow.com/questions/2010655/itemgroup-with-custom-metadata-regarding-files -->
     <!-- and https://github.com/dotnet/msbuild/pull/6237 -->
-    <CreateItem
-      Include="@(SandboxFile)"
-      AdditionalMetadata="TargetPath=sandbox\%(RecursiveDir)%(Filename)%(Extension)">
-        <Output TaskParameter="Include" ItemName="Content"/>
+    <CreateItem Include="@(SandboxFile)" AdditionalMetadata="TargetPath=sandbox\%(RecursiveDir)%(Filename)%(Extension)">
+        <Output TaskParameter="Include" ItemName="Content" />
     </CreateItem>
   </Target>
 

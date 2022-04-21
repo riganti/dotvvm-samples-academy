@@ -1,34 +1,32 @@
 ﻿using DotVVM.Framework.Configuration;
 using DotVVM.Framework.Hosting;
-using DotVVM.Framework.Runtime;
-using DotVVM.Framework.Security;
-using DotVVM.Framework.ViewModel.Serialization;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Net.Http.Headers;
+using System;
+using System.Threading.Tasks;
 
 namespace DotvvmAcademy.Web.Hosting
 {
-    public class EmbeddedViewPresenter : DotvvmPresenter
+    public class EmbeddedViewPresenter : IDotvvmPresenter
     {
-#pragma warning disable CS0618
+        private readonly IDotvvmPresenter inner;
+
         public EmbeddedViewPresenter(
+            IServiceProvider services,
             DotvvmConfiguration configuration,
             EmbeddedViewBuilder viewBuilder,
-            EmbeddedViewModelLoader viewModelLoader,
-            IViewModelSerializer viewModelSerializer,
-            IOutputRenderer outputRender,
-            ICsrfProtector csrfProtector,
-            IViewModelParameterBinder viewModelParameterBinder,
-            IStaticCommandServiceLoader staticCommandServiceLoader)
-            : base(
-                  configuration,
-                  viewBuilder,
-                  viewModelLoader,
-                  viewModelSerializer,
-                  outputRender,
-                  csrfProtector,
-                  viewModelParameterBinder,
-                  staticCommandServiceLoader)
+            EmbeddedViewModelLoader viewModelLoader)
         {
+            inner = ActivatorUtilities.CreateInstance<DotvvmPresenter>(
+                services,
+                configuration,
+                viewBuilder,
+                viewModelLoader);
         }
-#pragma warning restore
+
+        public async Task ProcessRequest(IDotvvmRequestContext context)
+        {
+            await inner.ProcessRequest(context);
+        }
     }
 }

@@ -67,16 +67,17 @@ namespace DotvvmAcademy.Validation
         public override bool Equals(object? obj)
         {
             return obj is LightDiagnostic diagnostic &&
-                   Equals(diagnostic);
+                Equals(diagnostic);
         }
 
-        public bool Equals(LightDiagnostic other)
+        public bool Equals(LightDiagnostic? other)
         {
-            return End == other.End &&
-                   Message == other.Message &&
-                   Severity == other.Severity &&
-                   Source == other.Source &&
-                   Start == other.Start;
+            return other is object &&
+                End == other.End &&
+                Message == other.Message &&
+                Severity == other.Severity &&
+                Source == other.Source &&
+                Start == other.Start;
         }
     }
 }
