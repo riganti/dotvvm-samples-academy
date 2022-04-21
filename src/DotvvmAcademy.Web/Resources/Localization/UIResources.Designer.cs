@@ -390,7 +390,7 @@ namespace DotvvmAcademy.Web.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to An error occured on our side. Please try again later..
+        ///   Looks up a localized string similar to An error occurred on our side. Please try again later..
         /// </summary>
         public static string Error_500Message {
             get {

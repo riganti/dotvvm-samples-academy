@@ -358,7 +358,7 @@ namespace DotvvmAcademy.CourseFormat
             }
             catch(YamlException exception)
             {
-                throw new InvalidOperationException($"An exception occured while parsing the front matter of \"{filePath}\".", exception);
+                throw new InvalidOperationException($"An exception occurred while parsing the front matter of \"{filePath}\".", exception);
             }
         }
 

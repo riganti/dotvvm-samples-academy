@@ -135,7 +135,7 @@ namespace DotvvmAcademy.CourseFormat.Sandbox
                 catch (Exception exception)
                 {
                     reporter.Report($"An '{exception.GetType().Name}' with message: '{exception.Message}', " +
-                        $"occured during execution of your code");
+                        $"occurred during execution of your code");
                 }
             }
 

@@ -225,7 +225,7 @@ We will explain everything to you in a few easy lessons.</value>
     <value>Not Found</value>
   </data>
   <data name="Error_500Message" xml:space="preserve">
-    <value>An error occured on our side. Please try again later.</value>
+    <value>An error occurred on our side. Please try again later.</value>
   </data>
   <data name="Error_500Title" xml:space="preserve">
     <value>Internal Server Error</value>
