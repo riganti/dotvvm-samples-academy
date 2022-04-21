@@ -106,6 +106,18 @@ namespace DotvvmAcademy.Web
             config.Resources.Register(
                 name: "MonacoLoader",
                 resource: new ScriptResource(new FileResourceLocation("~/wwwroot/libs/monaco-editor/min/vs/loader.js")));
+//            config.Resources.Register(
+//                name: "MonacoLoaderInvokation",
+//                resource: new InlineScriptResource(@"
+//require.config({ paths: { ""vs"": ""/libs/monaco-editor/min/vs"" } });
+//window.isMonacoLoaded = false;
+//require([""vs/editor/editor.main""], () => window.isMonacoLoaded = true);
+//",
+//                ResourceRenderPosition.Head)
+//                {
+//                    RenderPosition = ResourceRenderPosition.Body,
+//                    Dependencies = new[] { "MonacoLoader" }
+//                });
             config.Resources.Register(
                 name: "AppJS",
                 resource: new ScriptResource(new FileResourceLocation("~/wwwroot/scripts/app.js"))
