@@ -14,7 +14,7 @@
     "module": "ES6",
     "types": [ "knockout" ],
     "moduleResolution": "node",
-    "outDir": "../../wwwroot/",
+    "outDir": "../../wwwroot/scripts",
     "typeRoots": [
       "../../node_modules/@types",
       "../../node_modules/dotvvm-types",
@@ -24,8 +24,8 @@
   "compileOnSave": false,
   "include": [
     "**/*.ts",
-    "../../node_modules/dotvvm-types/DotVVM.d.ts"
-    //"../../node_modules/monaco-editor/monaco.d.ts",
+    "../../node_modules/dotvvm-types/DotVVM.d.ts",
+    "../../node_modules/monaco-editor/monaco.d.ts"
     //"../Localization/UILanguage.cs"
   ] 
 }

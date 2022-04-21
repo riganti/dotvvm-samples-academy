@@ -1,21 +1,21 @@
-﻿import * as monaco from "monaco-editor";
-import { ModuleContext } from "viewModules/viewModuleManager";
+﻿declare let require: any;
 
-export default (context: ModuleContext) => new MonacoModule(context);
+require.config({ paths: { "vs": "/libs/monaco-editor/min/vs" } });
+require(["vs/editor/editor.main"], () => { });
 
-class MonacoModule {
-
-    constructor(private context: ModuleContext) {
-        ko.bindingHandlers["dotvvm-monaco"] = {
-            init(element: HTMLElement, value: () => IEditorBinding) {
-                highlightSnippets()
-                new Editor(element, value());
-            }
-        }
+ko.bindingHandlers["dotvvm-monaco"] = {
+    init(element: HTMLElement, value: () => IEditorBinding) {
+        require(["vs/editor/editor.main"], () => {
+            new Editor(element, value());
+        });
     }
 }
 
-let isMonacoLoaded = false;
+dotvvm.events.initCompleted.subscribe(e => {
+    require(["vs/editor/editor.main"], () => {
+        highlightSnippets();
+    });
+});
 
 function highlightSnippets() {
     let snippets = document.querySelectorAll("code[class^=language-]");
@@ -30,7 +30,7 @@ function highlightSnippets() {
             language = "html";
         }
         snippet.setAttribute("data-lang", language);
-        monaco.editor.colorizeElement(<HTMLElement>snippet, { tabSize: 4 });
+        monaco.editor.colorizeElement(<HTMLElement>snippet, { tabSize: 4, theme: "vs-dark" });
     }
 }
 
